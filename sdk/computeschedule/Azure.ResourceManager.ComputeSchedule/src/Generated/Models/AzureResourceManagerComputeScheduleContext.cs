@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ComputeSchedule
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CancelOperationsContent))]
     [ModelReaderWriterBuildable(typeof(CancelOperationsResult))]
@@ -33,12 +34,7 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(NotificationSettings))]
     [ModelReaderWriterBuildable(typeof(OccurrenceCancelContent))]
     [ModelReaderWriterBuildable(typeof(OccurrenceDelayContent))]
-    [ModelReaderWriterBuildable(typeof(OccurrenceExtensionProperties))]
-    [ModelReaderWriterBuildable(typeof(OccurrenceExtensionResourceData))]
-    [ModelReaderWriterBuildable(typeof(OccurrenceExtensionResourceListResult))]
     [ModelReaderWriterBuildable(typeof(OccurrenceListResult))]
-    [ModelReaderWriterBuildable(typeof(OccurrenceResourceData))]
-    [ModelReaderWriterBuildable(typeof(OccurrenceResourceListResponse))]
     [ModelReaderWriterBuildable(typeof(OccurrenceResultSummary))]
     [ModelReaderWriterBuildable(typeof(OperationErrorDetails))]
     [ModelReaderWriterBuildable(typeof(OperationErrorsResult))]
@@ -57,18 +53,15 @@ namespace Azure.ResourceManager.ComputeSchedule
     [ModelReaderWriterBuildable(typeof(ScheduledActionOccurrenceResource))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionPatch))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionPatchProperties))]
-    [ModelReaderWriterBuildable(typeof(ScheduledActionProperties))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionResource))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionResourceAttachContent))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionResourceData))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionResourceDetachContent))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionResourcePatchContent))]
-    [ModelReaderWriterBuildable(typeof(ScheduledActionResources))]
-    [ModelReaderWriterBuildable(typeof(ScheduledActionResourcesListResult))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionResourceStatus))]
-    [ModelReaderWriterBuildable(typeof(ScheduledActionsExtensionProperties))]
     [ModelReaderWriterBuildable(typeof(ScheduledActionsSchedule))]
+    [ModelReaderWriterBuildable(typeof(ScheduledActionUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(StartResourceOperationResult))]
     [ModelReaderWriterBuildable(typeof(SubmitDeallocateContent))]
     [ModelReaderWriterBuildable(typeof(SubmitHibernateContent))]

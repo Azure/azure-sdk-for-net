@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ComputeSchedule;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeSchedule.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableComputeScheduleResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeScheduleResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableComputeScheduleResourceGroupResource for mocking. </summary>
         protected MockableComputeScheduleResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeScheduleResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableComputeScheduleResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableComputeScheduleResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of ScheduledActionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ScheduledActionResources and their operations over a ScheduledActionResource. </returns>
+        /// <summary> Gets a collection of ScheduledActions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ScheduledActions and their operations over a ScheduledActionResource. </returns>
         public virtual ScheduledActionCollection GetScheduledActions()
         {
             return GetCachedClient(client => new ScheduledActionCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// Get a ScheduledAction
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledAction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<ScheduledActionResource>> GetScheduledActionAsync(string scheduledActionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+
             return await GetScheduledActions().GetAsync(scheduledActionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// Get a ScheduledAction
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledAction_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         [ForwardsClientCalls]
         public virtual Response<ScheduledActionResource> GetScheduledAction(string scheduledActionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+
             return GetScheduledActions().Get(scheduledActionName, cancellationToken);
         }
     }

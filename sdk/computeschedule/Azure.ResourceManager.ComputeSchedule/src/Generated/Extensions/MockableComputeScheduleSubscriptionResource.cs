@@ -8,61 +8,95 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.ComputeSchedule;
 using Azure.ResourceManager.ComputeSchedule.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeSchedule.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableComputeScheduleSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _scheduledActionClientDiagnostics;
-        private ScheduledActionsRestOperations _scheduledActionRestClient;
+        private ClientDiagnostics _scheduledActionsClientDiagnostics;
+        private ScheduledActions _scheduledActionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeScheduleSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableComputeScheduleSubscriptionResource for mocking. </summary>
         protected MockableComputeScheduleSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableComputeScheduleSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableComputeScheduleSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableComputeScheduleSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics ScheduledActionClientDiagnostics => _scheduledActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
-        private ScheduledActionsRestOperations ScheduledActionRestClient => _scheduledActionRestClient ??= new ScheduledActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ScheduledActionResource.ResourceType));
+        private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Endpoint, "2025-04-15-preview");
 
         /// <summary>
-        /// VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future.
+        /// List ScheduledAction resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesSubmitDeallocate</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/scheduledActions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActions_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-15-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionResource> GetScheduledActionsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionAsyncCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ScheduledActionResource(Client, data));
+        }
+
+        /// <summary>
+        /// List ScheduledAction resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/scheduledActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActions_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-04-15-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionResource> GetScheduledActions(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ScheduledActionData, ScheduledActionResource>(new ScheduledActionsGetBySubscriptionCollectionResultOfT(ScheduledActionsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new ScheduledActionResource(Client, data));
+        }
+
+        /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -71,11 +105,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.SubmitVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitDeallocateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -85,27 +129,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesSubmitDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesSubmitDeallocate: Schedule deallocate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -114,11 +138,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.SubmitVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitDeallocateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -128,27 +162,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesSubmitHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -157,11 +171,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.SubmitVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitHibernateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -171,27 +195,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesSubmitHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesSubmitHibernate: Schedule hibernate operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -200,11 +204,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.SubmitVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitHibernateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -214,27 +228,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesSubmitStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -243,11 +237,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.SubmitVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitStartContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -257,27 +261,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesSubmitStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesSubmitStart: Schedule start operation for a batch of virtual machines at datetime in future. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -286,11 +270,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.SubmitVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.SubmitVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateSubmitVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, SubmitStartContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -300,27 +294,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -329,11 +303,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineDeallocateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeallocateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -343,27 +327,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteDeallocate: Execute deallocate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -372,11 +336,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeallocate");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineDeallocate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeallocateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeallocateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeallocateResourceOperationResult> response = Response.FromValue(DeallocateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -386,27 +360,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -415,11 +369,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineHibernateAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteHibernateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -429,27 +393,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteHibernate: Execute hibernate operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -458,11 +402,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineHibernate");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineHibernate(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineHibernateRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteHibernateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<HibernateResourceOperationResult> response = Response.FromValue(HibernateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -472,27 +426,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -501,11 +435,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineStartAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteStartContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -515,27 +459,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteStart: Execute start operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -544,11 +468,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineStart");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineStart(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineStartRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteStartContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StartResourceOperationResult> response = Response.FromValue(StartResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -558,27 +492,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteCreate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineCreateOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -587,11 +501,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperation");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperation");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineCreateOperationAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CreateResourceOperationResult> response = Response.FromValue(CreateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -601,27 +525,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteCreate</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineCreateOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteCreate: Execute create operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -630,11 +534,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperation");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineCreateOperation");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineCreateOperation(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineCreateOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteCreateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CreateResourceOperationResult> response = Response.FromValue(CreateResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -644,27 +558,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteDelete</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineDeleteOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -673,11 +567,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperation");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperation");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.ExecuteVirtualMachineDeleteOperationAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeleteOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeleteContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeleteResourceOperationResult> response = Response.FromValue(DeleteResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -687,27 +591,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesExecuteDelete</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineDeleteOperation</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesExecuteDelete: Execute delete operation for a batch of virtual machines, this operation is triggered as soon as Computeschedule receives it. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -716,11 +600,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperation");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.ExecuteVirtualMachineDeleteOperation");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.ExecuteVirtualMachineDeleteOperation(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateExecuteVirtualMachineDeleteOperationRequest(Guid.Parse(Id.SubscriptionId), locationparameter, ExecuteDeleteContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeleteResourceOperationResult> response = Response.FromValue(DeleteResourceOperationResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -730,27 +624,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesGetOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -759,11 +633,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.GetVirtualMachineOperationStatusAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationStatusRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationStatusContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GetOperationStatusResult> response = Response.FromValue(GetOperationStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -773,27 +657,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesGetOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesGetOperationStatus: Polling endpoint to read status of operations performed on virtual machines. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -802,11 +666,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationStatus");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.GetVirtualMachineOperationStatus(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationStatusRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationStatusContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GetOperationStatusResult> response = Response.FromValue(GetOperationStatusResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -816,27 +690,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesCancelOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -845,11 +699,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.CancelVirtualMachineOperationsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateCancelVirtualMachineOperationsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, CancelOperationsContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<CancelOperationsResult> response = Response.FromValue(CancelOperationsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -859,27 +723,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesCancelOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesCancelOperations: Cancel a previously submitted (start/deallocate/hibernate) request. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -888,11 +732,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.CancelVirtualMachineOperations");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.CancelVirtualMachineOperations(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateCancelVirtualMachineOperationsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, CancelOperationsContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<CancelOperationsResult> response = Response.FromValue(CancelOperationsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -902,27 +756,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesGetOperationErrors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -931,11 +765,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
             scope.Start();
             try
             {
-                var response = await ScheduledActionRestClient.GetVirtualMachineOperationErrorsAsync(Id.SubscriptionId, locationparameter, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationErrorsContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<GetOperationErrorsResult> response = Response.FromValue(GetOperationErrorsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -945,27 +789,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             }
         }
 
-        /// <summary>
-        /// VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/locations/{locationparameter}/virtualMachinesGetOperationErrors</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> VirtualMachinesGetOperationErrors: Get error details on operation errors (like transient errors encountered, additional logs) if they exist. </summary>
         /// <param name="locationparameter"> The location name. </param>
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -974,11 +798,21 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ScheduledActionClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
+            using DiagnosticScope scope = ScheduledActionsClientDiagnostics.CreateScope("MockableComputeScheduleSubscriptionResource.GetVirtualMachineOperationErrors");
             scope.Start();
             try
             {
-                var response = ScheduledActionRestClient.GetVirtualMachineOperationErrors(Id.SubscriptionId, locationparameter, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = ScheduledActionsRestClient.CreateGetVirtualMachineOperationErrorsRequest(Guid.Parse(Id.SubscriptionId), locationparameter, GetOperationErrorsContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<GetOperationErrorsResult> response = Response.FromValue(GetOperationErrorsResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -986,66 +820,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// List ScheduledAction resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/scheduledActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledAction_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledActionResource> GetScheduledActionsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), ScheduledActionClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActions", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List ScheduledAction resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ComputeSchedule/scheduledActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ScheduledAction_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-15-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduledActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ScheduledActionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledActionResource> GetScheduledActions(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ScheduledActionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ScheduledActionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ScheduledActionResource(Client, ScheduledActionData.DeserializeScheduledActionData(e)), ScheduledActionClientDiagnostics, Pipeline, "MockableComputeScheduleSubscriptionResource.GetScheduledActions", "value", "nextLink", cancellationToken);
         }
     }
 }
