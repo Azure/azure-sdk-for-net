@@ -801,9 +801,6 @@
 # ServiceLabel: %Search
 # ServiceOwners:                                                   @efrainretana @kuanlu95 @mattgotteiner
 
-# ServiceLabel: %Security
-# ServiceOwners:                                                   @chlahav
-
 # ServiceLabel: %SecurityInsights
 # ServiceOwners:                                                   @amirkeren
 
