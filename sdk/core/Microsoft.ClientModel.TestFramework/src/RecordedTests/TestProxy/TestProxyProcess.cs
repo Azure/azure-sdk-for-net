@@ -94,6 +94,7 @@ public class TestProxyProcess
                 $"tool run test-proxy start -u --storage-location=\"{TestEnvironment.RepositoryRoot}\"");
         }
 
+        testProxyProcessInfo.WorkingDirectory = TestEnvironment.RepositoryRoot;
         testProxyProcessInfo.UseShellExecute = false;
         testProxyProcessInfo.RedirectStandardOutput = true;
         testProxyProcessInfo.RedirectStandardError = true;
@@ -297,7 +298,8 @@ public class TestProxyProcess
                 UseShellExecute = false,
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
-                CreateNoWindow = true
+                CreateNoWindow = true,
+                WorkingDirectory = TestEnvironment.RepositoryRoot
             };
 
             using var process = Process.Start(processInfo);
