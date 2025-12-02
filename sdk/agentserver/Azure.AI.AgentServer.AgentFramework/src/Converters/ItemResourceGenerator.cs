@@ -3,6 +3,7 @@
 
 using System.Text;
 
+using Azure.AI.AgentServer.Contracts.Generated.Agents;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Core.Common;
 using Azure.AI.AgentServer.Core.Common.Id;
@@ -42,6 +43,22 @@ public class ItemResourceGenerator
     }
 
     /// <summary>
+    /// Creates a CreatedBy object from the author name.
+    /// </summary>
+    /// <param name="authorName">The name of the author from the agent update.</param>
+    /// <returns>A CreatedBy object with agent information and response ID.</returns>
+    private CreatedBy CreateCreatedBy(string? authorName)
+    {
+        AgentId? agentId = null;
+        if (!string.IsNullOrEmpty(authorName))
+        {
+            agentId = new AgentId(authorName, string.Empty);
+        }
+
+        return new CreatedBy(agentId, Context.ResponseId, null);
+    }
+
+    /// <summary>
     /// Creates a nested events group from a chunk of updates.
     /// </summary>
     /// <param name="updateGroup">The group of updates to process.</param>
@@ -69,9 +86,9 @@ public class ItemResourceGenerator
 
         var events = p.First.Content switch
         {
-            FunctionCallContent => GenerateFunctionCallEvents(ReadContents(p.Source), onItemResource),
-            FunctionResultContent => GenerateFunctionCallOutputEvents(ReadContents(p.Source), onItemResource),
-            TextContent => GenerateAssistantMessageEvents(ReadContents(p.Source), onItemResource),
+            FunctionCallContent => GenerateFunctionCallEvents(p.Source, onItemResource),
+            FunctionResultContent => GenerateFunctionCallOutputEvents(p.Source, onItemResource),
+            TextContent => GenerateAssistantMessageEvents(p.Source, onItemResource),
             _ => null!
         };
 
@@ -114,18 +131,25 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateFunctionCallEvents(
-        IAsyncEnumerable<AIContent> source,
+        IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
         Action<ItemResource> onItemResource)
     {
-        await foreach (var content in source.WithCancellation(CancellationToken).ConfigureAwait(false))
+        string? authorName = null;
+        await foreach (var (update, content) in source.WithCancellation(CancellationToken).ConfigureAwait(false))
         {
             if (content is not FunctionCallContent functionCallContent)
             {
                 continue;
             }
 
+            // Capture the author name from the first update
+            authorName ??= update.AuthorName;
+
             var groupSeq = GroupSeq.Next();
-            var item = functionCallContent.ToFunctionToolCallItemResource(Context.IdGenerator.GenerateFunctionCallId());
+            var createdBy = CreateCreatedBy(authorName);
+            var item = functionCallContent.ToFunctionToolCallItemResource(
+                Context.IdGenerator.GenerateFunctionCallId(),
+                createdBy);
             onItemResource(item);
 
             yield return new ResponseOutputItemAddedEvent(
@@ -153,18 +177,25 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateFunctionCallOutputEvents(
-        IAsyncEnumerable<AIContent> source,
+        IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
         Action<ItemResource> onItemResource)
     {
-        await foreach (var content in source.WithCancellation(CancellationToken).ConfigureAwait(false))
+        string? authorName = null;
+        await foreach (var (update, content) in source.WithCancellation(CancellationToken).ConfigureAwait(false))
         {
             if (content is not FunctionResultContent functionResultContent)
             {
                 continue;
             }
 
+            // Capture the author name from the first update
+            authorName ??= update.AuthorName;
+
             var groupSeq = GroupSeq.Next();
-            var item = functionResultContent.ToFunctionToolCallOutputItemResource(Context.IdGenerator.GenerateFunctionOutputId());
+            var createdBy = CreateCreatedBy(authorName);
+            var item = functionResultContent.ToFunctionToolCallOutputItemResource(
+                Context.IdGenerator.GenerateFunctionOutputId(),
+                createdBy);
             onItemResource(item);
 
             yield return new ResponseOutputItemAddedEvent(
@@ -180,11 +211,14 @@ public class ItemResourceGenerator
     }
 
     private async IAsyncEnumerable<ResponseStreamEvent> GenerateAssistantMessageEvents(
-        IAsyncEnumerable<AIContent> source,
+        IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> source,
         Action<ItemResource> onItemResource)
     {
         var groupSeq = GroupSeq.Next();
         var itemId = Context.IdGenerator.GenerateMessageId();
+        string? authorName = null;
+
+        // Create incomplete item without createdBy (will be set in final item)
         var incompleteItem = new ResponsesAssistantMessageItemResource(
             id: itemId,
             status: ResponsesMessageItemResourceStatus.Completed,
@@ -204,12 +238,15 @@ public class ItemResourceGenerator
             part: new ItemContentOutputText(string.Empty, []));
 
         var text = new StringBuilder();
-        await foreach (var content in source.WithCancellation(CancellationToken).ConfigureAwait(false))
+        await foreach (var (update, content) in source.WithCancellation(CancellationToken).ConfigureAwait(false))
         {
             if (content is not TextContent textContent)
             {
                 continue;
             }
+
+            // Capture the author name from the first update
+            authorName ??= update.AuthorName;
 
             text.Append(textContent.Text);
             yield return new ResponseTextDeltaEvent(
@@ -229,10 +266,12 @@ public class ItemResourceGenerator
             contentIndex: 0,
             part: itemContent);
 
+        var createdBy = CreateCreatedBy(authorName);
         var itemResource = new ResponsesAssistantMessageItemResource(
             id: itemId,
             status: ResponsesMessageItemResourceStatus.Completed,
-            content: [itemContent]
+            content: [itemContent],
+            createdBy: createdBy
         );
         onItemResource(itemResource);
         yield return new ResponseOutputItemDoneEvent(
