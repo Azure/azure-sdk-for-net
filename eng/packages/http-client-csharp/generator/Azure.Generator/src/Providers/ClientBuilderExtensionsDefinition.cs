@@ -76,8 +76,10 @@ namespace Azure.Generator.Providers
                         continue;
                     }
 
-                    // only add overloads for the full constructors that include the client options parameter
-                    if (constructor.Signature.Parameters.LastOrDefault()?.Type.Equals(client.ClientOptionsParameter.Type) != true)
+                    // Only add overloads for the full constructors that include the client options parameter
+                    // Check that the name of the last parameter matches the client options parameter as the namespace will not be resolved for
+                    // customized constructors. This is safe as we don't allow multiple types types with the same name in an Azure library.
+                    if (constructor.Signature.Parameters.LastOrDefault()?.Type.Name.Equals(client.ClientOptionsParameter.Type.Name) != true)
                     {
                         continue;
                     }

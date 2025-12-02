@@ -68,7 +68,7 @@ namespace Azure.Identity.Samples
             #region Snippet:WorkloadIdentityCredentialWithIdentityBinding
             var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
             {
-                IsAzureKubernetesTokenProxyEnabled = true  // Enable identity binding mode
+                IsAzureProxyEnabled = true  // Enable identity binding mode
             });
             #endregion
         }
@@ -86,7 +86,7 @@ namespace Azure.Identity.Samples
             // After (with identity binding support):
             var credential = new WorkloadIdentityCredential(new WorkloadIdentityCredentialOptions
             {
-                IsAzureKubernetesTokenProxyEnabled = true
+                IsAzureProxyEnabled = true
             });
             #endregion
         }

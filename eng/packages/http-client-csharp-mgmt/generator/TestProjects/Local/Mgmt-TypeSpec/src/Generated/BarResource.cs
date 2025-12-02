@@ -513,7 +513,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -561,7 +561,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<BarResource> result = Update(patch, cancellationToken);
+                    Response<BarResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -604,7 +604,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     BarData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     BarData patch = new BarData();
                     patch.Tags.ReplaceWith(tags);
-                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -647,7 +647,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     BarData current = Get(cancellationToken: cancellationToken).Value.Data;
                     BarData patch = new BarData();
                     patch.Tags.ReplaceWith(tags);
-                    Response<BarResource> result = Update(patch, cancellationToken);
+                    Response<BarResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -693,7 +693,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<BarResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -739,7 +739,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<BarResource> result = Update(patch, cancellationToken);
+                    Response<BarResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

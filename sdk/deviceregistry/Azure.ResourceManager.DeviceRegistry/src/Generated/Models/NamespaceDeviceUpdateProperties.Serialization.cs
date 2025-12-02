@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(Policy))
+            {
+                writer.WritePropertyName("policy"u8);
+                writer.WriteObjectValue(Policy, options);
+            }
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -117,6 +122,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string operatingSystemVersion = default;
             MessagingEndpoints endpoints = default;
             IDictionary<string, BinaryData> attributes = default;
+            DeviceCredentialPolicy policy = default;
             bool? enabled = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,6 +162,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     attributes = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("policy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policy = DeviceCredentialPolicy.DeserializeDeviceCredentialPolicy(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("enabled"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -170,7 +185,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NamespaceDeviceUpdateProperties(operatingSystemVersion, endpoints, attributes ?? new ChangeTrackingDictionary<string, BinaryData>(), enabled, additionalBinaryDataProperties);
+            return new NamespaceDeviceUpdateProperties(
+                operatingSystemVersion,
+                endpoints,
+                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                policy,
+                enabled,
+                additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

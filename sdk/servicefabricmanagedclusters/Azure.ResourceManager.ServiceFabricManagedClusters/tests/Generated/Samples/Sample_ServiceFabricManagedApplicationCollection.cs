@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMaximumParameters()
         {
-            // Generated from example definition: 2025-06-01-preview/ApplicationPutOperation_example_max.json
+            // Generated from example definition: 2025-10-01-preview/ApplicationPutOperation_example_max.json
             // this example is just showing the usage of "ApplicationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_PutAnApplicationWithMinimumParameters()
         {
-            // Generated from example definition: 2025-06-01-preview/ApplicationPutOperation_example_min.json
+            // Generated from example definition: 2025-10-01-preview/ApplicationPutOperation_example_min.json
             // this example is just showing the usage of "ApplicationResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAnApplication()
         {
-            // Generated from example definition: 2025-06-01-preview/ApplicationGetOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/ApplicationGetOperation_example.json
             // this example is just showing the usage of "ApplicationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAListOfApplicationResources()
         {
-            // Generated from example definition: 2025-06-01-preview/ApplicationListOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/ApplicationListOperation_example.json
             // this example is just showing the usage of "ApplicationResource_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAnApplication()
         {
-            // Generated from example definition: 2025-06-01-preview/ApplicationGetOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/ApplicationGetOperation_example.json
             // this example is just showing the usage of "ApplicationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAnApplication()
         {
-            // Generated from example definition: 2025-06-01-preview/ApplicationGetOperation_example.json
+            // Generated from example definition: 2025-10-01-preview/ApplicationGetOperation_example.json
             // this example is just showing the usage of "ApplicationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

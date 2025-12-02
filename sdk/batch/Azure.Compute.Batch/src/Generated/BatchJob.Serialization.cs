@@ -34,7 +34,7 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchJob)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(Id))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -49,35 +49,35 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("usesTaskDependencies"u8);
                 writer.WriteBooleanValue(UsesTaskDependencies.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(Uri))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(ETag))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
+                writer.WriteStringValue(ETag.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModified))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("lastModified"u8);
-                writer.WriteStringValue(LastModified.Value, "O");
+                writer.WriteStringValue(LastModified, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreationTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("creationTime"u8);
-                writer.WriteStringValue(CreationTime.Value, "O");
+                writer.WriteStringValue(CreationTime, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(State))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
+                writer.WriteStringValue(State.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StateTransitionTime))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("stateTransitionTime"u8);
-                writer.WriteStringValue(StateTransitionTime.Value, "O");
+                writer.WriteStringValue(StateTransitionTime, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousState))
             {
@@ -212,11 +212,11 @@ namespace Azure.Compute.Batch
             string displayName = default;
             bool? usesTaskDependencies = default;
             Uri url = default;
-            ETag? eTag = default;
-            DateTimeOffset? lastModified = default;
-            DateTimeOffset? creationTime = default;
-            BatchJobState? state = default;
-            DateTimeOffset? stateTransitionTime = default;
+            ETag eTag = default;
+            DateTimeOffset lastModified = default;
+            DateTimeOffset creationTime = default;
+            BatchJobState state = default;
+            DateTimeOffset stateTransitionTime = default;
             BatchJobState? previousState = default;
             DateTimeOffset? previousStateTransitionTime = default;
             int? priority = default;
@@ -259,55 +259,31 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("url"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     url = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("eTag"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     eTag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("lastModified"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     lastModified = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     creationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     state = new BatchJobState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("stateTransitionTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     stateTransitionTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }

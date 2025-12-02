@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.Compute.Batch
 {
-    /// <summary> The network configuration for the Job. </summary>
+    /// <summary> (This property is not available by default. Please contact support for more information) The network configuration for the Job. </summary>
     public partial class BatchJobNetworkConfiguration
     {
         /// <summary>

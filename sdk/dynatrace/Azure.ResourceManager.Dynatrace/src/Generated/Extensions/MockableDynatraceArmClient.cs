@@ -6,50 +6,36 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableDynatraceArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDynatraceArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableDynatraceArmClient for mocking. </summary>
         protected MockableDynatraceArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDynatraceArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDynatraceArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDynatraceArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableDynatraceArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DynatraceMonitorResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynatraceMonitorResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceMonitorResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DynatraceMonitoredSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DynatraceMonitorResource"/> object. </returns>
-        public virtual DynatraceMonitorResource GetDynatraceMonitorResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DynatraceMonitoredSubscriptionResource"/> object. </returns>
+        public virtual DynatraceMonitoredSubscriptionResource GetDynatraceMonitoredSubscriptionResource(ResourceIdentifier id)
         {
-            DynatraceMonitorResource.ValidateResourceId(id);
-            return new DynatraceMonitorResource(Client, id);
+            DynatraceMonitoredSubscriptionResource.ValidateResourceId(id);
+            return new DynatraceMonitoredSubscriptionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DynatraceTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynatraceTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DynatraceTagRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DynatraceTagRuleResource"/> object. </returns>
         public virtual DynatraceTagRuleResource GetDynatraceTagRuleResource(ResourceIdentifier id)
@@ -58,10 +44,16 @@ namespace Azure.ResourceManager.Dynatrace.Mocking
             return new DynatraceTagRuleResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="DynatraceSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DynatraceSingleSignOnResource.CreateResourceIdentifier" /> to create a <see cref="DynatraceSingleSignOnResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="DynatraceMonitorResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DynatraceMonitorResource"/> object. </returns>
+        public virtual DynatraceMonitorResource GetDynatraceMonitorResource(ResourceIdentifier id)
+        {
+            DynatraceMonitorResource.ValidateResourceId(id);
+            return new DynatraceMonitorResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="DynatraceSingleSignOnResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="DynatraceSingleSignOnResource"/> object. </returns>
         public virtual DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(ResourceIdentifier id)

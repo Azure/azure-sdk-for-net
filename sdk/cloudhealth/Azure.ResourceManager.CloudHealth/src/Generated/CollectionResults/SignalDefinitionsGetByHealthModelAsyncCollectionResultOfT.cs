@@ -31,13 +31,8 @@ namespace Azure.ResourceManager.CloudHealth
         /// <param name="healthModelName"> Name of health model resource. </param>
         /// <param name="timestamp"> Timestamp to use for the operation. When specified, the version of the resource at this point in time is retrieved. If not specified, the latest version is used. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="healthModelName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> or <paramref name="healthModelName"/> is an empty string, and was expected to be non-empty. </exception>
         public SignalDefinitionsGetByHealthModelAsyncCollectionResultOfT(SignalDefinitions client, Guid subscriptionId, string resourceGroupName, string healthModelName, DateTimeOffset? timestamp, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(healthModelName, nameof(healthModelName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
