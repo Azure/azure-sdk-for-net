@@ -167,7 +167,7 @@ public class ResponsesTests : AoaiTestBase<OpenAIResponseClient>
                 {
                     Tools =
                     {
-                        ResponseTool.CreateWebSearchTool()
+                        ResponseTool.CreateWebSearchPreviewTool()
                     }
                 }));
         Assert.That(expectedException, Is.Not.Null);

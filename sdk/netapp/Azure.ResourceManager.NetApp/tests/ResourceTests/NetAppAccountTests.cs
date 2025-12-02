@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Tests
     public class NetAppAccountTests: NetAppTestBase
     {
         private const string namePrefix = "testNetAppNetSDKmgmt";
-        public static new AzureLocation DefaultLocation = "eastus2euap";
+        //public static new AzureLocation DefaultLocation = "westus2";
 
         public NetAppAccountTests(bool isAsync) : base(isAsync)
         {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             VerifyNetAppAccountProperties(account4, true);
         }
 
-        [Ignore("ARM issue with nextLink ignore temporarly")]
+        //[Ignore("ARM issue with nextLink ignore temporarly")]
         [RecordedTest]
         public async Task GetAllNetAppAccountsBySubscription()
         {

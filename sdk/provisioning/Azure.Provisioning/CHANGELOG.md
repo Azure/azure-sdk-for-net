@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.3 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.0-beta.3 (2025-11-26)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed bug when assigning property to a collection throwing exceptions. ([#53862](https://github.com/Azure/azure-sdk-for-net/issues/53862))
 
 ## 1.4.0-beta.2 (2025-11-10)
 

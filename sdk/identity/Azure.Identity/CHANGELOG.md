@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `WorkloadIdentityCredentialOptions.IsAzureKubernetesTokenProxyEnabled` to `IsAzureProxyEnabled` to follow .NET naming conventions for boolean properties.
+
 ### Bugs Fixed
 
 ### Other Changes

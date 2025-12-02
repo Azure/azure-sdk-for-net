@@ -219,7 +219,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.6.0" />
+    <PackageReference Update="OpenAI" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
@@ -498,7 +498,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250930.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251120.5</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20251114.1</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251125.5</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20251125.3</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

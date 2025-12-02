@@ -806,6 +806,16 @@ namespace Azure.AI.Projects.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.LocalShellToolCallOutputAgentResponseItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public static partial class McpToolExtensions
+    {
+        public static string get_ProjectConnectionId(OpenAI.Responses.McpTool mcpTool) { throw null; }
+        public static void set_ProjectConnectionId(OpenAI.Responses.McpTool mcpTool, string value) { }
+        public sealed partial class <>E__0
+        {
+            internal <>E__0() { }
+            public string ProjectConnectionId { get { throw null; } set { } }
+        }
+    }
     public abstract partial class MemoryItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.MemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemoryItem>
     {
         internal MemoryItem() { }

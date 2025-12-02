@@ -816,6 +816,397 @@ namespace Azure.Provisioning.Tests.BicepValues
             TestHelpers.AssertExpression("'Hyphenated: ${test.dictionary[\'my-key\']}, Dotted: ${test.dictionary[\'key.with.dots\']}, Spaced: ${test.dictionary[\'key with spaces\']}'", interpolatedWithExpressions);
         }
 
+        [Test]
+        public void ValidatePropertyReferenceFromAnotherResource()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = "skuValue";
+            var r2 = new TestResource("r2")
+            {
+                WithValue = r1.WithValue
+            };
+
+            // r2.WithValue should have the same value as r1.WithValue
+            TestHelpers.AssertExpression("'skuValue'", r2.WithValue);
+            // The Bicep expression should reference r2's property, not r1's
+            TestHelpers.AssertExpression("r2.withValue", r2.WithValue.ToBicepExpression());
+
+            // r1.WithValue's value and Bicep expression should reference r1
+            TestHelpers.AssertExpression("'skuValue'", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidatePropertyReferenceFromAnotherResource_Expression()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = BicepFunction.GetUniqueString("sku");
+            var r2 = new TestResource("r2")
+            {
+                WithValue = r1.WithValue
+            };
+
+            // r2.WithValue should have the same value as r1.WithValue (expression)
+            TestHelpers.AssertExpression("uniqueString('sku')", r2.WithValue);
+            // The Bicep expression should reference r2's property, not r1's
+            TestHelpers.AssertExpression("r2.withValue", r2.WithValue.ToBicepExpression());
+
+            // r1.WithValue's value and Bicep expression should reference r1
+            TestHelpers.AssertExpression("uniqueString('sku')", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidatePropertyReferenceFromAnotherResource_UsingToBicepExpression()
+        {
+            // r1: assign a literal string value
+            var r1 = new TestResource("r1");
+            r1.WithValue = "skuValue";
+
+            // r2: assign using r1.WithValue.ToBicepExpression()
+            var r2 = new TestResource("r2");
+            r2.WithValue = r1.WithValue.ToBicepExpression();
+
+            // r3: assign using r2.WithValue
+            var r3 = new TestResource("r3")
+            {
+                WithValue = r2.WithValue
+            };
+
+            // Assert r1.WithValue
+            TestHelpers.AssertExpression("'skuValue'", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+
+            // Assert r2.WithValue
+            TestHelpers.AssertExpression("r1.withValue", r2.WithValue);
+            TestHelpers.AssertExpression("r2.withValue", r2.WithValue.ToBicepExpression());
+
+            // Assert r3.WithValue
+            TestHelpers.AssertExpression("r1.withValue", r3.WithValue);
+            TestHelpers.AssertExpression("r3.withValue", r3.WithValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateCollectionPropertyReferenceFromAnotherResource_UsingToBicepExpression()
+        {
+            // r1: add a literal string value to list
+            var r1 = new TestResource("r1");
+            r1.List.Add("item1");
+
+            // r2: add using r1.List[0].ToBicepExpression()
+            var r2 = new TestResource("r2");
+            r2.List.Add(r1.List[0].ToBicepExpression());
+
+            // r3: add using r2.List[0]
+            var r3 = new TestResource("r3");
+            r3.List.Add(r2.List[0]);
+
+            // Assert r1.List
+            TestHelpers.AssertExpression("""
+            [
+              'item1'
+            ]
+            """, r1.List);
+            TestHelpers.AssertExpression("r1.list", r1.List.ToBicepExpression());
+
+            // Assert r1.List[0]
+            TestHelpers.AssertExpression("'item1'", r1.List[0]);
+            TestHelpers.AssertExpression("r1.list[0]", r1.List[0].ToBicepExpression());
+
+            // Assert r2.List
+            TestHelpers.AssertExpression("""
+            [
+              r1.list[0]
+            ]
+            """, r2.List);
+            TestHelpers.AssertExpression("r2.list", r2.List.ToBicepExpression());
+
+            // Assert r2.List[0]
+            TestHelpers.AssertExpression("r1.list[0]", r2.List[0]);
+            TestHelpers.AssertExpression("r2.list[0]", r2.List[0].ToBicepExpression());
+
+            // Assert r3.List
+            TestHelpers.AssertExpression("""
+            [
+              r1.list[0]
+            ]
+            """, r3.List);
+            TestHelpers.AssertExpression("r3.list", r3.List.ToBicepExpression());
+
+            // Assert r3.List[0]
+            TestHelpers.AssertExpression("r1.list[0]", r3.List[0]);
+            TestHelpers.AssertExpression("r3.list[0]", r3.List[0].ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidatePropertyReferenceIntoCollectionFromAnotherResource_UsingToBicepExpression()
+        {
+            // r1: assign a literal string value to property
+            var r1 = new TestResource("r1");
+            r1.WithValue = "propValue";
+
+            // r2: add r1.WithValue.ToBicepExpression() to list
+            var r2 = new TestResource("r2");
+            r2.List.Add(r1.WithValue.ToBicepExpression());
+
+            // r3: add r2.List[0] to its list
+            var r3 = new TestResource("r3");
+            r3.List.Add(r2.List[0]);
+
+            // Assert r1.WithValue
+            TestHelpers.AssertExpression("'propValue'", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+
+            // Assert r2.List
+            TestHelpers.AssertExpression("""
+            [
+              r1.withValue
+            ]
+            """, r2.List);
+            TestHelpers.AssertExpression("r2.list", r2.List.ToBicepExpression());
+
+            // Assert r2.List[0]
+            TestHelpers.AssertExpression("r1.withValue", r2.List[0]);
+            TestHelpers.AssertExpression("r2.list[0]", r2.List[0].ToBicepExpression());
+
+            // Assert r3.List
+            TestHelpers.AssertExpression("""
+            [
+              r1.withValue
+            ]
+            """, r3.List);
+            TestHelpers.AssertExpression("r3.list", r3.List.ToBicepExpression());
+
+            // Assert r3.List[0]
+            TestHelpers.AssertExpression("r1.withValue", r3.List[0]);
+            TestHelpers.AssertExpression("r3.list[0]", r3.List[0].ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidatePropertyAssignToAnotherProperty_SameResource_Literal()
+        {
+            var resource = new TestResource("r1");
+            resource.WithValue = "foo";
+            resource.WithoutValue = resource.WithValue;
+
+            TestHelpers.AssertExpression("'foo'", resource.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", resource.WithValue.ToBicepExpression());
+            TestHelpers.AssertExpression("'foo'", resource.WithoutValue);
+            TestHelpers.AssertExpression("r1.withoutValue", resource.WithoutValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidatePropertyAssignToAnotherProperty_SameResource_Expression()
+        {
+            var resource = new TestResource("r1");
+            resource.WithValue = BicepFunction.GetUniqueString("bar");
+            resource.WithoutValue = resource.WithValue;
+
+            TestHelpers.AssertExpression("uniqueString('bar')", resource.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", resource.WithValue.ToBicepExpression());
+            TestHelpers.AssertExpression("uniqueString('bar')", resource.WithoutValue);
+            TestHelpers.AssertExpression("r1.withoutValue", resource.WithoutValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateListPropertyAssignFromStandaloneList()
+        {
+            // Construct a standalone list first
+            var list = new BicepList<string>
+            {
+                "item1",
+                "item2"
+            };
+
+            // Then assign it to a resource property
+            var resource = new TestResource("test");
+            resource.List = list;
+
+            // Assert the list
+            TestHelpers.AssertExpression("""
+            [
+              'item1'
+              'item2'
+            ]
+            """, resource.List);
+            TestHelpers.AssertExpression("test.list", resource.List.ToBicepExpression());
+
+            // Assert individual elements
+            TestHelpers.AssertExpression("'item1'", resource.List[0]);
+            TestHelpers.AssertExpression("test.list[0]", resource.List[0].ToBicepExpression());
+            TestHelpers.AssertExpression("'item2'", resource.List[1]);
+            TestHelpers.AssertExpression("test.list[1]", resource.List[1].ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateDictionaryPropertyAssignFromStandaloneDictionary()
+        {
+            // Construct a standalone dictionary first
+            var dictionary = new BicepDictionary<string>
+            {
+                ["key1"] = "value1",
+                ["key2"] = "value2"
+            };
+
+            // Then assign it to a resource property
+            var resource = new TestResource("test");
+            resource.Dictionary = dictionary;
+
+            // Assert the dictionary
+            TestHelpers.AssertExpression("""
+            {
+              key1: 'value1'
+              key2: 'value2'
+            }
+            """, resource.Dictionary);
+            TestHelpers.AssertExpression("test.dictionary", resource.Dictionary.ToBicepExpression());
+
+            // Assert individual elements
+            TestHelpers.AssertExpression("'value1'", resource.Dictionary["key1"]);
+            TestHelpers.AssertExpression("test.dictionary['key1']", resource.Dictionary["key1"].ToBicepExpression());
+            TestHelpers.AssertExpression("'value2'", resource.Dictionary["key2"]);
+            TestHelpers.AssertExpression("test.dictionary['key2']", resource.Dictionary["key2"].ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateModelListPropertyAssignFromStandaloneList()
+        {
+            // Construct a standalone list of models first
+            var list = new BicepList<TestModel>
+            {
+                new TestModel() { Name = "model1" },
+                new TestModel() { Name = "model2" }
+            };
+
+            // Then assign it to a resource property
+            var resource = new TestResource("test");
+            resource.Models = list;
+
+            // Assert the list
+            TestHelpers.AssertExpression("""
+            [
+              {
+                name: 'model1'
+              }
+              {
+                name: 'model2'
+              }
+            ]
+            """, resource.Models);
+            TestHelpers.AssertExpression("test.models", resource.Models.ToBicepExpression());
+
+            // Assert individual elements
+            var model1 = resource.Models[0].Value!;
+            Assert.IsNotNull(model1);
+            TestHelpers.AssertExpression("'model1'", model1.Name);
+            TestHelpers.AssertExpression("test.models[0].name", model1.Name.ToBicepExpression());
+
+            var model2 = resource.Models[1].Value!;
+            Assert.IsNotNull(model2);
+            TestHelpers.AssertExpression("'model2'", model2.Name);
+            TestHelpers.AssertExpression("test.models[1].name", model2.Name.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateCollectionPropertyReferenceFromAnotherResource()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = "itemFromR1";
+            var r2 = new TestResource("r2");
+            r2.List.Add(r1.WithValue); // Add r1's property to r2's list
+
+            // The value should be the literal value
+            TestHelpers.AssertExpression("""
+            [
+              'itemFromR1'
+            ]
+            """, r2.List);
+            // The Bicep expression should reference r2's list
+            TestHelpers.AssertExpression("r2.list", r2.List.ToBicepExpression());
+
+            // The item in the list should reference r2's list index in Bicep expression
+            TestHelpers.AssertExpression("'itemFromR1'", r2.List[0]);
+            TestHelpers.AssertExpression("r2.list[0]", r2.List[0].ToBicepExpression());
+            // The original property should reference r1
+            TestHelpers.AssertExpression("'itemFromR1'", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateCollectionPropertyReferenceFromAnotherResource_Expression()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = BicepFunction.GetUniqueString("itemExpr");
+            var r2 = new TestResource("r2");
+            r2.List.Add(r1.WithValue); // Add r1's property (expression) to r2's list
+
+            // The value should be the expression value
+            TestHelpers.AssertExpression("""
+            [
+              uniqueString('itemExpr')
+            ]
+            """, r2.List);
+            // The Bicep expression should reference r2's list
+            TestHelpers.AssertExpression("r2.list", r2.List.ToBicepExpression());
+
+            // The item in the list should reference r2's list index in Bicep expression
+            TestHelpers.AssertExpression("uniqueString('itemExpr')", r2.List[0]);
+            TestHelpers.AssertExpression("r2.list[0]", r2.List[0].ToBicepExpression());
+            // The original property should reference r1
+            TestHelpers.AssertExpression("uniqueString('itemExpr')", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateDictionaryPropertyReferenceFromAnotherResource()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = "dictValue";
+            var r2 = new TestResource("r2");
+            r2.Dictionary["refKey"] = r1.WithValue;
+
+            // The value should be the literal value
+            TestHelpers.AssertExpression("""
+            {
+              refKey: 'dictValue'
+            }
+            """, r2.Dictionary);
+            // The Bicep expression should reference r2's dictionary
+            TestHelpers.AssertExpression("r2.dictionary", r2.Dictionary.ToBicepExpression());
+
+            // The item in the dictionary should reference r2's dictionary key in Bicep expression
+            TestHelpers.AssertExpression("'dictValue'", r2.Dictionary["refKey"]);
+            TestHelpers.AssertExpression("r2.dictionary['refKey']", r2.Dictionary["refKey"].ToBicepExpression());
+            // The original property should reference r1
+            TestHelpers.AssertExpression("'dictValue'", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
+        [Test]
+        public void ValidateDictionaryPropertyReferenceFromAnotherResource_Expression()
+        {
+            var r1 = new TestResource("r1");
+            r1.WithValue = BicepFunction.GetUniqueString("dictExpr");
+            var r2 = new TestResource("r2");
+            r2.Dictionary["refKey"] = r1.WithValue;
+
+            // The value should be the expression value
+            TestHelpers.AssertExpression("""
+            {
+              refKey: uniqueString('dictExpr')
+            }
+            """, r2.Dictionary);
+            // The Bicep expression should reference r2's dictionary
+            TestHelpers.AssertExpression("r2.dictionary", r2.Dictionary.ToBicepExpression());
+
+            // The item in the dictionary should reference r2's dictionary key in Bicep expression
+            TestHelpers.AssertExpression("uniqueString('dictExpr')", r2.Dictionary["refKey"]);
+            TestHelpers.AssertExpression("r2.dictionary['refKey']", r2.Dictionary["refKey"].ToBicepExpression());
+            // The original property should reference r1
+            TestHelpers.AssertExpression("uniqueString('dictExpr')", r1.WithValue);
+            TestHelpers.AssertExpression("r1.withValue", r1.WithValue.ToBicepExpression());
+        }
+
         private class TestResource : ProvisionableResource
         {
             public TestResource(string identifier) : base(identifier, "Microsoft.Tests/tests", "2025-11-09")

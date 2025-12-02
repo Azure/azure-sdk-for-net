@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
@@ -13,7 +14,6 @@ using Azure.AI.Projects.OpenAI;
 using OpenAI.Files;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
-using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.OpenAI.Tests;
 
@@ -304,7 +304,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientMode.UseFDPOpenAI, Ignore = "Issue 4823408")]
+    [TestCase(OpenAIClientMode.UseFDPOpenAI)]
     [TestCase(OpenAIClientMode.UseExternalOpenAI)]
     public async Task GetResponseStreamingWorks(OpenAIClientMode clientMode)
     {
