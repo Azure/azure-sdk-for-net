@@ -19,6 +19,8 @@ namespace Specs.Azure.ClientGeneratorCore.ClientInitialization
 
         public ParamAliasClient(string blobName, string blob) : this(new Uri("http://localhost:3000"), blobName, blob, new ParamAliasClientOptions()) => throw null;
 
+        public ParamAliasClient(string blobName, string blob, ParamAliasClientOptions options) : this(new Uri("http://localhost:3000"), blobName, blob, options) => throw null;
+
         public ParamAliasClient(Uri endpoint, string blobName, string blob, ParamAliasClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
