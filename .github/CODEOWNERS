@@ -1158,11 +1158,8 @@
 # ServiceLabel: %Workload Orchestration %Mgmt
 # ServiceOwners:                                                   @atharvau
 
-# PRLabel: %NetAppFiles
 /sdk/netapp/Azure.ResourceManager.*/							   @audunn @ArcturusZhang @ArthurMa1978 @Azure/azure-sdk-write-netappfiles
 
-# ServiceLabel: %NetAppFiles %Mgmt
-# ServiceOwners:                                                   @audunn
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
