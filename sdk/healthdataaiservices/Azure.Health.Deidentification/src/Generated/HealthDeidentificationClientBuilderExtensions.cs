@@ -13,7 +13,7 @@ using Azure.Health.Deidentification;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-    public static partial class DeidentificationClientBuilderExtensions
+    public static partial class HealthDeidentificationClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="DeidentificationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
