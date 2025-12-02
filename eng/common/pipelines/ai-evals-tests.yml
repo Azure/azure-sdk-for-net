@@ -19,12 +19,26 @@ parameters:
   - name: Model
     type: string
     default: 'gpt-5'
-  - name: EvalsRepoName
-    type: string
-    default: 'azure-sdk-tools'
-  - name: EvalsRepoOwner
+# Repository where evals are located
+  - name: EvalRepoOwner
     type: string
     default: 'Azure'
+  - name: EvalRepoName
+    type: string
+    default: 'azure-sdk-tools'
+  - name: EvalRepoCommit
+    type: string
+    default: 'main'
+# Target repository for copilot instructions
+  - name: TargetRepoOwner
+    type: string
+    default: 'Azure'
+  - name: TargetRepoName
+    type: string
+    default: 'azure-rest-api-specs'
+  - name: TargetRepoCommit
+    type: string
+    default: '$(Build.SourceVersion)'
 
 jobs:
   - job: Run_Eval
@@ -58,11 +72,12 @@ jobs:
       parameters:
         SkipCheckoutNone: true
         Repositories:
-          - Name: $(Build.Repository.Name)
-            Commitish: $(Build.SourceVersion)
-            WorkingDirectory: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)
-          - Name: ${{ parameters.ToolsRepoOwner }}/${{ parameters.ToolsRepoName }}
-            WorkingDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.ToolsRepoName }}
+          - Name: ${{ parameters.EvalRepoOwner }}/${{ parameters.EvalRepoName }}
+            Commitish: ${{ parameters.EvalRepoCommit }}
+            WorkingDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.EvalRepoName }}
+          - Name: ${{ parameters.TargetRepoOwner }}/${{ parameters.TargetRepoName }}
+            Commitish: ${{ parameters.TargetRepoCommit }}
+            WorkingDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.TargetRepoName }}
         Paths:
           - 'tools/**'
           - 'eng/common/**'
@@ -70,14 +85,15 @@ jobs:
     
     - task: AzureCLI@2
       displayName: 'Run eval'
+      condition: and(succeeded(), ne(variables['Skip.Eval'], 'true'))
       inputs:
         azureSubscription: opensource-api-connection
         scriptType: 'bash'
         scriptLocation: 'inlineScript'
-        workingDirectory: '${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/${{ parameters.EvalRepoName }}/${{ parameters.EvalProject }}'
         inlineScript: |
           echo "Logged in to Azure"
-          echo "Running eval in project ${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}"
+          echo "Running eval"
           dotnet test --logger trx
       env:
         DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -85,8 +101,8 @@ jobs:
         DOTNET_MULTILEVEL_LOOKUP: 0
         AZURE_OPENAI_MODEL_DEPLOYMENT_NAME: ${{ parameters.Model }}
         AZURE_OPENAI_ENDPOINT: ${{ parameters.OpenAIEndPoint }}
-        REPOSITORY_NAME: $(Build.Repository.Name)
-        COPILOT_INSTRUCTIONS_PATH_MCP_EVALS: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)/.github/copilot-instructions.md
+        REPOSITORY_NAME: ${{ parameters.TargetRepoName }}
+        COPILOT_INSTRUCTIONS_PATH_MCP_EVALS: $(System.DefaultWorkingDirectory)/${{ parameters.TargetRepoName }}/.github/copilot-instructions.md
 
     - task: PublishTestResults@2
       condition: succeededOrFailed()
