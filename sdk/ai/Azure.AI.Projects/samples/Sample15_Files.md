@@ -1,46 +1,131 @@
-# Sample using Files in Azure.AI.Projects
+# File Operations with OpenAI Files API
 
-This sample demonstrates how to use file operations with OpenAI Files API through the Azure AI Projects SDK. The file operations are accessed via the AgentsClient's GetOpenAIClient() method.
+This sample demonstrates how to use file operations with OpenAI Files API through the Azure AI Projects SDK. The file operations are accessed via the ProjectOpenAIClient GetOpenAIClient method.
 
 ## Prerequisites
 
 - Install the Azure.AI.Projects package.
-- Install the Azure.AI.Agents package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
+  - `TRAINING_FILE_PATH` : the file with training data.
 
-## Asynchronous Sample
 
-```C# Snippet:AI_Projects_FileOperationsAsync
-var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
-AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
-ProjectFilesClient fileClient = projectClient.OpenAI.Files;
+## Create Clients
 
-// Upload file
-var dataDirectory = GetDataDirectory();
-var testFilePath = Path.Combine(dataDirectory, "training_set.jsonl");
+### Async
+
+```C# Snippet:AI_Projects_Files_CreateClientsAsync
+string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+```
+
+### Sync
+
+```C# Snippet:AI_Projects_Files_CreateClients
+string trainFilePath = Environment.GetEnvironmentVariable("TRAINING_FILE_PATH") ?? "data/sft_training_set.jsonl";
+var endpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+ProjectOpenAIClient oaiClient = projectClient.OpenAI;
+OpenAIFileClient fileClient = oaiClient.GetOpenAIFileClient();
+```
+
+## Upload File
+
+The `UploadFile` method uploads a file to the OpenAI Files API. This method returns an `OpenAIFile` object containing the file ID and `Status`, which indicates whether the file was successfully uploaded to the cloud. The `FileUploadPurpose` parameter specifies how the file will be used (e.g., `FineTune` for training data).
+
+### Async
+
+```C# Snippet:AI_Projects_Files_UploadFileAsync
+using FileStream fileStream = File.OpenRead(trainFilePath);
 OpenAIFile uploadedFile = await fileClient.UploadFileAsync(
-        testFilePath,
-        FileUploadPurpose.FineTune);
+    fileStream,
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
+```
 
-string fileId = uploadedFile.Id;
+### Sync
 
-// Retrieve file metadata
+```C# Snippet:AI_Projects_Files_UploadFile
+using FileStream fileStream = File.OpenRead(trainFilePath);
+OpenAIFile uploadedFile = fileClient.UploadFile(
+    fileStream,
+    "sft_training_set.jsonl",
+    FileUploadPurpose.FineTune);
+Console.WriteLine($"Uploaded file with ID: {uploadedFile.Id}");
+```
+
+## Get File Metadata
+
+The `GetFile` method retrieves metadata about an uploaded file, including its filename, size, status, and creation timestamp. This is useful for checking the processing status of uploaded files before using them in fine-tuning jobs.
+
+### Async
+
+```C# Snippet:AI_Projects_Files_GetFileAsync
 OpenAIFile retrievedFile = await fileClient.GetFileAsync(fileId);
-Console.WriteLine($"File ID: {retrievedFile.Id}, Filename: {retrievedFile.Filename}");
+Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
+```
 
-// Download file content
+### Sync
+
+```C# Snippet:AI_Projects_Files_GetFile
+OpenAIFile retrievedFile = fileClient.GetFile(fileId);
+Console.WriteLine($"Retrieved file: {retrievedFile.Filename} ({retrievedFile.SizeInBytes} bytes)");
+```
+
+## Download File Content
+
+The `DownloadFile` method downloads the content of an uploaded file as `BinaryData`. This can be used to retrieve and verify the contents of files stored in the OpenAI Files API.
+
+### Async
+
+```C# Snippet:AI_Projects_Files_DownloadFileAsync
 BinaryData fileContent = await fileClient.DownloadFileAsync(fileId);
-Console.WriteLine($"Content size: {fileContent.ToMemory().Length} bytes");
+Console.WriteLine($"Downloaded file content: {fileContent.ToMemory().Length} bytes");
+```
 
-// List all files
+### Sync
+
+```C# Snippet:AI_Projects_Files_DownloadFile
+BinaryData fileContent = fileClient.DownloadFile(fileId);
+Console.WriteLine($"Downloaded file content: {fileContent.ToMemory().Length} bytes");
+```
+
+## List Files
+
+The `GetFiles` method returns a collection of all files that have been uploaded to the OpenAI Files API. This is useful for managing and auditing your uploaded files.
+
+### Async
+
+```C# Snippet:AI_Projects_Files_ListFilesAsync
 ClientResult<OpenAIFileCollection> filesResult = await fileClient.GetFilesAsync();
-foreach (OpenAIFile file in filesResult.Value)
-{
-    Console.WriteLine($"File: {file.Filename} (ID: {file.Id})");
-}
+Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
+```
 
-// Delete file
+### Sync
+
+```C# Snippet:AI_Projects_Files_ListFiles
+ClientResult<OpenAIFileCollection> filesResult = fileClient.GetFiles();
+Console.WriteLine($"Listed {filesResult.Value.Count} file(s)");
+```
+
+## Delete File
+
+The `DeleteFile` method removes an uploaded file from the OpenAI Files API. It's good practice to clean up files after fine-tuning jobs complete to manage storage and costs.
+
+### Async
+
+```C# Snippet:AI_Projects_Files_DeleteFileAsync
 ClientResult<FileDeletionResult> deleteResult = await fileClient.DeleteFileAsync(fileId);
-Console.WriteLine($"File deleted: {deleteResult.Value.Deleted}");
+Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
+```
+
+### Sync
+
+```C# Snippet:AI_Projects_Files_DeleteFile
+ClientResult<FileDeletionResult> deleteResult = fileClient.DeleteFile(fileId);
+Console.WriteLine($"Deleted file: {deleteResult.Value.FileId}");
 ```

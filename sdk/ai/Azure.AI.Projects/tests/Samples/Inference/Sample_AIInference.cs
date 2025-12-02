@@ -209,10 +209,10 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
         Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        Assert.That(response.Value.Data.Count, Is.EqualTo(input.Count));
         for (int i = 0; i < input.Count; i++)
         {
-            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Index, Is.EqualTo(i));
             Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
             var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
             Assert.That(embedding.Count, Is.GreaterThan(0));
@@ -266,10 +266,10 @@ public class Sample_AIInference : SamplesBase<AIProjectsTestEnvironment>
         Assert.That(response, Is.Not.Null);
         Assert.That(response.Value, Is.InstanceOf<EmbeddingsResult>());
         Assert.That(response.Value.Id, Is.Not.Null.Or.Empty);
-        Assert.AreEqual(response.Value.Data.Count, input.Count);
+        Assert.That(response.Value.Data.Count, Is.EqualTo(input.Count));
         for (int i = 0; i < input.Count; i++)
         {
-            Assert.AreEqual(response.Value.Data[i].Index, i);
+            Assert.That(response.Value.Data[i].Index, Is.EqualTo(i));
             Assert.That(response.Value.Data[i].Embedding, Is.Not.Null.Or.Empty);
             var embedding = response.Value.Data[i].Embedding.ToObjectFromJson<List<float>>();
             Assert.That(embedding.Count, Is.GreaterThan(0));
