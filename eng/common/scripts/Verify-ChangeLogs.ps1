@@ -34,6 +34,8 @@ foreach($propertiesFile in $packageProperties) {
         continue
   }
 
+  Write-Host "Verifying changelog for $($PackageProp.Name)"
+
   $validChangeLog =  Confirm-ChangeLogEntry -ChangeLogLocation $PackageProp.ChangeLogPath -VersionString $PackageProp.Version -ForRelease $ForRelease
 
   if (-not $validChangeLog) {
