@@ -45,9 +45,7 @@ public abstract class RecordedTestBase : ClientTestBase
             (char)21, (char)22, (char)23, (char)24, (char)25, (char)26, (char)27, (char)28, (char)29, (char)30,
             (char)31, ':', '*', '?', '\\', '/'
     });
-    private static string EmptyGuid = Guid.Empty.ToString();
-    private static readonly object s_syncLock = new();
-    private static bool s_ranTestProxyValidation;
+    private static readonly string s_emptyGuid = Guid.Empty.ToString();
     private TestProxyProcess? _proxy;
     private DateTime _testStartTime;
 
@@ -134,8 +132,8 @@ public abstract class RecordedTestBase : ClientTestBase
     /// </summary>
     public virtual List<UriRegexSanitizer> UriRegexSanitizers { get; } = new()
         {
-            UriRegexSanitizer.CreateWithQueryParameter("skoid", EmptyGuid),
-            UriRegexSanitizer.CreateWithQueryParameter("sktid", EmptyGuid),
+            UriRegexSanitizer.CreateWithQueryParameter("skoid", s_emptyGuid),
+            UriRegexSanitizer.CreateWithQueryParameter("sktid", s_emptyGuid),
         };
 
     /// <summary>
