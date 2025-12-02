@@ -16,16 +16,16 @@ namespace Azure.Data.AppConfiguration
     /// Enables filtering of key-values. Syntax reference:
     /// https://aka.ms/azconfig/docs/restapisnapshots
     /// </summary>
-    public partial class KeyValueFilter : IJsonModel<KeyValueFilter>
+    public partial class ConfigurationSettingsFilter : IJsonModel<ConfigurationSettingsFilter>
     {
-        /// <summary> Initializes a new instance of <see cref="KeyValueFilter"/> for deserialization. </summary>
-        internal KeyValueFilter()
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSettingsFilter"/> for deserialization. </summary>
+        internal ConfigurationSettingsFilter()
         {
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<KeyValueFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfigurationSettingsFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -36,10 +36,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSettingsFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyValueFilter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationSettingsFilter)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("key"u8);
             writer.WriteStringValue(Key);
@@ -82,24 +82,24 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyValueFilter IJsonModel<KeyValueFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ConfigurationSettingsFilter IJsonModel<ConfigurationSettingsFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyValueFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ConfigurationSettingsFilter JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSettingsFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyValueFilter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationSettingsFilter)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyValueFilter(document.RootElement, options);
+            return DeserializeConfigurationSettingsFilter(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static KeyValueFilter DeserializeKeyValueFilter(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfigurationSettingsFilter DeserializeConfigurationSettingsFilter(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,47 +147,47 @@ namespace Azure.Data.AppConfiguration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyValueFilter(key, label, tags ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ConfigurationSettingsFilter(key, label, tags ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<KeyValueFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConfigurationSettingsFilter>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSettingsFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(KeyValueFilter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationSettingsFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyValueFilter IPersistableModel<KeyValueFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ConfigurationSettingsFilter IPersistableModel<ConfigurationSettingsFilter>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyValueFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ConfigurationSettingsFilter PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSettingsFilter>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeKeyValueFilter(document.RootElement, options);
+                        return DeserializeConfigurationSettingsFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyValueFilter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationSettingsFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<KeyValueFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfigurationSettingsFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

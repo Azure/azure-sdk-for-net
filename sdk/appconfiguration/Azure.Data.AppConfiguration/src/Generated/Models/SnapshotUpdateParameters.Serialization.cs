@@ -79,7 +79,7 @@ namespace Azure.Data.AppConfiguration
             {
                 return null;
             }
-            SnapshotStatus? status = default;
+            ConfigurationSnapshotStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -89,7 +89,7 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    status = new SnapshotStatus(prop.Value.GetString());
+                    status = new ConfigurationSnapshotStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

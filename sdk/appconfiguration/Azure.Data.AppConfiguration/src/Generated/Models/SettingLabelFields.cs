@@ -11,16 +11,16 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Label fields. </summary>
-    public readonly partial struct LabelFields : IEquatable<LabelFields>
+    public readonly partial struct SettingLabelFields : IEquatable<SettingLabelFields>
     {
         private readonly string _value;
         /// <summary> Name field. </summary>
         private const string NameValue = "name";
 
-        /// <summary> Initializes a new instance of <see cref="LabelFields"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SettingLabelFields"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public LabelFields(string value)
+        public SettingLabelFields(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -28,32 +28,32 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> Name field. </summary>
-        public static LabelFields Name { get; } = new LabelFields(NameValue);
+        public static SettingLabelFields Name { get; } = new SettingLabelFields(NameValue);
 
-        /// <summary> Determines if two <see cref="LabelFields"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="SettingLabelFields"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(LabelFields left, LabelFields right) => left.Equals(right);
+        public static bool operator ==(SettingLabelFields left, SettingLabelFields right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="LabelFields"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="SettingLabelFields"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(LabelFields left, LabelFields right) => !left.Equals(right);
+        public static bool operator !=(SettingLabelFields left, SettingLabelFields right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="LabelFields"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SettingLabelFields"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LabelFields(string value) => new LabelFields(value);
+        public static implicit operator SettingLabelFields(string value) => new SettingLabelFields(value);
 
-        /// <summary> Converts a string to a <see cref="LabelFields"/>. </summary>
+        /// <summary> Converts a string to a <see cref="SettingLabelFields"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator LabelFields?(string value) => value == null ? null : new LabelFields(value);
+        public static implicit operator SettingLabelFields?(string value) => value == null ? null : new SettingLabelFields(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is LabelFields other && Equals(other);
+        public override bool Equals(object obj) => obj is SettingLabelFields other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(LabelFields other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(SettingLabelFields other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

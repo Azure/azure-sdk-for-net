@@ -23,13 +23,13 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of <see cref="SnapshotUpdateParameters"/>. </summary>
         /// <param name="status"> The desired status of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotUpdateParameters(SnapshotStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotUpdateParameters(ConfigurationSnapshotStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The desired status of the snapshot. </summary>
-        public SnapshotStatus? Status { get; set; }
+        public ConfigurationSnapshotStatus? Status { get; set; }
     }
 }

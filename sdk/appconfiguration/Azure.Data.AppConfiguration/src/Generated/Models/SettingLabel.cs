@@ -10,27 +10,27 @@ using System.Collections.Generic;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Keys serve as identifiers for key-values and are used to store and retrieve corresponding values. </summary>
-    public partial class Key
+    /// <summary> Labels are used to group key-values. </summary>
+    public partial class SettingLabel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Key"/>. </summary>
-        internal Key()
+        /// <summary> Initializes a new instance of <see cref="SettingLabel"/>. </summary>
+        internal SettingLabel()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Key"/>. </summary>
-        /// <param name="name"> The name of the key. </param>
+        /// <summary> Initializes a new instance of <see cref="SettingLabel"/>. </summary>
+        /// <param name="name"> The name of the label. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Key(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SettingLabel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The name of the key. </summary>
+        /// <summary> The name of the label. </summary>
         public string Name { get; }
     }
 }

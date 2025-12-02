@@ -14,15 +14,15 @@ namespace Azure.Data.AppConfiguration
     /// Enables filtering of key-values. Syntax reference:
     /// https://aka.ms/azconfig/docs/restapisnapshots
     /// </summary>
-    public partial class KeyValueFilter
+    public partial class ConfigurationSettingsFilter
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="KeyValueFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSettingsFilter"/>. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public KeyValueFilter(string key)
+        public ConfigurationSettingsFilter(string key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -30,12 +30,12 @@ namespace Azure.Data.AppConfiguration
             Tags = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyValueFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSettingsFilter"/>. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <param name="label"> Filters key-values by their label field. </param>
         /// <param name="tags"> Filters key-values by their tags field. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyValueFilter(string key, string label, IList<string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationSettingsFilter(string key, string label, IList<string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Label = label;
