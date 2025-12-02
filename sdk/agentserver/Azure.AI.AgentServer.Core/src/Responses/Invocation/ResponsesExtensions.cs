@@ -56,7 +56,7 @@ public static class ResponsesExtensions
             createdAt: createdAt ?? DateTimeOffset.UtcNow,
             error: null,
             incompleteDetails: null,
-            output: output?.ToList(),
+            output: output?.ToList() ?? [],
             instructions: string.IsNullOrEmpty(request.Instructions) ? null : new BinaryData(request.Instructions),
             outputText: null,
             usage: usage,
