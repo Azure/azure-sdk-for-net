@@ -46,7 +46,10 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         public static CodeTransparencyOfflineKeys FromBinaryData(BinaryData json)
         {
-            return FromJsonDocument(JsonDocument.Parse(json.ToString()));
+            using (JsonDocument doc = JsonDocument.Parse(json.ToString()))
+            {
+                return FromJsonDocument(doc);
+            }
         }
 
         internal static CodeTransparencyOfflineKeys FromJsonDocument(JsonDocument jsonDocument)
