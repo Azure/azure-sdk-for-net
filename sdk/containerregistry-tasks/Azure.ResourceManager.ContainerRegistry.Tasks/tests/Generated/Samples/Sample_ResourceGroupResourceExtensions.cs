@@ -9,7 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
+using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Samples
 
             // invoke the operation
             string registryName = "myRegistry";
-            ContainerRegistryRunContent content = new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryTasksPlatformProperties(ContainerRegistryOS.Linux)
+            ContainerRegistryRunContent content = new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux)
             {
                 Architecture = ContainerRegistryOSArchitecture.Amd64,
             })
@@ -57,12 +57,12 @@ IsSecret = true,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
                 IsArchiveEnabled = true,
             };
-            ArmOperation<ContainerRegistryTasksRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
-            ContainerRegistryTasksRunResource result = lro.Value;
+            ArmOperation<ContainerRegistryRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
+            ContainerRegistryRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerRegistryTasksRunData resourceData = result.Data;
+            ContainerRegistryRunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -88,7 +88,7 @@ IsSecret = true,
 
             // invoke the operation
             string registryName = "myRegistry";
-            ContainerRegistryRunContent content = new ContainerRegistryEncodedTaskRunContent("c3RlcHM6Cnt7IGlmIFZhbHVlcy5lbnZpcm9ubWVudCA9PSAncHJvZCcgfX0KICAtIHJ1bjogcHJvZCBzZXR1cAp7eyBlbHNlIGlmIFZhbHVlcy5lbnZpcm9ubWVudCA9PSAnc3RhZ2luZycgfX0KICAtIHJ1bjogc3RhZ2luZyBzZXR1cAp7eyBlbHNlIH19CiAgLSBydW46IGRlZmF1bHQgc2V0dXAKe3sgZW5kIH19CgogIC0gcnVuOiBidWlsZCAtdCBGYW5jeVRoaW5nOnt7LlZhbHVlcy5lbnZpcm9ubWVudH19LXt7LlZhbHVlcy52ZXJzaW9ufX0gLgoKcHVzaDogWydGYW5jeVRoaW5nOnt7LlZhbHVlcy5lbnZpcm9ubWVudH19LXt7LlZhbHVlcy52ZXJzaW9ufX0nXQ==", new ContainerRegistryTasksPlatformProperties(ContainerRegistryOS.Linux))
+            ContainerRegistryRunContent content = new ContainerRegistryEncodedTaskRunContent("c3RlcHM6Cnt7IGlmIFZhbHVlcy5lbnZpcm9ubWVudCA9PSAncHJvZCcgfX0KICAtIHJ1bjogcHJvZCBzZXR1cAp7eyBlbHNlIGlmIFZhbHVlcy5lbnZpcm9ubWVudCA9PSAnc3RhZ2luZycgfX0KICAtIHJ1bjogc3RhZ2luZyBzZXR1cAp7eyBlbHNlIH19CiAgLSBydW46IGRlZmF1bHQgc2V0dXAKe3sgZW5kIH19CgogIC0gcnVuOiBidWlsZCAtdCBGYW5jeVRoaW5nOnt7LlZhbHVlcy5lbnZpcm9ubWVudH19LXt7LlZhbHVlcy52ZXJzaW9ufX0gLgoKcHVzaDogWydGYW5jeVRoaW5nOnt7LlZhbHVlcy5lbnZpcm9ubWVudH19LXt7LlZhbHVlcy52ZXJzaW9ufX0nXQ==", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux))
             {
                 EncodedValuesContent = "ZW52aXJvbm1lbnQ6IHByb2QKdmVyc2lvbjogMQ==",
                 Values = {new ContainerRegistryTaskOverridableValue("mytestargument", "mytestvalue")
@@ -100,12 +100,12 @@ IsSecret = true,
 }},
                 AgentCpu = 2,
             };
-            ArmOperation<ContainerRegistryTasksRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
-            ContainerRegistryTasksRunResource result = lro.Value;
+            ArmOperation<ContainerRegistryRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
+            ContainerRegistryRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerRegistryTasksRunData resourceData = result.Data;
+            ContainerRegistryRunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -131,7 +131,7 @@ IsSecret = true,
 
             // invoke the operation
             string registryName = "myRegistry";
-            ContainerRegistryRunContent content = new ContainerRegistryFileTaskRunContent("acb.yaml", new ContainerRegistryTasksPlatformProperties(ContainerRegistryOS.Linux))
+            ContainerRegistryRunContent content = new ContainerRegistryFileTaskRunContent("acb.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux))
             {
                 ValuesFilePath = "prod-values.yaml",
                 Values = {new ContainerRegistryTaskOverridableValue("mytestargument", "mytestvalue")
@@ -144,12 +144,12 @@ IsSecret = true,
                 AgentCpu = 2,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
             };
-            ArmOperation<ContainerRegistryTasksRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
-            ContainerRegistryTasksRunResource result = lro.Value;
+            ArmOperation<ContainerRegistryRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
+            ContainerRegistryRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerRegistryTasksRunData resourceData = result.Data;
+            ContainerRegistryRunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -177,7 +177,7 @@ IsSecret = true,
             string registryName = "myRegistry";
             ContainerRegistryRunContent content = new ContainerRegistryTaskRunContent(new ResourceIdentifier("myTask"))
             {
-                OverrideTaskStepProperties = new ContainerRegistryTasksOverrideTaskStepProperties
+                OverrideTaskStepProperties = new ContainerRegistryOverrideTaskStepProperties
                 {
                     File = "overriddenDockerfile",
                     Arguments = {new ContainerRegistryRunArgument("mytestargument", "mytestvalue")
@@ -198,12 +198,12 @@ IsSecret = true,
                     UpdateTriggerToken = "aGVsbG8gd29ybGQ=",
                 },
             };
-            ArmOperation<ContainerRegistryTasksRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
-            ContainerRegistryTasksRunResource result = lro.Value;
+            ArmOperation<ContainerRegistryRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
+            ContainerRegistryRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerRegistryTasksRunData resourceData = result.Data;
+            ContainerRegistryRunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -229,7 +229,7 @@ IsSecret = true,
 
             // invoke the operation
             string registryName = "myRegistry";
-            ContainerRegistryRunContent content = new ContainerRegistryFileTaskRunContent("acb.yaml", new ContainerRegistryTasksPlatformProperties(ContainerRegistryOS.Linux))
+            ContainerRegistryRunContent content = new ContainerRegistryFileTaskRunContent("acb.yaml", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux))
             {
                 Values = {new ContainerRegistryTaskOverridableValue("mytestargument", "mytestvalue")
 {
@@ -238,33 +238,33 @@ IsSecret = false,
 {
 IsSecret = true,
 }},
-                Credentials = new ContainerRegistryTasksCredentials
+                Credentials = new ContainerRegistryCredentials
                 {
                     SourceRegistryLoginMode = SourceRegistryLoginMode.Default,
                     CustomRegistries =
 {
 ["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistryTasksSecretObject
+UserName = new ContainerRegistrySecretObject
 {
 Value = "reg1",
-ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
+ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistryTasksSecretObject
+Password = new ContainerRegistrySecretObject
 {
 Value = "***",
-ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
+ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
 }
 },
                 },
             };
-            ArmOperation<ContainerRegistryTasksRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
-            ContainerRegistryTasksRunResource result = lro.Value;
+            ArmOperation<ContainerRegistryRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
+            ContainerRegistryRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerRegistryTasksRunData resourceData = result.Data;
+            ContainerRegistryRunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -290,7 +290,7 @@ ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
 
             // invoke the operation
             string registryName = "myRegistry";
-            ContainerRegistryRunContent content = new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryTasksPlatformProperties(ContainerRegistryOS.Linux)
+            ContainerRegistryRunContent content = new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux)
             {
                 Architecture = ContainerRegistryOSArchitecture.Amd64,
             })
@@ -308,47 +308,47 @@ IsSecret = true,
 }},
                 AgentCpu = 2,
                 SourceLocation = "https://myaccount.blob.core.windows.net/sascontainer/source.zip?sv=2015-04-05&st=2015-04-29T22%3A18%3A26Z&se=2015-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=Z%2FRHIX5Xcg0Mq2rqI3OlWTjEg2tYkboXr1P9ZUXDtkk%3D",
-                Credentials = new ContainerRegistryTasksCredentials
+                Credentials = new ContainerRegistryCredentials
                 {
                     SourceRegistryLoginMode = SourceRegistryLoginMode.Default,
                     CustomRegistries =
 {
 ["myregistry.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistryTasksSecretObject
+UserName = new ContainerRegistrySecretObject
 {
 Value = "reg1",
-ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
+ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistryTasksSecretObject
+Password = new ContainerRegistrySecretObject
 {
 Value = "***",
-ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
+ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
 },
 ["myregistry2.azurecr.io"] = new CustomRegistryCredentials
 {
-UserName = new ContainerRegistryTasksSecretObject
+UserName = new ContainerRegistrySecretObject
 {
 Value = "reg2",
-ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
+ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
-Password = new ContainerRegistryTasksSecretObject
+Password = new ContainerRegistrySecretObject
 {
 Value = "***",
-ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
+ObjectType = ContainerRegistrySecretObjectType.Opaque,
 },
 }
 },
                 },
                 IsArchiveEnabled = true,
             };
-            ArmOperation<ContainerRegistryTasksRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
-            ContainerRegistryTasksRunResource result = lro.Value;
+            ArmOperation<ContainerRegistryRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
+            ContainerRegistryRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerRegistryTasksRunData resourceData = result.Data;
+            ContainerRegistryRunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -374,7 +374,7 @@ ObjectType = ContainerRegistryTasksSecretObjectType.Opaque,
 
             // invoke the operation
             string registryName = "myRegistry";
-            ContainerRegistryRunContent content = new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryTasksPlatformProperties(ContainerRegistryOS.Linux)
+            ContainerRegistryRunContent content = new ContainerRegistryDockerBuildContent("DockerFile", new ContainerRegistryPlatformProperties(ContainerRegistryOS.Linux)
             {
                 Architecture = ContainerRegistryOSArchitecture.Amd64,
             })
@@ -394,12 +394,12 @@ IsSecret = true,
                 IsArchiveEnabled = true,
                 LogTemplate = "acr/tasks:{{.Run.OS}}",
             };
-            ArmOperation<ContainerRegistryTasksRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
-            ContainerRegistryTasksRunResource result = lro.Value;
+            ArmOperation<ContainerRegistryRunResource> lro = await resourceGroupResource.ScheduleRunAsync(WaitUntil.Completed, registryName, content);
+            ContainerRegistryRunResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ContainerRegistryTasksRunData resourceData = result.Data;
+            ContainerRegistryRunData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

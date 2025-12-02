@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryBaseImageTriggerUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryBaseImageTriggerUpdateContent>
     {
@@ -34,22 +35,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(BaseImageTriggerType))
+            if (Tasks.Optional.IsDefined(BaseImageTriggerType))
             {
                 writer.WritePropertyName("baseImageTriggerType"u8);
                 writer.WriteStringValue(BaseImageTriggerType.Value.ToString());
             }
-            if (Optional.IsDefined(UpdateTriggerEndpoint))
+            if (Tasks.Optional.IsDefined(UpdateTriggerEndpoint))
             {
                 writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
-            if (Optional.IsDefined(UpdateTriggerPayloadType))
+            if (Tasks.Optional.IsDefined(UpdateTriggerPayloadType))
             {
                 writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
-            if (Optional.IsDefined(Status))
+            if (Tasks.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -93,10 +94,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            ContainerRegistryTasksBaseImageTriggerType? baseImageTriggerType = default;
+            ContainerRegistryBaseImageTriggerType? baseImageTriggerType = default;
             string updateTriggerEndpoint = default;
-            ContainerRegistryTasksUpdateTriggerPayloadType? updateTriggerPayloadType = default;
-            ContainerRegistryTasksTriggerStatus? status = default;
+            ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    baseImageTriggerType = new ContainerRegistryTasksBaseImageTriggerType(property.Value.GetString());
+                    baseImageTriggerType = new ContainerRegistryBaseImageTriggerType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("updateTriggerEndpoint"u8))
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    updateTriggerPayloadType = new ContainerRegistryTasksUpdateTriggerPayloadType(property.Value.GetString());
+                    updateTriggerPayloadType = new ContainerRegistryUpdateTriggerPayloadType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -131,7 +132,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    status = new ContainerRegistryTasksTriggerStatus(property.Value.GetString());
+                    status = new ContainerRegistryTriggerStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

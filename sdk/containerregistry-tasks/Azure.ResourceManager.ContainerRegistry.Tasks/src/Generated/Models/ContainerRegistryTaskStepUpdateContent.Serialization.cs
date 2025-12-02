@@ -9,8 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     [PersistableModelProxy(typeof(UnknownTaskStepUpdateParameters))]
     public partial class ContainerRegistryTaskStepUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskStepUpdateContent>
@@ -36,12 +37,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StepType.ToString());
-            if (Optional.IsDefined(ContextPath))
+            if (Tasks.Optional.IsDefined(ContextPath))
             {
                 writer.WritePropertyName("contextPath"u8);
                 writer.WriteStringValue(ContextPath);
             }
-            if (Optional.IsDefined(ContextAccessToken))
+            if (Tasks.Optional.IsDefined(ContextAccessToken))
             {
                 writer.WritePropertyName("contextAccessToken"u8);
                 writer.WriteStringValue(ContextAccessToken);

@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class SourceCodeRepoProperties : IUtf8JsonSerializable, IJsonModel<SourceCodeRepoProperties>
     {
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             writer.WriteStringValue(SourceControlType.ToString());
             writer.WritePropertyName("repositoryUrl"u8);
             writer.WriteStringValue(RepositoryUri.AbsoluteUri);
-            if (Optional.IsDefined(Branch))
+            if (Tasks.Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(SourceControlAuthProperties))
+            if (Tasks.Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties, options);
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(RepositoryUri))
+                if (Tasks.Optional.IsDefined(RepositoryUri))
                 {
                     builder.Append("  repositoryUrl: ");
                     builder.AppendLine($"'{RepositoryUri.AbsoluteUri}'");
@@ -173,7 +174,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Branch))
+                if (Tasks.Optional.IsDefined(Branch))
                 {
                     builder.Append("  branch: ");
                     if (Branch.Contains(Environment.NewLine))
@@ -196,7 +197,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(SourceControlAuthProperties))
+                if (Tasks.Optional.IsDefined(SourceControlAuthProperties))
                 {
                     builder.Append("  sourceControlAuthProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SourceControlAuthProperties, options, 2, false, "  sourceControlAuthProperties: ");

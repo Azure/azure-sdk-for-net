@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class SourceCodeRepoUpdateContent : IUtf8JsonSerializable, IJsonModel<SourceCodeRepoUpdateContent>
     {
@@ -34,22 +35,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(SourceCodeRepoUpdateContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SourceControlType))
+            if (Tasks.Optional.IsDefined(SourceControlType))
             {
                 writer.WritePropertyName("sourceControlType"u8);
                 writer.WriteStringValue(SourceControlType.Value.ToString());
             }
-            if (Optional.IsDefined(RepositoryUri))
+            if (Tasks.Optional.IsDefined(RepositoryUri))
             {
                 writer.WritePropertyName("repositoryUrl"u8);
                 writer.WriteStringValue(RepositoryUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(Branch))
+            if (Tasks.Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (Optional.IsDefined(SourceControlAuthProperties))
+            if (Tasks.Optional.IsDefined(SourceControlAuthProperties))
             {
                 writer.WritePropertyName("sourceControlAuthProperties"u8);
                 writer.WriteObjectValue(SourceControlAuthProperties, options);

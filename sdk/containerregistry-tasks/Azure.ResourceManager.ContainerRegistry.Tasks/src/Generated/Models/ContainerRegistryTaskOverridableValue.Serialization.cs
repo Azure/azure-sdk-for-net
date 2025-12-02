@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTaskOverridableValue : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskOverridableValue>
     {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("value"u8);
             writer.WriteStringValue(Value);
-            if (Optional.IsDefined(IsSecret))
+            if (Tasks.Optional.IsDefined(IsSecret))
             {
                 writer.WritePropertyName("isSecret"u8);
                 writer.WriteBooleanValue(IsSecret.Value);
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Name))
+                if (Tasks.Optional.IsDefined(Name))
                 {
                     builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Value))
+                if (Tasks.Optional.IsDefined(Value))
                 {
                     builder.Append("  value: ");
                     if (Value.Contains(Environment.NewLine))
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(IsSecret))
+                if (Tasks.Optional.IsDefined(IsSecret))
                 {
                     builder.Append("  isSecret: ");
                     var boolValue = IsSecret.Value == true ? "true" : "false";

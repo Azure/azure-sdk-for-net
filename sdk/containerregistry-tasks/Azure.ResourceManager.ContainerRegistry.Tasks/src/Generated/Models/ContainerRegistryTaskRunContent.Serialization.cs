@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTaskRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskRunContent>
     {
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("taskId"u8);
             writer.WriteStringValue(TaskId);
-            if (Optional.IsDefined(OverrideTaskStepProperties))
+            if (Tasks.Optional.IsDefined(OverrideTaskStepProperties))
             {
                 writer.WritePropertyName("overrideTaskStepProperties"u8);
                 writer.WriteObjectValue(OverrideTaskStepProperties, options);
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             ResourceIdentifier taskId = default;
-            ContainerRegistryTasksOverrideTaskStepProperties overrideTaskStepProperties = default;
+            ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties = default;
             string type = default;
             bool? isArchiveEnabled = default;
             string agentPoolName = default;
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    overrideTaskStepProperties = ContainerRegistryTasksOverrideTaskStepProperties.DeserializeContainerRegistryTasksOverrideTaskStepProperties(property.Value, options);
+                    overrideTaskStepProperties = ContainerRegistryOverrideTaskStepProperties.DeserializeContainerRegistryOverrideTaskStepProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -148,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(TaskId))
+                if (Tasks.Optional.IsDefined(TaskId))
                 {
                     builder.Append("  taskId: ");
                     builder.AppendLine($"'{TaskId.ToString()}'");
@@ -163,7 +164,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(OverrideTaskStepProperties))
+                if (Tasks.Optional.IsDefined(OverrideTaskStepProperties))
                 {
                     builder.Append("  overrideTaskStepProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, OverrideTaskStepProperties, options, 2, false, "  overrideTaskStepProperties: ");
@@ -178,7 +179,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(RunRequestType))
+                if (Tasks.Optional.IsDefined(RunRequestType))
                 {
                     builder.Append("  type: ");
                     if (RunRequestType.Contains(Environment.NewLine))
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(IsArchiveEnabled))
+                if (Tasks.Optional.IsDefined(IsArchiveEnabled))
                 {
                     builder.Append("  isArchiveEnabled: ");
                     var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
@@ -217,7 +218,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(AgentPoolName))
+                if (Tasks.Optional.IsDefined(AgentPoolName))
                 {
                     builder.Append("  agentPoolName: ");
                     if (AgentPoolName.Contains(Environment.NewLine))
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(LogTemplate))
+                if (Tasks.Optional.IsDefined(LogTemplate))
                 {
                     builder.Append("  logTemplate: ");
                     if (LogTemplate.Contains(Environment.NewLine))

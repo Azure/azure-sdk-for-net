@@ -8,8 +8,9 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters for a task run request. </summary>
     public partial class ContainerRegistryTaskRunContent : ContainerRegistryRunContent
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         public ContainerRegistryTaskRunContent(ResourceIdentifier taskId)
         {
-            Argument.AssertNotNull(taskId, nameof(taskId));
+            Tasks.Argument.AssertNotNull(taskId, nameof(taskId));
 
             TaskId = taskId;
             RunRequestType = "TaskRunRequest";
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
         /// <param name="overrideTaskStepProperties"> Set of overridable parameters that can be passed when running a Task. </param>
-        internal ContainerRegistryTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier taskId, ContainerRegistryTasksOverrideTaskStepProperties overrideTaskStepProperties) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData)
+        internal ContainerRegistryTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier taskId, ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData)
         {
             TaskId = taskId;
             OverrideTaskStepProperties = overrideTaskStepProperties;
@@ -50,6 +51,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public ResourceIdentifier TaskId { get; set; }
         /// <summary> Set of overridable parameters that can be passed when running a Task. </summary>
         [WirePath("overrideTaskStepProperties")]
-        public ContainerRegistryTasksOverrideTaskStepProperties OverrideTaskStepProperties { get; set; }
+        public ContainerRegistryOverrideTaskStepProperties OverrideTaskStepProperties { get; set; }
     }
 }

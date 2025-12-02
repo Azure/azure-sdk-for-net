@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class SourceCodeRepoAuthInfo : IUtf8JsonSerializable, IJsonModel<SourceCodeRepoAuthInfo>
     {
@@ -39,17 +40,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             writer.WriteStringValue(TokenType.ToString());
             writer.WritePropertyName("token"u8);
             writer.WriteStringValue(Token);
-            if (Optional.IsDefined(RefreshToken))
+            if (Tasks.Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Optional.IsDefined(Scope))
+            if (Tasks.Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (Optional.IsDefined(ExpireInSeconds))
+            if (Tasks.Optional.IsDefined(ExpireInSeconds))
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpireInSeconds.Value);
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Token))
+                if (Tasks.Optional.IsDefined(Token))
                 {
                     builder.Append("  token: ");
                     if (Token.Contains(Environment.NewLine))
@@ -198,7 +199,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(RefreshToken))
+                if (Tasks.Optional.IsDefined(RefreshToken))
                 {
                     builder.Append("  refreshToken: ");
                     if (RefreshToken.Contains(Environment.NewLine))
@@ -221,7 +222,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Scope))
+                if (Tasks.Optional.IsDefined(Scope))
                 {
                     builder.Append("  scope: ");
                     if (Scope.Contains(Environment.NewLine))
@@ -244,7 +245,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(ExpireInSeconds))
+                if (Tasks.Optional.IsDefined(ExpireInSeconds))
                 {
                     builder.Append("  expiresIn: ");
                     builder.AppendLine($"{ExpireInSeconds.Value}");

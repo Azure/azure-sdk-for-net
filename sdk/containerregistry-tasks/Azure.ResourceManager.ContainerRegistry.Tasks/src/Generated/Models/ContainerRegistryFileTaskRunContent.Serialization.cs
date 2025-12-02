@@ -12,8 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryFileTaskRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryFileTaskRunContent>
     {
@@ -39,12 +40,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("taskFilePath"u8);
             writer.WriteStringValue(TaskFilePath);
-            if (Optional.IsDefined(ValuesFilePath))
+            if (Tasks.Optional.IsDefined(ValuesFilePath))
             {
                 writer.WritePropertyName("valuesFilePath"u8);
                 writer.WriteStringValue(ValuesFilePath);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Tasks.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -54,24 +55,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TimeoutInSeconds))
+            if (Tasks.Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
             writer.WritePropertyName("platform"u8);
             writer.WriteObjectValue(Platform, options);
-            if (Optional.IsDefined(AgentConfiguration))
+            if (Tasks.Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
                 writer.WriteObjectValue(AgentConfiguration, options);
             }
-            if (Optional.IsDefined(SourceLocation))
+            if (Tasks.Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
                 writer.WriteStringValue(SourceLocation);
             }
-            if (Optional.IsDefined(Credentials))
+            if (Tasks.Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
                 writer.WriteObjectValue(Credentials, options);
@@ -102,10 +103,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             string valuesFilePath = default;
             IList<ContainerRegistryTaskOverridableValue> values = default;
             int? timeout = default;
-            ContainerRegistryTasksPlatformProperties platform = default;
-            ContainerRegistryTasksAgentProperties agentConfiguration = default;
+            ContainerRegistryPlatformProperties platform = default;
+            ContainerRegistryAgentProperties agentConfiguration = default;
             string sourceLocation = default;
-            ContainerRegistryTasksCredentials credentials = default;
+            ContainerRegistryCredentials credentials = default;
             string type = default;
             bool? isArchiveEnabled = default;
             string agentPoolName = default;
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 if (property.NameEquals("platform"u8))
                 {
-                    platform = ContainerRegistryTasksPlatformProperties.DeserializeContainerRegistryTasksPlatformProperties(property.Value, options);
+                    platform = ContainerRegistryPlatformProperties.DeserializeContainerRegistryPlatformProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("agentConfiguration"u8))
@@ -158,7 +159,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    agentConfiguration = ContainerRegistryTasksAgentProperties.DeserializeContainerRegistryTasksAgentProperties(property.Value, options);
+                    agentConfiguration = ContainerRegistryAgentProperties.DeserializeContainerRegistryAgentProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceLocation"u8))
@@ -172,7 +173,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    credentials = ContainerRegistryTasksCredentials.DeserializeContainerRegistryTasksCredentials(property.Value, options);
+                    credentials = ContainerRegistryCredentials.DeserializeContainerRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 serializedAdditionalRawData,
                 taskFilePath,
                 valuesFilePath,
-                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
+                values ?? new Tasks.ChangeTrackingList<ContainerRegistryTaskOverridableValue>(),
                 timeout,
                 platform,
                 agentConfiguration,
@@ -240,7 +241,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(TaskFilePath))
+                if (Tasks.Optional.IsDefined(TaskFilePath))
                 {
                     builder.Append("  taskFilePath: ");
                     if (TaskFilePath.Contains(Environment.NewLine))
@@ -263,7 +264,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(ValuesFilePath))
+                if (Tasks.Optional.IsDefined(ValuesFilePath))
                 {
                     builder.Append("  valuesFilePath: ");
                     if (ValuesFilePath.Contains(Environment.NewLine))
@@ -286,7 +287,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(Values))
+                if (Tasks.Optional.IsCollectionDefined(Values))
                 {
                     if (Values.Any())
                     {
@@ -309,7 +310,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(TimeoutInSeconds))
+                if (Tasks.Optional.IsDefined(TimeoutInSeconds))
                 {
                     builder.Append("  timeout: ");
                     builder.AppendLine($"{TimeoutInSeconds.Value}");
@@ -324,7 +325,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Platform))
+                if (Tasks.Optional.IsDefined(Platform))
                 {
                     builder.Append("  platform: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Platform, options, 2, false, "  platform: ");
@@ -342,7 +343,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(AgentConfiguration))
+                if (Tasks.Optional.IsDefined(AgentConfiguration))
                 {
                     builder.Append("  agentConfiguration: ");
                     BicepSerializationHelpers.AppendChildObject(builder, AgentConfiguration, options, 2, false, "  agentConfiguration: ");
@@ -357,7 +358,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(SourceLocation))
+                if (Tasks.Optional.IsDefined(SourceLocation))
                 {
                     builder.Append("  sourceLocation: ");
                     if (SourceLocation.Contains(Environment.NewLine))
@@ -380,7 +381,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Credentials))
+                if (Tasks.Optional.IsDefined(Credentials))
                 {
                     builder.Append("  credentials: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Credentials, options, 2, false, "  credentials: ");
@@ -395,7 +396,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(RunRequestType))
+                if (Tasks.Optional.IsDefined(RunRequestType))
                 {
                     builder.Append("  type: ");
                     if (RunRequestType.Contains(Environment.NewLine))
@@ -418,7 +419,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(IsArchiveEnabled))
+                if (Tasks.Optional.IsDefined(IsArchiveEnabled))
                 {
                     builder.Append("  isArchiveEnabled: ");
                     var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
@@ -434,7 +435,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(AgentPoolName))
+                if (Tasks.Optional.IsDefined(AgentPoolName))
                 {
                     builder.Append("  agentPoolName: ");
                     if (AgentPoolName.Contains(Environment.NewLine))
@@ -457,7 +458,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(LogTemplate))
+                if (Tasks.Optional.IsDefined(LogTemplate))
                 {
                     builder.Append("  logTemplate: ");
                     if (LogTemplate.Contains(Environment.NewLine))

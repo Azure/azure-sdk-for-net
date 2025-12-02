@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters for a quick task run request. </summary>
     public partial class ContainerRegistryEncodedTaskRunContent : ContainerRegistryRunContent
@@ -17,7 +18,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="encodedTaskContent"> Base64 encoded value of the template/definition file content. </param>
         /// <param name="platform"> The platform properties against which the run has to happen. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="encodedTaskContent"/> or <paramref name="platform"/> is null. </exception>
-        public ContainerRegistryEncodedTaskRunContent(string encodedTaskContent, ContainerRegistryTasksPlatformProperties platform)
+        public ContainerRegistryEncodedTaskRunContent(string encodedTaskContent, ContainerRegistryPlatformProperties platform)
         {
             Argument.AssertNotNull(encodedTaskContent, nameof(encodedTaskContent));
             Argument.AssertNotNull(platform, nameof(platform));
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        internal ContainerRegistryEncodedTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryTasksPlatformProperties platform, ContainerRegistryTasksAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryTasksCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData)
+        internal ContainerRegistryEncodedTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData, string encodedTaskContent, string encodedValuesContent, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData)
         {
             EncodedTaskContent = encodedTaskContent;
             EncodedValuesContent = encodedValuesContent;
@@ -77,9 +78,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public int? TimeoutInSeconds { get; set; }
         /// <summary> The platform properties against which the run has to happen. </summary>
         [WirePath("platform")]
-        public ContainerRegistryTasksPlatformProperties Platform { get; set; }
+        public ContainerRegistryPlatformProperties Platform { get; set; }
         /// <summary> The machine configuration of the run agent. </summary>
-        internal ContainerRegistryTasksAgentProperties AgentConfiguration { get; set; }
+        internal ContainerRegistryAgentProperties AgentConfiguration { get; set; }
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
         [WirePath("agentConfiguration.cpu")]
         public int? AgentCpu
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             set
             {
                 if (AgentConfiguration is null)
-                    AgentConfiguration = new ContainerRegistryTasksAgentProperties();
+                    AgentConfiguration = new ContainerRegistryAgentProperties();
                 AgentConfiguration.Cpu = value;
             }
         }
@@ -101,6 +102,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public string SourceLocation { get; set; }
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
         [WirePath("credentials")]
-        public ContainerRegistryTasksCredentials Credentials { get; set; }
+        public ContainerRegistryCredentials Credentials { get; set; }
     }
 }

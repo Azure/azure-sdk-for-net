@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties for updating base image dependency trigger. </summary>
     public partial class ContainerRegistryBaseImageTriggerUpdateContent
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryBaseImageTriggerUpdateContent(ContainerRegistryTasksBaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, ContainerRegistryTasksUpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTasksTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryBaseImageTriggerUpdateContent(ContainerRegistryBaseImageTriggerType? baseImageTriggerType, string updateTriggerEndpoint, ContainerRegistryUpdateTriggerPayloadType? updateTriggerPayloadType, ContainerRegistryTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BaseImageTriggerType = baseImageTriggerType;
             UpdateTriggerEndpoint = updateTriggerEndpoint;
@@ -79,16 +80,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> The type of the auto trigger for base image dependency updates. </summary>
         [WirePath("baseImageTriggerType")]
-        public ContainerRegistryTasksBaseImageTriggerType? BaseImageTriggerType { get; set; }
+        public ContainerRegistryBaseImageTriggerType? BaseImageTriggerType { get; set; }
         /// <summary> The endpoint URL for receiving update triggers. </summary>
         [WirePath("updateTriggerEndpoint")]
         public string UpdateTriggerEndpoint { get; set; }
         /// <summary> Type of Payload body for Base image update triggers. </summary>
         [WirePath("updateTriggerPayloadType")]
-        public ContainerRegistryTasksUpdateTriggerPayloadType? UpdateTriggerPayloadType { get; set; }
+        public ContainerRegistryUpdateTriggerPayloadType? UpdateTriggerPayloadType { get; set; }
         /// <summary> The current status of trigger. </summary>
         [WirePath("status")]
-        public ContainerRegistryTasksTriggerStatus? Status { get; set; }
+        public ContainerRegistryTriggerStatus? Status { get; set; }
         /// <summary> The name of the trigger. </summary>
         [WirePath("name")]
         public string Name { get; }

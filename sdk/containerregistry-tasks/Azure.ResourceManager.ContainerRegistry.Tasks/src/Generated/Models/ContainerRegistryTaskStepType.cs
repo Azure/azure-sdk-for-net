@@ -8,10 +8,10 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The type of the step. </summary>
-    internal readonly partial struct ContainerRegistryTaskStepType : IEquatable<ContainerRegistryTaskStepType>
+    public readonly partial struct ContainerRegistryTaskStepType : IEquatable<ContainerRegistryTaskStepType>
     {
         private readonly string _value;
 

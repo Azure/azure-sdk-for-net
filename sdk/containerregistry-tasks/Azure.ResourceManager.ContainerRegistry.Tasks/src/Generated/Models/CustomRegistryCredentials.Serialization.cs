@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class CustomRegistryCredentials : IUtf8JsonSerializable, IJsonModel<CustomRegistryCredentials>
     {
@@ -35,17 +36,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(UserName))
+            if (Tasks.Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteObjectValue(UserName, options);
             }
-            if (Optional.IsDefined(Password))
+            if (Tasks.Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteObjectValue(Password, options);
             }
-            if (Optional.IsDefined(Identity))
+            if (Tasks.Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 writer.WriteStringValue(Identity);
@@ -87,8 +88,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             {
                 return null;
             }
-            ContainerRegistryTasksSecretObject userName = default;
-            ContainerRegistryTasksSecretObject password = default;
+            ContainerRegistrySecretObject userName = default;
+            ContainerRegistrySecretObject password = default;
             string identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    userName = ContainerRegistryTasksSecretObject.DeserializeContainerRegistryTasksSecretObject(property.Value, options);
+                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    password = ContainerRegistryTasksSecretObject.DeserializeContainerRegistryTasksSecretObject(property.Value, options);
+                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(UserName))
+                if (Tasks.Optional.IsDefined(UserName))
                 {
                     builder.Append("  userName: ");
                     BicepSerializationHelpers.AppendChildObject(builder, UserName, options, 2, false, "  userName: ");
@@ -160,7 +161,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Password))
+                if (Tasks.Optional.IsDefined(Password))
                 {
                     builder.Append("  password: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Password, options, 2, false, "  password: ");
@@ -175,7 +176,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(Identity))
+                if (Tasks.Optional.IsDefined(Identity))
                 {
                     builder.Append("  identity: ");
                     if (Identity.Contains(Environment.NewLine))

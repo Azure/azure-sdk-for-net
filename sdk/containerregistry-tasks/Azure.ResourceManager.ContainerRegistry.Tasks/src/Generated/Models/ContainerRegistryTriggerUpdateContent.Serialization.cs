@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTriggerUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTriggerUpdateContent>
     {
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(ContainerRegistryTriggerUpdateContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsCollectionDefined(TimerTriggers))
+            if (Tasks.Optional.IsCollectionDefined(TimerTriggers))
             {
                 writer.WritePropertyName("timerTriggers"u8);
                 writer.WriteStartArray();
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(SourceTriggers))
+            if (Tasks.Optional.IsCollectionDefined(SourceTriggers))
             {
                 writer.WritePropertyName("sourceTriggers"u8);
                 writer.WriteStartArray();
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BaseImageTrigger))
+            if (Tasks.Optional.IsDefined(BaseImageTrigger))
             {
                 writer.WritePropertyName("baseImageTrigger"u8);
                 writer.WriteObjectValue(BaseImageTrigger, options);
@@ -146,7 +147,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerRegistryTriggerUpdateContent(timerTriggers ?? new ChangeTrackingList<ContainerRegistryTimerTriggerUpdateContent>(), sourceTriggers ?? new ChangeTrackingList<ContainerRegistrySourceTriggerUpdateContent>(), baseImageTrigger, serializedAdditionalRawData);
+            return new ContainerRegistryTriggerUpdateContent(timerTriggers ?? new Tasks.ChangeTrackingList<ContainerRegistryTimerTriggerUpdateContent>(), sourceTriggers ?? new Tasks.ChangeTrackingList<ContainerRegistrySourceTriggerUpdateContent>(), baseImageTrigger, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryTriggerUpdateContent>.Write(ModelReaderWriterOptions options)

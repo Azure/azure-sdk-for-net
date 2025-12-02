@@ -10,7 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
+using Azure.ResourceManager.ContainerRegistry.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
 {
@@ -45,14 +45,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ContainerRegistryTasksAgentPoolResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerRegistryAgentPoolResources in the ResourceGroupResource. </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ContainerRegistryTasksAgentPoolResources and their operations over a ContainerRegistryTasksAgentPoolResource. </returns>
-        public virtual ContainerRegistryTasksAgentPoolCollection GetContainerRegistryTasksAgentPools(string registryName)
+        /// <returns> An object representing collection of ContainerRegistryAgentPoolResources and their operations over a ContainerRegistryAgentPoolResource. </returns>
+        public virtual ContainerRegistryAgentPoolCollection GetContainerRegistryAgentPools(string registryName)
         {
-            return new ContainerRegistryTasksAgentPoolCollection(Client, Id, registryName);
+            return new ContainerRegistryAgentPoolCollection(Client, Id, registryName);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksAgentPoolResource"/></description>
+        /// <description><see cref="ContainerRegistryAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerRegistryTasksAgentPoolResource>> GetContainerRegistryTasksAgentPoolAsync(string registryName, string agentPoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryAgentPoolResource>> GetContainerRegistryAgentPoolAsync(string registryName, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerRegistryTasksAgentPools(registryName).GetAsync(agentPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryAgentPools(registryName).GetAsync(agentPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksAgentPoolResource"/></description>
+        /// <description><see cref="ContainerRegistryAgentPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,19 +114,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="agentPoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerRegistryTasksAgentPoolResource> GetContainerRegistryTasksAgentPool(string registryName, string agentPoolName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryAgentPoolResource> GetContainerRegistryAgentPool(string registryName, string agentPoolName, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistryTasksAgentPools(registryName).Get(agentPoolName, cancellationToken);
+            return GetContainerRegistryAgentPools(registryName).Get(agentPoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerRegistryTasksRunResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerRegistryRunResources in the ResourceGroupResource. </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ContainerRegistryTasksRunResources and their operations over a ContainerRegistryTasksRunResource. </returns>
-        public virtual ContainerRegistryTasksRunCollection GetContainerRegistryTasksRuns(string registryName)
+        /// <returns> An object representing collection of ContainerRegistryRunResources and their operations over a ContainerRegistryRunResource. </returns>
+        public virtual ContainerRegistryRunCollection GetContainerRegistryRuns(string registryName)
         {
-            return new ContainerRegistryTasksRunCollection(Client, Id, registryName);
+            return new ContainerRegistryRunCollection(Client, Id, registryName);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksRunResource"/></description>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -156,9 +156,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerRegistryTasksRunResource>> GetContainerRegistryTasksRunAsync(string registryName, string runId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryRunResource>> GetContainerRegistryRunAsync(string registryName, string runId, CancellationToken cancellationToken = default)
         {
-            return await GetContainerRegistryTasksRuns(registryName).GetAsync(runId, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryRuns(registryName).GetAsync(runId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksRunResource"/></description>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,19 +188,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerRegistryTasksRunResource> GetContainerRegistryTasksRun(string registryName, string runId, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryRunResource> GetContainerRegistryRun(string registryName, string runId, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistryTasksRuns(registryName).Get(runId, cancellationToken);
+            return GetContainerRegistryRuns(registryName).Get(runId, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerRegistryTasksTaskRunResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerRegistryTaskRunResources in the ResourceGroupResource. </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ContainerRegistryTasksTaskRunResources and their operations over a ContainerRegistryTasksTaskRunResource. </returns>
-        public virtual ContainerRegistryTasksTaskRunCollection GetContainerRegistryTasksTaskRuns(string registryName)
+        /// <returns> An object representing collection of ContainerRegistryTaskRunResources and their operations over a ContainerRegistryTaskRunResource. </returns>
+        public virtual ContainerRegistryTaskRunCollection GetContainerRegistryTaskRuns(string registryName)
         {
-            return new ContainerRegistryTasksTaskRunCollection(Client, Id, registryName);
+            return new ContainerRegistryTaskRunCollection(Client, Id, registryName);
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksTaskRunResource"/></description>
+        /// <description><see cref="ContainerRegistryTaskRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,9 +230,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="taskRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerRegistryTasksTaskRunResource>> GetContainerRegistryTasksTaskRunAsync(string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryTaskRunResource>> GetContainerRegistryTaskRunAsync(string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerRegistryTasksTaskRuns(registryName).GetAsync(taskRunName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryTaskRuns(registryName).GetAsync(taskRunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksTaskRunResource"/></description>
+        /// <description><see cref="ContainerRegistryTaskRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -262,19 +262,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="taskRunName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="taskRunName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerRegistryTasksTaskRunResource> GetContainerRegistryTasksTaskRun(string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryTaskRunResource> GetContainerRegistryTaskRun(string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistryTasksTaskRuns(registryName).Get(taskRunName, cancellationToken);
+            return GetContainerRegistryTaskRuns(registryName).Get(taskRunName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerRegistryTasksTaskResources in the ResourceGroupResource. </summary>
+        /// <summary> Gets a collection of ContainerRegistryTaskResources in the ResourceGroupResource. </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> An object representing collection of ContainerRegistryTasksTaskResources and their operations over a ContainerRegistryTasksTaskResource. </returns>
-        public virtual ContainerRegistryTasksTaskCollection GetContainerRegistryTasksTasks(string registryName)
+        /// <returns> An object representing collection of ContainerRegistryTaskResources and their operations over a ContainerRegistryTaskResource. </returns>
+        public virtual ContainerRegistryTaskCollection GetContainerRegistryTasks(string registryName)
         {
-            return new ContainerRegistryTasksTaskCollection(Client, Id, registryName);
+            return new ContainerRegistryTaskCollection(Client, Id, registryName);
         }
 
         /// <summary>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksTaskResource"/></description>
+        /// <description><see cref="ContainerRegistryTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,9 +304,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerRegistryTasksTaskResource>> GetContainerRegistryTasksTaskAsync(string registryName, string taskName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerRegistryTaskResource>> GetContainerRegistryTaskAsync(string registryName, string taskName, CancellationToken cancellationToken = default)
         {
-            return await GetContainerRegistryTasksTasks(registryName).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerRegistryTasks(registryName).GetAsync(taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryTasksTaskResource"/></description>
+        /// <description><see cref="ContainerRegistryTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -336,9 +336,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="taskName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> or <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerRegistryTasksTaskResource> GetContainerRegistryTasksTask(string registryName, string taskName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerRegistryTaskResource> GetContainerRegistryTask(string registryName, string taskName, CancellationToken cancellationToken = default)
         {
-            return GetContainerRegistryTasksTasks(registryName).Get(taskName, cancellationToken);
+            return GetContainerRegistryTasks(registryName).Get(taskName, cancellationToken);
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<ContainerRegistryTasksRunResource>> ScheduleRunAsync(WaitUntil waitUntil, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ContainerRegistryRunResource>> ScheduleRunAsync(WaitUntil waitUntil, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
             try
             {
                 var response = await SchedulesRestClient.ScheduleRunAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new TasksArmOperation<ContainerRegistryTasksRunResource>(new ContainerRegistryTasksRunOperationSource(Client), SchedulesClientDiagnostics, Pipeline, SchedulesRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new TasksArmOperation<ContainerRegistryRunResource>(new ContainerRegistryRunOperationSource(Client), SchedulesClientDiagnostics, Pipeline, SchedulesRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<ContainerRegistryTasksRunResource> ScheduleRun(WaitUntil waitUntil, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ContainerRegistryRunResource> ScheduleRun(WaitUntil waitUntil, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(content, nameof(content));
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Mocking
             try
             {
                 var response = SchedulesRestClient.ScheduleRun(Id.SubscriptionId, Id.ResourceGroupName, registryName, content, cancellationToken);
-                var operation = new TasksArmOperation<ContainerRegistryTasksRunResource>(new ContainerRegistryTasksRunOperationSource(Client), SchedulesClientDiagnostics, Pipeline, SchedulesRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, content).Request, response, OperationFinalStateVia.Location);
+                var operation = new TasksArmOperation<ContainerRegistryRunResource>(new ContainerRegistryRunOperationSource(Client), SchedulesClientDiagnostics, Pipeline, SchedulesRestClient.CreateScheduleRunRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

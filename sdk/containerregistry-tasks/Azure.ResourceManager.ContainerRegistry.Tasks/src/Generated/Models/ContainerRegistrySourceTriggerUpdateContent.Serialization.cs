@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistrySourceTriggerUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistrySourceTriggerUpdateContent>
     {
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(SourceRepository))
+            if (Tasks.Optional.IsDefined(SourceRepository))
             {
                 writer.WritePropertyName("sourceRepository"u8);
                 writer.WriteObjectValue(SourceRepository, options);
             }
-            if (Optional.IsCollectionDefined(SourceTriggerEvents))
+            if (Tasks.Optional.IsCollectionDefined(SourceTriggerEvents))
             {
                 writer.WritePropertyName("sourceTriggerEvents"u8);
                 writer.WriteStartArray();
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Status))
+            if (Tasks.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -94,8 +95,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             SourceCodeRepoUpdateContent sourceRepository = default;
-            IList<ContainerRegistryTasksSourceTriggerEvent> sourceTriggerEvents = default;
-            ContainerRegistryTasksTriggerStatus? status = default;
+            IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -116,10 +117,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<ContainerRegistryTasksSourceTriggerEvent> array = new List<ContainerRegistryTasksSourceTriggerEvent>();
+                    List<ContainerRegistrySourceTriggerEvent> array = new List<ContainerRegistrySourceTriggerEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new ContainerRegistryTasksSourceTriggerEvent(item.GetString()));
+                        array.Add(new ContainerRegistrySourceTriggerEvent(item.GetString()));
                     }
                     sourceTriggerEvents = array;
                     continue;
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    status = new ContainerRegistryTasksTriggerStatus(property.Value.GetString());
+                    status = new ContainerRegistryTriggerStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistryTasksSourceTriggerEvent>(), status, name, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents ?? new Tasks.ChangeTrackingList<ContainerRegistrySourceTriggerEvent>(), status, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTriggerUpdateContent>.Write(ModelReaderWriterOptions options)

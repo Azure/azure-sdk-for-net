@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryFileTaskStepUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryFileTaskStepUpdateContent>
     {
@@ -35,17 +36,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(TaskFilePath))
+            if (Tasks.Optional.IsDefined(TaskFilePath))
             {
                 writer.WritePropertyName("taskFilePath"u8);
                 writer.WriteStringValue(TaskFilePath);
             }
-            if (Optional.IsDefined(ValuesFilePath))
+            if (Tasks.Optional.IsDefined(ValuesFilePath))
             {
                 writer.WritePropertyName("valuesFilePath"u8);
                 writer.WriteStringValue(ValuesFilePath);
             }
-            if (Optional.IsCollectionDefined(Values))
+            if (Tasks.Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -139,7 +140,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 serializedAdditionalRawData,
                 taskFilePath,
                 valuesFilePath,
-                values ?? new ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
+                values ?? new Tasks.ChangeTrackingList<ContainerRegistryTaskOverridableValue>());
         }
 
         BinaryData IPersistableModel<ContainerRegistryFileTaskStepUpdateContent>.Write(ModelReaderWriterOptions options)

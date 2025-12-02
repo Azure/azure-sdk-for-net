@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Describes the credential parameters for accessing the source registry. </summary>
-    internal partial class SourceRegistryCredentials
+    public partial class SourceRegistryCredentials
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

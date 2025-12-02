@@ -12,14 +12,15 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    internal partial class UnknownTaskStepProperties : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTasksTaskStepProperties>
+    internal partial class UnknownTaskStepProperties : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTaskStepProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTasksTaskStepProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryTaskStepProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ContainerRegistryTasksTaskStepProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerRegistryTaskStepProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,25 +31,25 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTasksTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTasksTaskStepProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        ContainerRegistryTasksTaskStepProperties IJsonModel<ContainerRegistryTasksTaskStepProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerRegistryTaskStepProperties IJsonModel<ContainerRegistryTaskStepProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTasksTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTasksTaskStepProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContainerRegistryTasksTaskStepProperties(document.RootElement, options);
+            return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
         }
 
         internal static UnknownTaskStepProperties DeserializeUnknownTaskStepProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             ContainerRegistryTaskStepType type = "Unknown";
-            IReadOnlyList<ContainerRegistryTasksBaseImageDependency> baseImageDependencies = default;
+            IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies = default;
             string contextPath = default;
             string contextAccessToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -78,10 +79,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    List<ContainerRegistryTasksBaseImageDependency> array = new List<ContainerRegistryTasksBaseImageDependency>();
+                    List<ContainerRegistryBaseImageDependency> array = new List<ContainerRegistryBaseImageDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryTasksBaseImageDependency.DeserializeContainerRegistryTasksBaseImageDependency(item, options));
+                        array.Add(ContainerRegistryBaseImageDependency.DeserializeContainerRegistryBaseImageDependency(item, options));
                     }
                     baseImageDependencies = array;
                     continue;
@@ -102,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownTaskStepProperties(type, baseImageDependencies ?? new ChangeTrackingList<ContainerRegistryTasksBaseImageDependency>(), contextPath, contextAccessToken, serializedAdditionalRawData);
+            return new UnknownTaskStepProperties(type, baseImageDependencies ?? new Tasks.ChangeTrackingList<ContainerRegistryBaseImageDependency>(), contextPath, contextAccessToken, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -136,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(BaseImageDependencies))
+                if (Tasks.Optional.IsCollectionDefined(BaseImageDependencies))
                 {
                     if (BaseImageDependencies.Any())
                     {
@@ -159,7 +160,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(ContextPath))
+                if (Tasks.Optional.IsDefined(ContextPath))
                 {
                     builder.Append("  contextPath: ");
                     if (ContextPath.Contains(Environment.NewLine))
@@ -182,7 +183,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(ContextAccessToken))
+                if (Tasks.Optional.IsDefined(ContextAccessToken))
                 {
                     builder.Append("  contextAccessToken: ");
                     if (ContextAccessToken.Contains(Environment.NewLine))
@@ -201,9 +202,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ContainerRegistryTasksTaskStepProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerRegistryTaskStepProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTasksTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -212,26 +213,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTasksTaskStepProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContainerRegistryTasksTaskStepProperties IPersistableModel<ContainerRegistryTasksTaskStepProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerRegistryTaskStepProperties IPersistableModel<ContainerRegistryTaskStepProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTasksTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTaskStepProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContainerRegistryTasksTaskStepProperties(document.RootElement, options);
+                        return DeserializeContainerRegistryTaskStepProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTasksTaskStepProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTaskStepProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContainerRegistryTasksTaskStepProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerRegistryTaskStepProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

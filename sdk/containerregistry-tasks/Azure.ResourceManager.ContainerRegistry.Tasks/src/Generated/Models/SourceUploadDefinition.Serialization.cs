@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class SourceUploadDefinition : IUtf8JsonSerializable, IJsonModel<SourceUploadDefinition>
     {
@@ -35,12 +36,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(SourceUploadDefinition)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(UploadUri))
+            if (Tasks.Optional.IsDefined(UploadUri))
             {
                 writer.WritePropertyName("uploadUrl"u8);
                 writer.WriteStringValue(UploadUri.AbsoluteUri);
             }
-            if (Optional.IsDefined(RelativePath))
+            if (Tasks.Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
@@ -130,7 +131,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(UploadUri))
+                if (Tasks.Optional.IsDefined(UploadUri))
                 {
                     builder.Append("  uploadUrl: ");
                     builder.AppendLine($"'{UploadUri.AbsoluteUri}'");
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(RelativePath))
+                if (Tasks.Optional.IsDefined(RelativePath))
                 {
                     builder.Append("  relativePath: ");
                     if (RelativePath.Contains(Environment.NewLine))

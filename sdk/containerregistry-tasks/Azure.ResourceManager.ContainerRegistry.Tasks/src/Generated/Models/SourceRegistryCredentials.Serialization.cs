@@ -11,10 +11,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    internal partial class SourceRegistryCredentials : IUtf8JsonSerializable, IJsonModel<SourceRegistryCredentials>
+    public partial class SourceRegistryCredentials : IUtf8JsonSerializable, IJsonModel<SourceRegistryCredentials>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceRegistryCredentials>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(SourceRegistryCredentials)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(LoginMode))
+            if (Tasks.Optional.IsDefined(LoginMode))
             {
                 writer.WritePropertyName("loginMode"u8);
                 writer.WriteStringValue(LoginMode.Value.ToString());
@@ -119,7 +120,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(LoginMode))
+                if (Tasks.Optional.IsDefined(LoginMode))
                 {
                     builder.Append("  loginMode: ");
                     builder.AppendLine($"'{LoginMode.Value.ToString()}'");

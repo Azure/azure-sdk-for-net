@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryTimerTriggerUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryTimerTriggerUpdateContent>
     {
@@ -34,12 +35,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(ContainerRegistryTimerTriggerUpdateContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Schedule))
+            if (Tasks.Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteStringValue(Schedule);
             }
-            if (Optional.IsDefined(Status))
+            if (Tasks.Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 return null;
             }
             string schedule = default;
-            ContainerRegistryTasksTriggerStatus? status = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    status = new ContainerRegistryTasksTriggerStatus(property.Value.GetString());
+                    status = new ContainerRegistryTriggerStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

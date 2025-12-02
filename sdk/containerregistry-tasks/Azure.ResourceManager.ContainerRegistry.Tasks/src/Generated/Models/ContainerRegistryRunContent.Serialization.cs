@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     [PersistableModelProxy(typeof(UnknownRunRequest))]
     public partial class ContainerRegistryRunContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryRunContent>
@@ -38,17 +39,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (Optional.IsDefined(IsArchiveEnabled))
+            if (Tasks.Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (Optional.IsDefined(AgentPoolName))
+            if (Tasks.Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (Optional.IsDefined(LogTemplate))
+            if (Tasks.Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(RunRequestType))
+                if (Tasks.Optional.IsDefined(RunRequestType))
                 {
                     builder.Append("  type: ");
                     if (RunRequestType.Contains(Environment.NewLine))
@@ -145,7 +146,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(IsArchiveEnabled))
+                if (Tasks.Optional.IsDefined(IsArchiveEnabled))
                 {
                     builder.Append("  isArchiveEnabled: ");
                     var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
@@ -161,7 +162,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(AgentPoolName))
+                if (Tasks.Optional.IsDefined(AgentPoolName))
                 {
                     builder.Append("  agentPoolName: ");
                     if (AgentPoolName.Contains(Environment.NewLine))
@@ -184,7 +185,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(LogTemplate))
+                if (Tasks.Optional.IsDefined(LogTemplate))
                 {
                     builder.Append("  logTemplate: ");
                     if (LogTemplate.Contains(Environment.NewLine))

@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryPlatformUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryPlatformUpdateContent>
     {
@@ -34,17 +35,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 throw new FormatException($"The model {nameof(ContainerRegistryPlatformUpdateContent)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(OS))
+            if (Tasks.Optional.IsDefined(OS))
             {
                 writer.WritePropertyName("os"u8);
                 writer.WriteStringValue(OS.Value.ToString());
             }
-            if (Optional.IsDefined(Architecture))
+            if (Tasks.Optional.IsDefined(Architecture))
             {
                 writer.WritePropertyName("architecture"u8);
                 writer.WriteStringValue(Architecture.Value.ToString());
             }
-            if (Optional.IsDefined(Variant))
+            if (Tasks.Optional.IsDefined(Variant))
             {
                 writer.WritePropertyName("variant"u8);
                 writer.WriteStringValue(Variant.Value.ToString());

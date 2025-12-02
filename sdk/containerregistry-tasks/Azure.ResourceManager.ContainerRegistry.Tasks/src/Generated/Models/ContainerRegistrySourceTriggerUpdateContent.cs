@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties for updating a source based trigger. </summary>
     public partial class ContainerRegistrySourceTriggerUpdateContent
@@ -52,7 +53,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            SourceTriggerEvents = new ChangeTrackingList<ContainerRegistryTasksSourceTriggerEvent>();
+            SourceTriggerEvents = new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>();
             Name = name;
         }
 
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistrySourceTriggerUpdateContent(SourceCodeRepoUpdateContent sourceRepository, IList<ContainerRegistryTasksSourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTasksTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistrySourceTriggerUpdateContent(SourceCodeRepoUpdateContent sourceRepository, IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents, ContainerRegistryTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceRepository = sourceRepository;
             SourceTriggerEvents = sourceTriggerEvents;
@@ -81,10 +82,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public SourceCodeRepoUpdateContent SourceRepository { get; set; }
         /// <summary> The source event corresponding to the trigger. </summary>
         [WirePath("sourceTriggerEvents")]
-        public IList<ContainerRegistryTasksSourceTriggerEvent> SourceTriggerEvents { get; }
+        public IList<ContainerRegistrySourceTriggerEvent> SourceTriggerEvents { get; }
         /// <summary> The current status of trigger. </summary>
         [WirePath("status")]
-        public ContainerRegistryTasksTriggerStatus? Status { get; set; }
+        public ContainerRegistryTriggerStatus? Status { get; set; }
         /// <summary> The name of the trigger. </summary>
         [WirePath("name")]
         public string Name { get; }

@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     public partial class ContainerRegistryDockerBuildStepUpdateContent : IUtf8JsonSerializable, IJsonModel<ContainerRegistryDockerBuildStepUpdateContent>
     {
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(ImageNames))
+            if (Tasks.Optional.IsCollectionDefined(ImageNames))
             {
                 writer.WritePropertyName("imageNames"u8);
                 writer.WriteStartArray();
@@ -45,22 +46,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsPushEnabled))
+            if (Tasks.Optional.IsDefined(IsPushEnabled))
             {
                 writer.WritePropertyName("isPushEnabled"u8);
                 writer.WriteBooleanValue(IsPushEnabled.Value);
             }
-            if (Optional.IsDefined(NoCache))
+            if (Tasks.Optional.IsDefined(NoCache))
             {
                 writer.WritePropertyName("noCache"u8);
                 writer.WriteBooleanValue(NoCache.Value);
             }
-            if (Optional.IsDefined(DockerFilePath))
+            if (Tasks.Optional.IsDefined(DockerFilePath))
             {
                 writer.WritePropertyName("dockerFilePath"u8);
                 writer.WriteStringValue(DockerFilePath);
             }
-            if (Optional.IsCollectionDefined(Arguments))
+            if (Tasks.Optional.IsCollectionDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
                 writer.WriteStartArray();
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Target))
+            if (Tasks.Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
@@ -192,11 +193,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 contextPath,
                 contextAccessToken,
                 serializedAdditionalRawData,
-                imageNames ?? new ChangeTrackingList<string>(),
+                imageNames ?? new Tasks.ChangeTrackingList<string>(),
                 isPushEnabled,
                 noCache,
                 dockerFilePath,
-                arguments ?? new ChangeTrackingList<ContainerRegistryRunArgument>(),
+                arguments ?? new Tasks.ChangeTrackingList<ContainerRegistryRunArgument>(),
                 target);
         }
 

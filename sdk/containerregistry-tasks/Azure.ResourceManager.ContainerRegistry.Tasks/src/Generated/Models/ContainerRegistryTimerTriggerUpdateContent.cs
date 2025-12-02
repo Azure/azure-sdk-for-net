@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties for updating a timer trigger. </summary>
     public partial class ContainerRegistryTimerTriggerUpdateContent
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="status"> The current status of trigger. </param>
         /// <param name="name"> The name of the trigger. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTimerTriggerUpdateContent(string schedule, ContainerRegistryTasksTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryTimerTriggerUpdateContent(string schedule, ContainerRegistryTriggerStatus? status, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Schedule = schedule;
             Status = status;
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         public string Schedule { get; set; }
         /// <summary> The current status of trigger. </summary>
         [WirePath("status")]
-        public ContainerRegistryTasksTriggerStatus? Status { get; set; }
+        public ContainerRegistryTriggerStatus? Status { get; set; }
         /// <summary> The name of the trigger. </summary>
         [WirePath("name")]
         public string Name { get; }

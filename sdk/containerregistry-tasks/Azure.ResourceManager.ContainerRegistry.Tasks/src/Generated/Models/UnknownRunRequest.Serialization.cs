@@ -11,8 +11,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry.Tasks;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     internal partial class UnknownRunRequest : IUtf8JsonSerializable, IJsonModel<ContainerRegistryRunContent>
     {
@@ -118,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(RunRequestType))
+                if (Tasks.Optional.IsDefined(RunRequestType))
                 {
                     builder.Append("  type: ");
                     if (RunRequestType.Contains(Environment.NewLine))
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(IsArchiveEnabled))
+                if (Tasks.Optional.IsDefined(IsArchiveEnabled))
                 {
                     builder.Append("  isArchiveEnabled: ");
                     var boolValue = IsArchiveEnabled.Value == true ? "true" : "false";
@@ -157,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(AgentPoolName))
+                if (Tasks.Optional.IsDefined(AgentPoolName))
                 {
                     builder.Append("  agentPoolName: ");
                     if (AgentPoolName.Contains(Environment.NewLine))
@@ -180,7 +181,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             }
             else
             {
-                if (Optional.IsDefined(LogTemplate))
+                if (Tasks.Optional.IsDefined(LogTemplate))
                 {
                     builder.Append("  logTemplate: ");
                     if (LogTemplate.Contains(Environment.NewLine))

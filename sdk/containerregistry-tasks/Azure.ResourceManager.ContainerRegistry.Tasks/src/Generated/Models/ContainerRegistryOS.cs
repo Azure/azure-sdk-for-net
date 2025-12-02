@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The OS of agent machine. </summary>
     public readonly partial struct ContainerRegistryOS : IEquatable<ContainerRegistryOS>

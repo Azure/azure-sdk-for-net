@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
+namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Describes the credentials that will be used to access a custom registry during a run. </summary>
     public partial class CustomRegistryCredentials
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// source of authentication used for accessing the registry.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRegistryCredentials(ContainerRegistryTasksSecretObject userName, ContainerRegistryTasksSecretObject password, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CustomRegistryCredentials(ContainerRegistrySecretObject userName, ContainerRegistrySecretObject password, string identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserName = userName;
             Password = password;
@@ -74,13 +74,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
 
         /// <summary> The username for logging into the custom registry. </summary>
         [WirePath("userName")]
-        public ContainerRegistryTasksSecretObject UserName { get; set; }
+        public ContainerRegistrySecretObject UserName { get; set; }
         /// <summary>
         /// The password for logging into the custom registry. The password is a secret
         /// object that allows multiple ways of providing the value for it.
         /// </summary>
         [WirePath("password")]
-        public ContainerRegistryTasksSecretObject Password { get; set; }
+        public ContainerRegistrySecretObject Password { get; set; }
         /// <summary>
         /// Indicates the managed identity assigned to the custom credential. If a user-assigned identity
         /// this value is the Client ID. If a system-assigned identity, the value will be `system`. In
