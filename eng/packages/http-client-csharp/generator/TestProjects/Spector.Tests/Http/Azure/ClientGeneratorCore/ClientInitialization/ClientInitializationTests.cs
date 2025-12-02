@@ -83,7 +83,6 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
         });
 
         [SpectorTest]
-        [Ignore("The InitializedBy flag is not being respected. The Child client should have a public constructor.")]
         public Task Azure_ClientGenerator_Core_ClientInitialization_ParentClient_ChildClient() => Test(async (host) =>
         {
             // Create ParentClient with blobName elevated to client constructor
@@ -91,19 +90,27 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientInitia
 
             // Get ChildClient from ParentClient
             var childClient = parentClient.GetChildClient();
+            await PerformClientOperations(childClient);
+
+            // Can also create ChildClient directly with blobName elevated to parent client
+            var directChildClient = new ChildClient(host, "sample-blob", null);
+            await PerformClientOperations(directChildClient);
 
             // Test WithQuery - blobName is elevated to parent client, format is method param
-            await childClient.WithQueryAsync("text");
+            async Task PerformClientOperations(ChildClient client)
+            {
+                await client.WithQueryAsync("text");
 
-            // Test GetStandalone - blobName is elevated to parent client
-            var response = await childClient.GetStandaloneAsync();
-            Assert.AreEqual("sample-blob", response.Value.Name);
-            Assert.AreEqual(42, response.Value.Size);
-            Assert.AreEqual("text/plain", response.Value.ContentType);
-            Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
+                // Test GetStandalone - blobName is elevated to parent client
+                var response = await client.GetStandaloneAsync();
+                Assert.AreEqual("sample-blob", response.Value.Name);
+                Assert.AreEqual(42, response.Value.Size);
+                Assert.AreEqual("text/plain", response.Value.ContentType);
+                Assert.AreEqual(new DateTimeOffset(2025, 4, 1, 12, 0, 0, TimeSpan.Zero), response.Value.CreatedOn);
 
-            // Test DeleteStandalone - blobName is elevated to parent client
-            await childClient.DeleteStandaloneAsync();
+                // Test DeleteStandalone - blobName is elevated to parent client
+                await client.DeleteStandaloneAsync();
+            }
         });
     }
 }
