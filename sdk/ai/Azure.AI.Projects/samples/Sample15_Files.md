@@ -7,6 +7,8 @@ This sample demonstrates how to use file operations with OpenAI Files API throug
 - Install the Azure.AI.Projects package.
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
+  - `TRAINING_FILE_PATH` : the file with training data.
+
 
 ## Create Clients
 

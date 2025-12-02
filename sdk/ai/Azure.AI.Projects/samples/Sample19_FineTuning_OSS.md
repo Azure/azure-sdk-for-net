@@ -13,6 +13,8 @@ Supported models: Ministral-3B
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `MODEL_DEPLOYMENT_NAME`: The name of the model deployment to use for fine-tuning.
+  - `TRAINING_FILE_PATH` : the file with training data.
+  - `VALIDATION_FILE_PATH` : the file with data for model validation.
 
 ## Create Clients
 
@@ -90,9 +92,89 @@ OpenAIFile validationFile = fileClient.UploadFile(
 Console.WriteLine($"Uploaded validation file with ID: {validationFile.Id}");
 ```
 
-## Wait for File Processing
+## Wait for File Processing Helper
 
-In production, you should wait for files to complete processing before creating a fine-tuning job. See the helper methods in `Sample16_FineTuning_Supervised.md` for `WaitForFileProcessingAsync` and `WaitForFileProcessing` implementations.
+After uploading files, they need to be processed before they can be used for fine-tuning. In production, you should wait for files to complete processing before creating a fine-tuning job. The helper methods below poll the file status until it reaches `Processed` or `Error` state. This ensures your training data is ready before starting the fine-tuning job.
+
+```C# Snippet:AI_Projects_FineTuning_WaitForFileProcessingHelper
+/// <summary>
+/// Wait for file to complete processing (async).
+/// </summary>
+public static async Task<OpenAIFile> WaitForFileProcessingAsync(
+    OpenAIFileClient fileClient,
+    string fileId,
+    int pollIntervalSeconds = 5,
+    int maxWaitSeconds = 1800)
+{
+    var start = DateTimeOffset.Now;
+    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+    OpenAIFile file = await fileClient.GetFileAsync(fileId);
+    Console.WriteLine($"File {fileId} initial status: {file.Status}");
+
+    while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
+    {
+        if (DateTimeOffset.Now - start > timeout)
+        {
+            throw new TimeoutException(
+                $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
+        }
+
+        await Task.Delay(pollInterval);
+        file = await fileClient.GetFileAsync(fileId);
+        Console.WriteLine($"File {fileId} status: {file.Status}");
+    }
+
+    if (file.Status == FileStatus.Error)
+    {
+        throw new InvalidOperationException(
+            $"File {fileId} processing failed: {file.StatusDetails}");
+    }
+
+    Console.WriteLine($"File {fileId} processing completed successfully");
+    return file;
+}
+
+/// <summary>
+/// Wait for file to complete processing (sync).
+/// </summary>
+public static OpenAIFile WaitForFileProcessing(
+    OpenAIFileClient fileClient,
+    string fileId,
+    int pollIntervalSeconds = 5,
+    int maxWaitSeconds = 1800)
+{
+    var start = DateTimeOffset.Now;
+    var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+    var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+    OpenAIFile file = fileClient.GetFile(fileId);
+    Console.WriteLine($"File {fileId} initial status: {file.Status}");
+
+    while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error)
+    {
+        if (DateTimeOffset.Now - start > timeout)
+        {
+            throw new TimeoutException(
+                $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
+        }
+
+        System.Threading.Thread.Sleep(pollInterval);
+        file = fileClient.GetFile(fileId);
+        Console.WriteLine($"File {fileId} status: {file.Status}");
+    }
+
+    if (file.Status == FileStatus.Error)
+    {
+        throw new InvalidOperationException(
+            $"File {fileId} processing failed: {file.StatusDetails}");
+    }
+
+    Console.WriteLine($"File {fileId} processing completed successfully");
+    return file;
+}
+```
 
 ## Create OSS Fine-Tuning Job
 

@@ -14,6 +14,8 @@ Supported OpenAI models: gpt-4o, gpt-4o-mini, gpt-4.1, gpt-4.1-mini
 - Set the following environment variables:
   - `PROJECT_ENDPOINT`: The Azure AI Project endpoint, as found in the overview page of your Azure AI Foundry project.
   - `MODEL_DEPLOYMENT_NAME`: The name of the model deployment to use for fine-tuning.
+  - `TRAINING_FILE_PATH` : the file with training data.
+  - `VALIDATION_FILE_PATH` : the file with data for model validation.
 
 ## Create Clients
 
