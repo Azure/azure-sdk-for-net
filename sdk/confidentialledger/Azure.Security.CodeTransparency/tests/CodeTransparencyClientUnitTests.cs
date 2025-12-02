@@ -541,7 +541,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
-            // Should not make any network calls since we're using offline keys
+            // Offline keys are empty, so network fallback is expected; should make 1 network call
             CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 
             Assert.AreEqual(1, mockTransport.Requests.Count);
