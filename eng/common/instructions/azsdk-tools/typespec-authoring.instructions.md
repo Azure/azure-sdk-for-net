@@ -36,7 +36,7 @@ Following tasks need collect required information:
 **Task 1: add a new api version**
 Prompt user to answer following question one by one:
 - prompt user to provide the api version name
-- prompt user to idenfity if it is a stable version or preview version.
+- prompt user to identify if it is a stable version or preview version.
 - verify if the api version name match the azure version rule: preview version suffix '-preview'. If not, prompt user to suggest an api version name
 - identify current api versions which are stable version, which are preview version ( the version with suffix '-preview', For preview versions, the format should be YYYY-MM-DD-preview; For stable versions, the format should be YYYY-MM-DD (e.g., 2025-12-01))
 - **when add a new preview api version**, and the current latest api version is preview version, prompt user to ask if it want to replace the previous preview api version or add a new preview api version
