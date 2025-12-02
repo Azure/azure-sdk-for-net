@@ -32,11 +32,6 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(AIProjectConnectionCustomCredential)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
