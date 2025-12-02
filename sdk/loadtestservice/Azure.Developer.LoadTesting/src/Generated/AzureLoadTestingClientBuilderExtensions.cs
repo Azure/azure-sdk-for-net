@@ -13,21 +13,8 @@ using Azure.Developer.LoadTesting;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-    public static partial class LoadTestingClientBuilderExtensions
+    public static partial class AzureLoadTestingClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="LoadTestAdministrationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<LoadTestAdministrationClient, LoadTestingClientOptions> AddLoadTestAdministrationClient<TBuilder>(this TBuilder builder, string endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<LoadTestAdministrationClient, LoadTestingClientOptions>((options, credential) => new LoadTestAdministrationClient(endpoint, credential, options));
-        }
-
         /// <summary> Registers a <see cref="LoadTestAdministrationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"></param>
@@ -46,19 +33,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<LoadTestAdministrationClient, LoadTestingClientOptions>(configuration);
-        }
-
-        /// <summary> Registers a <see cref="LoadTestRunClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpoint"/> is an empty string, and was expected to be non-empty. </exception>
-        public static IAzureClientBuilder<LoadTestRunClient, LoadTestingClientOptions> AddLoadTestRunClient<TBuilder>(this TBuilder builder, string endpoint)
-            where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            Argument.AssertNotNullOrEmpty(endpoint, nameof(endpoint));
-
-            return builder.RegisterClientFactory<LoadTestRunClient, LoadTestingClientOptions>((options, credential) => new LoadTestRunClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="LoadTestRunClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
