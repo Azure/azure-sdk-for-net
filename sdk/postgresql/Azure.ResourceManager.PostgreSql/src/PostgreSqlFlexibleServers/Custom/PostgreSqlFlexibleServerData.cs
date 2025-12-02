@@ -15,25 +15,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// </summary>
     public partial class PostgreSqlFlexibleServerData : TrackedResourceData
     {
-        /// <summary> Max storage allowed for a server. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [WirePath("properties.storage.storageSizeGB")]
-        public int? StorageSizeInGB
-        {
-            get => Storage is null ? default : Storage.StorageSizeInGB;
-            set
-            {
-                if (Storage is null)
-                    Storage = new PostgreSqlFlexibleServerStorage();
-                Storage.StorageSizeInGB = value;
-            }
-        }
         /// <summary> Replicas allowed for a server. </summary>
         [WirePath("properties.replicaCapacity")]
         public int? ReplicaCapacity
         {
             get;
             [EditorBrowsable(EditorBrowsableState.Never)]
+            set;
+        }
+        /// <summary> User assigned managed identities assigned to the server. </summary>
+        [WirePath("identity")]
+        public PostgreSqlFlexibleServerUserAssignedIdentity UserAssignedIdentity
+        {
+            get;
             set;
         }
     }
