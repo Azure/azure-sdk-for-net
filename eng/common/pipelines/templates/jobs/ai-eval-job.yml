@@ -17,6 +17,7 @@ parameters:
     default: 'azure-sdk-tools'
   - name: EvalRepoCommit
     type: string
+    default: 'main'
 # Target repository for copilot instructions
   - name: TargetRepoOwner
     type: string
