@@ -174,7 +174,7 @@ public class TestProxyProcess
                     Console.WriteLine($"dotnet tool list --local output:\n{standardOutput2}");
 
                     throw new InvalidOperationException("An error occurred in the test proxy. " +
-                        $"The full error is: {error} | The wd is {TestEnvironment.RepositoryRoot}" + Environment.NewLine +
+                        $"The full error is: {error} | the wd is {Directory.GetCurrentDirectory()} | The repo root is {TestEnvironment.RepositoryRoot}" + Environment.NewLine +
                         $"list tool output: {standardOutput2}");
                 }
                 throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
