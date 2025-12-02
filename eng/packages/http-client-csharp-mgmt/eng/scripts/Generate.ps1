@@ -90,7 +90,7 @@ if ($null -eq $filter) {
 
     foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
         $mgmtLaunchSettings["profiles"].Add($kvp.Key, @{})
-        $mgmtLaunchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$($kvp.Value) -g MgmtStubGenerator")
+        $mgmtLaunchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll `$(SolutionDir)/$($kvp.Value) -g AzureStubGenerator")
         $mgmtLaunchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
         $mgmtLaunchSettings["profiles"][$kvp.Key].Add("executablePath", "dotnet")
     }
