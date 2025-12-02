@@ -42,7 +42,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WritePropertyName("brokerProperties"u8);
             writer.WriteObjectValue(BrokerProperties, options);
             writer.WritePropertyName("event"u8);
-            writer.WriteObjectValue(Event, options);
+            WriteEvent(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -86,7 +86,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 return null;
             }
             BrokerProperties brokerProperties = default;
-            Messaging.CloudEvent @event = default;
+            CloudEvent @event = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -97,7 +97,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
                 if (prop.NameEquals("event"u8))
                 {
-                    @event = Messaging.CloudEvent.DeserializeCloudEvent(prop.Value, options);
+                    ReadEvent(prop, ref @event);
                     continue;
                 }
                 if (options.Format != "W")

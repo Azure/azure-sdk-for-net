@@ -33,60 +33,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridSenderClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new EventGridNamespacesClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridSenderClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new EventGridNamespacesClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridSenderClient(Uri endpoint, AzureKeyCredential credential, EventGridNamespacesClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new EventGridNamespacesClientOptions();
-
-            _endpoint = endpoint;
-            _keyCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader, AuthorizationApiKeyPrefix) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
-        /// <summary> Initializes a new instance of EventGridSenderClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public EventGridSenderClient(Uri endpoint, TokenCredential credential, EventGridNamespacesClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-
-            options ??= new EventGridNamespacesClientOptions();
-
-            _endpoint = endpoint;
-            _tokenCredential = credential;
-            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
-            _apiVersion = options.Version;
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline { get; }
 
@@ -156,7 +102,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="event"> Single Cloud Event being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<PublishResult> Send(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        internal virtual Response<PublishResult> Send(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
             Response result = Send(topicName, @event, cancellationToken.ToRequestContext());
             return Response.FromValue((PublishResult)result, result);
@@ -167,7 +113,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="event"> Single Cloud Event being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<PublishResult>> SendAsync(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<PublishResult>> SendAsync(string topicName, CloudEventInternal @event, CancellationToken cancellationToken = default)
         {
             Response result = await SendAsync(topicName, @event, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PublishResult)result, result);
@@ -236,7 +182,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="events"> Array of Cloud Events being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        internal virtual Response<PublishResult> SendEvents(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(events);
             Response result = SendEvents(topicName, content, cancellationToken.ToRequestContext());
@@ -248,7 +194,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="events"> Array of Cloud Events being published. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<PublishResult>> SendEventsAsync(string topicName, IEnumerable<CloudEventInternal> events, CancellationToken cancellationToken = default)
         {
             using RequestContent content = BinaryContentHelper.FromEnumerable(events);
             Response result = await SendEventsAsync(topicName, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
