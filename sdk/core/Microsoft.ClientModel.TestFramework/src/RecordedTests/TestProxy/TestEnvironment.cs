@@ -82,7 +82,7 @@ public abstract class TestEnvironment
 
         while (directoryInfo != null)
         {
-            if (File.Exists(Path.Combine(directoryInfo.FullName, ".git")) ||
+            if (Directory.Exists(Path.Combine(directoryInfo.FullName, ".git")) ||
                 Directory.Exists(Path.Combine(directoryInfo.FullName, ".github")) ||
                 File.Exists(Path.Combine(directoryInfo.FullName, "global.json")) ||
                 directoryInfo.Name == "artifacts")

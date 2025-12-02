@@ -44,7 +44,7 @@ public class ProxyTransport : PipelineTransport
         string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
         _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxyProcess.IpAddress;
 
-        if (innerTransport is HttpClientPipelineTransport httpClientTransport)
+        if (innerTransport is HttpClientPipelineTransport _)
         {
             var handler = new HttpClientHandler
             {
@@ -54,7 +54,7 @@ public class ProxyTransport : PipelineTransport
             };
             _innerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
         }
-        else // override
+        else // Use provided custom transport as-is when it's not an HttpClientPipelineTransport
         {
             _innerTransport = innerTransport;
         }

@@ -245,6 +245,8 @@ public class TestProxyProcess
         }
     }
 
+    // This method is internal to allow unit tests to access and verify port parsing logic.
+    // It should not be used outside of testing scenarios. Do not make this public.
     internal static bool TryParsePort(string? output, string scheme, out int? port)
     {
         if (output == null)
@@ -268,6 +270,8 @@ public class TestProxyProcess
         return false;
     }
 
+    // This method is internal to allow access from test code. It would otherwise be private,
+    // but is exposed specifically for testing purposes.
     internal static void TryRestoreLocalTools()
     {
         try
@@ -292,7 +296,10 @@ public class TestProxyProcess
                 {
                     try
                     { process.Kill(); }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        TestContext.Progress.WriteLine($"Exception during process cleanup (Kill): {ex.Message}");
+                    }
                 }
                 else if (process.ExitCode != 0)
                 {
