@@ -1,4 +1,8 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System.Runtime.CompilerServices;
+using Azure.Core;
 using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.ContainerRegistry.Models;
 
@@ -14,6 +18,10 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 [assembly: TypeForwardedTo(typeof(ContainerRegistryTaskRunResource))]
 [assembly: TypeForwardedTo(typeof(ContainerRegistryTaskRunData))]
 [assembly: TypeForwardedTo(typeof(ContainerRegistryTaskRunCollection))]
+
+// suppress this type because both this project, and its dependency Azure.ResourceManager.ContainerRegistry.Tasks define it
+// and they are the same.
+[assembly: CodeGenSuppressType("ContainerRegistryProvisioningState")]
 
 // Models
 [assembly: TypeForwardedTo(typeof(ContainerRegistryAgentPoolListResult))]
@@ -85,6 +93,3 @@ using Azure.ResourceManager.ContainerRegistry.Models;
 [assembly: TypeForwardedTo(typeof(SourceRegistryCredentials))]
 [assembly: TypeForwardedTo(typeof(SourceRegistryLoginMode))]
 [assembly: TypeForwardedTo(typeof(SourceUploadDefinition))]
-[assembly: TypeForwardedTo(typeof(UnknownRunRequest))]
-[assembly: TypeForwardedTo(typeof(UnknownTaskStepProperties))]
-[assembly: TypeForwardedTo(typeof(UnknownTaskStepUpdateParameters))]
