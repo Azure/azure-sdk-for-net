@@ -56,8 +56,26 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Filters field. </summary>
         public static SnapshotFields Filters { get; } = new SnapshotFields(FiltersValue);
 
+        /// <summary> Composition type field. </summary>
+        public static SnapshotFields CompositionType { get; } = new SnapshotFields(CompositionTypeValue);
+
+        /// <summary> Created field. </summary>
+        public static SnapshotFields Created { get; } = new SnapshotFields(CreatedValue);
+
+        /// <summary> Expires field. </summary>
+        public static SnapshotFields Expires { get; } = new SnapshotFields(ExpiresValue);
+
+        /// <summary> Size field. </summary>
+        public static SnapshotFields Size { get; } = new SnapshotFields(SizeValue);
+
+        /// <summary> Items count field. </summary>
+        public static SnapshotFields ItemsCount { get; } = new SnapshotFields(ItemsCountValue);
+
         /// <summary> Tags field. </summary>
         public static SnapshotFields Tags { get; } = new SnapshotFields(TagsValue);
+
+        /// <summary> Etag field. </summary>
+        public static SnapshotFields Etag { get; } = new SnapshotFields(EtagValue);
 
         /// <summary> Determines if two <see cref="SnapshotFields"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
