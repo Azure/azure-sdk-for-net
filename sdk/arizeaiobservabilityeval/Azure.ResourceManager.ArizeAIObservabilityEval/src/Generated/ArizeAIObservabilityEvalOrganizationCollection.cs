@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
 {
     /// <summary>
     /// A class representing a collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> and their operations.
-    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of the parent resource.
+    /// Each <see cref="ArizeAIObservabilityEvalOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ArizeAIObservabilityEvalOrganizationCollection"/> instance call the GetArizeAIObservabilityEvalOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ArizeAIObservabilityEvalOrganizationCollection : ArmCollection, IEnumerable<ArizeAIObservabilityEvalOrganizationResource>, IAsyncEnumerable<ArizeAIObservabilityEvalOrganizationResource>
     {
@@ -55,7 +55,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> Create a OrganizationResource. </summary>
+        /// <summary>
+        /// Create a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -97,7 +113,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> Create a OrganizationResource. </summary>
+        /// <summary>
+        /// Create a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_CreateOrUpdate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="data"> Resource create parameters. </param>
@@ -139,7 +171,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> Get a OrganizationResource. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
@@ -172,7 +220,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> Get a OrganizationResource. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
@@ -205,7 +269,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArizeAIObservabilityEvalOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -217,7 +297,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             return new AsyncPageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
-        /// <summary> List OrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List OrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ArizeAIObservabilityEvalOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArizeAIObservabilityEvalOrganizationResource> GetAll(CancellationToken cancellationToken = default)
@@ -229,7 +325,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             return new PageableWrapper<ArizeAIObservabilityEvalOrganizationData, ArizeAIObservabilityEvalOrganizationResource>(new OrganizationsGetByResourceGroupCollectionResultOfT(_organizationsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ArizeAIObservabilityEvalOrganizationResource(Client, data));
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
@@ -270,7 +382,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> Checks to see if the resource exists in azure. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
@@ -311,7 +439,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>
@@ -356,7 +500,23 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
             }
         }
 
-        /// <summary> Tries to get details for this resource from the service. </summary>
+        /// <summary>
+        /// Get a OrganizationResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/ArizeAi.ObservabilityEval/organizations/{organizationname}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-10-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="organizationname"> Name of the Organization resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="organizationname"/> is null. </exception>

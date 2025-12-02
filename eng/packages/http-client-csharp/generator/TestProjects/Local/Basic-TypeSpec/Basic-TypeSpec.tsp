@@ -408,11 +408,33 @@ op ListWithHeaderNextLink(): {
   @nextLink @header next?: string;
 };
 
+@route("/linkHeaderWithMaxPage")
+@doc("List things with nextlink")
+@convenientAPI(true)
+@list
+op ListWithHeaderNextLinkWithMaxPage(@query @pageSize numElements: int32): {
+  @pageItems
+  things: ThingModel[];
+
+  @nextLink @header next?: string;
+};
+
 @route("/continuation")
 @doc("List things with continuation token")
 @convenientAPI(true)
 @list
 op ListWithContinuationToken(@query @continuationToken token?: string): {
+  @pageItems
+  things: ThingModel[];
+
+  @continuationToken nextToken?: string;
+};
+
+@route("/continuationWithMaxPage")
+@doc("List things with continuation token")
+@convenientAPI(true)
+@list
+op ListWithContinuationTokenWithMaxPage(@query @continuationToken token?: string, @query @pageSize numElements: int32): {
   @pageItems
   things: ThingModel[];
 

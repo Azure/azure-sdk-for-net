@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using _Specs_.Azure.Core.Page;
+using Specs.Azure.Core.Page;
 using NUnit.Framework;
 
 namespace TestProjects.Spector.Tests.Http.Azure.Core.Page

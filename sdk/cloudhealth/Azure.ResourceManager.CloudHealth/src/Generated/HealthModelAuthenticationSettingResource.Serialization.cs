@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.CloudHealth
 {
+    /// <summary></summary>
     public partial class HealthModelAuthenticationSettingResource : IJsonModel<HealthModelAuthenticationSettingData>
     {
-        private static HealthModelAuthenticationSettingData s_dataDeserializationInstance;
-        private static HealthModelAuthenticationSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HealthModelAuthenticationSettingData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HealthModelAuthenticationSettingData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HealthModelAuthenticationSettingData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HealthModelAuthenticationSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthModelAuthenticationSettingData>)Data).Write(writer, options);
 
-        HealthModelAuthenticationSettingData IJsonModel<HealthModelAuthenticationSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthModelAuthenticationSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HealthModelAuthenticationSettingData IJsonModel<HealthModelAuthenticationSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HealthModelAuthenticationSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthModelAuthenticationSettingData>(Data, options, AzureResourceManagerCloudHealthContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HealthModelAuthenticationSettingData IPersistableModel<HealthModelAuthenticationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthModelAuthenticationSettingData>(data, options, AzureResourceManagerCloudHealthContext.Default);
 
-        string IPersistableModel<HealthModelAuthenticationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthModelAuthenticationSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HealthModelAuthenticationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

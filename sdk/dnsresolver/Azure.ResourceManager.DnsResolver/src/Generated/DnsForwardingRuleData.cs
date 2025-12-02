@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="etag"> ETag of the forwarding rule. </param>
+        /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="domainName"> The domain name for the forwarding rule. </param>
         /// <param name="targetDnsServers"> DNS servers to forward the DNS query to. </param>
         /// <param name="metadata"> Metadata attached to the forwarding rule. </param>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
         }
 
-        /// <summary> ETag of the forwarding rule. </summary>
+        /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
         /// <summary> The domain name for the forwarding rule. </summary>
         public string DomainName { get; set; }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_RedisEnterpriseCreate()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseCreate.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseCreate.json
             // this example is just showing the usage of "RedisEnterprise_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                     },
                     KeyEncryptionKeyUri = new Uri("https://your-kv.vault.azure.net/keys/your-key/your-key-version"),
                 },
+                PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Disabled,
                 Tags =
 {
 ["tag1"] = "value1"
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseGet.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseGet.json
             // this example is just showing the usage of "RedisEnterprise_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_RedisEnterpriseListByResourceGroup()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseListByResourceGroup.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseListByResourceGroup.json
             // this example is just showing the usage of "RedisEnterprise_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +153,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_RedisEnterpriseGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseGet.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseGet.json
             // this example is just showing the usage of "RedisEnterprise_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_RedisEnterpriseGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseGet.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseGet.json
             // this example is just showing the usage of "RedisEnterprise_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

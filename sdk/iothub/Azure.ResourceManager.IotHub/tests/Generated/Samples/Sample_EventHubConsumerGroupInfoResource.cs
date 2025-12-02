@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_IotHubResourceListEventHubConsumerGroups()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_getconsumergroup.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_getconsumergroup.json
             // this example is just showing the usage of "IotHubResource_GetEventHubConsumerGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_IotHubResourceDeleteEventHubConsumerGroup()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_deleteconsumergroup.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_deleteconsumergroup.json
             // this example is just showing the usage of "IotHubResource_DeleteEventHubConsumerGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_IotHubResourceCreateEventHubConsumerGroup()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_createconsumergroup.json
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/IoTHub/preview/2025-08-01-preview/examples/iothub_createconsumergroup.json
             // this example is just showing the usage of "IotHubResource_CreateEventHubConsumerGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

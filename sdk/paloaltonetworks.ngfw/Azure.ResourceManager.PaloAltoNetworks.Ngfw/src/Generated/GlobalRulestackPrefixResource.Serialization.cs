@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
+    /// <summary></summary>
     public partial class GlobalRulestackPrefixResource : IJsonModel<GlobalRulestackPrefixData>
     {
-        private static GlobalRulestackPrefixData s_dataDeserializationInstance;
-        private static GlobalRulestackPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<GlobalRulestackPrefixData> s_dataDeserializationInstance;
 
+        private static IJsonModel<GlobalRulestackPrefixData> DataDeserializationInstance => s_dataDeserializationInstance ??= new GlobalRulestackPrefixData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<GlobalRulestackPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackPrefixData>)Data).Write(writer, options);
 
-        GlobalRulestackPrefixData IJsonModel<GlobalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GlobalRulestackPrefixData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        GlobalRulestackPrefixData IJsonModel<GlobalRulestackPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<GlobalRulestackPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GlobalRulestackPrefixData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         GlobalRulestackPrefixData IPersistableModel<GlobalRulestackPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GlobalRulestackPrefixData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
 
-        string IPersistableModel<GlobalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GlobalRulestackPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<GlobalRulestackPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

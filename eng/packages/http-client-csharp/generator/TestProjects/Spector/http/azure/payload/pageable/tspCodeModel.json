@@ -280,7 +280,8 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         }
       ],
@@ -316,6 +317,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Payload.Pageable",
       "apiVersions": []
