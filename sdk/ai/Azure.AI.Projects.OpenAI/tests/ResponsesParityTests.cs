@@ -304,7 +304,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     }
 
     [RecordedTest]
-    [TestCase(OpenAIClientMode.UseFDPOpenAI, Ignore = "Issue 4823408")]
+    [TestCase(OpenAIClientMode.UseFDPOpenAI)]
     [TestCase(OpenAIClientMode.UseExternalOpenAI)]
     public async Task GetResponseStreamingWorks(OpenAIClientMode clientMode)
     {
