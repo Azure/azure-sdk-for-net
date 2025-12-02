@@ -54,8 +54,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationDetails"/>. </summary>
         /// <param name="status"> Validation status for migration. </param>
-        /// <param name="validationStartTimeInUtc"> Validation Start date-time in UTC. </param>
-        /// <param name="validationEndTimeInUtc"> Validation End date-time in UTC. </param>
+        /// <param name="validationStartTimeInUtc"> Start time (UTC) for validation. </param>
+        /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
         /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
         /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -72,10 +72,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Validation status for migration. </summary>
         [WirePath("status")]
         public PostgreSqlFlexibleServersValidationState? Status { get; }
-        /// <summary> Validation Start date-time in UTC. </summary>
+        /// <summary> Start time (UTC) for validation. </summary>
         [WirePath("validationStartTimeInUtc")]
         public DateTimeOffset? ValidationStartTimeInUtc { get; }
-        /// <summary> Validation End date-time in UTC. </summary>
+        /// <summary> End time (UTC) for validation. </summary>
         [WirePath("validationEndTimeInUtc")]
         public DateTimeOffset? ValidationEndTimeInUtc { get; }
         /// <summary> Details of server level validations. </summary>

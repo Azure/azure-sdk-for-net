@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
@@ -17,9 +18,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_UpdateAUserConfiguration()
+        public async Task CreateOrUpdate_UpdateUsingPutVerbTheValueAssignedToASpecificModifiableConfigurationAlsoKnownAsServerParameterOfAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ConfigurationUpdate.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/ConfigurationsUpdateUsingPut.json
             // this example is just showing the usage of "Configurations_Put" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,8 +31,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "testserver";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -39,13 +40,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerConfigurationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlFlexibleServerConfigurations();
 
             // invoke the operation
-            string configurationName = "event_scheduler";
-            PostgreSqlFlexibleServerConfigurationData data = new PostgreSqlFlexibleServerConfigurationData
+            string configurationName = "constraint_exclusion";
+            ConfigurationForUpdate configurationForUpdate = new ConfigurationForUpdate
             {
                 Value = "on",
                 Source = "user-override",
             };
-            ArmOperation<PostgreSqlFlexibleServerConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, data);
+            ArmOperation<PostgreSqlFlexibleServerConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configurationName, configurationForUpdate);
             PostgreSqlFlexibleServerConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -57,9 +58,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ConfigurationGet()
+        public async Task Get_GetInformationAboutASpecificConfigurationAlsoKnownAsServerParameterOfAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ConfigurationGet.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/ConfigurationsGet.json
             // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -70,8 +71,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "testserver";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -91,9 +92,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ConfigurationList()
+        public async Task GetAll_ListAllConfigurationsAlsoKnownAsServerParametersOfAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ConfigurationListByServer.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/ConfigurationsListByServer.json
             // this example is just showing the usage of "Configurations_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,8 +105,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "testserver";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -127,9 +128,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ConfigurationGet()
+        public async Task Exists_GetInformationAboutASpecificConfigurationAlsoKnownAsServerParameterOfAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ConfigurationGet.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/ConfigurationsGet.json
             // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,8 +141,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "testserver";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -157,9 +158,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_ConfigurationGet()
+        public async Task GetIfExists_GetInformationAboutASpecificConfigurationAlsoKnownAsServerParameterOfAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ConfigurationGet.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/ConfigurationsGet.json
             // this example is just showing the usage of "Configurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,8 +171,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string serverName = "testserver";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 

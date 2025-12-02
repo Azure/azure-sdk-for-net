@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Represents server restart parameters. </summary>
+    /// <summary> PostgreSQL database engine restart parameters. </summary>
     public partial class PostgreSqlFlexibleServerRestartParameter
     {
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerRestartParameter"/>. </summary>
-        /// <param name="restartWithFailover"> Indicates whether to restart the server with failover. </param>
+        /// <param name="restartWithFailover"> Indicates if restart the PostgreSQL database engine should failover or switch over from primary to standby. This only works if server has high availability enabled. </param>
         /// <param name="failoverMode"> Failover mode. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerRestartParameter(bool? restartWithFailover, PostgreSqlFlexibleServerFailoverMode? failoverMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates whether to restart the server with failover. </summary>
+        /// <summary> Indicates if restart the PostgreSQL database engine should failover or switch over from primary to standby. This only works if server has high availability enabled. </summary>
         [WirePath("restartWithFailover")]
         public bool? RestartWithFailover { get; set; }
         /// <summary> Failover mode. </summary>

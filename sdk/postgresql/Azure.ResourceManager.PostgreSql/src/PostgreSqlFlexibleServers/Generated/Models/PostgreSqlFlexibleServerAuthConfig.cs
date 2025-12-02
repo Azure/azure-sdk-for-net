@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAuthConfig"/>. </summary>
-        /// <param name="activeDirectoryAuth"> If Enabled, Azure Active Directory authentication is enabled. </param>
-        /// <param name="passwordAuth"> If Enabled, Password authentication is enabled. </param>
-        /// <param name="tenantId"> Tenant id of the server. </param>
+        /// <param name="activeDirectoryAuth"> Indicates if the server supports Microsoft Entra authentication. </param>
+        /// <param name="passwordAuth"> Indicates if the server supports password based authentication. </param>
+        /// <param name="tenantId"> Identifier of the tenant of the delegated resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerAuthConfig(PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerAuthConfig(MicrosoftEntraAuth? activeDirectoryAuth, PasswordBasedAuth? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveDirectoryAuth = activeDirectoryAuth;
             PasswordAuth = passwordAuth;
@@ -63,13 +63,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> If Enabled, Azure Active Directory authentication is enabled. </summary>
+        /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
         [WirePath("activeDirectoryAuth")]
-        public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
-        /// <summary> If Enabled, Password authentication is enabled. </summary>
+        public MicrosoftEntraAuth? ActiveDirectoryAuth { get; set; }
+        /// <summary> Indicates if the server supports password based authentication. </summary>
         [WirePath("passwordAuth")]
-        public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
-        /// <summary> Tenant id of the server. </summary>
+        public PasswordBasedAuth? PasswordAuth { get; set; }
+        /// <summary> Identifier of the tenant of the delegated resource. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }

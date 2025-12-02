@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             PostgreSqlFlexibleServerHighAvailabilityMode? mode = default;
-            PostgreSqlFlexibleServerHAState? state = default;
+            HighAvailabilityState? state = default;
             string standbyAvailabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    state = new PostgreSqlFlexibleServerHAState(property.Value.GetString());
+                    state = new HighAvailabilityState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("standbyAvailabilityZone"u8))

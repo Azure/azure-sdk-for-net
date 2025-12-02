@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServerDatabase data model.
-    /// Represents a Database.
+    /// Represents a database.
     /// </summary>
     public partial class PostgreSqlFlexibleServerDatabaseData : ResourceData
     {
@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="charset"> The charset of the database. </param>
-        /// <param name="collation"> The collation of the database. </param>
+        /// <param name="charset"> Character set of the database. </param>
+        /// <param name="collation"> Collation of the database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerDatabaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string charset, string collation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The charset of the database. </summary>
+        /// <summary> Character set of the database. </summary>
         [WirePath("properties.charset")]
         public string Charset { get; set; }
-        /// <summary> The collation of the database. </summary>
+        /// <summary> Collation of the database. </summary>
         [WirePath("properties.collation")]
         public string Collation { get; set; }
     }

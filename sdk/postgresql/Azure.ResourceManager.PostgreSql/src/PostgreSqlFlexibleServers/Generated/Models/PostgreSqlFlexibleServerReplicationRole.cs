@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Used to indicate role of the server in replication set. </summary>
+    /// <summary> Role of the server in a replication set. </summary>
     public readonly partial struct PostgreSqlFlexibleServerReplicationRole : IEquatable<PostgreSqlFlexibleServerReplicationRole>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string AsyncReplicaValue = "AsyncReplica";
         private const string GeoAsyncReplicaValue = "GeoAsyncReplica";
 
-        /// <summary> None. </summary>
+        /// <summary> No replication role assigned; the server operates independently. </summary>
         public static PostgreSqlFlexibleServerReplicationRole None { get; } = new PostgreSqlFlexibleServerReplicationRole(NoneValue);
-        /// <summary> Primary. </summary>
+        /// <summary> Acts as the source server for replication to one or more replicas. </summary>
         public static PostgreSqlFlexibleServerReplicationRole Primary { get; } = new PostgreSqlFlexibleServerReplicationRole(PrimaryValue);
-        /// <summary> AsyncReplica. </summary>
+        /// <summary> Receives data asynchronously from a primary server within the same region. </summary>
         public static PostgreSqlFlexibleServerReplicationRole AsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(AsyncReplicaValue);
-        /// <summary> GeoAsyncReplica. </summary>
+        /// <summary> Receives data asynchronously from a primary server in a different region for geographical redundancy. </summary>
         public static PostgreSqlFlexibleServerReplicationRole GeoAsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(GeoAsyncReplicaValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerReplicationRole left, PostgreSqlFlexibleServerReplicationRole right) => left.Equals(right);

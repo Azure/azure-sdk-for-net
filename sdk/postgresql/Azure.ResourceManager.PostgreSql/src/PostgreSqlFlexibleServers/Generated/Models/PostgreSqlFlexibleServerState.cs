@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A state of a server that is visible to user. </summary>
+    /// <summary> Possible states of a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerState : IEquatable<PostgreSqlFlexibleServerState>
     {
         private readonly string _value;
@@ -29,21 +29,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string StoppingValue = "Stopping";
         private const string StoppedValue = "Stopped";
         private const string UpdatingValue = "Updating";
+        private const string RestartingValue = "Restarting";
+        private const string InaccessibleValue = "Inaccessible";
+        private const string ProvisioningValue = "Provisioning";
 
-        /// <summary> Ready. </summary>
+        /// <summary> Server is healthy and not undergoing any operations at the management or control plane level. This doesn't mean that the server is fully operational at the data plane level. </summary>
         public static PostgreSqlFlexibleServerState Ready { get; } = new PostgreSqlFlexibleServerState(ReadyValue);
-        /// <summary> Dropping. </summary>
+        /// <summary> Server is being deleted. </summary>
         public static PostgreSqlFlexibleServerState Dropping { get; } = new PostgreSqlFlexibleServerState(DroppingValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Server is disabled. Typical reasons include: the subscription on which the server is deployed is explicitly disabled or canceled by the administrator, the spending limit has been reached, or the bill is past due. May also happen when the server is being moved to another resource group or subscription. </summary>
         public static PostgreSqlFlexibleServerState Disabled { get; } = new PostgreSqlFlexibleServerState(DisabledValue);
-        /// <summary> Starting. </summary>
+        /// <summary> PostgreSQL database engine is being restarted. </summary>
         public static PostgreSqlFlexibleServerState Starting { get; } = new PostgreSqlFlexibleServerState(StartingValue);
-        /// <summary> Stopping. </summary>
+        /// <summary> Compute resources associated with the server are being stopped and deallocated. If the server has high availability enabled, the compute resources of the standby server are also stopped and deallocated. </summary>
         public static PostgreSqlFlexibleServerState Stopping { get; } = new PostgreSqlFlexibleServerState(StoppingValue);
-        /// <summary> Stopped. </summary>
+        /// <summary> Compute resources associated with the server are being stopped and deallocated. </summary>
         public static PostgreSqlFlexibleServerState Stopped { get; } = new PostgreSqlFlexibleServerState(StoppedValue);
-        /// <summary> Updating. </summary>
+        /// <summary> Server is undergoing some changes which may or may not impact the availability of the PostgreSQL database engine. For example, the compute resources of the server are being scaled up or down, which may cause temporary unavailability of the database engine. Or, for example, a firewall rule is being added or removed, which doesn't cause any unavailability of the database engine. </summary>
         public static PostgreSqlFlexibleServerState Updating { get; } = new PostgreSqlFlexibleServerState(UpdatingValue);
+        /// <summary> PostgreSQL database engine is being restarted. </summary>
+        public static PostgreSqlFlexibleServerState Restarting { get; } = new PostgreSqlFlexibleServerState(RestartingValue);
+        /// <summary> Server isn't accessible, because the key provided to encrypt and decrypt the data is in invalid state. </summary>
+        public static PostgreSqlFlexibleServerState Inaccessible { get; } = new PostgreSqlFlexibleServerState(InaccessibleValue);
+        /// <summary> Server is in the process of being created. </summary>
+        public static PostgreSqlFlexibleServerState Provisioning { get; } = new PostgreSqlFlexibleServerState(ProvisioningValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerState left, PostgreSqlFlexibleServerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerState"/> values are not the same. </summary>

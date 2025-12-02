@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Validation status summary for an individual database. </summary>
+    /// <summary> Validation status summary for a database. </summary>
     public partial class DbLevelValidationStatus
     {
         /// <summary>
@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DbLevelValidationStatus"/>. </summary>
-        /// <param name="databaseName"> Name of the database. </param>
-        /// <param name="startedOn"> Start date-time of a database level validation. </param>
-        /// <param name="endedOn"> End date-time of a database level validation. </param>
+        /// <param name="databaseName"> Name of database. </param>
+        /// <param name="startedOn"> Start time of a database level validation. </param>
+        /// <param name="endedOn"> End time of a database level validation. </param>
         /// <param name="summary"> Summary of database level validations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DbLevelValidationStatus(string databaseName, DateTimeOffset? startedOn, DateTimeOffset? endedOn, IReadOnlyList<ValidationSummaryItem> summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the database. </summary>
+        /// <summary> Name of database. </summary>
         [WirePath("databaseName")]
         public string DatabaseName { get; }
-        /// <summary> Start date-time of a database level validation. </summary>
+        /// <summary> Start time of a database level validation. </summary>
         [WirePath("startedOn")]
         public DateTimeOffset? StartedOn { get; }
-        /// <summary> End date-time of a database level validation. </summary>
+        /// <summary> End time of a database level validation. </summary>
         [WirePath("endedOn")]
         public DateTimeOffset? EndedOn { get; }
         /// <summary> Summary of database level validations. </summary>
