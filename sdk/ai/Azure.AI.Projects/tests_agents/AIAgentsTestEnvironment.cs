@@ -42,5 +42,6 @@ namespace Azure.AI.Projects.Tests
         public string BING_CONNECTION_NAME => GetRecordedVariable("BING_CONNECTION_NAME");
         public string CUSTOM_BING_CONNECTION_NAME => GetRecordedVariable("CUSTOM_BING_CONNECTION_NAME");
         public string BING_CUSTOM_SEARCH_INSTANCE_NAME => GetRecordedVariable("BING_CUSTOM_SEARCH_INSTANCE_NAME");
+        public string MCP_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable("MCP_PROJECT_CONNECTION_NAME");
     }
 }
