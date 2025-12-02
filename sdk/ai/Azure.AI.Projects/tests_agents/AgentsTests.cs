@@ -722,68 +722,76 @@ public class AgentsTests : AgentsTestBase
             }
         }
         Assert.That(annotationMet, Is.True);
+        Assert.That(updateFound, Is.True, $"The update of type {expectedUpdateType} was not found.");
         Assert.That(isStarted, Is.True, "The stream did not started.");
         Assert.That(isFinished, Is.True, "The stream did not finished.");
         Assert.That(isStatusGood, Is.True, "No StreamingResponseCompletedUpdate were met.");
     }
 
-[RecordedTest]
-public async Task TestToolChoiceWorks()
-{
-    AIProjectClient projectClient = GetTestProjectClient();
-    AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
-        agentName: AGENT_NAME,
-        new AgentVersionCreationOptions(
-            new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
-            {
-                Instructions = "Always greet the user by name when possible.",
-                Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
-            }));
-
-    OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
-
-    OpenAIResponse response = await responseClient.CreateResponseAsync("Hello!");
-    Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.True);
-
-    response = await responseClient.CreateResponseAsync(
-        "Hello!",
-        new ResponseCreationOptions()
-        {
-            ToolChoice = ResponseToolChoice.CreateNoneChoice(),
-        });
-    Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.False);
-}
-
     [RecordedTest]
-    public async Task TestFunctions()
+    public async Task TestToolChoiceWorks()
     {
         AIProjectClient projectClient = GetTestProjectClient();
         AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
             agentName: AGENT_NAME,
-            options: new(await GetAgentToolDefinition(ToolType.FunctionCall, projectClient))
+            new AgentVersionCreationOptions(
+                new PromptAgentDefinition(TestEnvironment.MODELDEPLOYMENTNAME)
+                {
+                    Instructions = "Always greet the user by name when possible.",
+                    Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
+                }));
+
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+
+        OpenAIResponse response = await responseClient.CreateResponseAsync("Hello!");
+        Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.True);
+
+        response = await responseClient.CreateResponseAsync(
+            "Hello!",
+            new ResponseCreationOptions()
+            {
+                ToolChoice = ResponseToolChoice.CreateNoneChoice(),
+            });
+        Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.False);
+    }
+
+    [RecordedTest]
+    [TestCase(ToolType.FunctionCall)]
+    [TestCase(ToolType.MCP)]
+    [TestCase(ToolType.MCPConnection)]
+    public async Task TestInterativeTools(ToolType toolType)
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(await GetAgentToolDefinition(toolType, projectClient))
         );
         OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseCreationOptions responseOptions = new()
         {
             Agent = agentVersion,
         };
-        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[ToolType.FunctionCall]);
+        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
         List<ResponseItem> inputItems = [request];
         bool funcionCalled;
         bool functionWasCalled = false;
+        string previousResponse = default;
         OpenAIResponse response;
         do
         {
+            responseOptions.PreviousResponseId = previousResponse;
             response = await responseClient.CreateResponseAsync(
                 inputItems: inputItems,
                 options: responseOptions);
             response = await WaitForRun(responseClient, response);
+            inputItems.Clear();
+            previousResponse = response.Id;
             funcionCalled = false;
             foreach (ResponseItem responseItem in response.OutputItems)
             {
-                inputItems.Add(responseItem);
-                if (responseItem is FunctionCallResponseItem functionToolCall)
+                if (toolType == ToolType.FunctionCall && responseItem is FunctionCallResponseItem functionToolCall)
                 {
+                    //inputItems.Add(responseItem);
                     Assert.That(functionToolCall.FunctionName, Is.EqualTo("GetCityNicknameForTest"));
                     using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.FunctionArguments);
                     string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
@@ -794,11 +802,113 @@ public async Task TestToolChoiceWorks()
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
+                else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                {
+                    Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                    inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                    funcionCalled = true;
+                    functionWasCalled = true;
+                }
             }
         } while (funcionCalled);
         Assert.That(functionWasCalled, "The function was not called.");
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
-        Assert.That(response.GetOutputText().ToLower, Does.Contain(ExpectedOutput[ToolType.FunctionCall]), $"The output: \"{response.GetOutputText()}\" does not contain {ExpectedOutput[ToolType.FunctionCall]}");
+        if (ExpectedOutput.TryGetValue(toolType, out string expected))
+        {
+            Assert.That(response.GetOutputText().ToLower, Does.Contain(expected), $"The output: \"{response.GetOutputText()}\" does not contain {expected}");
+        }
+    }
+
+    [RecordedTest]
+    [TestCase(ToolType.FunctionCall)]
+    [TestCase(ToolType.MCP)]
+    [TestCase(ToolType.MCPConnection)]
+    public async Task TestInterativeToolsStreaming(ToolType toolType)
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+            agentName: AGENT_NAME,
+            options: new(await GetAgentToolDefinition(toolType, projectClient))
+        );
+        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ResponseCreationOptions responseOptions = new()
+        {
+            Agent = agentVersion,
+        };
+        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
+        List<ResponseItem> inputItems = [request];
+        bool funcionCalled=false;
+        bool functionWasCalled = false;
+        bool isStarted = false, isFinished=false, isStatusGood=false;
+        bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
+        string previousResponse = default;
+        do
+        {
+            ResponseCreationOptions opts = new()
+            {
+                PreviousResponseId = previousResponse,
+            };
+            await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(inputItems, opts))
+            {
+                if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
+                {
+                    isStarted = true;
+                }
+                else if (streamResponse is StreamingResponseOutputTextDoneUpdate textDoneUpdate)
+                {
+                    isFinished = true;
+                    Assert.That(textDoneUpdate.Text, Is.Not.Null.And.Not.Empty);
+                    if (ExpectedOutput.TryGetValue(toolType, out string expectedResponse))
+                    {
+                        Assert.That(Regex.Match(textDoneUpdate.Text.ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{textDoneUpdate.Text}\" does not contain {expectedResponse}");
+                    }
+                }
+                else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
+                {
+                    Assert.Fail($"The stream has failed: {errorUpdate.Message}");
+                }
+                else if (streamResponse is StreamingResponseCompletedUpdate streamResponseCompletedUpdate)
+                {
+                    funcionCalled = false;
+                    inputItems.Clear();
+                    Assert.That(streamResponseCompletedUpdate.Response.Status, Is.EqualTo(ResponseStatus.Completed));
+                    isStatusGood = true;
+                    foreach (ResponseItem responseItem in streamResponseCompletedUpdate.Response.OutputItems)
+                    {
+                        if (toolType == ToolType.FunctionCall && responseItem is FunctionCallResponseItem functionToolCall)
+                        {
+                            //inputItems.Add(responseItem);
+                            Assert.That(functionToolCall.FunctionName, Is.EqualTo("GetCityNicknameForTest"));
+                            using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.FunctionArguments);
+                            string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+                            inputItems.Add(ResponseItem.CreateFunctionCallOutputItem(
+                                callId: functionToolCall.CallId,
+                                functionOutput: GetCityNicknameForTest(locationArgument)
+                            ));
+                            funcionCalled = true;
+                            functionWasCalled = true;
+                        }
+                        else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+                        {
+                            Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
+                            inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                            funcionCalled = true;
+                            functionWasCalled = true;
+                        }
+                        previousResponse = streamResponseCompletedUpdate.Response.Id;
+                    }
+                }
+                if (expectedUpdateType is not null)
+                {
+                    updateFound |= streamResponse.GetType() == expectedUpdateType;
+                }
+            }
+        } while (funcionCalled);
+        Assert.That(updateFound, Is.True, $"The update of type {expectedUpdateType} was not found.");
+        Assert.That(isStarted, Is.True, "The stream did not started.");
+        Assert.That(isFinished, Is.True, "The stream did not finished.");
+        Assert.That(isStatusGood, Is.True, "No StreamingResponseCompletedUpdate were met.");
+        Assert.That(functionWasCalled, "The function was not called.");
     }
 
     private static ComputerCallOutputResponseItem ProcessComputerUseCallTest<T>(ComputerCallResponseItem item, IReadOnlyDictionary<string, T> screenshots)

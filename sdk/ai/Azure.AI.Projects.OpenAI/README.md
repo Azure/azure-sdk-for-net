@@ -33,6 +33,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Web Search](#web-search)
   - [Bing Grounding](#bing-grounding)
   - [Bing Custom Search](#bing-custom-search)
+  - [MCP tool](#mcp-tool)
+  - [MCP tool with project connection](#mcp-tool-with-project-connection)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -914,6 +916,98 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 ```
 
 Sending request and formatting the response is done the same way as in Bing Grounding.
+
+## MCP tool
+The `MCPTool` allows Agent to communicate with third party services using [Model Context Protocol (MCP)](https://learn.microsoft.com/windows/ai/mcp/overview).
+To use MCP we need to create agent definition with the `MCPTool`.
+
+```C# Snippet:Sample_CreateAgent_MCPTool_Async
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
+    Tools = { ResponseTool.CreateMcpTool(
+        serverLabel: "api-specs",
+        serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+    )) }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+Note that in this scenario we are using `GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval`, which means that any calls to the MCP server need to be approved.
+Because of this setup we will need to get the response and check if we need to approve the call. If no calls were made, we are safe to output the Agent result.
+
+```C# Snippet:Sample_CreateResponse_MCPTool_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+
+ResponseItem request = ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme");
+List<ResponseItem> inputItems = [request];
+bool mcpCalled = false;
+string previousResponseId = default;
+OpenAIResponse response;
+do
+{
+    ResponseCreationOptions options = new()
+    {
+        PreviousResponseId = previousResponseId,
+    };
+    response = await responseClient.CreateResponseAsync(
+        inputItems: inputItems,
+        options
+    );
+    previousResponseId = response.Id;
+    inputItems.Clear();
+    mcpCalled = false;
+    foreach (ResponseItem responseItem in response.OutputItems)
+    {
+        if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+        {
+            mcpCalled = true;
+            if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
+            {
+                Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
+                // Automatically approve the MCP request to allow the agent to proceed
+                // In production, you might want to implement more sophisticated approval logic
+                inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+            }
+            else
+            {
+                Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
+                inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+            }
+        }
+    }
+} while (mcpCalled);
+Console.WriteLine(response.GetOutputText());
+```
+
+## MCP tool with project connection
+Running MCP tool with project connection allows you to connect to the MCP servers, requiring authentication. The only difference from
+the previous example is that we need to provide the connection name. To create connection valid for GitHub please log in to your GitHub profile, click on the profile picture at the upper right corner and select "Settings". At the left panel click "Developer Settings", select "Personal access tokens > Tokens (classic)". At the top choose "Generate new token" and enter password and create a token, which can read public repositories. **Save the token, or keep the page open as once the page is closed, token cannot be shown again!**
+In the Azure portal open Microsoft Foundry you are using, at the left panel select "Management center" and then select "Connected resources". Create new connection of "Custom keys" type; name it and add a key value pair. Set the key name `Authorization` and the value should have a form of `Bearer your_github_token`.
+When the connection is created, we can set it on the MCPTool and use it in `PromptAgentDefinition`.
+
+```C# Snippet:Sample_CreateAgent_MCPTool_ProjectConnection_Async
+McpTool tool = ResponseTool.CreateMcpTool(
+        serverLabel: "api-specs",
+        serverUri: new Uri("https://api.githubcopilot.com/mcp"),
+        toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+    ));
+tool.ProjectConnectionId = mcpProjectConnectionName;
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks.",
+    Tools = { tool }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+In this scenario the agent can be asked questions about GitHub profile, the token is attributed to. The responses from Agent with project connection should be
+handled the same way as described in the MCP tool section.
 
 ## Tracing
 **Note:** The tracing functionality is currently in preview with limited scope. Only agent creation operations generate dedicated gen_ai traces currently. As a preview feature, the trace structure including spans, attributes, and events may change in future releases.

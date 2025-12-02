@@ -43,6 +43,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         BingGrounding,
         BingGroundingCustom,
         MCP,
+        MCPConnection,
         OpenAPI,
         A2A,
         BrowserAutomation,
@@ -80,6 +81,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
         {ToolType.Sharepoint, "Hello, summarize the key points of the first document in the list."},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
+        {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
+        {ToolType.MCPConnection, "How many follower on github do I have?"},
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -104,6 +107,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.MicrosoftFabric, "You are helpful agent."},
         {ToolType.Sharepoint, "You are helpful agent."},
         {ToolType.CodeInterpreter, "You are helpful agent."},
+        {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
+        {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
     };
 
     public Dictionary<ToolType, string> ExpectedOutput = new()
@@ -126,7 +131,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
 
     public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
     {
-        {ToolType.FileSearch, typeof(StreamingResponseFileSearchCallCompletedUpdate) }
+        {ToolType.FileSearch, typeof(StreamingResponseFileSearchCallCompletedUpdate) },
+        {ToolType.MCP, typeof(StreamingResponseMcpCallCompletedUpdate)},
+        {ToolType.MCPConnection, typeof(StreamingResponseMcpCallCompletedUpdate)},
+        {ToolType.FunctionCall, typeof(StreamingResponseFunctionCallArgumentsDoneUpdate)},
     };
 
     public Dictionary<ToolType, Type> ExpectedAnnotations = new()
@@ -314,7 +322,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return store;
     }
 
-    private AzureAISearchToolIndex GetAISearchIndex(AIProjectClient projectClient)
+    private AzureAISearchToolIndex GetAISearchIndex()
     {
         AzureAISearchToolIndex index = new()
         {
@@ -325,6 +333,17 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             QueryType = AzureAISearchQueryType.Simple
         };
         return index;
+    }
+
+    private McpTool GetProjectConnectedMCPTool()
+    {
+        McpTool tool = ResponseTool.CreateMcpTool(
+            serverLabel: "api-specs",
+            serverUri: new Uri("https://api.githubcopilot.com/mcp"),
+            toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+        ));
+        tool.ProjectConnectionId = TestEnvironment.MCP_PROJECT_CONNECTION_NAME;
+        return tool;
     }
 
     /// <summary>
@@ -383,13 +402,19 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             ),
             ToolType.WebSearch => ResponseTool.CreateWebSearchTool(WebSearchToolLocation.CreateApproximateLocation(country: "US", region: "Pennsylvania", city: "Centralia")),
             ToolType.Memory => new MemorySearchTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
-            ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex(projectClient)])),
+            ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
             ToolType.BingGrounding => new BingGroundingAgentTool(new BingGroundingSearchToolOptions(
                 searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.BING_CONNECTION_NAME).Id)]
             )),
             ToolType.BingGroundingCustom => new BingCustomSearchAgentTool(new BingCustomSearchToolParameters(
                 searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.CUSTOM_BING_CONNECTION_NAME).Id, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
+            ToolType.MCP => ResponseTool.CreateMcpTool(
+                serverLabel: "api-specs",
+                serverUri: new Uri("https://gitmcp.io/Azure/azure-rest-api-specs"),
+                toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
+            )),
+            ToolType.MCPConnection => GetProjectConnectedMCPTool(),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
