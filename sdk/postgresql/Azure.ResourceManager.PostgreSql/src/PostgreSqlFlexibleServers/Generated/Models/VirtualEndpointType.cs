@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The endpoint type for the virtual endpoint. </summary>
+    /// <summary> Type of endpoint for the virtual endpoints. </summary>
     public readonly partial struct VirtualEndpointType : IEquatable<VirtualEndpointType>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         private const string ReadWriteValue = "ReadWrite";
 
-        /// <summary> ReadWrite. </summary>
+        /// <summary> Read-write endpoint. </summary>
         public static VirtualEndpointType ReadWrite { get; } = new VirtualEndpointType(ReadWriteValue);
         /// <summary> Determines if two <see cref="VirtualEndpointType"/> values are the same. </summary>
         public static bool operator ==(VirtualEndpointType left, VirtualEndpointType right) => left.Equals(right);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Flag to enable / disable Storage Auto grow for flexible server. </summary>
+    /// <summary> Flag to enable or disable the automatic growth of storage size of a server when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
     public readonly partial struct StorageAutoGrow : IEquatable<StorageAutoGrow>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Server should automatically grow storage size when available space is nearing zero and conditions allow for automatically growing storage size. </summary>
         public static StorageAutoGrow Enabled { get; } = new StorageAutoGrow(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary> Server should not automatically grow storage size when available space is nearing zero. </summary>
         public static StorageAutoGrow Disabled { get; } = new StorageAutoGrow(DisabledValue);
         /// <summary> Determines if two <see cref="StorageAutoGrow"/> values are the same. </summary>
         public static bool operator ==(StorageAutoGrow left, StorageAutoGrow right) => left.Equals(right);

@@ -22,7 +22,7 @@ enable-bicep-serialization: true
 ``` yaml $(tag) == 'package-2020-01-01'
 
 namespace: Azure.ResourceManager.PostgreSql
-require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b24c97bfc136b01dd46a1c8ddcecd0bb5a1ab152/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSql/Generated
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
@@ -159,7 +159,7 @@ directive:
 ``` yaml $(tag) == 'package-flexibleserver-2025-08-01'
 
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/6c25a1834c32a6810e9b9408b3a2899ecb7dc66c/specification/postgresql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b24c97bfc136b01dd46a1c8ddcecd0bb5a1ab152/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated

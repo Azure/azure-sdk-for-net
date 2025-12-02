@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string PlannedSwitchoverValue = "PlannedSwitchover";
         private const string ForcedSwitchoverValue = "ForcedSwitchover";
 
-        /// <summary> PlannedFailover. </summary>
+        /// <summary> Triggers a failover from primary to standby without killing the primary database process first. This is a graceful failover that attempts to preserve data consistency. </summary>
         public static PostgreSqlFlexibleServerFailoverMode PlannedFailover { get; } = new PostgreSqlFlexibleServerFailoverMode(PlannedFailoverValue);
-        /// <summary> ForcedFailover. </summary>
+        /// <summary> Kills the primary database process first, then triggers the failover. This is more aggressive and used when the primary is unresponsive or in an unhealthy state. </summary>
         public static PostgreSqlFlexibleServerFailoverMode ForcedFailover { get; } = new PostgreSqlFlexibleServerFailoverMode(ForcedFailoverValue);
-        /// <summary> PlannedSwitchover. </summary>
+        /// <summary> Similar to 'PlannedFailover' but prefers a switch over operation where roles are swapped between primary and standby. </summary>
         public static PostgreSqlFlexibleServerFailoverMode PlannedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(PlannedSwitchoverValue);
-        /// <summary> ForcedSwitchover. </summary>
+        /// <summary> Kills the primary database process and then triggers a switch over with role swapping. </summary>
         public static PostgreSqlFlexibleServerFailoverMode ForcedSwitchover { get; } = new PostgreSqlFlexibleServerFailoverMode(ForcedSwitchoverValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerFailoverMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerFailoverMode left, PostgreSqlFlexibleServerFailoverMode right) => left.Equals(right);

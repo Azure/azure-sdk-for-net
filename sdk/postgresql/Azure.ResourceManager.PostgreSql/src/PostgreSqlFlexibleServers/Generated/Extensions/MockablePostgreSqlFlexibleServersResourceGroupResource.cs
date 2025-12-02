@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

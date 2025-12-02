@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The principal type used to represent the type of Active Directory Administrator. </summary>
+    /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
     public readonly partial struct PostgreSqlFlexibleServerPrincipalType : IEquatable<PostgreSqlFlexibleServerPrincipalType>
     {
         private readonly string _value;
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string GroupValue = "Group";
         private const string ServicePrincipalValue = "ServicePrincipal";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> The principal type is not known or not specified. </summary>
         public static PostgreSqlFlexibleServerPrincipalType Unknown { get; } = new PostgreSqlFlexibleServerPrincipalType(UnknownValue);
-        /// <summary> User. </summary>
+        /// <summary> A Microsoft Entra user. </summary>
         public static PostgreSqlFlexibleServerPrincipalType User { get; } = new PostgreSqlFlexibleServerPrincipalType(UserValue);
-        /// <summary> Group. </summary>
+        /// <summary> A Microsoft Entra group. </summary>
         public static PostgreSqlFlexibleServerPrincipalType Group { get; } = new PostgreSqlFlexibleServerPrincipalType(GroupValue);
-        /// <summary> ServicePrincipal. </summary>
+        /// <summary> A Microsoft Entra service principal, typically representing an application or service identity. </summary>
         public static PostgreSqlFlexibleServerPrincipalType ServicePrincipal { get; } = new PostgreSqlFlexibleServerPrincipalType(ServicePrincipalValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPrincipalType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPrincipalType left, PostgreSqlFlexibleServerPrincipalType right) => left.Equals(right);

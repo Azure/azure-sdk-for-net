@@ -10,32 +10,38 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Server version capabilities. </summary>
+    /// <summary> Capabilities in terms of major versions of PostgreSQL database engine. </summary>
     public partial class PostgreSqlFlexibleServerServerVersionCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
         internal PostgreSqlFlexibleServerServerVersionCapability()
         {
             SupportedVersionsToUpgrade = new ChangeTrackingList<string>();
+            SupportedFeatures = new ChangeTrackingList<SupportedFeature>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Server version. </param>
-        /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
-        internal PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IReadOnlyList<string> supportedVersionsToUpgrade) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        /// <param name="name"> Major version of PostgreSQL database engine. </param>
+        /// <param name="supportedVersionsToUpgrade"> Major versions of PostgreSQL database engine to which this version can be automatically upgraded. </param>
+        /// <param name="supportedFeatures"> Features supported. </param>
+        internal PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IReadOnlyList<string> supportedVersionsToUpgrade, IReadOnlyList<SupportedFeature> supportedFeatures) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
             SupportedVersionsToUpgrade = supportedVersionsToUpgrade;
+            SupportedFeatures = supportedFeatures;
         }
 
-        /// <summary> Server version. </summary>
+        /// <summary> Major version of PostgreSQL database engine. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> Supported servers versions to upgrade. </summary>
+        /// <summary> Major versions of PostgreSQL database engine to which this version can be automatically upgraded. </summary>
         [WirePath("supportedVersionsToUpgrade")]
         public IReadOnlyList<string> SupportedVersionsToUpgrade { get; }
+        /// <summary> Features supported. </summary>
+        [WirePath("supportedFeatures")]
+        public IReadOnlyList<SupportedFeature> SupportedFeatures { get; }
     }
 }

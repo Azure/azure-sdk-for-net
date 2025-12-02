@@ -52,6 +52,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFeatures))
+            {
+                writer.WritePropertyName("supportedFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFeatures)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         PostgreSqlFlexibleServerServerVersionCapability IJsonModel<PostgreSqlFlexibleServerServerVersionCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,6 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             string name = default;
             IReadOnlyList<string> supportedVersionsToUpgrade = default;
+            IReadOnlyList<SupportedFeature> supportedFeatures = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -101,6 +112,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     supportedVersionsToUpgrade = array;
                     continue;
                 }
+                if (property.NameEquals("supportedFeatures"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SupportedFeature> array = new List<SupportedFeature>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SupportedFeature.DeserializeSupportedFeature(item, options));
+                    }
+                    supportedFeatures = array;
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -121,7 +146,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlFlexibleServerServerVersionCapability(status, reason, serializedAdditionalRawData, name, supportedVersionsToUpgrade ?? new ChangeTrackingList<string>());
+            return new PostgreSqlFlexibleServerServerVersionCapability(
+                status,
+                reason,
+                serializedAdditionalRawData,
+                name,
+                supportedVersionsToUpgrade ?? new ChangeTrackingList<string>(),
+                supportedFeatures ?? new ChangeTrackingList<SupportedFeature>());
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -188,6 +219,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 builder.AppendLine($"    '{item}'");
                             }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFeatures), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedFeatures))
+                {
+                    if (SupportedFeatures.Any())
+                    {
+                        builder.Append("  supportedFeatures: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedFeatures)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedFeatures: ");
                         }
                         builder.AppendLine("  ]");
                     }

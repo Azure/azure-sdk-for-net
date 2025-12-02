@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Sku information related properties of a server. </summary>
+    /// <summary> Compute information of a server. </summary>
     public partial class PostgreSqlFlexibleServersServerSku
     {
         /// <summary>
@@ -51,8 +51,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersServerSku"/>. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
-        /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
+        /// <param name="name"> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </param>
+        /// <param name="tier"> Tier of the compute assigned to a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServersServerSku(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </summary>
+        /// <summary> Compute tier and size of the database server. This object is empty for an Azure Database for PostgreSQL single server. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The tier of the particular SKU, e.g. Burstable. </summary>
+        /// <summary> Tier of the compute assigned to a server. </summary>
         [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier? Tier { get; }
     }

@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a configuration of server.
+        /// Gets information about a specific configuration (also known as server parameter) of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -129,7 +130,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a configuration of server.
+        /// Gets information about a specific configuration (also known as server parameter) of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -141,7 +142,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +170,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Updates a configuration of a server.
+        /// Updates the value assigned to a specific modifiable configuration (also known as server parameter) of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,7 +182,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -190,19 +191,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The required parameters for updating a server configuration. </param>
+        /// <param name="configurationForUpdate"> Parameters required to update the value of a specific modifiable configuration (also known as server parameter). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerConfigurationResource>> UpdateAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationForUpdate"/> is null. </exception>
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerConfigurationResource>> UpdateAsync(WaitUntil waitUntil, ConfigurationForUpdate configurationForUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(configurationForUpdate, nameof(configurationForUpdate));
 
             using var scope = _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = await _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource>(new PostgreSqlFlexibleServerConfigurationOperationSource(Client), _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, configurationForUpdate, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource>(new PostgreSqlFlexibleServerConfigurationOperationSource(Client), _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, configurationForUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -215,7 +216,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Updates a configuration of a server.
+        /// Updates the value assigned to a specific modifiable configuration (also known as server parameter) of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -227,7 +228,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -236,19 +237,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The required parameters for updating a server configuration. </param>
+        /// <param name="configurationForUpdate"> Parameters required to update the value of a specific modifiable configuration (also known as server parameter). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServerConfigurationResource> Update(WaitUntil waitUntil, PostgreSqlFlexibleServerConfigurationData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationForUpdate"/> is null. </exception>
+        public virtual ArmOperation<PostgreSqlFlexibleServerConfigurationResource> Update(WaitUntil waitUntil, ConfigurationForUpdate configurationForUpdate, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(data, nameof(data));
+            Argument.AssertNotNull(configurationForUpdate, nameof(configurationForUpdate));
 
             using var scope = _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerConfigurationResource.Update");
             scope.Start();
             try
             {
-                var response = _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource>(new PostgreSqlFlexibleServerConfigurationOperationSource(Client), _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, configurationForUpdate, cancellationToken);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerConfigurationResource>(new PostgreSqlFlexibleServerConfigurationOperationSource(Client), _postgreSqlFlexibleServerConfigurationConfigurationsClientDiagnostics, Pipeline, _postgreSqlFlexibleServerConfigurationConfigurationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, configurationForUpdate).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The mode to create a new PostgreSQL server. </summary>
+    /// <summary> Creation mode of a new server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerCreateMode : IEquatable<PostgreSqlFlexibleServerCreateMode>
     {
         private readonly string _value;
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ReplicaValue = "Replica";
         private const string ReviveDroppedValue = "ReviveDropped";
 
-        /// <summary> Default. </summary>
+        /// <summary> If the operation is triggered on a non-existing server, it's equivalent to 'Create'. If the operation is triggered on an existing server, it's equivalent to 'Update'. </summary>
         public static PostgreSqlFlexibleServerCreateMode Default { get; } = new PostgreSqlFlexibleServerCreateMode(DefaultValue);
-        /// <summary> Create. </summary>
+        /// <summary> Operation creates a new server. </summary>
         public static PostgreSqlFlexibleServerCreateMode Create { get; } = new PostgreSqlFlexibleServerCreateMode(CreateValue);
-        /// <summary> Update. </summary>
+        /// <summary> Operation updates an existing server. </summary>
         public static PostgreSqlFlexibleServerCreateMode Update { get; } = new PostgreSqlFlexibleServerCreateMode(UpdateValue);
-        /// <summary> PointInTimeRestore. </summary>
+        /// <summary> Operation restores an existing backup of an existing server. This operation creates a new server, and then restores on it the backup of an existing server at a specific point in time. </summary>
         public static PostgreSqlFlexibleServerCreateMode PointInTimeRestore { get; } = new PostgreSqlFlexibleServerCreateMode(PointInTimeRestoreValue);
-        /// <summary> GeoRestore. </summary>
+        /// <summary> Operation restores an existing backup of an existing server, on the paired region of the existing server. This operation creates a new server on the paired region of the existing server, and then restores on it the backup of an existing server at a specific point in time, in a different region. This operation is only supported on existing servers that were created with geographically redundant backups enabled. </summary>
         public static PostgreSqlFlexibleServerCreateMode GeoRestore { get; } = new PostgreSqlFlexibleServerCreateMode(GeoRestoreValue);
-        /// <summary> Replica. </summary>
+        /// <summary> Operation creates a replica of an existing server. This operation creates a new server, restores a base backup of the existing server (referred to as primary), and configures physical replication to asynchronously stream all changes which are recorded in the transaction log of the primary. </summary>
         public static PostgreSqlFlexibleServerCreateMode Replica { get; } = new PostgreSqlFlexibleServerCreateMode(ReplicaValue);
-        /// <summary> ReviveDropped. </summary>
+        /// <summary> Operation creates a new server, initialized with the backup of a server that was recently deleted. </summary>
         public static PostgreSqlFlexibleServerCreateMode ReviveDropped { get; } = new PostgreSqlFlexibleServerCreateMode(ReviveDroppedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerCreateMode"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerCreateMode left, PostgreSqlFlexibleServerCreateMode right) => left.Equals(right);
