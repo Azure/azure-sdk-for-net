@@ -157,9 +157,6 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      # - pwsh: |
-      #     dotnet tool restore
-
       - pwsh: >
           ./eng/scripts/runwithdevopslogging.ps1
           dotnet test eng/service.proj

@@ -159,25 +159,6 @@ public class TestProxyProcess
             {
                 var error = _errorBuffer.ToString();
                 _errorBuffer.Clear();
-                if (error.Contains("dotnet tool restore"))
-                {
-                    var processInfo2 = new ProcessStartInfo
-                    {
-                        FileName = s_dotNetExe,
-                        Arguments = "tool list --local",
-                        UseShellExecute = false,
-                        RedirectStandardOutput = true,
-                        RedirectStandardError = true,
-                        CreateNoWindow = true
-                    };
-                    using var process2 = Process.Start(processInfo2);
-                    var standardOutput2 = process2!.StandardOutput.ReadToEnd();
-                    Console.WriteLine($"dotnet tool list --local output:\n{standardOutput2}");
-
-                    throw new InvalidOperationException("An error occurred in the test proxy. " +
-                        $"The full error is: {error} | the wd is {Directory.GetCurrentDirectory()} | The repo root is {TestEnvironment.RepositoryRoot}" + Environment.NewLine +
-                        $"list tool output: {standardOutput2}");
-                }
                 throw new InvalidOperationException($"An error occurred in the test proxy: {error}");
             }
 
