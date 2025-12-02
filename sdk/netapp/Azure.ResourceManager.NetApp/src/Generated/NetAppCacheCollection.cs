@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CacheResource"/> and their operations.
-    /// Each <see cref="CacheResource"/> in the collection will belong to the same instance of <see cref="CapacityPoolResource"/>.
-    /// To get a <see cref="CacheCollection"/> instance call the GetCaches method from an instance of <see cref="CapacityPoolResource"/>.
+    /// A class representing a collection of <see cref="NetAppCacheResource"/> and their operations.
+    /// Each <see cref="NetAppCacheResource"/> in the collection will belong to the same instance of <see cref="CapacityPoolResource"/>.
+    /// To get a <see cref="NetAppCacheCollection"/> instance call the GetNetAppCaches method from an instance of <see cref="CapacityPoolResource"/>.
     /// </summary>
-    public partial class CacheCollection : ArmCollection, IEnumerable<CacheResource>, IAsyncEnumerable<CacheResource>
+    public partial class NetAppCacheCollection : ArmCollection, IEnumerable<NetAppCacheResource>, IAsyncEnumerable<NetAppCacheResource>
     {
-        private readonly ClientDiagnostics _cacheClientDiagnostics;
-        private readonly CachesRestOperations _cacheRestClient;
+        private readonly ClientDiagnostics _netAppCacheCachesClientDiagnostics;
+        private readonly CachesRestOperations _netAppCacheCachesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="CacheCollection"/> class for mocking. </summary>
-        protected CacheCollection()
+        /// <summary> Initializes a new instance of the <see cref="NetAppCacheCollection"/> class for mocking. </summary>
+        protected NetAppCacheCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="CacheCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetAppCacheCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal CacheCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal NetAppCacheCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _cacheClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", CacheResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(CacheResource.ResourceType, out string cacheApiVersion);
-            _cacheRestClient = new CachesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cacheApiVersion);
+            _netAppCacheCachesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppCacheResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(NetAppCacheResource.ResourceType, out string netAppCacheCachesApiVersion);
+            _netAppCacheCachesRestClient = new CachesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, netAppCacheCachesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CacheResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cacheName, CacheData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NetAppCacheResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string cacheName, NetAppCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.CreateOrUpdate");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _cacheRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NetAppArmOperation<CacheResource>(new CacheOperationSource(Client), _cacheClientDiagnostics, Pipeline, _cacheRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _netAppCacheCachesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetAppArmOperation<NetAppCacheResource>(new NetAppCacheOperationSource(Client), _netAppCacheCachesClientDiagnostics, Pipeline, _netAppCacheCachesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CacheResource> CreateOrUpdate(WaitUntil waitUntil, string cacheName, CacheData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NetAppCacheResource> CreateOrUpdate(WaitUntil waitUntil, string cacheName, NetAppCacheData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.CreateOrUpdate");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _cacheRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data, cancellationToken);
-                var operation = new NetAppArmOperation<CacheResource>(new CacheOperationSource(Client), _cacheClientDiagnostics, Pipeline, _cacheRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _netAppCacheCachesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data, cancellationToken);
+                var operation = new NetAppArmOperation<NetAppCacheResource>(new NetAppCacheOperationSource(Client), _netAppCacheCachesClientDiagnostics, Pipeline, _netAppCacheCachesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
-        public virtual async Task<Response<CacheResource>> GetAsync(string cacheName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppCacheResource>> GetAsync(string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.Get");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.Get");
             scope.Start();
             try
             {
-                var response = await _cacheRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken).ConfigureAwait(false);
+                var response = await _netAppCacheCachesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CacheResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppCacheResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
-        public virtual Response<CacheResource> Get(string cacheName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppCacheResource> Get(string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.Get");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.Get");
             scope.Start();
             try
             {
-                var response = _cacheRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken);
+                var response = _netAppCacheCachesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new CacheResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new NetAppCacheResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CacheResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CacheResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="NetAppCacheResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetAppCacheResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cacheRestClient.CreateListByCapacityPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cacheRestClient.CreateListByCapacityPoolsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CacheResource(Client, CacheData.DeserializeCacheData(e)), _cacheClientDiagnostics, Pipeline, "CacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppCacheCachesRestClient.CreateListByCapacityPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppCacheCachesRestClient.CreateListByCapacityPoolsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NetAppCacheResource(Client, NetAppCacheData.DeserializeNetAppCacheData(e)), _netAppCacheCachesClientDiagnostics, Pipeline, "NetAppCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CacheResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CacheResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="NetAppCacheResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetAppCacheResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _cacheRestClient.CreateListByCapacityPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cacheRestClient.CreateListByCapacityPoolsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CacheResource(Client, CacheData.DeserializeCacheData(e)), _cacheClientDiagnostics, Pipeline, "CacheCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppCacheCachesRestClient.CreateListByCapacityPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _netAppCacheCachesRestClient.CreateListByCapacityPoolsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NetAppCacheResource(Client, NetAppCacheData.DeserializeNetAppCacheData(e)), _netAppCacheCachesClientDiagnostics, Pipeline, "NetAppCacheCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.Exists");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _cacheRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _netAppCacheCachesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.NetApp
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.Exists");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.Exists");
             scope.Start();
             try
             {
-                var response = _cacheRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken);
+                var response = _netAppCacheCachesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
-        public virtual async Task<NullableResponse<CacheResource>> GetIfExistsAsync(string cacheName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<NetAppCacheResource>> GetIfExistsAsync(string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.GetIfExists");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _cacheRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _netAppCacheCachesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<CacheResource>(response.GetRawResponse());
-                return Response.FromValue(new CacheResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetAppCacheResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppCacheResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
-        public virtual NullableResponse<CacheResource> GetIfExists(string cacheName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<NetAppCacheResource> GetIfExists(string cacheName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(cacheName, nameof(cacheName));
 
-            using var scope = _cacheClientDiagnostics.CreateScope("CacheCollection.GetIfExists");
+            using var scope = _netAppCacheCachesClientDiagnostics.CreateScope("NetAppCacheCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _cacheRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken);
+                var response = _netAppCacheCachesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cacheName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<CacheResource>(response.GetRawResponse());
-                return Response.FromValue(new CacheResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<NetAppCacheResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppCacheResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        IEnumerator<CacheResource> IEnumerable<CacheResource>.GetEnumerator()
+        IEnumerator<NetAppCacheResource> IEnumerable<NetAppCacheResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.NetApp
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<CacheResource> IAsyncEnumerable<CacheResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<NetAppCacheResource> IAsyncEnumerable<NetAppCacheResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

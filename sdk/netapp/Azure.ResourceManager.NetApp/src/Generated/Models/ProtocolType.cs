@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Export policy rule. </summary>
+    /// <summary> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </summary>
     public readonly partial struct ProtocolType : IEquatable<ProtocolType>
     {
         private readonly string _value;

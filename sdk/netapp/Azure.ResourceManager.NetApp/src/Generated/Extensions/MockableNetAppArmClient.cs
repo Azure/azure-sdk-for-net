@@ -215,15 +215,15 @@ namespace Azure.ResourceManager.NetApp.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="CacheResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CacheResource.CreateResourceIdentifier" /> to create a <see cref="CacheResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="NetAppCacheResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetAppCacheResource.CreateResourceIdentifier" /> to create a <see cref="NetAppCacheResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CacheResource"/> object. </returns>
-        public virtual CacheResource GetCacheResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="NetAppCacheResource"/> object. </returns>
+        public virtual NetAppCacheResource GetNetAppCacheResource(ResourceIdentifier id)
         {
-            CacheResource.ValidateResourceId(id);
-            return new CacheResource(Client, id);
+            NetAppCacheResource.ValidateResourceId(id);
+            return new NetAppCacheResource(Client, id);
         }
 
         /// <summary>

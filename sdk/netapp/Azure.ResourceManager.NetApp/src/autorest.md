@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/97241c594f16e0915407b7dc85377e4e3b26b0b9/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/fa4de8af2faa4a809027619c6ec8ed45b1e0a761/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
 tag: package-preview-2025-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -122,6 +122,10 @@ prepend-rp-prefix:
   - BucketCredentialStatus
   - BucketFileSystemUser
   - BucketNfsUser
+  - Cache
+  - CacheList
+  - CacheUpdateProperties
+  - CacheProperties
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid

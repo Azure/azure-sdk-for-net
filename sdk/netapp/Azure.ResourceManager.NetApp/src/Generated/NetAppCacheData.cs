@@ -14,10 +14,10 @@ using Azure.ResourceManager.NetApp.Models;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing the Cache data model.
+    /// A class representing the NetAppCache data model.
     /// Cache resource
     /// </summary>
-    public partial class CacheData : TrackedResourceData
+    public partial class NetAppCacheData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.NetApp
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CacheData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="properties"> Cache properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public CacheData(AzureLocation location, CacheProperties properties) : base(location)
+        public NetAppCacheData(AzureLocation location, NetAppCacheProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.NetApp
             Zones = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="zones"> The availability zones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CacheProperties properties, ETag? etag, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetAppCacheData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetAppCacheProperties properties, ETag? etag, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Properties = properties;
             ETag = etag;
@@ -82,13 +82,13 @@ namespace Azure.ResourceManager.NetApp
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheData"/> for deserialization. </summary>
-        internal CacheData()
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheData"/> for deserialization. </summary>
+        internal NetAppCacheData()
         {
         }
 
         /// <summary> Cache properties. </summary>
-        public CacheProperties Properties { get; set; }
+        public NetAppCacheProperties Properties { get; set; }
         /// <summary> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </summary>
         public ETag? ETag { get; }
         /// <summary> The availability zones. </summary>

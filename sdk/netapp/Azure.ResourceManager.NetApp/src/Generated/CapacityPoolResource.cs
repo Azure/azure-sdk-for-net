@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.NetApp
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of CacheResources in the CapacityPool. </summary>
-        /// <returns> An object representing collection of CacheResources and their operations over a CacheResource. </returns>
-        public virtual CacheCollection GetCaches()
+        /// <summary> Gets a collection of NetAppCacheResources in the CapacityPool. </summary>
+        /// <returns> An object representing collection of NetAppCacheResources and their operations over a NetAppCacheResource. </returns>
+        public virtual NetAppCacheCollection GetNetAppCaches()
         {
-            return GetCachedClient(client => new CacheCollection(client, Id));
+            return GetCachedClient(client => new NetAppCacheCollection(client, Id));
         }
 
         /// <summary>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,9 +123,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<CacheResource>> GetCacheAsync(string cacheName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetAppCacheResource>> GetNetAppCacheAsync(string cacheName, CancellationToken cancellationToken = default)
         {
-            return await GetCaches().GetAsync(cacheName, cancellationToken).ConfigureAwait(false);
+            return await GetNetAppCaches().GetAsync(cacheName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetApp
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="CacheResource"/></description>
+        /// <description><see cref="NetAppCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,9 +154,9 @@ namespace Azure.ResourceManager.NetApp
         /// <exception cref="ArgumentNullException"> <paramref name="cacheName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="cacheName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<CacheResource> GetCache(string cacheName, CancellationToken cancellationToken = default)
+        public virtual Response<NetAppCacheResource> GetNetAppCache(string cacheName, CancellationToken cancellationToken = default)
         {
-            return GetCaches().Get(cacheName, cancellationToken);
+            return GetNetAppCaches().Get(cacheName, cancellationToken);
         }
 
         /// <summary> Gets a collection of NetAppVolumeResources in the CapacityPool. </summary>

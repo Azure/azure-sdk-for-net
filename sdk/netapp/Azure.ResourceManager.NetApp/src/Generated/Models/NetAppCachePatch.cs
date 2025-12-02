@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The type used for update operations of the Cache. </summary>
-    public partial class CachePatch
+    public partial class NetAppCachePatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CachePatch"/>. </summary>
-        public CachePatch()
+        /// <summary> Initializes a new instance of <see cref="NetAppCachePatch"/>. </summary>
+        public NetAppCachePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CachePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCachePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CachePatch(IDictionary<string, string> tags, CacheUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppCachePatch(IDictionary<string, string> tags, NetAppCacheUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Properties = properties;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        public CacheUpdateProperties Properties { get; set; }
+        public NetAppCacheUpdateProperties Properties { get; set; }
     }
 }

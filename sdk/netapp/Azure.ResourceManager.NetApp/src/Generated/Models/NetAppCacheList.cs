@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> List of Cache resources. </summary>
-    internal partial class CacheList
+    internal partial class NetAppCacheList
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,34 +46,34 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CacheList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheList"/>. </summary>
         /// <param name="value"> The Cache items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CacheList(IEnumerable<CacheData> value)
+        internal NetAppCacheList(IEnumerable<NetAppCacheData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheList"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheList"/>. </summary>
         /// <param name="value"> The Cache items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheList(IReadOnlyList<CacheData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppCacheList(IReadOnlyList<NetAppCacheData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheList"/> for deserialization. </summary>
-        internal CacheList()
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheList"/> for deserialization. </summary>
+        internal NetAppCacheList()
         {
         }
 
         /// <summary> The Cache items on this page. </summary>
-        public IReadOnlyList<CacheData> Value { get; }
+        public IReadOnlyList<NetAppCacheData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

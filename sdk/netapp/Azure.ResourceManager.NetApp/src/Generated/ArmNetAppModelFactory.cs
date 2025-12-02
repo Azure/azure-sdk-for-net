@@ -1042,7 +1042,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetApp.CacheData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetApp.NetAppCacheData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -1052,13 +1052,13 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="properties"> Cache properties. </param>
         /// <param name="etag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <returns> A new <see cref="NetApp.CacheData"/> instance for mocking. </returns>
-        public static CacheData CacheData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CacheProperties properties = null, ETag? etag = null, IEnumerable<string> zones = null)
+        /// <returns> A new <see cref="NetApp.NetAppCacheData"/> instance for mocking. </returns>
+        public static NetAppCacheData NetAppCacheData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetAppCacheProperties properties = null, ETag? etag = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new CacheData(
+            return new NetAppCacheData(
                 id,
                 name,
                 resourceType,
@@ -1071,11 +1071,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CacheProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.NetAppCacheProperties"/>. </summary>
         /// <param name="filepath"> The file path of the Cache. </param>
         /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
-        /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="exportRules"> Set of export policy rules. </param>
+        /// <param name="protocolTypes"> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="cacheState"> Azure NetApp Files Cache lifecycle management. </param>
         /// <param name="cacheSubnetResourceId"> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </param>
@@ -1096,17 +1096,17 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
-        /// <returns> A new <see cref="Models.CacheProperties"/> instance for mocking. </returns>
-        public static CacheProperties CacheProperties(string filepath = null, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportPolicy = null, IEnumerable<ProtocolType> protocolTypes = null, CacheProvisioningState? provisioningState = null, CacheLifeCycleState? cacheState = null, ResourceIdentifier cacheSubnetResourceId = null, ResourceIdentifier peeringSubnetResourceId = null, IEnumerable<CacheMountTargetProperties> mountTargets = null, KerberosState? kerberos = null, SmbSettings smbSettings = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, long? maximumNumberOfFiles = null, EncryptionState? encryption = null, NetAppVolumeLanguage? language = null, LdapState? ldap = null, LdapServerType? ldapServerType = null, OriginClusterInformation originClusterInformation = null, CifsChangeNotifyState? cifsChangeNotifications = null, GlobalFileLockingState? globalFileLocking = null, EnableWriteBackState? writeBack = null)
+        /// <returns> A new <see cref="Models.NetAppCacheProperties"/> instance for mocking. </returns>
+        public static NetAppCacheProperties NetAppCacheProperties(string filepath = null, long size = default, IEnumerable<NetAppVolumeExportPolicyRule> exportRules = null, IEnumerable<ProtocolType> protocolTypes = null, CacheProvisioningState? provisioningState = null, CacheLifeCycleState? cacheState = null, ResourceIdentifier cacheSubnetResourceId = null, ResourceIdentifier peeringSubnetResourceId = null, IEnumerable<CacheMountTargetProperties> mountTargets = null, KerberosState? kerberos = null, SmbSettings smbSettings = null, float? throughputMibps = null, float? actualThroughputMibps = null, NetAppEncryptionKeySource encryptionKeySource = default, ResourceIdentifier keyVaultPrivateEndpointResourceId = null, long? maximumNumberOfFiles = null, EncryptionState? encryption = null, NetAppVolumeLanguage? language = null, LdapState? ldap = null, LdapServerType? ldapServerType = null, OriginClusterInformation originClusterInformation = null, CifsChangeNotifyState? cifsChangeNotifications = null, GlobalFileLockingState? globalFileLocking = null, EnableWriteBackState? writeBack = null)
         {
-            exportPolicy ??= new List<NetAppVolumeExportPolicyRule>();
+            exportRules ??= new List<NetAppVolumeExportPolicyRule>();
             protocolTypes ??= new List<ProtocolType>();
             mountTargets ??= new List<CacheMountTargetProperties>();
 
-            return new CacheProperties(
+            return new NetAppCacheProperties(
                 filepath,
                 size,
-                exportPolicy?.ToList(),
+                exportRules != null ? new CachePropertiesExportPolicy(exportRules?.ToList(), serializedAdditionalRawData: null) : null,
                 protocolTypes?.ToList(),
                 provisioningState,
                 cacheState,

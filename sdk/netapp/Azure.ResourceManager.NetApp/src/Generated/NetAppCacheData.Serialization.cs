@@ -16,11 +16,11 @@ using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class CacheData : IUtf8JsonSerializable, IJsonModel<CacheData>
+    public partial class NetAppCacheData : IUtf8JsonSerializable, IJsonModel<NetAppCacheData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CacheData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppCacheData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CacheData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NetAppCacheData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppCacheData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        CacheData IJsonModel<CacheData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NetAppCacheData IJsonModel<NetAppCacheData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CacheData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppCacheData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCacheData(document.RootElement, options);
+            return DeserializeNetAppCacheData(document.RootElement, options);
         }
 
-        internal static CacheData DeserializeCacheData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NetAppCacheData DeserializeNetAppCacheData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 return null;
             }
-            CacheProperties properties = default;
+            NetAppCacheProperties properties = default;
             ETag? etag = default;
             IList<string> zones = default;
             IDictionary<string, string> tags = default;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = CacheProperties.DeserializeCacheProperties(property.Value, options);
+                    properties = NetAppCacheProperties.DeserializeNetAppCacheProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CacheData(
+            return new NetAppCacheData(
                 id,
                 name,
                 type,
@@ -180,35 +180,35 @@ namespace Azure.ResourceManager.NetApp
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CacheData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NetAppCacheData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CacheData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppCacheData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CacheData IPersistableModel<CacheData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NetAppCacheData IPersistableModel<NetAppCacheData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CacheData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppCacheData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCacheData(document.RootElement, options);
+                        return DeserializeNetAppCacheData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CacheData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppCacheData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CacheData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NetAppCacheData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

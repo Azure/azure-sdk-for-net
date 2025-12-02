@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> The updatable properties of the Cache. </summary>
-    public partial class CacheUpdateProperties
+    public partial class NetAppCacheUpdateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,24 +46,23 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CacheUpdateProperties"/>. </summary>
-        public CacheUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheUpdateProperties"/>. </summary>
+        public NetAppCacheUpdateProperties()
         {
-            ExportPolicy = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
             ProtocolTypes = new ChangeTrackingList<ProtocolType>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheUpdateProperties"/>. </summary>
         /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes"> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </param>
         /// <param name="smbSettings"> SMB information for the cache. </param>
         /// <param name="throughputMibps"> Maximum throughput in MiB/s that can be achieved by this cache volume and this will be accepted as input only for manual qosType cache. </param>
         /// <param name="keyVaultPrivateEndpointResourceId"> The resource ID of private endpoint for KeyVault. It must reside in the same VNET as the volume. Only applicable if encryptionKeySource = 'Microsoft.KeyVault'. </param>
         /// <param name="cifsChangeNotifications"> Flag indicating whether a CIFS change notification is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheUpdateProperties(long? size, IList<NetAppVolumeExportPolicyRule> exportPolicy, IList<ProtocolType> protocolTypes, SmbSettings smbSettings, float? throughputMibps, ResourceIdentifier keyVaultPrivateEndpointResourceId, CifsChangeNotifyState? cifsChangeNotifications, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppCacheUpdateProperties(long? size, CachePropertiesExportPolicy exportPolicy, IList<ProtocolType> protocolTypes, SmbSettings smbSettings, float? throughputMibps, ResourceIdentifier keyVaultPrivateEndpointResourceId, CifsChangeNotifyState? cifsChangeNotifications, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Size = size;
             ExportPolicy = exportPolicy;
@@ -79,8 +78,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </summary>
         public long? Size { get; set; }
         /// <summary> Set of export policy rules. </summary>
-        public IList<NetAppVolumeExportPolicyRule> ExportPolicy { get; }
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        internal CachePropertiesExportPolicy ExportPolicy { get; set; }
+        /// <summary> Export policy rule. </summary>
+        public IList<NetAppVolumeExportPolicyRule> ExportRules
+        {
+            get
+            {
+                if (ExportPolicy is null)
+                    ExportPolicy = new CachePropertiesExportPolicy();
+                return ExportPolicy.Rules;
+            }
+        }
+
+        /// <summary> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </summary>
         public IList<ProtocolType> ProtocolTypes { get; }
         /// <summary> SMB information for the cache. </summary>
         public SmbSettings SmbSettings { get; set; }

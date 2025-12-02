@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetApp.Models
 {
     /// <summary> Cache resource properties. </summary>
-    public partial class CacheProperties
+    public partial class NetAppCacheProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CacheProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheProperties"/>. </summary>
         /// <param name="filepath"> The file path of the Cache. </param>
         /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
         /// <param name="cacheSubnetResourceId"> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </param>
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="encryptionKeySource"> Source of key used to encrypt data in the cache. Applicable if NetApp account has encryption.keySource = 'Microsoft.KeyVault'. Possible values (case-insensitive) are: 'Microsoft.NetApp, Microsoft.KeyVault'. </param>
         /// <param name="originClusterInformation"> Origin cluster information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filepath"/>, <paramref name="cacheSubnetResourceId"/>, <paramref name="peeringSubnetResourceId"/> or <paramref name="originClusterInformation"/> is null. </exception>
-        public CacheProperties(string filepath, long size, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, NetAppEncryptionKeySource encryptionKeySource, OriginClusterInformation originClusterInformation)
+        public NetAppCacheProperties(string filepath, long size, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, NetAppEncryptionKeySource encryptionKeySource, OriginClusterInformation originClusterInformation)
         {
             Argument.AssertNotNull(filepath, nameof(filepath));
             Argument.AssertNotNull(cacheSubnetResourceId, nameof(cacheSubnetResourceId));
@@ -63,7 +63,6 @@ namespace Azure.ResourceManager.NetApp.Models
 
             Filepath = filepath;
             Size = size;
-            ExportPolicy = new ChangeTrackingList<NetAppVolumeExportPolicyRule>();
             ProtocolTypes = new ChangeTrackingList<ProtocolType>();
             CacheSubnetResourceId = cacheSubnetResourceId;
             PeeringSubnetResourceId = peeringSubnetResourceId;
@@ -72,11 +71,11 @@ namespace Azure.ResourceManager.NetApp.Models
             OriginClusterInformation = originClusterInformation;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheProperties"/>. </summary>
         /// <param name="filepath"> The file path of the Cache. </param>
         /// <param name="size"> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </param>
         /// <param name="exportPolicy"> Set of export policy rules. </param>
-        /// <param name="protocolTypes"> Set of protocol types, default NFSv3, CIFS for SMB protocol. </param>
+        /// <param name="protocolTypes"> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="cacheState"> Azure NetApp Files Cache lifecycle management. </param>
         /// <param name="cacheSubnetResourceId"> The Azure Resource URI for a delegated cache subnet that will be used to allocate data IPs. </param>
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="globalFileLocking"> Flag indicating whether the global file lock is enabled for the cache. </param>
         /// <param name="writeBack"> Flag indicating whether writeback is enabled for the cache. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CacheProperties(string filepath, long size, IList<NetAppVolumeExportPolicyRule> exportPolicy, IList<ProtocolType> protocolTypes, CacheProvisioningState? provisioningState, CacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<CacheMountTargetProperties> mountTargets, KerberosState? kerberos, SmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, EncryptionState? encryption, NetAppVolumeLanguage? language, LdapState? ldap, LdapServerType? ldapServerType, OriginClusterInformation originClusterInformation, CifsChangeNotifyState? cifsChangeNotifications, GlobalFileLockingState? globalFileLocking, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppCacheProperties(string filepath, long size, CachePropertiesExportPolicy exportPolicy, IList<ProtocolType> protocolTypes, CacheProvisioningState? provisioningState, CacheLifeCycleState? cacheState, ResourceIdentifier cacheSubnetResourceId, ResourceIdentifier peeringSubnetResourceId, IReadOnlyList<CacheMountTargetProperties> mountTargets, KerberosState? kerberos, SmbSettings smbSettings, float? throughputMibps, float? actualThroughputMibps, NetAppEncryptionKeySource encryptionKeySource, ResourceIdentifier keyVaultPrivateEndpointResourceId, long? maximumNumberOfFiles, EncryptionState? encryption, NetAppVolumeLanguage? language, LdapState? ldap, LdapServerType? ldapServerType, OriginClusterInformation originClusterInformation, CifsChangeNotifyState? cifsChangeNotifications, GlobalFileLockingState? globalFileLocking, EnableWriteBackState? writeBack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Filepath = filepath;
             Size = size;
@@ -127,8 +126,8 @@ namespace Azure.ResourceManager.NetApp.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CacheProperties"/> for deserialization. </summary>
-        internal CacheProperties()
+        /// <summary> Initializes a new instance of <see cref="NetAppCacheProperties"/> for deserialization. </summary>
+        internal NetAppCacheProperties()
         {
         }
 
@@ -137,8 +136,19 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Maximum storage quota allowed for a file system in bytes. Valid values are in the range 50GiB to 1PiB. Values expressed in bytes as multiples of 1GiB. </summary>
         public long Size { get; set; }
         /// <summary> Set of export policy rules. </summary>
-        public IList<NetAppVolumeExportPolicyRule> ExportPolicy { get; }
-        /// <summary> Set of protocol types, default NFSv3, CIFS for SMB protocol. </summary>
+        internal CachePropertiesExportPolicy ExportPolicy { get; set; }
+        /// <summary> Export policy rule. </summary>
+        public IList<NetAppVolumeExportPolicyRule> ExportRules
+        {
+            get
+            {
+                if (ExportPolicy is null)
+                    ExportPolicy = new CachePropertiesExportPolicy();
+                return ExportPolicy.Rules;
+            }
+        }
+
+        /// <summary> Set of supported protocol types, which include NFSv3, NFSv4 and SMB protocol. </summary>
         public IList<ProtocolType> ProtocolTypes { get; }
         /// <summary> Azure lifecycle management. </summary>
         public CacheProvisioningState? ProvisioningState { get; }
