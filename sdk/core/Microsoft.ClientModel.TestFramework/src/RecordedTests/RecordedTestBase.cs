@@ -667,7 +667,6 @@ public abstract class RecordedTestBase : ClientTestBase
         if (Recording != null)
         {
             await Recording.DisposeAsync(save).ConfigureAwait(false);
-
         }
 
         if (_proxy != null)
