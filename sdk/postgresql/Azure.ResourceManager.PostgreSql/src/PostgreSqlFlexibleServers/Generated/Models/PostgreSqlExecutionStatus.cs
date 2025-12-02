@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Running. </summary>
+        /// <summary> The operation is currently running. </summary>
         public static PostgreSqlExecutionStatus Running { get; } = new PostgreSqlExecutionStatus(RunningValue);
-        /// <summary> Cancelled. </summary>
+        /// <summary> The operation was cancelled. </summary>
         public static PostgreSqlExecutionStatus Cancelled { get; } = new PostgreSqlExecutionStatus(CancelledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The operation failed. </summary>
         public static PostgreSqlExecutionStatus Failed { get; } = new PostgreSqlExecutionStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The operation succeeded. </summary>
         public static PostgreSqlExecutionStatus Succeeded { get; } = new PostgreSqlExecutionStatus(SucceededValue);
         /// <summary> Determines if two <see cref="PostgreSqlExecutionStatus"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlExecutionStatus left, PostgreSqlExecutionStatus right) => left.Equals(right);

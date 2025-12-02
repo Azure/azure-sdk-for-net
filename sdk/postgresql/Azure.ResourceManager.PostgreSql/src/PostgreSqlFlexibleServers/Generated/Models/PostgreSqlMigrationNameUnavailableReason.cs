@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string InvalidValue = "Invalid";
         private const string AlreadyExistsValue = "AlreadyExists";
 
-        /// <summary> Invalid. </summary>
+        /// <summary> Migration name is invalid. </summary>
         public static PostgreSqlMigrationNameUnavailableReason Invalid { get; } = new PostgreSqlMigrationNameUnavailableReason(InvalidValue);
-        /// <summary> AlreadyExists. </summary>
+        /// <summary> Migration name already exists. </summary>
         public static PostgreSqlMigrationNameUnavailableReason AlreadyExists { get; } = new PostgreSqlMigrationNameUnavailableReason(AlreadyExistsValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationNameUnavailableReason"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationNameUnavailableReason left, PostgreSqlMigrationNameUnavailableReason right) => left.Equals(right);

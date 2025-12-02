@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerBackupProperties"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
-        /// <param name="geoRedundantBackup"> A value indicating whether Geo-Redundant backup is enabled on the server. </param>
-        /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for server. </param>
+        /// <param name="geoRedundantBackup"> Indicates if the server is configured to create geographically redundant backups. </param>
+        /// <param name="earliestRestoreOn"> Earliest restore point time (ISO8601 format) for a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays, PostgreSqlFlexibleServerGeoRedundantBackupEnum? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerBackupProperties(int? backupRetentionDays, GeographicallyRedundantBackup? geoRedundantBackup, DateTimeOffset? earliestRestoreOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BackupRetentionDays = backupRetentionDays;
             GeoRedundantBackup = geoRedundantBackup;
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Backup retention days for the server. </summary>
         [WirePath("backupRetentionDays")]
         public int? BackupRetentionDays { get; set; }
-        /// <summary> A value indicating whether Geo-Redundant backup is enabled on the server. </summary>
+        /// <summary> Indicates if the server is configured to create geographically redundant backups. </summary>
         [WirePath("geoRedundantBackup")]
-        public PostgreSqlFlexibleServerGeoRedundantBackupEnum? GeoRedundantBackup { get; set; }
-        /// <summary> The earliest restore point time (ISO8601 format) for server. </summary>
+        public GeographicallyRedundantBackup? GeoRedundantBackup { get; set; }
+        /// <summary> Earliest restore point time (ISO8601 format) for a server. </summary>
         [WirePath("earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; }
     }

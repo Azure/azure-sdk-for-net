@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth = default;
-            PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth = default;
+            MicrosoftEntraAuth? activeDirectoryAuth = default;
+            PasswordBasedAuth? passwordAuth = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    activeDirectoryAuth = new PostgreSqlFlexibleServerActiveDirectoryAuthEnum(property.Value.GetString());
+                    activeDirectoryAuth = new MicrosoftEntraAuth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("passwordAuth"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    passwordAuth = new PostgreSqlFlexibleServerPasswordAuthEnum(property.Value.GetString());
+                    passwordAuth = new PasswordBasedAuth(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tenantId"u8))

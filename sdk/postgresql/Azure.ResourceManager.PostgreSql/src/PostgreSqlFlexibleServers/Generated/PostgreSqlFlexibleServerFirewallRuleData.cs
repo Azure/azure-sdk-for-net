@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServerFirewallRule data model.
-    /// Represents a server firewall rule.
+    /// Firewall rule.
     /// </summary>
     public partial class PostgreSqlFlexibleServerFirewallRuleData : ResourceData
     {
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerFirewallRuleData"/>. </summary>
-        /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <param name="startIPAddress"> IP address defining the start of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </param>
+        /// <param name="endIPAddress"> IP address defining the end of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public PostgreSqlFlexibleServerFirewallRuleData(IPAddress startIPAddress, IPAddress endIPAddress)
         {
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="startIPAddress"> The start IP address of the server firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the server firewall rule. Must be IPv4 format. </param>
+        /// <param name="startIPAddress"> IP address defining the start of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </param>
+        /// <param name="endIPAddress"> IP address defining the end of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerFirewallRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IPAddress startIPAddress, IPAddress endIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
         }
 
-        /// <summary> The start IP address of the server firewall rule. Must be IPv4 format. </summary>
+        /// <summary> IP address defining the start of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </summary>
         [WirePath("properties.startIpAddress")]
         public IPAddress StartIPAddress { get; set; }
-        /// <summary> The end IP address of the server firewall rule. Must be IPv4 format. </summary>
+        /// <summary> IP address defining the end of the range of addresses of a firewall rule. Must be expressed in IPv4 format. </summary>
         [WirePath("properties.endIpAddress")]
         public IPAddress EndIPAddress { get; set; }
     }

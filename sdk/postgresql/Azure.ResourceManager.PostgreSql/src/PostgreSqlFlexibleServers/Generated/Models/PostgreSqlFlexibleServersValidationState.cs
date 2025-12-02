@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string SucceededValue = "Succeeded";
         private const string WarningValue = "Warning";
 
-        /// <summary> Failed. </summary>
+        /// <summary> Validation has failed. </summary>
         public static PostgreSqlFlexibleServersValidationState Failed { get; } = new PostgreSqlFlexibleServersValidationState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Validation has succeeded. </summary>
         public static PostgreSqlFlexibleServersValidationState Succeeded { get; } = new PostgreSqlFlexibleServersValidationState(SucceededValue);
-        /// <summary> Warning. </summary>
+        /// <summary> Validation has succeeded with warnings. </summary>
         public static PostgreSqlFlexibleServersValidationState Warning { get; } = new PostgreSqlFlexibleServersValidationState(WarningValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersValidationState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersValidationState left, PostgreSqlFlexibleServersValidationState right) => left.Equals(right);

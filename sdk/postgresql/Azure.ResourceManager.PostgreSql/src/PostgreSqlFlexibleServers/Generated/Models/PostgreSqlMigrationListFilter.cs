@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string ActiveValue = "Active";
         private const string AllValue = "All";
 
-        /// <summary> Active. </summary>
+        /// <summary> Only active (in-progress) migrations. </summary>
         public static PostgreSqlMigrationListFilter Active { get; } = new PostgreSqlMigrationListFilter(ActiveValue);
-        /// <summary> All. </summary>
+        /// <summary> All migrations. </summary>
         public static PostgreSqlMigrationListFilter All { get; } = new PostgreSqlMigrationListFilter(AllValue);
         /// <summary> Determines if two <see cref="PostgreSqlMigrationListFilter"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMigrationListFilter left, PostgreSqlMigrationListFilter right) => left.Equals(right);

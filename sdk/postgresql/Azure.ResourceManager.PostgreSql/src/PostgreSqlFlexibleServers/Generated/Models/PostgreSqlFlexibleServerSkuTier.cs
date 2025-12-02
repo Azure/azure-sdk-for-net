@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The tier of the particular SKU, e.g. Burstable. </summary>
+    /// <summary> Tier of the compute assigned to a server. </summary>
     public readonly partial struct PostgreSqlFlexibleServerSkuTier : IEquatable<PostgreSqlFlexibleServerSkuTier>
     {
         private readonly string _value;

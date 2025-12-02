@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         private const string DefaultValue = "Default";
 
-        /// <summary> Default. </summary>
+        /// <summary> Default advanced threat protection settings. </summary>
         public static ThreatProtectionName Default { get; } = new ThreatProtectionName(DefaultValue);
         /// <summary> Determines if two <see cref="ThreatProtectionName"/> values are the same. </summary>
         public static bool operator ==(ThreatProtectionName left, ThreatProtectionName right) => left.Equals(right);
