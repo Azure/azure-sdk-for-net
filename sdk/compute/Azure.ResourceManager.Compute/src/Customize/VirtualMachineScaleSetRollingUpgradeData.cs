@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Compute
             if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
             {
                 id = null;
+                return;
             }
             id = new ResourceIdentifier(property.Value.GetString());
         }
