@@ -14,17 +14,6 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class DocumentIntelligenceModelFactory
     {
-        /// <summary> Document analysis parameters. </summary>
-        /// <param name="uriSource"> Document URL to analyze.  Either urlSource or base64Source must be specified. </param>
-        /// <param name="bytesSource">
-        /// Base64 encoding of the document to analyze.  Either urlSource or base64Source
-        /// must be specified.
-        /// </param>
-        /// <returns> A new <see cref="DocumentIntelligence.AnalyzeDocumentOptions"/> instance for mocking. </returns>
-        public static AnalyzeDocumentOptions AnalyzeDocumentOptions(Uri uriSource = default, BinaryData bytesSource = default)
-        {
-            return new AnalyzeDocumentOptions(uriSource, bytesSource, additionalBinaryDataProperties: null);
-        }
 
         /// <summary> The error object. </summary>
         /// <param name="code"> One of a server-defined set of error codes. </param>
@@ -458,6 +447,28 @@ namespace Azure.AI.DocumentIntelligence
             return new DocumentLanguage(locale, spans.ToList(), confidence, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> An object describing the location and semantic content of a document. </summary>
+        /// <param name="documentType"> Document type. </param>
+        /// <param name="boundingRegions"> Bounding regions covering the document. </param>
+        /// <param name="spans"> Location of the document in the reading order concatenated content. </param>
+        /// <param name="fieldsPrivate"> Dictionary of named field values. </param>
+        /// <param name="confidence"> Confidence of correctly extracting the document. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
+        public static AnalyzedDocument AnalyzedDocument(string documentType = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IReadOnlyDictionary<string, DocumentField> fieldsPrivate = default, float confidence = default)
+        {
+            boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
+            spans ??= new ChangeTrackingList<DocumentSpan>();
+            fieldsPrivate ??= new ChangeTrackingDictionary<string, DocumentField>();
+
+            return new AnalyzedDocument(
+                documentType,
+                boundingRegions.ToList(),
+                spans.ToList(),
+                fieldsPrivate,
+                confidence,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> An object representing the content and location of a field value. </summary>
         /// <param name="fieldType"> Data type of the field value. </param>
         /// <param name="valueString"> String value. </param>
@@ -657,18 +668,6 @@ namespace Azure.AI.DocumentIntelligence
                 error,
                 result,
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Document classification parameters. </summary>
-        /// <param name="uriSource"> Document URL to classify.  Either urlSource or base64Source must be specified. </param>
-        /// <param name="bytesSource">
-        /// Base64 encoding of the document to classify.  Either urlSource or base64Source
-        /// must be specified.
-        /// </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ClassifyDocumentOptions"/> instance for mocking. </returns>
-        public static ClassifyDocumentOptions ClassifyDocumentOptions(Uri uriSource = default, BinaryData bytesSource = default)
-        {
-            return new ClassifyDocumentOptions(uriSource, bytesSource, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request body to build a new custom document model. </summary>
@@ -986,24 +985,6 @@ namespace Azure.AI.DocumentIntelligence
                 documentTypes,
                 warnings.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Classifier document type info. </summary>
-        /// <param name="sourceKind"> Type of training data source. </param>
-        /// <param name="blobSource">
-        /// Azure Blob Storage location containing the training data for a classifier
-        /// document type.  Either azureBlobSource or azureBlobFileListSource must be
-        /// specified.
-        /// </param>
-        /// <param name="blobFileListSource">
-        /// Azure Blob Storage file list specifying the training data for a classifier
-        /// document type.  Either azureBlobSource or azureBlobFileListSource must be
-        /// specified.
-        /// </param>
-        /// <returns> A new <see cref="DocumentIntelligence.ClassifierDocumentTypeDetails"/> instance for mocking. </returns>
-        public static ClassifierDocumentTypeDetails ClassifierDocumentTypeDetails(ContentSourceKind? sourceKind = default, BlobContentSource blobSource = default, BlobFileListContentSource blobFileListSource = default)
-        {
-            return new ClassifierDocumentTypeDetails(sourceKind, blobSource, blobFileListSource, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Get Operation response object. </summary>

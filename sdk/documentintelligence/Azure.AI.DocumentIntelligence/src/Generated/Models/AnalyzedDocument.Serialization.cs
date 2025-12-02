@@ -57,10 +57,16 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Fields))
+            if (Optional.IsCollectionDefined(FieldsPrivate))
             {
                 writer.WritePropertyName("fields"u8);
-                writer.WriteObjectValue(Fields, options);
+                writer.WriteStartObject();
+                foreach (var item in FieldsPrivate)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
             }
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
@@ -109,7 +115,7 @@ namespace Azure.AI.DocumentIntelligence
             string documentType = default;
             IReadOnlyList<BoundingRegion> boundingRegions = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            DocumentFieldDictionary fields = default;
+            IReadOnlyDictionary<string, DocumentField> fieldsPrivate = default;
             float confidence = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -149,7 +155,12 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fields = DocumentFieldDictionary.DeserializeDocumentFieldDictionary(prop.Value, options);
+                    Dictionary<string, DocumentField> dictionary = new Dictionary<string, DocumentField>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        dictionary.Add(prop0.Name, DocumentField.DeserializeDocumentField(prop0.Value, options));
+                    }
+                    fieldsPrivate = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("confidence"u8))
@@ -166,7 +177,7 @@ namespace Azure.AI.DocumentIntelligence
                 documentType,
                 boundingRegions ?? new ChangeTrackingList<BoundingRegion>(),
                 spans,
-                fields,
+                fieldsPrivate ?? new ChangeTrackingDictionary<string, DocumentField>(),
                 confidence,
                 additionalBinaryDataProperties);
         }
