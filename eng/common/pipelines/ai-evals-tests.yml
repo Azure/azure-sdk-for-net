@@ -19,10 +19,10 @@ parameters:
   - name: Model
     type: string
     default: 'gpt-5'
-  - name: ToolsRepoName
+  - name: EvalsRepoName
     type: string
     default: 'azure-sdk-tools'
-  - name: ToolsRepoOwner
+  - name: EvalsRepoOwner
     type: string
     default: 'Azure'
 
@@ -65,8 +65,8 @@ jobs:
             WorkingDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.ToolsRepoName }}
         Paths:
           - 'tools/**'
-          - eng/common/**
-          - .github/copilot-instructions.md
+          - 'eng/common/**'
+          - '.github/copilot-instructions.md'
     
     - task: AzureCLI@2
       displayName: 'Run eval'
@@ -78,7 +78,7 @@ jobs:
         inlineScript: |
           echo "Logged in to Azure"
           echo "Running eval in project ${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}"
-          dotnet test /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) --logger trx
+          dotnet test --logger trx
       env:
         DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
