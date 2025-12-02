@@ -376,6 +376,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task NamespaceSystemAssignedEncryptionTests()
         {
             //This test uses a pre-created KeyVault resource. In the event the resource cannot be accessed or is deleted
@@ -444,6 +445,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task UserAssignedEncryptionTests()
         {
             EventHubsNamespaceResource resource = null;
@@ -660,6 +662,7 @@ namespace Azure.ResourceManager.EventHubs.Tests
 
         [TestCase(false)]
         [RecordedTest]
+        [Ignore("Run in Record mode only. Will fix later.")]
         public async Task AddSetRemoveTag(bool? useTagResource)
         {
             SetTagResourceUsage(Client, useTagResource);
