@@ -37,6 +37,9 @@ function Get-Mgmt-TspCommand {
     }
     $command += " --option @azure-typespec/http-client-csharp-mgmt.emitter-output-dir=$generationDir"
     $command += " --option @azure-typespec/http-client-csharp-mgmt.save-inputs=true"
+    if ($generateStub) {
+        $command += " --option @azure-typespec/http-client-csharp-mgmt.plugin-name=AzureStubPlugin"
+    }
 
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp-mgmt.api-version=$apiVersion"
