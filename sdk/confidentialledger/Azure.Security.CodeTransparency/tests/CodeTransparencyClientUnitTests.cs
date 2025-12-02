@@ -495,28 +495,30 @@ namespace Azure.Security.CodeTransparency.Tests
 #else
             // Parse the JWKS JSON from the mocked response
             string doc = "{\"foo.bar.com\":" + ValidSignedStatementJWKS + "}";
-            var jsonDoc = JsonDocument.Parse(doc);
-            var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
-
-            var mockTransport = new MockTransport(new MockResponse(503));
-            var options = new CodeTransparencyClientOptions
+            using (var jsonDoc = JsonDocument.Parse(doc))
             {
-                IdentityClientEndpoint = "https://some.identity.com",
-                Transport = mockTransport,
-            };
+                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
 
-            var verificationOptions = new CodeTransparencyVerificationOptions
-            {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
-                OfflineKeys = offlineStore
-            };
+                var mockTransport = new MockTransport(new MockResponse(503));
+                var options = new CodeTransparencyClientOptions
+                {
+                    IdentityClientEndpoint = "https://some.identity.com",
+                    Transport = mockTransport,
+                };
 
-            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    OfflineKeys = offlineStore
+                };
 
-            // Should not make any network calls since we're using offline keys
-            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
-            Assert.AreEqual(0, mockTransport.Requests.Count);
+                // Should not make any network calls since we're using offline keys
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+
+                Assert.AreEqual(0, mockTransport.Requests.Count);
+            }
 #endif
         }
 
@@ -528,23 +530,25 @@ namespace Azure.Security.CodeTransparency.Tests
 #else
             // Parse the JWKS JSON from the mocked response
             string doc = "{}";
-            var jsonDoc = JsonDocument.Parse(doc);
-            var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
-
-            var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
-
-            var verificationOptions = new CodeTransparencyVerificationOptions
+            using (var jsonDoc = JsonDocument.Parse(doc))
             {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
-                OfflineKeys = offlineStore
-            };
+                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
 
-            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+                var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
 
-            // Offline keys are empty, so network fallback is expected; should make 1 network call
-            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    OfflineKeys = offlineStore
+                };
 
-            Assert.AreEqual(1, mockTransport.Requests.Count);
+                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+
+                // Offline keys are empty, so network fallback is expected; should make 1 network call
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
+
+                Assert.AreEqual(1, mockTransport.Requests.Count);
+            }
 #endif
         }
 
@@ -556,27 +560,29 @@ namespace Azure.Security.CodeTransparency.Tests
 #else
             // Parse the JWKS JSON from the mocked response
             string doc = "{}";
-            var jsonDoc = JsonDocument.Parse(doc);
-            var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
-
-            var mockTransport = new MockTransport(new MockResponse(503));
-            var options = new CodeTransparencyClientOptions
+            using (var jsonDoc = JsonDocument.Parse(doc))
             {
-                IdentityClientEndpoint = "https://some.identity.com",
-                Transport = mockTransport,
-            };
+                var offlineStore = CodeTransparencyOfflineKeys.FromJsonDocument(jsonDoc);
 
-            var verificationOptions = new CodeTransparencyVerificationOptions
-            {
-                AuthorizedDomains = new string[] { "foo.bar.com" },
-                OfflineKeys = offlineStore,
-                OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
-            };
+                var mockTransport = new MockTransport(new MockResponse(503));
+                var options = new CodeTransparencyClientOptions
+                {
+                    IdentityClientEndpoint = "https://some.identity.com",
+                    Transport = mockTransport,
+                };
 
-            byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
-            var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-            StringAssert.Contains("Either offline keys are not configured or network fallback is disabled.", exception.Message);
-            Assert.AreEqual(0, mockTransport.Requests.Count);
+                var verificationOptions = new CodeTransparencyVerificationOptions
+                {
+                    AuthorizedDomains = new string[] { "foo.bar.com" },
+                    OfflineKeys = offlineStore,
+                    OfflineKeysBehavior = OfflineKeysBehavior.NoFallbackToNetwork
+                };
+
+                byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
+                var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
+                StringAssert.Contains("Either offline keys are not configured or network fallback is disabled.", exception.Message);
+                Assert.AreEqual(0, mockTransport.Requests.Count);
+            }
 #endif
         }
 

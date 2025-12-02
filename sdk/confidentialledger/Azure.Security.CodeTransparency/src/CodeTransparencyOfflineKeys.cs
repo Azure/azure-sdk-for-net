@@ -5,10 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Security.CodeTransparency
@@ -38,6 +35,8 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         public void Add(string ledgerDomain, JwksDocument jwksDocument)
         {
+            Argument.AssertNotNullOrEmpty(ledgerDomain, nameof(ledgerDomain));
+            Argument.AssertNotNull(jwksDocument, nameof(jwksDocument));
             _keysByDomain[ledgerDomain] = jwksDocument;
         }
 

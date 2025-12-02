@@ -3,15 +3,10 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Collections.ObjectModel;
 using System.Formats.Cbor;
-using System.IO;
 using System.Security.Cryptography.Cose;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
