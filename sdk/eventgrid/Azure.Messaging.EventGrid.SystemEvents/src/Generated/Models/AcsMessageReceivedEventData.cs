@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -27,7 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
+        /// <param name="errorInternal"> The channel event error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Optional. The message content. </param>
         /// <param name="messageId"> Optional. Message ID. Format is Guid as string. </param>
@@ -38,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="context"> Optional. The received message context. </param>
         /// <param name="button"> Optional. The received message button content. </param>
         /// <param name="interactiveContent"> Optional. The received message interactive content. </param>
-        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content, string messageId, AcsMessageChannelKind? channelKind, string messageType, AcsMessageMediaContent mediaContent, AcsMessageReactionContent reaction, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, error, additionalBinaryDataProperties)
+        internal AcsMessageReceivedEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties, string content, string messageId, AcsMessageChannelKind? channelKind, string messageType, AcsMessageMediaContent mediaContent, AcsMessageReactionContent reaction, AcsMessageContext context, AcsMessageButtonContent button, AcsMessageInteractiveContent interactiveContent) : base(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties)
         {
             Content = content;
             MessageId = messageId;

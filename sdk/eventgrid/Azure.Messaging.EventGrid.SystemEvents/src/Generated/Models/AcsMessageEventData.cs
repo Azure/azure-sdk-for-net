@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -30,14 +29,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
+        /// <param name="errorInternal"> The channel event error. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AcsMessageEventData(string @from, string to, DateTimeOffset? receivedTimestamp, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMessageEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             From = @from;
             To = to;
             ReceivedTimestamp = receivedTimestamp;
-            Error = error;
+            ErrorInternal = errorInternal;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

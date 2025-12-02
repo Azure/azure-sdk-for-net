@@ -51,10 +51,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("reason"u8);
                 writer.WriteObjectValue(Reason, options);
             }
-            if (Optional.IsDefined(CallDurationInSeconds))
+            if (Optional.IsDefined(CallDuration))
             {
                 writer.WritePropertyName("callDurationInSeconds"u8);
-                writer.WriteNumberValue(CallDurationInSeconds.Value.TotalSeconds);
+                writer.WriteNumberValue(CallDuration.Value.TotalSeconds);
             }
         }
 
@@ -93,7 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             AcsCallEndedByProperties endedBy = default;
             AcsCallEndReasonProperties reason = default;
-            TimeSpan? callDurationInSeconds = default;
+            TimeSpan? callDuration = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startedBy"u8))
@@ -171,7 +171,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    callDurationInSeconds = TimeSpan.FromSeconds(prop.Value.GetDouble());
+                    callDuration = TimeSpan.FromSeconds(prop.Value.GetDouble());
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,7 +190,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 additionalBinaryDataProperties,
                 endedBy,
                 reason,
-                callDurationInSeconds);
+                callDuration);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

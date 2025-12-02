@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.Messaging.EventGrid.Models;
+using Azure.Messaging.EventGrid.SystemEvents;
 
-namespace Azure.Messaging.EventGrid.SystemEvents
+namespace Azure.Messaging.EventGrid
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class EventGridSystemEventsModelFactory
+    public static partial class EventGridModelFactory
     {
         /// <summary> Schema of the data property of an EventGridEvent for a Microsoft.ApiCenter.ApiDefinitionAdded event. </summary>
         /// <param name="title"> API definition title. </param>
@@ -286,7 +285,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryEventData"/> instance for mocking. </returns>
-        public static ApiManagementGatewayTokenNearExpiryEventData ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway = default, ApiManagementNearExpiryGatewayTokenProperties token = default)
+        public static ApiManagementGatewayTokenNearExpiryEventData ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway = default, ApiManagementGatewayTokenNearExpiryProperties token = default)
         {
             return new ApiManagementGatewayTokenNearExpiryEventData(gateway, token, additionalBinaryDataProperties: null);
         }
@@ -302,10 +301,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Information related to a gateway token that is near expiry for a self-hosted gateway deployment. </summary>
         /// <param name="expiresOn"> Timestamp when the gateway token will expire. </param>
-        /// <returns> A new <see cref="SystemEvents.ApiManagementNearExpiryGatewayTokenProperties"/> instance for mocking. </returns>
-        public static ApiManagementNearExpiryGatewayTokenProperties ApiManagementNearExpiryGatewayTokenProperties(DateTimeOffset? expiresOn = default)
+        /// <returns> A new <see cref="SystemEvents.ApiManagementGatewayTokenNearExpiryProperties"/> instance for mocking. </returns>
+        public static ApiManagementGatewayTokenNearExpiryProperties ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset? expiresOn = default)
         {
-            return new ApiManagementNearExpiryGatewayTokenProperties(expiresOn, additionalBinaryDataProperties: null);
+            return new ApiManagementGatewayTokenNearExpiryProperties(expiresOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ApiManagement.GatewayTokenExpired event. </summary>
@@ -349,32 +348,32 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Schema of common properties of snapshot events. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = default, string etag = default, string syncToken = default)
+        public static AppConfigurationSnapshotEventData AppConfigurationSnapshotEventData(string name = default, string eTag = default, string syncToken = default)
         {
-            return new AppConfigurationSnapshotEventData(name, etag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationSnapshotEventData(name, eTag, syncToken, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotCreated event. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotCreatedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = default, string etag = default, string syncToken = default)
+        public static AppConfigurationSnapshotCreatedEventData AppConfigurationSnapshotCreatedEventData(string name = default, string eTag = default, string syncToken = default)
         {
-            return new AppConfigurationSnapshotCreatedEventData(name, etag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationSnapshotCreatedEventData(name, eTag, syncToken, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.AppConfiguration.SnapshotModified event. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <returns> A new <see cref="SystemEvents.AppConfigurationSnapshotModifiedEventData"/> instance for mocking. </returns>
-        public static AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = default, string etag = default, string syncToken = default)
+        public static AppConfigurationSnapshotModifiedEventData AppConfigurationSnapshotModifiedEventData(string name = default, string eTag = default, string syncToken = default)
         {
-            return new AppConfigurationSnapshotModifiedEventData(name, etag, syncToken, additionalBinaryDataProperties: null);
+            return new AppConfigurationSnapshotModifiedEventData(name, eTag, syncToken, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of the Data property of an EventGridEvent for Microsoft.AVS/privateClouds events. </summary>
@@ -602,7 +601,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
-        public static CommunicationIdentifierModel CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind = default, string rawId = default, CommunicationUserIdentifierModel communicationUser = default, PhoneNumberIdentifierModel phoneNumber = default, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default)
+        public static CommunicationIdentifierModel CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind = default, string rawId = default, CommunicationUserIdentifierModel communicationUser = default, PhoneNumberIdentifierModel phoneNumber = default, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = default)
         {
             return new CommunicationIdentifierModel(
                 kind,
@@ -643,10 +642,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> A Microsoft Teams application. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
-        /// <returns> A new <see cref="SystemEvents.MicrosoftTeamsAppIdentifierModel"/> instance for mocking. </returns>
-        public static MicrosoftTeamsAppIdentifierModel MicrosoftTeamsAppIdentifierModel(string appId = default, CommunicationCloudEnvironmentModel? cloud = default)
+        /// <returns> A new <see cref="SystemEvents.AcsMicrosoftTeamsAppIdentifier"/> instance for mocking. </returns>
+        public static AcsMicrosoftTeamsAppIdentifier AcsMicrosoftTeamsAppIdentifier(string appId = default, CommunicationCloudEnvironmentModel? cloud = default)
         {
-            return new MicrosoftTeamsAppIdentifierModel(appId, cloud, additionalBinaryDataProperties: null);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Custom Context of Incoming Call. </summary>
@@ -748,9 +747,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="isRoomsCall"> Is the calling event a room call. </param>
         /// <param name="endedBy"> The communication identifier of the user who was disconnected. </param>
         /// <param name="reason"> The reason for ending the call. </param>
-        /// <param name="callDurationInSeconds"> Duration of the call in seconds. </param>
+        /// <param name="callDuration"> Duration of the call in seconds. </param>
         /// <returns> A new <see cref="SystemEvents.AcsCallEndedEventData"/> instance for mocking. </returns>
-        public static AcsCallEndedEventData AcsCallEndedEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default, AcsCallEndedByProperties endedBy = default, AcsCallEndReasonProperties reason = default, TimeSpan? callDurationInSeconds = default)
+        public static AcsCallEndedEventData AcsCallEndedEventData(AcsCallParticipantProperties startedBy = default, string serverCallId = default, AcsCallGroupProperties @group = default, AcsCallRoomProperties room = default, bool? isTwoParty = default, string correlationId = default, bool? isRoomsCall = default, AcsCallEndedByProperties endedBy = default, AcsCallEndReasonProperties reason = default, TimeSpan? callDuration = default)
         {
             return new AcsCallEndedEventData(
                 startedBy,
@@ -763,7 +762,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 additionalBinaryDataProperties: null,
                 endedBy,
                 reason,
-                callDurationInSeconds);
+                callDuration);
         }
 
         /// <summary> Schema of calling event ended by properties. </summary>
@@ -1703,34 +1702,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 dispositionCode);
         }
 
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassificationFailed event. </summary>
-        /// <param name="jobId"> Router Event Job ID. </param>
-        /// <param name="channelReference"> Router Event Channel Reference. </param>
-        /// <param name="channelId"> Router Event Channel ID. </param>
-        /// <param name="queueId"> Router Job events Queue Id. </param>
-        /// <param name="labels"> Router Job events Labels. </param>
-        /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
-        /// <param name="errors"> Router Job Classification Failed Errors. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsRouterJobClassificationFailedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobClassificationFailedEventData AcsRouterJobClassificationFailedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, string classificationPolicyId = default, IEnumerable<ResponseError> errors = default)
-        {
-            labels ??= new ChangeTrackingDictionary<string, string>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-            errors ??= new ChangeTrackingList<ResponseError>();
-
-            return new AcsRouterJobClassificationFailedEventData(
-                jobId,
-                channelReference,
-                channelId,
-                additionalBinaryDataProperties: null,
-                queueId,
-                labels,
-                tags,
-                classificationPolicyId,
-                errors.ToList());
-        }
-
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.RouterJobClassified event. </summary>
         /// <param name="jobId"> Router Event Job ID. </param>
         /// <param name="channelReference"> Router Event Channel Reference. </param>
@@ -1777,17 +1748,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Router Job Worker Selector. </summary>
         /// <param name="key"> Router Job Worker Selector Key. </param>
-        /// <param name="labelOperator"> Router Job Worker Selector Label Operator. </param>
+        /// <param name="operator"> Router Job Worker Selector Label Operator. </param>
         /// <param name="labelValue"> Router Job Worker Selector Value. </param>
         /// <param name="ttlSeconds"> Router Job Worker Selector Time to Live in Seconds. </param>
         /// <param name="selectorState"> Router Job Worker Selector State. </param>
         /// <param name="expirationTime"> Router Job Worker Selector Expiration Time. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerSelector"/> instance for mocking. </returns>
-        public static AcsRouterWorkerSelector AcsRouterWorkerSelector(string key = default, Models.AcsRouterLabelOperator? labelOperator = default, object labelValue = default, double? ttlSeconds = default, AcsRouterWorkerSelectorState? selectorState = default, DateTimeOffset? expirationTime = default)
+        public static AcsRouterWorkerSelector AcsRouterWorkerSelector(string key = default, AcsRouterLabelOperator? @operator = default, object labelValue = default, double? ttlSeconds = default, AcsRouterWorkerSelectorState? selectorState = default, DateTimeOffset? expirationTime = default)
         {
             return new AcsRouterWorkerSelector(
                 key,
-                labelOperator,
+                @operator,
                 labelValue,
                 ttlSeconds,
                 selectorState,
@@ -1939,14 +1910,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="jobStatus"> Router Job Received Job Status. </param>
+        /// <param name="status"> Router Job Received Job Status. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobReceivedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, Models.AcsRouterJobStatus? jobStatus = default, string classificationPolicyId = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = default)
+        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, AcsRouterJobStatus? status = default, string classificationPolicyId = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = default)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -1960,7 +1931,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 queueId,
                 labels,
                 tags,
-                jobStatus,
+                status,
                 classificationPolicyId,
                 priority,
                 requestedWorkerSelectors.ToList(),
@@ -2321,73 +2292,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 tags,
                 updatedWorkerProperties.ToList(),
                 additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of common properties of all chat thread events. </summary>
-        /// <param name="from"> The message sender. </param>
-        /// <param name="to"> The message recipient. </param>
-        /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsMessageEventData"/> instance for mocking. </returns>
-        public static AcsMessageEventData AcsMessageEventData(string @from = default, string to = default, DateTimeOffset? receivedTimestamp = default, ResponseError error = default)
-        {
-            return new AcsMessageEventData(@from, to, receivedTimestamp, error, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageDeliveryStatusUpdated event. </summary>
-        /// <param name="from"> The message sender. </param>
-        /// <param name="to"> The message recipient. </param>
-        /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
-        /// <param name="messageId"> The message id. </param>
-        /// <param name="status"> The updated message status. </param>
-        /// <param name="channelKind"> The updated message channel type. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsMessageDeliveryStatusUpdatedEventData"/> instance for mocking. </returns>
-        public static AcsMessageDeliveryStatusUpdatedEventData AcsMessageDeliveryStatusUpdatedEventData(string @from = default, string to = default, DateTimeOffset? receivedTimestamp = default, ResponseError error = default, string messageId = default, AcsMessageDeliveryStatus? status = default, AcsMessageChannelKind? channelKind = default)
-        {
-            return new AcsMessageDeliveryStatusUpdatedEventData(
-                @from,
-                to,
-                receivedTimestamp,
-                error,
-                additionalBinaryDataProperties: null,
-                messageId,
-                status,
-                channelKind);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Communication.AdvancedMessageReceived event. </summary>
-        /// <param name="from"> The message sender. </param>
-        /// <param name="to"> The message recipient. </param>
-        /// <param name="receivedTimestamp"> The time message was received. </param>
-        /// <param name="error"> The channel event error. </param>
-        /// <param name="content"> Optional. The message content. </param>
-        /// <param name="messageId"> Optional. Message ID. Format is Guid as string. </param>
-        /// <param name="channelKind"> Required. The message channel type. </param>
-        /// <param name="messageType"> Required. Whatsapp message type. </param>
-        /// <param name="mediaContent"> Optional. The received message media content. </param>
-        /// <param name="reaction"> Optional. The received message reaction content. </param>
-        /// <param name="context"> Optional. The received message context. </param>
-        /// <param name="button"> Optional. The received message button content. </param>
-        /// <param name="interactiveContent"> Optional. The received message interactive content. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsMessageReceivedEventData"/> instance for mocking. </returns>
-        public static AcsMessageReceivedEventData AcsMessageReceivedEventData(string @from = default, string to = default, DateTimeOffset? receivedTimestamp = default, ResponseError error = default, string content = default, string messageId = default, AcsMessageChannelKind? channelKind = default, string messageType = default, AcsMessageMediaContent mediaContent = default, AcsMessageReactionContent reaction = default, AcsMessageContext context = default, AcsMessageButtonContent button = default, AcsMessageInteractiveContent interactiveContent = default)
-        {
-            return new AcsMessageReceivedEventData(
-                @from,
-                to,
-                receivedTimestamp,
-                error,
-                additionalBinaryDataProperties: null,
-                content,
-                messageId,
-                channelKind,
-                messageType,
-                mediaContent,
-                reaction,
-                context,
-                button,
-                interactiveContent);
         }
 
         /// <summary> Message Media Content. </summary>
@@ -3602,287 +3506,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ResourceAuthorization(scope, action, evidence, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The details of the HTTP request. </summary>
-        /// <param name="clientRequestId"> The client request ID. </param>
-        /// <param name="clientIpAddress"> The client IP address. </param>
-        /// <param name="method"> The request method. </param>
-        /// <param name="url"> The url used in the request. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceHttpRequest"/> instance for mocking. </returns>
-        public static ResourceHttpRequest ResourceHttpRequest(string clientRequestId = default, string clientIpAddress = default, RequestMethod @method = default, string url = default)
-        {
-            return new ResourceHttpRequest(clientRequestId, clientIpAddress, @method, url, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteSuccess event. This is raised when a resource create or update operation succeeds. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceWriteSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceWriteSuccessEventData ResourceWriteSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceWriteSuccessEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteFailure event. This is raised when a resource create or update operation fails. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceWriteFailureEventData"/> instance for mocking. </returns>
-        public static ResourceWriteFailureEventData ResourceWriteFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceWriteFailureEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceWriteCancel event. This is raised when a resource create or update operation is canceled. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceWriteCancelEventData"/> instance for mocking. </returns>
-        public static ResourceWriteCancelEventData ResourceWriteCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceWriteCancelEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteSuccess event. This is raised when a resource delete operation succeeds. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceDeleteSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteSuccessEventData ResourceDeleteSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceDeleteSuccessEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteFailure event. This is raised when a resource delete operation fails. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceDeleteFailureEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteFailureEventData ResourceDeleteFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceDeleteFailureEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceDeleteCancel event. This is raised when a resource delete operation is canceled. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceDeleteCancelEventData"/> instance for mocking. </returns>
-        public static ResourceDeleteCancelEventData ResourceDeleteCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceDeleteCancelEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionSuccess event. This is raised when a resource action operation succeeds. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceActionSuccessEventData"/> instance for mocking. </returns>
-        public static ResourceActionSuccessEventData ResourceActionSuccessEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceActionSuccessEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionFailure event. This is raised when a resource action operation fails. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceActionFailureEventData"/> instance for mocking. </returns>
-        public static ResourceActionFailureEventData ResourceActionFailureEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceActionFailureEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionCancel event. This is raised when a resource action operation is canceled. </summary>
-        /// <param name="tenantId"> The tenant ID of the resource. </param>
-        /// <param name="subscriptionId"> The subscription ID of the resource. </param>
-        /// <param name="resourceGroup"> The resource group of the resource. </param>
-        /// <param name="resourceProvider"> The resource provider performing the operation. </param>
-        /// <param name="resourceUri"> The URI of the resource in the operation. </param>
-        /// <param name="operationName"> The operation that was performed. </param>
-        /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
-        /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        /// <returns> A new <see cref="SystemEvents.ResourceActionCancelEventData"/> instance for mocking. </returns>
-        public static ResourceActionCancelEventData ResourceActionCancelEventData(string tenantId = default, string subscriptionId = default, string resourceGroup = default, string resourceProvider = default, string resourceUri = default, string operationName = default, string status = default, string authorization = default, string claims = default, string correlationId = default, string httpRequest = default)
-        {
-            return new ResourceActionCancelEventData(
-                tenantId,
-                subscriptionId,
-                resourceGroup,
-                resourceProvider,
-                resourceUri,
-                operationName,
-                status,
-                authorization,
-                claims,
-                correlationId,
-                httpRequest,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.ServiceBus.ActiveMessagesAvailableWithNoListeners event. </summary>
         /// <param name="namespaceName"> The namespace name of the Microsoft.ServiceBus resource. </param>
         /// <param name="requestUri"> The endpoint of the Microsoft.ServiceBus resource. </param>
@@ -4070,30 +3693,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 requestId,
                 eTag,
                 url,
-                sequencer,
-                identity,
-                storageDiagnostics,
-                additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Storage.DirectoryDeleted event. </summary>
-        /// <param name="api"> The name of the API/operation that triggered this event. </param>
-        /// <param name="clientRequestId"> A request id provided by the client of the storage API operation that triggered this event. </param>
-        /// <param name="requestId"> The request id generated by the storage service for the storage API operation that triggered this event. </param>
-        /// <param name="url"> The path to the deleted directory. </param>
-        /// <param name="recursive"> Is this event for a recursive delete operation. </param>
-        /// <param name="sequencer"> An opaque string value representing the logical sequence of events for any particular directory name. Users can use standard string comparison to understand the relative sequence of two events on the same directory name. </param>
-        /// <param name="identity"> The identity of the requester that triggered this event. </param>
-        /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
-        /// <returns> A new <see cref="SystemEvents.StorageDirectoryDeletedEventData"/> instance for mocking. </returns>
-        public static StorageDirectoryDeletedEventData StorageDirectoryDeletedEventData(string api = default, string clientRequestId = default, string requestId = default, string url = default, bool? recursive = default, string sequencer = default, string identity = default, object storageDiagnostics = default)
-        {
-            return new StorageDirectoryDeletedEventData(
-                api,
-                clientRequestId,
-                requestId,
-                url,
-                recursive,
                 sequencer,
                 identity,
                 storageDiagnostics,
@@ -4664,19 +4263,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary>
-        /// To complete an event subscription validation handshake, a subscriber can use
-        /// either the validationCode or the validationUrl received in a
-        /// SubscriptionValidationEvent. When the validationCode is used, the
-        /// SubscriptionValidationResponse can be used to build the response.
-        /// </summary>
-        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
-        /// <returns> A new <see cref="SystemEvents.SubscriptionValidationResponse"/> instance for mocking. </returns>
-        public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
-        {
-            return new SubscriptionValidationResponse(validationResponse, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary>
         /// Schema of the Data property of an EventGridEvent for a
         /// Microsoft.EventGrid.SubscriptionDeletedEvent event.
         /// </summary>
@@ -4826,21 +4412,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// </summary>
         /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
-        /// <param name="type"> the type of the resource for which the event is being emitted. </param>
+        /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
         /// <param name="location"> the location of the resource for which the event is being emitted. </param>
-        /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
+        /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = default, string name = default, string @type = default, string location = default, string tags = default, IReadOnlyDictionary<string, object> properties = default)
+        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = default, string name = default, string resourceType = default, string location = default, IReadOnlyDictionary<string, string> resourceTags = default, IReadOnlyDictionary<string, object> properties = default)
         {
+            resourceTags ??= new ChangeTrackingDictionary<string, string>();
             properties ??= new ChangeTrackingDictionary<string, object>();
 
             return new ResourceNotificationsResourceUpdatedDetails(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
-                tags,
+                resourceTags,
                 properties,
                 additionalBinaryDataProperties: null);
         }
@@ -4884,13 +4471,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// Describes the schema of the properties under resource info which are common
         /// across all ARN system topic delete events
         /// </summary>
-        /// <param name="id"> id of the resource for which the event is being emitted. </param>
+        /// <param name="resource"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="type"> the type of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceDeletedDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceDeletedDetails ResourceNotificationsResourceDeletedDetails(string id = default, string name = default, string @type = default)
+        public static ResourceNotificationsResourceDeletedDetails ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource = default, string name = default, string @type = default)
         {
-            return new ResourceNotificationsResourceDeletedDetails(id, name, @type, additionalBinaryDataProperties: null);
+            return new ResourceNotificationsResourceDeletedDetails(resource, name, @type, additionalBinaryDataProperties: null);
         }
 
         /// <summary>

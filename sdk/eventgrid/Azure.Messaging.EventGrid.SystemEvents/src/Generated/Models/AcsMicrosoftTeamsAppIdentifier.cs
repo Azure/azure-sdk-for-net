@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> A Microsoft Teams application. </summary>
-    public partial class MicrosoftTeamsAppIdentifierModel
+    public partial class AcsMicrosoftTeamsAppIdentifier
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
-        internal MicrosoftTeamsAppIdentifierModel(string appId)
+        internal AcsMicrosoftTeamsAppIdentifier(string appId)
         {
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MicrosoftTeamsAppIdentifierModel(string appId, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AcsMicrosoftTeamsAppIdentifier(string appId, CommunicationCloudEnvironmentModel? cloud, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AppId = appId;
             Cloud = cloud;

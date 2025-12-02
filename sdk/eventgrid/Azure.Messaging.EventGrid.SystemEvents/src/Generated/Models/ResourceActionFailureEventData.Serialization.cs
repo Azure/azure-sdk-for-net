@@ -76,11 +76,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("authorization"u8);
-            writer.WriteStringValue(Authorization);
+            AuthorizationJson.WriteTo(writer);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("claims"u8);
-                writer.WriteStringValue(Claims);
+                ClaimsJson.WriteTo(writer);
             }
             if (Optional.IsDefined(CorrelationId))
             {
@@ -88,7 +88,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(CorrelationId);
             }
             writer.WritePropertyName("httpRequest"u8);
-            writer.WriteStringValue(HttpRequest);
+            HttpRequestJson.WriteTo(writer);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,10 +138,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string resourceUri = default;
             string operationName = default;
             string status = default;
-            string authorization = default;
-            string claims = default;
+            JsonElement authorizationJson = default;
+            JsonElement claimsJson = default;
             string correlationId = default;
-            string httpRequest = default;
+            JsonElement httpRequestJson = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -182,12 +182,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("authorization"u8))
                 {
-                    authorization = prop.Value.GetString();
+                    authorizationJson = prop.Value.Clone();
                     continue;
                 }
                 if (prop.NameEquals("claims"u8))
                 {
-                    claims = prop.Value.GetString();
+                    claimsJson = prop.Value.Clone();
                     continue;
                 }
                 if (prop.NameEquals("correlationId"u8))
@@ -197,7 +197,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("httpRequest"u8))
                 {
-                    httpRequest = prop.Value.GetString();
+                    httpRequestJson = prop.Value.Clone();
                     continue;
                 }
                 if (options.Format != "W")
@@ -213,10 +213,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 resourceUri,
                 operationName,
                 status,
-                authorization,
-                claims,
+                authorizationJson,
+                claimsJson,
                 correlationId,
-                httpRequest,
+                httpRequestJson,
                 additionalBinaryDataProperties);
         }
 

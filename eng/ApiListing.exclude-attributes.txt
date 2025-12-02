@@ -16,7 +16,14 @@ T:Azure.Core.CodeGenMemberSerializationHooksAttribute
 T:Azure.Core.CodeGenSuppressAttribute
 T:Azure.Core.CodeGenSuppressTypeAttribute
 T:Azure.Core.CodeGenSerializationAttribute
+T:Microsoft.TypeSpec.Generator.Customizations.CodeGenMemberAttribute
+T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSerializationAttribute
+T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute
+T:Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute
 T:System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute
 T:Azure.Data.AppConfiguration.CodeGenSuppressAttribute
 T:Azure.Monitor.Query.Logs.CodeGenSuppressAttribute
 T:Azure.Monitor.Query.Metrics.CodeGenSuppressAttribute
+T:Azure.Messaging.EventGrid.Namespaces.CodeGenTypeAttribute
+T:Azure.Messaging.EventGrid.Namespaces.CodeGenSuppressAttribute
+T:Azure.Messaging.EventGrid.Namespaces.CodeGenSerializationAttribute

@@ -18,33 +18,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
-        internal AppConfigurationSnapshotEventData(string name, string etag, string syncToken)
+        internal AppConfigurationSnapshotEventData(string name, string eTag, string syncToken)
         {
             Name = name;
-            Etag = etag;
+            ETag = eTag;
             SyncToken = syncToken;
         }
 
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotEventData"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="etag"> The etag representing the new state of the snapshot. </param>
+        /// <param name="eTag"> The etag representing the new state of the snapshot. </param>
         /// <param name="syncToken"> The sync token representing the server state after the event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationSnapshotEventData(string name, string etag, string syncToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppConfigurationSnapshotEventData(string name, string eTag, string syncToken, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            Etag = etag;
+            ETag = eTag;
             SyncToken = syncToken;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the snapshot. </summary>
         public string Name { get; }
-
-        /// <summary> The etag representing the new state of the snapshot. </summary>
-        public string Etag { get; }
 
         /// <summary> The sync token representing the server state after the event. </summary>
         public string SyncToken { get; }

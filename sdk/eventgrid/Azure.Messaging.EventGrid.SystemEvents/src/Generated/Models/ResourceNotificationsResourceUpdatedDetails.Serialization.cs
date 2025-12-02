@@ -46,16 +46,27 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            writer.WriteStringValue(ResourceType);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (options.Format != "W" && Optional.IsDefined(Tags))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteStringValue(Tags);
+                writer.WriteStartObject();
+                foreach (var item in ResourceTags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Properties))
             {
@@ -117,9 +128,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string id = default;
             string name = default;
-            string @type = default;
+            string resourceType = default;
             string location = default;
-            string tags = default;
+            IReadOnlyDictionary<string, string> resourceTags = default;
             IReadOnlyDictionary<string, object> properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -136,7 +147,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = prop.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -146,7 +157,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("tags"u8))
                 {
-                    tags = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    resourceTags = dictionary;
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -178,9 +205,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ResourceNotificationsResourceUpdatedDetails(
                 id,
                 name,
-                @type,
+                resourceType,
                 location,
-                tags,
+                resourceTags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, object>(),
                 additionalBinaryDataProperties);
         }

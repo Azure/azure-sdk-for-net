@@ -69,7 +69,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string name = default;
-            string etag = default;
+            string eTag = default;
             string syncToken = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    etag = prop.Value.GetString();
+                    eTag = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("syncToken"u8))
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AppConfigurationSnapshotCreatedEventData(name, etag, syncToken, additionalBinaryDataProperties);
+            return new AppConfigurationSnapshotCreatedEventData(name, eTag, syncToken, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,12 +18,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceDeleteCancelEventData"/>. </summary>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
-        internal ResourceDeleteCancelEventData(string authorization, string httpRequest)
+        /// <param name="authorizationJson"> The requested authorization for the operation. </param>
+        /// <param name="httpRequestJson"> The details of the operation. </param>
+        internal ResourceDeleteCancelEventData(JsonElement authorizationJson, JsonElement httpRequestJson)
         {
-            Authorization = authorization;
-            HttpRequest = httpRequest;
+            AuthorizationJson = authorizationJson;
+            HttpRequestJson = httpRequestJson;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceDeleteCancelEventData"/>. </summary>
@@ -33,12 +34,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceUri"> The URI of the resource in the operation. </param>
         /// <param name="operationName"> The operation that was performed. </param>
         /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorization"> The requested authorization for the operation. </param>
-        /// <param name="claims"> The properties of the claims. </param>
+        /// <param name="authorizationJson"> The requested authorization for the operation. </param>
+        /// <param name="claimsJson"> The properties of the claims. </param>
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequest"> The details of the operation. </param>
+        /// <param name="httpRequestJson"> The details of the operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDeleteCancelEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, string authorization, string claims, string correlationId, string httpRequest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceDeleteCancelEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
@@ -47,10 +48,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ResourceUri = resourceUri;
             OperationName = operationName;
             Status = status;
-            Authorization = authorization;
-            Claims = claims;
+            AuthorizationJson = authorizationJson;
+            ClaimsJson = claimsJson;
             CorrelationId = correlationId;
-            HttpRequest = httpRequest;
+            HttpRequestJson = httpRequestJson;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

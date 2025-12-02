@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -47,14 +45,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
-                foreach (ResponseError item in Errors)
+                foreach (AcsRouterCommunicationError item in ErrorsInternal)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             IReadOnlyDictionary<string, string> labels = default;
             IReadOnlyDictionary<string, string> tags = default;
             string classificationPolicyId = default;
-            IReadOnlyList<ResponseError> errors = default;
+            IReadOnlyList<AcsRouterCommunicationError> errorsInternal = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("jobId"u8))
@@ -157,19 +150,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("errors"u8))
                 {
-                    List<ResponseError> array = new List<ResponseError>();
+                    List<AcsRouterCommunicationError> array = new List<AcsRouterCommunicationError>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureMessagingEventGridSystemEventsContext.Default));
-                        }
+                        array.Add(AcsRouterCommunicationError.DeserializeAcsRouterCommunicationError(item, options));
                     }
-                    errors = array;
+                    errorsInternal = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -186,7 +172,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 labels,
                 tags,
                 classificationPolicyId,
-                errors);
+                errorsInternal);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

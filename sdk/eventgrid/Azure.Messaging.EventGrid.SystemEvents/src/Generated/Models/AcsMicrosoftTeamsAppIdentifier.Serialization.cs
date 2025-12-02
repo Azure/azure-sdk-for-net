@@ -12,12 +12,17 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Information related to a gateway token that is near expiry for a self-hosted gateway deployment. </summary>
-    public partial class ApiManagementNearExpiryGatewayTokenProperties : IJsonModel<ApiManagementNearExpiryGatewayTokenProperties>
+    /// <summary> A Microsoft Teams application. </summary>
+    public partial class AcsMicrosoftTeamsAppIdentifier : IJsonModel<AcsMicrosoftTeamsAppIdentifier>
     {
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/> for deserialization. </summary>
+        internal AcsMicrosoftTeamsAppIdentifier()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ApiManagementNearExpiryGatewayTokenProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AcsMicrosoftTeamsAppIdentifier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,15 +33,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpiresOn))
+            writer.WritePropertyName("appId"u8);
+            writer.WriteStringValue(AppId);
+            if (Optional.IsDefined(Cloud))
             {
-                writer.WritePropertyName("expiredAtUtc"u8);
-                writer.WriteStringValue(ExpiresOn.Value, "O");
+                writer.WritePropertyName("cloud"u8);
+                writer.WriteStringValue(Cloud.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -57,40 +64,46 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementNearExpiryGatewayTokenProperties IJsonModel<ApiManagementNearExpiryGatewayTokenProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AcsMicrosoftTeamsAppIdentifier IJsonModel<AcsMicrosoftTeamsAppIdentifier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiManagementNearExpiryGatewayTokenProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AcsMicrosoftTeamsAppIdentifier JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeApiManagementNearExpiryGatewayTokenProperties(document.RootElement, options);
+            return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ApiManagementNearExpiryGatewayTokenProperties DeserializeApiManagementNearExpiryGatewayTokenProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AcsMicrosoftTeamsAppIdentifier DeserializeAcsMicrosoftTeamsAppIdentifier(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? expiresOn = default;
+            string appId = default;
+            CommunicationCloudEnvironmentModel? cloud = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("expiredAtUtc"u8))
+                if (prop.NameEquals("appId"u8))
+                {
+                    appId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("cloud"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiresOn = prop.Value.GetDateTimeOffset("O");
+                    cloud = new CommunicationCloudEnvironmentModel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,47 +111,47 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiManagementNearExpiryGatewayTokenProperties(expiresOn, additionalBinaryDataProperties);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ApiManagementNearExpiryGatewayTokenProperties IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AcsMicrosoftTeamsAppIdentifier IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ApiManagementNearExpiryGatewayTokenProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AcsMicrosoftTeamsAppIdentifier PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AcsMicrosoftTeamsAppIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeApiManagementNearExpiryGatewayTokenProperties(document.RootElement, options);
+                        return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementNearExpiryGatewayTokenProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsMicrosoftTeamsAppIdentifier)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ApiManagementNearExpiryGatewayTokenProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AcsMicrosoftTeamsAppIdentifier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -51,10 +49,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("receivedTimeStamp"u8);
                 writer.WriteStringValue(ReceivedTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(ErrorInternal))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                writer.WriteObjectValue(ErrorInternal, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -101,7 +99,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string @from = default;
             string to = default;
             DateTimeOffset? receivedTimestamp = default;
-            ResponseError error = default;
+            AcsMessageChannelEventError errorInternal = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +128,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureMessagingEventGridSystemEventsContext.Default);
+                    errorInternal = AcsMessageChannelEventError.DeserializeAcsMessageChannelEventError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,7 +136,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AcsMessageEventData(@from, to, receivedTimestamp, error, additionalBinaryDataProperties);
+            return new AcsMessageEventData(@from, to, receivedTimestamp, errorInternal, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

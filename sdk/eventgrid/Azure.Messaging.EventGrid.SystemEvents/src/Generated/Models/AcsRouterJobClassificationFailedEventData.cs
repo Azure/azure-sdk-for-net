@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
         internal AcsRouterJobClassificationFailedEventData()
         {
-            Errors = new ChangeTrackingList<ResponseError>();
+            ErrorsInternal = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
@@ -29,11 +28,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
-        /// <param name="errors"> Router Job Classification Failed Errors. </param>
-        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<ResponseError> errors) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
+        /// <param name="errorsInternal"> Router Job Classification Failed Errors. </param>
+        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<AcsRouterCommunicationError> errorsInternal) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             ClassificationPolicyId = classificationPolicyId;
-            Errors = errors;
+            ErrorsInternal = errorsInternal;
         }
 
         /// <summary> Router Job Classification Policy Id. </summary>
