@@ -59,11 +59,15 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchNodeRemoteLoginSettings"/>. </summary>
+        /// <param name="ipv6RemoteLoginIpAddress"> The IPv6 address used for remote login to the Compute Node. </param>
+        /// <param name="ipv6RemoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchNodeRemoteLoginSettings(IPAddress remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchNodeRemoteLoginSettings(IPAddress ipv6RemoteLoginIpAddress, int? ipv6RemoteLoginPort, IPAddress remoteLoginIpAddress, int remoteLoginPort, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Ipv6RemoteLoginIpAddress = ipv6RemoteLoginIpAddress;
+            Ipv6RemoteLoginPort = ipv6RemoteLoginPort;
             RemoteLoginIpAddress = remoteLoginIpAddress;
             RemoteLoginPort = remoteLoginPort;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -74,6 +78,10 @@ namespace Azure.Compute.Batch
         {
         }
 
+        /// <summary> The IPv6 address used for remote login to the Compute Node. </summary>
+        public IPAddress Ipv6RemoteLoginIpAddress { get; }
+        /// <summary> The port used for remote login to the Compute Node. </summary>
+        public int? Ipv6RemoteLoginPort { get; }
         /// <summary> The IP address used for remote login to the Compute Node. </summary>
         public IPAddress RemoteLoginIpAddress { get; }
         /// <summary> The port used for remote login to the Compute Node. </summary>

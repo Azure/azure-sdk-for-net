@@ -59,8 +59,8 @@ DnsARecord aRecord = new(nameof(aRecord), DnsARecord.ResourceVersions.V2018_05_0
     TtlInSeconds = 3600,
     ARecords =
     {
-        new DnsARecordInfo() { Ipv4Addresses = IPAddress.Parse("203.0.113.1") },
-        new DnsARecordInfo() { Ipv4Addresses = IPAddress.Parse("203.0.113.2") }
+        new DnsARecordInfo() { Ipv4Address = IPAddress.Parse("203.0.113.1") },
+        new DnsARecordInfo() { Ipv4Address = IPAddress.Parse("203.0.113.2") }
     }
 };
 infra.Add(aRecord);

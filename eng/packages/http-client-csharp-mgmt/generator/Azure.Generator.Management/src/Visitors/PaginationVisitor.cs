@@ -142,7 +142,7 @@ internal class PaginationVisitor : ScmLibraryVisitor
             && variable.Declaration.RequestedName == "scope")
         {
             // first we fetch the diagnostics scope from outputlibrary
-            if (ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.TryGetValue(method.EnclosingType, out var diagnosticsScopeValue))
+            if (ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.TryGetValue(method.EnclosingType.Name, out var diagnosticsScopeValue))
             {
                 // change its first argument to be the new diagnostics scope value.
                 invokeMethodExpression.Update(

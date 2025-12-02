@@ -37,7 +37,7 @@ namespace Azure.Generator.Management
 
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
-        internal Dictionary<TypeProvider, string> PageableMethodScopes { get; } = new();
+        internal Dictionary<string, string> PageableMethodScopes { get; } = new();
 
         private IReadOnlyDictionary<string, ResourceClientProvider>? _resourcesByIdDict;
         private IReadOnlyList<ResourceClientProvider>? _resources;
@@ -138,20 +138,28 @@ namespace Azure.Generator.Management
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = new MockableArmClientProvider(_resources);
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
-                if (scope != ResourceScope.Extension &&
-                    (resourcesInScope.Count > 0 || resourceMethods.Count > 0 || nonResourceMethods.Count > 0))
+                if (scope != ResourceScope.Extension)
                 {
-                    var mockableExtension = new MockableResourceProvider(scope, resourcesInScope, resourceMethods, nonResourceMethods);
-                    mockableResources.Add(scope, mockableExtension);
+                    var mockableExtension = MockableResourceProvider.TryCreate(scope, resourcesInScope, resourceMethods, nonResourceMethods);
+                    if (mockableExtension != null)
+                    {
+                        mockableResources.Add(scope, mockableExtension);
+                    }
                 }
             }
 
             _mockableResourcesByScopeDict = mockableResources;
-            _mockableResources = [mockableArmClientResource, ..mockableResources.Values];
+            var allMockableResources = new List<MockableResourceProvider>();
+            if (mockableArmClientResource != null)
+            {
+                allMockableResources.Add(mockableArmClientResource);
+            }
+            allMockableResources.AddRange(mockableResources.Values);
+            _mockableResources = allMockableResources;
             _extensionProvider = new ExtensionProvider(_mockableResources);
 
             static Dictionary<ResourceScope, ResourcesAndNonResourceMethodsInScope> BuildResourcesAndNonResourceMethods(

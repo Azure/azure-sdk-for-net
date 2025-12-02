@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<IspCustomerResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<IspCustomerResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<IspCustomerResource> result = Update(patch, cancellationToken);
+                    Response<IspCustomerResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     IspCustomerData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    Response<IspCustomerResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<IspCustomerResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.ConnectedCache
                     IspCustomerData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedCachePatchContent patch = new ConnectedCachePatchContent();
                     patch.Tags.ReplaceWith(tags);
-                    Response<IspCustomerResource> result = Update(patch, cancellationToken);
+                    Response<IspCustomerResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<IspCustomerResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<IspCustomerResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ConnectedCache
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<IspCustomerResource> result = Update(patch, cancellationToken);
+                    Response<IspCustomerResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
