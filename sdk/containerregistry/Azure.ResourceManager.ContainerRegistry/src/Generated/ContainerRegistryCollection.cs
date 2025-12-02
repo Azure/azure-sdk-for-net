@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerRegistry
@@ -25,51 +26,49 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryCollection : ArmCollection, IEnumerable<ContainerRegistryResource>, IAsyncEnumerable<ContainerRegistryResource>
     {
-        private readonly ClientDiagnostics _containerRegistryRegistriesClientDiagnostics;
-        private readonly RegistriesRestOperations _containerRegistryRegistriesRestClient;
+        private readonly ClientDiagnostics _registriesClientDiagnostics;
+        private readonly Registries _registriesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryCollection for mocking. </summary>
         protected ContainerRegistryCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerRegistryCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerRegistryRegistriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerRegistryResource.ResourceType, out string containerRegistryRegistriesApiVersion);
-            _containerRegistryRegistriesRestClient = new RegistriesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryRegistriesApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerRegistryResource.ResourceType, out string containerRegistryApiVersion);
+            _registriesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryResource.ResourceType.Namespace, Diagnostics);
+            _registriesRestClient = new Registries(_registriesClientDiagnostics, Pipeline, Endpoint, containerRegistryApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,21 +76,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="data"> The parameters for creating a container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string registryName, ContainerRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerRegistryRegistriesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryResource>(new ContainerRegistryOperationSource(Client), _containerRegistryRegistriesClientDiagnostics, Pipeline, _containerRegistryRegistriesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerRegistryArmOperation<ContainerRegistryResource> operation = new ContainerRegistryArmOperation<ContainerRegistryResource>(
+                    new ContainerRegistryOperationSource(Client),
+                    _registriesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -105,20 +117,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Creates a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,21 +134,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="data"> The parameters for creating a container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ContainerRegistryResource> CreateOrUpdate(WaitUntil waitUntil, string registryName, ContainerRegistryData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerRegistryRegistriesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, registryName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryResource>(new ContainerRegistryOperationSource(Client), _containerRegistryRegistriesClientDiagnostics, Pipeline, _containerRegistryRegistriesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, registryName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, ContainerRegistryData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerRegistryArmOperation<ContainerRegistryResource> operation = new ContainerRegistryArmOperation<ContainerRegistryResource>(
+                    new ContainerRegistryOperationSource(Client),
+                    _registriesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +175,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerRegistryResource>> GetAsync(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Get");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerRegistryRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerRegistryData> response = Response.FromValue(ContainerRegistryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +224,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerRegistryResource> Get(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Get");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerRegistryData> response = Response.FromValue(ContainerRegistryData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,50 +273,44 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Lists all the container registries under the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetByResourceGroupAsyncCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
         /// Lists all the container registries under the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -295,45 +318,61 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryRegistriesRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryResource(Client, ContainerRegistryData.DeserializeContainerRegistryData(e)), _containerRegistryRegistriesClientDiagnostics, Pipeline, "ContainerRegistryCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerRegistryData, ContainerRegistryResource>(new RegistriesGetByResourceGroupCollectionResultOfT(_registriesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ContainerRegistryResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the properties of the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Exists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -344,39 +383,53 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the properties of the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Exists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,41 +440,57 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the properties of the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryResource>> GetIfExistsAsync(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryRegistriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -432,41 +501,57 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the properties of the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Registries_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Registries_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="registryName"> The name of the container registry. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="registryName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="registryName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerRegistryResource> GetIfExists(string registryName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
 
-            using var scope = _containerRegistryRegistriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
+            using DiagnosticScope scope = _registriesClientDiagnostics.CreateScope("ContainerRegistryCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerRegistryRegistriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, registryName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _registriesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, registryName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -486,6 +571,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerRegistryResource> IAsyncEnumerable<ContainerRegistryResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

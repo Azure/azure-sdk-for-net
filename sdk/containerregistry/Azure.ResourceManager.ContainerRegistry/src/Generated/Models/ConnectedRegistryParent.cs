@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of the connected registry parent. </summary>
     public partial class ConnectedRegistryParent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryParent"/>. </summary>
         /// <param name="syncProperties"> The sync properties of the connected registry with its parent. </param>
@@ -59,24 +31,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistryParent"/>. </summary>
         /// <param name="id"> The resource ID of the parent to which the connected registry will be associated. </param>
         /// <param name="syncProperties"> The sync properties of the connected registry with its parent. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistryParent(ResourceIdentifier id, ConnectedRegistrySyncProperties syncProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectedRegistryParent(ResourceIdentifier id, ConnectedRegistrySyncProperties syncProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             SyncProperties = syncProperties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryParent"/> for deserialization. </summary>
-        internal ConnectedRegistryParent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource ID of the parent to which the connected registry will be associated. </summary>
-        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
+
         /// <summary> The sync properties of the connected registry with its parent. </summary>
-        [WirePath("syncProperties")]
         public ConnectedRegistrySyncProperties SyncProperties { get; set; }
     }
 }

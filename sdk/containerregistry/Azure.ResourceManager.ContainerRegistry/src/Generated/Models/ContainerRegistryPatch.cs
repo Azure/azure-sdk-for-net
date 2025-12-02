@@ -7,44 +7,15 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The parameters for updating a container registry. </summary>
     public partial class ContainerRegistryPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPatch"/>. </summary>
         public ContainerRegistryPatch()
@@ -56,73 +27,214 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="identity"> The identity of the container registry. </param>
         /// <param name="tags"> The tags for the container registry. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
-        /// <param name="isAdminUserEnabled"> The value that indicates whether the admin user is enabled. </param>
-        /// <param name="networkRuleSet"> The network rule set for a container registry. </param>
-        /// <param name="policies"> The policies for a container registry. </param>
-        /// <param name="encryption"> The encryption settings of container registry. </param>
-        /// <param name="isDataEndpointEnabled"> Enable a single data endpoint per region for serving data. </param>
-        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the container registry. </param>
-        /// <param name="networkRuleBypassOptions"> Whether to allow trusted Azure services to access a network restricted registry. </param>
-        /// <param name="isNetworkRuleBypassAllowedForTasks"> Whether to allow ACR Tasks service to access a network restricted registry. </param>
-        /// <param name="isAnonymousPullEnabled"> Enables registry-wide pull from unauthenticated clients. </param>
-        /// <param name="roleAssignmentMode"> Determines registry role assignment mode. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, ContainerRegistrySku sku, bool? isAdminUserEnabled, ContainerRegistryNetworkRuleSet networkRuleSet, ContainerRegistryPolicies policies, ContainerRegistryEncryption encryption, bool? isDataEndpointEnabled, ContainerRegistryPublicNetworkAccess? publicNetworkAccess, ContainerRegistryNetworkRuleBypassOption? networkRuleBypassOptions, bool? isNetworkRuleBypassAllowedForTasks, bool? isAnonymousPullEnabled, ContainerRegistryRoleAssignmentMode? roleAssignmentMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> The properties that the container registry will be updated with. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPatch(IdentityProperties identity, IDictionary<string, string> tags, ContainerRegistrySku sku, RegistryPropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
             Sku = sku;
-            IsAdminUserEnabled = isAdminUserEnabled;
-            NetworkRuleSet = networkRuleSet;
-            Policies = policies;
-            Encryption = encryption;
-            IsDataEndpointEnabled = isDataEndpointEnabled;
-            PublicNetworkAccess = publicNetworkAccess;
-            NetworkRuleBypassOptions = networkRuleBypassOptions;
-            IsNetworkRuleBypassAllowedForTasks = isNetworkRuleBypassAllowedForTasks;
-            IsAnonymousPullEnabled = isAnonymousPullEnabled;
-            RoleAssignmentMode = roleAssignmentMode;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identity of the container registry. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
+        public IdentityProperties Identity { get; set; }
+
         /// <summary> The tags for the container registry. </summary>
-        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
         /// <summary> The SKU of the container registry. </summary>
-        [WirePath("sku")]
         public ContainerRegistrySku Sku { get; set; }
+
+        /// <summary> The properties that the container registry will be updated with. </summary>
+        internal RegistryPropertiesUpdateParameters Properties { get; set; }
+
         /// <summary> The value that indicates whether the admin user is enabled. </summary>
-        [WirePath("properties.adminUserEnabled")]
-        public bool? IsAdminUserEnabled { get; set; }
+        public bool? AdminUserEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdminUserEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.AdminUserEnabled = value.Value;
+            }
+        }
+
         /// <summary> The network rule set for a container registry. </summary>
-        [WirePath("properties.networkRuleSet")]
-        public ContainerRegistryNetworkRuleSet NetworkRuleSet { get; set; }
+        public ContainerRegistryNetworkRuleSet NetworkRuleSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRuleSet;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.NetworkRuleSet = value;
+            }
+        }
+
         /// <summary> The policies for a container registry. </summary>
-        [WirePath("properties.policies")]
-        public ContainerRegistryPolicies Policies { get; set; }
+        public ContainerRegistryPolicies Policies
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Policies;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.Policies = value;
+            }
+        }
+
         /// <summary> The encryption settings of container registry. </summary>
-        [WirePath("properties.encryption")]
-        public ContainerRegistryEncryption Encryption { get; set; }
+        public ContainerRegistryEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.Encryption = value;
+            }
+        }
+
         /// <summary> Enable a single data endpoint per region for serving data. </summary>
-        [WirePath("properties.dataEndpointEnabled")]
-        public bool? IsDataEndpointEnabled { get; set; }
+        public bool? DataEndpointEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DataEndpointEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.DataEndpointEnabled = value.Value;
+            }
+        }
+
         /// <summary> Whether or not public network access is allowed for the container registry. </summary>
-        [WirePath("properties.publicNetworkAccess")]
-        public ContainerRegistryPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        public ContainerRegistryPublicNetworkAccess? PublicNetworkAccess
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccess;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.PublicNetworkAccess = value.Value;
+            }
+        }
+
         /// <summary> Whether to allow trusted Azure services to access a network restricted registry. </summary>
-        [WirePath("properties.networkRuleBypassOptions")]
-        public ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions { get; set; }
+        public ContainerRegistryNetworkRuleBypassOption? NetworkRuleBypassOptions
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRuleBypassOptions;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.NetworkRuleBypassOptions = value.Value;
+            }
+        }
+
         /// <summary> Whether to allow ACR Tasks service to access a network restricted registry. </summary>
-        [WirePath("properties.networkRuleBypassAllowedForTasks")]
-        public bool? IsNetworkRuleBypassAllowedForTasks { get; set; }
+        public bool? NetworkRuleBypassAllowedForTasks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRuleBypassAllowedForTasks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.NetworkRuleBypassAllowedForTasks = value.Value;
+            }
+        }
+
         /// <summary> Enables registry-wide pull from unauthenticated clients. </summary>
-        [WirePath("properties.anonymousPullEnabled")]
-        public bool? IsAnonymousPullEnabled { get; set; }
+        public bool? AnonymousPullEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AnonymousPullEnabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.AnonymousPullEnabled = value.Value;
+            }
+        }
+
+        /// <summary> Determines whether registry artifacts are indexed for metadata search. </summary>
+        public MetadataSearch? MetadataSearch
+        {
+            get
+            {
+                return Properties is null ? default : Properties.MetadataSearch;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.MetadataSearch = value.Value;
+            }
+        }
+
         /// <summary> Determines registry role assignment mode. </summary>
-        [WirePath("properties.roleAssignmentMode")]
-        public ContainerRegistryRoleAssignmentMode? RoleAssignmentMode { get; set; }
+        public ContainerRegistryRoleAssignmentMode? RoleAssignmentMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoleAssignmentMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new RegistryPropertiesUpdateParameters();
+                }
+                Properties.RoleAssignmentMode = value.Value;
+            }
+        }
     }
 }
