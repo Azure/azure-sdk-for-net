@@ -21,7 +21,10 @@ T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSerializationAttribute
 T:Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute
 T:Microsoft.TypeSpec.Generator.Customizations.CodeGenTypeAttribute
 T:System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute
+T:Azure.Data.AppConfiguration.CodeGenMemberAttribute
+T:Azure.Data.AppConfiguration.CodeGenSerializationAttribute
 T:Azure.Data.AppConfiguration.CodeGenSuppressAttribute
+T:Azure.Data.AppConfiguration.CodeGenTypeAttribute
 T:Azure.Monitor.Query.Logs.CodeGenSuppressAttribute
 T:Azure.Monitor.Query.Metrics.CodeGenSuppressAttribute
 T:Azure.Messaging.EventGrid.Namespaces.CodeGenTypeAttribute
@@ -30,3 +33,6 @@ T:Azure.Messaging.EventGrid.Namespaces.CodeGenSerializationAttribute
 T:Azure.Monitor.Query.Metrics.CodeGenTypeAttribute
 T:Azure.Monitor.Query.Logs.CodeGenTypeAttribute
 T:Azure.Monitor.Query.Logs.CodeGenMemberAttribute
+T:Azure.AI.Projects.CodeGenMemberAttribute
+T:Azure.AI.Projects.CodeGenTypeAttribute
+T:Azure.AI.VoiceLive.CodeGenMemberAttribute
