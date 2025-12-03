@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Monitor.Query.Logs;
@@ -43,61 +42,25 @@ namespace Azure.Monitor.Query.Logs.Models
             }
             writer.WritePropertyName("tables"u8);
             writer.WriteStartArray();
-            foreach (LogsTable item in Tables)
+            foreach (LogsTable item in AllTables)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsCollectionDefined(Statistics))
-            {
-                writer.WritePropertyName("statistics"u8);
-                writer.WriteStartObject();
-                foreach (var item in Statistics)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(Render))
-            {
-                writer.WritePropertyName("render"u8);
-                writer.WriteStartObject();
-                foreach (var item in Render)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(Error))
+            if (Optional.IsDefined(_error))
             {
                 writer.WritePropertyName("error"u8);
-                ((IJsonModel<ResponseError>)Error).Write(writer, options);
+                _error.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                _statistics.WriteTo(writer);
+            }
+            if (Optional.IsDefined(_visualization))
+            {
+                writer.WritePropertyName("render"u8);
+                _visualization.WriteTo(writer);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -141,10 +104,10 @@ namespace Azure.Monitor.Query.Logs.Models
             {
                 return null;
             }
-            IList<LogsTable> tables = default;
-            IDictionary<string, BinaryData> statistics = default;
-            IDictionary<string, BinaryData> render = default;
-            ResponseError error = default;
+            IReadOnlyList<LogsTable> allTables = default;
+            JsonElement error = default;
+            JsonElement statistics = default;
+            JsonElement visualization = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,58 +118,22 @@ namespace Azure.Monitor.Query.Logs.Models
                     {
                         array.Add(LogsTable.DeserializeLogsTable(item, options));
                     }
-                    tables = array;
-                    continue;
-                }
-                if (prop.NameEquals("statistics"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    statistics = dictionary;
-                    continue;
-                }
-                if (prop.NameEquals("render"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var prop0 in prop.Value.EnumerateObject())
-                    {
-                        if (prop0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(prop0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
-                        }
-                    }
-                    render = dictionary;
+                    allTables = array;
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    error = ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), options, AzureMonitorQueryLogsContext.Default);
+                    error = prop.Value.Clone();
+                    continue;
+                }
+                if (prop.NameEquals("statistics"u8))
+                {
+                    statistics = prop.Value.Clone();
+                    continue;
+                }
+                if (prop.NameEquals("render"u8))
+                {
+                    visualization = prop.Value.Clone();
                     continue;
                 }
                 if (options.Format != "W")
@@ -214,7 +141,7 @@ namespace Azure.Monitor.Query.Logs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogsQueryResult(tables, statistics ?? new ChangeTrackingDictionary<string, BinaryData>(), render ?? new ChangeTrackingDictionary<string, BinaryData>(), error, additionalBinaryDataProperties);
+            return new LogsQueryResult(allTables, error, statistics, visualization, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

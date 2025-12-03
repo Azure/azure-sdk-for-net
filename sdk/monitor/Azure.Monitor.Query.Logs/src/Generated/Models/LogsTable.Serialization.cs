@@ -49,12 +49,7 @@ namespace Azure.Monitor.Query.Logs.Models
             }
             writer.WriteEndArray();
             writer.WritePropertyName("rows"u8);
-            writer.WriteStartArray();
-            foreach (LogsTableRow item in Rows)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
+            InternalRows.WriteTo(writer);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -99,7 +94,7 @@ namespace Azure.Monitor.Query.Logs.Models
             }
             string name = default;
             IReadOnlyList<LogsTableColumn> columns = default;
-            IReadOnlyList<LogsTableRow> rows = default;
+            JsonElement internalRows = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -120,12 +115,7 @@ namespace Azure.Monitor.Query.Logs.Models
                 }
                 if (prop.NameEquals("rows"u8))
                 {
-                    List<LogsTableRow> array = new List<LogsTableRow>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(LogsTableRow.DeserializeLogsTableRow(item, options));
-                    }
-                    rows = array;
+                    internalRows = prop.Value.Clone();
                     continue;
                 }
                 if (options.Format != "W")
@@ -133,7 +123,7 @@ namespace Azure.Monitor.Query.Logs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new LogsTable(name, columns, rows, additionalBinaryDataProperties);
+            return new LogsTable(name, columns, internalRows, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

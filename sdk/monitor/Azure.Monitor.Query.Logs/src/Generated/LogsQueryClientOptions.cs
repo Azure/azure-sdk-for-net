@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.Monitor.Query.Logs
 {
-    /// <summary> Client options for <see cref="Client"/>. </summary>
-    public partial class ClientOptions : Core.ClientOptions
+    /// <summary> Client options for <see cref="LogsQueryClient"/>. </summary>
+    public partial class LogsQueryClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1;
 
-        /// <summary> Initializes a new instance of ClientOptions. </summary>
+        /// <summary> Initializes a new instance of LogsQueryClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        public ClientOptions(ServiceVersion version = LatestVersion)
+        public LogsQueryClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
