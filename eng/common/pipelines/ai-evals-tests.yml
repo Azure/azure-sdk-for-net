@@ -14,5 +14,5 @@ extends:
   parameters:
     EvalRepoCommit: main
     TargetRepoOwner: ${{ split(variables['Build.Repository.Name'], '/')[0] }}
-    TargetRepoName: ${{ split(variables['Build.Repository.Name'], '/')[1] }}
+    TargetRepoName: ${{ split(variables['Build.Repository.Name'], '/')[1] }} 
     TargetRepoCommit: $(Build.SourceVersion)
