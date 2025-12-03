@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Request data for transliterate. </summary>
-    public partial class TransliterateBody
+    internal partial class TransliterateBody
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
