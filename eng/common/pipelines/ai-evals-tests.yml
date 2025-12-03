@@ -13,6 +13,6 @@ extends:
   template: /eng/common/pipelines/templates/jobs/ai-eval-job.yml
   parameters:
     EvalRepoCommit: main
-    TargetRepoOwner: $(Build.Repository.Owner)
-    TargetRepoName: $(Build.Repository.Name)
+    TargetRepoOwner: $[split(variables['Build.Repository.Name'], '/')[0]]
+    TargetRepoName: $[split(variables['Build.Repository.Name'], '/')[1]]
     TargetRepoCommit: $(Build.SourceVersion)
