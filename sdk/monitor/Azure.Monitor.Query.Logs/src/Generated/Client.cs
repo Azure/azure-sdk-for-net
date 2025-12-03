@@ -15,8 +15,8 @@ using Azure.Monitor.Query.Logs.Models;
 
 namespace Azure.Monitor.Query.Logs
 {
-    /// <summary> The LogsQueryClient. </summary>
-    public partial class LogsQueryClient
+    /// <summary> The Client. </summary>
+    public partial class Client
     {
         private readonly Uri _endpoint;
         /// <summary> A credential used to authenticate to the service. </summary>
@@ -24,16 +24,43 @@ namespace Azure.Monitor.Query.Logs
         private static readonly string[] AuthorizationScopes = new string[] { "https://api.loganalytics.io/.default" };
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of LogsQueryClient for mocking. </summary>
-        protected LogsQueryClient()
+        /// <summary> Initializes a new instance of Client for mocking. </summary>
+        protected Client()
         {
         }
 
-        /// <summary> Initializes a new instance of LogsQueryClient. </summary>
+        /// <summary> Initializes a new instance of Client. </summary>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
-        public LogsQueryClient(TokenCredential credential) : this(new Uri("https://api.loganalytics.io"), credential, new LogsQueryClientOptions())
+        public Client(TokenCredential credential) : this(new Uri("https://api.loganalytics.io"), credential, new ClientOptions())
         {
+        }
+
+        /// <summary> Initializes a new instance of Client. </summary>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="credential"/> is null. </exception>
+        public Client(TokenCredential credential, ClientOptions options) : this(new Uri("https://api.loganalytics.io"), credential, options)
+        {
+        }
+
+        /// <summary> Initializes a new instance of Client. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public Client(Uri endpoint, TokenCredential credential, ClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+
+            options ??= new ClientOptions();
+
+            _endpoint = endpoint;
+            _tokenCredential = credential;
+            Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
+            _apiVersion = options.Version;
+            ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -63,7 +90,7 @@ namespace Azure.Monitor.Query.Logs
         /// <returns> The response returned from the service. </returns>
         internal virtual Response QueryWorkspace(string workspaceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryWorkspace");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Client.QueryWorkspace");
             scope.Start();
             try
             {
@@ -98,7 +125,7 @@ namespace Azure.Monitor.Query.Logs
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> QueryWorkspaceAsync(string workspaceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryWorkspace");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Client.QueryWorkspace");
             scope.Start();
             try
             {
@@ -177,7 +204,7 @@ namespace Azure.Monitor.Query.Logs
         /// <returns> The response returned from the service. </returns>
         internal virtual Response QueryResource(string resourceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryResource");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Client.QueryResource");
             scope.Start();
             try
             {
@@ -212,7 +239,7 @@ namespace Azure.Monitor.Query.Logs
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> QueryResourceAsync(string resourceId, RequestContent content, string prefer = default, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryResource");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Client.QueryResource");
             scope.Start();
             try
             {
@@ -286,7 +313,7 @@ namespace Azure.Monitor.Query.Logs
         /// <returns> The response returned from the service. </returns>
         internal virtual Response QueryBatch(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryBatch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Client.QueryBatch");
             scope.Start();
             try
             {
@@ -316,7 +343,7 @@ namespace Azure.Monitor.Query.Logs
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> QueryBatchAsync(RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("LogsQueryClient.QueryBatch");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("Client.QueryBatch");
             scope.Start();
             try
             {

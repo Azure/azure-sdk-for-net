@@ -8,6 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using Azure;
+using Azure.Monitor.Query.Logs;
 
 namespace Azure.Monitor.Query.Logs.Models
 {
@@ -18,10 +21,86 @@ namespace Azure.Monitor.Query.Logs.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
-        /// <param name="allTables"> The results of the query in tabular format. </param>
-        internal LogsQueryResult(IEnumerable<LogsTable> allTables)
+        /// <param name="tables"> The results of the query in tabular format. </param>
+        internal LogsQueryResult(IEnumerable<LogsTable> tables)
         {
-            AllTables = allTables.ToList();
+            Tables = tables.ToList();
+            Statistics = new ChangeTrackingDictionary<string, BinaryData>();
+            Render = new ChangeTrackingDictionary<string, BinaryData>();
         }
+
+        /// <summary> Initializes a new instance of <see cref="LogsQueryResult"/>. </summary>
+        /// <param name="tables"> The results of the query in tabular format. </param>
+        /// <param name="statistics"> Statistics represented in JSON format. </param>
+        /// <param name="render"> Visualization data in JSON format. </param>
+        /// <param name="error"> The code and message for an error. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LogsQueryResult(IList<LogsTable> tables, IDictionary<string, BinaryData> statistics, IDictionary<string, BinaryData> render, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Tables = tables;
+            Statistics = statistics;
+            Render = render;
+            Error = error;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> The results of the query in tabular format. </summary>
+        public IList<LogsTable> Tables { get; }
+
+        /// <summary>
+        /// Statistics represented in JSON format.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> Statistics { get; }
+
+        /// <summary>
+        /// Visualization data in JSON format.
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// <item>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> Render { get; }
     }
 }

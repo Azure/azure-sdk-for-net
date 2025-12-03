@@ -13,7 +13,7 @@ using Azure.Monitor.Query.Metrics;
 namespace Azure.Monitor.Query.Metrics.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class MetricsQueryModelFactory
+    public static partial class QueryMetricsModelFactory
     {
         /// <summary> The metrics result for a resource. </summary>
         /// <param name="values"> The collection of metric data responses per resource, per metric. </param>
@@ -53,6 +53,50 @@ namespace Azure.Monitor.Query.Metrics.Models
                 resourceId,
                 metrics.ToList(),
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The result data of a query. </summary>
+        /// <param name="id"> The metric Id. </param>
+        /// <param name="type"> The resource type of the metric resource. </param>
+        /// <param name="localizedName"> The name and the display name of the metric, i.e. it is localizable string. </param>
+        /// <param name="description"> Detailed description of this metric. </param>
+        /// <param name="errorCode"> 'Success' or the error details on query failures for this metric. </param>
+        /// <param name="errorMessage"> Error message encountered querying this specific metric. </param>
+        /// <param name="unit"> The unit of the metric. </param>
+        /// <param name="timeSeries"> The time series returned when a data query is performed. </param>
+        /// <returns> A new <see cref="Models.MetricResult"/> instance for mocking. </returns>
+        public static MetricResult MetricResult(string id = default, string @type = default, LocalizableString localizedName = default, string description = default, string errorCode = default, string errorMessage = default, MetricUnit unit = default, IEnumerable<MetricTimeSeriesElement> timeSeries = default)
+        {
+            timeSeries ??= new ChangeTrackingList<MetricTimeSeriesElement>();
+
+            return new MetricResult(
+                id,
+                @type,
+                localizedName,
+                description,
+                errorCode,
+                errorMessage,
+                unit,
+                timeSeries.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A time series result type. The discriminator value is always TimeSeries in this
+        /// case.
+        /// </summary>
+        /// <param name="metadatavalues"> The metadata values returned if $filter was specified in the call. </param>
+        /// <param name="values">
+        /// An array of data points representing the metric values.  This is only returned
+        /// if a result type of data is specified.
+        /// </param>
+        /// <returns> A new <see cref="Models.MetricTimeSeriesElement"/> instance for mocking. </returns>
+        public static MetricTimeSeriesElement MetricTimeSeriesElement(IEnumerable<MetadataValue> metadatavalues = default, IEnumerable<MetricValue> values = default)
+        {
+            metadatavalues ??= new ChangeTrackingList<MetadataValue>();
+            values ??= new ChangeTrackingList<MetricValue>();
+
+            return new MetricTimeSeriesElement(metadatavalues.ToList(), values.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a metric value. </summary>
