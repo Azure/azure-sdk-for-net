@@ -1026,6 +1026,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobRequestConditions : Azure.Storage.Blobs.Models.BlobLeaseRequestConditions
     {
         public BlobRequestConditions() { }
+        public System.DateTimeOffset? AccessTierIfModifiedSince { get { throw null; } set { } }
+        public System.DateTimeOffset? AccessTierIfUnmodifiedSince { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
