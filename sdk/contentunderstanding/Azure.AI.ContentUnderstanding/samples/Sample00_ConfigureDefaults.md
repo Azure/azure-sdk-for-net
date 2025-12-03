@@ -4,10 +4,10 @@ This sample demonstrates how to configure and retrieve default model deployment 
 
 ## About model deployment configuration
 
-Content Understanding prebuilt analyzers require specific GPT model deployments to function:
+Content Understanding prebuilt analyzers require specific large language model deployments to function. Currently, Content Understanding uses OpenAI GPT models:
 
-- **GPT-4.1** - Used by most prebuilt analyzers (e.g., `prebuilt-invoice`, `prebuilt-receipt`, `prebuilt-idDocument`)
-- **GPT-4.1-mini** - Used by RAG analyzers (e.g., `prebuilt-documentSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch`)
+- **gpt-4.1** - Used by most prebuilt analyzers (e.g., `prebuilt-invoice`, `prebuilt-receipt`, `prebuilt-idDocument`)
+- **gpt-4.1-mini** - Used by RAG analyzers (e.g., `prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch`)
 - **text-embedding-3-large** - Used for semantic search and embeddings
 
 This configuration is **per Microsoft Foundry resource** and persists across sessions. You only need to configure it once per Microsoft Foundry resource (or when you change deployment names).
@@ -17,8 +17,8 @@ This configuration is **per Microsoft Foundry resource** and persists across ses
 To get started you'll need a **Microsoft Foundry resource**. See [README][README] for prerequisites and instructions.
 
 You also need to have deployed the following models in Microsoft Foundry:
-- GPT-4.1
-- GPT-4.1-mini
+- gpt-4.1
+- gpt-4.1-mini
 - text-embedding-3-large
 
 ## Creating a `ContentUnderstandingClient`
@@ -49,7 +49,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 ## Configure model deployments
 
-Before you can use prebuilt analyzers, you need to map your deployed GPT models to the models required by the prebuilt analyzers:
+Before you can use prebuilt analyzers, you need to map your deployed large language models to the models required by the prebuilt analyzers. Currently, Content Understanding uses OpenAI GPT models:
 
 ```C# Snippet:ContentUnderstandingUpdateDefaults
 // Map your deployed models to the models required by prebuilt analyzers

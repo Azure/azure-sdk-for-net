@@ -28,7 +28,7 @@ dotnet add package Azure.AI.ContentUnderstanding --prerelease
 
 ### Configuring Microsoft Foundry resource
 
-Before using the Content Understanding SDK, you need to set up a Microsoft Foundry resource and deploy the required GPT models.
+Before using the Content Understanding SDK, you need to set up a Microsoft Foundry resource and deploy the required large language models. Content Understanding currently uses OpenAI GPT models (such as gpt-4.1, gpt-4.1-mini, and text-embedding-3-large).
 
 #### Step 1: Create Microsoft Foundry resource
 
@@ -43,7 +43,7 @@ Before using the Content Understanding SDK, you need to set up a Microsoft Found
 
 **Important: Grant Required Permissions**
 
-After creating your Microsoft Foundry resource, you must grant yourself the **Cognitive Services User** role to enable API calls for setting default GPT deployments:
+After creating your Microsoft Foundry resource, you must grant yourself the **Cognitive Services User** role to enable API calls for setting default model deployments:
 
 1. Go to [Azure Portal][azure_portal]
 2. Navigate to your Microsoft Foundry resource
@@ -57,26 +57,17 @@ After creating your Microsoft Foundry resource, you must grant yourself the **Co
 #### Step 2: Deploy required models
 
 **Important:** The prebuilt analyzers require model deployments. You must deploy these models before using prebuilt analyzers:
-- `prebuilt-documentSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch` require **GPT-4.1-mini** and **text-embedding-3-large**
-- Other prebuilt analyzers like `prebuilt-invoice`, `prebuilt-receipt` require **GPT-4.1** and **text-embedding-3-large**
+- `prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch` require **gpt-4.1-mini** and **text-embedding-3-large**
+- Other prebuilt analyzers like `prebuilt-invoice`, `prebuilt-receipt` require **gpt-4.1** and **text-embedding-3-large**
 
-1. **Deploy GPT-4.1:**
-   - In Microsoft Foundry, go to **Deployments** > **Deploy model** > **Deploy base model**
-   - Search for and select **gpt-4.1**
-   - Complete the deployment with your preferred settings
-   - Note the deployment name (by convention, use `gpt-4.1`)
+To deploy a model:
 
-2. **Deploy GPT-4.1-mini:**
-   - In Microsoft Foundry, go to **Deployments** > **Deploy model** > **Deploy base model**
-   - Search for and select **gpt-4.1-mini**
-   - Complete the deployment with your preferred settings
-   - Note the deployment name (by convention, use `gpt-4.1-mini`)
+1. In Microsoft Foundry, go to **Deployments** > **Deploy model** > **Deploy base model**
+2. Search for and select the model you want to deploy. Currently, prebuilt analyzers require models such as `gpt-4.1`, `gpt-4.1-mini`, and `text-embedding-3-large`
+3. Complete the deployment with your preferred settings
+4. Note the deployment name you chose (by convention, use the model name as the deployment name, e.g., `gpt-4.1` for the `gpt-4.1` model). You can use any name you prefer, but you'll need to note it for use in Step 3 when configuring model deployments.
 
-3. **Deploy text-embedding-3-large:**
-   - In Microsoft Foundry, go to **Deployments** > **Deploy model** > **Deploy base model**
-   - Search for and select **text-embedding-3-large**
-   - Complete the deployment with your preferred settings
-   - Note the deployment name (by convention, use `text-embedding-3-large`)
+Repeat this process for each model required by your prebuilt analyzers.
 
 For more information on deploying models, see [Create model deployments in Microsoft Foundry portal][deploy_models_docs].
 
@@ -84,7 +75,11 @@ For more information on deploying models, see [Create model deployments in Micro
 
 > **IMPORTANT:** Before using prebuilt analyzers, you must configure the model deployments. This is a **one-time setup per Microsoft Foundry resource** that maps your deployed models to the prebuilt analyzers.
 
-You need to configure the default model mappings in your Microsoft Foundry resource. This can be done programmatically using the SDK or through the Azure Portal. The configuration maps your deployed models (GPT-4.1, GPT-4.1-mini, and text-embedding-3-large) to the prebuilt analyzers that require them.
+You need to configure the default model mappings in your Microsoft Foundry resource. This can be done programmatically using the SDK. The configuration maps your deployed models (currently gpt-4.1, gpt-4.1-mini, and text-embedding-3-large) to the large language models required by prebuilt analyzers.
+
+To configure model deployments using code, see [Sample 00: Configure model deployment defaults][sample00] for a complete example. The sample shows how to:
+- Map your deployed models to the models required by prebuilt analyzers
+- Retrieve the current default model deployment configuration
 
 > **Note:** The configuration is persisted in your Microsoft Foundry resource, so you only need to run this once per resource (or whenever you change your deployment names). If you have multiple Microsoft Foundry resources, you need to configure each one separately.
 
@@ -127,6 +122,7 @@ For more information on authentication, see [Azure Identity client library][azur
 Content Understanding provides prebuilt analyzers that are ready to use without any configuration. These analyzers use the `*Search` naming pattern:
 
 * **`prebuilt-documentSearch`** - Extracts content from documents (PDF, images, Office documents) with layout preservation, table detection, figure analysis, and structured markdown output. Optimized for RAG scenarios.
+* **`prebuilt-imageSearch`** - Analyzes standalone images to generate descriptions, extract visual features, and identify objects and scenes within images. Optimized for image understanding and search scenarios.
 * **`prebuilt-audioSearch`** - Transcribes audio content with speaker diarization, timing information, and conversation summaries. Supports multilingual transcription.
 * **`prebuilt-videoSearch`** - Analyzes video content with visual frame extraction, audio transcription, and structured summaries. Provides temporal alignment of visual and audio content.
 
@@ -194,7 +190,7 @@ See the [samples directory][samples_directory] for complete examples.
 - Make sure you have the **Cognitive Services User** role assigned to your account
 
 **Error: "Model deployment not found" or "Default model deployment not configured"**
-- Ensure you have deployed the required models (GPT-4.1, GPT-4.1-mini, text-embedding-3-large) in Microsoft Foundry
+- Ensure you have deployed the required models (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) in Microsoft Foundry
 - Verify you have configured the default model deployments (see [Configure Model Deployments](#step-3-configure-model-deployments-required-for-prebuilt-analyzers))
 - Check that your deployment names match what you configured in the defaults
 
@@ -252,6 +248,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [mocking]: https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking
 [client_lifetime]: https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/
 [samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
+[sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

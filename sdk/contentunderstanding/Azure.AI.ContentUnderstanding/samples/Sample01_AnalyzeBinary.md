@@ -19,9 +19,9 @@ To get started you'll need a **Microsoft Foundry resource**. See [README][README
 
 ### ⚠️ IMPORTANT: Configure model deployments first
 
-> **Before using prebuilt analyzers, you MUST configure model deployments for your Microsoft Foundry resource.** This is a **one-time setup per resource** that maps your deployed GPT models to the models required by the prebuilt analyzers. This configuration is persisted in your Microsoft Foundry resource, so you only need to run this once per resource (or whenever you change your deployment names).
+> **Before using prebuilt analyzers, you MUST configure model deployments for your Microsoft Foundry resource.** This is a **one-time setup per resource** that maps your deployed large language models to the models required by the prebuilt analyzers. Currently, Content Understanding uses OpenAI GPT models. This configuration is persisted in your Microsoft Foundry resource, so you only need to run this once per resource (or whenever you change your deployment names).
 
-The `prebuilt-documentSearch` analyzer requires **GPT-4.1-mini** and **text-embedding-3-large** model deployments. See the [README][README] for detailed instructions on configuring model deployments.
+The `prebuilt-documentSearch` analyzer requires **gpt-4.1-mini** and **text-embedding-3-large** model deployments. See the [README][README] for detailed instructions on configuring model deployments.
 
 ## Prebuilt analyzers
 
