@@ -79,7 +79,7 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary>
         /// Gets or sets the behavior for receipts whose issuer domain is not in <see cref="AuthorizedDomains"/>.
-        /// Defaults to <see cref="UnauthorizedReceiptBehavior.VerifyAll"/> to preserve current behavior.
+        /// Defaults to <see cref="UnauthorizedReceiptBehavior.FailIfPresent"/>.
         /// </summary>
         public UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get; set; } = UnauthorizedReceiptBehavior.FailIfPresent;
 
