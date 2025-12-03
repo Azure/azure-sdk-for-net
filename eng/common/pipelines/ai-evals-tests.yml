@@ -30,10 +30,10 @@ parameters:
     default: 'main'
 
 variables:
-  TargetRepoOwner: ${{ coalesce(parameters.TargetRepoOwner, split(variables['Build.Repository.Name'], '/')[0]) }}
-  TargetRepoName: ${{ coalesce(parameters.TargetRepoName, split(variables['Build.Repository.Name'], '/')[1]) }}
-  TargetRepoCommit: ${{ coalesce(parameters.TargetRepoCommit, variables['Build.SourceVersion']) }}
-
+  TargetRepoOwner: ${{ split(variables['Build.Repository.Name'], '/')[0] }}
+  TargetRepoName: ${{ split(variables['Build.Repository.Name'], '/')[1] }}
+  TargetRepoCommit: ${{ variables['Build.SourceVersion'] }}
+ 
 extends:
   template: /eng/common/pipelines/templates/jobs/ai-eval-job.yml
   parameters:
