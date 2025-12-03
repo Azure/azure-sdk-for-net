@@ -4,8 +4,9 @@
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Initial preview release of `Azure.AI.Language.QuestionAnswering.Authoring`.
+- Enables authoring and management of Question Answering projects.
 
 ### Other Changes
+
+- No additional changes.
