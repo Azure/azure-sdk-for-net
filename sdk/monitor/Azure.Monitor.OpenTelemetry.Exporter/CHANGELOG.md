@@ -2,8 +2,6 @@
 
 ## 1.6.0-beta.1 (2025-12-03)
 
-### Features Added
-
 ### Bugs Fixed
 * Added Microsoft override attributes to preserve exact Application Insights
   semantics when exporting telemetry data.
