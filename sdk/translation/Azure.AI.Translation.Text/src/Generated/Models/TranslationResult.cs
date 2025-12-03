@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Response for the translation API. </summary>
-    internal partial class TranslationResult
+    public partial class TranslationResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
