@@ -10,7 +10,7 @@ Use the client library for Azure AI Content Understanding to:
 * **Create custom analyzers** - Build domain-specific analyzers for specialized content extraction needs
 * **Classify documents** - Automatically categorize and organize documents by type or content
 
-[Source code][source_code] | [Package (NuGet)] | [API reference documentation][api_reference] | [Product documentation][product_docs]
+[Source code][source_code] | [Package (NuGet)] | [API reference documentation] | [Product documentation][product_docs]
 
 ## Getting started
 
@@ -85,7 +85,7 @@ To configure model deployments using code, see [Sample 00: Configure model deplo
 
 ### Authenticate the client
 
-To authenticate the client, you need your Microsoft Foundry resource endpoint and credentials. You can use either an API key or Azure Active Directory (Azure AD) authentication.
+To authenticate the client, you need your Microsoft Foundry resource endpoint and credentials. You can use either an API key or Microsoft Entra ID authentication.
 
 #### Using DefaultAzureCredential
 
@@ -119,15 +119,23 @@ For more information on authentication, see [Azure Identity client library][azur
 
 ### Prebuilt analyzers
 
-Content Understanding provides prebuilt analyzers that are ready to use without any configuration. These analyzers use the `*Search` naming pattern:
+Content Understanding provides a rich set of prebuilt analyzers that are ready to use without any configuration. These analyzers are powered by knowledge bases of thousands of real-world document examples, enabling them to understand document structure and adapt to variations in format and content.
 
-* **`prebuilt-documentSearch`** - Extracts content from documents (PDF, images, Office documents) with layout preservation, table detection, figure analysis, and structured markdown output. Optimized for RAG scenarios.
-* **`prebuilt-imageSearch`** - Analyzes standalone images to generate descriptions, extract visual features, and identify objects and scenes within images. Optimized for image understanding and search scenarios.
-* **`prebuilt-audioSearch`** - Transcribes audio content with speaker diarization, timing information, and conversation summaries. Supports multilingual transcription.
-* **`prebuilt-videoSearch`** - Analyzes video content with visual frame extraction, audio transcription, and structured summaries. Provides temporal alignment of visual and audio content.
+Prebuilt analyzers are organized into several categories:
 
-> **Note:** The prebuilt analyzers use the `prebuilt-{type}Search` naming pattern (not `prebuilt-{type}Analyzer`). This is a recent change in the Content Understanding service.
+* **RAG analyzers** - Optimized for retrieval-augmented generation scenarios with semantic analysis and markdown extraction:
+  * **`prebuilt-documentSearch`** - Extracts content from documents (PDF, images, Office documents) with layout preservation, table detection, figure analysis, and structured markdown output. Optimized for RAG scenarios.
+  * **`prebuilt-imageSearch`** - Analyzes standalone images to generate descriptions, extract visual features, and identify objects and scenes within images. Optimized for image understanding and search scenarios.
+  * **`prebuilt-audioSearch`** - Transcribes audio content with speaker diarization, timing information, and conversation summaries. Supports multilingual transcription.
+  * **`prebuilt-videoSearch`** - Analyzes video content with visual frame extraction, audio transcription, and structured summaries. Provides temporal alignment of visual and audio content.
+* **Content extraction analyzers** - Focus on OCR and layout analysis (e.g., `prebuilt-read`, `prebuilt-layout`)
+* **Base analyzers** - Fundamental content processing capabilities used as parent analyzers for custom analyzers (e.g., `prebuilt-document`, `prebuilt-image`, `prebuilt-audio`, `prebuilt-video`)
+* **Domain-specific analyzers** - Preconfigured analyzers for common document categories including financial documents (invoices, receipts, bank statements), identity documents (passports, driver's licenses), tax forms, mortgage documents, and contracts
+* **Utility analyzers** - Specialized tools for schema generation and field extraction (e.g., `prebuilt-documentFieldSchema`, `prebuilt-documentFields`)
 
+For a complete list of available prebuilt analyzers and their capabilities, see the [Prebuilt analyzers documentation][prebuilt-analyzers-docs].
+
+>
 ### Content types
 
 The API returns different content types based on the input:
@@ -172,11 +180,14 @@ You can familiarize yourself with different APIs using [Samples][samples_directo
 
 The samples demonstrate:
 
-* **Document Analysis** - Extract content from PDFs and images using `prebuilt-documentSearch`
-* **Audio Analysis** - Transcribe and analyze audio files using `prebuilt-audioSearch`
-* **Video Analysis** - Analyze video content using `prebuilt-videoSearch`
-* **Custom Analyzers** - Create domain-specific analyzers for specialized extraction needs
-* **Document Classification** - Classify documents by type or content
+* **Configuration** - Configure model deployment defaults for prebuilt analyzers
+* **Document Content Extraction** - Extract structured markdown content from PDFs and images using `prebuilt-documentSearch`, optimized for RAG (Retrieval-Augmented Generation) applications
+* **Domain-Specific Analysis** - Extract structured fields from invoices using `prebuilt-invoice`
+* **Advanced Document Features** - Extract charts, hyperlinks, formulas, and annotations from documents
+* **Custom Analyzers** - Create custom analyzers with field schemas for specialized extraction needs
+* **Document Classification** - Create and use classifiers to categorize documents
+* **Analyzer Management** - Get, list, update, copy, and delete analyzers
+* **Result Management** - Retrieve result files from video analysis and delete analysis results
 
 See the [samples directory][samples_directory] for complete examples.
 
@@ -186,7 +197,7 @@ See the [samples directory][samples_directory] for complete examples.
 
 **Error: "Access denied due to invalid subscription key or wrong API endpoint"**
 - Verify your endpoint URL is correct and includes the trailing slash
-- Ensure your API key is valid or that your Azure AD credentials have the correct permissions
+- Ensure your API key is valid or that your Microsoft Entra ID credentials have the correct permissions
 - Make sure you have the **Cognitive Services User** role assigned to your account
 
 **Error: "Model deployment not found" or "Default model deployment not configured"**
@@ -216,7 +227,6 @@ For more information, see [Diagnostics samples][diagnostics].
 
 * Explore the [samples directory][samples_directory] for complete code examples
 * Read the [Azure AI Content Understanding documentation][product_docs] for detailed service information
-* Check out the [API reference documentation][api_reference] for detailed API documentation
 
 ## Contributing
 
@@ -228,7 +238,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/src
-[api_reference]: https://azure.github.io/azure-sdk-for-net
+
 [product_docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [nuget]: https://www.nuget.org/
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/
@@ -249,6 +259,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [client_lifetime]: https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/
 [samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
