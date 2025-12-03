@@ -225,14 +225,14 @@ await client.DeleteAnalyzerAsync(analyzerId);
 Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 ```
 
-## Next Steps
+## Next steps
 
 - [Sample 06: Get analyzer information][sample06] - Learn how to retrieve analyzer details
 - [Sample 07: List analyzers][sample07] - Learn how to list all analyzers
 - [Sample 08: Update analyzer][sample08] - Learn how to update an existing analyzer
 - [Sample 09: Delete analyzer][sample09] - Learn how to delete an analyzer
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Analyzer Reference Documentation][analyzer-reference-docs] - Complete reference for analyzer configuration, extraction methods, and field schemas

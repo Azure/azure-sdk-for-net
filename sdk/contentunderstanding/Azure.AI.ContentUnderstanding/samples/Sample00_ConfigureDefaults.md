@@ -2,7 +2,7 @@
 
 This sample demonstrates how to configure and retrieve default model deployment settings for your Microsoft Foundry resource. This is a **required one-time setup** before using prebuilt analyzers.
 
-## About Model Deployment Configuration
+## About model deployment configuration
 
 Content Understanding prebuilt analyzers require specific GPT model deployments to function:
 
@@ -29,7 +29,7 @@ The `ContentUnderstandingClient` is the main interface for interacting with the 
 
 To create a new `ContentUnderstandingClient` you need the endpoint and credentials from your Microsoft Foundry resource. You can authenticate using either `DefaultAzureCredential` (recommended) or an API key.
 
-### Using DefaultAzureCredential (Recommended)
+### Using DefaultAzureCredential (recommended)
 
 ```C# Snippet:CreateContentUnderstandingClient
 string endpoint = "<endpoint>";
@@ -37,7 +37,7 @@ var credential = new DefaultAzureCredential();
 var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 ```
 
-### Using API Key
+### Using API key
 
 ```C# Snippet:CreateContentUnderstandingClientApiKey
 string endpoint = "<endpoint>";
@@ -47,7 +47,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 > **⚠️ Security Warning**: API key authentication is not secure and is only recommended for testing purposes with test resources. For production, use `DefaultAzureCredential` or other secure authentication methods.
 
-## Configure Model Deployments
+## Configure model deployments
 
 Before you can use prebuilt analyzers, you need to map your deployed GPT models to the models required by the prebuilt analyzers:
 
@@ -70,7 +70,7 @@ foreach (var kvp in updatedDefaults.ModelDeployments)
 }
 ```
 
-## Retrieve Current Defaults
+## Retrieve current defaults
 
 You can retrieve the current default model deployment configuration:
 
@@ -92,13 +92,13 @@ else
 }
 ```
 
-## Next Steps
+## Next steps
 
 After configuring model deployments, you can use prebuilt analyzers. See:
 - [Sample 01: Analyze a document from binary data][sample01] to analyze PDF files
 - [Sample 02: Analyze a document from URL][sample02] to analyze documents from URLs
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Model Deployment Configuration][model-deployment-docs]

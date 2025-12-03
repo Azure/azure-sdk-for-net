@@ -1,4 +1,4 @@
-# Azure ContentUnderstanding client library for .NET
+# Azure Content Understanding client library for .NET
 
 Azure AI Content Understanding is a multimodal AI service that extracts semantic content from documents, audio, and video files. It transforms unstructured content into structured, machine-readable data optimized for retrieval-augmented generation (RAG) and automated workflows.
 
@@ -24,13 +24,13 @@ dotnet add package Azure.AI.ContentUnderstanding --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription][azure_subscription] and a **Microsoft Foundry resource**. To create a Microsoft Foundry resource, follow the steps in the [Azure Content Understanding quickstart][cu_quickstart]. In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK][dotnet_sdk] 3.0 or higher with a [language version][csharp_lang_version] of `latest`.
+> You must have an Azure subscription and a **Microsoft Foundry resource**. To create a Microsoft Foundry resource, follow the steps in the [Azure Content Understanding quickstart][cu_quickstart]. In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK][dotnet_sdk] 3.0 or higher with a [language version][csharp_lang_version] of `latest`.
 
-### Configuring Microsoft Foundry Resource
+### Configuring Microsoft Foundry resource
 
 Before using the Content Understanding SDK, you need to set up a Microsoft Foundry resource and deploy the required GPT models.
 
-#### Step 1: Create Microsoft Foundry Resource
+#### Step 1: Create Microsoft Foundry resource
 
 > **Important:** You must create your Microsoft Foundry resource in a region that supports Content Understanding. For a list of available regions, see [Azure Content Understanding region and language support][cu_region_support].
 
@@ -54,7 +54,7 @@ After creating your Microsoft Foundry resource, you must grant yourself the **Co
 
 > **Note:** This role assignment is required even if you are the owner of the resource. Without this role, you will not be able to call the Content Understanding API to configure model deployments for prebuilt analyzers.
 
-#### Step 2: Deploy Required Models
+#### Step 2: Deploy required models
 
 **Important:** The prebuilt analyzers require model deployments. You must deploy these models before using prebuilt analyzers:
 - `prebuilt-documentSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch` require **GPT-4.1-mini** and **text-embedding-3-large**
@@ -80,7 +80,7 @@ After creating your Microsoft Foundry resource, you must grant yourself the **Co
 
 For more information on deploying models, see [Create model deployments in Microsoft Foundry portal][deploy_models_docs].
 
-#### Step 3: Configure Model Deployments (Required for Prebuilt Analyzers)
+#### Step 3: Configure model deployments (required for prebuilt analyzers)
 
 > **IMPORTANT:** Before using prebuilt analyzers, you must configure the model deployments. This is a **one-time setup per Microsoft Foundry resource** that maps your deployed models to the prebuilt analyzers.
 
@@ -102,7 +102,7 @@ var credential = new DefaultAzureCredential();
 var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 ```
 
-#### Using API Key
+#### Using API key
 
 You can also authenticate using an API key from your Microsoft Foundry resource:
 
@@ -122,7 +122,7 @@ For more information on authentication, see [Azure Identity client library][azur
 
 ## Key concepts
 
-### Prebuilt Analyzers
+### Prebuilt analyzers
 
 Content Understanding provides prebuilt analyzers that are ready to use without any configuration. These analyzers use the `*Search` naming pattern:
 
@@ -132,14 +132,14 @@ Content Understanding provides prebuilt analyzers that are ready to use without 
 
 > **Note:** The prebuilt analyzers use the `prebuilt-{type}Search` naming pattern (not `prebuilt-{type}Analyzer`). This is a recent change in the Content Understanding service.
 
-### Content Types
+### Content types
 
 The API returns different content types based on the input:
 
 * **`document`** - For document files (PDF, images, Office documents). Contains pages, tables, figures, paragraphs, and markdown representation.
 * **`audioVisual`** - For audio and video files. Contains transcript phrases, timing information, and for video, visual frame references.
 
-### Asynchronous Operations
+### Asynchronous operations
 
 Content Understanding operations are asynchronous long-running operations. The workflow is:
 
@@ -149,7 +149,7 @@ Content Understanding operations are asynchronous long-running operations. The w
 
 The SDK provides `Operation<T>` types that handle polling automatically when using `WaitUntil.Completed`. For analysis operations, the SDK returns `AnalyzeResultOperation`, which extends `Operation<AnalyzeResult>` and provides access to the operation ID via the `Id` property. This operation ID can be used with `GetResultFile*` and `DeleteResult*` methods.
 
-### Main Classes
+### Main classes
 
 * **`ContentUnderstandingClient`** - The main client for analyzing content, as well as creating, managing, and configuring analyzers
 * **`AnalyzeResult`** - Contains the structured results of an analysis operation, including content elements, markdown, and metadata
@@ -186,7 +186,7 @@ See the [samples directory][samples_directory] for complete examples.
 
 ## Troubleshooting
 
-### Common Issues
+### Common issues
 
 **Error: "Access denied due to invalid subscription key or wrong API endpoint"**
 - Verify your endpoint URL is correct and includes the trailing slash
@@ -203,7 +203,7 @@ See the [samples directory][samples_directory] for complete examples.
 - Ensure you are properly polling for results using `WaitUntil.Completed` or manual polling
 - Check the operation status for more details about the failure
 
-### Enable Logging
+### Enable logging
 
 To enable logging for debugging, configure logging in your application:
 

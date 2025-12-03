@@ -170,12 +170,12 @@ if (result.Contents?.FirstOrDefault() is DocumentContent document)
 }
 ```
 
-## Next Steps
+## Next steps
 
 - [Sample 04: Create a custom analyzer][sample04] - Learn how to configure analysis options for custom analyzers
 - [Sample 01: Analyze binary][sample01] - Learn more about basic document analysis
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Document Elements Documentation][document-elements-docs] - Detailed information about document elements (pages, figures, annotations, etc.)

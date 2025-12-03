@@ -58,11 +58,11 @@ Console.WriteLine($"Description: {updated.Value.Description}");
 Console.WriteLine($"Tags: {string.Join(", ", updated.Value.Tags.Select(kvp => $"{kvp.Key}={kvp.Value}"))}");
 ```
 
-## Next Steps
+## Next steps
 
 - [Sample 09: Delete analyzer][sample09] - Learn how to delete an analyzer
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 

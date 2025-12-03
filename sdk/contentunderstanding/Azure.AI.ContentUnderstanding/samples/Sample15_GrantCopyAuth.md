@@ -192,13 +192,13 @@ Use cross-resource copying when you need to:
 
 **Note**: Both source and target resources require 'Cognitive Services User' role for cross-resource copying. The copy authorization expires after a certain time, so copy operations should be performed soon after granting authorization.
 
-## Next Steps
+## Next steps
 
 - [Sample 14: Copy analyzer][sample14] - Learn about same-resource copying
 - [Sample 04: Create analyzer][sample04] - Learn more about creating custom analyzers
 - [Sample 09: Delete analyzer][sample09] - Learn about analyzer lifecycle management
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Analyzer Management][analyzer-docs] - Learn about managing analyzers

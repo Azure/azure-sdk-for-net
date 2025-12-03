@@ -80,11 +80,11 @@ Console.WriteLine($"Raw JSON response saved to: {outputPath}");
 Console.WriteLine($"File size: {prettyJson.Length:N0} characters");
 ```
 
-## Comparing approaches: Raw JSON vs Object Model
+## Comparing approaches: Raw JSON vs object model
 
 The following comparison highlights the difference between the protocol method (raw JSON) and the object model approach:
 
-### Protocol Method (Raw JSON)
+### Protocol method (raw JSON)
 
 ```csharp
 // Get raw JSON response
@@ -102,7 +102,7 @@ var resultElement = jsonDocument.RootElement.GetProperty("result");
 var analyzerId = resultElement.GetProperty("analyzerId").GetString();
 ```
 
-### Object Model (Recommended)
+### Object model (recommended)
 
 ```csharp
 // Get strongly-typed result
@@ -156,12 +156,12 @@ if (resultElement.TryGetProperty("contents", out var contentsElement) &&
 }
 ```
 
-## Next Steps
+## Next steps
 
 - [Sample 01: Analyze binary][sample01] - Learn the recommended object model approach
 - [Sample 10: Analyze configs][sample10] - Learn about extracting features from results
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Protocol Methods][protocol-methods-docs] - Learn about protocol methods in Azure SDKs

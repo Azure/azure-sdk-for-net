@@ -171,12 +171,12 @@ The `DocumentContent.Unit` property indicates the measurement system used for co
 
 For more details about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.), see the [Document Elements documentation][document-elements-docs].
 
-## Next Steps
+## Next steps
 
 - [Sample 04: Create a custom analyzer][sample04] - Learn how to create custom analyzers
 - [Sample 05: Create and use a classifier][sample05] - Learn about classifiers
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Document Elements Documentation][document-elements-docs] - Detailed information about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.)

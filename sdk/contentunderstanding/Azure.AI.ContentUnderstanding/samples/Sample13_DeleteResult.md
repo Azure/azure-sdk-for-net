@@ -72,12 +72,12 @@ Delete results when you need to:
 
 **Note**: Results are automatically deleted after 24 hours if not manually deleted. Manual deletion is only needed if you want to remove results immediately.
 
-## Next Steps
+## Next steps
 
 - [Sample 12: Get result files][sample12] - Learn how to retrieve result files using operation IDs
 - [Sample 01: Analyze binary][sample01] - Learn more about basic document analysis
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 

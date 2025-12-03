@@ -187,13 +187,13 @@ await client.DeleteAnalyzerAsync(analyzerId);
 Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 ```
 
-## Next Steps
+## Next steps
 
 - [Sample 06: Get analyzer information][sample06] - Learn how to retrieve analyzer details
 - [Sample 07: List analyzers][sample07] - Learn how to list all analyzers
 - [Sample 08: Update analyzer][sample08] - Learn how to update an existing analyzer
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Classifiers Documentation][classifier-docs]

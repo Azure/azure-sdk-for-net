@@ -65,14 +65,14 @@ await client.DeleteAnalyzerAsync(analyzerId);
 Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 ```
 
-## Next Steps
+## Next steps
 
 You've completed the analyzer management samples! Consider exploring:
 - [Sample 01: Analyze binary][sample01] - Analyze documents from files
 - [Sample 02: Analyze URL][sample02] - Analyze documents from URLs
 - [Sample 03: Analyze invoice][sample03] - Use prebuilt analyzers
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 

@@ -17,13 +17,13 @@ This sample focuses on **document analysis**. For image, audio, and video analys
 
 To get started you'll need a **Microsoft Foundry resource**. See [README][README] for prerequisites and instructions.
 
-### ⚠️ IMPORTANT: Configure Model Deployments First
+### ⚠️ IMPORTANT: Configure model deployments first
 
 > **Before using prebuilt analyzers, you MUST configure model deployments for your Microsoft Foundry resource.** This is a **one-time setup per resource** that maps your deployed GPT models to the models required by the prebuilt analyzers. This configuration is persisted in your Microsoft Foundry resource, so you only need to run this once per resource (or whenever you change your deployment names).
 
 The `prebuilt-documentSearch` analyzer requires **GPT-4.1-mini** and **text-embedding-3-large** model deployments. See the [README][README] for detailed instructions on configuring model deployments.
 
-## Prebuilt Analyzers
+## Prebuilt analyzers
 
 Content Understanding provides prebuilt analyzers that are ready to use without any configuration. These analyzers use the `*Search` naming pattern:
 
@@ -40,7 +40,7 @@ To create a new `ContentUnderstandingClient` you need the endpoint and credentia
 
 You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
-### Using DefaultAzureCredential (Recommended)
+### Using DefaultAzureCredential (recommended)
 
 The simplest way to authenticate is using `DefaultAzureCredential`, which supports multiple authentication methods and works well in both local development and production environments:
 
@@ -50,7 +50,7 @@ var credential = new DefaultAzureCredential();
 var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 ```
 
-### Using API Key
+### Using API key
 
 > **⚠️ Security Warning:** API key authentication is **not secure** for production use. API keys are sensitive credentials that should not be hardcoded or committed to source control. This method is **only recommended for testing purposes with test resources**. For production applications, use `DefaultAzureCredential` or other Azure AD-based authentication methods.
 
@@ -84,7 +84,7 @@ AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
 AnalyzeResult result = operation.Value;
 ```
 
-## Extract Markdown Content
+## Extract markdown content
 
 The most common use case for document analysis is extracting markdown content, which is optimized for RAG (Retrieval-Augmented Generation) scenarios. Markdown provides a structured, searchable representation of the document that preserves layout, formatting, and hierarchy while being easily consumable by AI models and search systems.
 
@@ -120,7 +120,7 @@ The markdown output includes structured text with preserved formatting and hiera
 
 For more information about the markdown format, see [Document Markdown][cu-document-markdown].
 
-## Access Document Properties with Type-Safe APIs
+## Access document properties with type-safe APIs
 
 The SDK provides type-safe access to extraction results. Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides strongly-typed access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For detailed information about all available document elements and properties, see [Document Elements][cu-document-elements].
 
@@ -158,12 +158,12 @@ if (content is DocumentContent documentContent)
 }
 ```
 
-## Next Steps
+## Next steps
 
 - **[Sample02_AnalyzeUrl][sample02-analyze-url]** - Learn how to analyze documents from publicly accessible URLs
 - Explore other samples in the [samples directory][samples-directory] for more advanced scenarios
 
-## Learn More
+## Learn more
 
 - **[Content Understanding Overview][cu-overview]** - Comprehensive introduction to the service
 - **[What's New][cu-whats-new]** - Latest features and updates

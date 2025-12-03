@@ -106,12 +106,12 @@ else
 }
 ```
 
-## Next Steps
+## Next steps
 
 - [Sample 13: Delete result][sample13] - Learn how to delete analysis results
 - [Sample 01: Analyze binary][sample01] - Learn more about basic document analysis
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Video Analysis][video-docs] - Learn about video analysis capabilities

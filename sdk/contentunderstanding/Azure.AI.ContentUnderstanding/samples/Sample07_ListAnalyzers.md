@@ -65,12 +65,12 @@ foreach (var analyzer in analyzers)
 }
 ```
 
-## Next Steps
+## Next steps
 
 - [Sample 08: Update analyzer][sample08] - Learn how to update an existing analyzer
 - [Sample 09: Delete analyzer][sample09] - Learn how to delete an analyzer
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Prebuilt Analyzers Documentation][prebuilt-docs]

@@ -94,13 +94,13 @@ Copy analyzers when you need to:
 
 **Note**: For cross-resource copying (between different Azure resources or subscriptions), use the [GrantCopyAuth sample][sample15] which demonstrates the full workflow with authorization.
 
-## Next Steps
+## Next steps
 
 - [Sample 15: Grant copy authorization][sample15] - Learn how to copy analyzers across resources
 - [Sample 04: Create analyzer][sample04] - Learn more about creating custom analyzers
 - [Sample 09: Delete analyzer][sample09] - Learn about analyzer lifecycle management
 
-## Learn More
+## Learn more
 
 - [Content Understanding Documentation][cu-docs]
 - [Analyzer Management][analyzer-docs] - Learn about managing analyzers

@@ -8,7 +8,7 @@ This sample demonstrates how to analyze a document from a URL using the `prebuil
 > - Extracting markdown content from analysis results
 > - Accessing document properties with type-safe APIs
 
-## What's Different from Sample01
+## What's different from Sample01
 
 This sample shows how to analyze a document from a **publicly accessible URL** instead of a local file. The main difference is using `AnalyzeAsync` with `AnalyzeInput` instead of `AnalyzeBinaryAsync`.
 
@@ -32,13 +32,13 @@ After getting the result, you can extract markdown content and access document p
 
 The generated sample includes code for extracting markdown and accessing document properties (using the same snippets as Sample01), but this markdown focuses on the URL-specific analysis method.
 
-## Next Steps
+## Next steps
 
 - Try analyzing different document types (images, Office documents) from URLs
 - Explore other samples in the [samples directory][samples-directory] for more advanced scenarios
 - Learn about creating custom analyzers and classifiers
 
-## Learn More
+## Learn more
 
 - **[Sample01_AnalyzeBinary][sample01-analyze-binary]** - Learn the basics of document analysis, authentication, and result processing
 - **[Content Understanding Overview][cu-overview]** - Comprehensive introduction to the service
