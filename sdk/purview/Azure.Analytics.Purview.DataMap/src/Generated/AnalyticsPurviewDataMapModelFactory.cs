@@ -11,10 +11,24 @@ using System.Linq;
 
 namespace Azure.Analytics.Purview.DataMap
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class AnalyticsPurviewDataMapModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasEntity"/>. </summary>
+        /// <summary>
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </summary>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entity"> An instance of an entity - like hive_table, hive_database. </param>
+        /// <returns> A new <see cref="DataMap.AtlasEntityWithExtInfo"/> instance for mocking. </returns>
+        public static AtlasEntityWithExtInfo AtlasEntityWithExtInfo(IDictionary<string, AtlasEntity> referredEntities = default, AtlasEntity entity = default)
+        {
+            referredEntities ??= new ChangeTrackingDictionary<string, AtlasEntity>();
+
+            return new AtlasEntityWithExtInfo(referredEntities, entity, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An instance of an entity - like hive_table, hive_database. </summary>
         /// <param name="attributes"> The attributes of the struct. </param>
         /// <param name="typeName"> The name of the type. </param>
         /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
@@ -41,23 +55,23 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="version"> The version of the entity. </param>
         /// <param name="contacts"> The dictionary of contacts for entities. Key could be Expert or Owner. </param>
         /// <returns> A new <see cref="DataMap.AtlasEntity"/> instance for mocking. </returns>
-        public static AtlasEntity AtlasEntity(IDictionary<string, BinaryData> attributes = null, string typeName = null, string lastModifiedTS = null, IDictionary<string, BinaryData> businessAttributes = null, IEnumerable<AtlasClassification> classifications = null, long? createTime = null, string createdBy = null, IDictionary<string, string> customAttributes = null, string guid = null, string homeId = null, string collectionId = null, bool? isIncomplete = null, IEnumerable<string> labels = null, IEnumerable<AtlasTermAssignmentHeader> meanings = null, int? provenanceType = null, bool? proxy = null, IDictionary<string, BinaryData> relationshipAttributes = null, EntityStatus? status = null, long? updateTime = null, string updatedBy = null, long? version = null, IDictionary<string, IList<ContactInfo>> contacts = null)
+        public static AtlasEntity AtlasEntity(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IDictionary<string, BinaryData> businessAttributes = default, IEnumerable<AtlasClassification> classifications = default, long? createTime = default, string createdBy = default, IDictionary<string, string> customAttributes = default, string guid = default, string homeId = default, string collectionId = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, int? provenanceType = default, bool? proxy = default, IDictionary<string, BinaryData> relationshipAttributes = default, EntityStatus? status = default, long? updateTime = default, string updatedBy = default, long? version = default, IDictionary<string, IList<ContactInfo>> contacts = default)
         {
-            attributes ??= new Dictionary<string, BinaryData>();
-            businessAttributes ??= new Dictionary<string, BinaryData>();
-            classifications ??= new List<AtlasClassification>();
-            customAttributes ??= new Dictionary<string, string>();
-            labels ??= new List<string>();
-            meanings ??= new List<AtlasTermAssignmentHeader>();
-            relationshipAttributes ??= new Dictionary<string, BinaryData>();
-            contacts ??= new Dictionary<string, IList<ContactInfo>>();
+            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            businessAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            customAttributes ??= new ChangeTrackingDictionary<string, string>();
+            labels ??= new ChangeTrackingList<string>();
+            meanings ??= new ChangeTrackingList<AtlasTermAssignmentHeader>();
+            relationshipAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            contacts ??= new ChangeTrackingDictionary<string, IList<ContactInfo>>();
 
             return new AtlasEntity(
                 attributes,
                 typeName,
                 lastModifiedTS,
                 businessAttributes,
-                classifications?.ToList(),
+                classifications.ToList(),
                 createTime,
                 createdBy,
                 customAttributes,
@@ -65,8 +79,8 @@ namespace Azure.Analytics.Purview.DataMap
                 homeId,
                 collectionId,
                 isIncomplete,
-                labels?.ToList(),
-                meanings?.ToList(),
+                labels.ToList(),
+                meanings.ToList(),
                 provenanceType,
                 proxy,
                 relationshipAttributes,
@@ -75,24 +89,171 @@ namespace Azure.Analytics.Purview.DataMap
                 updatedBy,
                 version,
                 contacts,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.EntityMutationResult"/>. </summary>
+        /// <summary>
+        /// An instance of a classification; it doesn't have an identity, this object
+        /// exists only when associated with an entity.
+        /// </summary>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="entityGuid"> The GUID of the entity. </param>
+        /// <param name="entityStatus">
+        /// Status of the entity - can be active or deleted. Deleted entities are not
+        /// removed.
+        /// </param>
+        /// <param name="removePropagationsOnEntityDelete"> Determines if propagations will be removed on entity deletion. </param>
+        /// <param name="validityPeriods"> An array of time boundaries indicating validity periods. </param>
+        /// <returns> A new <see cref="DataMap.AtlasClassification"/> instance for mocking. </returns>
+        public static AtlasClassification AtlasClassification(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, string entityGuid = default, EntityStatus? entityStatus = default, bool? removePropagationsOnEntityDelete = default, IEnumerable<TimeBoundary> validityPeriods = default)
+        {
+            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            validityPeriods ??= new ChangeTrackingList<TimeBoundary>();
+
+            return new AtlasClassification(
+                attributes,
+                typeName,
+                lastModifiedTS,
+                entityGuid,
+                entityStatus,
+                removePropagationsOnEntityDelete,
+                validityPeriods.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Captures time-boundary details. </summary>
+        /// <param name="endTime"> The end of the time boundary. </param>
+        /// <param name="startTime"> The start of the time boundary. </param>
+        /// <param name="timeZone"> The timezone of the time boundary. </param>
+        /// <returns> A new <see cref="DataMap.TimeBoundary"/> instance for mocking. </returns>
+        public static TimeBoundary TimeBoundary(string endTime = default, string startTime = default, string timeZone = default)
+        {
+            return new TimeBoundary(endTime, startTime, timeZone, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The header for term assignment. </summary>
+        /// <param name="confidence"> The confidence of the term assignment. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="description"> The description of the term assignment. </param>
+        /// <param name="displayText"> The display text. </param>
+        /// <param name="expression"> The expression of the term assignment. </param>
+        /// <param name="relationGuid"> The GUID of the relationship. </param>
+        /// <param name="status"> The status of terms assignment. </param>
+        /// <param name="steward"> The steward of the term. </param>
+        /// <param name="termGuid"> The GUID of the term. </param>
+        /// <returns> A new <see cref="DataMap.AtlasTermAssignmentHeader"/> instance for mocking. </returns>
+        public static AtlasTermAssignmentHeader AtlasTermAssignmentHeader(int? confidence = default, string createdBy = default, string description = default, string displayText = default, string expression = default, Guid? relationGuid = default, AtlasTermAssignmentStatus? status = default, string steward = default, Guid? termGuid = default)
+        {
+            return new AtlasTermAssignmentHeader(
+                confidence,
+                createdBy,
+                description,
+                displayText,
+                expression,
+                relationGuid,
+                status,
+                steward,
+                termGuid,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> ContactInfo. </summary>
+        /// <param name="id"> Azure Active Directory object Id. </param>
+        /// <param name="info"> additional information to describe this contact. </param>
+        /// <returns> A new <see cref="DataMap.ContactInfo"/> instance for mocking. </returns>
+        public static ContactInfo ContactInfo(string id = default, string info = default)
+        {
+            return new ContactInfo(id, info, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The mutation response result of entity. </summary>
         /// <param name="guidAssignments"> A map of GUID assignments with entities. </param>
         /// <param name="mutatedEntities"> The entity headers of mutated entities. </param>
         /// <param name="partialUpdatedEntities"> An array of entity headers that partially updated. </param>
         /// <returns> A new <see cref="DataMap.EntityMutationResult"/> instance for mocking. </returns>
-        public static EntityMutationResult EntityMutationResult(IReadOnlyDictionary<string, string> guidAssignments = null, IReadOnlyDictionary<string, IList<AtlasEntityHeader>> mutatedEntities = null, IEnumerable<AtlasEntityHeader> partialUpdatedEntities = null)
+        public static EntityMutationResult EntityMutationResult(IDictionary<string, string> guidAssignments = default, IDictionary<string, IList<AtlasEntityHeader>> mutatedEntities = default, IEnumerable<AtlasEntityHeader> partialUpdatedEntities = default)
         {
-            guidAssignments ??= new Dictionary<string, string>();
-            mutatedEntities ??= new Dictionary<string, IList<AtlasEntityHeader>>();
-            partialUpdatedEntities ??= new List<AtlasEntityHeader>();
+            guidAssignments ??= new ChangeTrackingDictionary<string, string>();
+            mutatedEntities ??= new ChangeTrackingDictionary<string, IList<AtlasEntityHeader>>();
+            partialUpdatedEntities ??= new ChangeTrackingList<AtlasEntityHeader>();
 
-            return new EntityMutationResult(guidAssignments, mutatedEntities, partialUpdatedEntities?.ToList(), serializedAdditionalRawData: null);
+            return new EntityMutationResult(guidAssignments, mutatedEntities, partialUpdatedEntities.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasClassifications"/>. </summary>
+        /// <summary> An instance of an entity - like hive_table, hive_database. </summary>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="classificationNames"> An array of classification names. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="displayText"> The display text. </param>
+        /// <param name="guid"> The GUID of the record. </param>
+        /// <param name="isIncomplete"> Whether it is a shell entity. </param>
+        /// <param name="labels"> labels. </param>
+        /// <param name="meaningNames"> An array of meanings. </param>
+        /// <param name="meanings"> An array of term assignment headers. </param>
+        /// <param name="status">
+        /// Status of the entity - can be active or deleted. Deleted entities are not
+        /// removed.
+        /// </param>
+        /// <returns> A new <see cref="DataMap.AtlasEntityHeader"/> instance for mocking. </returns>
+        public static AtlasEntityHeader AtlasEntityHeader(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, IEnumerable<string> classificationNames = default, IEnumerable<AtlasClassification> classifications = default, string displayText = default, string guid = default, bool? isIncomplete = default, IEnumerable<string> labels = default, IEnumerable<string> meaningNames = default, IEnumerable<AtlasTermAssignmentHeader> meanings = default, EntityStatus? status = default)
+        {
+            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            classificationNames ??= new ChangeTrackingList<string>();
+            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            labels ??= new ChangeTrackingList<string>();
+            meaningNames ??= new ChangeTrackingList<string>();
+            meanings ??= new ChangeTrackingList<AtlasTermAssignmentHeader>();
+
+            return new AtlasEntityHeader(
+                attributes,
+                typeName,
+                lastModifiedTS,
+                classificationNames.ToList(),
+                classifications.ToList(),
+                displayText,
+                guid,
+                isIncomplete,
+                labels.ToList(),
+                meaningNames.ToList(),
+                meanings.ToList(),
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// An instance of an entity along with extended info - like hive_table,
+        /// hive_database.
+        /// </summary>
+        /// <param name="referredEntities"> The referred entities. </param>
+        /// <param name="entities"> An array of entities. </param>
+        /// <returns> A new <see cref="DataMap.AtlasEntitiesWithExtInfo"/> instance for mocking. </returns>
+        public static AtlasEntitiesWithExtInfo AtlasEntitiesWithExtInfo(IDictionary<string, AtlasEntity> referredEntities = default, IEnumerable<AtlasEntity> entities = default)
+        {
+            referredEntities ??= new ChangeTrackingDictionary<string, AtlasEntity>();
+            entities ??= new ChangeTrackingList<AtlasEntity>();
+
+            return new AtlasEntitiesWithExtInfo(referredEntities, entities.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The request payload for classification association. </summary>
+        /// <param name="classification">
+        /// An instance of a classification; it doesn't have an identity, this object
+        /// exists only when associated with an entity.
+        /// </param>
+        /// <param name="entityGuids"> The GUID of the entity. </param>
+        /// <returns> A new <see cref="DataMap.ClassificationAssociateConfig"/> instance for mocking. </returns>
+        public static ClassificationAssociateConfig ClassificationAssociateConfig(AtlasClassification classification = default, IEnumerable<string> entityGuids = default)
+        {
+            entityGuids ??= new ChangeTrackingList<string>();
+
+            return new ClassificationAssociateConfig(classification, entityGuids.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> REST serialization friendly list. </summary>
         /// <param name="list"> An array of objects. </param>
         /// <param name="pageSize"> The size of the page. </param>
         /// <param name="sortBy"> The sorted by field. </param>
@@ -100,44 +261,421 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="startIndex"> The start index of the page. </param>
         /// <param name="totalCount"> The total count of items. </param>
         /// <returns> A new <see cref="DataMap.AtlasClassifications"/> instance for mocking. </returns>
-        public static AtlasClassifications AtlasClassifications(IEnumerable<BinaryData> list = null, int? pageSize = null, string sortBy = null, AtlasSortType? sortType = null, int? startIndex = null, int? totalCount = null)
+        public static AtlasClassifications AtlasClassifications(IEnumerable<BinaryData> list = default, int? pageSize = default, string sortBy = default, AtlasSortType? sortType = default, int? startIndex = default, int? totalCount = default)
         {
-            list ??= new List<BinaryData>();
+            list ??= new ChangeTrackingList<BinaryData>();
 
             return new AtlasClassifications(
-                list?.ToList(),
+                list.ToList(),
                 pageSize,
                 sortBy,
                 sortType,
                 startIndex,
                 totalCount,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.BulkImportResult"/>. </summary>
+        /// <summary> An instance of an entity header map. </summary>
+        /// <param name="guidHeaderMap"> The description of the guid header map,. </param>
+        /// <returns> A new <see cref="DataMap.AtlasEntityHeaders"/> instance for mocking. </returns>
+        public static AtlasEntityHeaders AtlasEntityHeaders(IDictionary<string, AtlasEntityHeader> guidHeaderMap = default)
+        {
+            guidHeaderMap ??= new ChangeTrackingDictionary<string, AtlasEntityHeader>();
+
+            return new AtlasEntityHeaders(guidHeaderMap, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Business metadata to send to the service. </summary>
+        /// <param name="file"> InputStream of file. </param>
+        /// <returns> A new <see cref="DataMap.BusinessMetadataOptions"/> instance for mocking. </returns>
+        public static BusinessMetadataOptions BusinessMetadataOptions(BinaryData @file = default)
+        {
+            return new BusinessMetadataOptions(@file, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Bulk import result. </summary>
         /// <param name="failedImportInfoList"> failed importInfoList. </param>
         /// <param name="successImportInfoList"> successful importInfoList. </param>
         /// <returns> A new <see cref="DataMap.BulkImportResult"/> instance for mocking. </returns>
-        public static BulkImportResult BulkImportResult(IEnumerable<ImportInfo> failedImportInfoList = null, IEnumerable<ImportInfo> successImportInfoList = null)
+        public static BulkImportResult BulkImportResult(IEnumerable<ImportInfo> failedImportInfoList = default, IEnumerable<ImportInfo> successImportInfoList = default)
         {
-            failedImportInfoList ??= new List<ImportInfo>();
-            successImportInfoList ??= new List<ImportInfo>();
+            failedImportInfoList ??= new ChangeTrackingList<ImportInfo>();
+            successImportInfoList ??= new ChangeTrackingList<ImportInfo>();
 
-            return new BulkImportResult(failedImportInfoList?.ToList(), successImportInfoList?.ToList(), serializedAdditionalRawData: null);
+            return new BulkImportResult(failedImportInfoList.ToList(), successImportInfoList.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.ImportInfo"/>. </summary>
+        /// <summary> ImportInfo. </summary>
         /// <param name="childObjectName"> childObjectName. </param>
         /// <param name="importStatus"> importStatus. </param>
         /// <param name="parentObjectName"> parentObjectName. </param>
         /// <param name="remarks"> remarks. </param>
         /// <returns> A new <see cref="DataMap.ImportInfo"/> instance for mocking. </returns>
-        public static ImportInfo ImportInfo(string childObjectName = null, ImportStatus? importStatus = null, string parentObjectName = null, string remarks = null)
+        public static ImportInfo ImportInfo(string childObjectName = default, ImportStatus? importStatus = default, string parentObjectName = default, string remarks = default)
         {
-            return new ImportInfo(childObjectName, importStatus, parentObjectName, remarks, serializedAdditionalRawData: null);
+            return new ImportInfo(childObjectName, importStatus, parentObjectName, remarks, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasGlossaryExtInfo"/>. </summary>
+        /// <summary> MoveEntitiesOptions. </summary>
+        /// <param name="entityGuids"> An array of entity guids to be moved to target collection. </param>
+        /// <returns> A new <see cref="DataMap.MoveEntitiesConfig"/> instance for mocking. </returns>
+        public static MoveEntitiesConfig MoveEntitiesConfig(IEnumerable<string> entityGuids = default)
+        {
+            entityGuids ??= new ChangeTrackingList<string>();
+
+            return new MoveEntitiesConfig(entityGuids.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The glossary object. </summary>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="categories"> An array of categories. </param>
+        /// <param name="language"> The language of the glossary. </param>
+        /// <param name="terms"> An array of related term headers. </param>
+        /// <param name="usage"> The usage of the glossary. </param>
+        /// <returns> A new <see cref="DataMap.AtlasGlossary"/> instance for mocking. </returns>
+        public static AtlasGlossary AtlasGlossary(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, IEnumerable<AtlasRelatedCategoryHeader> categories = default, string language = default, IEnumerable<AtlasRelatedTermHeader> terms = default, string usage = default)
+        {
+            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            categories ??= new ChangeTrackingList<AtlasRelatedCategoryHeader>();
+            terms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+
+            return new AtlasGlossary(
+                guid,
+                classifications.ToList(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                categories.ToList(),
+                language,
+                terms.ToList(),
+                usage,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The header of the related category. </summary>
+        /// <param name="categoryGuid"> The GUID of the category. </param>
+        /// <param name="description"> The description of the category header. </param>
+        /// <param name="displayText"> The display text. </param>
+        /// <param name="parentCategoryGuid"> The GUID of the parent category. </param>
+        /// <param name="relationGuid"> The GUID of the relationship. </param>
+        /// <returns> A new <see cref="DataMap.AtlasRelatedCategoryHeader"/> instance for mocking. </returns>
+        public static AtlasRelatedCategoryHeader AtlasRelatedCategoryHeader(string categoryGuid = default, string description = default, string displayText = default, string parentCategoryGuid = default, string relationGuid = default)
+        {
+            return new AtlasRelatedCategoryHeader(
+                categoryGuid,
+                description,
+                displayText,
+                parentCategoryGuid,
+                relationGuid,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The header of the related term. </summary>
+        /// <param name="description"> The description of the related term. </param>
+        /// <param name="displayText"> The display text. </param>
+        /// <param name="expression"> The expression of the term. </param>
+        /// <param name="relationGuid"> The GUID of the relationship. </param>
+        /// <param name="status"> The status of term relationship. </param>
+        /// <param name="steward"> The steward of the term. </param>
+        /// <param name="termGuid"> The GUID of the term. </param>
+        /// <returns> A new <see cref="DataMap.AtlasRelatedTermHeader"/> instance for mocking. </returns>
+        public static AtlasRelatedTermHeader AtlasRelatedTermHeader(string description = default, string displayText = default, string expression = default, string relationGuid = default, AtlasTermRelationshipStatus? status = default, string steward = default, string termGuid = default)
+        {
+            return new AtlasRelatedTermHeader(
+                description,
+                displayText,
+                expression,
+                relationGuid,
+                status,
+                steward,
+                termGuid,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The glossary category. </summary>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="childrenCategories"> An array of children categories. </param>
+        /// <param name="parentCategory"> The header of the related category. </param>
+        /// <param name="terms"> An array of related term headers. </param>
+        /// <returns> A new <see cref="DataMap.AtlasGlossaryCategory"/> instance for mocking. </returns>
+        public static AtlasGlossaryCategory AtlasGlossaryCategory(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, AtlasGlossaryHeader anchor = default, IEnumerable<AtlasRelatedCategoryHeader> childrenCategories = default, AtlasRelatedCategoryHeader parentCategory = default, IEnumerable<AtlasRelatedTermHeader> terms = default)
+        {
+            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            childrenCategories ??= new ChangeTrackingList<AtlasRelatedCategoryHeader>();
+            terms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+
+            return new AtlasGlossaryCategory(
+                guid,
+                classifications.ToList(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                anchor,
+                childrenCategories.ToList(),
+                parentCategory,
+                terms.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The glossary header with basic information. </summary>
+        /// <param name="displayText"> The display text. </param>
+        /// <param name="glossaryGuid"> The GUID of the glossary. </param>
+        /// <param name="relationGuid"> The GUID of the relationship. </param>
+        /// <returns> A new <see cref="DataMap.AtlasGlossaryHeader"/> instance for mocking. </returns>
+        public static AtlasGlossaryHeader AtlasGlossaryHeader(string displayText = default, string glossaryGuid = default, string relationGuid = default)
+        {
+            return new AtlasGlossaryHeader(displayText, glossaryGuid, relationGuid, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The glossary term. </summary>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="classifications"> An array of classifications. </param>
+        /// <param name="longDescription"> The long version description. </param>
+        /// <param name="name"> The name of the glossary object. </param>
+        /// <param name="qualifiedName"> The qualified name of the glossary object. </param>
+        /// <param name="shortDescription"> The short version of description. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="abbreviation"> The abbreviation of the term. </param>
+        /// <param name="templateName"> The name of the template. </param>
+        /// <param name="anchor"> The glossary header with basic information. </param>
+        /// <param name="antonyms"> An array of related term headers as antonyms. </param>
+        /// <param name="status"> Status of the AtlasGlossaryTerm. </param>
+        /// <param name="nickName"> The nick name of the term. </param>
+        /// <param name="hierarchyInfo"> The hierarchy information of the term. </param>
+        /// <param name="resources"> An array of resource link for term. </param>
+        /// <param name="contacts"> The dictionary of contacts for terms. Key could be Expert or Steward. </param>
+        /// <param name="attributes">
+        /// The custom attributes of the term, which is map&lt;string,map&lt;string,object&gt;&gt;.
+        /// The
+        /// key of the first layer map is term template name.
+        /// </param>
+        /// <param name="assignedEntities"> An array of related object IDs. </param>
+        /// <param name="categories"> An array of term categorization headers. </param>
+        /// <param name="classifies"> An array of related term headers. </param>
+        /// <param name="examples"> An array of examples. </param>
+        /// <param name="isA"> An array of related term headers indicating the is-a relationship. </param>
+        /// <param name="preferredTerms"> An array of preferred related term headers. </param>
+        /// <param name="preferredToTerms"> An array of related term headers that are preferred to. </param>
+        /// <param name="replacedBy"> An array of related term headers that are replaced by. </param>
+        /// <param name="replacementTerms"> An array of related term headers for replacement. </param>
+        /// <param name="seeAlso"> An array of related term headers for see also. </param>
+        /// <param name="synonyms"> An array of related term headers as synonyms. </param>
+        /// <param name="translatedTerms"> An array of translated related term headers. </param>
+        /// <param name="translationTerms"> An array of related term headers for translation. </param>
+        /// <param name="usage"> The usage of the term. </param>
+        /// <param name="validValues"> An array of related term headers as valid values. </param>
+        /// <param name="validValuesFor"> An array of related term headers as valid values for other records. </param>
+        /// <returns> A new <see cref="DataMap.AtlasGlossaryTerm"/> instance for mocking. </returns>
+        public static AtlasGlossaryTerm AtlasGlossaryTerm(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, string abbreviation = default, IEnumerable<BinaryData> templateName = default, AtlasGlossaryHeader anchor = default, IEnumerable<AtlasRelatedTermHeader> antonyms = default, TermStatus? status = default, string nickName = default, IEnumerable<PurviewObjectId> hierarchyInfo = default, IEnumerable<ResourceLink> resources = default, IDictionary<string, IList<ContactInfo>> contacts = default, IDictionary<string, IDictionary<string, BinaryData>> attributes = default, IEnumerable<AtlasRelatedObjectId> assignedEntities = default, IEnumerable<AtlasTermCategorizationHeader> categories = default, IEnumerable<AtlasRelatedTermHeader> classifies = default, IEnumerable<string> examples = default, IEnumerable<AtlasRelatedTermHeader> isA = default, IEnumerable<AtlasRelatedTermHeader> preferredTerms = default, IEnumerable<AtlasRelatedTermHeader> preferredToTerms = default, IEnumerable<AtlasRelatedTermHeader> replacedBy = default, IEnumerable<AtlasRelatedTermHeader> replacementTerms = default, IEnumerable<AtlasRelatedTermHeader> seeAlso = default, IEnumerable<AtlasRelatedTermHeader> synonyms = default, IEnumerable<AtlasRelatedTermHeader> translatedTerms = default, IEnumerable<AtlasRelatedTermHeader> translationTerms = default, string usage = default, IEnumerable<AtlasRelatedTermHeader> validValues = default, IEnumerable<AtlasRelatedTermHeader> validValuesFor = default)
+        {
+            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            templateName ??= new ChangeTrackingList<BinaryData>();
+            antonyms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            hierarchyInfo ??= new ChangeTrackingList<PurviewObjectId>();
+            resources ??= new ChangeTrackingList<ResourceLink>();
+            contacts ??= new ChangeTrackingDictionary<string, IList<ContactInfo>>();
+            attributes ??= new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
+            assignedEntities ??= new ChangeTrackingList<AtlasRelatedObjectId>();
+            categories ??= new ChangeTrackingList<AtlasTermCategorizationHeader>();
+            classifies ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            examples ??= new ChangeTrackingList<string>();
+            isA ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            preferredTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            preferredToTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            replacedBy ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            replacementTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            seeAlso ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            synonyms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            translatedTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            translationTerms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            validValues ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            validValuesFor ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+
+            return new AtlasGlossaryTerm(
+                guid,
+                classifications.ToList(),
+                longDescription,
+                name,
+                qualifiedName,
+                shortDescription,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                updateTime,
+                updatedBy,
+                abbreviation,
+                templateName.ToList(),
+                anchor,
+                antonyms.ToList(),
+                status,
+                nickName,
+                hierarchyInfo.ToList(),
+                resources.ToList(),
+                contacts,
+                attributes,
+                assignedEntities.ToList(),
+                categories.ToList(),
+                classifies.ToList(),
+                examples.ToList(),
+                isA.ToList(),
+                preferredTerms.ToList(),
+                preferredToTerms.ToList(),
+                replacedBy.ToList(),
+                replacementTerms.ToList(),
+                seeAlso.ToList(),
+                synonyms.ToList(),
+                translatedTerms.ToList(),
+                translationTerms.ToList(),
+                usage,
+                validValues.ToList(),
+                validValuesFor.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> PurviewObjectId. </summary>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="uniqueAttributes"> The unique attributes of the object. </param>
+        /// <param name="name"> Name. </param>
+        /// <param name="displayText"> Display text. </param>
+        /// <param name="itemPath"> Item path. </param>
+        /// <param name="resourceId"> Resource Id. </param>
+        /// <param name="properties"> Dictionary of &lt;any&gt;. </param>
+        /// <returns> A new <see cref="DataMap.PurviewObjectId"/> instance for mocking. </returns>
+        public static PurviewObjectId PurviewObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default, string name = default, string displayText = default, string itemPath = default, string resourceId = default, IDictionary<string, BinaryData> properties = default)
+        {
+            uniqueAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+            properties ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new PurviewObjectId(
+                guid,
+                typeName,
+                uniqueAttributes,
+                name,
+                displayText,
+                itemPath,
+                resourceId,
+                properties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> ResourceLink. </summary>
+        /// <param name="displayName"> Display name for url. </param>
+        /// <param name="url"> web url. http or https. </param>
+        /// <returns> A new <see cref="DataMap.ResourceLink"/> instance for mocking. </returns>
+        public static ResourceLink ResourceLink(string displayName = default, string url = default)
+        {
+            return new ResourceLink(displayName, url, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Reference to an object-instance of AtlasEntity type used in relationship
+        /// attribute values
+        /// </summary>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="uniqueAttributes"> The unique attributes of the object. </param>
+        /// <param name="displayText"> The display text. </param>
+        /// <param name="entityStatus">
+        /// Status of the entity - can be active or deleted. Deleted entities are not
+        /// removed.
+        /// </param>
+        /// <param name="relationshipType"> Relationship type. </param>
+        /// <param name="relationshipAttributes">
+        /// Captures details of struct contents. Not instantiated directly, used only via
+        /// AtlasEntity, AtlasClassification.
+        /// </param>
+        /// <param name="relationshipGuid"> The GUID of the relationship. </param>
+        /// <param name="relationshipStatus"> The enum of relationship status. </param>
+        /// <returns> A new <see cref="DataMap.AtlasRelatedObjectId"/> instance for mocking. </returns>
+        public static AtlasRelatedObjectId AtlasRelatedObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default, string displayText = default, EntityStatus? entityStatus = default, string relationshipType = default, AtlasStruct relationshipAttributes = default, Guid? relationshipGuid = default, StatusAtlasRelationship? relationshipStatus = default)
+        {
+            uniqueAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AtlasRelatedObjectId(
+                guid,
+                typeName,
+                uniqueAttributes,
+                displayText,
+                entityStatus,
+                relationshipType,
+                relationshipAttributes,
+                relationshipGuid,
+                relationshipStatus,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// Captures details of struct contents. Not instantiated directly, used only via
+        /// AtlasEntity, AtlasClassification.
+        /// </summary>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <returns> A new <see cref="DataMap.AtlasStruct"/> instance for mocking. </returns>
+        public static AtlasStruct AtlasStruct(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default)
+        {
+            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AtlasStruct(attributes, typeName, lastModifiedTS, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The basic information for term categorization. </summary>
+        /// <param name="categoryGuid"> The GUID of the category. </param>
+        /// <param name="description"> The description of the record. </param>
+        /// <param name="displayText"> The display text. </param>
+        /// <param name="relationGuid"> The GUID of the relationship. </param>
+        /// <param name="status"> The status of term relationship. </param>
+        /// <returns> A new <see cref="DataMap.AtlasTermCategorizationHeader"/> instance for mocking. </returns>
+        public static AtlasTermCategorizationHeader AtlasTermCategorizationHeader(Guid? categoryGuid = default, string description = default, string displayText = default, Guid? relationGuid = default, AtlasTermRelationshipStatus? status = default)
+        {
+            return new AtlasTermCategorizationHeader(
+                categoryGuid,
+                description,
+                displayText,
+                relationGuid,
+                status,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The extended information of glossary. </summary>
         /// <param name="guid"> The GUID of the object. </param>
         /// <param name="classifications"> An array of classifications. </param>
         /// <param name="longDescription"> The long version description. </param>
@@ -156,17 +694,17 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="categoryInfo"> The glossary category information. </param>
         /// <param name="termInfo"> The glossary term information. </param>
         /// <returns> A new <see cref="DataMap.AtlasGlossaryExtInfo"/> instance for mocking. </returns>
-        public static AtlasGlossaryExtInfo AtlasGlossaryExtInfo(string guid = null, IEnumerable<AtlasClassification> classifications = null, string longDescription = null, string name = null, string qualifiedName = null, string shortDescription = null, string lastModifiedTS = null, long? createTime = null, string createdBy = null, long? updateTime = null, string updatedBy = null, IEnumerable<AtlasRelatedCategoryHeader> categories = null, string language = null, IEnumerable<AtlasRelatedTermHeader> terms = null, string usage = null, IReadOnlyDictionary<string, AtlasGlossaryCategory> categoryInfo = null, IReadOnlyDictionary<string, AtlasGlossaryTerm> termInfo = null)
+        public static AtlasGlossaryExtInfo AtlasGlossaryExtInfo(string guid = default, IEnumerable<AtlasClassification> classifications = default, string longDescription = default, string name = default, string qualifiedName = default, string shortDescription = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, long? updateTime = default, string updatedBy = default, IEnumerable<AtlasRelatedCategoryHeader> categories = default, string language = default, IEnumerable<AtlasRelatedTermHeader> terms = default, string usage = default, IDictionary<string, AtlasGlossaryCategory> categoryInfo = default, IDictionary<string, AtlasGlossaryTerm> termInfo = default)
         {
-            classifications ??= new List<AtlasClassification>();
-            categories ??= new List<AtlasRelatedCategoryHeader>();
-            terms ??= new List<AtlasRelatedTermHeader>();
-            categoryInfo ??= new Dictionary<string, AtlasGlossaryCategory>();
-            termInfo ??= new Dictionary<string, AtlasGlossaryTerm>();
+            classifications ??= new ChangeTrackingList<AtlasClassification>();
+            categories ??= new ChangeTrackingList<AtlasRelatedCategoryHeader>();
+            terms ??= new ChangeTrackingList<AtlasRelatedTermHeader>();
+            categoryInfo ??= new ChangeTrackingDictionary<string, AtlasGlossaryCategory>();
+            termInfo ??= new ChangeTrackingDictionary<string, AtlasGlossaryTerm>();
 
             return new AtlasGlossaryExtInfo(
                 guid,
-                classifications?.ToList(),
+                classifications.ToList(),
                 longDescription,
                 name,
                 qualifiedName,
@@ -176,16 +714,77 @@ namespace Azure.Analytics.Purview.DataMap
                 createdBy,
                 updateTime,
                 updatedBy,
-                categories?.ToList(),
+                categories.ToList(),
                 language,
-                terms?.ToList(),
+                terms.ToList(),
                 usage,
                 categoryInfo,
                 termInfo,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.QueryResult"/>. </summary>
+        /// <summary> The search query of advanced search request. </summary>
+        /// <param name="keywords"> The keywords applied to all searchable fields. </param>
+        /// <param name="limit">
+        /// The limit of the number of the search result. default value is 50; maximum
+        /// value is 1000.
+        /// </param>
+        /// <param name="continuationToken">
+        /// The token used to get next batch of data. Default 'Null' to get the first
+        /// batch, and will return new token in each response unless there's no more data.
+        /// </param>
+        /// <param name="orderby"> The sort order of search results, can specify multiple fields. </param>
+        /// <param name="filter"> The filter for the search. See examples for the usage of supported filters. </param>
+        /// <param name="facets"> The facets for search. See examples for the usage of supported facets. </param>
+        /// <param name="taxonomySetting"> The taxonomy setting for search. </param>
+        /// <returns> A new <see cref="DataMap.QueryConfig"/> instance for mocking. </returns>
+        public static QueryConfig QueryConfig(string keywords = default, int? limit = default, string continuationToken = default, IEnumerable<BinaryData> @orderby = default, BinaryData filter = default, IEnumerable<SearchFacetItem> facets = default, SearchTaxonomySetting taxonomySetting = default)
+        {
+            @orderby ??= new ChangeTrackingList<BinaryData>();
+            facets ??= new ChangeTrackingList<SearchFacetItem>();
+
+            return new QueryConfig(
+                keywords,
+                limit,
+                continuationToken,
+                @orderby.ToList(),
+                filter,
+                facets.ToList(),
+                taxonomySetting,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The content of a search facet result item. </summary>
+        /// <param name="count"> The count of the facet item. </param>
+        /// <param name="facet"> The name of the facet item. </param>
+        /// <param name="sort"> Define the sorting criteria for items. </param>
+        /// <returns> A new <see cref="DataMap.SearchFacetItem"/> instance for mocking. </returns>
+        public static SearchFacetItem SearchFacetItem(int? count = default, string facet = default, SearchFacetSort sort = default)
+        {
+            return new SearchFacetItem(count, facet, sort, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The sorting criteria. </summary>
+        /// <param name="count"> Order by count. </param>
+        /// <param name="value"> Order by value. </param>
+        /// <returns> A new <see cref="DataMap.SearchFacetSort"/> instance for mocking. </returns>
+        public static SearchFacetSort SearchFacetSort(SearchSortOrder? count = default, SearchSortOrder? value = default)
+        {
+            return new SearchFacetSort(count, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Taxonomy setting for search request. </summary>
+        /// <param name="assetTypes"> Asset types. </param>
+        /// <param name="facet"> The content of a search facet result item. </param>
+        /// <returns> A new <see cref="DataMap.SearchTaxonomySetting"/> instance for mocking. </returns>
+        public static SearchTaxonomySetting SearchTaxonomySetting(IEnumerable<string> assetTypes = default, SearchFacetItem facet = default)
+        {
+            assetTypes ??= new ChangeTrackingList<string>();
+
+            return new SearchTaxonomySetting(assetTypes.ToList(), facet, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The result of the search result. </summary>
         /// <param name="searchCount">
         /// The total number of search results (not the number of documents in a single
         /// page).
@@ -199,20 +798,24 @@ namespace Azure.Analytics.Purview.DataMap
         /// </param>
         /// <param name="value"> Search result value. </param>
         /// <returns> A new <see cref="DataMap.QueryResult"/> instance for mocking. </returns>
-        public static QueryResult QueryResult(int? searchCount = null, bool? searchCountApproximate = null, string continuationToken = null, SearchFacetResultValue searchFacets = null, IEnumerable<SearchResultValue> value = null)
+        public static QueryResult QueryResult(int? searchCount = default, bool? searchCountApproximate = default, string continuationToken = default, SearchFacetResultValue searchFacets = default, IEnumerable<SearchResultValue> value = default)
         {
-            value ??= new List<SearchResultValue>();
+            value ??= new ChangeTrackingList<SearchResultValue>();
 
             return new QueryResult(
                 searchCount,
                 searchCountApproximate,
                 continuationToken,
                 searchFacets,
-                value?.ToList(),
-                serializedAdditionalRawData: null);
+                value.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.SearchFacetResultValue"/>. </summary>
+        /// <summary>
+        /// A facet list that consists of index fields assetType ,classification,
+        /// contactId, and label. When the facet is specified in the request, the value of
+        /// the facet is returned as an element of @search.facets.
+        /// </summary>
         /// <param name="entityType"> Entity type. </param>
         /// <param name="assetType"> Asset type. </param>
         /// <param name="classification"> Classification. </param>
@@ -224,43 +827,43 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termStatus"> Term status. </param>
         /// <param name="termTemplate"> Term template. </param>
         /// <returns> A new <see cref="DataMap.SearchFacetResultValue"/> instance for mocking. </returns>
-        public static SearchFacetResultValue SearchFacetResultValue(IEnumerable<SearchFacetItemValue> entityType = null, IEnumerable<SearchFacetItemValue> assetType = null, IEnumerable<SearchFacetItemValue> classification = null, IEnumerable<SearchFacetItemValue> term = null, IEnumerable<SearchFacetItemValue> contactId = null, IEnumerable<SearchFacetItemValue> contactType = null, IEnumerable<SearchFacetItemValue> label = null, IEnumerable<SearchFacetItemValue> glossaryType = null, IEnumerable<SearchFacetItemValue> termStatus = null, IEnumerable<SearchFacetItemValue> termTemplate = null)
+        public static SearchFacetResultValue SearchFacetResultValue(IEnumerable<SearchFacetItemValue> entityType = default, IEnumerable<SearchFacetItemValue> assetType = default, IEnumerable<SearchFacetItemValue> classification = default, IEnumerable<SearchFacetItemValue> term = default, IEnumerable<SearchFacetItemValue> contactId = default, IEnumerable<SearchFacetItemValue> contactType = default, IEnumerable<SearchFacetItemValue> label = default, IEnumerable<SearchFacetItemValue> glossaryType = default, IEnumerable<SearchFacetItemValue> termStatus = default, IEnumerable<SearchFacetItemValue> termTemplate = default)
         {
-            entityType ??= new List<SearchFacetItemValue>();
-            assetType ??= new List<SearchFacetItemValue>();
-            classification ??= new List<SearchFacetItemValue>();
-            term ??= new List<SearchFacetItemValue>();
-            contactId ??= new List<SearchFacetItemValue>();
-            contactType ??= new List<SearchFacetItemValue>();
-            label ??= new List<SearchFacetItemValue>();
-            glossaryType ??= new List<SearchFacetItemValue>();
-            termStatus ??= new List<SearchFacetItemValue>();
-            termTemplate ??= new List<SearchFacetItemValue>();
+            entityType ??= new ChangeTrackingList<SearchFacetItemValue>();
+            assetType ??= new ChangeTrackingList<SearchFacetItemValue>();
+            classification ??= new ChangeTrackingList<SearchFacetItemValue>();
+            term ??= new ChangeTrackingList<SearchFacetItemValue>();
+            contactId ??= new ChangeTrackingList<SearchFacetItemValue>();
+            contactType ??= new ChangeTrackingList<SearchFacetItemValue>();
+            label ??= new ChangeTrackingList<SearchFacetItemValue>();
+            glossaryType ??= new ChangeTrackingList<SearchFacetItemValue>();
+            termStatus ??= new ChangeTrackingList<SearchFacetItemValue>();
+            termTemplate ??= new ChangeTrackingList<SearchFacetItemValue>();
 
             return new SearchFacetResultValue(
-                entityType?.ToList(),
-                assetType?.ToList(),
-                classification?.ToList(),
-                term?.ToList(),
-                contactId?.ToList(),
-                contactType?.ToList(),
-                label?.ToList(),
-                glossaryType?.ToList(),
-                termStatus?.ToList(),
-                termTemplate?.ToList(),
-                serializedAdditionalRawData: null);
+                entityType.ToList(),
+                assetType.ToList(),
+                classification.ToList(),
+                term.ToList(),
+                contactId.ToList(),
+                contactType.ToList(),
+                label.ToList(),
+                glossaryType.ToList(),
+                termStatus.ToList(),
+                termTemplate.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.SearchFacetItemValue"/>. </summary>
+        /// <summary> The content of a search facet result item. </summary>
         /// <param name="count"> The count of the facet item. </param>
         /// <param name="value"> The name of the facet item. </param>
         /// <returns> A new <see cref="DataMap.SearchFacetItemValue"/> instance for mocking. </returns>
-        public static SearchFacetItemValue SearchFacetItemValue(int? count = null, string value = null)
+        public static SearchFacetItemValue SearchFacetItemValue(int? count = default, string value = default)
         {
-            return new SearchFacetItemValue(count, value, serializedAdditionalRawData: null);
+            return new SearchFacetItemValue(count, value, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.SearchResultValue"/>. </summary>
+        /// <summary> The value item of the search result. </summary>
         /// <param name="searchScore">
         /// The search score calculated by the search engine. The results are ordered by
         /// search score by default.
@@ -298,15 +901,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
         /// <returns> A new <see cref="DataMap.SearchResultValue"/> instance for mocking. </returns>
-        public static SearchResultValue SearchResultValue(float? searchScore = null, SearchHighlights searchHighlights = null, string objectType = null, long? createTime = null, long? updateTime = null, string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, IEnumerable<string> endorsement = null, string owner = null, IEnumerable<string> classification = null, IEnumerable<string> label = null, IEnumerable<TermSearchResultValue> term = null, IEnumerable<ContactSearchResultValue> contact = null, IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, IEnumerable<string> termTemplate = null, string longDescription = null)
+        public static SearchResultValue SearchResultValue(float? searchScore = default, SearchHighlights searchHighlights = default, string objectType = default, long? createTime = default, long? updateTime = default, string id = default, string name = default, string qualifiedName = default, string entityType = default, string description = default, IEnumerable<string> endorsement = default, string owner = default, IEnumerable<string> classification = default, IEnumerable<string> label = default, IEnumerable<TermSearchResultValue> term = default, IEnumerable<ContactSearchResultValue> contact = default, IEnumerable<string> assetType = default, string glossaryType = default, string glossary = default, string termStatus = default, IEnumerable<string> termTemplate = default, string longDescription = default)
         {
-            endorsement ??= new List<string>();
-            classification ??= new List<string>();
-            label ??= new List<string>();
-            term ??= new List<TermSearchResultValue>();
-            contact ??= new List<ContactSearchResultValue>();
-            assetType ??= new List<string>();
-            termTemplate ??= new List<string>();
+            endorsement ??= new ChangeTrackingList<string>();
+            classification ??= new ChangeTrackingList<string>();
+            label ??= new ChangeTrackingList<string>();
+            term ??= new ChangeTrackingList<TermSearchResultValue>();
+            contact ??= new ChangeTrackingList<ContactSearchResultValue>();
+            assetType ??= new ChangeTrackingList<string>();
+            termTemplate ??= new ChangeTrackingList<string>();
 
             return new SearchResultValue(
                 searchScore,
@@ -319,56 +922,61 @@ namespace Azure.Analytics.Purview.DataMap
                 qualifiedName,
                 entityType,
                 description,
-                endorsement?.ToList(),
+                endorsement.ToList(),
                 owner,
-                classification?.ToList(),
-                label?.ToList(),
-                term?.ToList(),
-                contact?.ToList(),
-                assetType?.ToList(),
+                classification.ToList(),
+                label.ToList(),
+                term.ToList(),
+                contact.ToList(),
+                assetType.ToList(),
                 glossaryType,
                 glossary,
                 termStatus,
-                termTemplate?.ToList(),
+                termTemplate.ToList(),
                 longDescription,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.SearchHighlights"/>. </summary>
+        /// <summary>
+        /// A highlight list that consists of index fields id ,qualifiedName, name,
+        /// description, entityType. When the keyword appears in those fields, the value of
+        /// the field, attached with emphasis mark, is returned as an element of
+        /// @search.highlights.
+        /// </summary>
         /// <param name="id"> Id. </param>
         /// <param name="qualifiedName"> Qualified name. </param>
         /// <param name="name"> Name. </param>
         /// <param name="description"> Description. </param>
         /// <param name="entityType"> Entity type. </param>
         /// <returns> A new <see cref="DataMap.SearchHighlights"/> instance for mocking. </returns>
-        public static SearchHighlights SearchHighlights(IEnumerable<string> id = null, IEnumerable<string> qualifiedName = null, IEnumerable<string> name = null, IEnumerable<string> description = null, IEnumerable<string> entityType = null)
+        public static SearchHighlights SearchHighlights(IEnumerable<string> id = default, IEnumerable<string> qualifiedName = default, IEnumerable<string> name = default, IEnumerable<string> description = default, IEnumerable<string> entityType = default)
         {
-            id ??= new List<string>();
-            qualifiedName ??= new List<string>();
-            name ??= new List<string>();
-            description ??= new List<string>();
-            entityType ??= new List<string>();
+            id ??= new ChangeTrackingList<string>();
+            qualifiedName ??= new ChangeTrackingList<string>();
+            name ??= new ChangeTrackingList<string>();
+            description ??= new ChangeTrackingList<string>();
+            entityType ??= new ChangeTrackingList<string>();
 
             return new SearchHighlights(
-                id?.ToList(),
-                qualifiedName?.ToList(),
-                name?.ToList(),
-                description?.ToList(),
-                entityType?.ToList(),
-                serializedAdditionalRawData: null);
+                id.ToList(),
+                qualifiedName.ToList(),
+                name.ToList(),
+                description.ToList(),
+                entityType.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.TermSearchResultValue"/>. </summary>
+        /// <summary> The context. </summary>
         /// <param name="name"> The name of the term. </param>
         /// <param name="glossaryName"> The name of the glossary which contains the term. </param>
         /// <param name="guid"> The GUID of the term. </param>
         /// <returns> A new <see cref="DataMap.TermSearchResultValue"/> instance for mocking. </returns>
-        public static TermSearchResultValue TermSearchResultValue(string name = null, string glossaryName = null, string guid = null)
+        public static TermSearchResultValue TermSearchResultValue(string name = default, string glossaryName = default, string guid = default)
         {
-            return new TermSearchResultValue(name, glossaryName, guid, serializedAdditionalRawData: null);
+            return new TermSearchResultValue(name, glossaryName, guid, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.ContactSearchResultValue"/>. </summary>
+        /// <summary> The contact in the search and suggest result. </summary>
         /// <param name="id"> The GUID of the contact. </param>
         /// <param name="info"> The description of the contact. </param>
         /// <param name="contactType">
@@ -376,22 +984,40 @@ namespace Azure.Analytics.Purview.DataMap
         /// Expert or Steward for a glossary term.
         /// </param>
         /// <returns> A new <see cref="DataMap.ContactSearchResultValue"/> instance for mocking. </returns>
-        public static ContactSearchResultValue ContactSearchResultValue(string id = null, string info = null, string contactType = null)
+        public static ContactSearchResultValue ContactSearchResultValue(string id = default, string info = default, string contactType = default)
         {
-            return new ContactSearchResultValue(id, info, contactType, serializedAdditionalRawData: null);
+            return new ContactSearchResultValue(id, info, contactType, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.SuggestResult"/>. </summary>
+        /// <summary> The payload of suggest request. </summary>
+        /// <param name="keywords">
+        /// The keywords applied to all fields that support suggest operation. It must be
+        /// at least 1 character, and no more than 100 characters. In the index schema we
+        /// defined a default suggester which lists all the supported fields and specifies
+        /// a search mode.
+        /// </param>
+        /// <param name="limit">
+        /// The number of suggestions we hope to return. The default value is 5. The value
+        /// must be a number between 1 and 100.
+        /// </param>
+        /// <param name="filter"> The filter for the search. </param>
+        /// <returns> A new <see cref="DataMap.SuggestConfig"/> instance for mocking. </returns>
+        public static SuggestConfig SuggestConfig(string keywords = default, int? limit = default, BinaryData filter = default)
+        {
+            return new SuggestConfig(keywords, limit, filter, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The result item of the search suggest. </summary>
         /// <param name="value"> The result value. </param>
         /// <returns> A new <see cref="DataMap.SuggestResult"/> instance for mocking. </returns>
-        public static SuggestResult SuggestResult(IEnumerable<SuggestResultValue> value = null)
+        public static SuggestResult SuggestResult(IEnumerable<SuggestResultValue> value = default)
         {
-            value ??= new List<SuggestResultValue>();
+            value ??= new ChangeTrackingList<SuggestResultValue>();
 
-            return new SuggestResult(value?.ToList(), serializedAdditionalRawData: null);
+            return new SuggestResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.SuggestResultValue"/>. </summary>
+        /// <summary> The value item of the search suggest. </summary>
         /// <param name="searchScore">
         /// The search score calculated by the search engine. The results are ordered by
         /// search score by default.
@@ -427,15 +1053,15 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
         /// <returns> A new <see cref="DataMap.SuggestResultValue"/> instance for mocking. </returns>
-        public static SuggestResultValue SuggestResultValue(float? searchScore = null, string searchText = null, string objectType = null, long? createTime = null, long? updateTime = null, string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, IEnumerable<string> endorsement = null, string owner = null, IEnumerable<string> classification = null, IEnumerable<string> label = null, IEnumerable<TermSearchResultValue> term = null, IEnumerable<ContactSearchResultValue> contact = null, IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, IEnumerable<string> termTemplate = null, string longDescription = null)
+        public static SuggestResultValue SuggestResultValue(float? searchScore = default, string searchText = default, string objectType = default, long? createTime = default, long? updateTime = default, string id = default, string name = default, string qualifiedName = default, string entityType = default, string description = default, IEnumerable<string> endorsement = default, string owner = default, IEnumerable<string> classification = default, IEnumerable<string> label = default, IEnumerable<TermSearchResultValue> term = default, IEnumerable<ContactSearchResultValue> contact = default, IEnumerable<string> assetType = default, string glossaryType = default, string glossary = default, string termStatus = default, IEnumerable<string> termTemplate = default, string longDescription = default)
         {
-            endorsement ??= new List<string>();
-            classification ??= new List<string>();
-            label ??= new List<string>();
-            term ??= new List<TermSearchResultValue>();
-            contact ??= new List<ContactSearchResultValue>();
-            assetType ??= new List<string>();
-            termTemplate ??= new List<string>();
+            endorsement ??= new ChangeTrackingList<string>();
+            classification ??= new ChangeTrackingList<string>();
+            label ??= new ChangeTrackingList<string>();
+            term ??= new ChangeTrackingList<TermSearchResultValue>();
+            contact ??= new ChangeTrackingList<ContactSearchResultValue>();
+            assetType ??= new ChangeTrackingList<string>();
+            termTemplate ??= new ChangeTrackingList<string>();
 
             return new SuggestResultValue(
                 searchScore,
@@ -448,41 +1074,57 @@ namespace Azure.Analytics.Purview.DataMap
                 qualifiedName,
                 entityType,
                 description,
-                endorsement?.ToList(),
+                endorsement.ToList(),
                 owner,
-                classification?.ToList(),
-                label?.ToList(),
-                term?.ToList(),
-                contact?.ToList(),
-                assetType?.ToList(),
+                classification.ToList(),
+                label.ToList(),
+                term.ToList(),
+                contact.ToList(),
+                assetType.ToList(),
                 glossaryType,
                 glossary,
                 termStatus,
-                termTemplate?.ToList(),
+                termTemplate.ToList(),
                 longDescription,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AutoCompleteResult"/>. </summary>
+        /// <summary> The payload of autocomplete request. </summary>
+        /// <param name="keywords">
+        /// The keywords applied to all fields that support autocomplete operation. It must
+        /// be at least 1 character, and no more than 100 characters.
+        /// </param>
+        /// <param name="limit">
+        /// The number of autocomplete results we hope to return. The default value is 50.
+        /// The value must be a number between 1 and 100.
+        /// </param>
+        /// <param name="filter"> The filter for the autocomplete request. </param>
+        /// <returns> A new <see cref="DataMap.AutoCompleteConfig"/> instance for mocking. </returns>
+        public static AutoCompleteConfig AutoCompleteConfig(string keywords = default, int? limit = default, BinaryData filter = default)
+        {
+            return new AutoCompleteConfig(keywords, limit, filter, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The result of the autocomplete request. </summary>
         /// <param name="value"> The result value. </param>
         /// <returns> A new <see cref="DataMap.AutoCompleteResult"/> instance for mocking. </returns>
-        public static AutoCompleteResult AutoCompleteResult(IEnumerable<AutoCompleteResultValue> value = null)
+        public static AutoCompleteResult AutoCompleteResult(IEnumerable<AutoCompleteResultValue> value = default)
         {
-            value ??= new List<AutoCompleteResultValue>();
+            value ??= new ChangeTrackingList<AutoCompleteResultValue>();
 
-            return new AutoCompleteResult(value?.ToList(), serializedAdditionalRawData: null);
+            return new AutoCompleteResult(value.ToList(), additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AutoCompleteResultValue"/>. </summary>
+        /// <summary> The value item of the autocomplete suggest. </summary>
         /// <param name="text"> The completed term or phrase. </param>
         /// <param name="queryPlusText"> The completed search query text. </param>
         /// <returns> A new <see cref="DataMap.AutoCompleteResultValue"/> instance for mocking. </returns>
-        public static AutoCompleteResultValue AutoCompleteResultValue(string text = null, string queryPlusText = null)
+        public static AutoCompleteResultValue AutoCompleteResultValue(string text = default, string queryPlusText = default)
         {
-            return new AutoCompleteResultValue(text, queryPlusText, serializedAdditionalRawData: null);
+            return new AutoCompleteResultValue(text, queryPlusText, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasLineageInfo"/>. </summary>
+        /// <summary> The lineage information. </summary>
         /// <param name="baseEntityGuid"> The GUID of the base entity. </param>
         /// <param name="guidEntityMap"> The GUID entity map. </param>
         /// <param name="widthCounts"> The entity count in specific direction. </param>
@@ -493,12 +1135,12 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="parentRelations"> An array of parentRelations relations. </param>
         /// <param name="relations"> An array of lineage relations. </param>
         /// <returns> A new <see cref="DataMap.AtlasLineageInfo"/> instance for mocking. </returns>
-        public static AtlasLineageInfo AtlasLineageInfo(string baseEntityGuid = null, IReadOnlyDictionary<string, AtlasEntityHeader> guidEntityMap = null, IReadOnlyDictionary<string, IDictionary<string, BinaryData>> widthCounts = null, int? lineageDepth = null, int? lineageWidth = null, int? childrenCount = null, LineageDirection? lineageDirection = null, IEnumerable<ParentRelation> parentRelations = null, IEnumerable<LineageRelation> relations = null)
+        public static AtlasLineageInfo AtlasLineageInfo(string baseEntityGuid = default, IDictionary<string, AtlasEntityHeader> guidEntityMap = default, IDictionary<string, IDictionary<string, BinaryData>> widthCounts = default, int? lineageDepth = default, int? lineageWidth = default, int? childrenCount = default, LineageDirection? lineageDirection = default, IEnumerable<ParentRelation> parentRelations = default, IEnumerable<LineageRelation> relations = default)
         {
-            guidEntityMap ??= new Dictionary<string, AtlasEntityHeader>();
-            widthCounts ??= new Dictionary<string, IDictionary<string, BinaryData>>();
-            parentRelations ??= new List<ParentRelation>();
-            relations ??= new List<LineageRelation>();
+            guidEntityMap ??= new ChangeTrackingDictionary<string, AtlasEntityHeader>();
+            widthCounts ??= new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>();
+            parentRelations ??= new ChangeTrackingList<ParentRelation>();
+            relations ??= new ChangeTrackingList<LineageRelation>();
 
             return new AtlasLineageInfo(
                 baseEntityGuid,
@@ -508,43 +1150,667 @@ namespace Azure.Analytics.Purview.DataMap
                 lineageWidth,
                 childrenCount,
                 lineageDirection,
-                parentRelations?.ToList(),
-                relations?.ToList(),
-                serializedAdditionalRawData: null);
+                parentRelations.ToList(),
+                relations.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.ParentRelation"/>. </summary>
+        /// <summary> The lineage parents relation with GUID of the parent entity and to child entity. </summary>
         /// <param name="childEntityId"> The GUID of child entity. </param>
         /// <param name="relationshipId"> The GUID of relationship. </param>
         /// <param name="parentEntityId"> The GUID of parent entity. </param>
         /// <returns> A new <see cref="DataMap.ParentRelation"/> instance for mocking. </returns>
-        public static ParentRelation ParentRelation(string childEntityId = null, string relationshipId = null, string parentEntityId = null)
+        public static ParentRelation ParentRelation(string childEntityId = default, string relationshipId = default, string parentEntityId = default)
         {
-            return new ParentRelation(childEntityId, relationshipId, parentEntityId, serializedAdditionalRawData: null);
+            return new ParentRelation(childEntityId, relationshipId, parentEntityId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.LineageRelation"/>. </summary>
+        /// <summary> The lineage relation with GUID of the from and to entity. </summary>
         /// <param name="fromEntityId"> The GUID of from-entity. </param>
         /// <param name="relationshipId"> The GUID of relationship. </param>
         /// <param name="toEntityId"> The GUID of to-entity. </param>
         /// <returns> A new <see cref="DataMap.LineageRelation"/> instance for mocking. </returns>
-        public static LineageRelation LineageRelation(string fromEntityId = null, string relationshipId = null, string toEntityId = null)
+        public static LineageRelation LineageRelation(string fromEntityId = default, string relationshipId = default, string toEntityId = default)
         {
-            return new LineageRelation(fromEntityId, relationshipId, toEntityId, serializedAdditionalRawData: null);
+            return new LineageRelation(fromEntityId, relationshipId, toEntityId, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasRelationshipWithExtInfo"/>. </summary>
+        /// <summary> Atlas relationship instance. </summary>
+        /// <param name="attributes"> The attributes of the struct. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="end1"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="end2"> Reference to an object-instance of a type - like entity. </param>
+        /// <param name="guid"> The GUID of the relationship. </param>
+        /// <param name="homeId"> The home ID of the relationship. </param>
+        /// <param name="label"> The label of the relationship. </param>
+        /// <param name="provenanceType"> Used to record the provenance of an instance of an entity or relationship. </param>
+        /// <param name="status"> The enum of relationship status. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the relationship. </param>
+        /// <returns> A new <see cref="DataMap.AtlasRelationship"/> instance for mocking. </returns>
+        public static AtlasRelationship AtlasRelationship(IDictionary<string, BinaryData> attributes = default, string typeName = default, string lastModifiedTS = default, long? createTime = default, string createdBy = default, AtlasObjectId end1 = default, AtlasObjectId end2 = default, string guid = default, string homeId = default, string label = default, int? provenanceType = default, StatusAtlasRelationship? status = default, long? updateTime = default, string updatedBy = default, long? version = default)
+        {
+            attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AtlasRelationship(
+                attributes,
+                typeName,
+                lastModifiedTS,
+                createTime,
+                createdBy,
+                end1,
+                end2,
+                guid,
+                homeId,
+                label,
+                provenanceType,
+                status,
+                updateTime,
+                updatedBy,
+                version,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Reference to an object-instance of a type - like entity. </summary>
+        /// <param name="guid"> The GUID of the object. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="uniqueAttributes"> The unique attributes of the object. </param>
+        /// <returns> A new <see cref="DataMap.AtlasObjectId"/> instance for mocking. </returns>
+        public static AtlasObjectId AtlasObjectId(string guid = default, string typeName = default, IDictionary<string, BinaryData> uniqueAttributes = default)
+        {
+            uniqueAttributes ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AtlasObjectId(guid, typeName, uniqueAttributes, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The relationship with extended information. </summary>
         /// <param name="referredEntities"> The referred entity header. </param>
         /// <param name="relationship"> Atlas relationship instance. </param>
         /// <returns> A new <see cref="DataMap.AtlasRelationshipWithExtInfo"/> instance for mocking. </returns>
-        public static AtlasRelationshipWithExtInfo AtlasRelationshipWithExtInfo(IReadOnlyDictionary<string, AtlasEntityHeader> referredEntities = null, AtlasRelationship relationship = null)
+        public static AtlasRelationshipWithExtInfo AtlasRelationshipWithExtInfo(IDictionary<string, AtlasEntityHeader> referredEntities = default, AtlasRelationship relationship = default)
         {
-            referredEntities ??= new Dictionary<string, AtlasEntityHeader>();
+            referredEntities ??= new ChangeTrackingDictionary<string, AtlasEntityHeader>();
 
-            return new AtlasRelationshipWithExtInfo(referredEntities, relationship, serializedAdditionalRawData: null);
+            return new AtlasRelationshipWithExtInfo(referredEntities, relationship, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasTypeDef"/>. </summary>
+        /// <summary> class that captures details of a struct-type. </summary>
+        /// <param name="category"> The enum of type category. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="dateFormatter"> The date format. </param>
+        /// <param name="description"> The description of the type definition. </param>
+        /// <param name="guid"> The GUID of the type definition. </param>
+        /// <param name="name"> The name of the type definition. </param>
+        /// <param name="options"> The options for the type definition. </param>
+        /// <param name="serviceType"> The service type. </param>
+        /// <param name="typeVersion"> The version of the type. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the record. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="attributeDefs"> An array of attribute definitions. </param>
+        /// <returns> A new <see cref="DataMap.AtlasBusinessMetadataDef"/> instance for mocking. </returns>
+        public static AtlasBusinessMetadataDef AtlasBusinessMetadataDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
+        {
+            options ??= new ChangeTrackingDictionary<string, string>();
+            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+
+            return new AtlasBusinessMetadataDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The date format. </summary>
+        /// <param name="availableLocales"> An array of available locales. </param>
+        /// <param name="calendar"> Calendar. </param>
+        /// <param name="dateInstance"> The date format. </param>
+        /// <param name="dateTimeInstance"> The date format. </param>
+        /// <param name="instance"> The date format. </param>
+        /// <param name="lenient"> Determines the leniency of the date format. </param>
+        /// <param name="numberFormat"> The number format. </param>
+        /// <param name="timeInstance"> The date format. </param>
+        /// <param name="timeZone"> The timezone information. </param>
+        /// <returns> A new <see cref="DataMap.AtlasDateFormat"/> instance for mocking. </returns>
+        public static AtlasDateFormat AtlasDateFormat(IEnumerable<string> availableLocales = default, float? calendar = default, AtlasDateFormat dateInstance = default, AtlasDateFormat dateTimeInstance = default, AtlasDateFormat instance = default, bool? lenient = default, AtlasNumberFormat numberFormat = default, AtlasDateFormat timeInstance = default, AtlasTimeZone timeZone = default)
+        {
+            availableLocales ??= new ChangeTrackingList<string>();
+
+            return new AtlasDateFormat(
+                availableLocales.ToList(),
+                calendar,
+                dateInstance,
+                dateTimeInstance,
+                instance,
+                lenient,
+                numberFormat,
+                timeInstance,
+                timeZone,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The number format. </summary>
+        /// <param name="availableLocales"> The number format. </param>
+        /// <param name="currency"> The currency. </param>
+        /// <param name="currencyInstance"> The number format. </param>
+        /// <param name="groupingUsed"> Determines if grouping is used. </param>
+        /// <param name="instance"> The number format. </param>
+        /// <param name="integerInstance"> The number format. </param>
+        /// <param name="maximumFractionDigits"> The maximum of fraction digits. </param>
+        /// <param name="maximumIntegerDigits"> The maximum of integer digits. </param>
+        /// <param name="minimumFractionDigits"> The minimum of fraction digits. </param>
+        /// <param name="minimumIntegerDigits"> The minimum of integer digits. </param>
+        /// <param name="numberInstance"> The number format. </param>
+        /// <param name="parseIntegerOnly"> Determines if only integer is parsed. </param>
+        /// <param name="percentInstance"> The number format. </param>
+        /// <param name="roundingMode"> The enum of rounding mode. </param>
+        /// <returns> A new <see cref="DataMap.AtlasNumberFormat"/> instance for mocking. </returns>
+        public static AtlasNumberFormat AtlasNumberFormat(IEnumerable<string> availableLocales = default, string currency = default, AtlasNumberFormat currencyInstance = default, bool? groupingUsed = default, AtlasNumberFormat instance = default, AtlasNumberFormat integerInstance = default, int? maximumFractionDigits = default, int? maximumIntegerDigits = default, int? minimumFractionDigits = default, int? minimumIntegerDigits = default, AtlasNumberFormat numberInstance = default, bool? parseIntegerOnly = default, AtlasNumberFormat percentInstance = default, RoundingMode? roundingMode = default)
+        {
+            availableLocales ??= new ChangeTrackingList<string>();
+
+            return new AtlasNumberFormat(
+                availableLocales.ToList(),
+                currency,
+                currencyInstance,
+                groupingUsed,
+                instance,
+                integerInstance,
+                maximumFractionDigits,
+                maximumIntegerDigits,
+                minimumFractionDigits,
+                minimumIntegerDigits,
+                numberInstance,
+                parseIntegerOnly,
+                percentInstance,
+                roundingMode,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The timezone information. </summary>
+        /// <param name="dstSavings"> The value of the daylight saving time. </param>
+        /// <param name="id"> The ID of the timezone. </param>
+        /// <param name="availableIds"> An array of available IDs. </param>
+        /// <param name="default"> The timezone information. </param>
+        /// <param name="displayName"> The display name of the timezone. </param>
+        /// <param name="rawOffset"> The raw offset of the timezone. </param>
+        /// <returns> A new <see cref="DataMap.AtlasTimeZone"/> instance for mocking. </returns>
+        public static AtlasTimeZone AtlasTimeZone(int? dstSavings = default, string id = default, IEnumerable<string> availableIds = default, AtlasTimeZone @default = default, string displayName = default, int? rawOffset = default)
+        {
+            availableIds ??= new ChangeTrackingList<string>();
+
+            return new AtlasTimeZone(
+                dstSavings,
+                id,
+                availableIds.ToList(),
+                @default,
+                displayName,
+                rawOffset,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> class that captures details of a struct-attribute. </summary>
+        /// <param name="cardinality"> single-valued attribute or multi-valued attribute. </param>
+        /// <param name="constraints"> An array of constraints. </param>
+        /// <param name="defaultValue"> The default value of the attribute. </param>
+        /// <param name="description"> The description of the attribute. </param>
+        /// <param name="includeInNotification"> Determines if it is included in notification. </param>
+        /// <param name="isIndexable"> Determines if it is indexable. </param>
+        /// <param name="isOptional"> Determines if it is optional. </param>
+        /// <param name="isUnique"> Determines if it unique. </param>
+        /// <param name="name"> The name of the attribute. </param>
+        /// <param name="options"> The options for the attribute. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="valuesMaxCount"> The maximum count of the values. </param>
+        /// <param name="valuesMinCount"> The minimum count of the values. </param>
+        /// <returns> A new <see cref="DataMap.AtlasAttributeDef"/> instance for mocking. </returns>
+        public static AtlasAttributeDef AtlasAttributeDef(CardinalityValue? cardinality = default, IEnumerable<AtlasConstraintDef> constraints = default, string defaultValue = default, string description = default, bool? includeInNotification = default, bool? isIndexable = default, bool? isOptional = default, bool? isUnique = default, string name = default, IDictionary<string, string> options = default, string typeName = default, int? valuesMaxCount = default, int? valuesMinCount = default)
+        {
+            constraints ??= new ChangeTrackingList<AtlasConstraintDef>();
+            options ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AtlasAttributeDef(
+                cardinality,
+                constraints.ToList(),
+                defaultValue,
+                description,
+                includeInNotification,
+                isIndexable,
+                isOptional,
+                isUnique,
+                name,
+                options,
+                typeName,
+                valuesMaxCount,
+                valuesMinCount,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> class that captures details of a constraint. </summary>
+        /// <param name="params"> The parameters of the constraint definition. </param>
+        /// <param name="type"> The type of the constraint. </param>
+        /// <returns> A new <see cref="DataMap.AtlasConstraintDef"/> instance for mocking. </returns>
+        public static AtlasConstraintDef AtlasConstraintDef(IDictionary<string, BinaryData> @params = default, string @type = default)
+        {
+            @params ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new AtlasConstraintDef(@params, @type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> class that captures details of a classification-type. </summary>
+        /// <param name="category"> The enum of type category. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="dateFormatter"> The date format. </param>
+        /// <param name="description"> The description of the type definition. </param>
+        /// <param name="guid"> The GUID of the type definition. </param>
+        /// <param name="name"> The name of the type definition. </param>
+        /// <param name="options"> The options for the type definition. </param>
+        /// <param name="serviceType"> The service type. </param>
+        /// <param name="typeVersion"> The version of the type. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the record. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="attributeDefs"> An array of attribute definitions. </param>
+        /// <param name="entityTypes">
+        /// Specifying a list of entityType names in the classificationDef, ensures that
+        /// classifications can
+        /// only be applied to those entityTypes.
+        /// 
+        /// Any subtypes of the entity types inherit the restriction.
+        /// 
+        /// Any classificationDef subtypes inherit the parents entityTypes restrictions.
+        /// 
+        /// Any classificationDef subtypes can further restrict the parents entityTypes
+        /// restrictions by specifying a subset of the entityTypes.
+        /// 
+        /// An empty entityTypes list when there are no parent restrictions means there are no
+        /// restrictions.
+        /// 
+        /// An empty entityTypes list when there are parent
+        /// restrictions means that the subtype picks up the parents
+        /// restrictions.
+        /// 
+        /// If a list of entityTypes are supplied, where one inherits
+        /// from another, this will be rejected. This should encourage cleaner
+        /// classificationsDefs.
+        /// 
+        /// </param>
+        /// <param name="subTypes"> An array of sub types. </param>
+        /// <param name="superTypes"> An array of super types. </param>
+        /// <returns> A new <see cref="DataMap.AtlasClassificationDef"/> instance for mocking. </returns>
+        public static AtlasClassificationDef AtlasClassificationDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default, IEnumerable<string> entityTypes = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default)
+        {
+            options ??= new ChangeTrackingDictionary<string, string>();
+            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            entityTypes ??= new ChangeTrackingList<string>();
+            subTypes ??= new ChangeTrackingList<string>();
+            superTypes ??= new ChangeTrackingList<string>();
+
+            return new AtlasClassificationDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs.ToList(),
+                entityTypes.ToList(),
+                subTypes.ToList(),
+                superTypes.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> class that captures details of a entity-type. </summary>
+        /// <param name="category"> The enum of type category. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="dateFormatter"> The date format. </param>
+        /// <param name="description"> The description of the type definition. </param>
+        /// <param name="guid"> The GUID of the type definition. </param>
+        /// <param name="name"> The name of the type definition. </param>
+        /// <param name="options"> The options for the type definition. </param>
+        /// <param name="serviceType"> The service type. </param>
+        /// <param name="typeVersion"> The version of the type. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the record. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="attributeDefs"> An array of attribute definitions. </param>
+        /// <param name="subTypes"> An array of sub types. </param>
+        /// <param name="superTypes"> An array of super types. </param>
+        /// <param name="relationshipAttributeDefs"> An array of relationship attributes. </param>
+        /// <returns> A new <see cref="DataMap.AtlasEntityDef"/> instance for mocking. </returns>
+        public static AtlasEntityDef AtlasEntityDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default, IEnumerable<AtlasRelationshipAttributeDef> relationshipAttributeDefs = default)
+        {
+            options ??= new ChangeTrackingDictionary<string, string>();
+            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+            subTypes ??= new ChangeTrackingList<string>();
+            superTypes ??= new ChangeTrackingList<string>();
+            relationshipAttributeDefs ??= new ChangeTrackingList<AtlasRelationshipAttributeDef>();
+
+            return new AtlasEntityDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs.ToList(),
+                subTypes.ToList(),
+                superTypes.ToList(),
+                relationshipAttributeDefs.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The relationshipEndDef represents an end of the relationship. The end of the
+        /// relationship is defined by a type, an
+        /// attribute name, cardinality and whether
+        /// it  is the container end of the relationship.
+        /// </summary>
+        /// <param name="cardinality"> single-valued attribute or multi-valued attribute. </param>
+        /// <param name="constraints"> An array of constraints. </param>
+        /// <param name="defaultValue"> The default value of the attribute. </param>
+        /// <param name="description"> The description of the attribute. </param>
+        /// <param name="includeInNotification"> Determines if it is included in notification. </param>
+        /// <param name="isIndexable"> Determines if it is indexable. </param>
+        /// <param name="isOptional"> Determines if it is optional. </param>
+        /// <param name="isUnique"> Determines if it unique. </param>
+        /// <param name="name"> The name of the attribute. </param>
+        /// <param name="options"> The options for the attribute. </param>
+        /// <param name="typeName"> The name of the type. </param>
+        /// <param name="valuesMaxCount"> The maximum count of the values. </param>
+        /// <param name="valuesMinCount"> The minimum count of the values. </param>
+        /// <param name="isLegacyAttribute"> Determines if it is a legacy attribute. </param>
+        /// <param name="relationshipTypeName"> The name of the relationship type. </param>
+        /// <returns> A new <see cref="DataMap.AtlasRelationshipAttributeDef"/> instance for mocking. </returns>
+        public static AtlasRelationshipAttributeDef AtlasRelationshipAttributeDef(CardinalityValue? cardinality = default, IEnumerable<AtlasConstraintDef> constraints = default, string defaultValue = default, string description = default, bool? includeInNotification = default, bool? isIndexable = default, bool? isOptional = default, bool? isUnique = default, string name = default, IDictionary<string, string> options = default, string typeName = default, int? valuesMaxCount = default, int? valuesMinCount = default, bool? isLegacyAttribute = default, string relationshipTypeName = default)
+        {
+            constraints ??= new ChangeTrackingList<AtlasConstraintDef>();
+            options ??= new ChangeTrackingDictionary<string, string>();
+
+            return new AtlasRelationshipAttributeDef(
+                cardinality,
+                constraints.ToList(),
+                defaultValue,
+                description,
+                includeInNotification,
+                isIndexable,
+                isOptional,
+                isUnique,
+                name,
+                options,
+                typeName,
+                valuesMaxCount,
+                valuesMinCount,
+                isLegacyAttribute,
+                relationshipTypeName,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> class that captures details of an enum-type. </summary>
+        /// <param name="category"> The enum of type category. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="dateFormatter"> The date format. </param>
+        /// <param name="description"> The description of the type definition. </param>
+        /// <param name="guid"> The GUID of the type definition. </param>
+        /// <param name="name"> The name of the type definition. </param>
+        /// <param name="options"> The options for the type definition. </param>
+        /// <param name="serviceType"> The service type. </param>
+        /// <param name="typeVersion"> The version of the type. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the record. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="defaultValue"> The default value. </param>
+        /// <param name="elementDefs"> An array of enum element definitions. </param>
+        /// <returns> A new <see cref="DataMap.AtlasEnumDef"/> instance for mocking. </returns>
+        public static AtlasEnumDef AtlasEnumDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, string defaultValue = default, IEnumerable<AtlasEnumElementDef> elementDefs = default)
+        {
+            options ??= new ChangeTrackingDictionary<string, string>();
+            elementDefs ??= new ChangeTrackingList<AtlasEnumElementDef>();
+
+            return new AtlasEnumDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                defaultValue,
+                elementDefs.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> class that captures details of an enum-element. </summary>
+        /// <param name="description"> The description of the enum element definition. </param>
+        /// <param name="ordinal"> The ordinal of the enum element definition. </param>
+        /// <param name="value"> The value of the enum element definition. </param>
+        /// <returns> A new <see cref="DataMap.AtlasEnumElementDef"/> instance for mocking. </returns>
+        public static AtlasEnumElementDef AtlasEnumElementDef(string description = default, int? ordinal = default, string value = default)
+        {
+            return new AtlasEnumElementDef(description, ordinal, value, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// AtlasRelationshipDef is a TypeDef that defines a relationship.
+        /// As with other typeDefs the AtlasRelationshipDef has a name. Once created the
+        /// RelationshipDef has a guid.
+        /// The name and the guid are the 2 ways that the
+        /// RelationshipDef is identified.
+        /// RelationshipDefs have 2 ends, each of which
+        /// specify cardinality, an EntityDef type name and name and optionally
+        /// whether the
+        /// end is a container.
+        /// RelationshipDefs can have AttributeDefs - though only
+        /// primitive types are allowed. 
+        /// RelationshipDefs have a relationshipCategory
+        /// specifying the UML type of relationship required 
+        /// The way EntityDefs and
+        /// RelationshipDefs are intended to be used is that EntityDefs will define
+        /// AttributeDefs these AttributeDefs
+        /// will not specify an EntityDef type name as
+        /// their types.
+        /// RelationshipDefs introduce new attributes to the entity
+        /// instances. For example
+        /// EntityDef A might have attributes attr1,attr2,attr3
+        /// 
+        /// EntityDef B might have attributes attr4,attr5,attr6 
+        /// RelationshipDef
+        /// AtoB might define 2 ends 
+        /// 
+        /// end1:  type A, name attr7
+        /// end2:  type B, name attr8 
+        /// 
+        /// When an instance of EntityDef A is created, it
+        /// will have attributes attr1,attr2,attr3,attr7 
+        /// When an instance of EntityDef
+        /// B is created, it will have attributes attr4,attr5,attr6,attr8
+        /// 
+        /// In this way
+        /// relationshipDefs can be authored separately from entityDefs and can inject
+        /// relationship attributes into
+        /// the entity instances
+        /// </summary>
+        /// <param name="category"> The enum of type category. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="dateFormatter"> The date format. </param>
+        /// <param name="description"> The description of the type definition. </param>
+        /// <param name="guid"> The GUID of the type definition. </param>
+        /// <param name="name"> The name of the type definition. </param>
+        /// <param name="options"> The options for the type definition. </param>
+        /// <param name="serviceType"> The service type. </param>
+        /// <param name="typeVersion"> The version of the type. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the record. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="attributeDefs"> An array of attribute definitions. </param>
+        /// <param name="endDef1">
+        /// The relationshipEndDef represents an end of the relationship. The end of the
+        /// relationship is defined by a type, an
+        /// attribute name, cardinality and whether
+        /// it  is the container end of the relationship.
+        /// </param>
+        /// <param name="endDef2">
+        /// The relationshipEndDef represents an end of the relationship. The end of the
+        /// relationship is defined by a type, an
+        /// attribute name, cardinality and whether
+        /// it  is the container end of the relationship.
+        /// </param>
+        /// <param name="relationshipCategory">
+        /// The Relationship category determines the style of relationship around
+        /// containment and lifecycle.
+        /// UML terminology is used for the values.
+        /// ASSOCIATION is a relationship with no containment. 
+        /// COMPOSITION and AGGREGATION are containment relationships.
+        /// The difference being in the lifecycles of the container and its children. 
+        /// In the COMPOSITION case, the children cannot exist without the container.
+        /// For AGGREGATION, the life cycles of the container and children are totally independent.
+        /// </param>
+        /// <param name="relationshipLabel"> The label of the relationship. </param>
+        /// <returns> A new <see cref="DataMap.AtlasRelationshipDef"/> instance for mocking. </returns>
+        public static AtlasRelationshipDef AtlasRelationshipDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default, AtlasRelationshipEndDef endDef1 = default, AtlasRelationshipEndDef endDef2 = default, RelationshipCategory? relationshipCategory = default, string relationshipLabel = default)
+        {
+            options ??= new ChangeTrackingDictionary<string, string>();
+            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+
+            return new AtlasRelationshipDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs.ToList(),
+                endDef1,
+                endDef2,
+                relationshipCategory,
+                relationshipLabel,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// The relationshipEndDef represents an end of the relationship. The end of the
+        /// relationship is defined by a type, an
+        /// attribute name, cardinality and whether
+        /// it  is the container end of the relationship.
+        /// </summary>
+        /// <param name="cardinality"> single-valued attribute or multi-valued attribute. </param>
+        /// <param name="description"> The description of the relationship end definition. </param>
+        /// <param name="isContainer"> Determines if it is container. </param>
+        /// <param name="isLegacyAttribute"> Determines if it is a legacy attribute. </param>
+        /// <param name="name"> The name of the relationship end definition. </param>
+        /// <param name="type"> The type of the relationship end. </param>
+        /// <returns> A new <see cref="DataMap.AtlasRelationshipEndDef"/> instance for mocking. </returns>
+        public static AtlasRelationshipEndDef AtlasRelationshipEndDef(CardinalityValue? cardinality = default, string description = default, bool? isContainer = default, bool? isLegacyAttribute = default, string name = default, string @type = default)
+        {
+            return new AtlasRelationshipEndDef(
+                cardinality,
+                description,
+                isContainer,
+                isLegacyAttribute,
+                name,
+                @type,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> class that captures details of a struct-type. </summary>
+        /// <param name="category"> The enum of type category. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="dateFormatter"> The date format. </param>
+        /// <param name="description"> The description of the type definition. </param>
+        /// <param name="guid"> The GUID of the type definition. </param>
+        /// <param name="name"> The name of the type definition. </param>
+        /// <param name="options"> The options for the type definition. </param>
+        /// <param name="serviceType"> The service type. </param>
+        /// <param name="typeVersion"> The version of the type. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the record. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="attributeDefs"> An array of attribute definitions. </param>
+        /// <returns> A new <see cref="DataMap.AtlasStructDef"/> instance for mocking. </returns>
+        public static AtlasStructDef AtlasStructDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
+        {
+            options ??= new ChangeTrackingDictionary<string, string>();
+            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+
+            return new AtlasStructDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The definitions of type. </summary>
         /// <param name="category"> The enum of type category. </param>
         /// <param name="createTime"> The created time of the record. </param>
         /// <param name="createdBy"> The user who created the record. </param>
@@ -563,25 +1829,25 @@ namespace Azure.Analytics.Purview.DataMap
         /// Specifying a list of entityType names in the classificationDef, ensures that
         /// classifications can
         /// only be applied to those entityTypes.
-        ///
+        /// 
         /// Any subtypes of the entity types inherit the restriction.
-        ///
+        /// 
         /// Any classificationDef subtypes inherit the parents entityTypes restrictions.
-        ///
+        /// 
         /// Any classificationDef subtypes can further restrict the parents entityTypes
         /// restrictions by specifying a subset of the entityTypes.
-        ///
+        /// 
         /// An empty entityTypes list when there are no parent restrictions means there are no
         /// restrictions.
-        ///
+        /// 
         /// An empty entityTypes list when there are parent
         /// restrictions means that the subtype picks up the parents
         /// restrictions.
-        ///
+        /// 
         /// If a list of entityTypes are supplied, where one inherits
         /// from another, this will be rejected. This should encourage cleaner
         /// classificationsDefs.
-        ///
+        /// 
         /// </param>
         /// <param name="subTypes"> An array of sub types. </param>
         /// <param name="superTypes"> An array of super types. </param>
@@ -604,26 +1870,26 @@ namespace Azure.Analytics.Purview.DataMap
         /// The Relationship category determines the style of relationship around
         /// containment and lifecycle.
         /// UML terminology is used for the values.
-        ///
-        /// ASSOCIATION is a relationship with no containment.
+        /// 
+        /// ASSOCIATION is a relationship with no containment. 
         /// COMPOSITION and AGGREGATION are containment relationships.
-        ///
-        /// The difference being in the lifecycles of the container and its children.
-        /// In the COMPOSITION case, the children cannot exist without the container.
+        /// 
+        /// The difference being in the lifecycles of the container and its children. 
+        /// In the COMPOSITION case, the children cannot exist without the container. 
         /// For AGGREGATION, the life cycles of the container and children are totally independent.
         /// </param>
         /// <param name="relationshipLabel"> The label of the relationship. </param>
         /// <param name="attributeDefs"> An array of attribute definitions. </param>
         /// <returns> A new <see cref="DataMap.AtlasTypeDef"/> instance for mocking. </returns>
-        public static AtlasTypeDef AtlasTypeDef(TypeCategory? category = null, long? createTime = null, string createdBy = null, AtlasDateFormat dateFormatter = null, string description = null, string guid = null, string name = null, IReadOnlyDictionary<string, string> options = null, string serviceType = null, string typeVersion = null, long? updateTime = null, string updatedBy = null, long? version = null, string lastModifiedTS = null, IEnumerable<string> entityTypes = null, IEnumerable<string> subTypes = null, IEnumerable<string> superTypes = null, IEnumerable<AtlasRelationshipAttributeDef> relationshipAttributeDefs = null, string defaultValue = null, IEnumerable<AtlasEnumElementDef> elementDefs = null, AtlasRelationshipEndDef endDef1 = null, AtlasRelationshipEndDef endDef2 = null, RelationshipCategory? relationshipCategory = null, string relationshipLabel = null, IEnumerable<AtlasAttributeDef> attributeDefs = null)
+        public static AtlasTypeDef AtlasTypeDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<string> entityTypes = default, IEnumerable<string> subTypes = default, IEnumerable<string> superTypes = default, IEnumerable<AtlasRelationshipAttributeDef> relationshipAttributeDefs = default, string defaultValue = default, IEnumerable<AtlasEnumElementDef> elementDefs = default, AtlasRelationshipEndDef endDef1 = default, AtlasRelationshipEndDef endDef2 = default, RelationshipCategory? relationshipCategory = default, string relationshipLabel = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
         {
-            options ??= new Dictionary<string, string>();
-            entityTypes ??= new List<string>();
-            subTypes ??= new List<string>();
-            superTypes ??= new List<string>();
-            relationshipAttributeDefs ??= new List<AtlasRelationshipAttributeDef>();
-            elementDefs ??= new List<AtlasEnumElementDef>();
-            attributeDefs ??= new List<AtlasAttributeDef>();
+            options ??= new ChangeTrackingDictionary<string, string>();
+            entityTypes ??= new ChangeTrackingList<string>();
+            subTypes ??= new ChangeTrackingList<string>();
+            superTypes ??= new ChangeTrackingList<string>();
+            relationshipAttributeDefs ??= new ChangeTrackingList<AtlasRelationshipAttributeDef>();
+            elementDefs ??= new ChangeTrackingList<AtlasEnumElementDef>();
+            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
 
             return new AtlasTypeDef(
                 category,
@@ -640,28 +1906,99 @@ namespace Azure.Analytics.Purview.DataMap
                 updatedBy,
                 version,
                 lastModifiedTS,
-                entityTypes?.ToList(),
-                subTypes?.ToList(),
-                superTypes?.ToList(),
-                relationshipAttributeDefs?.ToList(),
+                entityTypes.ToList(),
+                subTypes.ToList(),
+                superTypes.ToList(),
+                relationshipAttributeDefs.ToList(),
                 defaultValue,
-                elementDefs?.ToList(),
+                elementDefs.ToList(),
                 endDef1,
                 endDef2,
                 relationshipCategory,
                 relationshipLabel,
-                attributeDefs?.ToList(),
-                serializedAdditionalRawData: null);
+                attributeDefs.ToList(),
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataMap.AtlasTypeDefHeader"/>. </summary>
+        /// <summary> The definitions of types. </summary>
+        /// <param name="businessMetadataDefs"> businessMetadataDefs. </param>
+        /// <param name="classificationDefs"> An array of classification definitions. </param>
+        /// <param name="entityDefs"> An array of entity definitions. </param>
+        /// <param name="enumDefs"> An array of enum definitions. </param>
+        /// <param name="relationshipDefs"> An array of relationship definitions. </param>
+        /// <param name="structDefs"> An array of struct definitions. </param>
+        /// <param name="termTemplateDefs"> An array of term template definitions. </param>
+        /// <returns> A new <see cref="DataMap.AtlasTypesDef"/> instance for mocking. </returns>
+        public static AtlasTypesDef AtlasTypesDef(IEnumerable<AtlasBusinessMetadataDef> businessMetadataDefs = default, IEnumerable<AtlasClassificationDef> classificationDefs = default, IEnumerable<AtlasEntityDef> entityDefs = default, IEnumerable<AtlasEnumDef> enumDefs = default, IEnumerable<AtlasRelationshipDef> relationshipDefs = default, IEnumerable<AtlasStructDef> structDefs = default, IEnumerable<TermTemplateDef> termTemplateDefs = default)
+        {
+            businessMetadataDefs ??= new ChangeTrackingList<AtlasBusinessMetadataDef>();
+            classificationDefs ??= new ChangeTrackingList<AtlasClassificationDef>();
+            entityDefs ??= new ChangeTrackingList<AtlasEntityDef>();
+            enumDefs ??= new ChangeTrackingList<AtlasEnumDef>();
+            relationshipDefs ??= new ChangeTrackingList<AtlasRelationshipDef>();
+            structDefs ??= new ChangeTrackingList<AtlasStructDef>();
+            termTemplateDefs ??= new ChangeTrackingList<TermTemplateDef>();
+
+            return new AtlasTypesDef(
+                businessMetadataDefs.ToList(),
+                classificationDefs.ToList(),
+                entityDefs.ToList(),
+                enumDefs.ToList(),
+                relationshipDefs.ToList(),
+                structDefs.ToList(),
+                termTemplateDefs.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Term template definition for glossary term. </summary>
+        /// <param name="category"> The enum of type category. </param>
+        /// <param name="createTime"> The created time of the record. </param>
+        /// <param name="createdBy"> The user who created the record. </param>
+        /// <param name="dateFormatter"> The date format. </param>
+        /// <param name="description"> The description of the type definition. </param>
+        /// <param name="guid"> The GUID of the type definition. </param>
+        /// <param name="name"> The name of the type definition. </param>
+        /// <param name="options"> The options for the type definition. </param>
+        /// <param name="serviceType"> The service type. </param>
+        /// <param name="typeVersion"> The version of the type. </param>
+        /// <param name="updateTime"> The update time of the record. </param>
+        /// <param name="updatedBy"> The user who updated the record. </param>
+        /// <param name="version"> The version of the record. </param>
+        /// <param name="lastModifiedTS"> ETag for concurrency control. </param>
+        /// <param name="attributeDefs"> An array of attribute definitions. </param>
+        /// <returns> A new <see cref="DataMap.TermTemplateDef"/> instance for mocking. </returns>
+        public static TermTemplateDef TermTemplateDef(TypeCategory? category = default, long? createTime = default, string createdBy = default, AtlasDateFormat dateFormatter = default, string description = default, string guid = default, string name = default, IDictionary<string, string> options = default, string serviceType = default, string typeVersion = default, long? updateTime = default, string updatedBy = default, long? version = default, string lastModifiedTS = default, IEnumerable<AtlasAttributeDef> attributeDefs = default)
+        {
+            options ??= new ChangeTrackingDictionary<string, string>();
+            attributeDefs ??= new ChangeTrackingList<AtlasAttributeDef>();
+
+            return new TermTemplateDef(
+                category,
+                createTime,
+                createdBy,
+                dateFormatter,
+                description,
+                guid,
+                name,
+                options,
+                serviceType,
+                typeVersion,
+                updateTime,
+                updatedBy,
+                version,
+                lastModifiedTS,
+                attributeDefs.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The basic information of the type definition. </summary>
         /// <param name="category"> The enum of type category. </param>
         /// <param name="guid"> The GUID of the type definition. </param>
         /// <param name="name"> The name of the type definition. </param>
         /// <returns> A new <see cref="DataMap.AtlasTypeDefHeader"/> instance for mocking. </returns>
-        public static AtlasTypeDefHeader AtlasTypeDefHeader(TypeCategory? category = null, string guid = null, string name = null)
+        public static AtlasTypeDefHeader AtlasTypeDefHeader(TypeCategory? category = default, string guid = default, string name = default)
         {
-            return new AtlasTypeDefHeader(category, guid, name, serializedAdditionalRawData: null);
+            return new AtlasTypeDefHeader(category, guid, name, additionalBinaryDataProperties: null);
         }
     }
 }

@@ -60,7 +60,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |
 | openai | Azure.AI.OpenAI | ✅ |
-| purview | Azure.Analytics.Purview.DataMap |  |
+| purview | Azure.Analytics.Purview.DataMap | ✅ |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | template | Azure.Template | ✅ |
 | translation | Azure.AI.Translation.Document |  |
