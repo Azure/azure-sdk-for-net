@@ -42,5 +42,8 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public Uri OperationCallbackUri { get; set; }
+
+        /// <summary> DTMF tones to send as part of the call for a participant. </summary>
+        public string PostDialTones { get; set; }
     }
 }

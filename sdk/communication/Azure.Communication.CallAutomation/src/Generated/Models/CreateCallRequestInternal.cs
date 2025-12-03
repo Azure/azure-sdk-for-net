@@ -43,7 +43,8 @@ namespace Azure.Communication.CallAutomation
         /// <param name="teamsAppSource"> The identifier of the source for creating call with Teams resource account ID. </param>
         /// <param name="enableLoopbackAudio"> Enables loopback audio functionality for the call. </param>
         /// <param name="dtmfOptions"> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </param>
-        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, MicrosoftTeamsAppIdentifierModel teamsAppSource, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions)
+        /// <param name="postDialTones"> DTMF tones to send as part of the call for a participant. </param>
+        internal CreateCallRequestInternal(IList<CommunicationIdentifierModel> targets, PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationUserIdentifierModel source, string operationContext, string callbackUri, CallIntelligenceOptionsInternal callIntelligenceOptions, TranscriptionOptionsInternal transcriptionConfiguration, MediaStreamingOptionsInternal mediaStreamingConfiguration, MicrosoftTeamsAppIdentifierModel teamsAppSource, bool? enableLoopbackAudio, DtmfConfigurationOptionsInternal dtmfOptions, string postDialTones)
         {
             Targets = targets;
             SourceCallerIdNumber = sourceCallerIdNumber;
@@ -57,6 +58,7 @@ namespace Azure.Communication.CallAutomation
             TeamsAppSource = teamsAppSource;
             EnableLoopbackAudio = enableLoopbackAudio;
             DtmfOptions = dtmfOptions;
+            PostDialTones = postDialTones;
         }
 
         /// <summary> The targets of the call. </summary>
@@ -86,5 +88,7 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableLoopbackAudio { get; set; }
         /// <summary> DTMF (Dual-Tone Multi-Frequency) configuration for the call. </summary>
         public DtmfConfigurationOptionsInternal DtmfOptions { get; set; }
+        /// <summary> DTMF tones to send as part of the call for a participant. </summary>
+        public string PostDialTones { get; set; }
     }
 }

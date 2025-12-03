@@ -737,6 +737,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
+            request.PostDialTones = options.PostDialTones;
             request.EnableLoopbackAudio = options.EnableLoopbackAudio;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
@@ -773,6 +774,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             request.OperationContext = options.OperationContext;
+            request.PostDialTones = options.PostDialTones;
             request.EnableLoopbackAudio = options.EnableLoopbackAudio;
             request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
@@ -829,13 +831,14 @@ namespace Azure.Communication.CallAutomation
         {
             return configuration == default
                 ? default
-                : new MediaStreamingOptionsInternal(configuration.TransportUri.AbsoluteUri, configuration.MediaStreamingTransport,
+                : new MediaStreamingOptionsInternal(configuration.MediaStreamingTransport,
                 configuration.MediaStreamingContent, configuration.MediaStreamingAudioChannel)
                 {
-                   StartMediaStreaming = configuration.StartMediaStreaming,
-                   EnableBidirectional = configuration.EnableBidirectional,
-                   AudioFormat = configuration.AudioFormat,
-                   EnableDtmfTones = configuration.EnableDtmfTones
+                    StartMediaStreaming = configuration.StartMediaStreaming,
+                    EnableBidirectional = configuration.EnableBidirectional,
+                    AudioFormat = configuration.AudioFormat,
+                    TransportUrl = configuration.TransportUri.AbsoluteUri,
+                    EnableDtmfTones = configuration.EnableDtmfTones
                 };
         }
 
