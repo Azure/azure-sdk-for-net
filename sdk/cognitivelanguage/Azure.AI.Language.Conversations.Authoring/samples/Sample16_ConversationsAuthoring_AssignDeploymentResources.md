@@ -23,12 +23,12 @@ var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Act
-Operation sampleOperation = sampleProjectClient.AssignDeploymentResources(
+Operation sampleOperation = sampleProjectClient.AssignProjectResources(
     waitUntil: WaitUntil.Started,
     details: sampleAssignDetails
 );
@@ -69,12 +69,12 @@ var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Act
-Operation sampleOperation = await sampleProjectClient.AssignDeploymentResourcesAsync(
+Operation sampleOperation = await sampleProjectClient.AssignProjectResourcesAsync(
     waitUntil: WaitUntil.Started,
     details: sampleAssignDetails
 );

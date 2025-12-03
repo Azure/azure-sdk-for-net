@@ -9,7 +9,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -57,8 +57,8 @@ AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource =
     };
 
 // Create Cognitive Services resource with AOAI linkage
-ConversationAuthoringDeploymentResource assignedResource =
-    new ConversationAuthoringDeploymentResource(
+ConversationAuthoringAssignedProjectResource assignedResource =
+    new ConversationAuthoringAssignedProjectResource(
         resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
         region: "{region}")
     {
@@ -68,7 +68,7 @@ ConversationAuthoringDeploymentResource assignedResource =
 // Set up deployment details with assigned resources
 ConversationAuthoringCreateDeploymentDetails deploymentDetails =
     new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-deploymentDetails.AssignedResources.Add(assignedResource);
+deploymentDetails.AzureResourceIds.Add(assignedResource);
 
 // Get deployment client
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
@@ -125,8 +125,8 @@ AnalyzeConversationAuthoringDataGenerationConnectionInfo assignedAoaiResource =
     };
 
 // Create Cognitive Services resource with AOAI linkage
-ConversationAuthoringDeploymentResource assignedResource =
-    new ConversationAuthoringDeploymentResource(
+ConversationAuthoringAssignedProjectResource assignedResource =
+    new ConversationAuthoringAssignedProjectResource(
         resourceId: "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}",
         region: "{region}")
     {
@@ -136,7 +136,7 @@ ConversationAuthoringDeploymentResource assignedResource =
 // Set up deployment details with assigned resources
 ConversationAuthoringCreateDeploymentDetails deploymentDetails =
     new ConversationAuthoringCreateDeploymentDetails("ModelWithDG");
-deploymentDetails.AssignedResources.Add(assignedResource);
+deploymentDetails.AzureResourceIds.Add(assignedResource);
 
 // Get deployment client
 ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);

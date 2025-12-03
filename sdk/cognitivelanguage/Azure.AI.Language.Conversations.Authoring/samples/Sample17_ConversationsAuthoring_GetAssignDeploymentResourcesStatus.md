@@ -22,12 +22,12 @@ var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Submit assignment operation
-Operation sampleAssignOperation = sampleProjectClient.AssignDeploymentResources(
+Operation sampleAssignOperation = sampleProjectClient.AssignProjectResources(
     waitUntil: WaitUntil.Started,
     details: sampleAssignDetails
 );
@@ -41,7 +41,7 @@ string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
 Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call status API
-Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = sampleProjectClient.GetAssignDeploymentResourcesStatus(sampleJobId);
+Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = sampleProjectClient.GetAssignProjectResourcesStatus(sampleJobId);
 
 Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");
 ```
@@ -61,12 +61,12 @@ var sampleResourceMetadata = new ConversationAuthoringResourceMetadata(
     region: "{region}"
 );
 
-var sampleAssignDetails = new ConversationAuthoringAssignDeploymentResourcesDetails(
+var sampleAssignDetails = new ConversationAuthoringAssignProjectResourcesDetails(
     new List<ConversationAuthoringResourceMetadata> { sampleResourceMetadata }
 );
 
 // Submit assignment operation
-Operation sampleAssignOperation = await sampleProjectClient.AssignDeploymentResourcesAsync(
+Operation sampleAssignOperation = await sampleProjectClient.AssignProjectResourcesAsync(
     waitUntil: WaitUntil.Started,
     details: sampleAssignDetails
 );
@@ -80,7 +80,7 @@ string sampleJobId = new Uri(location).Segments.Last().Split('?')[0];
 Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call status API
-Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse = await sampleProjectClient.GetAssignDeploymentResourcesStatusAsync(sampleJobId);
+Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse = await sampleProjectClient.GetAssignProjectResourcesStatusAsync(sampleJobId);
 
 Assert.IsNotNull(sampleStatusResponse);
 Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.Status}");

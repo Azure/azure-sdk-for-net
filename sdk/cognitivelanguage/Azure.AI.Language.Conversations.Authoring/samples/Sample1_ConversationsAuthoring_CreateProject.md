@@ -9,7 +9,7 @@ To create a `ConversationAnalysisAuthoringClient`, you will need the service end
 ```C# Snippet:CreateAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("{endpoint}");
 AzureKeyCredential credential = new AzureKeyCredential("{api-key}");
-ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+ConversationAnalysisAuthoringClientOptions options = new ConversationAnalysisAuthoringClientOptions(ConversationAnalysisAuthoringClientOptions.ServiceVersion.V2025_11_15_Preview);
 ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
@@ -24,9 +24,9 @@ To create a new project synchronously, call CreateProject on the `ConversationAu
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProject
 string projectName = "{projectName}";
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
+      projectName: projectName,
       language: "en-us"
     )
 {
@@ -34,7 +34,7 @@ ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthorin
     Description = "Project description"
 };
 
-Response response = projectClient.CreateProject(projectData);
+Response response = client.CreateProject(projectName, projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```
@@ -48,6 +48,7 @@ string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
+       projectName: projectName,
       language: "en-us"
     )
 {
@@ -55,7 +56,7 @@ ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthorin
     Description = "Project description"
 };
 
-Response response = await projectClient.CreateProjectAsync(projectData);
+Response response = await client.CreateProjectAsync(projectName, projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```

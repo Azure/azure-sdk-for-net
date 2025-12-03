@@ -16,18 +16,18 @@ string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
 // Define assigned resource ID to be unassigned
-var sampleAssignedResourceIds = new List<string>
+var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
 {
-    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    AzureResourceIds =
+    {
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    }
 };
 
-// Build the unassignment details
-var sampleUnassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(sampleAssignedResourceIds);
-
 // Start the unassign operation
-Operation sampleUnassignOperation = sampleProjectClient.UnassignDeploymentResources(
+Operation sampleUnassignOperation = sampleProjectClient.UnassignProjectResources(
     waitUntil: WaitUntil.Started,
-    details: sampleUnassignDetails
+    details: sampleUnassignIds
 );
 
 Console.WriteLine($"UnassignDeploymentResources initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
@@ -40,8 +40,8 @@ string sampleJobId = sampleUnassignOperation.GetRawResponse().Headers.TryGetValu
 Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call the API to get unassign job status
-Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse =
-    sampleProjectClient.GetUnassignDeploymentResourcesStatus(sampleJobId);
+Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse =
+    sampleProjectClient.GetUnassignProjectResourcesStatus(sampleJobId);
 
 Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
 
@@ -64,18 +64,18 @@ string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
 // Define assigned resource ID to be unassigned
-var sampleAssignedResourceIds = new List<string>
+var sampleUnassignIds = new ConversationAuthoringProjectResourceIds
 {
-    "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    AzureResourceIds =
+    {
+        "/subscriptions/{subscription}/resourceGroups/{resourcegroup}/providers/Microsoft.CognitiveServices/accounts/{sampleAccount}"
+    }
 };
 
-// Build the unassignment details
-var sampleUnassignDetails = new ConversationAuthoringUnassignDeploymentResourcesDetails(sampleAssignedResourceIds);
-
 // Start the unassign operation
-Operation sampleUnassignOperation = await sampleProjectClient.UnassignDeploymentResourcesAsync(
+Operation sampleUnassignOperation = await sampleProjectClient.UnassignProjectResourcesAsync(
     waitUntil: WaitUntil.Started,
-    details: sampleUnassignDetails
+    details: sampleUnassignIds
 );
 
 Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
@@ -88,8 +88,8 @@ string sampleJobId = sampleUnassignOperation.GetRawResponse().Headers.TryGetValu
 Console.WriteLine($"Job ID: {sampleJobId}");
 
 // Call the API to get unassign job status
-Response<ConversationAuthoringDeploymentResourcesState> sampleStatusResponse =
-    await sampleProjectClient.GetUnassignDeploymentResourcesStatusAsync(sampleJobId);
+Response<ConversationAuthoringProjectResourcesState> sampleStatusResponse =
+    await sampleProjectClient.GetUnassignProjectResourcesStatusAsync(sampleJobId);
 
 Console.WriteLine($"Job Status: {sampleStatusResponse.Value.Status}");
 
