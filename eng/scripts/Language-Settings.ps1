@@ -7,8 +7,7 @@ $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/rel
 $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
-. (Join-Path $PSScriptRoot docs Docs-ToC.ps1)
-. (Join-Path $PSScriptRoot .. common scripts SemVer.ps1)
+. "$PSScriptRoot/docs/Docs-ToC.ps1"
 function Get-AllPackageInfoFromRepo($serviceDirectory)
 {
   $allPackageProps = @()
