@@ -1,6 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -18,10 +22,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using System;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests.Listeners
 {

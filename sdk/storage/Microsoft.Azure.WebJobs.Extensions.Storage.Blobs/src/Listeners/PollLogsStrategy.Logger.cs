@@ -17,14 +17,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                    "Log scan for recent blob updates in container '{containerName}' with PollId '{pollId}' found {blobCount} blobs.");
 
             private static readonly Action<ILogger<BlobListener>, string, Exception> _loggingNotEnabledOnTargetAccount =
-               LoggerMessage.Define<string>(LogLevel.Debug, new EventId(400, nameof(LoggingNotEnabledOnTargetAccount)),
-                   "Logging not enabled on target blob storage account, '{targetAccountUri}'");
+               LoggerMessage.Define<string>(LogLevel.Warning, new EventId(400, nameof(LoggingNotEnabledOnTargetAccount)),
+                   "Storage Analytics Logs are not enabled on the target blob storage account: '{targetAccountName}'. See aka.ms/AAywxhb");
 
             public static void ScanBlobLogs(ILogger<BlobListener> logger, string containerName, string pollId, int blobCount) =>
                 _scanBlobLogs(logger, containerName, pollId, blobCount, null);
 
-            public static void LoggingNotEnabledOnTargetAccount(ILogger<BlobListener> logger, string targetAccountUri) =>
-                _loggingNotEnabledOnTargetAccount(logger, targetAccountUri, null);
+            public static void LoggingNotEnabledOnTargetAccount(ILogger<BlobListener> logger, string targetAccountName) =>
+                _loggingNotEnabledOnTargetAccount(logger, targetAccountName, null);
         }
     }
 }

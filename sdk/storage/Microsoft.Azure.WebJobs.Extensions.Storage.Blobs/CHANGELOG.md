@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where the scan will scan the AzureWebJobsStorage even when configuring a target storage account
+- Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
 
 ### Other Changes
 
