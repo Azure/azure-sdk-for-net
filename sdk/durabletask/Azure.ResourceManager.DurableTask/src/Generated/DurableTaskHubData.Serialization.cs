@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DurableTask
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDurableTaskHubData(document.RootElement, options);
                     }
@@ -186,11 +186,10 @@ namespace Azure.ResourceManager.DurableTask
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DurableTaskHubData"/> from. </param>
-        internal static DurableTaskHubData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DurableTaskHubData"/> from. </param>
+        internal static DurableTaskHubData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDurableTaskHubData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

@@ -17,9 +17,23 @@ namespace Azure.Generator.Management.Providers
     internal sealed class MockableArmClientProvider : MockableResourceProvider
     {
         // TODO -- we also need to put operations here when we want to support scope resources/operations https://github.com/Azure/azure-sdk-for-net/issues/51821
-        public MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources)
+        private MockableArmClientProvider(IReadOnlyList<ResourceClientProvider> resources)
             : base(typeof(ArmClient), RequestPathPattern.Tenant, resources, new Dictionary<ResourceClientProvider, IReadOnlyList<ResourceMethod>>(), [])
         {
+        }
+
+        /// <summary>
+        /// Creates a new instance of <see cref="MockableArmClientProvider"/> if there are resources to generate methods for.
+        /// </summary>
+        /// <param name="resources">The resources to generate methods for.</param>
+        /// <returns>A new instance of <see cref="MockableArmClientProvider"/> if there are resources, otherwise null.</returns>
+        public static MockableArmClientProvider? TryCreate(IReadOnlyList<ResourceClientProvider> resources)
+        {
+            if (resources.Count == 0)
+            {
+                return null;
+            }
+            return new MockableArmClientProvider(resources);
         }
 
         protected override MethodProvider[] BuildMethods()

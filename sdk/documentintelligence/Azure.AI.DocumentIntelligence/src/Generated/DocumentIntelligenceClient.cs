@@ -106,19 +106,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAnalyzeBatchResults(string modelId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResults");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(this, modelId, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsCollectionResult(this, modelId, context);
         }
 
         /// <summary>
@@ -137,19 +127,9 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAnalyzeBatchResultsAsync(string modelId, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResults");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-                return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(this, modelId, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResult(this, modelId, context);
         }
 
         /// <summary> List batch document analysis results. </summary>

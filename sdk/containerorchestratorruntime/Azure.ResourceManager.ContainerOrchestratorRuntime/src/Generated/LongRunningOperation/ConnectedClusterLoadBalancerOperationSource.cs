@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
-    internal class ConnectedClusterLoadBalancerOperationSource : IOperationSource<ConnectedClusterLoadBalancerResource>
+    /// <summary></summary>
+    internal partial class ConnectedClusterLoadBalancerOperationSource : IOperationSource<ConnectedClusterLoadBalancerResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ConnectedClusterLoadBalancerOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ConnectedClusterLoadBalancerResource IOperationSource<ConnectedClusterLoadBalancerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ConnectedClusterLoadBalancerData data = ConnectedClusterLoadBalancerData.DeserializeConnectedClusterLoadBalancerData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ConnectedClusterLoadBalancerResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ConnectedClusterLoadBalancerResource> IOperationSource<ConnectedClusterLoadBalancerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterLoadBalancerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
-            return await Task.FromResult(new ConnectedClusterLoadBalancerResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ConnectedClusterLoadBalancerData data = ConnectedClusterLoadBalancerData.DeserializeConnectedClusterLoadBalancerData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConnectedClusterLoadBalancerResource(_client, data);
         }
     }
 }

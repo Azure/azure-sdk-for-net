@@ -56,14 +56,18 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="DiskEncryptionConfiguration"/>. </summary>
+        /// <param name="customerManagedKey"> The Customer Managed Key reference to encrypt the OS Disk. Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </param>
         /// <param name="targets"> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskEncryptionConfiguration(IList<DiskEncryptionTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskEncryptionConfiguration(DiskCustomerManagedKey customerManagedKey, IList<DiskEncryptionTarget> targets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            CustomerManagedKey = customerManagedKey;
             Targets = targets;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The Customer Managed Key reference to encrypt the OS Disk. Customer Managed Key will encrypt OS Disk by EncryptionAtRest, and by default we will encrypt the data disk as well. It can be used only when the pool is configured with an identity and OsDisk is set as one of the targets of DiskEncryption. </summary>
+        public DiskCustomerManagedKey CustomerManagedKey { get; set; }
         /// <summary> The list of disk targets Batch Service will encrypt on the compute node. The list of disk targets Batch Service will encrypt on the compute node. </summary>
         public IList<DiskEncryptionTarget> Targets { get; }
     }

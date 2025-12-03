@@ -53,10 +53,12 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="BatchTaskSchedulingPolicy"/>. </summary>
+        /// <param name="jobDefaultOrder"> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </param>
         /// <param name="nodeFillType"> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchTaskSchedulingPolicy(BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchTaskSchedulingPolicy(BatchJobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            JobDefaultOrder = jobDefaultOrder;
             NodeFillType = nodeFillType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -66,6 +68,8 @@ namespace Azure.Compute.Batch
         {
         }
 
+        /// <summary> The order for scheduling tasks from different jobs with the same priority. If not specified, the default is none. </summary>
+        public BatchJobDefaultOrder? JobDefaultOrder { get; set; }
         /// <summary> How Tasks are distributed across Compute Nodes in a Pool. If not specified, the default is spread. </summary>
         public BatchNodeFillType NodeFillType { get; set; }
     }

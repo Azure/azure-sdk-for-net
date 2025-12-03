@@ -103,15 +103,7 @@ namespace Azure.Compute.Batch.Tests.Samples
                     }
                 };
 
-            BatchCertificateReference[] certificateReferences = new BatchCertificateReference[] {
-                    new BatchCertificateReference("thumbprint","thumbprintAlgorithm")
-                    {
-                        StoreLocation = "storeLocation",
-                        StoreName = "storeName"
-                    }
-            };
-
-            BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(certificateReferences, batchApplicationPackageReferences, metadataItems);
+            BatchPoolReplaceOptions replaceOptions = new BatchPoolReplaceOptions(batchApplicationPackageReferences, metadataItems);
             batchClient.ReplacePoolProperties("poolID", replaceOptions);
             #endregion
         }
@@ -823,95 +815,6 @@ namespace Azure.Compute.Batch.Tests.Samples
             {
                 // do something
             }
-            #endregion
-        }
-
-        public void BatchGetCertificate()
-        {
-            #region Snippet:Batch_Migration_GetCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            BatchCertificate cerCertificateResponse = batchClient.GetCertificate("ThumbprintAlgorithm", "Thumbprint");
-            #endregion
-        }
-
-        public void BatchCreateCertificate()
-        {
-            #region Snippet:Batch_Migration_CreateCerCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-            byte[] certData = File.ReadAllBytes("certPath");
-            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
-            {
-                CertificateFormat = BatchCertificateFormat.Cer,
-                Password = "",
-            };
-
-            Response response = batchClient.CreateCertificate(cerCertificate);
-            #endregion
-        }
-
-        public void BatchCreatePfxCerrtificate()
-        {
-            #region Snippet:Batch_Migration_CreatePfxCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            byte[] certData = File.ReadAllBytes("certPath");
-            BatchCertificate cerCertificate = new BatchCertificate("Thumbprint", "ThumbprintAlgorithm", BinaryData.FromBytes(certData))
-            {
-                CertificateFormat = BatchCertificateFormat.Pfx,
-                Password = "password",
-            };
-
-            Response response = batchClient.CreateCertificate(cerCertificate);
-            #endregion
-        }
-
-        public void BatchListCerrtificate()
-        {
-            #region Snippet:Batch_Migration_ListCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            foreach (BatchCertificate item in batchClient.GetCertificates())
-            {
-                // do something
-            }
-            #endregion
-        }
-
-        public void BatchDeleteCerrtificateOperation()
-        {
-            #region Snippet:Batch_Migration_DeleteCertificate_Operation
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            DeleteCertificateOperation operation = batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-
-            // Optional, wait for operation to complete
-            operation.WaitForCompletion();
-            #endregion
-        }
-
-        public void BatchDeleteCerrtificate()
-        {
-            #region Snippet:Batch_Migration_DeleteCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            batchClient.DeleteCertificate("ThumbprintAlgorithm", "Thumbprint");
-            #endregion
-        }
-
-        public void BatchCancelDeleteCerrtificate()
-        {
-            #region Snippet:Batch_Migration_CancelDeleteCertificate
-            BatchClient batchClient = new BatchClient(
-            new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-            batchClient.CancelCertificateDeletion("ThumbprintAlgorithm", "Thumbprint");
             #endregion
         }
     }
