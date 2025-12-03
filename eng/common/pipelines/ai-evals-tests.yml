@@ -9,10 +9,44 @@ pr:
       - .github/copilot-instructions.md
       - eng/common/instructions/azsdk-tools/**
 
+parameters:
+  - name: EvalProject
+    type: string
+    default: 'tools/azsdk-cli/Azure.Sdk.Tools.Cli.Evaluations'
+  - name: OpenAIEndPoint
+    type: string
+    default: 'https://openai-shared.openai.azure.com/'
+  - name: Model
+    type: string
+    default: 'gpt-5'
+  - name: EvalRepoOwner
+    type: string
+    default: 'Azure'
+  - name: EvalRepoName
+    type: string
+    default: 'azure-sdk-tools'
+  - name: EvalRepoCommit
+    type: string
+    default: 'main'
+  - name: TargetRepoOwner
+    type: string
+    default: ${{ split(variables['Build.Repository.Name'], '/')[0] }}
+  - name: TargetRepoName
+    type: string
+    default: ${{ split(variables['Build.Repository.Name'], '/')[1] }}
+  - name: TargetRepoCommit
+    type: string
+    default: $(Build.SourceVersion)
+
 extends:
   template: /eng/common/pipelines/templates/jobs/ai-eval-job.yml
   parameters:
-    EvalRepoCommit: main
-    TargetRepoOwner: ${{ split(variables['Build.Repository.Name'], '/')[0] }}
-    TargetRepoName: ${{ split(variables['Build.Repository.Name'], '/')[1] }} 
-    TargetRepoCommit: $(Build.SourceVersion)
+    EvalProject: ${{ parameters.EvalProject }}
+    OpenAIEndPoint: ${{ parameters.OpenAIEndPoint }}
+    Model: ${{ parameters.Model }}
+    EvalRepoOwner: ${{ parameters.EvalRepoOwner }}
+    EvalRepoName: ${{ parameters.EvalRepoName }}
+    EvalRepoCommit: ${{ parameters.EvalRepoCommit }}
+    TargetRepoOwner: ${{ parameters.TargetRepoOwner }}
+    TargetRepoName: ${{ parameters.TargetRepoName }}
+    TargetRepoCommit: ${{ parameters.TargetRepoCommit }}

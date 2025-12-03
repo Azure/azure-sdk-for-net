@@ -38,6 +38,7 @@ jobs:
       os: linux
 
     steps:
+    - checkout: none
     - task: UseDotNet@2
       displayName: "Use .NET SDK 9.0.x"
       retryCountOnTaskFailure: 3
