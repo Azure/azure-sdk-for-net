@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             ResourceIdentifier machineId = default;
-            RelayType? relayType = default;
+            VirtualMachineAssignRelayType? relayType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    relayType = new RelayType(property.Value.GetString());
+                    relayType = new VirtualMachineAssignRelayType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

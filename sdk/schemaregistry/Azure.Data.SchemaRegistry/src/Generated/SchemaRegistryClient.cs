@@ -43,17 +43,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetSchemaGroups(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaGroups");
-            scope.Start();
-            try
-            {
-                return new SchemaRegistryClientGetSchemaGroupsCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SchemaRegistryClientGetSchemaGroupsCollectionResult(this, context);
         }
 
         /// <summary>
@@ -69,17 +59,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetSchemaGroupsAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaGroups");
-            scope.Start();
-            try
-            {
-                return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SchemaRegistryClientGetSchemaGroupsAsyncCollectionResult(this, context);
         }
 
         /// <summary> Gets the list of schema groups user is authorized to access. </summary>
@@ -113,17 +93,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetSchemaVersions(string groupName, string schemaName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaVersions");
-            scope.Start();
-            try
-            {
-                return new SchemaRegistryClientGetSchemaVersionsCollectionResult(this, groupName, schemaName, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SchemaRegistryClientGetSchemaVersionsCollectionResult(this, groupName, schemaName, context);
         }
 
         /// <summary>
@@ -141,17 +111,7 @@ namespace Azure.Data.SchemaRegistry
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetSchemaVersionsAsync(string groupName, string schemaName, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SchemaRegistryClient.GetSchemaVersions");
-            scope.Start();
-            try
-            {
-                return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResult(this, groupName, schemaName, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new SchemaRegistryClientGetSchemaVersionsAsyncCollectionResult(this, groupName, schemaName, context);
         }
 
         /// <summary> Gets the list of all versions of one schema. </summary>

@@ -71,7 +71,13 @@ function Invoke-AzBoardsCmd($subCmd, $parameters, $output = $true)
   if ($output) {
     Write-Host $azCmdStr
   }
-  return Invoke-Expression "$azCmdStr" | ConvertFrom-Json -AsHashTable
+  $response =  Invoke-Expression "$azCmdStr" | ConvertFrom-Json -AsHashtable
+
+  if ($LASTEXITCODE -ne 0) {
+    Write-Host "ERROR command failed: $azCmdStr"
+  }
+
+  return $response
 }
 
 function Invoke-Query($fields, $wiql, $output = $true)
@@ -262,6 +268,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $outputCommand = $tr
   $fields += "Custom.Generated"
   $fields += "Custom.RoadmapState"
   $fields += "Microsoft.VSTS.Common.StateChangeDate"
+  $fields += "Custom.SpecProjectPath"
 
   $fieldList = ($fields | ForEach-Object { "[$_]"}) -join ", "
   $query = "SELECT ${fieldList} FROM WorkItems WHERE [Work Item Type] = 'Package'"
@@ -359,6 +366,18 @@ function CreateWorkItemParent($id, $parentId, $oldParentId, $outputCommand = $tr
   Invoke-AzBoardsCmd "work-item relation add" $parameters $outputCommand | Out-Null
 }
 
+function CheckUser($user)
+{
+  $azCmdStr = "az devops user show --user ${user} $($ReleaseDevOpsCommonParameters -join ' ')"
+  Invoke-Expression "$azCmdStr" | Out-Null
+
+  if ($LASTEXITCODE -ne 0) {
+    return $false
+  }
+
+  return $true
+}
+
 function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, $parentId, $relatedId = $null, $outputCommand = $true, $tag = $null)
 {
   $parameters = $ReleaseDevOpsCommonParametersWithProject
@@ -366,7 +385,7 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
   $parameters += "--type", "`"${type}`""
   $parameters += "--iteration", "`"${iteration}`""
   $parameters += "--area", "`"${area}`""
-  if ($assignedTo) {
+  if ($assignedTo -and (CheckUser $assignedTo)) {
     $parameters += "--assigned-to", "`"${assignedTo}`""
   }
   if ($tag)
@@ -388,7 +407,6 @@ function CreateWorkItem($title, $type, $iteration, $area, $fields, $assignedTo, 
 
   Write-Host "Creating work item"
   $workItem = Invoke-AzBoardsCmd "work-item create" $parameters $outputCommand
-  Write-Host $workItem
   $workItemId = $workItem.id
   Write-Host "Created work item [$workItemId]."
   if ($parentId)
@@ -424,7 +442,7 @@ function UpdateWorkItem($id, $fields, $title, $state, $assignedTo, $outputComman
   if ($state) {
     $parameters += "--state", "`"${state}`""
   }
-  if ($assignedTo) {
+  if ($assignedTo -and (CheckUser $assignedTo)) {
     $parameters += "--assigned-to", "`"${assignedTo}`""
   }
   if ($fields) {
@@ -499,6 +517,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $pkgType = $pkg.Type
   $pkgNewLibrary = $pkg.New
   $pkgRepoPath = $pkg.RepoPath
+  $specProjectPath = $pkg.SpecProjectPath
   $serviceName = $pkg.ServiceName
   $title = $lang + " - " + $pkg.DisplayName + " - " + $verMajorMinor
 
@@ -1239,7 +1258,8 @@ function Update-DevOpsReleaseWorkItem {
     [string]$packageNewLibrary = "true",
     [string]$relatedWorkItemId = $null,
     [string]$tag = $null,
-    [bool]$inRelease = $true
+    [bool]$inRelease = $true,
+    [string]$specProjectPath = ""
   )
 
   if (!(Get-Command az -ErrorAction SilentlyContinue)) {
@@ -1263,6 +1283,7 @@ function Update-DevOpsReleaseWorkItem {
     RepoPath = $packageRepoPath
     Type = $packageType
     New = $packageNewLibrary
+    SpecProjectPath = $specProjectPath
   };
 
   if (!$plannedDate) {
@@ -1308,6 +1329,16 @@ function Update-DevOpsReleaseWorkItem {
     $updatedWI = UpdatePackageWorkItemReleaseState -id $workItem.id -state "In Release" -releaseType $releaseType -outputCommand $false
   }
   $updatedWI = UpdatePackageVersions $workItem -plannedVersions $plannedVersions
+
+  if ((!$workItem.fields.ContainsKey('Custom.SpecProjectPath') -and $packageInfo.SpecProjectPath) -or
+      ($workItem.fields.ContainsKey('Custom.SpecProjectPath') -and ($workItem.fields['Custom.SpecProjectPath'] -ne $packageInfo.SpecProjectPath))
+  ) {
+    Write-Host "Updating SpecProjectPath to '$($packageInfo.SpecProjectPath)' for work item [$($workItem.id)]"
+    UpdateWorkItem `
+      -id $workItem.id `
+      -fields "`"Custom.SpecProjectPath=$($packageInfo.SpecProjectPath)`"" `
+      -outputCommand $false
+  }
 
   Write-Host "Release tracking item is at https://dev.azure.com/azure-sdk/Release/_workitems/edit/$($updatedWI.id)/"
   return $true

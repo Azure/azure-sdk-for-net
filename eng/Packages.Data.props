@@ -112,7 +112,7 @@
     <PackageReference Update="Azure.AI.Projects" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
     <PackageReference Update="Azure.Communication.Common" Version="1.4.0" />
-    <PackageReference Update="Azure.Core" Version="1.49.0" />
+    <PackageReference Update="Azure.Core" Version="1.50.0" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.36" />
     <PackageReference Update="Azure.Core.Expressions.DataFactory" Version="1.0.0" />
@@ -124,9 +124,9 @@
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageReference Update="Azure.Messaging.WebPubSub" Version="1.6.0" />
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
-    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0" />
+    <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.5.0" />
     <PackageReference Update="Azure.Monitor.Query.Logs" Version="1.0.0" />
-    <PackageReference Update="Azure.Identity" Version="1.16.0" />
+    <PackageReference Update="Azure.Identity" Version="1.17.1" />
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.7.0" />
@@ -185,9 +185,9 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.7.0" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.5.0" />
-    <PackageReference Update="Microsoft.Identity.Client" Version="4.76.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.76.0" />
-    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.76.0" />
+    <PackageReference Update="Microsoft.Identity.Client" Version="4.78.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.78.0" />
+    <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.78.0" />
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="8.14.0" />
     <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="8.14.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
@@ -195,11 +195,11 @@
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
-    <PackageReference Update="OpenTelemetry" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.1" />
+    <PackageReference Update="OpenTelemetry" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Extensions.Hosting" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.AspNetCore" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.PersistentStorage.FileSystem" Version="1.0.2" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Abstractions" Version="[2.1.1,6.0)" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Features" Version="[2.1.1,6.0)" />
   </ItemGroup>
@@ -213,7 +213,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.OpenAI'))">
-    <PackageReference Update="OpenAI" Version="2.5.0" />
+    <PackageReference Update="OpenAI" Version="2.7.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.Playwright'))">
@@ -332,8 +332,8 @@
   <ItemGroup Condition="('$(IsTestProject)' == 'true') OR ('$(IsTestSupportProject)' == 'true') OR ('$(IsPerfProject)' == 'true') OR ('$(IsStressProject)' == 'true') OR ('$(IsSamplesProject)' == 'true')">
     <PackageReference Update="ApprovalTests" Version="3.0.22" />
     <PackageReference Update="ApprovalUtilities" Version="3.0.22" />
-    <PackageReference Update="Azure.Core" Version="1.49.0" />
-    <PackageReference Update="Azure.Identity" Version="1.16.0" />
+    <PackageReference Update="Azure.Core" Version="1.50.0" />
+    <PackageReference Update="Azure.Identity" Version="1.17.1" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
     <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
@@ -408,6 +408,7 @@
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="5.0.0" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
+    <PackageReference Update="Microsoft.CognitiveServices.Speech"  Version="1.47.0"/>
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.2.2" />
     <PackageReference Update="Microsoft.Extensions.Azure" Version="1.12.0" />
@@ -440,12 +441,12 @@
     <PackageReference Update="NSubstitute" Version="3.1.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.4.2" />
-    <PackageReference Update="OpenTelemetry" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.12.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.12.0-beta.1" />
+    <PackageReference Update="OpenTelemetry" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.14.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.14.0-beta.1" />
     <PackageReference Update="Polly" Version="7.1.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
@@ -485,7 +486,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250930.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20251107.3</UnbrandedGeneratorVersion>
-    <AzureGeneratorVersion>1.0.0-alpha.20251022.3</AzureGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20251202.4</UnbrandedGeneratorVersion>
+    <AzureGeneratorVersion>1.0.0-alpha.20251125.3</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

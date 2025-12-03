@@ -203,7 +203,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 options.Credential ??= credential;
             }
 
-            return loggerOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(options)));
+            var exporter = new AzureMonitorLogExporter(options);
+            BaseProcessor<LogRecord> processor = options.EnableTraceBasedLogsSampler
+                ? new LogFilteringProcessor(exporter)
+                : new BatchLogRecordExportProcessor(exporter);
+
+            return loggerOptions.AddProcessor(processor);
         }
 
         /// <summary>
@@ -271,7 +276,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
-                return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));
+                var exporter = new AzureMonitorLogExporter(exporterOptions);
+                return exporterOptions.EnableTraceBasedLogsSampler
+                    ? new LogFilteringProcessor(exporter)
+                    : new BatchLogRecordExportProcessor(exporter);
             });
         }
     }

@@ -28,16 +28,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(int? propertyLeft, int? anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
         {
+            Argument.AssertNotNull(anotherPropertyLeft, nameof(anotherPropertyLeft));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
             Argument.AssertNotNull(middleProp2, nameof(middleProp2));
             Argument.AssertNotNull(prop1, nameof(prop1));
 
             StringArray = new ChangeTrackingList<string>();
-            Property = propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value);
-            AnotherProperty = anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value);
+            Property = new BarQuotaProperties(propertyLeft);
+            AnotherProperty = new BarQuotaProperties(anotherPropertyLeft);
             FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
             DiscriminatorProperty = discriminatorProperty;
         }
@@ -107,7 +108,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> enabled. </summary>
         [WirePath("property.left")]
-        public int? PropertyLeft
+        public string PropertyLeft
         {
             get
             {
@@ -115,13 +116,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                Property = new BarQuotaProperties(value);
             }
         }
 
         /// <summary> enabled. </summary>
         [WirePath("anotherProperty.left")]
-        public int? AnotherPropertyLeft
+        public string AnotherPropertyLeft
         {
             get
             {
@@ -129,7 +130,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
             set
             {
-                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                AnotherProperty = new BarQuotaProperties(value);
             }
         }
 

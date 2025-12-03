@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Definition for App Seen. </summary>
     public partial class AppSeenInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/>. </summary>
         /// <param name="title"> title. </param>
@@ -53,17 +24,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="tag"> tag. </param>
         /// <param name="technology"> technology. </param>
         /// <param name="standardPorts"> standardPorts. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="title"/>, <paramref name="category"/>, <paramref name="subCategory"/>, <paramref name="risk"/>, <paramref name="tag"/>, <paramref name="technology"/> or <paramref name="standardPorts"/> is null. </exception>
         internal AppSeenInfo(string title, string category, string subCategory, string risk, string tag, string technology, string standardPorts)
         {
-            Argument.AssertNotNull(title, nameof(title));
-            Argument.AssertNotNull(category, nameof(category));
-            Argument.AssertNotNull(subCategory, nameof(subCategory));
-            Argument.AssertNotNull(risk, nameof(risk));
-            Argument.AssertNotNull(tag, nameof(tag));
-            Argument.AssertNotNull(technology, nameof(technology));
-            Argument.AssertNotNull(standardPorts, nameof(standardPorts));
-
             Title = title;
             Category = category;
             SubCategory = subCategory;
@@ -81,8 +43,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="tag"> tag. </param>
         /// <param name="technology"> technology. </param>
         /// <param name="standardPorts"> standardPorts. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppSeenInfo(string title, string category, string subCategory, string risk, string tag, string technology, string standardPorts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppSeenInfo(string title, string category, string subCategory, string risk, string tag, string technology, string standardPorts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Category = category;
@@ -91,26 +53,27 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Tag = tag;
             Technology = technology;
             StandardPorts = standardPorts;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AppSeenInfo"/> for deserialization. </summary>
-        internal AppSeenInfo()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> title. </summary>
         public string Title { get; }
+
         /// <summary> category. </summary>
         public string Category { get; }
+
         /// <summary> subCategory. </summary>
         public string SubCategory { get; }
+
         /// <summary> risk. </summary>
         public string Risk { get; }
+
         /// <summary> tag. </summary>
         public string Tag { get; }
+
         /// <summary> technology. </summary>
         public string Technology { get; }
+
         /// <summary> standardPorts. </summary>
         public string StandardPorts { get; }
     }

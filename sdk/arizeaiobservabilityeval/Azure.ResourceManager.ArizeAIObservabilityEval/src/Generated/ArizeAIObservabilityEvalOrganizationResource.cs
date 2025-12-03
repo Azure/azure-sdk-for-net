@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ArizeAIObservabilityEvalOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ArizeAIObservabilityEvalOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ArizeAIObservabilityEvalOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<ArizeAIObservabilityEvalOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                     ArizeAIObservabilityEvalOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ArizeAIObservabilityEvalOrganizationPatch patch = new ArizeAIObservabilityEvalOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ArizeAIObservabilityEvalOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ArizeAIObservabilityEvalOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                     ArizeAIObservabilityEvalOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ArizeAIObservabilityEvalOrganizationPatch patch = new ArizeAIObservabilityEvalOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ArizeAIObservabilityEvalOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<ArizeAIObservabilityEvalOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ArizeAIObservabilityEvalOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ArizeAIObservabilityEvalOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ArizeAIObservabilityEvalOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<ArizeAIObservabilityEvalOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
