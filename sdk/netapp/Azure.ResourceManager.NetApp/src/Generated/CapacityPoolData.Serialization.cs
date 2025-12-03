@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("utilizedThroughputMibps"u8);
                 writer.WriteNumberValue(UtilizedThroughputMibps.Value);
             }
-            if (Optional.IsDefined(CustomThroughputMibps))
+            if (Optional.IsDefined(CustomThroughputMibpsInt))
             {
-                if (CustomThroughputMibps != null)
+                if (CustomThroughputMibpsInt != null)
                 {
                     writer.WritePropertyName("customThroughputMibps"u8);
-                    writer.WriteNumberValue(CustomThroughputMibps.Value);
+                    writer.WriteNumberValue(CustomThroughputMibpsInt.Value);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetApp
             string provisioningState = default;
             float? totalThroughputMibps = default;
             float? utilizedThroughputMibps = default;
-            float? customThroughputMibps = default;
+            int? customThroughputMibps = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
             CapacityPoolEncryptionType? encryptionType = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.NetApp
                                 customThroughputMibps = null;
                                 continue;
                             }
-                            customThroughputMibps = property0.Value.GetSingle();
+                            customThroughputMibps = property0.Value.GetInt32();
                             continue;
                         }
                         if (property0.NameEquals("qosType"u8))

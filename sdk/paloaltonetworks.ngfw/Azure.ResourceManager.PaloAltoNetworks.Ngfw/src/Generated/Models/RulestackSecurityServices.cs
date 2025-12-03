@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> security services. </summary>
     public partial class RulestackSecurityServices
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RulestackSecurityServices"/>. </summary>
         public RulestackSecurityServices()
@@ -59,8 +30,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="dnsSubscription"> DNS Subscription profile data. </param>
         /// <param name="outboundUnTrustCertificate"> Untrusted Egress Decryption profile data. </param>
         /// <param name="outboundTrustCertificate"> Trusted Egress Decryption profile data. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RulestackSecurityServices(string vulnerabilityProfile, string antiSpywareProfile, string antiVirusProfile, string urlFilteringProfile, string fileBlockingProfile, string dnsSubscription, string outboundUnTrustCertificate, string outboundTrustCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RulestackSecurityServices(string vulnerabilityProfile, string antiSpywareProfile, string antiVirusProfile, string urlFilteringProfile, string fileBlockingProfile, string dnsSubscription, string outboundUnTrustCertificate, string outboundTrustCertificate, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VulnerabilityProfile = vulnerabilityProfile;
             AntiSpywareProfile = antiSpywareProfile;
@@ -70,23 +41,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             DnsSubscription = dnsSubscription;
             OutboundUnTrustCertificate = outboundUnTrustCertificate;
             OutboundTrustCertificate = outboundTrustCertificate;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IPs Vulnerability Profile Data. </summary>
         public string VulnerabilityProfile { get; set; }
+
         /// <summary> Anti spyware Profile data. </summary>
         public string AntiSpywareProfile { get; set; }
+
         /// <summary> anti virus profile data. </summary>
         public string AntiVirusProfile { get; set; }
+
         /// <summary> URL filtering profile data. </summary>
         public string UrlFilteringProfile { get; set; }
+
         /// <summary> File blocking profile data. </summary>
         public string FileBlockingProfile { get; set; }
+
         /// <summary> DNS Subscription profile data. </summary>
         public string DnsSubscription { get; set; }
+
         /// <summary> Untrusted Egress Decryption profile data. </summary>
         public string OutboundUnTrustCertificate { get; set; }
+
         /// <summary> Trusted Egress Decryption profile data. </summary>
         public string OutboundTrustCertificate { get; set; }
     }

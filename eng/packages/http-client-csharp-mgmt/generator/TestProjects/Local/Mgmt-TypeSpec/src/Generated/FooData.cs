@@ -24,15 +24,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="something"> something. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="nestedPropertyProperties"> Gets or sets the Properties. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="something"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
-        public FooData(AzureLocation location, ManagedServiceIdentity something, FooProperties nestedPropertyProperties) : base(location)
+        /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
+        public FooData(AzureLocation location, ManagedServiceIdentity something, IEnumerable<string> prop1, FooProperties nestedPropertyProperties) : base(location)
         {
             Argument.AssertNotNull(something, nameof(something));
+            Argument.AssertNotNull(prop1, nameof(prop1));
             Argument.AssertNotNull(nestedPropertyProperties, nameof(nestedPropertyProperties));
 
-            Something = something;
-            NestedPropertyProperties = nestedPropertyProperties;
+            Properties = new FooProperties(something, prop1, new NestedFooModel(nestedPropertyProperties, null));
         }
 
         /// <summary> Initializes a new instance of <see cref="FooData"/>. </summary>
@@ -45,11 +46,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        internal FooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FooProperties properties, ExtendedLocation extendedLocation, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ExtendedLocation = extendedLocation;
+            Identity = identity;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
@@ -59,6 +62,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Gets or sets the ExtendedLocation. </summary>
         [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
+
+        /// <summary> The managed service identities assigned to this resource. </summary>
+        [WirePath("identity")]
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> the service url. </summary>
         [WirePath("properties.serviceUrl")]

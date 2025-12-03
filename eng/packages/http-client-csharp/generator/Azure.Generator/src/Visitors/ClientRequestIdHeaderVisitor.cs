@@ -1,16 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
-using Azure.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Visitors
@@ -24,12 +22,12 @@ namespace Azure.Generator.Visitors
         private const string XMsClientRequestIdParameterName = "x-ms-client-request-id";
         private const string ReturnClientRequestIdParameterName = "return-client-request-id";
         private readonly bool _includeXmsClientRequestIdInRequest;
-        private readonly Dictionary<InputServiceMethod, InputMethodParameter?> _returnClientRequestIdParameterMap;
+        private readonly Dictionary<InputServiceMethod, (InputMethodParameter? ReturnClientRequestId, InputMethodParameter? XmsClientRequestId, InputMethodParameter? ClientRequestId)> _serviceMethodParameterMap;
 
         public ClientRequestIdHeaderVisitor(bool includeXmsClientRequestIdInRequest = false)
         {
             _includeXmsClientRequestIdInRequest = includeXmsClientRequestIdInRequest;
-            _returnClientRequestIdParameterMap = [];
+            _serviceMethodParameterMap = [];
         }
 
         protected override ScmMethodProviderCollection? Visit(
@@ -43,8 +41,11 @@ namespace Azure.Generator.Visitors
                 serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == XMsClientRequestIdParameterName);
             var returnClientRequestIdParameter =
                 serviceMethod.Parameters.FirstOrDefault(p => p.SerializedName == ReturnClientRequestIdParameterName);
+            var hasRequestIdParameters = clientRequestIdParameter != null ||
+                                         xMsClientRequestIdParameter != null ||
+                                         returnClientRequestIdParameter != null;
 
-            if (clientRequestIdParameter != null || xMsClientRequestIdParameter != null || returnClientRequestIdParameter != null)
+            if (hasRequestIdParameters)
             {
                 // Update the service method to remove the client-request-id, x-ms-client-request-id, and return-client-request-id parameters from the request parameters
                 serviceMethod.Update(parameters: [.. serviceMethod.Parameters.Where(p =>
@@ -59,17 +60,10 @@ namespace Azure.Generator.Visitors
                 // Create a new method collection with the updated service method
                 methods = new ScmMethodProviderCollection(serviceMethod, client);
 
-                // Store the return-client-request-id parameter for later use in VisitMethod
-                if (returnClientRequestIdParameter != null)
-                {
-                    _returnClientRequestIdParameterMap.TryAdd(serviceMethod, returnClientRequestIdParameter);
-                }
+                _serviceMethodParameterMap.TryAdd(serviceMethod, (returnClientRequestIdParameter, xMsClientRequestIdParameter, clientRequestIdParameter));
 
                 // Reset the rest client so that its methods are rebuilt.
                 client.RestClient.Reset();
-
-                // Handle client-request-id and x-ms-client-request-id headers
-                methods = AddClientIdHeaders(serviceMethod, client, methods, clientRequestIdParameter, xMsClientRequestIdParameter);
             }
 
             return methods;
@@ -77,113 +71,95 @@ namespace Azure.Generator.Visitors
 
         protected override ScmMethodProvider? VisitMethod(ScmMethodProvider method)
         {
-            // Handle return-client-request-id parameter if it exists
-            if (method.ServiceMethod is not null && _returnClientRequestIdParameterMap.TryGetValue(method.ServiceMethod, out var returnClientRequestIdParameter))
+            if (method.Kind != ScmMethodKind.CreateRequest ||
+                method.ServiceMethod == null ||
+                !_serviceMethodParameterMap.TryGetValue(method.ServiceMethod, out var parameters))
             {
-                var originalBodyStatements = method.BodyStatements!.ToList();
+                return method;
+            }
 
-                // Find the request variable
-                VariableExpression? requestVariable = null;
-                foreach (var statement in originalBodyStatements)
-                {
-                    if (statement is ExpressionStatement
-                        {
-                            Expression: AssignmentExpression { Variable: DeclarationExpression declaration }
-                        })
+            var (returnClientRequestIdParameter, xMsClientRequestIdParameter, clientRequestIdParameter) = parameters;
+
+            var originalBodyStatements = method.BodyStatements!.ToList();
+
+            // Find the request variable
+            VariableExpression? requestVariable = null;
+            foreach (var statement in originalBodyStatements)
+            {
+                if (statement is ExpressionStatement
                     {
-                        var variable = declaration.Variable;
-                        if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
-                        {
-                            requestVariable = variable;
-                            break;
-                        }
+                        Expression: AssignmentExpression { Variable: DeclarationExpression declaration }
+                    })
+                {
+                    var variable = declaration.Variable;
+                    if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
+                    {
+                        requestVariable = variable;
+                        break;
                     }
                 }
+            }
 
-                var request = requestVariable?.ToApi<HttpRequestApi>();
-                if (request != null && returnClientRequestIdParameter?.DefaultValue?.Value != null)
+            var request = requestVariable?.ToApi<HttpRequestApi>();
+            if (request == null)
+            {
+                return method;
+            }
+
+            if (returnClientRequestIdParameter?.DefaultValue?.Value != null)
+            {
+                if (bool.TryParse(returnClientRequestIdParameter.DefaultValue.Value.ToString(), out bool value))
                 {
-                    if (bool.TryParse(returnClientRequestIdParameter.DefaultValue.Value.ToString(), out bool value))
-                    {
-                        // Exclude the last statement which is the return statement. We will add it back later.
-                        var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
+                    // Exclude the last statement which is the return statement. We will add it back later.
+                    var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
 
-                        // Set the return-client-request-id header
-                        newStatements.Add(request.SetHeaders(
-                        [
-                            Literal(returnClientRequestIdParameter.SerializedName),
-                            Literal(value.ToString().ToLowerInvariant())
-                        ]));
+                    // Set the return-client-request-id header
+                    newStatements.Add(request.SetHeaders(
+                    [
+                        Literal(returnClientRequestIdParameter.SerializedName),
+                        Literal(value.ToString().ToLowerInvariant())
+                    ]));
 
-                        // Add the return statement back
-                        newStatements.Add(originalBodyStatements[^1]);
+                    // Add the return statement back
+                    newStatements.Add(originalBodyStatements[^1]);
 
-                        method.Update(bodyStatements: newStatements);
-                    }
+                    method.Update(bodyStatements: newStatements);
                 }
+            }
+
+            if (_includeXmsClientRequestIdInRequest && xMsClientRequestIdParameter != null)
+            {
+                SetClientRequestId(xMsClientRequestIdParameter, method, request);
+            }
+
+            if (clientRequestIdParameter != null)
+            {
+                SetClientRequestId(clientRequestIdParameter, method, request);
             }
 
             return method;
         }
 
-        private ScmMethodProviderCollection? AddClientIdHeaders(
-            InputServiceMethod serviceMethod,
-            ClientProvider client,
-            ScmMethodProviderCollection? methods,
-            InputMethodParameter? clientRequestIdParameter,
-            InputMethodParameter? xMsClientRequestIdParameter)
+        private static void SetClientRequestId(
+            InputMethodParameter clientRequestIdParameter,
+            ScmMethodProvider method,
+            HttpRequestApi request)
         {
-            if (clientRequestIdParameter != null || xMsClientRequestIdParameter != null)
-            {
-                var createRequestMethod = client.RestClient.GetCreateRequestMethod(serviceMethod.Operation);
-                var originalBodyStatements = createRequestMethod.BodyStatements!.ToList();
+            var originalBodyStatements = method.BodyStatements!.ToList();
 
-                // Find the request variable
-                HttpRequestApi? requestVariable = null;
-                foreach (var statement in originalBodyStatements)
-                {
-                    if (statement is ExpressionStatement
-                        {
-                            Expression: AssignmentExpression { Variable: DeclarationExpression declaration }
-                        })
-                    {
-                        var variable = declaration.Variable;
-                        if (variable.Type.Equals(variable.ToApi<HttpRequestApi>().Type))
-                        {
-                            requestVariable = variable.ToApi<HttpRequestApi>();
-                            break;
-                        }
-                    }
-                }
+            // Exclude the last statement which is the return statement. We will add it back later.
+            var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
 
-                if (requestVariable != null)
-                {
-                    // Exclude the last statement which is the return statement. We will add it back later.
-                    var newStatements = new List<MethodBodyStatement>(originalBodyStatements[..^1]);
+            newStatements.Add(request.SetHeaders(
+            [
+                Literal(clientRequestIdParameter.SerializedName),
+                request.ClientRequestId()
+            ]));
 
-                    // Set the client-request-id header
-                    if (clientRequestIdParameter != null)
-                    {
-                        newStatements.Add(requestVariable.As<Request>().SetHeaderValue(
-                            clientRequestIdParameter.SerializedName,
-                            requestVariable.ClientRequestId()));
-                    }
+            // Add the return statement back
+            newStatements.Add(originalBodyStatements[^1]);
 
-                    // Set the x-ms-client-request-id header if requested
-                    if (_includeXmsClientRequestIdInRequest && xMsClientRequestIdParameter != null)
-                    {
-                        newStatements.Add(requestVariable.As<Request>().SetHeaderValue(
-                            xMsClientRequestIdParameter.SerializedName,
-                            requestVariable.ClientRequestId()));
-                    }
-
-                    // Add the return statement back
-                    newStatements.Add(originalBodyStatements[^1]);
-                    createRequestMethod.Update(bodyStatements: newStatements);
-                }
-            }
-
-            return methods;
+            method.Update(bodyStatements: newStatements);
         }
     }
 }

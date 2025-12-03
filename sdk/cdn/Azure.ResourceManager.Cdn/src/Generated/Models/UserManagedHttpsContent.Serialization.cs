@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -100,6 +101,75 @@ namespace Azure.ResourceManager.Cdn.Models
             return new UserManagedHttpsContent(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData, certificateSourceParameters);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateSourceParameters), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateSourceParameters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CertificateSourceParameters))
+                {
+                    builder.Append("  certificateSourceParameters: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, CertificateSourceParameters, options, 2, false, "  certificateSourceParameters: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateSource), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  certificateSource: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  certificateSource: ");
+                builder.AppendLine($"'{CertificateSource.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProtocolType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  protocolType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  protocolType: ");
+                builder.AppendLine($"'{ProtocolType.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumTlsVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  minimumTlsVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinimumTlsVersion))
+                {
+                    builder.Append("  minimumTlsVersion: ");
+                    builder.AppendLine($"'{MinimumTlsVersion.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<UserManagedHttpsContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<UserManagedHttpsContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,6 +178,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(UserManagedHttpsContent)} does not support writing '{options.Format}' format.");
             }
