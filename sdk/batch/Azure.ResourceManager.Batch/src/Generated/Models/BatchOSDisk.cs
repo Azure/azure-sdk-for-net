@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> Initializes a new instance of <see cref="BatchOSDisk"/>. </summary>
         /// <param name="ephemeralOSDiskSettings"> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </param>
         /// <param name="caching"> The type of caching to enable for the disk. </param>
-        /// <param name="managedDisk"></param>
+        /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <param name="diskSizeGB"> The initial disk size in GB when creating new OS disk. </param>
         /// <param name="isWriteAcceleratorEnabled"> Specifies whether writeAccelerator should be enabled or disabled on the disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. </summary>
         internal DiffDiskSettings EphemeralOSDiskSettings { get; set; }
-        /// <summary> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://docs.microsoft.com/en-us/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </summary>
+        /// <summary> This property can be used by user in the request to choose which location the operating system should be in. e.g., cache disk space for Ephemeral OS disk provisioning. For more information on Ephemeral OS disk size requirements, please refer to Ephemeral OS disk size requirements for Windows VMs at https://learn.microsoft.com/azure/virtual-machines/windows/ephemeral-os-disks#size-requirements and Linux VMs at https://learn.microsoft.com/azure/virtual-machines/linux/ephemeral-os-disks#size-requirements. </summary>
         public BatchDiffDiskPlacement? EphemeralOSDiskPlacement
         {
             get => EphemeralOSDiskSettings is null ? default : EphemeralOSDiskSettings.Placement;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Batch.Models
 
         /// <summary> The type of caching to enable for the disk. </summary>
         public BatchDiskCachingType? Caching { get; set; }
-        /// <summary> Gets or sets the managed disk. </summary>
+        /// <summary> The managed disk parameters. </summary>
         public ManagedDisk ManagedDisk { get; set; }
         /// <summary> The initial disk size in GB when creating new OS disk. </summary>
         public int? DiskSizeGB { get; set; }

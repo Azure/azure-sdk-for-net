@@ -70,9 +70,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="licenseType">
         /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
         ///
-        ///  Windows_Server - The on-premises license is for Windows Server.
-        ///  Windows_Client - The on-premises license is for Windows Client.
-        ///
+        /// Windows_Server - The on-premises license is for Windows Server.
+        /// Windows_Client - The on-premises license is for Windows Client.
         /// </param>
         /// <param name="containerConfiguration"> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </param>
         /// <param name="diskEncryptionConfiguration"> If specified, encryption is performed on each node in the pool during node provisioning. </param>
@@ -127,26 +126,14 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary>
         /// This only applies to images that contain the Windows operating system, and should only be used when you hold valid on-premises licenses for the nodes which will be deployed. If omitted, no on-premises licensing discount is applied. Values are:
         ///
-        ///  Windows_Server - The on-premises license is for Windows Server.
-        ///  Windows_Client - The on-premises license is for Windows Client.
-        ///
+        /// Windows_Server - The on-premises license is for Windows Server.
+        /// Windows_Client - The on-premises license is for Windows Client.
         /// </summary>
         public string LicenseType { get; set; }
         /// <summary> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </summary>
         public BatchVmContainerConfiguration ContainerConfiguration { get; set; }
         /// <summary> If specified, encryption is performed on each node in the pool during node provisioning. </summary>
-        internal DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
-        /// <summary> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </summary>
-        public IList<BatchDiskEncryptionTarget> DiskEncryptionTargets
-        {
-            get
-            {
-                if (DiskEncryptionConfiguration is null)
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration();
-                return DiskEncryptionConfiguration.Targets;
-            }
-        }
-
+        public DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
         /// <summary> This configuration will specify rules on how nodes in the pool will be physically allocated. </summary>
         internal NodePlacementConfiguration NodePlacementConfiguration { get; set; }
         /// <summary> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </summary>
