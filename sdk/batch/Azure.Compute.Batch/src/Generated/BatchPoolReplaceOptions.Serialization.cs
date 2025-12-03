@@ -39,13 +39,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            writer.WritePropertyName("certificateReferences"u8);
-            writer.WriteStartArray();
-            foreach (var item in CertificateReferences)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             writer.WritePropertyName("applicationPackageReferences"u8);
             writer.WriteStartArray();
             foreach (var item in ApplicationPackageReferences)
@@ -60,11 +53,6 @@ namespace Azure.Compute.Batch
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(TargetNodeCommunicationMode))
-            {
-                writer.WritePropertyName("targetNodeCommunicationMode"u8);
-                writer.WriteStringValue(TargetNodeCommunicationMode.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -103,10 +91,8 @@ namespace Azure.Compute.Batch
                 return null;
             }
             BatchStartTask startTask = default;
-            IList<BatchCertificateReference> certificateReferences = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             IList<BatchMetadataItem> metadata = default;
-            BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,16 +104,6 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
                     continue;
                 }
                 if (property.NameEquals("applicationPackageReferences"u8))
@@ -150,28 +126,13 @@ namespace Azure.Compute.Batch
                     metadata = array;
                     continue;
                 }
-                if (property.NameEquals("targetNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchPoolReplaceOptions(
-                startTask,
-                certificateReferences,
-                applicationPackageReferences,
-                metadata,
-                targetNodeCommunicationMode,
-                serializedAdditionalRawData);
+            return new BatchPoolReplaceOptions(startTask, applicationPackageReferences, metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPoolReplaceOptions>.Write(ModelReaderWriterOptions options)

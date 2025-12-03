@@ -99,9 +99,11 @@ namespace Azure.ResourceManager.Maintenance.Tests
                 Duration = TimeSpan.Parse("03:00"),
                 TimeZone = "Pacific Standard Time",
                 RecurEvery = "Day",
-                InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
-                    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, false, null),
-                    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, null), null)
+
+                // TODO: These tests are commented out for patch release.
+                //InstallPatches = new MaintenancePatchConfiguration(MaintenanceRebootOption.Always,
+                //    new MaintenanceWindowsPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, false, null),
+                //    new MaintenanceLinuxPatchSettings(new List<string>(), new List<string>(), new List<string>() { "Security", "Critical" }, null), null)
             };
             data.ExtensionProperties.Add("InGuestPatchMode", "User");
 

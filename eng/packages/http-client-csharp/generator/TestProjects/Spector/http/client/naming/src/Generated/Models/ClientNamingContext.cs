@@ -12,9 +12,9 @@ using Client.Naming.Property;
 namespace Client.Naming
 {
     [ModelReaderWriterBuildable(typeof(ClientModel))]
-    [ModelReaderWriterBuildable(typeof(CSModel))]
     [ModelReaderWriterBuildable(typeof(ClientNameAndJsonEncodedNameModel))]
     [ModelReaderWriterBuildable(typeof(ClientNameModel))]
+    [ModelReaderWriterBuildable(typeof(CSModel))]
     [ModelReaderWriterBuildable(typeof(LanguageClientNameModel))]
     public partial class ClientNamingContext : ModelReaderWriterContext
     {

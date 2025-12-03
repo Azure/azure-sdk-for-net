@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryAssetEndpointProfileResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeviceRegistryAssetEndpointProfileCollection"/> instance call the GetDeviceRegistryAssetEndpointProfiles method from an instance of the parent resource.
+    /// Each <see cref="DeviceRegistryAssetEndpointProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DeviceRegistryAssetEndpointProfileCollection"/> instance call the GetDeviceRegistryAssetEndpointProfiles method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DeviceRegistryAssetEndpointProfileCollection : ArmCollection, IEnumerable<DeviceRegistryAssetEndpointProfileResource>, IAsyncEnumerable<DeviceRegistryAssetEndpointProfileResource>
     {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryAssetEndpointProfileResource.ResourceType, out string deviceRegistryAssetEndpointProfileApiVersion);
             _assetEndpointProfilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryAssetEndpointProfileResource.ResourceType.Namespace, Diagnostics);
-            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetEndpointProfileApiVersion ?? "2025-10-01");
+            _assetEndpointProfilesRestClient = new AssetEndpointProfiles(_assetEndpointProfilesClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetEndpointProfileApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List AssetEndpointProfile resources by resource group. </summary>
+        /// <summary>
+        /// List AssetEndpointProfile resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AssetEndpointProfiles_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryAssetEndpointProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             return new AsyncPageableWrapper<DeviceRegistryAssetEndpointProfileData, DeviceRegistryAssetEndpointProfileResource>(new AssetEndpointProfilesGetByResourceGroupAsyncCollectionResultOfT(_assetEndpointProfilesRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DeviceRegistryAssetEndpointProfileResource(Client, data));
         }
 
-        /// <summary> List AssetEndpointProfile resources by resource group. </summary>
+        /// <summary>
+        /// List AssetEndpointProfile resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/assetEndpointProfiles. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AssetEndpointProfiles_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryAssetEndpointProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryAssetEndpointProfileResource> GetAll(CancellationToken cancellationToken = default)
@@ -306,7 +338,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,7 +395,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -420,7 +452,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -481,7 +513,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

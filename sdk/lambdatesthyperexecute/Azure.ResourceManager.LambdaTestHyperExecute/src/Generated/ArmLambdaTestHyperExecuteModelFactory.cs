@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, new Dictionary<string, BinaryData>()),
+                partnerLicensesSubscribed is null ? default : new LambdaTestHyperExecuteOfferPartnerProperties(partnerLicensesSubscribed.Value, null),
                 singleSignOnProperties,
                 additionalBinaryDataProperties: null);
         }

@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     InformaticaOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                     InformaticaOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     InformaticaOrganizationPatch patch = new InformaticaOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<InformaticaOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -846,7 +846,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<InformaticaOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

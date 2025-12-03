@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_08_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)

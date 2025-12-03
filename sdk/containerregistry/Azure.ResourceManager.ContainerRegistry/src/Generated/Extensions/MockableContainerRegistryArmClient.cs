@@ -35,6 +35,30 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerRegistryResource"/> object. </returns>
+        public virtual ContainerRegistryResource GetContainerRegistryResource(ResourceIdentifier id)
+        {
+            ContainerRegistryResource.ValidateResourceId(id);
+            return new ContainerRegistryResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
+        public virtual ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(ResourceIdentifier id)
+        {
+            ContainerRegistryPrivateLinkResource.ValidateResourceId(id);
+            return new ContainerRegistryPrivateLinkResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryCacheRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerRegistryCacheRuleResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryCacheRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -68,30 +92,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Mocking
         {
             ContainerRegistryCredentialSetResource.ValidateResourceId(id);
             return new ContainerRegistryCredentialSetResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryResource"/> object. </returns>
-        public virtual ContainerRegistryResource GetContainerRegistryResource(ResourceIdentifier id)
-        {
-            ContainerRegistryResource.ValidateResourceId(id);
-            return new ContainerRegistryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
-        public virtual ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(ResourceIdentifier id)
-        {
-            ContainerRegistryPrivateLinkResource.ValidateResourceId(id);
-            return new ContainerRegistryPrivateLinkResource(Client, id);
         }
 
         /// <summary>

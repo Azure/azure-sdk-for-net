@@ -126,7 +126,7 @@ namespace Microsoft.Extensions.Azure
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
-                    return new ManagedIdentityCredential(new ResourceIdentifier(resourceId));
+                    return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(resourceId)));
                 }
 
                 if (!string.IsNullOrWhiteSpace(objectId))
@@ -136,10 +136,15 @@ namespace Microsoft.Extensions.Azure
 
                 if (!string.IsNullOrWhiteSpace(managedIdentityClientId))
                 {
-                    return new ManagedIdentityCredential(managedIdentityClientId);
+                    return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(managedIdentityClientId));
                 }
 
-                return new ManagedIdentityCredential(clientId);
+                if (!string.IsNullOrWhiteSpace(clientId))
+                {
+                    return new ManagedIdentityCredential(ManagedIdentityId.FromUserAssignedClientId(clientId));
+                }
+
+                return new ManagedIdentityCredential(ManagedIdentityId.SystemAssigned);
             }
 
             if (string.Equals(credentialType, "workloadidentity", StringComparison.OrdinalIgnoreCase))

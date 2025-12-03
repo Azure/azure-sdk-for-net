@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     public readonly partial struct FirewallProvisioningState : IEquatable<FirewallProvisioningState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FirewallProvisioningState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FirewallProvisioningState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AcceptedValue = "Accepted";
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
@@ -32,41 +25,73 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         private const string DeletedValue = "Deleted";
         private const string NotSpecifiedValue = "NotSpecified";
 
-        /// <summary> Accepted. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FirewallProvisioningState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Accepted. </summary>
         public static FirewallProvisioningState Accepted { get; } = new FirewallProvisioningState(AcceptedValue);
-        /// <summary> Creating. </summary>
+
+        /// <summary> Gets the Creating. </summary>
         public static FirewallProvisioningState Creating { get; } = new FirewallProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+
+        /// <summary> Gets the Updating. </summary>
         public static FirewallProvisioningState Updating { get; } = new FirewallProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static FirewallProvisioningState Deleting { get; } = new FirewallProvisioningState(DeletingValue);
-        /// <summary> Succeeded. </summary>
+
+        /// <summary> Gets the Succeeded. </summary>
         public static FirewallProvisioningState Succeeded { get; } = new FirewallProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static FirewallProvisioningState Failed { get; } = new FirewallProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+
+        /// <summary> Gets the Canceled. </summary>
         public static FirewallProvisioningState Canceled { get; } = new FirewallProvisioningState(CanceledValue);
-        /// <summary> Deleted. </summary>
+
+        /// <summary> Gets the Deleted. </summary>
         public static FirewallProvisioningState Deleted { get; } = new FirewallProvisioningState(DeletedValue);
-        /// <summary> NotSpecified. </summary>
+
+        /// <summary> Gets the NotSpecified. </summary>
         public static FirewallProvisioningState NotSpecified { get; } = new FirewallProvisioningState(NotSpecifiedValue);
+
         /// <summary> Determines if two <see cref="FirewallProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallProvisioningState left, FirewallProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallProvisioningState left, FirewallProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallProvisioningState(string value) => new FirewallProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallProvisioningState?(string value) => value == null ? null : new FirewallProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

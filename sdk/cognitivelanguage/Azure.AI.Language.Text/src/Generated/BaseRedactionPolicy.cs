@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
     /// <summary>
     /// The abstract base class for RedactionPolicy.
     /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/> and <see cref="NoMaskPolicyType"/>.
+    /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/>, <see cref="NoMaskPolicyType"/> and <see cref="SyntheticReplacementPolicyType"/>.
     /// </summary>
     public abstract partial class BaseRedactionPolicy
     {
@@ -52,18 +52,31 @@ namespace Azure.AI.Language.Text
         /// <summary> Initializes a new instance of <see cref="BaseRedactionPolicy"/>. </summary>
         protected BaseRedactionPolicy()
         {
+            EntityTypes = new ChangeTrackingList<PiiCategoriesExclude>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BaseRedactionPolicy"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
+        /// <param name="entityTypes"> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </param>
+        /// <param name="policyName"> (Optional) name of the redaction policy for identification purposes. </param>
+        /// <param name="isDefault"> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BaseRedactionPolicy(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BaseRedactionPolicy(RedactionPolicyKind policyKind, IList<PiiCategoriesExclude> entityTypes, string policyName, bool? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PolicyKind = policyKind;
+            EntityTypes = entityTypes;
+            PolicyName = policyName;
+            IsDefault = isDefault;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The entity RedactionPolicy object kind. </summary>
         internal RedactionPolicyKind PolicyKind { get; set; }
+        /// <summary> (Optional) describes the PII categories to which the redaction policy will be applied. If not specified, the redaction policy will be applied to all PII categories. </summary>
+        public IList<PiiCategoriesExclude> EntityTypes { get; }
+        /// <summary> (Optional) name of the redaction policy for identification purposes. </summary>
+        public string PolicyName { get; set; }
+        /// <summary> (Optional) flag to indicate whether this redaction policy is the default policy to be applied when no specific policy is defined for a PII category. Only one policy can be marked as default. </summary>
+        public bool? IsDefault { get; set; }
     }
 }
