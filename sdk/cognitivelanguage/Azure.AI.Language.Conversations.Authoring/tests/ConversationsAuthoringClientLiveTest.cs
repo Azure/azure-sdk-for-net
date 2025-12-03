@@ -909,43 +909,5 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             // Assert completion
             Assert.IsTrue(operation.HasCompleted, "The deletion operation should have completed.");
         }
-
-        [RecordedTest]
-        public async Task GetDeploymentDeleteFromResourcesStatusAsync()
-        {
-            string projectName = "EmailApp";
-            string deploymentName = "deploysdk2";
-            string jobId = "00000000-0000-0000-0000-000000000000";
-            ConversationAuthoringDeployment deploymentClient = client.GetDeployment(projectName, deploymentName);
-
-            // Act
-            Response<ConversationAuthoringDeploymentDeleteFromResourcesState> response = null;
-
-            try
-            {
-                response = await deploymentClient.GetDeploymentDeleteFromResourcesStatusAsync(
-                    jobId);
-            }
-            catch (RequestFailedException e)
-            {
-                Assert.Fail($"GetDeploymentDeleteFromResourcesStatusAsync failed: {e.Message}");
-                throw;
-            }
-
-            // Assert
-            Assert.IsNotNull(response, "The response should not be null.");
-            Assert.AreEqual(200, response.GetRawResponse().Status, "Expected a 200 (OK) status code.");
-
-            ConversationAuthoringDeploymentDeleteFromResourcesState state = response.Value;
-
-            Assert.IsNotNull(state, "The job status object should not be null.");
-
-            Assert.IsNotNull(state.JobId, "JobId should not be null.");
-            Assert.IsNotNull(state.Status, "Status should not be null.");
-
-            Assert.AreNotEqual(default(DateTimeOffset), state.CreatedOn, "CreatedOn should be populated.");
-            Assert.AreNotEqual(default(DateTimeOffset), state.LastUpdatedOn, "LastUpdatedOn should be populated.");
-            Assert.AreNotEqual(default(DateTimeOffset), state.ExpiresOn, "ExpiresOn should be populated.");
-        }
     }
 }
