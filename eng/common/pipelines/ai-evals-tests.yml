@@ -28,15 +28,11 @@ parameters:
   - name: EvalRepoCommit
     type: string
     default: 'main'
-  - name: TargetRepoOwner
-    type: string
-    default: ${{ split(variables['Build.Repository.Name'], '/')[0] }}
-  - name: TargetRepoName
-    type: string
-    default: ${{ split(variables['Build.Repository.Name'], '/')[1] }}
-  - name: TargetRepoCommit
-    type: string
-    default: $(Build.SourceVersion)
+
+variables:
+  TargetRepoOwner: ${{ coalesce(parameters.TargetRepoOwner, split(variables['Build.Repository.Name'], '/')[0]) }}
+  TargetRepoName: ${{ coalesce(parameters.TargetRepoName, split(variables['Build.Repository.Name'], '/')[1]) }}
+  TargetRepoCommit: ${{ coalesce(parameters.TargetRepoCommit, variables['Build.SourceVersion']) }}
 
 extends:
   template: /eng/common/pipelines/templates/jobs/ai-eval-job.yml
@@ -47,6 +43,6 @@ extends:
     EvalRepoOwner: ${{ parameters.EvalRepoOwner }}
     EvalRepoName: ${{ parameters.EvalRepoName }}
     EvalRepoCommit: ${{ parameters.EvalRepoCommit }}
-    TargetRepoOwner: ${{ parameters.TargetRepoOwner }}
-    TargetRepoName: ${{ parameters.TargetRepoName }}
-    TargetRepoCommit: ${{ parameters.TargetRepoCommit }}
+    TargetRepoOwner: ${{ variables.TargetRepoOwner }}
+    TargetRepoName: ${{ variables.TargetRepoName }}
+    TargetRepoCommit: ${{ variables.TargetRepoCommit }}
