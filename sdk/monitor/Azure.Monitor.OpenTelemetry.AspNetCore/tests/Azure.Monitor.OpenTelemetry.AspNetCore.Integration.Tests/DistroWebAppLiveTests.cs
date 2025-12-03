@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;

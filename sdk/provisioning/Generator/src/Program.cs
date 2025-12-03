@@ -27,6 +27,7 @@ List<Specification> rpSpecs =
     new CosmosDBSpecification(),
     new EventGridSpecification(),
     new EventHubsSpecification(),
+    new FrontDoorSpecification(),
     new KeyVaultSpecification(),
     new KubernetesSpecification(),
     new KubernetesConfigurationSpecification(),

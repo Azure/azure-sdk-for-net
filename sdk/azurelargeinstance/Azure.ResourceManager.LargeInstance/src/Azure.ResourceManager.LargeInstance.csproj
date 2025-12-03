@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.LargeInstance</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider LargeInstance.</Description>
     <PackageTags>azure;management;arm;resource manager;largeinstance</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

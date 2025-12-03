@@ -185,8 +185,6 @@ function LintBicepFile([string] $path) {
     }
 
     # Work around lack of config file override: https://github.com/Azure/bicep/issues/5013
-    $output = bicep lint $path 2>&1
-
     if ($useBicepCli) {
         $output = bicep lint $path 2>&1
     } else {

@@ -24,7 +24,7 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot Helpers ApiView-Helpers.ps1)
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVersion)
+function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVersion, $packageType)
 {
     Write-Host "File path: $filePath"
     $fileName = Split-Path -Leaf $filePath
@@ -61,6 +61,13 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     $multipartContent.Add($releaseTagParamContent)
     Write-Host "Request param, setReleaseTag: $MarkPackageAsShipped"
 
+    $packageTypeParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
+    $packageTypeParam.Name = "packageType"
+    $packageTypeParamContent = [System.Net.Http.StringContent]::new($packageType)
+    $packageTypeParamContent.Headers.ContentDisposition = $packageTypeParam
+    $multipartContent.Add($packageTypeParamContent)
+    Write-Host "Request param, packageType: $packageType"
+
     if ($releaseStatus -and ($releaseStatus -ne "Unreleased"))
     {
         $compareAllParam = [System.Net.Http.Headers.ContentDispositionHeaderValue]::new("form-data")
@@ -92,14 +99,14 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     return $StatusCode
 }
 
-function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $reviewFileName, $packageVersion, $filePath)
+function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $reviewFileName, $packageVersion, $filePath, $packageType)
 {
     Write-Host "Original File path: $filePath"
     $fileName = Split-Path -Leaf $filePath
     Write-Host "OriginalFile name: $fileName"
 
     $params = "buildId=${BuildId}&artifactName=${ArtifactName}&originalFilePath=${fileName}&reviewFilePath=${reviewFileName}"
-    $params += "&label=${apiLabel}&repoName=${RepoName}&packageName=${packageName}&project=internal&packageVersion=${packageVersion}"
+    $params +="&label=${apiLabel}&repoName=${RepoName}&packageName=${packageName}&project=internal&packageVersion=${packageVersion}&packageType=${packageType}"
     if($MarkPackageAsShipped) {
         $params += "&setReleaseTag=true"
     }
@@ -146,17 +153,18 @@ function Get-APITokenFileName($packageName)
 function Submit-APIReview($packageInfo, $packagePath)
 {
     $apiLabel = "Source Branch:${SourceBranch}"
+    $packageType = $packageInfo.SdkType
 
     # Get generated review token file if present
     # APIView processes request using different API if token file is already generated
     $reviewTokenFileName =  Get-APITokenFileName $packageInfo.ArtifactName
     if ($reviewTokenFileName) {
         Write-Host "Uploading review token file $reviewTokenFileName to APIView."
-        return Upload-ReviewTokenFile $packageInfo.ArtifactName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
+        return Upload-ReviewTokenFile $packageInfo.ArtifactName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath $packageType
     }
     else {
         Write-Host "Uploading $packagePath to APIView."
-        return Upload-SourceArtifact $packagePath $apiLabel $packageInfo.ReleaseStatus $packageInfo.Version
+        return Upload-SourceArtifact $packagePath $apiLabel $packageInfo.ReleaseStatus $packageInfo.Version $packageType
     }
 }
 

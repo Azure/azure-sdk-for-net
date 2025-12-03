@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.StorageMover</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider StorageMover</Description>
     <PackageTags>azure;management;arm;resource manager;storagemover</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

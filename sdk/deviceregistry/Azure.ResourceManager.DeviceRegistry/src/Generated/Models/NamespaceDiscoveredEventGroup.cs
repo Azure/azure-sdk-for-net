@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the discovered event group properties. </summary>
     public partial class NamespaceDiscoveredEventGroup
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NamespaceDiscoveredEventGroup"/>. </summary>
         /// <param name="name"> The name of the event group. </param>
@@ -61,15 +33,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="name"> The name of the event group. </param>
         /// <param name="dataSource"> The address of the notifier of the event group in the asset (e.g. URL) so that a client can access the event group on the asset. </param>
         /// <param name="eventGroupConfiguration"> Stringified JSON that contains connector-specific configuration for the event group. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
-        /// <param name="defaultDestinations">
-        /// Destinations for events. Default destinations when destinations is not defined at the event level.
-        /// Please note <see cref="EventDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventMqttDestination"/> and <see cref="EventStorageDestination"/>.
-        /// </param>
+        /// <param name="defaultDestinations"> Destinations for events. Default destinations when destinations is not defined at the event level. </param>
         /// <param name="typeRef"> URI or type definition ID. </param>
         /// <param name="events"> Array of events that are part of the event group. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceDiscoveredEventGroup(string name, string dataSource, string eventGroupConfiguration, IList<EventDestination> defaultDestinations, string typeRef, IList<NamespaceDiscoveredEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceDiscoveredEventGroup(string name, string dataSource, string eventGroupConfiguration, IList<EventDestination> defaultDestinations, string typeRef, IList<NamespaceDiscoveredEvent> events, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DataSource = dataSource;
@@ -77,28 +45,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             DefaultDestinations = defaultDestinations;
             TypeRef = typeRef;
             Events = events;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NamespaceDiscoveredEventGroup"/> for deserialization. </summary>
-        internal NamespaceDiscoveredEventGroup()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The name of the event group. </summary>
         public string Name { get; set; }
+
         /// <summary> The address of the notifier of the event group in the asset (e.g. URL) so that a client can access the event group on the asset. </summary>
         public string DataSource { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific configuration for the event group. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </summary>
         public string EventGroupConfiguration { get; set; }
-        /// <summary>
-        /// Destinations for events. Default destinations when destinations is not defined at the event level.
-        /// Please note <see cref="EventDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventMqttDestination"/> and <see cref="EventStorageDestination"/>.
-        /// </summary>
+
+        /// <summary> Destinations for events. Default destinations when destinations is not defined at the event level. </summary>
         public IList<EventDestination> DefaultDestinations { get; }
+
         /// <summary> URI or type definition ID. </summary>
         public string TypeRef { get; set; }
+
         /// <summary> Array of events that are part of the event group. </summary>
         public IList<NamespaceDiscoveredEvent> Events { get; }
     }

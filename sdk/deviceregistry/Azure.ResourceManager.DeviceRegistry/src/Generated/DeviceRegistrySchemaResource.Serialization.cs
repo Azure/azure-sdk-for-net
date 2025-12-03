@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
+    /// <summary></summary>
     public partial class DeviceRegistrySchemaResource : IJsonModel<DeviceRegistrySchemaData>
     {
-        private static DeviceRegistrySchemaData s_dataDeserializationInstance;
-        private static DeviceRegistrySchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeviceRegistrySchemaData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeviceRegistrySchemaData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeviceRegistrySchemaData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceRegistrySchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistrySchemaData>)Data).Write(writer, options);
 
-        DeviceRegistrySchemaData IJsonModel<DeviceRegistrySchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceRegistrySchemaData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceRegistrySchemaData IJsonModel<DeviceRegistrySchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeviceRegistrySchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceRegistrySchemaData>(Data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeviceRegistrySchemaData IPersistableModel<DeviceRegistrySchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceRegistrySchemaData>(data, options, AzureResourceManagerDeviceRegistryContext.Default);
 
-        string IPersistableModel<DeviceRegistrySchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceRegistrySchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceRegistrySchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -10,19 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    /// <summary> Unknown version of DatasetDestination. </summary>
     internal partial class UnknownDatasetDestination : DatasetDestination
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDatasetDestination"/>. </summary>
         /// <param name="target"> Target destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownDatasetDestination(DatasetDestinationTarget? target, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(target, serializedAdditionalRawData)
-        {
-            Target = target;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownDatasetDestination"/> for deserialization. </summary>
-        internal UnknownDatasetDestination()
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDatasetDestination(DatasetDestinationTarget? target, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(target != default ? target : "unknown", additionalBinaryDataProperties)
         {
         }
     }

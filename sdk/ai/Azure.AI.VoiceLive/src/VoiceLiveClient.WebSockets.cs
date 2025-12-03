@@ -31,7 +31,7 @@ namespace Azure.AI.VoiceLive
 
             VoiceLiveSession session = _keyCredential != null ? new(this, webSocketEndpoint, _keyCredential) : new(this, webSocketEndpoint, _tokenCredential);
 
-            await session.ConnectAsync(_options.Headers, cancellationToken).ConfigureAwait(false);
+            await session.ConnectAsync(Options.Headers, cancellationToken).ConfigureAwait(false);
 
             return session;
         }
@@ -92,13 +92,13 @@ namespace Azure.AI.VoiceLive
             // Ensure the path includes the WebSocket endpoint
             if (!builder.Path.EndsWith("/realtime", StringComparison.OrdinalIgnoreCase))
             {
-                builder.Path = builder.Path.TrimEnd('/') + "/voice-agent/realtime";
+                builder.Path = builder.Path.TrimEnd('/') + "/voice-live/realtime";
             }
 
             // Add the query parameter for the API version if it doesn't already exist
             if (!builder.Query.Contains("api-version="))
             {
-                builder.Query = $"{builder.Query.TrimStart('?')}&api-version={_options.Version}";
+                builder.Query = $"{builder.Query.TrimStart('?')}&api-version={Options.Version}";
             }
 
             if (!builder.Query.Contains("model="))

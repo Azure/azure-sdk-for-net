@@ -12,33 +12,33 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.ClientLocati
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToExistingSubClient() => Test(async (host) =>
         {
-            var response1 = await new ClientLocationClient(host, null).GetMoveToExistingSubClient().GetMoveToExistingSubClientUserOperationsClient().GetUserAsync();
+            var response1 = await new ClientLocationClient(host, "testaccount", null).GetMoveToExistingSubClient().GetMoveToExistingSubClientUserOperationsClient().GetUserAsync();
             Assert.AreEqual(204, response1.Status);
 
-            var response2 = await new ClientLocationClient(host, null).GetMoveToExistingSubClient().GetMoveToExistingSubClientAdminOperationsClient().DeleteUserAsync();
+            var response2 = await new ClientLocationClient(host, "testaccount", null).GetMoveToExistingSubClient().GetMoveToExistingSubClientAdminOperationsClient().DeleteUserAsync();
             Assert.AreEqual(204, response2.Status);
 
-            var response3 = await new ClientLocationClient(host, null).GetMoveToExistingSubClient().GetMoveToExistingSubClientAdminOperationsClient().GetAdminInfoAsync();
+            var response3 = await new ClientLocationClient(host, "testaccount", null).GetMoveToExistingSubClient().GetMoveToExistingSubClientAdminOperationsClient().GetAdminInfoAsync();
             Assert.AreEqual(204, response3.Status);
         });
 
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToNewSubClient() => Test(async (host) =>
         {
-            var response1 = await new ClientLocationClient(host, null).GetMoveToNewSubClient().GetMoveToNewSubClientProductOperationsClient().GetProductsAsync();
+            var response1 = await new ClientLocationClient(host, "testaccount", null).GetMoveToNewSubClient().GetMoveToNewSubClientProductOperationsClient().GetProductsAsync();
             Assert.AreEqual(204, response1.Status);
 
-            var response2 = await new ClientLocationClient(host, null).GetArchiveOperationsClient().ArchiveProductAsync();
+            var response2 = await new ClientLocationClient(host, "testaccount", null).GetArchiveOperationsClient().ArchiveProductAsync();
             Assert.AreEqual(204, response2.Status);
         });
 
         [SpectorTest]
         public Task Azure_ClientGenerator_Core_ClientLocation_MoveToRootClient() => Test(async (host) =>
         {
-            var response1 = await new ClientLocationClient(host, null).GetMoveToRootClient().GetMoveToRootClientResourceOperationsClient().GetResourceAsync();
+            var response1 = await new ClientLocationClient(host, "testaccount", null).GetMoveToRootClient().GetMoveToRootClientResourceOperationsClient().GetResourceAsync();
             Assert.AreEqual(204, response1.Status);
 
-            var response2 = await new ClientLocationClient(host, null).GetHealthStatusAsync();
+            var response2 = await new ClientLocationClient(host, "testaccount", null).GetHealthStatusAsync();
             Assert.AreEqual(204, response2.Status);
         });
     }

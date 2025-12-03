@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Network.Models
         private const string AddressPrefixValue = "AddressPrefix";
         private const string ServiceTagValue = "ServiceTag";
 
-        /// <summary> AddressPrefix. </summary>
+        /// <summary> Destination specified as an IP address prefix (CIDR). </summary>
         public static RoutingRuleDestinationType AddressPrefix { get; } = new RoutingRuleDestinationType(AddressPrefixValue);
-        /// <summary> ServiceTag. </summary>
+        /// <summary> Destination specified as an Azure service tag. </summary>
         public static RoutingRuleDestinationType ServiceTag { get; } = new RoutingRuleDestinationType(ServiceTagValue);
         /// <summary> Determines if two <see cref="RoutingRuleDestinationType"/> values are the same. </summary>
         public static bool operator ==(RoutingRuleDestinationType left, RoutingRuleDestinationType right) => left.Equals(right);

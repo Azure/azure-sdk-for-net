@@ -9,14 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    internal partial class NamespaceDiscoveredDeviceListResult : IUtf8JsonSerializable, IJsonModel<NamespaceDiscoveredDeviceListResult>
+    /// <summary> The response of a NamespaceDiscoveredDevice list operation. </summary>
+    internal partial class NamespaceDiscoveredDeviceListResult : IJsonModel<NamespaceDiscoveredDeviceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceDiscoveredDeviceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NamespaceDiscoveredDeviceListResult"/> for deserialization. </summary>
+        internal NamespaceDiscoveredDeviceListResult()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NamespaceDiscoveredDeviceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,15 +35,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceDiscoveredDeviceListResult)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (var item in Value)
+            foreach (DeviceRegistryNamespaceDiscoveredDeviceData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -46,15 +52,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -63,64 +69,70 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        NamespaceDiscoveredDeviceListResult IJsonModel<NamespaceDiscoveredDeviceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceDiscoveredDeviceListResult IJsonModel<NamespaceDiscoveredDeviceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceDiscoveredDeviceListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NamespaceDiscoveredDeviceListResult)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNamespaceDiscoveredDeviceListResult(document.RootElement, options);
         }
 
-        internal static NamespaceDiscoveredDeviceListResult DeserializeNamespaceDiscoveredDeviceListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NamespaceDiscoveredDeviceListResult DeserializeNamespaceDiscoveredDeviceListResult(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<DeviceRegistryNamespaceDiscoveredDeviceData> value = default;
+            IList<DeviceRegistryNamespaceDiscoveredDeviceData> value = default;
             Uri nextLink = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("value"u8))
+                if (prop.NameEquals("value"u8))
                 {
                     List<DeviceRegistryNamespaceDiscoveredDeviceData> array = new List<DeviceRegistryNamespaceDiscoveredDeviceData>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DeviceRegistryNamespaceDiscoveredDeviceData.DeserializeDeviceRegistryNamespaceDiscoveredDeviceData(item, options));
                     }
                     value = array;
                     continue;
                 }
-                if (property.NameEquals("nextLink"u8))
+                if (prop.NameEquals("nextLink"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextLink = new Uri(property.Value.GetString());
+                    nextLink = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NamespaceDiscoveredDeviceListResult(value, nextLink, serializedAdditionalRawData);
+            return new NamespaceDiscoveredDeviceListResult(value, nextLink, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<NamespaceDiscoveredDeviceListResult>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NamespaceDiscoveredDeviceListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -130,15 +142,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        NamespaceDiscoveredDeviceListResult IPersistableModel<NamespaceDiscoveredDeviceListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NamespaceDiscoveredDeviceListResult IPersistableModel<NamespaceDiscoveredDeviceListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NamespaceDiscoveredDeviceListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NamespaceDiscoveredDeviceListResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNamespaceDiscoveredDeviceListResult(document.RootElement, options);
                     }
                 default:
@@ -146,6 +163,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NamespaceDiscoveredDeviceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="NamespaceDiscoveredDeviceListResult"/> from. </param>
+        internal static NamespaceDiscoveredDeviceListResult FromResponse(Response result)
+        {
+            using Response response = result;
+            using JsonDocument document = JsonDocument.Parse(response.Content);
+            return DeserializeNamespaceDiscoveredDeviceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

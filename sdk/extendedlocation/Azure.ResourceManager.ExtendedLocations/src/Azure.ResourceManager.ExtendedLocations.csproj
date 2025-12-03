@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.ExtendedLocations</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.ExtendedLocation.</Description>
     <PackageTags>azure;management;arm;resource manager;extendedlocations</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
