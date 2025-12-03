@@ -837,7 +837,7 @@ namespace Azure.Communication.CallAutomation
                     StartMediaStreaming = configuration.StartMediaStreaming,
                     EnableBidirectional = configuration.EnableBidirectional,
                     AudioFormat = configuration.AudioFormat,
-                    TransportUrl = configuration.TransportUri.AbsoluteUri,
+                    TransportUrl = configuration.TransportUri?.AbsoluteUri,
                     EnableDtmfTones = configuration.EnableDtmfTones
                 };
         }
