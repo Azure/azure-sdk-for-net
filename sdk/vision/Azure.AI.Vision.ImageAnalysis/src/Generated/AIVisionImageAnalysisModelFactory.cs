@@ -13,7 +13,7 @@ using Azure;
 namespace Azure.AI.Vision.ImageAnalysis
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class VisionImageAnalysisModelFactory
+    public static partial class AIVisionImageAnalysisModelFactory
     {
         /// <summary> Represents the outcome of an Image Analysis operation. </summary>
         /// <param name="caption"> The generated phrase that describes the content of the analyzed image. </param>

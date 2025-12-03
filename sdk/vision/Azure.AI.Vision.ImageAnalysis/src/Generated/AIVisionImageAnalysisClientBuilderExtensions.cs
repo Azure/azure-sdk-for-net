@@ -14,7 +14,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-    public static partial class VisionImageAnalysisClientBuilderExtensions
+    public static partial class AIVisionImageAnalysisClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="ImageAnalysisClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
