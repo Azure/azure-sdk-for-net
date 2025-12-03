@@ -33,7 +33,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             RawId = rawId;
@@ -45,7 +45,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The identifier kind. Only required in responses. </summary>
-        public AcsCommunicationIdentifierKind? Kind { get; }
+        public CommunicationIdentifierModelKind? Kind { get; }
 
         /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
         public string RawId { get; }
@@ -60,6 +60,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; }
 
         /// <summary> The Microsoft Teams application. </summary>
-        public AcsMicrosoftTeamsAppIdentifier MicrosoftTeamsApp { get; }
+        public MicrosoftTeamsAppIdentifierModel MicrosoftTeamsApp { get; }
     }
 }
