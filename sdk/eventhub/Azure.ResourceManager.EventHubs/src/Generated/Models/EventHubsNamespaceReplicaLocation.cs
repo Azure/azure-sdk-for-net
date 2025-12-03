@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="replicaState"> state of Namespace replica. </param>
         /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNamespaceReplicaLocation(string locationName, NamespaceGeoDRRoleType? roleType, string replicaState, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventHubsNamespaceReplicaLocation(string locationName, EventHubsNamespaceGeoDRRoleType? roleType, string replicaState, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocationName = locationName;
             RoleType = roleType;
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         public string LocationName { get; set; }
         /// <summary> GeoDR Role Types. </summary>
         [WirePath("roleType")]
-        public NamespaceGeoDRRoleType? RoleType { get; set; }
+        public EventHubsNamespaceGeoDRRoleType? RoleType { get; set; }
         /// <summary> state of Namespace replica. </summary>
         [WirePath("replicaState")]
         public string ReplicaState { get; }

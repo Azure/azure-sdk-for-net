@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="replicaState"> state of Namespace replica. </param>
         /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <returns> A new <see cref="Models.EventHubsNamespaceReplicaLocation"/> instance for mocking. </returns>
-        public static EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = null, NamespaceGeoDRRoleType? roleType = null, string replicaState = null, ResourceIdentifier clusterArmId = null)
+        public static EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = null, EventHubsNamespaceGeoDRRoleType? roleType = null, string replicaState = null, ResourceIdentifier clusterArmId = null)
         {
             return new EventHubsNamespaceReplicaLocation(locationName, roleType, replicaState, clusterArmId, serializedAdditionalRawData: null);
         }

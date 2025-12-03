@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventHubs.EventHubsNamespaceData EventHubsNamespaceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.EventHubs.Models.EventHubsSku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion? minimumTlsVersion, string provisioningState, string status, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string serviceBusEndpoint, Azure.Core.ResourceIdentifier clusterArmId, string metricId, bool? isAutoInflateEnabled, Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess? publicNetworkAccess, int? maximumThroughputUnits, bool? kafkaEnabled, bool? zoneRedundant, Azure.ResourceManager.EventHubs.Models.EventHubsEncryption encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubsNamespaceData EventHubsNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.EventHubs.Models.EventHubsSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.EventHubs.Models.EventHubsTlsVersion?), string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, Azure.Core.ResourceIdentifier clusterArmId = null, string metricId = null, bool? isAutoInflateEnabled = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccess?), int? maximumThroughputUnits = default(int?), bool? kafkaEnabled = default(bool?), bool? zoneRedundant = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.EventHubsPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null, Azure.ResourceManager.EventHubs.Models.EventHubsConfidentialComputeMode? confidentialComputeMode = default(Azure.ResourceManager.EventHubs.Models.EventHubsConfidentialComputeMode?), Azure.ResourceManager.EventHubs.Models.NamespaceGeoDataReplicationProperties geoDataReplication = null) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = null, Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType? roleType = default(Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType?), string replicaState = null, Azure.Core.ResourceIdentifier clusterArmId = null) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = null, Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType? roleType = default(Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType?), string replicaState = null, Azure.Core.ResourceIdentifier clusterArmId = null) { throw null; }
         public static Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData EventHubsNetworkRuleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), bool? trustedServiceAccessEnabled = default(bool?), Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetDefaultAction? defaultAction = default(Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetDefaultAction?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules> ipRules = null, Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag? publicNetworkAccess = default(Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.EventHubs.EventHubsNetworkRuleSetData EventHubsNetworkRuleSetData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, bool? trustedServiceAccessEnabled, Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetDefaultAction? defaultAction, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EventHubs.Models.EventHubsNetworkRuleSetIPRules> ipRules, Azure.ResourceManager.EventHubs.Models.EventHubsPublicNetworkAccessFlag? publicNetworkAccess, Azure.Core.AzureLocation? location) { throw null; }
@@ -1144,13 +1144,31 @@ namespace Azure.ResourceManager.EventHubs.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceFailOver>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceFailOver>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct EventHubsNamespaceGeoDRRoleType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public EventHubsNamespaceGeoDRRoleType(string value) { throw null; }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType Primary { get { throw null; } }
+        public static Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType Secondary { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType left, Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType left, Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class EventHubsNamespaceReplicaLocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation>
     {
         public EventHubsNamespaceReplicaLocation() { }
         public Azure.Core.ResourceIdentifier ClusterArmId { get { throw null; } set { } }
         public string LocationName { get { throw null; } set { } }
         public string ReplicaState { get { throw null; } }
-        public Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType? RoleType { get { throw null; } set { } }
+        public Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceGeoDRRoleType? RoleType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.EventHubsNamespaceReplicaLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1667,24 +1685,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         Azure.ResourceManager.EventHubs.Models.NamespaceGeoDataReplicationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.NamespaceGeoDataReplicationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.NamespaceGeoDataReplicationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.NamespaceGeoDataReplicationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NamespaceGeoDRRoleType : System.IEquatable<Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NamespaceGeoDRRoleType(string value) { throw null; }
-        public static Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType Primary { get { throw null; } }
-        public static Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType Secondary { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType left, Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType left, Azure.ResourceManager.EventHubs.Models.NamespaceGeoDRRoleType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class RetentionDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EventHubs.Models.RetentionDescription>
     {

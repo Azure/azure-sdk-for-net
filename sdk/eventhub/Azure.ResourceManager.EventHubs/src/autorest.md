@@ -138,13 +138,12 @@ rename-mapping:
   FailOver: EventHubsNamespaceFailOver
   FailOver.properties.primaryLocation: -|azure-location
   GeoDataReplicationProperties: NamespaceGeoDataReplicationProperties
-  GeoDRRoleType: NamespaceGeoDRRoleType
+  GeoDRRoleType: EventHubsNamespaceGeoDRRoleType
   NamespaceReplicaLocation.clusterArmId: -|arm-id
   Mode: EventHubsConfidentialComputeMode
   TimestampType: EventHubsTimestampType
   EncryptionKeySource: EventHubsKeySource
   NamespaceReplicaLocation: EventHubsNamespaceReplicaLocation
-  NamespaceGeoDRRoleType: EventHubsNamespaceGeoDRRoleType 
 
 directive:
   # remove messageRetentionInDays and eTag format
