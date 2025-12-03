@@ -45,6 +45,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         MCP,
         MCPConnection,
         OpenAPI,
+        OpenAPIConnection,
         A2A,
         BrowserAutomation,
         MicrosoftFabric,
@@ -59,11 +60,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FunctionCall, "What is the nickname for Seattle, WA?" },
         {ToolType.ComputerUse, "I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete." },
         {ToolType.ImageGeneration, "Generate an image of Microsoft logo."},
-        {ToolType.WebSearch, "What is special about this place?"},
+        {ToolType.WebSearch, "Use web search to describe what is special about this place?"},
         {ToolType.Memory, "What is user's favorite animal?"},
         {ToolType.BingGrounding, "How does wikipedia explain Euler's Identity?" },
         {ToolType.BingGroundingCustom, "How many medals did the USA win in the 2024 summer olympics?"},
-        {ToolType.OpenAPI, "What's the weather in Seattle?"},
+        {ToolType.OpenAPI, "Use the OpenAPI tool to print out, what is the weather in Seattle, WA today."},
+        {ToolType.OpenAPIConnection, "Recommend me 5 top hotels in paris, France."},
         {ToolType.DeepResearch, "Research the current state of studies on orca intelligence and orca language, " +
             "including what is currently known about orcas' cognitive capabilities, " +
             "communication systems and problem-solving reflected in recent publications in top their scientific " +
@@ -96,7 +98,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.FunctionCall, "You are helpful agent. Use the provided functions to help answer questions."},
         {ToolType.ComputerUse, "You are a computer automation assistant.\n\n" +
                                "Be direct and efficient. When you reach the search results page, read and describe the actual search result titles and descriptions you can see." },
-        {ToolType.OpenAPI, "You are helpful agent."},
+        {ToolType.OpenAPI, "You are a helpful assistant."},
+        {ToolType.OpenAPIConnection, "You are a helpful assistant."},
         {ToolType.DeepResearch, "You are a helpful agent that assists in researching scientific topics."},
         {ToolType.AzureAISearch, "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`."},
         {ToolType.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
@@ -143,6 +146,16 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.AzureAISearch, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGrounding, typeof(UriCitationMessageAnnotation) },
         {ToolType.BingGroundingCustom, typeof(UriCitationMessageAnnotation) },
+    };
+
+    public Dictionary<ToolType, string> ExpectedItems = new()
+    {
+        {ToolType.FileSearch, "file_search_call" },
+        {ToolType.WebSearch, "web_search_call" },
+        {ToolType.ImageGeneration, "image_generation_call"},
+        {ToolType.CodeInterpreter, "code_interpreter_call"},
+        {ToolType.OpenAPI, "openapi_call"},
+        {ToolType.OpenAPIConnection, "openapi_call"}
     };
     #endregion
 
@@ -277,6 +290,24 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return Path.Combine(new string[] { dirName, "TestData", fileName });
     }
 
+    protected static string GetModelType<T>(IJsonModel<T> model)
+    {
+        using MemoryStream memoryStream = new();
+        using var writer = new Utf8JsonWriter(memoryStream, new JsonWriterOptions());
+        model.Write(writer, ModelReaderWriterOptions.Json);
+        writer.Flush();
+        memoryStream.Position = 0;
+        using JsonDocument document = JsonDocument.Parse(memoryStream);
+        foreach (JsonProperty prop in document.RootElement.EnumerateObject())
+        {
+            if (prop.NameEquals("type"u8))
+            {
+                return prop.Value.ToString();
+            }
+        }
+        return default;
+    }
+
     #region ToolHelper
     private async Task<VectorStore> GetVectorStore(OpenAIClient openAIClient)
     {
@@ -344,6 +375,32 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         ));
         tool.ProjectConnectionId = TestEnvironment.MCP_PROJECT_CONNECTION_NAME;
         return tool;
+    }
+
+    private async Task<OpenAPIAgentTool> GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
+    {
+        OpenAPIAuthenticationDetails auth;
+        string filePath;
+        if (withConnection)
+        {
+            AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
+            auth = new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+                projectConnectionId: tripadvisorConnection.Id
+            ));
+            filePath = GetTestFile(fileName: "tripadvisor_openapi.json");
+        }
+        else
+        {
+            auth = new OpenAPIAnonymousAuthenticationDetails();
+            filePath = GetTestFile(fileName: "weather_openapi.json");
+        }
+        OpenAPIFunctionDefinition functionDefinition = new OpenAPIFunctionDefinition(
+            name: withConnection ? "tripadvisor" : "get_weather",
+            spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
+            auth: auth
+        );
+        functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
+        return new(functionDefinition);
     }
 
     /// <summary>
@@ -415,6 +472,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )),
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
+            ToolType.OpenAPI => await GetOpenAPITool(projectClient, false),
+            ToolType.OpenAPIConnection => await GetOpenAPITool(projectClient, true),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)

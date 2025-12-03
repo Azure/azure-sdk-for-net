@@ -1,5 +1,13 @@
 # Release History
 
+## 1.2.0-beta.5 (Unreleased)
+
+### Bugs Fixed
+* Fixed the uploading of files fore fine tuning.
+
+### Sample Updates
+* Added fine tuning samples.
+
 ## 1.2.0-beta.4 (2025-11-17)
 
 ### Bugs Fixed

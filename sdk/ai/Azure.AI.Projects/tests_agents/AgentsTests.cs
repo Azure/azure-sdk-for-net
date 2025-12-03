@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -15,6 +16,8 @@ using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Azure.Core.Pipeline;
 using Microsoft.ClientModel.TestFramework;
+using Microsoft.Extensions.Options;
+using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -598,6 +601,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.AzureAISearch)]
     [TestCase(ToolType.BingGrounding)]
     [TestCase(ToolType.BingGroundingCustom)]
+    [TestCase(ToolType.OpenAPI)]
+    [TestCase(ToolType.OpenAPIConnection)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -612,9 +617,26 @@ public class AgentsTests : AgentsTestBase
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
         ProjectResponsesClient responseClient = oaiClient.GetProjectResponsesClientForAgent(agentVersion.Name);
         ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
-        OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
+        ResponseCreationOptions responseOptions = new()
+        {
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+        };
+        OpenAIResponse response = await responseClient.CreateResponseAsync([request], responseOptions);
         response = await WaitForRun(responseClient, response);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+        if (ExpectedItems.TryGetValue(toolType, out string type))
+        {
+            bool isTypeMet = false;
+            foreach (ResponseItem item in response.OutputItems)
+            {
+                isTypeMet = string.Equals(GetModelType(item), type);
+                if (isTypeMet)
+                {
+                    break;
+                }
+            }
+            Assert.That(isTypeMet, Is.True, $"The item of type {type} was not found.");
+        }
         if (toolType == ToolType.ImageGeneration)
         {
             // If Tool type is Image generation, we need to check image output.
@@ -650,10 +672,13 @@ public class AgentsTests : AgentsTestBase
 
     [RecordedTest]
     [TestCase(ToolType.FileSearch)]
+    [TestCase(ToolType.CodeInterpreter)]
     [TestCase(ToolType.Memory)]
     [TestCase(ToolType.AzureAISearch)]
     [TestCase(ToolType.BingGrounding)]
     [TestCase(ToolType.BingGroundingCustom)]
+    [TestCase(ToolType.OpenAPI)]
+    [TestCase(ToolType.OpenAPIConnection)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -666,9 +691,12 @@ public class AgentsTests : AgentsTestBase
         bool isFinished = false;
         bool annotationMet = false;
         bool isStatusGood = false;
-        //Type expectedUpdateType = null;
+        ResponseCreationOptions responseOptions = new()
+        {
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+        };
         bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request]))
+        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -715,6 +743,19 @@ public class AgentsTests : AgentsTestBase
             {
                 Assert.That(streamResponseCompletedUpdate.Response.Status, Is.EqualTo(ResponseStatus.Completed));
                 isStatusGood = true;
+                if (ExpectedItems.TryGetValue(toolType, out string type))
+                {
+                    bool isTypeMet = false;
+                    foreach (ResponseItem item in streamResponseCompletedUpdate.Response.OutputItems)
+                    {
+                        isTypeMet = string.Equals(GetModelType(item), type);
+                        if (isTypeMet)
+                        {
+                            break;
+                        }
+                    }
+                    Assert.That(isTypeMet, Is.True, $"The item of type {type} was not found.");
+                }
             }
             if (expectedUpdateType is not null)
             {
@@ -877,7 +918,6 @@ public class AgentsTests : AgentsTestBase
                     {
                         if (toolType == ToolType.FunctionCall && responseItem is FunctionCallResponseItem functionToolCall)
                         {
-                            //inputItems.Add(responseItem);
                             Assert.That(functionToolCall.FunctionName, Is.EqualTo("GetCityNicknameForTest"));
                             using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.FunctionArguments);
                             string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
