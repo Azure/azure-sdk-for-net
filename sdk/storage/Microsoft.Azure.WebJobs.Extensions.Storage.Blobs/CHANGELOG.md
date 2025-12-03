@@ -7,7 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed a bug where polling for new blobs fails to detect newly created blobs when the List Blobs/Get Blobs operation requires multiple requests. If a blob is added or modified after LogScan begins, and is listed during the later portion of the listing, any blobs changed between the listing start time and the last modified timestamp of blobs found later will not be flagged as new in the subsequent LogScan.
+- Fixed an issue where polling for new blobs could miss recently created or updated blobs when the List Blobs/Get Blobs operation spans multiple requests. If a blob is added or modified after LogScan starts and appears in a later segment of the listing, any blobs changed between the initial listing start time and the last modified timestamp of those later blobs were not flagged as new in the subsequent LogScan.
 
 ### Other Changes
 
