@@ -65,6 +65,7 @@ namespace Azure.ResourceManager.Batch.Tests
         private async Task<StorageAccountResource> CreateStorageAccount(ResourceGroupResource rg, string storageAccountName)
         {
             var storageInput = ResourceDataHelper.GetStorageAccountData();
+            storageInput.AllowBlobPublicAccess = false;
             var lro = await rg.GetStorageAccounts().CreateOrUpdateAsync(WaitUntil.Completed, storageAccountName, storageInput);
             return lro.Value;
         }

@@ -83,18 +83,6 @@ namespace Azure.ResourceManager.Batch.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BatchAccountCertificateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BatchAccountCertificateResource.CreateResourceIdentifier" /> to create a <see cref="BatchAccountCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BatchAccountCertificateResource"/> object. </returns>
-        public virtual BatchAccountCertificateResource GetBatchAccountCertificateResource(ResourceIdentifier id)
-        {
-            BatchAccountCertificateResource.ValidateResourceId(id);
-            return new BatchAccountCertificateResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="BatchPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="BatchPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="BatchPrivateLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

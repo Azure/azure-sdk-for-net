@@ -8,12 +8,14 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class VmDiskSecurityProfile : IUtf8JsonSerializable, IJsonModel<VmDiskSecurityProfile>
+    public partial class VmDiskSecurityProfile : IUtf8JsonSerializable, IJsonModel<VmDiskSecurityProfile>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmDiskSecurityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,6 +40,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 writer.WritePropertyName("securityEncryptionType"u8);
                 writer.WriteStringValue(SecurityEncryptionType.Value.ToString());
+            }
+            if (Optional.IsDefined(DiskEncryptionSet))
+            {
+                writer.WritePropertyName("diskEncryptionSet"u8);
+                ((IJsonModel<WritableSubResource>)DiskEncryptionSet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,6 +84,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             BatchSecurityEncryptionType? securityEncryptionType = default;
+            WritableSubResource diskEncryptionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +98,22 @@ namespace Azure.ResourceManager.Batch.Models
                     securityEncryptionType = new BatchSecurityEncryptionType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("diskEncryptionSet"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskEncryptionSet = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerBatchContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VmDiskSecurityProfile(securityEncryptionType, serializedAdditionalRawData);
+            return new VmDiskSecurityProfile(securityEncryptionType, diskEncryptionSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmDiskSecurityProfile>.Write(ModelReaderWriterOptions options)

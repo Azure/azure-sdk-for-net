@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class DiskEncryptionConfiguration : IUtf8JsonSerializable, IJsonModel<DiskEncryptionConfiguration>
+    public partial class DiskEncryptionConfiguration : IUtf8JsonSerializable, IJsonModel<DiskEncryptionConfiguration>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskEncryptionConfiguration>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.Batch.Models
                     writer.WriteStringValue(item.ToSerialString());
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(CustomerManagedKey))
+            {
+                writer.WritePropertyName("customerManagedKey"u8);
+                writer.WriteObjectValue(CustomerManagedKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,6 +87,7 @@ namespace Azure.ResourceManager.Batch.Models
                 return null;
             }
             IList<BatchDiskEncryptionTarget> targets = default;
+            DiskCustomerManagedKey customerManagedKey = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,13 +106,22 @@ namespace Azure.ResourceManager.Batch.Models
                     targets = array;
                     continue;
                 }
+                if (property.NameEquals("customerManagedKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerManagedKey = DiskCustomerManagedKey.DeserializeDiskCustomerManagedKey(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiskEncryptionConfiguration(targets ?? new ChangeTrackingList<BatchDiskEncryptionTarget>(), serializedAdditionalRawData);
+            return new DiskEncryptionConfiguration(targets ?? new ChangeTrackingList<BatchDiskEncryptionTarget>(), customerManagedKey, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionConfiguration>.Write(ModelReaderWriterOptions options)

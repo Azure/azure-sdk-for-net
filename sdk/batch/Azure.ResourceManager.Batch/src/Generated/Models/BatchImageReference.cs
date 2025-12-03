@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="offer"> For example, UbuntuServer or WindowsServer. </param>
         /// <param name="sku"> For example, 18.04-LTS or 2022-datacenter. </param>
         /// <param name="version"> A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
-        /// <param name="id"> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </param>
+        /// <param name="id"> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://learn.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </param>
         /// <param name="sharedGalleryImageId"> This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </param>
         /// <param name="communityGalleryImageId"> This property is mutually exclusive with other properties and can be fetched from community gallery image GET call. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
         public string Sku { get; set; }
         /// <summary> A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </summary>
         public string Version { get; set; }
-        /// <summary> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </summary>
+        /// <summary> This property is mutually exclusive with other properties. The Azure Compute Gallery Image must have replicas in the same region as the Azure Batch account. For information about the firewall settings for the Batch node agent to communicate with the Batch service see https://learn.microsoft.com/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </summary>
         public ResourceIdentifier Id { get; set; }
         /// <summary> This property is mutually exclusive with other properties and can be fetched from shared gallery image GET call. </summary>
         public string SharedGalleryImageId { get; set; }

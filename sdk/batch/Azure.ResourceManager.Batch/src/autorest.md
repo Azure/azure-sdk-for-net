@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/d85634405ec3b905f1b0bfc350e47cb704aedb61/specification/batch/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/642265ba67a59559f1a91e4bb1ff98d71d594190/specification/batch/resource-manager/readme.md
 #tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -96,14 +96,6 @@ rename-mapping:
   AutoScaleRun: BatchAccountPoolAutoScaleRun
   ResizeOperationStatus: BatchResizeOperationStatus
   ComputeNodeDeallocationOption: BatchNodeDeallocationOption
-  Certificate: BatchAccountCertificate
-  CertificateCreateOrUpdateParameters: BatchAccountCertificateCreateOrUpdateContent
-  CertificateFormat: BatchAccountCertificateFormat
-  CertificateProvisioningState: BatchAccountCertificateProvisioningState
-  Certificate.properties.provisioningStateTransitionTime: provisioningStateTransitOn
-  Certificate.properties.previousProvisioningStateTransitionTime: previousProvisioningStateTransitOn
-  CertificateStoreLocation: BatchCertificateStoreLocation
-  CertificateVisibility: BatchCertificateVisibility
   PoolProvisioningState: BatchAccountPoolProvisioningState
   DeploymentConfiguration: BatchDeploymentConfiguration
   DeploymentConfiguration.virtualMachineConfiguration: vmConfiguration
@@ -123,8 +115,6 @@ rename-mapping:
   AllocationState: BatchAccountPoolAllocationState
   ApplicationPackageReference: BatchApplicationPackageReference
   ApplicationPackageReference.id: -|arm-id
-  CertificateReference: BatchCertificateReference
-  CertificateReference.id: -|arm-id
   MetadataItem: BatchAccountPoolMetadataItem
   MountConfiguration: BatchMountConfiguration
   AzureBlobFileSystemConfiguration: BatchBlobFileSystemConfiguration
@@ -192,7 +182,6 @@ rename-mapping:
   UserIdentity: BatchUserIdentity
   ImageReference: BatchImageReference
   ImageReference.id: -|arm-id
-  CertificateCreateOrUpdateParameters.properties.data: -|any
   KeyVaultProperties.keyIdentifier: -|uri
   AzureFileShareConfiguration.azureFileUrl: FileUrl
   MountConfiguration.azureBlobFileSystemConfiguration: BlobFileSystemConfiguration
@@ -201,8 +190,6 @@ rename-mapping:
   ResourceFile.autoStorageContainerName: AutoBlobContainerName
   AccountKeyType: BatchAccountKeyType
   BatchAccountRegenerateKeyParameters.keyName: KeyType
-  Certificate.properties.thumbprint: ThumbprintString
-  CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
   OSDisk: BatchOSDisk
   OSDisk.writeAcceleratorEnabled: IsWriteAcceleratorEnabled
   SecurityProfile: BatchSecurityProfile
@@ -239,7 +226,6 @@ directive:
     where: $.definitions
     transform: >
       $.BatchAccountProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
-      $.CertificateProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
       $.PrivateEndpointConnectionProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
       $.PoolProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
 # add some missing properties to ResizeError so that it could be replaced by Azure.ResponseError

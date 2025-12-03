@@ -135,18 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary> If specified, setup is performed on each node in the pool to allow tasks to run in containers. All regular tasks and job manager tasks run on this pool must specify the containerSettings property, and all other tasks may specify it. </summary>
         public BatchVmContainerConfiguration ContainerConfiguration { get; set; }
         /// <summary> If specified, encryption is performed on each node in the pool during node provisioning. </summary>
-        internal DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
-        /// <summary> On Linux pool, only "TemporaryDisk" is supported; on Windows pool, "OsDisk" and "TemporaryDisk" must be specified. </summary>
-        public IList<BatchDiskEncryptionTarget> DiskEncryptionTargets
-        {
-            get
-            {
-                if (DiskEncryptionConfiguration is null)
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration();
-                return DiskEncryptionConfiguration.Targets;
-            }
-        }
-
+        public DiskEncryptionConfiguration DiskEncryptionConfiguration { get; set; }
         /// <summary> This configuration will specify rules on how nodes in the pool will be physically allocated. </summary>
         internal NodePlacementConfiguration NodePlacementConfiguration { get; set; }
         /// <summary> Allocation policy used by Batch Service to provision the nodes. If not specified, Batch will use the regional policy. </summary>
