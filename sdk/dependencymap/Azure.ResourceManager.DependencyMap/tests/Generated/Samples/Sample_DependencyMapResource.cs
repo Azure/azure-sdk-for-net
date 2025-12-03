@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_MapsGetGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-01-31-preview/Maps_Get.json
+            // Generated from example definition: 2025-05-01-preview/Maps_Get.json
             // this example is just showing the usage of "MapsResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_MapsDeleteGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-01-31-preview/Maps_Delete.json
+            // Generated from example definition: 2025-05-01-preview/Maps_Delete.json
             // this example is just showing the usage of "MapsResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_MapsUpdateGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-01-31-preview/Maps_Update.json
+            // Generated from example definition: 2025-05-01-preview/Maps_Update.json
             // this example is just showing the usage of "MapsResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDependencyViewForFocusedMachine_MapsGetDependencyViewForFocusedMachineGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-01-31-preview/Maps_GetDependencyViewForFocusedMachine.json
+            // Generated from example definition: 2025-05-01-preview/Maps_GetDependencyViewForFocusedMachine.json
             // this example is just showing the usage of "Maps_GetDependencyViewForFocusedMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetConnectionsWithConnectedMachineForFocusedMachine_MapsGetConnectionsWithConnectedMachineForFocusedMachineGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-01-31-preview/Maps_GetConnectionsWithConnectedMachineForFocusedMachine.json
+            // Generated from example definition: 2025-05-01-preview/Maps_GetConnectionsWithConnectedMachineForFocusedMachine.json
             // this example is just showing the usage of "Maps_GetConnectionsWithConnectedMachineForFocusedMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetConnectionsForProcessOnFocusedMachine_MapsGetConnectionsForProcessOnFocusedMachineGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-01-31-preview/Maps_GetConnectionsForProcessOnFocusedMachine.json
+            // Generated from example definition: 2025-05-01-preview/Maps_GetConnectionsForProcessOnFocusedMachine.json
             // this example is just showing the usage of "Maps_GetConnectionsForProcessOnFocusedMachine" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ExportDependencies_MapsExportDependenciesGeneratedByMaximumSetRule()
         {
-            // Generated from example definition: 2025-01-31-preview/Maps_ExportDependencies.json
+            // Generated from example definition: 2025-05-01-preview/Maps_ExportDependencies.json
             // this example is just showing the usage of "Maps_ExportDependencies" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,8 +242,9 @@ namespace Azure.ResourceManager.DependencyMap.Samples
             DependencyMapResource dependencyMap = client.GetDependencyMapResource(dependencyMapResourceId);
 
             // invoke the operation
-            ExportDependenciesContent content = new ExportDependenciesContent(new ResourceIdentifier("qzjpilzxpurauwfwwanpiiafvz"))
+            ExportDependenciesContent content = new ExportDependenciesContent
             {
+                FocusedMachineId = new ResourceIdentifier("qzjpilzxpurauwfwwanpiiafvz"),
                 Filters = new DependencyMapVisualizationFilter
                 {
                     DateTime = new DependencyMapDateTimeFilter
@@ -253,10 +254,12 @@ namespace Azure.ResourceManager.DependencyMap.Samples
                     },
                     ProcessNameFilter = new DependencyMapProcessNameFilter(DependencyMapProcessNameFilterOperator.Contains, new string[] { "mnqtvduwzemjcvvmnnoqvcuemwhnz" }),
                 },
+                ApplianceNameList = { "guwwagnitv" },
             };
-            await dependencyMap.ExportDependenciesAsync(WaitUntil.Completed, content);
+            ArmOperation<ExportDependenciesOperationResult> lro = await dependencyMap.ExportDependenciesAsync(WaitUntil.Completed, content);
+            ExportDependenciesOperationResult result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

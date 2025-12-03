@@ -99,9 +99,18 @@
   </Target>
 
 
-  <Target Name="GenerateCode">
+  <Target Name="InstallTspClient">
+    <MSBuild Projects="@(ProjectReference)"
+             Targets="InstallTspClient"
+             BuildInParallel="false"
+             SkipNonexistentProjects="false"
+             SkipNonexistentTargets="true" />
+  </Target>
+
+  <Target Name="GenerateCode" DependsOnTargets="InstallTspClient">
     <MSBuild Projects="@(ProjectReference)"
              Targets="GenerateCode"
+             Properties="SkipTspClientInstall=true"
              BuildInParallel="$(BuildInParallel)"
              SkipNonexistentProjects="false"
              SkipNonexistentTargets="true" />

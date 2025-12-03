@@ -179,18 +179,21 @@ public partial struct JsonPatch
                 }
                 else
                 {
-                    if (kvp.Key.IsArrayIndex())
-                    {
-                        newJson = newJson.InsertAt(kvp.Key, kvp.Value.Value);
-                    }
-                    else
-                    {
-                        newJson = newJson.Set(kvp.Key, kvp.Value.Value);
-                    }
+                    newJson = newJson.Set(kvp.Key, GetEncodedBytes(kvp.Value));
                 }
             }
             writer.WriteRawValue(newJson.Span);
         }
+    }
+
+    private static ReadOnlyMemory<byte> GetEncodedBytes(EncodedValue value)
+    {
+        ValueKind kind = value.Kind;
+        if (kind.HasFlag(ValueKind.Utf8String) || kind.HasFlag(ValueKind.DateTime) || kind.HasFlag(ValueKind.Guid) || kind.HasFlag(ValueKind.TimeSpan))
+        {
+            return new([(byte)'"', .. value.Value.Span, (byte)'"']);
+        }
+        return value.Value;
     }
 
     private static void WriteEncodedValueAsJson(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, EncodedValue encodedValue)

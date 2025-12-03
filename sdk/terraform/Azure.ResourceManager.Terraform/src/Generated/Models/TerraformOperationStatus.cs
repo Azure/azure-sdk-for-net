@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
-    /// <summary> The status of the LRO operation. </summary>
+    /// <summary> The status of the LRO (Long Running Operation) and the export result. </summary>
     public partial class TerraformOperationStatus
     {
         /// <summary>
@@ -47,24 +47,31 @@ namespace Azure.ResourceManager.Terraform.Models
 
         /// <summary> Initializes a new instance of <see cref="TerraformOperationStatus"/>. </summary>
         /// <param name="status"> The operation status. </param>
-        internal TerraformOperationStatus(TerraformResourceProvisioningState status)
+        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
+        internal TerraformOperationStatus(TerraformResourceProvisioningState status, string id)
         {
+            Argument.AssertNotNull(id, nameof(id));
+
             Status = status;
+            Id = id;
         }
 
         /// <summary> Initializes a new instance of <see cref="TerraformOperationStatus"/>. </summary>
         /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
         /// <param name="status"> The operation status. </param>
+        /// <param name="id"> The unique identifier for the operationStatus resource. </param>
         /// <param name="name"> The name of the  operationStatus resource. </param>
         /// <param name="startOn"> Operation start time. </param>
         /// <param name="endOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TerraformOperationStatus(TerraformExportResult properties, TerraformResourceProvisioningState status, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TerraformOperationStatus(TerraformExportResult properties, TerraformResourceProvisioningState status, string id, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, double? percentComplete, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             Status = status;
+            Id = id;
             Name = name;
             StartOn = startOn;
             EndOn = endOn;
@@ -82,6 +89,8 @@ namespace Azure.ResourceManager.Terraform.Models
         public TerraformExportResult Properties { get; }
         /// <summary> The operation status. </summary>
         public TerraformResourceProvisioningState Status { get; }
+        /// <summary> The unique identifier for the operationStatus resource. </summary>
+        public string Id { get; }
         /// <summary> The name of the  operationStatus resource. </summary>
         public string Name { get; }
         /// <summary> Operation start time. </summary>

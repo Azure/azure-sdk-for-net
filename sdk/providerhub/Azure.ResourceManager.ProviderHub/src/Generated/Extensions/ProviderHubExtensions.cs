@@ -22,6 +22,11 @@ namespace Azure.ResourceManager.ProviderHub
             return client.GetCachedClient(client0 => new MockableProviderHubArmClient(client0));
         }
 
+        private static MockableProviderHubResourceGroupResource GetMockableProviderHubResourceGroupResource(ArmResource resource)
+        {
+            return resource.GetCachedClient(client => new MockableProviderHubResourceGroupResource(client, resource.Id));
+        }
+
         private static MockableProviderHubSubscriptionResource GetMockableProviderHubSubscriptionResource(ArmResource resource)
         {
             return resource.GetCachedClient(client => new MockableProviderHubSubscriptionResource(client, resource.Id));
@@ -63,6 +68,25 @@ namespace Azure.ResourceManager.ProviderHub
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetDefaultRolloutResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RegistrationNewRegionFrontloadReleaseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RegistrationNewRegionFrontloadReleaseResource.CreateResourceIdentifier" /> to create a <see cref="RegistrationNewRegionFrontloadReleaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubArmClient.GetRegistrationNewRegionFrontloadReleaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RegistrationNewRegionFrontloadReleaseResource"/> object. </returns>
+        public static RegistrationNewRegionFrontloadReleaseResource GetRegistrationNewRegionFrontloadReleaseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetRegistrationNewRegionFrontloadReleaseResource(id);
         }
 
         /// <summary>
@@ -199,6 +223,137 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ProviderAuthorizedApplicationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderAuthorizedApplicationResource.CreateResourceIdentifier" /> to create a <see cref="ProviderAuthorizedApplicationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubArmClient.GetProviderAuthorizedApplicationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProviderAuthorizedApplicationResource"/> object. </returns>
+        public static ProviderAuthorizedApplicationResource GetProviderAuthorizedApplicationResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetProviderAuthorizedApplicationResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ProviderMonitorSettingResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ProviderMonitorSettingResource.CreateResourceIdentifier" /> to create a <see cref="ProviderMonitorSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubArmClient.GetProviderMonitorSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProviderMonitorSettingResource"/> object. </returns>
+        public static ProviderMonitorSettingResource GetProviderMonitorSettingResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetProviderMonitorSettingResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of ProviderMonitorSettingResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubResourceGroupResource.GetProviderMonitorSettings()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ProviderMonitorSettingResources and their operations over a ProviderMonitorSettingResource. </returns>
+        public static ProviderMonitorSettingCollection GetProviderMonitorSettings(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableProviderHubResourceGroupResource(resourceGroupResource).GetProviderMonitorSettings();
+        }
+
+        /// <summary>
+        /// Gets the provider monitor setting details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderMonitorSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubResourceGroupResource.GetProviderMonitorSettingAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ProviderMonitorSettingResource>> GetProviderMonitorSettingAsync(this ResourceGroupResource resourceGroupResource, string providerMonitorSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableProviderHubResourceGroupResource(resourceGroupResource).GetProviderMonitorSettingAsync(providerMonitorSettingName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the provider monitor setting details.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ProviderHub/providerMonitorSettings/{providerMonitorSettingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderMonitorSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubResourceGroupResource.GetProviderMonitorSetting(string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="providerMonitorSettingName"> The name of the provider monitor setting. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="providerMonitorSettingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="providerMonitorSettingName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<ProviderMonitorSettingResource> GetProviderMonitorSetting(this ResourceGroupResource resourceGroupResource, string providerMonitorSettingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableProviderHubResourceGroupResource(resourceGroupResource).GetProviderMonitorSetting(providerMonitorSettingName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of ProviderRegistrationResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
@@ -228,7 +383,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -266,7 +421,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -289,6 +444,78 @@ namespace Azure.ResourceManager.ProviderHub
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableProviderHubSubscriptionResource(subscriptionResource).GetProviderRegistration(providerNamespace, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of the provider monitor settings in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerMonitorSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderMonitorSettings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubSubscriptionResource.GetProviderMonitorSettings(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ProviderMonitorSettingResource> GetProviderMonitorSettingsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableProviderHubSubscriptionResource(subscriptionResource).GetProviderMonitorSettingsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets the list of the provider monitor settings in the subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerMonitorSettings</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderMonitorSettings_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderMonitorSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableProviderHubSubscriptionResource.GetProviderMonitorSettings(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ProviderMonitorSettingResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ProviderMonitorSettingResource> GetProviderMonitorSettings(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableProviderHubSubscriptionResource(subscriptionResource).GetProviderMonitorSettings(cancellationToken);
         }
     }
 }

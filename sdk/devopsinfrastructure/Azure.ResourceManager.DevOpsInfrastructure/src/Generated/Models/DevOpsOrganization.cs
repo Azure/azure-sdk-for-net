@@ -60,12 +60,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="uri"> The Azure DevOps organization URL in which the pool should be created. </param>
         /// <param name="projects"> Optional list of projects in which the pool should be created. </param>
         /// <param name="parallelism"> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </param>
+        /// <param name="openAccess"> Determines if the pool should have open access to all projects in this organization. </param>
+        /// <param name="alias"> An alias to reference the Azure DevOps pool name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsOrganization(Uri uri, IList<string> projects, int? parallelism, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DevOpsOrganization(Uri uri, IList<string> projects, int? parallelism, bool? openAccess, string @alias, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Projects = projects;
             Parallelism = parallelism;
+            OpenAccess = openAccess;
+            Alias = @alias;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -80,5 +84,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public IList<string> Projects { get; }
         /// <summary> How many machines can be created at maximum in this organization out of the maximumConcurrency of the pool. </summary>
         public int? Parallelism { get; set; }
+        /// <summary> Determines if the pool should have open access to all projects in this organization. </summary>
+        public bool? OpenAccess { get; set; }
+        /// <summary> An alias to reference the Azure DevOps pool name. </summary>
+        public string Alias { get; set; }
     }
 }

@@ -1,17 +1,16 @@
-# Submission of a signature envelope to the service
+# Submit a signed statement to the service
 
 <!-- cspell:ignore cose -->
 
-This sample demonstrates how to submit your signature envelope (`COSE_Sign1`) to the service.
+This sample demonstrates how to submit your signed statement (`COSE_Sign1`) to the service.
 
-To get started, you'll need a url of the service.
+To get started, you'll need the service URL.
 
-Then, you will also need to have a valid `COSE_Sign1` envelope file. There are many ways you can obtain such an envelope, the assumption is that you have it already.
+You will also need a valid `COSE_Sign1` file. There are many ways to obtain one; this sample assumes you already have one.
 
 ## Create a client
 
-To create a new `CodeTransparencyClient` that will interact with the service, without explicit credentials if the service allows it or if you 
-want to get the publicly accessible data only. Then use a subclient to work with entries:
+Create a new `CodeTransparencyClient` that interacts with the service without explicit credentials (if the service allows it or if you only need publicly accessible data). Then use a subclient to work with entries:
 
 ```C# Snippet:CodeTransparencySample_CreateClient
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
@@ -19,7 +18,7 @@ CodeTransparencyClient client = new(new Uri("https://<< service name >>.confiden
 
 ## Submit the file
 
-The most basic usage is to submit a valid signature file to the service. Acceptance of the submission is a long running operation which is why the response will contain the operation id.
+The most basic usage submits a valid signature file to the service. Accepting the submission is a long-running operation, so the response contains the operation ID.
 
 ```C# Snippet:CodeTransparencySubmission
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
@@ -28,28 +27,22 @@ BinaryData content = BinaryData.FromStream(fileStream);
 Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
 ```
 
-## Verify if operation was successful
+## Verify the operation was successful
 
-If you want to be sure that the submission completed successfully it is necessary to check the status of the operation. The successful operation means that the signature was accepted by the service and it was countersigned, which in turn means you can get the cryptographic receipt afterwards.
+To ensure the submission completes successfully, check the status of the operation. A successful operation means the service has accepted and countersigned the signed statement, which in turn allows you to obtain the cryptographic receipt.
 
-Another important part of the operation check is that it will contain an identifier (entry ID) to be used to get the transaction receipt.
+Checking the operation also returns an identifier (entry ID) used to retrieve the transparent statement or a transaction receipt.
 
 ```C# Snippet:CodeTransparencySample1_WaitForResult
 Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
+string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
+```
 
-string entryId = string.Empty;
-CborReader cborReader = new CborReader(operationResult.Value);
-cborReader.ReadStartMap();
-while (cborReader.PeekState() != CborReaderState.EndMap)
-{
-    string key = cborReader.ReadTextString();
-    if (key == "EntryId")
-    {
-        entryId = cborReader.ReadTextString();
-    }
-    else
-        cborReader.SkipValue();
-}
+## Download the transparent statement
 
-Console.WriteLine($"The entry id to use to get the receipt and Transparent Statement is {{{entryId}}}");
+Once the operation is complete, you can download the transparent statement so you can distribute it to verify this registration.
+
+```C# Snippet:CodeTransparencySample1_DownloadStatement
+Response<BinaryData> transparentStatementResponse = client.GetEntryStatement(entryId);
 ```

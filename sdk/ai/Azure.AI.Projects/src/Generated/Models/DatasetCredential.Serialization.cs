@@ -80,13 +80,13 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            BlobReference blobReference = default;
+            AIProjectBlobReference blobReference = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("blobReference"u8))
                 {
-                    blobReference = BlobReference.DeserializeBlobReference(prop.Value, options);
+                    blobReference = AIProjectBlobReference.DeserializeAIProjectBlobReference(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

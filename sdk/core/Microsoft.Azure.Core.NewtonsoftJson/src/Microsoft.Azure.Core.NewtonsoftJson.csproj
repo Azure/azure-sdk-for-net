@@ -10,6 +10,7 @@
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>

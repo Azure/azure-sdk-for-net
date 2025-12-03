@@ -10,13 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.AgriculturePlatform;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
-    public partial class AgricultureServiceConfig : IUtf8JsonSerializable, IJsonModel<AgricultureServiceConfig>
+    /// <summary> Config of the AgriService resource instance. </summary>
+    public partial class AgricultureServiceConfig : IJsonModel<AgricultureServiceConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgricultureServiceConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AgricultureServiceConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +30,11 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgricultureServiceConfig)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(InstanceUri))
             {
                 writer.WritePropertyName("instanceUri"u8);
@@ -69,15 +70,15 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                 writer.WritePropertyName("redisCacheResourceId"u8);
                 writer.WriteStringValue(RedisCacheResourceId);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +87,27 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
-        AgricultureServiceConfig IJsonModel<AgricultureServiceConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgricultureServiceConfig IJsonModel<AgricultureServiceConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgricultureServiceConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AgricultureServiceConfig)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAgricultureServiceConfig(document.RootElement, options);
         }
 
-        internal static AgricultureServiceConfig DeserializeAgricultureServiceConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AgricultureServiceConfig DeserializeAgricultureServiceConfig(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,90 +115,91 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             string instanceUri = default;
             string version = default;
             ResourceIdentifier appServiceResourceId = default;
-            ResourceIdentifier cosmosDbResourceId = default;
+            ResourceIdentifier cosmosDBResourceId = default;
             ResourceIdentifier storageAccountResourceId = default;
             ResourceIdentifier keyVaultResourceId = default;
             ResourceIdentifier redisCacheResourceId = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceUri"u8))
+                if (prop.NameEquals("instanceUri"u8))
                 {
-                    instanceUri = property.Value.GetString();
+                    instanceUri = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("version"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    version = property.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("appServiceResourceId"u8))
+                if (prop.NameEquals("appServiceResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    appServiceResourceId = new ResourceIdentifier(property.Value.GetString());
+                    appServiceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("cosmosDbResourceId"u8))
+                if (prop.NameEquals("cosmosDbResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cosmosDbResourceId = new ResourceIdentifier(property.Value.GetString());
+                    cosmosDBResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("storageAccountResourceId"u8))
+                if (prop.NameEquals("storageAccountResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
+                    storageAccountResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("keyVaultResourceId"u8))
+                if (prop.NameEquals("keyVaultResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    keyVaultResourceId = new ResourceIdentifier(property.Value.GetString());
+                    keyVaultResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("redisCacheResourceId"u8))
+                if (prop.NameEquals("redisCacheResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    redisCacheResourceId = new ResourceIdentifier(property.Value.GetString());
+                    redisCacheResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new AgricultureServiceConfig(
                 instanceUri,
                 version,
                 appServiceResourceId,
-                cosmosDbResourceId,
+                cosmosDBResourceId,
                 storageAccountResourceId,
                 keyVaultResourceId,
                 redisCacheResourceId,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AgricultureServiceConfig>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AgricultureServiceConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -202,15 +209,20 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
-        AgricultureServiceConfig IPersistableModel<AgricultureServiceConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AgricultureServiceConfig IPersistableModel<AgricultureServiceConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AgricultureServiceConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServiceConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAgricultureServiceConfig(document.RootElement, options);
                     }
                 default:
@@ -218,6 +230,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AgricultureServiceConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,7 +22,7 @@ This section includes everything a developer needs to install the package and cr
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.AI.VoiceLive --prerelease
+dotnet add package Azure.AI.VoiceLive
 ```
 
 ### Prerequisites

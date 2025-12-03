@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupPreValidateProtection</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupStatus</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Mocking
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/Subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{azureRegion}/backupValidateFeatures</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>

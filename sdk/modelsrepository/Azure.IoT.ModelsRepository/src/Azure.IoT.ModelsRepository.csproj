@@ -13,6 +13,7 @@
     <PackageTags>IoT;ModelsRepository;Pnp;DigitalTwins;$(PackageCommonTags)</PackageTags>
     <Description>SDK for the Azure IoT Models Repository</Description>
     <Version>1.0.0-preview.7</Version>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
 

@@ -49,6 +49,7 @@ namespace Azure.Analytics.Defender.Easm
         public AssetUpdatePayload()
         {
             Labels = new ChangeTrackingDictionary<string, bool>();
+            Remediations = new ChangeTrackingList<ObservationRemediationItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssetUpdatePayload"/>. </summary>
@@ -56,13 +57,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="externalId"> A string which can be used to identify the asset in external systems. </param>
         /// <param name="labels"> Any Labels to update the asset with. </param>
         /// <param name="transfers"> A list of asset types to cascade the updates to. </param>
+        /// <param name="remediations"> A list of observation remediations to apply to the asset. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetUpdatePayload(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetUpdatePayload(AssetUpdateState? state, string externalId, IDictionary<string, bool> labels, AssetUpdateTransfers? transfers, IList<ObservationRemediationItem> remediations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             State = state;
             ExternalId = externalId;
             Labels = labels;
             Transfers = transfers;
+            Remediations = remediations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,5 +77,7 @@ namespace Azure.Analytics.Defender.Easm
         public IDictionary<string, bool> Labels { get; }
         /// <summary> A list of asset types to cascade the updates to. </summary>
         public AssetUpdateTransfers? Transfers { get; set; }
+        /// <summary> A list of observation remediations to apply to the asset. </summary>
+        public IList<ObservationRemediationItem> Remediations { get; }
     }
 }

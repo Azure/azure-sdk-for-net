@@ -453,6 +453,11 @@ public partial struct JsonPatch
                     nextPath = localPath.GetFirstProperty();
                     parentPath = "$"u8;
                 }
+                if (nextPath.IsArrayIndex() && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+                {
+                    nextPath = parentPath;
+                    kind |= ValueKind.ArrayItemAppend;
+                }
             }
             else
             {
@@ -470,14 +475,13 @@ public partial struct JsonPatch
                 {
                     nextPath = pathReader.GetParsedPath();
                     parentPath = nextPath.GetParent();
+                    if (nextPath.IsArrayIndex() && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
+                    {
+                        nextPath = parentPath;
+                        kind |= ValueKind.ArrayItemAppend;
+                    }
                 }
             }
-        }
-
-        if (nextPath.IsArrayIndex() && !encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
-        {
-            nextPath = parentPath;
-            kind |= ValueKind.ArrayItemAppend;
         }
 
         if (nextPath.SequenceEqual(localPath))

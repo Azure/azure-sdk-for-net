@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     /// <summary> The CheckNameAvailability operation response. </summary>
     public partial class TrustedSigningAccountNameAvailabilityResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningAccountNameAvailabilityResult"/>. </summary>
         internal TrustedSigningAccountNameAvailabilityResult()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.TrustedSigning.Models
         /// <param name="isNameAvailable"> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </param>
         /// <param name="reason"> The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable is false. </param>
         /// <param name="message"> An error message explaining the Reason value in more detail. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedSigningAccountNameAvailabilityResult(bool? isNameAvailable, TrustedSigningAccountNameUnavailabilityReason? reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TrustedSigningAccountNameAvailabilityResult(bool? isNameAvailable, TrustedSigningAccountNameUnavailabilityReason? reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsNameAvailable = isNameAvailable;
             Reason = reason;
             Message = message;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or is invalid and cannot be used. </summary>
         public bool? IsNameAvailable { get; }
+
         /// <summary> The reason that a trusted signing account name could not be used. The Reason element is only returned if nameAvailable is false. </summary>
         public TrustedSigningAccountNameUnavailabilityReason? Reason { get; }
+
         /// <summary> An error message explaining the Reason value in more detail. </summary>
         public string Message { get; }
     }

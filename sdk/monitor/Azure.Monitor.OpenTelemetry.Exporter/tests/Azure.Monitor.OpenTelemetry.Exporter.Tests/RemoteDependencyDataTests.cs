@@ -136,7 +136,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
-        public void ValidateDbRemoteDependencyData()
+        public void ValidateOldDbRemoteDependencyData()
         {
             using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
             using var activity = activitySource.StartActivity(
@@ -152,6 +152,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.SetTag(SemanticConventions.AttributeDbSystem, "mssql");
             activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via peer.service. all possible combinations are covered in AzMonListExtensionsTests.
             activity.SetTag(SemanticConventions.AttributeDbStatement, "Select * from table");
+
+            var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
+
+            var remoteDependencyData = new RemoteDependencyData(2, activity, ref activityTagsProcessor);
+
+            Assert.Equal(ActivityName, remoteDependencyData.Name);
+            Assert.Equal(activity.Context.SpanId.ToHexString(), remoteDependencyData.Id);
+            Assert.Equal("Select * from table", remoteDependencyData.Data);
+            Assert.Equal("localhost | mysqlserver", remoteDependencyData.Target);
+            Assert.Null(remoteDependencyData.ResultCode);
+            Assert.Equal(activity.Duration.ToString("c", CultureInfo.InvariantCulture), remoteDependencyData.Duration);
+            Assert.Equal(activity.Status != ActivityStatusCode.Error, remoteDependencyData.Success);
+            Assert.True(remoteDependencyData.Properties.Count == 1);
+            Assert.True(remoteDependencyData.Properties.Contains(new KeyValuePair<string, string>(SemanticConventions.AttributeDbName, "mysqlserver" )));
+            Assert.True(remoteDependencyData.Measurements.Count == 0);
+        }
+
+        [Fact]
+        public void ValidateNewDbRemoteDependencyData()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var activity = activitySource.StartActivity(
+                ActivityName,
+                ActivityKind.Client,
+                parentContext: new ActivityContext(ActivityTraceId.CreateRandom(), ActivitySpanId.CreateRandom(), ActivityTraceFlags.Recorded),
+                startTime: DateTime.UtcNow);
+            Assert.NotNull(activity);
+            activity.Stop();
+
+            activity.SetStatus(ActivityStatusCode.Ok);
+            activity.SetTag(SemanticConventions.AttributeDbNamespace, "mysqlserver");
+            activity.SetTag(SemanticConventions.AttributeDbSystemName, "mssql");
+            activity.SetTag(SemanticConventions.AttributePeerService, "localhost"); // only adding test via peer.service. all possible combinations are covered in AzMonListExtensionsTests.
+            activity.SetTag(SemanticConventions.AttributeDbQueryText, "Select * from table");
 
             var activityTagsProcessor = TraceHelper.EnumerateActivityTags(activity);
 

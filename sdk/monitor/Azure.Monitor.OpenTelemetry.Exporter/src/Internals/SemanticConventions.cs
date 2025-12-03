@@ -164,5 +164,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         // Messaging v1.21.0 https://github.com/open-telemetry/opentelemetry-specification/blob/v1.21.0/specification/trace/semantic_conventions/messaging.md
         public const string AttributeMessagingDestinationName = "messaging.destination.name";
         public const string AttributeNetworkProtocolName = "network.protocol.name";
+
+        // Database v1.36.0 https://github.com/open-telemetry/semantic-conventions/tree/v1.36.0/docs/database
+        public const string AttributeDbCollectionName = "db.collection.name";
+        public const string AttributeDbOperationName = "db.operation.name";
+        public const string AttributeDbSystemName = "db.system.name";
+        public const string AttributeDbNamespace = "db.namespace";
+        public const string AttributeDbResponseStatusCode = "db.response.status_code";
+        public const string AttributeDbOperationBatchSize = "db.operation.batch.size";
+        public const string AttributeDbQuerySummary = "db.query.summary";
+        public const string AttributeDbQueryText = "db.query.text";
+        public const string AttributeDbStoredProcedureName = "db.stored_procedure.name";
     }
 }

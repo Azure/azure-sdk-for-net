@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class JobResourceData : TrackedResourceData
@@ -43,9 +43,11 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal JobProperties Properties { get; }
 
         /// <summary> Gets or sets the JobName. </summary>
+        [WirePath("properties.jobName")]
         public string JobName
         {
             get

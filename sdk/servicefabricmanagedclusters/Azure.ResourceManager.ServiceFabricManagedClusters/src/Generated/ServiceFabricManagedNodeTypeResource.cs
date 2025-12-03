@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -686,7 +686,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -870,7 +870,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1008,7 +1008,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1054,7 +1054,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1100,7 +1100,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1142,7 +1142,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1184,7 +1184,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1197,7 +1197,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual AsyncPageable<FaultSimulation> GetFaultSimulationAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetFaultSimulation", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1213,7 +1214,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1226,7 +1227,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual Pageable<FaultSimulation> GetFaultSimulation(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetFaultSimulation", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serviceFabricManagedNodeTypeNodeTypesRestClient.CreateListFaultSimulationNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FaultSimulation.DeserializeFaultSimulation(e), _serviceFabricManagedNodeTypeNodeTypesClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetFaultSimulation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1242,7 +1244,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1251,7 +1253,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual AsyncPageable<NodeTypeAvailableSku> GetAvailableSkusAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeTypeSkusRestClient.CreateGetAvailableSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(e), _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeTypeSkusRestClient.CreateGetAvailableSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(e), _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1267,7 +1270,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1276,7 +1279,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         public virtual Pageable<NodeTypeAvailableSku> GetAvailableSkus(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeTypeSkusRestClient.CreateGetAvailableSkusRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(e), _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", null, cancellationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nodeTypeSkusRestClient.CreateGetAvailableSkusNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NodeTypeAvailableSku.DeserializeNodeTypeAvailableSku(e), _nodeTypeSkusClientDiagnostics, Pipeline, "ServiceFabricManagedNodeTypeResource.GetAvailableSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1292,7 +1296,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1354,7 +1358,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1416,7 +1420,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1473,7 +1477,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1530,7 +1534,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1590,7 +1594,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
+        /// <description>2025-06-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -320,7 +320,7 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals = null;
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
-                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<ToolOutput> ?? new ChangeTrackingList<ToolOutput>(),
+                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 true,
                 null);
@@ -393,7 +393,7 @@ namespace Azure.AI.Agents.Persistent
                 toolApprovals = null;
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(
-                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<ToolOutput> ?? new ChangeTrackingList<ToolOutput>(),
+                toolOutputs: toolOutputs?.ToList() as IReadOnlyList<StructuredToolOutput> ?? new ChangeTrackingList<StructuredToolOutput>(),
                 toolApprovals: toolApprovals?.ToList() as IReadOnlyList<ToolApproval> ?? new ChangeTrackingList<ToolApproval>(),
                 stream: true,
                 serializedAdditionalRawData: null);

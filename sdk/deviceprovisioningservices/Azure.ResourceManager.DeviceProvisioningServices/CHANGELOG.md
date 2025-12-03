@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 1.3.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,7 +10,15 @@
 
 ### Other Changes
 
-Generate SDK from typespec for api `2025-02-01-preview`
+## 1.3.0-beta.1 (2025-10-13)
+
+### Features Added
+
+- Updated to support API version `2025-02-01-preview`
+
+### Other Changes
+
+- Generate SDK from typespec for api `2025-02-01-preview`
 
 ## 1.2.1 (2025-03-11)
 

@@ -38,6 +38,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStringValue(LinkedOperation.ToString());
             writer.WritePropertyName("linkedAction"u8);
             writer.WriteStringValue(LinkedAction.ToString());
+            if (Optional.IsCollectionDefined(DependsOnTypes))
+            {
+                writer.WritePropertyName("dependsOnTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in DependsOnTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,6 +87,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             }
             LinkedOperation linkedOperation = default;
             LinkedAction linkedAction = default;
+            IList<string> dependsOnTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +102,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     linkedAction = new LinkedAction(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("dependsOnTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    dependsOnTypes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new LinkedOperationRule(linkedOperation, linkedAction, serializedAdditionalRawData);
+            return new LinkedOperationRule(linkedOperation, linkedAction, dependsOnTypes ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LinkedOperationRule>.Write(ModelReaderWriterOptions options)

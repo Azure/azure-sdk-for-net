@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary> Credentials that do not require authentication. </summary>
-    public partial class NoAuthenticationCredentials : BaseCredentials
+    public partial class NoAuthenticationCredentials : AIProjectConnectionBaseCredential
     {
         /// <summary> Initializes a new instance of <see cref="NoAuthenticationCredentials"/>. </summary>
         internal NoAuthenticationCredentials()

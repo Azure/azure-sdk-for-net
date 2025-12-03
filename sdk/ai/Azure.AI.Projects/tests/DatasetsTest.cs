@@ -29,7 +29,7 @@ namespace Azure.AI.Projects.Tests
         [Ignore("Calls to Azure.Storage.Blobs are not recorded with SCM structure")]
         public async Task DatasetsFileTest()
         {
-            var connectionName = TestEnvironment.CONNECTIONNAME;
+            var connectionName = TestEnvironment.STORAGECONNECTIONNAME;
             var datasetName = string.Concat(TestEnvironment.DATASETNAME, "-", Guid.NewGuid().ToString("N").Substring(0, 8));
             var filePath = TestEnvironment.SAMPLEFILEPATH;
             var datasetVersion = TestEnvironment.DATASETVERSION1;
@@ -49,7 +49,7 @@ namespace Azure.AI.Projects.Tests
         private void DatasetsFileTestSync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
         {
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
-            FileDatasetVersion fileDataset = projectClient.Datasets.UploadFile(
+            FileDataset fileDataset = projectClient.Datasets.UploadFile(
                 name: datasetName,
                 version: datasetVersion,
                 filePath: filePath,
@@ -57,14 +57,14 @@ namespace Azure.AI.Projects.Tests
                 );
             ValidateDataset(
                 fileDataset,
-                expectedDatasetType: "FileDatasetVersion",
+                expectedDatasetType: "FileDataset",
                 expectedDatasetName: datasetName,
                 expectedDatasetVersion: datasetVersion,
                 expectedConnectionName: connectionName
             );
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
-            DatasetVersion dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion);
+            AIProjectDataset dataset = projectClient.Datasets.GetDataset(datasetName, datasetVersion);
             ValidateDataset(
                 dataset,
                 expectedDatasetType: "FileDatasetVersion",
@@ -93,13 +93,13 @@ namespace Azure.AI.Projects.Tests
             ValidateAssetCredential(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersions(datasetName))
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersions(datasetName))
             {
                 ValidateDataset(ds, expectedDatasetName: datasetName);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            foreach (DatasetVersion ds in projectClient.Datasets.GetDatasets())
+            foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasets())
             {
                 ValidateDataset(ds);
             }
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Tests
         private async Task DatasetsFileTestAsync(AIProjectClient projectClient, string datasetName, string connectionName, string filePath, string datasetVersion)
         {
             Console.WriteLine($"Uploading a single file to create Dataset with name {datasetName} and version {datasetVersion}:");
-            FileDatasetVersion fileDataset = await projectClient.Datasets.UploadFileAsync(
+            FileDataset fileDataset = await projectClient.Datasets.UploadFileAsync(
                 name: datasetName,
                 version: datasetVersion,
                 filePath: filePath,
@@ -136,14 +136,14 @@ namespace Azure.AI.Projects.Tests
                 );
             ValidateDataset(
                 fileDataset,
-                expectedDatasetType: "FileDatasetVersion",
+                expectedDatasetType: "FileDataset",
                 expectedDatasetName: datasetName,
                 expectedDatasetVersion: datasetVersion,
                 expectedConnectionName: connectionName
             );
 
             Console.WriteLine($"Retrieving Dataset version {datasetVersion}:");
-            DatasetVersion dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion);
+            AIProjectDataset dataset = await projectClient.Datasets.GetDatasetAsync(datasetName, datasetVersion);
             ValidateDataset(
                 dataset,
                 expectedDatasetType: "FileDatasetVersion",
@@ -172,13 +172,13 @@ namespace Azure.AI.Projects.Tests
             ValidateAssetCredential(credentials);
 
             Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetVersionsAsync(datasetName))
             {
                 ValidateDataset(ds, expectedDatasetName: datasetName);
             }
 
             Console.WriteLine($"Listing latest versions for all datasets:");
-            await foreach (DatasetVersion ds in projectClient.Datasets.GetDatasetsAsync())
+            await foreach (AIProjectDataset ds in projectClient.Datasets.GetDatasetsAsync())
             {
                 ValidateDataset(ds);
             }

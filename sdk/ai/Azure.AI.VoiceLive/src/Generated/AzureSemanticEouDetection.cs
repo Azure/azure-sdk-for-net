@@ -22,7 +22,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="model"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="thresholdLevel"> Threshold level setting. Recommended instead of `threshold`. One of `low`, `medium`, `high`, or `default`. </param>
-        /// <param name="timeoutMs"> Gets or sets the Timeout. </param>
+        /// <param name="timeoutMs"> Timeout in milliseconds. Recommended instead of `timeout`. </param>
         internal AzureSemanticEouDetection(EouDetectionModel model, IDictionary<string, BinaryData> additionalBinaryDataProperties, EouThresholdLevel? thresholdLevel, float? timeoutMs) : base(model, additionalBinaryDataProperties)
         {
             ThresholdLevel = thresholdLevel;

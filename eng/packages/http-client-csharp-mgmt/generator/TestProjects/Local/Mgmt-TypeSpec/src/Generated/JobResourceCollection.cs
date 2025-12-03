@@ -15,7 +15,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="JobResource"/> and their operations.
@@ -38,7 +38,7 @@ namespace MgmtTypeSpec
         internal JobResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(JobResource.ResourceType, out string jobResourceApiVersion);
-            _jobResourcesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", JobResource.ResourceType.Namespace, Diagnostics);
+            _jobResourcesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", JobResource.ResourceType.Namespace, Diagnostics);
             _jobResourcesRestClient = new JobResources(_jobResourcesClientDiagnostics, Pipeline, Endpoint, jobResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

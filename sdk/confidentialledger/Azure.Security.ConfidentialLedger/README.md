@@ -288,7 +288,7 @@ Console.WriteLine($"The latest ledger entry from the collection is {latestCollec
 Ledger entries in a collection may be retrieved over a range of transaction ids.
 Note: Both ranges are optional; they can be provided individually or not at all.
 
-```C#
+```C# Snippet:RangedQuery
 ledgerClient.GetLedgerEntries(fromTransactionId: "2.1", toTransactionId: collectionTransactionId);
 ```
 #### Tags

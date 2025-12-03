@@ -20,12 +20,10 @@ namespace Azure.AI.Language.Text.Authoring
         {
             /// <summary> Service version "2023-04-01". </summary>
             V2023_04_01 = 1,
-            /// <summary> Service version "2023-04-15-preview". </summary>
-            V2023_04_15_Preview = 2,
             /// <summary> Service version "2024-11-15-preview". </summary>
-            V2024_11_15_Preview = 3,
+            V2024_11_15_Preview = 2,
             /// <summary> Service version "2025-05-15-preview". </summary>
-            V2025_05_15_Preview = 4,
+            V2025_05_15_Preview = 3,
         }
 
         internal string Version { get; }
@@ -36,7 +34,6 @@ namespace Azure.AI.Language.Text.Authoring
             Version = version switch
             {
                 ServiceVersion.V2023_04_01 => "2023-04-01",
-                ServiceVersion.V2023_04_15_Preview => "2023-04-15-preview",
                 ServiceVersion.V2024_11_15_Preview => "2024-11-15-preview",
                 ServiceVersion.V2025_05_15_Preview => "2025-05-15-preview",
                 _ => throw new NotSupportedException()

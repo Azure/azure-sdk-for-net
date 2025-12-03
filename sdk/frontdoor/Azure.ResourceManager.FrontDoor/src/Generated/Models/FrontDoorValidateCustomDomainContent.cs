@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The host name of the custom domain. Must be a domain name. </summary>
+        [WirePath("hostName")]
         public string HostName { get; }
     }
 }

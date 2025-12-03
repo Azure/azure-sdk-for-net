@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The description of the intent or details of the Experiment. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The state of the Experiment. </summary>
+        [WirePath("properties.enabledState")]
         public FrontDoorExperimentState? EnabledState { get; set; }
     }
 }

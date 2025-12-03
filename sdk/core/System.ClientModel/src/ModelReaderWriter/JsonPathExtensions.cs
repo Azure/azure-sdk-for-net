@@ -428,7 +428,9 @@ internal static class JsonPathExtensions
     public static byte[] Set(this ReadOnlyMemory<byte> json, ReadOnlySpan<byte> jsonPath, ReadOnlyMemory<byte> jsonReplacement)
     {
         bool found = TryFind(json.Span, jsonPath, out Utf8JsonReader jsonReader);
-        return jsonReader.SetCurrentValue(found, jsonPath.GetPropertyName(), json, jsonReplacement);
+        return !found && jsonPath.IsArrayIndex()
+            ? json.InsertAt(jsonPath, jsonReplacement)
+            : jsonReader.SetCurrentValue(found, jsonPath.GetPropertyName(), json, jsonReplacement);
     }
 
     /// <summary>

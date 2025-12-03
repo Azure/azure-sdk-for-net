@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePrivateEndpoint()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointCreate.json
             // this example is just showing the usage of "PrivateEndpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.6"),
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePrivateEndpointWithApplicationSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointCreateWithASG.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointCreateWithASG.json
             // this example is just showing the usage of "PrivateEndpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,7 +130,7 @@ Id = new ResourceIdentifier("/subscriptions/subId/resourceGroups/rg1/provders/Mi
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePrivateEndpointWithManualApprovalConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointCreateForManualApproval.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointCreateForManualApproval.json
             // this example is just showing the usage of "PrivateEndpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -186,7 +186,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateEndpoint()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGet.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +219,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateEndpointWithApplicationSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGetWithASG.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGetWithASG.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -252,7 +252,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateEndpointWithManualApprovalConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGetForManualApproval.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGetForManualApproval.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -285,7 +285,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPrivateEndpointsInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointList.json
             // this example is just showing the usage of "PrivateEndpoints_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -320,7 +320,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPrivateEndpoint()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGet.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -349,7 +349,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPrivateEndpointWithApplicationSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGetWithASG.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGetWithASG.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -378,7 +378,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPrivateEndpointWithManualApprovalConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGetForManualApproval.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGetForManualApproval.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -407,7 +407,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPrivateEndpoint()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGet.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -448,7 +448,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPrivateEndpointWithApplicationSecurityGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGetWithASG.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGetWithASG.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -489,7 +489,7 @@ PrivateIPAddress = IPAddress.Parse("192.168.0.5"),
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPrivateEndpointWithManualApprovalConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/PrivateEndpointGetForManualApproval.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/PrivateEndpointGetForManualApproval.json
             // this example is just showing the usage of "PrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

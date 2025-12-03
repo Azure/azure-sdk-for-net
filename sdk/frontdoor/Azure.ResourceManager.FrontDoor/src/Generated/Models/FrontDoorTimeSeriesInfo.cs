@@ -87,18 +87,25 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The endpoint associated with the Timeseries data point. </summary>
+        [WirePath("properties.endpoint")]
         public Uri Endpoint { get; set; }
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
+        [WirePath("properties.startDateTimeUTC")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
+        [WirePath("properties.endDateTimeUTC")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> The aggregation interval of the Timeseries. </summary>
+        [WirePath("properties.aggregationInterval")]
         public FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get; set; }
         /// <summary> The type of Timeseries. </summary>
+        [WirePath("properties.timeseriesType")]
         public FrontDoorTimeSeriesType? TimeSeriesType { get; set; }
         /// <summary> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </summary>
+        [WirePath("properties.country")]
         public string Country { get; set; }
         /// <summary> The set of data points for the timeseries. </summary>
+        [WirePath("properties.timeseriesData")]
         public IList<FrontDoorTimeSeriesDataPoint> TimeSeriesData { get; }
     }
 }

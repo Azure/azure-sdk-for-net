@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.CloudHealth</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider CloudHealth.</Description>
     <PackageTags>azure;management;arm;resource manager;cloudhealth</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

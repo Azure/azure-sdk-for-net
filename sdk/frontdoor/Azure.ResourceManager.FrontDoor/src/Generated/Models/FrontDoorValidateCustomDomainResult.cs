@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Indicates whether the custom domain is valid or not. </summary>
+        [WirePath("customDomainValidated")]
         public bool? IsCustomDomainValidated { get; }
         /// <summary> The reason why the custom domain is not valid. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> Error message describing why the custom domain is not valid. </summary>
+        [WirePath("message")]
         public string Message { get; }
     }
 }

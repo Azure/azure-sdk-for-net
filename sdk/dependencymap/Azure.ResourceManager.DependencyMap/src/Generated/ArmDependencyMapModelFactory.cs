@@ -69,13 +69,36 @@ namespace Azure.ResourceManager.DependencyMap.Models
             return new GetConnectionsForProcessOnFocusedMachineContent(focusedMachineId, processIdOnFocusedMachine, filters, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <param name="filters"> Filters for ExportDependencies. </param>
-        /// <returns> A new <see cref="Models.ExportDependenciesContent"/> instance for mocking. </returns>
-        public static ExportDependenciesContent ExportDependenciesContent(ResourceIdentifier focusedMachineId = null, DependencyMapVisualizationFilter filters = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ExportDependenciesOperationResult"/>. </summary>
+        /// <param name="id"> The status URL of export dependencies operation. </param>
+        /// <param name="name"> The resource name of the operation status. It must match the last segment of 'id' field. </param>
+        /// <param name="status"> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </param>
+        /// <param name="error"> Contains error details if status is Failed/Canceled. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="properties"> Properties for export dependencies. These should only be set if the status is Succeeded. </param>
+        /// <returns> A new <see cref="Models.ExportDependenciesOperationResult"/> instance for mocking. </returns>
+        public static ExportDependenciesOperationResult ExportDependenciesOperationResult(string id = null, string name = null, string status = null, ResponseError error = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, ExportDependenciesResultProperties properties = null)
         {
-            return new ExportDependenciesContent(focusedMachineId, filters, serializedAdditionalRawData: null);
+            return new ExportDependenciesOperationResult(
+                id,
+                name,
+                status,
+                error,
+                startOn,
+                endOn,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExportDependenciesResultProperties"/>. </summary>
+        /// <param name="exportedDataSasUri"> The SAS URI of the blob containing the exported dependencies data. </param>
+        /// <param name="statusCode"> A status code returned by the service with additional context about the export dependencies operation. </param>
+        /// <param name="additionalInfoAvailableDaysCount"> Additional information about the exported data. </param>
+        /// <returns> A new <see cref="Models.ExportDependenciesResultProperties"/> instance for mocking. </returns>
+        public static ExportDependenciesResultProperties ExportDependenciesResultProperties(string exportedDataSasUri = null, ExportDependenciesStatusCode? statusCode = null, int? additionalInfoAvailableDaysCount = null)
+        {
+            return new ExportDependenciesResultProperties(exportedDataSasUri, statusCode, additionalInfoAvailableDaysCount != null ? new ExportDependenciesAdditionalInfo(additionalInfoAvailableDaysCount, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DependencyMap.DependencyMapDiscoverySourceData"/>. </summary>

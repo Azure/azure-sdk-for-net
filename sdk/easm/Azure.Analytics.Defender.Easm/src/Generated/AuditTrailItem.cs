@@ -51,7 +51,7 @@ namespace Azure.Analytics.Defender.Easm
         }
 
         /// <summary> Initializes a new instance of <see cref="AuditTrailItem"/>. </summary>
-        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="kind"> The kind of asset. </param>
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Defender.Easm
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The system generated unique id for the resource. </summary>
+        /// <summary> This is typically the same as the name but might be different for different models. </summary>
         public string Id { get; }
         /// <summary> The caller provided unique name for the resource. </summary>
         public string Name { get; }

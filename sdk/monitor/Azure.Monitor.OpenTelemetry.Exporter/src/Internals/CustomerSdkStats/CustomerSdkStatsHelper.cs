@@ -113,48 +113,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// <summary>
         /// Tracks successful telemetry transmission using pre-computed counts.
         /// </summary>
-        /// <param name="telemetryCounter">Telemetry counter for tracking metrics</param>
-        public static void TrackSuccess(TelemetryCounter? telemetryCounter)
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
+        public static void TrackSuccess(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter)
         {
-            if (!IsEnabled() || telemetryCounter == null)
+            if (!IsEnabled() || telemetrySchemaTypeCounter == null)
                 return;
 
             try
             {
-                if (telemetryCounter._requestCount != 0)
+                if (telemetrySchemaTypeCounter._requestCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetBaseTags("REQUEST");
-                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetryCounter._requestCount, tags);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
                 }
 
-                if (telemetryCounter._dependencyCount != 0)
+                if (telemetrySchemaTypeCounter._dependencyCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetBaseTags("DEPENDENCY");
-                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetryCounter._dependencyCount, tags);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
                 }
 
-                if (telemetryCounter._exceptionCount != 0)
+                if (telemetrySchemaTypeCounter._exceptionCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetBaseTags("EXCEPTION");
-                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetryCounter._exceptionCount, tags);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
                 }
 
-                if (telemetryCounter._eventCount != 0)
+                if (telemetrySchemaTypeCounter._eventCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetBaseTags("EVENT");
-                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetryCounter._eventCount, tags);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
                 }
 
-                if (telemetryCounter._metricCount != 0)
+                if (telemetrySchemaTypeCounter._metricCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetBaseTags("METRIC");
-                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetryCounter._metricCount, tags);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
                 }
 
-                if (telemetryCounter._traceCount != 0)
+                if (telemetrySchemaTypeCounter._traceCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetBaseTags("TRACE");
-                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetryCounter._traceCount, tags);
+                    CustomerSdkStatsMeters.ItemSuccessCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
                 }
             }
             catch (Exception ex)
@@ -170,21 +170,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// - For other scenarios: use DropCode enum values (CLIENT_EXCEPTION, CLIENT_READONLY, etc.)
         /// </summary>
         /// <param name="persistentBlobProviderExists">Indicates if persistent blob storage is configured</param>
-        /// <param name="telemetryCounter">Telemetry counter for tracking metrics</param>
-        public static void TrackDropped(TelemetryCounter? telemetryCounter, bool persistentBlobProviderExists)
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
+        public static void TrackDropped(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, bool persistentBlobProviderExists)
         {
-            TrackDropped(telemetryCounter, (int)(persistentBlobProviderExists == false ? DropCode.ClientStorageDisabled : DropCode.ClientPersistenceIssue), null);
+            TrackDropped(telemetrySchemaTypeCounter, (int)(persistentBlobProviderExists == false ? DropCode.ClientStorageDisabled : DropCode.ClientPersistenceIssue), null);
         }
 
         /// <summary>
         /// Tracks dropped telemetry using pre-computed counts.
         /// </summary>
-        /// <param name="telemetryCounter">Telemetry counter for tracking metrics</param>
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
         /// <param name="dropCode">Drop code - either HTTP status code or DropCode enum value cast to int</param>
         /// <param name="dropReason">Optional detailed reason for the dropped telemetry</param>
-        public static void TrackDropped(TelemetryCounter? telemetryCounter, int dropCode, string? dropReason = null)
+        public static void TrackDropped(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, int dropCode, string? dropReason = null)
         {
-            if (!IsEnabled() || telemetryCounter == null)
+            if (!IsEnabled() || telemetrySchemaTypeCounter == null)
                 return;
 
             try
@@ -199,40 +199,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
 
                 dropCodeString ??= dropCode.ToString();
 
-                if (telemetryCounter._requestCount != 0)
+                if (telemetrySchemaTypeCounter._requestCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetDroppedTags("REQUEST", dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetryCounter._requestCount, tags);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
                 }
 
-                if (telemetryCounter._dependencyCount != 0)
+                if (telemetrySchemaTypeCounter._dependencyCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetDroppedTags("DEPENDENCY", dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetryCounter._dependencyCount, tags);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
                 }
 
-                if (telemetryCounter._exceptionCount != 0)
+                if (telemetrySchemaTypeCounter._exceptionCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetDroppedTags("EXCEPTION", dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetryCounter._exceptionCount, tags);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
                 }
 
-                if (telemetryCounter._eventCount != 0)
+                if (telemetrySchemaTypeCounter._eventCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetDroppedTags("EVENT", dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetryCounter._eventCount, tags);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
                 }
 
-                if (telemetryCounter._metricCount != 0)
+                if (telemetrySchemaTypeCounter._metricCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetDroppedTags("METRIC", dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetryCounter._metricCount, tags);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
                 }
 
-                if (telemetryCounter._traceCount != 0)
+                if (telemetrySchemaTypeCounter._traceCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetDroppedTags("TRACE", dropCodeString, dropReason);
-                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetryCounter._traceCount, tags);
+                    CustomerSdkStatsMeters.ItemDroppedCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
                 }
             }
             catch (Exception ex)
@@ -244,12 +244,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// <summary>
         /// Tracks retry telemetry using pre-computed counts.
         /// </summary>
-        /// <param name="telemetryCounter">Telemetry counter for tracking metrics</param>
+        /// <param name="telemetrySchemaTypeCounter">Telemetry counter for tracking metrics</param>
         /// <param name="retryCode">retry code - either HTTP status code or DropCode enum value cast to int</param>
         /// <param name="retryReason">Optional detailed reason for the retry telemetry</param>
-        public static void TrackRetry(TelemetryCounter? telemetryCounter, int retryCode, string? retryReason = null)
+        public static void TrackRetry(TelemetrySchemaTypeCounter? telemetrySchemaTypeCounter, int retryCode, string? retryReason = null)
         {
-            if (!IsEnabled() || telemetryCounter == null)
+            if (!IsEnabled() || telemetrySchemaTypeCounter == null)
                 return;
 
             try
@@ -264,40 +264,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
 
                 retryCodeString ??= retryCode.ToString();
 
-                if (telemetryCounter._requestCount != 0)
+                if (telemetrySchemaTypeCounter._requestCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetRetryTags("REQUEST", retryCodeString, retryReason);
-                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetryCounter._requestCount, tags);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._requestCount, tags);
                 }
 
-                if (telemetryCounter._dependencyCount != 0)
+                if (telemetrySchemaTypeCounter._dependencyCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetRetryTags("DEPENDENCY", retryCodeString, retryReason);
-                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetryCounter._dependencyCount, tags);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._dependencyCount, tags);
                 }
 
-                if (telemetryCounter._exceptionCount != 0)
+                if (telemetrySchemaTypeCounter._exceptionCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetRetryTags("EXCEPTION", retryCodeString, retryReason);
-                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetryCounter._exceptionCount, tags);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._exceptionCount, tags);
                 }
 
-                if (telemetryCounter._eventCount != 0)
+                if (telemetrySchemaTypeCounter._eventCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetRetryTags("EVENT", retryCodeString, retryReason);
-                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetryCounter._eventCount, tags);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._eventCount, tags);
                 }
 
-                if (telemetryCounter._metricCount != 0)
+                if (telemetrySchemaTypeCounter._metricCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetRetryTags("METRIC", retryCodeString, retryReason);
-                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetryCounter._metricCount, tags);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._metricCount, tags);
                 }
 
-                if (telemetryCounter._traceCount != 0)
+                if (telemetrySchemaTypeCounter._traceCount != 0)
                 {
                     var tags = CustomerSdkStatsDimensions.GetRetryTags("TRACE", retryCodeString, retryReason);
-                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetryCounter._traceCount, tags);
+                    CustomerSdkStatsMeters.ItemRetryCount.Add(telemetrySchemaTypeCounter._traceCount, tags);
                 }
             }
             catch (Exception ex)

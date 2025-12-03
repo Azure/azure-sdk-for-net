@@ -4,12 +4,11 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using OpenAI.Chat;
 using OpenAI.Embeddings;
 
 namespace Azure.AI.Projects.Tests;
@@ -27,7 +26,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
@@ -40,8 +39,18 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        var credential = new DefaultAzureCredential();
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+        ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+        {
+            throw new InvalidOperationException("Invalid URI.");
+        }
+        uri = new Uri($"https://{uri.Host}");
+
+        AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
         EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Generate an embedding");
@@ -61,7 +70,7 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
         var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
-        var modelDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var modelDeploymentName = TestEnvironment.TEXTEMBEDDINGSMODELDEPLOYMENTNAME;
         var connectionName = "";
         try
         {
@@ -74,8 +83,18 @@ public class Sample_AzureOpenAI_Embeddings : SamplesBase<AIProjectsTestEnvironme
 
 #endif
         Console.WriteLine("Create the Azure OpenAI embedding client");
-        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+        var credential = new DefaultAzureCredential();
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+        ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+        if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+        {
+            throw new InvalidOperationException("Invalid URI.");
+        }
+        uri = new Uri($"https://{uri.Host}");
+
+        AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
         EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
         Console.WriteLine("Generate an embedding");

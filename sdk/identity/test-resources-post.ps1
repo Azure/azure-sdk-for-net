@@ -28,7 +28,7 @@ az functionapp deployment source config-zip -g $DeploymentOutputs['IDENTITY_RESO
 # clean up
 Remove-Item -Force -Recurse "$workingFolder/Pub"
 
-$containerImage = 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:4484670'
+$containerImage = 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:5404191'
 $MIClientId = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_CLIENT_ID']
 $MIName = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_NAME']
 $SaAccountName = 'workload-identity-sa'

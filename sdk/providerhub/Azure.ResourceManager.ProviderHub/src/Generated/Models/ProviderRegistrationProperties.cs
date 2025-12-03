@@ -19,34 +19,70 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderRegistrationProperties"/>. </summary>
-        /// <param name="providerAuthentication"></param>
-        /// <param name="providerAuthorizations"></param>
-        /// <param name="namespace"></param>
-        /// <param name="providerVersion"></param>
-        /// <param name="providerType"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="requestHeaderOptions"></param>
-        /// <param name="management"></param>
-        /// <param name="capabilities"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="templateDeploymentOptions"></param>
+        /// <param name="providerAuthentication"> The provider authentication. </param>
+        /// <param name="providerAuthorizations"> The provider authorizations. </param>
+        /// <param name="namespace"> The namespace. </param>
+        /// <param name="services"> The services. </param>
+        /// <param name="serviceName"> The service name. </param>
+        /// <param name="providerVersion"> The provider version. </param>
+        /// <param name="providerType"> The provider type. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="featuresRule"> The features rule. </param>
+        /// <param name="requestHeaderOptions"> The request header options. </param>
+        /// <param name="management"> The resource provider management. </param>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="crossTenantTokenValidation"> The cross tenant token validation. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="templateDeploymentOptions"> The template deployment options. </param>
+        /// <param name="globalNotificationEndpoints"> The global notification endpoints. </param>
+        /// <param name="enableTenantLinkedNotification"> The enable tenant linked notification. </param>
+        /// <param name="notifications"> The notifications. </param>
+        /// <param name="linkedNotificationRules"> The linked notification rules. </param>
+        /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
+        /// <param name="dstsConfiguration"> The dsts configuration. </param>
+        /// <param name="notificationOptions"> Notification options. </param>
+        /// <param name="resourceHydrationAccounts"> resource hydration accounts. </param>
+        /// <param name="notificationSettings"> Notification settings. </param>
+        /// <param name="managementGroupGlobalNotificationEndpoints"> Management groups global notification endpoints. </param>
+        /// <param name="optionalFeatures"> Optional features. </param>
+        /// <param name="resourceGroupLockOptionDuringMove"> Resource group lock option during move. </param>
+        /// <param name="responseOptions"> Response options. </param>
+        /// <param name="legacyNamespace"> Legacy namespace. </param>
+        /// <param name="legacyRegistrations"> Legacy registrations. </param>
+        /// <param name="customManifestVersion"> Custom manifest version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="providerHubMetadata"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="subscriptionLifecycleNotificationSpecifications"></param>
-        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, FeaturesRule featuresRule, RequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IDictionary<string, BinaryData> serializedAdditionalRawData, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications) : base(providerAuthentication, providerAuthorizations, @namespace, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, metadata, templateDeploymentOptions, serializedAdditionalRawData)
+        /// <param name="providerHubMetadata"> The provider hub metadata. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="subscriptionLifecycleNotificationSpecifications"> The subscription lifecycle notification specifications. </param>
+        /// <param name="privateResourceProviderConfiguration"> The private resource provider configuration. </param>
+        /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
+        internal ProviderRegistrationProperties(ResourceProviderAuthentication providerAuthentication, IList<ResourceProviderAuthorization> providerAuthorizations, string @namespace, IList<ResourceProviderService> services, string serviceName, string providerVersion, ResourceProviderType? providerType, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, ProviderRequestHeaderOptions requestHeaderOptions, ResourceProviderManagement management, IList<ResourceProviderCapabilities> capabilities, CrossTenantTokenValidation? crossTenantTokenValidation, BinaryData metadata, TemplateDeploymentOptions templateDeploymentOptions, IList<ResourceProviderEndpoint> globalNotificationEndpoints, bool? enableTenantLinkedNotification, IList<ProviderNotification> notifications, IList<FanoutLinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, ProviderDstsConfiguration dstsConfiguration, ProviderNotificationOption? notificationOptions, IList<ResourceHydrationAccount> resourceHydrationAccounts, ResourceProviderManifestNotificationSettings notificationSettings, IList<ResourceProviderEndpoint> managementGroupGlobalNotificationEndpoints, IList<string> optionalFeatures, ResourceProviderManifestResourceGroupLockOptionDuringMove resourceGroupLockOptionDuringMove, ResourceProviderManifestResponseOptions responseOptions, string legacyNamespace, IList<string> legacyRegistrations, string customManifestVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, ProviderHubMetadata providerHubMetadata, ProviderHubProvisioningState? provisioningState, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, ProviderRegistrationPropertiesPrivateResourceProviderConfiguration privateResourceProviderConfiguration, TokenAuthConfiguration tokenAuthConfiguration) : base(providerAuthentication, providerAuthorizations, @namespace, services, serviceName, providerVersion, providerType, requiredFeatures, featuresRule, requestHeaderOptions, management, capabilities, crossTenantTokenValidation, metadata, templateDeploymentOptions, globalNotificationEndpoints, enableTenantLinkedNotification, notifications, linkedNotificationRules, resourceProviderAuthorizationRules, dstsConfiguration, notificationOptions, resourceHydrationAccounts, notificationSettings, managementGroupGlobalNotificationEndpoints, optionalFeatures, resourceGroupLockOptionDuringMove, responseOptions, legacyNamespace, legacyRegistrations, customManifestVersion, serializedAdditionalRawData)
         {
             ProviderHubMetadata = providerHubMetadata;
             ProvisioningState = provisioningState;
             SubscriptionLifecycleNotificationSpecifications = subscriptionLifecycleNotificationSpecifications;
+            PrivateResourceProviderConfiguration = privateResourceProviderConfiguration;
+            TokenAuthConfiguration = tokenAuthConfiguration;
         }
 
-        /// <summary> Gets or sets the provider hub metadata. </summary>
+        /// <summary> The provider hub metadata. </summary>
         public ProviderHubMetadata ProviderHubMetadata { get; set; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProviderHubProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Gets or sets the subscription lifecycle notification specifications. </summary>
+        /// <summary> The subscription lifecycle notification specifications. </summary>
         public SubscriptionLifecycleNotificationSpecifications SubscriptionLifecycleNotificationSpecifications { get; set; }
+        /// <summary> The private resource provider configuration. </summary>
+        internal ProviderRegistrationPropertiesPrivateResourceProviderConfiguration PrivateResourceProviderConfiguration { get; set; }
+        /// <summary> The allowed subscriptions. </summary>
+        public IList<string> PrivateResourceProviderAllowedSubscriptions
+        {
+            get
+            {
+                if (PrivateResourceProviderConfiguration is null)
+                    PrivateResourceProviderConfiguration = new ProviderRegistrationPropertiesPrivateResourceProviderConfiguration();
+                return PrivateResourceProviderConfiguration.AllowedSubscriptions;
+            }
+        }
+
+        /// <summary> The token auth configuration. </summary>
+        public TokenAuthConfiguration TokenAuthConfiguration { get; set; }
     }
 }

@@ -22,7 +22,8 @@ namespace Azure.AI.ContentSafety.Tests
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             BlocklistClient client;
-            var options = InstrumentClientOptions(new ContentSafetyClientOptions());
+            // TODO - re-record tests and unpin version https://github.com/Azure/azure-sdk-for-net/issues/53232
+            var options = InstrumentClientOptions(new ContentSafetyClientOptions(ContentSafetyClientOptions.ServiceVersion.V2023_10_01));
 
             if (useTokenCredential)
             {

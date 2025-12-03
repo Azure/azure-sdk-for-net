@@ -2,6 +2,7 @@
   <PropertyGroup>
     <IsClientLibrary>true</IsClientLibrary>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />

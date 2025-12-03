@@ -75,5 +75,58 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="bmcKeySetName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudBmcKeySetResource> CreateOrUpdate(WaitUntil waitUntil, string bmcKeySetName, NetworkCloudBmcKeySetData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, bmcKeySetName, data, null, null, cancellationToken);
+
+
+        /// <summary>
+        /// Get a list of baseboard management controller key sets for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BmcKeySets_ListByCluster</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkCloudBmcKeySetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudBmcKeySetResource> GetAllAsync(CancellationToken cancellationToken)
+			=> GetAllAsync(null, null, cancellationToken);
+
+        /// <summary>
+        /// Get a list of baseboard management controller key sets for the provided cluster.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/clusters/{clusterName}/bmcKeySets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BmcKeySets_ListByCluster</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudBmcKeySetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkCloudBmcKeySetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudBmcKeySetResource> GetAll(CancellationToken cancellationToken)
+			=> GetAll(null, null, cancellationToken);
     }
 }

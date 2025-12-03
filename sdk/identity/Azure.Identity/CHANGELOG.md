@@ -1,6 +1,6 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+## 1.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,17 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.17.0 (2025-10-07)
+
+### Bugs Fixed
+
 - TenantId is now configured via MSAL's `WithTenantId` instead of `WithTenantIdFromAuthority` to prevent malformed Uris to the authority.
 
 ### Other Changes
+
+- Deprecated `BrowserCustomizationOptions.UseEmbeddedWebView` property. This option requires additional dependencies on Microsoft.Identity.Client.Desktop and is no longer supported. Consider using brokered authentication instead.
 
 ## 1.16.0 (2025-09-09)
 

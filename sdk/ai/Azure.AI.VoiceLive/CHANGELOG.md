@@ -1,14 +1,55 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- **WebSocket Content Logging**: Added comprehensive content logging for WebSocket operations following Azure SDK diagnostic patterns
+  - Introduced `AzureVoiceLiveEventSource` for WebSocket event logging with consistent event IDs and levels
+  - Added `VoiceLiveWebSocketContentLogger` that integrates with Azure SDK `DiagnosticsOptions`
+  - WebSocket connection lifecycle events (open/close) logged at `Informational` level
+  - Message operations (send/receive) logged at `Informational` level with optional content at `Verbose` level
+  - Error events logged at `Warning` level with error content at `Informational` level
+  - Content size truncation respects `DiagnosticsOptions.LoggedContentSizeLimit`
+  - Unified event listener experience works alongside Azure.Core HTTP logging
+- **Enhanced Samples**: Added `ContentLoggingSample.cs` and `UnifiedEventListener.cs` demonstrating WebSocket content logging integration
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+- Updated test infrastructure with comprehensive content logging test coverage
+- Added test environment configuration for AI Services integration
+- Enhanced WebSocket helper classes to support diagnostic logging
+
+## 1.0.0 (2025-10-01)
+
+### Breaking Changes
+
+- **SessionResponse changes:**
+  - Removed public `Object` property (now internal)
+  - Renamed `ModalitiesInternal` property to `Modalities`
+  - Changed `Voice` property type from `BinaryData` to strongly typed `VoiceProvider`
+  - Changed `MaxOutputTokens` property type from `BinaryData` to strongly typed `MaxResponseOutputTokensOption`
+
+- **SessionResponseItem changes:**
+  - Removed public `Object` property (now internal)
+
+- **VoiceLiveSessionResponse changes:**
+  - No longer inherits from `VoiceLiveSessionOptions` 
+  - Constructor changed from internal to public
+  - Properties now have public setters: `Id`, `Model`, `Animation`, `Instructions`, `InputAudioSamplingRate`, `InputAudioFormat`, `OutputAudioFormat`, `InputAudioNoiseReduction`, `InputAudioEchoCancellation`, `Avatar`, `InputAudioTranscription`, `Temperature`
+  - Added new read-only properties: `Voice`, `MaxResponseOutputTokens`, `ToolChoice`, `TurnDetection`
+
+- **VoiceProvider changes:**
+  - Removed internal `ToBinaryData()` method
+
+### Other Changes
+
+- Improved API design by replacing `BinaryData` properties with strongly typed models for better type safety and developer experience
+- Removed unnecessary custom implementation files for voice provider classes
 
 ## 1.0.0-beta.4 (2025-09-30)
 

@@ -6,5 +6,7 @@
     <PackageId>Azure.ResourceManager.PrivateDns</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Network PrivateDns.</Description>
     <PackageTags>azure;management;arm;resource manager;privatedns</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>

@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
-        /// <param name="errorsInternal"> List of Router Communication Errors. </param>
+        /// <param name="errorsInternal"> Router Job Classification Failed Errors. </param>
         internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> additionalBinaryDataProperties, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<AcsRouterCommunicationError> errorsInternal) : base(jobId, channelReference, channelId, additionalBinaryDataProperties, queueId, labels, tags)
         {
             ClassificationPolicyId = classificationPolicyId;

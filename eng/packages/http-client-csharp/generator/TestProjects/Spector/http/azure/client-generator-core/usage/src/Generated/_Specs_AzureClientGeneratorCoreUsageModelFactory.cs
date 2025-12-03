@@ -18,5 +18,7 @@ namespace _Specs_.Azure.ClientGenerator.Core.Usage
         public static RoundTripModel RoundTripModel(ResultModel result = default) => throw null;
 
         public static ResultModel ResultModel(string name = default) => throw null;
+
+        public static OrphanModel OrphanModel(string modelName = default, string description = default) => throw null;
     }
 }
