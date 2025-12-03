@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("routingType"u8);
                 writer.WriteStringValue(RoutingType.Value.ToString());
             }
+            if (Optional.IsDefined(AdditionalOptions))
+            {
+                writer.WritePropertyName("additionalOptions"u8);
+                writer.WriteStringValue(AdditionalOptions.Value.ToString());
+            }
+            if (Optional.IsDefined(CrossTenantTokenValidation))
+            {
+                writer.WritePropertyName("crossTenantTokenValidation"u8);
+                writer.WriteStringValue(CrossTenantTokenValidation.Value.ToString());
+            }
             if (Optional.IsDefined(Regionality))
             {
                 writer.WritePropertyName("regionality"u8);
@@ -81,6 +91,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in AllowedUnauthorizedActions)
                 {
                     writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AllowedUnauthorizedActionsExtensions))
+            {
+                writer.WritePropertyName("allowedUnauthorizedActionsExtensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedUnauthorizedActionsExtensions)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -149,7 +169,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("enableAsyncOperation"u8);
                 writer.WriteBooleanValue(IsAsyncOperationEnabled.Value);
             }
-            if (Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -239,6 +259,295 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ResourceConcurrencyControlOptions))
+            {
+                writer.WritePropertyName("resourceConcurrencyControlOptions"u8);
+                writer.WriteStartObject();
+                foreach (var item in ResourceConcurrencyControlOptions)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ResourceGraphConfiguration))
+            {
+                writer.WritePropertyName("resourceGraphConfiguration"u8);
+                writer.WriteObjectValue(ResourceGraphConfiguration, options);
+            }
+            if (Optional.IsDefined(Management))
+            {
+                writer.WritePropertyName("management"u8);
+                writer.WriteObjectValue(Management, options);
+            }
+            if (Optional.IsDefined(OpenApiConfiguration))
+            {
+                writer.WritePropertyName("openApiConfiguration"u8);
+                writer.WriteObjectValue(OpenApiConfiguration, options);
+            }
+            if (Optional.IsDefined(OnBehalfOfTokens))
+            {
+                writer.WritePropertyName("onBehalfOfTokens"u8);
+                writer.WriteObjectValue(OnBehalfOfTokens, options);
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
+            }
+            if (Optional.IsDefined(ResourceValidation))
+            {
+                writer.WritePropertyName("resourceValidation"u8);
+                writer.WriteStringValue(ResourceValidation.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(DisallowedEndUserOperations))
+            {
+                writer.WritePropertyName("disallowedEndUserOperations"u8);
+                writer.WriteStartArray();
+                foreach (var item in DisallowedEndUserOperations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(SkuLink))
+            {
+                writer.WritePropertyName("skuLink"u8);
+                writer.WriteStringValue(SkuLink);
+            }
+            if (Optional.IsDefined(QuotaRule))
+            {
+                writer.WritePropertyName("quotaRule"u8);
+                writer.WriteObjectValue(QuotaRule, options);
+            }
+            if (Optional.IsCollectionDefined(Notifications))
+            {
+                writer.WritePropertyName("notifications"u8);
+                writer.WriteStartArray();
+                foreach (var item in Notifications)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LinkedNotificationRules))
+            {
+                writer.WritePropertyName("linkedNotificationRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedNotificationRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResourceProviderAuthorizationRules))
+            {
+                writer.WritePropertyName("resourceProviderAuthorizationRules"u8);
+                writer.WriteObjectValue(ResourceProviderAuthorizationRules, options);
+            }
+            if (Optional.IsDefined(TokenAuthConfiguration))
+            {
+                writer.WritePropertyName("tokenAuthConfiguration"u8);
+                writer.WriteObjectValue(TokenAuthConfiguration, options);
+            }
+            if (Optional.IsDefined(TemplateDeploymentPolicy))
+            {
+                writer.WritePropertyName("templateDeploymentPolicy"u8);
+                writer.WriteObjectValue(TemplateDeploymentPolicy, options);
+            }
+            if (Optional.IsDefined(IsEmptyRoleAssignmentsAllowed))
+            {
+                writer.WritePropertyName("allowEmptyRoleAssignments"u8);
+                writer.WriteBooleanValue(IsEmptyRoleAssignmentsAllowed.Value);
+            }
+            if (Optional.IsDefined(PolicyExecutionType))
+            {
+                writer.WritePropertyName("policyExecutionType"u8);
+                writer.WriteStringValue(PolicyExecutionType.Value.ToString());
+            }
+            if (Optional.IsDefined(AvailabilityZoneRule))
+            {
+                writer.WritePropertyName("availabilityZoneRule"u8);
+                writer.WriteObjectValue(AvailabilityZoneRule, options);
+            }
+            if (Optional.IsDefined(DstsConfiguration))
+            {
+                writer.WritePropertyName("dstsConfiguration"u8);
+                writer.WriteObjectValue(DstsConfiguration, options);
+            }
+            if (Optional.IsCollectionDefined(AsyncTimeoutRules))
+            {
+                writer.WritePropertyName("asyncTimeoutRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in AsyncTimeoutRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(CommonApiVersions))
+            {
+                writer.WritePropertyName("commonApiVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in CommonApiVersions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ApiProfiles))
+            {
+                writer.WritePropertyName("apiProfiles"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApiProfiles)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(LinkedOperationRules))
+            {
+                writer.WritePropertyName("linkedOperationRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in LinkedOperationRules)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LegacyName))
+            {
+                writer.WritePropertyName("legacyName"u8);
+                writer.WriteStringValue(LegacyName);
+            }
+            if (Optional.IsCollectionDefined(LegacyNames))
+            {
+                writer.WritePropertyName("legacyNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in LegacyNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AllowedTemplateDeploymentReferenceActions))
+            {
+                writer.WritePropertyName("allowedTemplateDeploymentReferenceActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedTemplateDeploymentReferenceActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LegacyPolicy))
+            {
+                writer.WritePropertyName("legacyPolicy"u8);
+                writer.WriteObjectValue(LegacyPolicy, options);
+            }
+            if (Optional.IsDefined(ManifestLink))
+            {
+                writer.WritePropertyName("manifestLink"u8);
+                writer.WriteStringValue(ManifestLink);
+            }
+            if (Optional.IsDefined(CapacityRule))
+            {
+                writer.WritePropertyName("capacityRule"u8);
+                writer.WriteObjectValue(CapacityRule, options);
+            }
+            if (Optional.IsDefined(MarketplaceOptions))
+            {
+                writer.WritePropertyName("marketplaceOptions"u8);
+                writer.WriteObjectValue(MarketplaceOptions, options);
+            }
+            if (Optional.IsCollectionDefined(AllowedResourceNames))
+            {
+                writer.WritePropertyName("allowedResourceNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedResourceNames)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ResourceCache))
+            {
+                writer.WritePropertyName("resourceCache"u8);
+                writer.WriteObjectValue(ResourceCache, options);
+            }
+            if (Optional.IsDefined(ResourceQueryManagement))
+            {
+                writer.WritePropertyName("resourceQueryManagement"u8);
+                writer.WriteObjectValue(ResourceQueryManagement, options);
+            }
+            if (Optional.IsDefined(AreTagsSupported))
+            {
+                writer.WritePropertyName("supportsTags"u8);
+                writer.WriteBooleanValue(AreTagsSupported.Value);
+            }
+            if (Optional.IsDefined(ResourceManagementOptions))
+            {
+                writer.WritePropertyName("resourceManagementOptions"u8);
+                writer.WriteObjectValue(ResourceManagementOptions, options);
+            }
+            if (Optional.IsDefined(GroupingTag))
+            {
+                writer.WritePropertyName("groupingTag"u8);
+                writer.WriteStringValue(GroupingTag);
+            }
+            if (Optional.IsDefined(IsAddResourceListTargetLocationsAllowed))
+            {
+                writer.WritePropertyName("addResourceListTargetLocations"u8);
+                writer.WriteBooleanValue(IsAddResourceListTargetLocationsAllowed.Value);
+            }
+            if (Optional.IsDefined(ResourceTypeCommonAttributeManagement))
+            {
+                writer.WritePropertyName("resourceTypeCommonAttributeManagement"u8);
+                writer.WriteObjectValue(ResourceTypeCommonAttributeManagement, options);
+            }
+            if (Optional.IsDefined(RoutingRule))
+            {
+                writer.WritePropertyName("routingRule"u8);
+                writer.WriteObjectValue(RoutingRule, options);
+            }
+            if (Optional.IsDefined(FrontdoorRequestMode))
+            {
+                writer.WritePropertyName("frontdoorRequestMode"u8);
+                writer.WriteStringValue(FrontdoorRequestMode.Value.ToString());
+            }
+            if (Optional.IsDefined(ResourceSubType))
+            {
+                writer.WritePropertyName("resourceSubType"u8);
+                writer.WriteStringValue(ResourceSubType.Value.ToString());
+            }
+            if (Optional.IsDefined(AsyncOperationResourceTypeName))
+            {
+                writer.WritePropertyName("asyncOperationResourceTypeName"u8);
+                writer.WriteStringValue(AsyncOperationResourceTypeName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -277,19 +586,22 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 return null;
             }
             ResourceRoutingType? routingType = default;
+            AdditionalOptionResourceTypeRegistration? additionalOptions = default;
+            CrossTenantTokenValidation? crossTenantTokenValidation = default;
             ResourceTypeRegistrationRegionality? regionality = default;
             IList<ResourceTypeEndpoint> endpoints = default;
             ResourceTypeExtensionOptions extensionOptions = default;
             MarketplaceType? marketplaceType = default;
             IList<SwaggerSpecification> swaggerSpecifications = default;
             IList<string> allowedUnauthorizedActions = default;
+            IList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions = default;
             IList<AuthorizationActionMapping> authorizationActionMappings = default;
             IList<LinkedAccessCheck> linkedAccessChecks = default;
             string defaultApiVersion = default;
             IList<LoggingRule> loggingRules = default;
             IList<ThrottlingRule> throttlingRules = default;
             IList<string> requiredFeatures = default;
-            FeaturesRule featuresRule = default;
+            ProviderFeaturesRule featuresRule = default;
             bool? enableAsyncOperation = default;
             ProviderHubProvisioningState? provisioningState = default;
             bool? enableThirdPartyS2S = default;
@@ -299,12 +611,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
             CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications = default;
             IList<string> disallowedActionVerbs = default;
             IList<ServiceTreeInfo> serviceTreeInfos = default;
-            RequestHeaderOptions requestHeaderOptions = default;
+            ProviderRequestHeaderOptions requestHeaderOptions = default;
             IList<ProviderSubscriptionStateRule> subscriptionStateRules = default;
             TemplateDeploymentOptions templateDeploymentOptions = default;
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             ResourceMovePolicy resourceMovePolicy = default;
             ResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = default;
+            ResourceGraphConfiguration resourceGraphConfiguration = default;
+            ResourceProviderManagement management = default;
+            OpenApiConfiguration openApiConfiguration = default;
+            ResourceTypeOnBehalfOfToken onBehalfOfTokens = default;
+            ResourceTypeCategory? category = default;
+            ResourceValidation? resourceValidation = default;
+            IList<string> disallowedEndUserOperations = default;
+            IDictionary<string, BinaryData> metadata = default;
+            string skuLink = default;
+            ProviderQuotaRule quotaRule = default;
+            IList<ProviderNotification> notifications = default;
+            IList<LinkedNotificationRule> linkedNotificationRules = default;
+            ResourceProviderAuthorizationRules resourceProviderAuthorizationRules = default;
+            TokenAuthConfiguration tokenAuthConfiguration = default;
+            TemplateDeploymentPolicy templateDeploymentPolicy = default;
+            bool? allowEmptyRoleAssignments = default;
+            PolicyExecutionType? policyExecutionType = default;
+            ResourceTypeRegistrationAvailabilityZoneRule availabilityZoneRule = default;
+            ProviderDstsConfiguration dstsConfiguration = default;
+            IList<AsyncTimeoutRule> asyncTimeoutRules = default;
+            IList<string> commonApiVersions = default;
+            IList<ResourceTypeRegistrationApiProfile> apiProfiles = default;
+            IList<LinkedOperationRule> linkedOperationRules = default;
+            string legacyName = default;
+            IList<string> legacyNames = default;
+            IList<string> allowedTemplateDeploymentReferenceActions = default;
+            ResourceTypeRegistrationLegacyPolicy legacyPolicy = default;
+            string manifestLink = default;
+            ResourceTypeRegistrationCapacityRule capacityRule = default;
+            ResourceTypeRegistrationMarketplaceOptions marketplaceOptions = default;
+            IList<AllowedResourceName> allowedResourceNames = default;
+            ResourceTypeRegistrationResourceCache resourceCache = default;
+            ProviderResourceQueryManagement resourceQueryManagement = default;
+            bool? supportsTags = default;
+            ResourceTypeRegistrationResourceManagementOptions resourceManagementOptions = default;
+            string groupingTag = default;
+            bool? addResourceListTargetLocations = default;
+            ResourceTypeCommonAttributeManagement resourceTypeCommonAttributeManagement = default;
+            ResourceTypeRegistrationRoutingRule routingRule = default;
+            FrontdoorRequestMode? frontdoorRequestMode = default;
+            ProviderResourceSubType? resourceSubType = default;
+            string asyncOperationResourceTypeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -316,6 +671,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     routingType = new ResourceRoutingType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("additionalOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    additionalOptions = new AdditionalOptionResourceTypeRegistration(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("crossTenantTokenValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossTenantTokenValidation = new CrossTenantTokenValidation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("regionality"u8))
@@ -385,6 +758,20 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         array.Add(item.GetString());
                     }
                     allowedUnauthorizedActions = array;
+                    continue;
+                }
+                if (property.NameEquals("allowedUnauthorizedActionsExtensions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AllowedUnauthorizedActionsExtension> array = new List<AllowedUnauthorizedActionsExtension>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AllowedUnauthorizedActionsExtension.DeserializeAllowedUnauthorizedActionsExtension(item, options));
+                    }
+                    allowedUnauthorizedActionsExtensions = array;
                     continue;
                 }
                 if (property.NameEquals("authorizationActionMappings"u8))
@@ -468,7 +855,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    featuresRule = FeaturesRule.DeserializeFeaturesRule(property.Value, options);
+                    featuresRule = ProviderFeaturesRule.DeserializeProviderFeaturesRule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableAsyncOperation"u8))
@@ -568,7 +955,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    requestHeaderOptions = RequestHeaderOptions.DeserializeRequestHeaderOptions(property.Value, options);
+                    requestHeaderOptions = ProviderRequestHeaderOptions.DeserializeProviderRequestHeaderOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subscriptionStateRules"u8))
@@ -626,6 +1013,440 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     resourceDeletionPolicy = new ResourceDeletionPolicy(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("resourceConcurrencyControlOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, ResourceConcurrencyControlOption> dictionary = new Dictionary<string, ResourceConcurrencyControlOption>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, ResourceConcurrencyControlOption.DeserializeResourceConcurrencyControlOption(property0.Value, options));
+                    }
+                    resourceConcurrencyControlOptions = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("resourceGraphConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceGraphConfiguration = ResourceGraphConfiguration.DeserializeResourceGraphConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("management"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    management = ResourceProviderManagement.DeserializeResourceProviderManagement(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("openApiConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    openApiConfiguration = OpenApiConfiguration.DeserializeOpenApiConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("onBehalfOfTokens"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onBehalfOfTokens = ResourceTypeOnBehalfOfToken.DeserializeResourceTypeOnBehalfOfToken(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("category"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    category = new ResourceTypeCategory(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceValidation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceValidation = new ResourceValidation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("disallowedEndUserOperations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    disallowedEndUserOperations = array;
+                    continue;
+                }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("skuLink"u8))
+                {
+                    skuLink = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("quotaRule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    quotaRule = ProviderQuotaRule.DeserializeProviderQuotaRule(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("notifications"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ProviderNotification> array = new List<ProviderNotification>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ProviderNotification.DeserializeProviderNotification(item, options));
+                    }
+                    notifications = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedNotificationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LinkedNotificationRule> array = new List<LinkedNotificationRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LinkedNotificationRule.DeserializeLinkedNotificationRule(item, options));
+                    }
+                    linkedNotificationRules = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceProviderAuthorizationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceProviderAuthorizationRules = ResourceProviderAuthorizationRules.DeserializeResourceProviderAuthorizationRules(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("tokenAuthConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tokenAuthConfiguration = TokenAuthConfiguration.DeserializeTokenAuthConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("templateDeploymentPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    templateDeploymentPolicy = TemplateDeploymentPolicy.DeserializeTemplateDeploymentPolicy(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("allowEmptyRoleAssignments"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowEmptyRoleAssignments = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("policyExecutionType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    policyExecutionType = new PolicyExecutionType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("availabilityZoneRule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    availabilityZoneRule = ResourceTypeRegistrationAvailabilityZoneRule.DeserializeResourceTypeRegistrationAvailabilityZoneRule(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("dstsConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dstsConfiguration = ProviderDstsConfiguration.DeserializeProviderDstsConfiguration(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("asyncTimeoutRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AsyncTimeoutRule> array = new List<AsyncTimeoutRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AsyncTimeoutRule.DeserializeAsyncTimeoutRule(item, options));
+                    }
+                    asyncTimeoutRules = array;
+                    continue;
+                }
+                if (property.NameEquals("commonApiVersions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    commonApiVersions = array;
+                    continue;
+                }
+                if (property.NameEquals("apiProfiles"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceTypeRegistrationApiProfile> array = new List<ResourceTypeRegistrationApiProfile>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceTypeRegistrationApiProfile.DeserializeResourceTypeRegistrationApiProfile(item, options));
+                    }
+                    apiProfiles = array;
+                    continue;
+                }
+                if (property.NameEquals("linkedOperationRules"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<LinkedOperationRule> array = new List<LinkedOperationRule>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(LinkedOperationRule.DeserializeLinkedOperationRule(item, options));
+                    }
+                    linkedOperationRules = array;
+                    continue;
+                }
+                if (property.NameEquals("legacyName"u8))
+                {
+                    legacyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("legacyNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    legacyNames = array;
+                    continue;
+                }
+                if (property.NameEquals("allowedTemplateDeploymentReferenceActions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    allowedTemplateDeploymentReferenceActions = array;
+                    continue;
+                }
+                if (property.NameEquals("legacyPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    legacyPolicy = ResourceTypeRegistrationLegacyPolicy.DeserializeResourceTypeRegistrationLegacyPolicy(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("manifestLink"u8))
+                {
+                    manifestLink = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("capacityRule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capacityRule = ResourceTypeRegistrationCapacityRule.DeserializeResourceTypeRegistrationCapacityRule(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("marketplaceOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    marketplaceOptions = ResourceTypeRegistrationMarketplaceOptions.DeserializeResourceTypeRegistrationMarketplaceOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("allowedResourceNames"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AllowedResourceName> array = new List<AllowedResourceName>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AllowedResourceName.DeserializeAllowedResourceName(item, options));
+                    }
+                    allowedResourceNames = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceCache"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceCache = ResourceTypeRegistrationResourceCache.DeserializeResourceTypeRegistrationResourceCache(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("resourceQueryManagement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceQueryManagement = ProviderResourceQueryManagement.DeserializeProviderResourceQueryManagement(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("supportsTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportsTags = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("resourceManagementOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceManagementOptions = ResourceTypeRegistrationResourceManagementOptions.DeserializeResourceTypeRegistrationResourceManagementOptions(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("groupingTag"u8))
+                {
+                    groupingTag = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("addResourceListTargetLocations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    addResourceListTargetLocations = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("resourceTypeCommonAttributeManagement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceTypeCommonAttributeManagement = ResourceTypeCommonAttributeManagement.DeserializeResourceTypeCommonAttributeManagement(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("routingRule"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    routingRule = ResourceTypeRegistrationRoutingRule.DeserializeResourceTypeRegistrationRoutingRule(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("frontdoorRequestMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    frontdoorRequestMode = new FrontdoorRequestMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("resourceSubType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceSubType = new ProviderResourceSubType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("asyncOperationResourceTypeName"u8))
+                {
+                    asyncOperationResourceTypeName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -634,12 +1455,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ResourceTypeRegistrationProperties(
                 routingType,
+                additionalOptions,
+                crossTenantTokenValidation,
                 regionality,
                 endpoints ?? new ChangeTrackingList<ResourceTypeEndpoint>(),
                 extensionOptions,
                 marketplaceType,
                 swaggerSpecifications ?? new ChangeTrackingList<SwaggerSpecification>(),
                 allowedUnauthorizedActions ?? new ChangeTrackingList<string>(),
+                allowedUnauthorizedActionsExtensions ?? new ChangeTrackingList<AllowedUnauthorizedActionsExtension>(),
                 authorizationActionMappings ?? new ChangeTrackingList<AuthorizationActionMapping>(),
                 linkedAccessChecks ?? new ChangeTrackingList<LinkedAccessCheck>(),
                 defaultApiVersion,
@@ -662,6 +1486,49 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 resourceMovePolicy,
                 resourceDeletionPolicy,
+                resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
+                resourceGraphConfiguration,
+                management,
+                openApiConfiguration,
+                onBehalfOfTokens,
+                category,
+                resourceValidation,
+                disallowedEndUserOperations ?? new ChangeTrackingList<string>(),
+                metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                skuLink,
+                quotaRule,
+                notifications ?? new ChangeTrackingList<ProviderNotification>(),
+                linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>(),
+                resourceProviderAuthorizationRules,
+                tokenAuthConfiguration,
+                templateDeploymentPolicy,
+                allowEmptyRoleAssignments,
+                policyExecutionType,
+                availabilityZoneRule,
+                dstsConfiguration,
+                asyncTimeoutRules ?? new ChangeTrackingList<AsyncTimeoutRule>(),
+                commonApiVersions ?? new ChangeTrackingList<string>(),
+                apiProfiles ?? new ChangeTrackingList<ResourceTypeRegistrationApiProfile>(),
+                linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
+                legacyName,
+                legacyNames ?? new ChangeTrackingList<string>(),
+                allowedTemplateDeploymentReferenceActions ?? new ChangeTrackingList<string>(),
+                legacyPolicy,
+                manifestLink,
+                capacityRule,
+                marketplaceOptions,
+                allowedResourceNames ?? new ChangeTrackingList<AllowedResourceName>(),
+                resourceCache,
+                resourceQueryManagement,
+                supportsTags,
+                resourceManagementOptions,
+                groupingTag,
+                addResourceListTargetLocations,
+                resourceTypeCommonAttributeManagement,
+                routingRule,
+                frontdoorRequestMode,
+                resourceSubType,
+                asyncOperationResourceTypeName,
                 serializedAdditionalRawData);
         }
 

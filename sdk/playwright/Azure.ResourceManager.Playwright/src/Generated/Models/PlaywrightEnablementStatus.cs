@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Playwright;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Playwright.Models
     public readonly partial struct PlaywrightEnablementStatus : IEquatable<PlaywrightEnablementStatus>
     {
         private readonly string _value;
+        /// <summary> The feature is enabled. </summary>
+        private const string EnabledValue = "Enabled";
+        /// <summary> The feature is disabled. </summary>
+        private const string DisabledValue = "Disabled";
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightEnablementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PlaywrightEnablementStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string EnabledValue = "Enabled";
-        private const string DisabledValue = "Disabled";
+            _value = value;
+        }
 
         /// <summary> The feature is enabled. </summary>
         public static PlaywrightEnablementStatus Enabled { get; } = new PlaywrightEnablementStatus(EnabledValue);
+
         /// <summary> The feature is disabled. </summary>
         public static PlaywrightEnablementStatus Disabled { get; } = new PlaywrightEnablementStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="PlaywrightEnablementStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PlaywrightEnablementStatus left, PlaywrightEnablementStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PlaywrightEnablementStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PlaywrightEnablementStatus left, PlaywrightEnablementStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PlaywrightEnablementStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PlaywrightEnablementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PlaywrightEnablementStatus(string value) => new PlaywrightEnablementStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PlaywrightEnablementStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PlaywrightEnablementStatus?(string value) => value == null ? null : new PlaywrightEnablementStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PlaywrightEnablementStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PlaywrightEnablementStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

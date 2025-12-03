@@ -12,13 +12,18 @@
     <TypespecAdditionalOptions Condition="'$(GenerateTestProject)' != '' AND '$(TypespecAdditionalOptions)' == ''">generate-test-project=true</TypespecAdditionalOptions>
     <_TypespecAdditionalOptions Condition="'$(TypespecAdditionalOptions)' != ''">--emitter-options "$(TypespecAdditionalOptions)"</_TypespecAdditionalOptions>
     <_LocalSpecRepo Condition="'$(LocalSpecRepo)' != ''">--local-spec-repo $(LocalSpecRepo)</_LocalSpecRepo>
+    <SkipTspClientInstall Condition="'$(SkipTspClientInstall)' == ''">false</SkipTspClientInstall>
   </PropertyGroup>
 
    <!-- For projects using the new TypeSpec generator, we don't include the Autorest dependency which pulls in the GenerateCode target.
    So we need to add it here. -->
+  <Target Name="InstallTspClient" Condition="'$(TypeSpecInput)' != ''">
+    <Exec Command="npm ci --prefix $(_TspClientDir)" />
+  </Target>
+
   <Target Name="GenerateCode" Condition="'$(TypeSpecInput)' != ''">
     <Error Text="You used skipped sync but didn't have the TempTypeSpecFiles in your project directory.  Please run 'dotnet build /t:GenerateCode /p:SaveInputs=true' without SkipSync first at least once" Condition="'$(SkipSync)' == 'true' AND !Exists('$(MSBuildProjectDirectory)/../TempTypeSpecFiles')" />
-    <Exec Command="npm ci --prefix $(_TspClientDir)" />
+    <CallTarget Condition="'$(SkipTspClientInstall)' != 'true'" Targets="InstallTspClient" />
     <Exec Condition="'$(SkipSync)' == 'true'" Command="$(_TypeSpecProjectGenerateCommand) $(_SaveInputs) $(_TypespecAdditionalOptions) $(_Trace)"/>
     <Exec Condition="'$(SkipSync)' != 'true'" Command="$(_TypeSpecProjectSyncAndGenerateCommand) $(_SaveInputs) $(_LocalSpecRepo) $(_TypespecAdditionalOptions) $(_Trace)"/>
   </Target>

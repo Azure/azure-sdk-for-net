@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.ConnectedCache</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider ConnectedCache.</Description>
     <PackageTags>azure;management;arm;resource manager;connectedcache</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

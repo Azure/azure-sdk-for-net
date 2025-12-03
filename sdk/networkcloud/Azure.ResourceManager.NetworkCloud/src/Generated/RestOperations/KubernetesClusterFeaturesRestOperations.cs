@@ -32,11 +32,11 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-02-01";
+            _apiVersion = apiVersion ?? "2025-07-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListByKubernetesClusterRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName)
+        internal RequestUriBuilder CreateListByKubernetesClusterRequestUri(string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -48,10 +48,18 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(kubernetesClusterName, true);
             uri.AppendPath("/features", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             return uri;
         }
 
-        internal HttpMessage CreateListByKubernetesClusterRequest(string subscriptionId, string resourceGroupName, string kubernetesClusterName)
+        internal HttpMessage CreateListByKubernetesClusterRequest(string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -66,6 +74,14 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(kubernetesClusterName, true);
             uri.AppendPath("/features", false);
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -76,16 +92,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KubernetesClusterFeatureList>> ListByKubernetesClusterAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<KubernetesClusterFeatureList>> ListByKubernetesClusterAsync(string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
-            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
+            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -105,16 +123,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KubernetesClusterFeatureList> ListByKubernetesCluster(string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        public Response<KubernetesClusterFeatureList> ListByKubernetesCluster(string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
-            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName);
+            using var message = CreateListByKubernetesClusterRequest(subscriptionId, resourceGroupName, kubernetesClusterName, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -564,7 +584,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateListByKubernetesClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName)
+        internal RequestUriBuilder CreateListByKubernetesClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -572,7 +592,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateListByKubernetesClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName)
+        internal HttpMessage CreateListByKubernetesClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -591,17 +611,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<KubernetesClusterFeatureList>> ListByKubernetesClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        public async Task<Response<KubernetesClusterFeatureList>> ListByKubernetesClusterNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
-            using var message = CreateListByKubernetesClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, kubernetesClusterName);
+            using var message = CreateListByKubernetesClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, kubernetesClusterName, top, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -622,17 +644,19 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="kubernetesClusterName"> The name of the Kubernetes cluster. </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="skipToken"> The opaque token that the server returns to indicate where to continue listing resources from. This is used for paging through large result sets. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="kubernetesClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<KubernetesClusterFeatureList> ListByKubernetesClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, CancellationToken cancellationToken = default)
+        public Response<KubernetesClusterFeatureList> ListByKubernetesClusterNextPage(string nextLink, string subscriptionId, string resourceGroupName, string kubernetesClusterName, int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(kubernetesClusterName, nameof(kubernetesClusterName));
 
-            using var message = CreateListByKubernetesClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, kubernetesClusterName);
+            using var message = CreateListByKubernetesClusterNextPageRequest(nextLink, subscriptionId, resourceGroupName, kubernetesClusterName, top, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

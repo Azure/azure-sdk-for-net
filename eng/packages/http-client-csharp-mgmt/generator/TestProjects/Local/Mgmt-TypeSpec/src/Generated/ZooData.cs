@@ -8,11 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class ZooData : TrackedResourceData
@@ -44,12 +44,15 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal ZooProperties Properties { get; set; }
 
         /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
 
         /// <summary> something. </summary>
+        [WirePath("properties.something")]
         public string ZooSomething
         {
             get

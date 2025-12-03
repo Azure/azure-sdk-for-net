@@ -58,6 +58,10 @@ namespace Azure.ResourceManager.HealthBot
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult> GetSecrets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>> GetSecretsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HealthBot.Models.HealthBotKey> RegenerateApiJwtSecret(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.Models.HealthBotKey>> RegenerateApiJwtSecretAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -67,8 +71,12 @@ namespace Azure.ResourceManager.HealthBot
         Azure.ResourceManager.HealthBot.HealthBotData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.HealthBotData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.HealthBotData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.HealthBotData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource> Update(Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HealthBot.HealthBotResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HealthBot.HealthBotResource>> UpdateAsync(Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HealthBot.HealthBotResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HealthBot.Models.HealthBotPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.HealthBot.Mocking
@@ -97,7 +105,34 @@ namespace Azure.ResourceManager.HealthBot.Models
     public static partial class ArmHealthBotModelFactory
     {
         public static Azure.ResourceManager.HealthBot.HealthBotData HealthBotData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthBot.Models.HealthBotSkuName? skuName = default(Azure.ResourceManager.HealthBot.Models.HealthBotSkuName?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HealthBot.Models.HealthBotProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HealthBot.Models.HealthBotProperties HealthBotProperties(string provisioningState = null, System.Uri botManagementPortalLink = null, Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties keyVaultProperties = null) { throw null; }
+        public static Azure.ResourceManager.HealthBot.Models.HealthBotKey HealthBotKey(string keyName = null, string value = null) { throw null; }
+        public static Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult HealthBotKeysResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthBot.Models.HealthBotKey> secrets = null) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.HealthBot.Models.HealthBotProperties HealthBotProperties(string provisioningState, System.Uri botManagementPortalLink, Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties keyVaultProperties) { throw null; }
+        public static Azure.ResourceManager.HealthBot.Models.HealthBotProperties HealthBotProperties(string provisioningState = null, System.Uri botManagementPortalLink = null, Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties keyVaultProperties = null, string accessControlMethod = null) { throw null; }
+    }
+    public partial class HealthBotKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKey>
+    {
+        internal HealthBotKey() { }
+        public string KeyName { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthBot.Models.HealthBotKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthBot.Models.HealthBotKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthBotKeysResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>
+    {
+        internal HealthBotKeysResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HealthBot.Models.HealthBotKey> Secrets { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeysResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthBotKeyVaultProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties>
     {
@@ -131,6 +166,7 @@ namespace Azure.ResourceManager.HealthBot.Models
     public partial class HealthBotProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthBot.Models.HealthBotProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthBot.Models.HealthBotProperties>
     {
         public HealthBotProperties() { }
+        public string AccessControlMethod { get { throw null; } }
         public System.Uri BotManagementPortalLink { get { throw null; } }
         public Azure.ResourceManager.HealthBot.Models.HealthBotKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
@@ -157,5 +193,7 @@ namespace Azure.ResourceManager.HealthBot.Models
         F0 = 0,
         S1 = 1,
         C0 = 2,
+        PES = 3,
+        C1 = 4,
     }
 }

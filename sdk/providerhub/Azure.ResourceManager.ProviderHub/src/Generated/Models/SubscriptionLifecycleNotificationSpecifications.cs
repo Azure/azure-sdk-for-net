@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionLifecycleNotificationSpecifications"/>. </summary>
-        /// <param name="subscriptionStateOverrideActions"></param>
-        /// <param name="softDeleteTtl"></param>
+        /// <param name="subscriptionStateOverrideActions"> The subscription state override actions. </param>
+        /// <param name="softDeleteTtl"> The soft delete TTL. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SubscriptionLifecycleNotificationSpecifications(IList<SubscriptionStateOverrideAction> subscriptionStateOverrideActions, TimeSpan? softDeleteTtl, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the subscription state override actions. </summary>
+        /// <summary> The subscription state override actions. </summary>
         public IList<SubscriptionStateOverrideAction> SubscriptionStateOverrideActions { get; }
-        /// <summary> Gets or sets the soft delete ttl. </summary>
+        /// <summary> The soft delete TTL. </summary>
         public TimeSpan? SoftDeleteTtl { get; set; }
     }
 }

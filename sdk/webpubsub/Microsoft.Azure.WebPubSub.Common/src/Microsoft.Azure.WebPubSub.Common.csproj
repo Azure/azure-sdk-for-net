@@ -2,8 +2,8 @@
   <PropertyGroup>
     <Description>Azure SDK Common object library for the WebPubSub service</Description>
     <AssemblyTitle>Azure SDK Common for WebPubSub</AssemblyTitle>
-    <Version>1.5.0</Version>
-    <ApiCompatVersion>1.4.0</ApiCompatVersion>
+    <Version>1.6.0-beta.1</Version>
+    <ApiCompatVersion>1.5.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <!--Remove ApiCompatVersion to remove unused JSON attribute-->
     <PackageTags>Azure, WebPubSub</PackageTags>

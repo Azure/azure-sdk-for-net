@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary>
     /// LimitJson abstract class.
@@ -36,6 +37,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The limit object type. </summary>
+        [WirePath("limitObjectType")]
         internal LimitType LimitObjectType { get; set; }
     }
 }

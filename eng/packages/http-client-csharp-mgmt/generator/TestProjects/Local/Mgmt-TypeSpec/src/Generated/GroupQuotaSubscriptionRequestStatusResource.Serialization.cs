@@ -9,7 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary></summary>
     public partial class GroupQuotaSubscriptionRequestStatusResource : IJsonModel<GroupQuotaSubscriptionRequestStatusData>
@@ -27,11 +27,11 @@ namespace MgmtTypeSpec
         GroupQuotaSubscriptionRequestStatusData IJsonModel<GroupQuotaSubscriptionRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GroupQuotaSubscriptionRequestStatusData>(Data, options, MgmtTypeSpecContext.Default);
+        BinaryData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GroupQuotaSubscriptionRequestStatusData>(Data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GroupQuotaSubscriptionRequestStatusData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaSubscriptionRequestStatusData>(data, options, MgmtTypeSpecContext.Default);
+        GroupQuotaSubscriptionRequestStatusData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaSubscriptionRequestStatusData>(data, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);

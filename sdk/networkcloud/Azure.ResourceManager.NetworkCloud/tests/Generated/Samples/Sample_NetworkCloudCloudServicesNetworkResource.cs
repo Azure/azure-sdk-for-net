@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/CloudServicesNetworks_Get.json
             // this example is just showing the usage of "CloudServicesNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchCloudServicesNetwork()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2025-02-01/examples/CloudServicesNetworks_Patch.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2025-07-01-preview/examples/CloudServicesNetworks_Patch.json
             // this example is just showing the usage of "CloudServicesNetworks_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,6 +82,12 @@ Port = 443L,
 }
 })},
                 EnableDefaultEgressEndpoints = CloudServicesNetworkEnableDefaultEgressEndpoint.False,
+                StorageOptions = new CloudServicesNetworkStorageOptionsPatch
+                {
+                    Mode = CloudServicesNetworkStorageMode.Standard,
+                    SizeMiB = 1048576L,
+                    StorageApplianceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.NetworkCloud/StorageAppliances/storageApplianceName"),
+                },
             };
             ArmOperation<NetworkCloudCloudServicesNetworkResource> lro = await networkCloudCloudServicesNetwork.UpdateAsync(WaitUntil.Completed, patch);
             NetworkCloudCloudServicesNetworkResource result = lro.Value;

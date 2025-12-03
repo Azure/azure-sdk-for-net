@@ -8,5 +8,6 @@
     <PackageTags>azure;management;arm;resource manager;cdn</PackageTags>
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

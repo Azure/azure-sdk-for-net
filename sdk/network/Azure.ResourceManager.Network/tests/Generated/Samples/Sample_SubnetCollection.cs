@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetCreate.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSubnetWithADelegation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetCreateWithDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetCreateWithDelegation.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSubnetWithServiceEndpoints()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetCreateServiceEndpoint.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetCreateServiceEndpoint.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ Service = "Microsoft.Storage",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSubnetWithServiceEndpointsWithNetworkIdentifier()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetCreateServiceEndpointNetworkIdentifier.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetCreateServiceEndpointNetworkIdentifier.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +185,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSubnetWithSharingScope()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetCreateWithSharingScope.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetCreateWithSharingScope.json
             // this example is just showing the usage of "Subnets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,7 +224,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGet.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -258,7 +258,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubnetWithADelegation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGetWithDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGetWithDelegation.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -292,7 +292,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetSubnetWithSharingScope()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGetWithSharingScope.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGetWithSharingScope.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -326,7 +326,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListSubnets()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetList.json
             // this example is just showing the usage of "Subnets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -362,7 +362,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGet.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -392,7 +392,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSubnetWithADelegation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGetWithDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGetWithDelegation.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -422,7 +422,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetSubnetWithSharingScope()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGetWithSharingScope.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGetWithSharingScope.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -452,7 +452,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSubnet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGet.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -494,7 +494,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSubnetWithADelegation()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGetWithDelegation.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGetWithDelegation.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -536,7 +536,7 @@ NetworkIdentifierId = new ResourceIdentifier("/subscriptions/subid/resourceGroup
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetSubnetWithSharingScope()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-10-01/examples/SubnetGetWithSharingScope.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2025-01-01/examples/SubnetGetWithSharingScope.json
             // this example is just showing the usage of "Subnets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

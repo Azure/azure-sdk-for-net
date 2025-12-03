@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2020-11-20";
+            _apiVersion = apiVersion ?? "2024-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the default rollout details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the default rollout details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Deletes the rollout resource. Rollout must be in terminal state. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Deletes the rollout resource. Rollout must be in terminal state. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Creates or updates the rollout details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="data"> The Default rollout properties supplied to the CreateOrUpdate operation. </param>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Creates or updates the rollout details. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="data"> The Default rollout properties supplied to the CreateOrUpdate operation. </param>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the list of the rollouts for the given provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Gets the list of the rollouts for the given provider. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Stops or cancels the rollout, if in progress. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary> Stops or cancels the rollout, if in progress. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="rolloutName"> The rollout name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> Gets the list of the rollouts for the given provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ProviderHub
 
         /// <summary> Gets the list of the rollouts for the given provider. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="providerNamespace"/> is null. </exception>

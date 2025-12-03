@@ -656,6 +656,8 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierSnapshotNotAllowed { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierVersionSnapshotNotAllowed { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get { throw null; } }
@@ -1566,6 +1568,9 @@ namespace Azure.Storage.Blobs.Models
         StandardRagrs = 2,
         StandardZrs = 3,
         PremiumLrs = 4,
+        StandardGzrs = 5,
+        PremiumZrs = 6,
+        StandardRagzrs = 7,
     }
     public partial class StageBlockFromUriOptions
     {

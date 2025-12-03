@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the action properties. </summary>
     public partial class ManagementAction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagementAction"/>. </summary>
         /// <param name="name"> Name of the action. </param>
@@ -66,8 +38,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="topic"> The MQTT topic path on which a client will receive the request for the action. </param>
         /// <param name="actionType"> The type of the action. </param>
         /// <param name="timeoutInSeconds"> Response timeout for the action. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagementAction(string name, string actionConfiguration, string targetUri, string typeRef, string topic, ManagementActionType? actionType, int? timeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementAction(string name, string actionConfiguration, string targetUri, string typeRef, string topic, ManagementActionType? actionType, int? timeoutInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ActionConfiguration = actionConfiguration;
@@ -76,26 +48,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Topic = topic;
             ActionType = actionType;
             TimeoutInSeconds = timeoutInSeconds;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagementAction"/> for deserialization. </summary>
-        internal ManagementAction()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the action. </summary>
         public string Name { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific configuration for the action. </summary>
         public string ActionConfiguration { get; set; }
+
         /// <summary> The target URI on which a client can invoke the specific action. </summary>
         public string TargetUri { get; set; }
+
         /// <summary> URI or type definition ID. </summary>
         public string TypeRef { get; set; }
+
         /// <summary> The MQTT topic path on which a client will receive the request for the action. </summary>
         public string Topic { get; set; }
+
         /// <summary> The type of the action. </summary>
         public ManagementActionType? ActionType { get; set; }
+
         /// <summary> Response timeout for the action. </summary>
         public int? TimeoutInSeconds { get; set; }
     }

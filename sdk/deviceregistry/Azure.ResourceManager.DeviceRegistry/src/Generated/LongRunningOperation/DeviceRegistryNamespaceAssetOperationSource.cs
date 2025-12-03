@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
-    internal class DeviceRegistryNamespaceAssetOperationSource : IOperationSource<DeviceRegistryNamespaceAssetResource>
+    /// <summary></summary>
+    internal partial class DeviceRegistryNamespaceAssetOperationSource : IOperationSource<DeviceRegistryNamespaceAssetResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DeviceRegistryNamespaceAssetOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DeviceRegistryNamespaceAssetResource IOperationSource<DeviceRegistryNamespaceAssetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceRegistryNamespaceAssetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceRegistryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DeviceRegistryNamespaceAssetData data = DeviceRegistryNamespaceAssetData.DeserializeDeviceRegistryNamespaceAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeviceRegistryNamespaceAssetResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DeviceRegistryNamespaceAssetResource> IOperationSource<DeviceRegistryNamespaceAssetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceRegistryNamespaceAssetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceRegistryContext.Default);
-            return await Task.FromResult(new DeviceRegistryNamespaceAssetResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DeviceRegistryNamespaceAssetData data = DeviceRegistryNamespaceAssetData.DeserializeDeviceRegistryNamespaceAssetData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DeviceRegistryNamespaceAssetResource(_client, data);
         }
     }
 }

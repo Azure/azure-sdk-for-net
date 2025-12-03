@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -21,22 +22,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Argument.AssertNotNull(configuration, nameof(configuration));
 
             Configuration = configuration;
-            Target = EventDestinationTarget.Mqtt;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventMqttDestination"/>. </summary>
         /// <param name="target"> Target destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configuration"> The MQTT destination configuration. </param>
-        internal EventMqttDestination(EventDestinationTarget? target, IDictionary<string, BinaryData> serializedAdditionalRawData, MqttDestinationConfiguration configuration) : base(target, serializedAdditionalRawData)
+        internal EventMqttDestination(EventDestinationTarget? target, IDictionary<string, BinaryData> additionalBinaryDataProperties, MqttDestinationConfiguration configuration) : base(target, additionalBinaryDataProperties)
         {
             Configuration = configuration;
-            Target = target;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EventMqttDestination"/> for deserialization. </summary>
-        internal EventMqttDestination()
-        {
         }
 
         /// <summary> The MQTT destination configuration. </summary>

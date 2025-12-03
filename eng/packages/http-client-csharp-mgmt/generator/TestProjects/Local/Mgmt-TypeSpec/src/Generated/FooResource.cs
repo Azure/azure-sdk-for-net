@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a Foo along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace MgmtTypeSpec
         internal FooResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string fooApiVersion);
-            _foosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _foosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _foosRestClient = new Foos(_foosClientDiagnostics, Pipeline, Endpoint, fooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -163,7 +163,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -192,7 +192,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_foosClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -225,7 +225,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _foosClientDiagnostics,
                     Pipeline,
@@ -264,7 +264,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _foosRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, FooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
+                TestsArmOperation<FooResource> operation = new TestsArmOperation<FooResource>(
                     new FooOperationSource(Client),
                     _foosClientDiagnostics,
                     Pipeline,

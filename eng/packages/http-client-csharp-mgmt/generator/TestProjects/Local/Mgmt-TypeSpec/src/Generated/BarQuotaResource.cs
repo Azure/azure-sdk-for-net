@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a BarQuotaResource along with the instance operations that can be performed on it.
@@ -50,7 +50,7 @@ namespace MgmtTypeSpec
         internal BarQuotaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string barQuotaResourceApiVersion);
-            _barQuotaOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _barQuotaOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _barQuotaOperationsRestClient = new BarQuotaOperations(_barQuotaOperationsClientDiagnostics, Pipeline, Endpoint, barQuotaResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -168,7 +168,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _barQuotaOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BarQuotaResourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<BarQuotaResource> operation = new MgmtTypeSpecArmOperation<BarQuotaResource>(
+                TestsArmOperation<BarQuotaResource> operation = new TestsArmOperation<BarQuotaResource>(
                     new BarQuotaResourceOperationSource(Client),
                     _barQuotaOperationsClientDiagnostics,
                     Pipeline,
@@ -207,7 +207,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _barQuotaOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, BarQuotaResourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<BarQuotaResource> operation = new MgmtTypeSpecArmOperation<BarQuotaResource>(
+                TestsArmOperation<BarQuotaResource> operation = new TestsArmOperation<BarQuotaResource>(
                     new BarQuotaResourceOperationSource(Client),
                     _barQuotaOperationsClientDiagnostics,
                     Pipeline,

@@ -299,7 +299,10 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 
-function getResourceScope(model: InputModelType, methods?: ResourceMethod[]): ResourceScope {
+function getResourceScope(
+  model: InputModelType,
+  methods?: ResourceMethod[]
+): ResourceScope {
   // First, check for explicit scope decorators
   const decorators = model.decorators;
   if (decorators?.some((d) => d.name == tenantResource)) {
@@ -312,7 +315,7 @@ function getResourceScope(model: InputModelType, methods?: ResourceMethod[]): Re
 
   // Fall back to Get method's scope only if no scope decorators are found
   if (methods) {
-    const getMethod = methods.find(m => m.kind === ResourceOperationKind.Get);
+    const getMethod = methods.find((m) => m.kind === ResourceOperationKind.Get);
     if (getMethod) {
       return getMethod.operationScope;
     }

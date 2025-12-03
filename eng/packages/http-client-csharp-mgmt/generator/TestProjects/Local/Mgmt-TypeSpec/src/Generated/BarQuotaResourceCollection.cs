@@ -12,11 +12,10 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BarQuotaResource"/> and their operations.
@@ -39,7 +38,7 @@ namespace MgmtTypeSpec
         internal BarQuotaResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(BarQuotaResource.ResourceType, out string barQuotaResourceApiVersion);
-            _barQuotaOperationsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", BarQuotaResource.ResourceType.Namespace, Diagnostics);
+            _barQuotaOperationsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", BarQuotaResource.ResourceType.Namespace, Diagnostics);
             _barQuotaOperationsRestClient = new BarQuotaOperations(_barQuotaOperationsClientDiagnostics, Pipeline, Endpoint, barQuotaResourceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -48,9 +47,9 @@ namespace MgmtTypeSpec
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != BarResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BarResource.ResourceType), id);
             }
         }
 

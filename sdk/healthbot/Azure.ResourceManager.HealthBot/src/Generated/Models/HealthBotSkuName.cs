@@ -15,6 +15,10 @@ namespace Azure.ResourceManager.HealthBot.Models
         /// <summary> S1. </summary>
         S1,
         /// <summary> C0. </summary>
-        C0
+        C0,
+        /// <summary> PES. </summary>
+        PES,
+        /// <summary> C1. </summary>
+        C1
     }
 }

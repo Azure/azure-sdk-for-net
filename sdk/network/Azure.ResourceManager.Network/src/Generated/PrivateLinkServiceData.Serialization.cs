@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("destinationIPAddress"u8);
                 writer.WriteStringValue(DestinationIPAddress);
             }
+            if (Optional.IsDefined(AccessMode))
+            {
+                writer.WritePropertyName("accessMode"u8);
+                writer.WriteStringValue(AccessMode.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(NetworkInterfaces))
             {
                 writer.WritePropertyName("networkInterfaces"u8);
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.Network
             IList<FrontendIPConfigurationData> loadBalancerFrontendIPConfigurations = default;
             IList<PrivateLinkServiceIPConfiguration> ipConfigurations = default;
             string destinationIPAddress = default;
+            PrivateLinkServiceAccessMode? accessMode = default;
             IReadOnlyList<NetworkInterfaceData> networkInterfaces = default;
             NetworkProvisioningState? provisioningState = default;
             IReadOnlyList<NetworkPrivateEndpointConnectionData> privateEndpointConnections = default;
@@ -282,6 +288,15 @@ namespace Azure.ResourceManager.Network
                             destinationIPAddress = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("accessMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            accessMode = new PrivateLinkServiceAccessMode(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("networkInterfaces"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -386,6 +401,7 @@ namespace Azure.ResourceManager.Network
                 loadBalancerFrontendIPConfigurations ?? new ChangeTrackingList<FrontendIPConfigurationData>(),
                 ipConfigurations ?? new ChangeTrackingList<PrivateLinkServiceIPConfiguration>(),
                 destinationIPAddress,
+                accessMode,
                 networkInterfaces ?? new ChangeTrackingList<NetworkInterfaceData>(),
                 provisioningState,
                 privateEndpointConnections ?? new ChangeTrackingList<NetworkPrivateEndpointConnectionData>(),
@@ -595,6 +611,21 @@ namespace Azure.ResourceManager.Network
                     {
                         builder.AppendLine($"'{DestinationIPAddress}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessMode), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    accessMode: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessMode))
+                {
+                    builder.Append("    accessMode: ");
+                    builder.AppendLine($"'{AccessMode.Value.ToString()}'");
                 }
             }
 

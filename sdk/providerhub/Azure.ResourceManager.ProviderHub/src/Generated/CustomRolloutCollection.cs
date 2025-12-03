@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -88,9 +88,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _customRolloutRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Name, rolloutName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _customRolloutRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, rolloutName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(new CustomRolloutOperationSource(Client), _customRolloutClientDiagnostics, Pipeline, _customRolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, rolloutName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -115,7 +113,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -139,9 +137,7 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _customRolloutRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Name, rolloutName, data, cancellationToken);
-                var uri = _customRolloutRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Name, rolloutName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ProviderHubArmOperation<CustomRolloutResource>(Response.FromValue(new CustomRolloutResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                var operation = new ProviderHubArmOperation<CustomRolloutResource>(new CustomRolloutOperationSource(Client), _customRolloutClientDiagnostics, Pipeline, _customRolloutRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.Name, rolloutName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +162,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +207,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +252,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -286,7 +282,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -316,7 +312,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -359,7 +355,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -402,7 +398,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -447,7 +443,7 @@ namespace Azure.ResourceManager.ProviderHub
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2020-11-20</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

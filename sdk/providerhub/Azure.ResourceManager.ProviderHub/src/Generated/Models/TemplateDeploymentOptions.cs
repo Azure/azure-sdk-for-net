@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateDeploymentOptions"/>. </summary>
-        /// <param name="isPreflightSupported"></param>
-        /// <param name="preflightOptions"></param>
+        /// <param name="isPreflightSupported"> Whether preflight is supported. </param>
+        /// <param name="preflightOptions"> The preflight options. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TemplateDeploymentOptions(bool? isPreflightSupported, IList<PreflightOption> preflightOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the is preflight supported. </summary>
+        /// <summary> Whether preflight is supported. </summary>
         public bool? IsPreflightSupported { get; set; }
-        /// <summary> Gets the preflight options. </summary>
+        /// <summary> The preflight options. </summary>
         public IList<PreflightOption> PreflightOptions { get; }
     }
 }
