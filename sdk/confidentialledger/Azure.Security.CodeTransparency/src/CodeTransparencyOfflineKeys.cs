@@ -15,20 +15,20 @@ namespace Azure.Security.CodeTransparency
     /// </summary>
     public sealed class CodeTransparencyOfflineKeys
     {
-        private IDictionary<string, JwksDocument> _keysByDomain;
+        private IDictionary<string, JwksDocument> _keysByIssuer;
 
         /// <summary>
         /// Initializes a new instance of CodeTransparencyOfflineKeys.
         /// </summary>
         public CodeTransparencyOfflineKeys()
         {
-            _keysByDomain = new Dictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
+            _keysByIssuer = new Dictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
         /// Gets the dictionary of ledger domains to their JWKS documents.
         /// </summary>
-        public IReadOnlyDictionary<string, JwksDocument> ByDomain => new ReadOnlyDictionary<string, JwksDocument>(_keysByDomain);
+        public IReadOnlyDictionary<string, JwksDocument> ByIssuer => new ReadOnlyDictionary<string, JwksDocument>(_keysByIssuer);
 
         /// <summary>
         /// Adds or updates a JWKS document for the specified ledger domain.
@@ -37,7 +37,7 @@ namespace Azure.Security.CodeTransparency
         {
             Argument.AssertNotNullOrEmpty(ledgerDomain, nameof(ledgerDomain));
             Argument.AssertNotNull(jwksDocument, nameof(jwksDocument));
-            _keysByDomain[ledgerDomain] = jwksDocument;
+            _keysByIssuer[ledgerDomain] = jwksDocument;
         }
 
         /// <summary>

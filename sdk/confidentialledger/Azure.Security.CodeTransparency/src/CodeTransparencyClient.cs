@@ -432,7 +432,7 @@ namespace Azure.Security.CodeTransparency
                         clientInstance = new CodeTransparencyClient(new Uri($"https://{issuer}"), clientOptions);
                         if (verificationOptions?.OfflineKeys != null)
                         {
-                            clientInstance._offlineKeys = verificationOptions.OfflineKeys.ByDomain;
+                            clientInstance._offlineKeys = verificationOptions.OfflineKeys.ByIssuer;
                             clientInstance._offlineKeysAllowNetworkFallback = verificationOptions.OfflineKeysBehavior == OfflineKeysBehavior.FallbackToNetwork;
                         }
                         clientInstances[issuer] = clientInstance;

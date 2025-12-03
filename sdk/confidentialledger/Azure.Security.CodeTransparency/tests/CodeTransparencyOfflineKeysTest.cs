@@ -30,8 +30,8 @@ namespace Azure.Security.CodeTransparency.Tests
         {
             var keys = new CodeTransparencyOfflineKeys();
 
-            Assert.IsNotNull(keys.ByDomain);
-            Assert.AreEqual(0, keys.ByDomain.Count);
+            Assert.IsNotNull(keys.ByIssuer);
+            Assert.AreEqual(0, keys.ByIssuer.Count);
         }
 
         [Test]
@@ -42,8 +42,8 @@ namespace Azure.Security.CodeTransparency.Tests
 
             keys.Add("ledger1", doc);
 
-            Assert.AreEqual(1, keys.ByDomain.Count);
-            Assert.AreSame(doc, keys.ByDomain["ledger1"]);
+            Assert.AreEqual(1, keys.ByIssuer.Count);
+            Assert.AreSame(doc, keys.ByIssuer["ledger1"]);
         }
 
         [Test]
@@ -56,8 +56,8 @@ namespace Azure.Security.CodeTransparency.Tests
             keys.Add("ledger1", doc1);
             keys.Add("ledger1", doc2);
 
-            Assert.AreEqual(1, keys.ByDomain.Count);
-            Assert.AreSame(doc2, keys.ByDomain["ledger1"]);
+            Assert.AreEqual(1, keys.ByIssuer.Count);
+            Assert.AreSame(doc2, keys.ByIssuer["ledger1"]);
         }
 
         [Test]
@@ -70,8 +70,8 @@ namespace Azure.Security.CodeTransparency.Tests
             keys.Add("Ledger.Domain", doc1);
             keys.Add("ledger.domain", doc2);
 
-            Assert.AreEqual(1, keys.ByDomain.Count);
-            Assert.AreSame(doc2, keys.ByDomain["LEDGER.DOMAIN"]);
+            Assert.AreEqual(1, keys.ByIssuer.Count);
+            Assert.AreSame(doc2, keys.ByIssuer["LEDGER.DOMAIN"]);
         }
 
         [Test]
@@ -101,18 +101,18 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public void ByDomain_ReturnsReadOnlyDictionary()
+        public void ByIssuer_ReturnsReadOnlyDictionary()
         {
             var keys = new CodeTransparencyOfflineKeys();
             var doc = new DummyJwksDocument("doc1");
             keys.Add("ledger1", doc);
 
-            var byDomain = keys.ByDomain;
+            var byIssuer = keys.ByIssuer;
 
             // IReadOnlyDictionary is read-only by design
             Assert.Throws<NotSupportedException>(() =>
             {
-                var cast = (IDictionary<string, JwksDocument>)byDomain;
+                var cast = (IDictionary<string, JwksDocument>)byIssuer;
                 cast["ledger2"] = doc;
             });
         }
@@ -133,9 +133,9 @@ namespace Azure.Security.CodeTransparency.Tests
 
             var keys = CodeTransparencyOfflineKeys.FromBinaryData(binary);
 
-            Assert.AreEqual(2, keys.ByDomain.Count);
-            Assert.IsTrue(keys.ByDomain.ContainsKey("ledger1.contoso.com"));
-            Assert.IsTrue(keys.ByDomain.ContainsKey("ledger2.contoso.com"));
+            Assert.AreEqual(2, keys.ByIssuer.Count);
+            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger1.contoso.com"));
+            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger2.contoso.com"));
         }
 
         [Test]
@@ -150,9 +150,9 @@ namespace Azure.Security.CodeTransparency.Tests
             using var doc = JsonDocument.Parse(json);
             var keys = CodeTransparencyOfflineKeys.DeserializeKeys(doc.RootElement);
 
-            Assert.AreEqual(2, keys.ByDomain.Count);
-            Assert.IsTrue(keys.ByDomain.ContainsKey("ledger1.example.com"));
-            Assert.IsTrue(keys.ByDomain.ContainsKey("ledger2.example.com"));
+            Assert.AreEqual(2, keys.ByIssuer.Count);
+            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger1.example.com"));
+            Assert.IsTrue(keys.ByIssuer.ContainsKey("ledger2.example.com"));
         }
     }
 }
