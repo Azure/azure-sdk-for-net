@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Azure.AI.Projects
 {
@@ -26,5 +27,8 @@ namespace Azure.AI.Projects
         {
             _additionalStringProperties = new ChangeTrackingDictionary<string, string>(additionalProperties);
         }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IReadOnlyDictionary<string, string> AdditionalProperties => new ReadOnlyDictionary<string, string>(_additionalStringProperties);
     }
 }

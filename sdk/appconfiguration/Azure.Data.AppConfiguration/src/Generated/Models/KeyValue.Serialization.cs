@@ -15,11 +15,11 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A key-value pair representing application settings. </summary>
-    public partial class ConfigurationSetting : IJsonModel<ConfigurationSetting>
+    public partial class KeyValue : IJsonModel<KeyValue>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ConfigurationSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyValue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyValue)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -76,13 +76,16 @@ namespace Azure.Data.AppConfiguration
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(IsReadOnly))
+            if (Optional.IsDefined(Locked))
             {
                 writer.WritePropertyName("locked"u8);
-                writer.WriteBooleanValue(IsReadOnly.Value);
+                writer.WriteBooleanValue(Locked.Value);
             }
-            writer.WritePropertyName("etag"u8);
-            SerializationEtag(writer, options);
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(Etag);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -102,24 +105,24 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSetting IJsonModel<ConfigurationSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KeyValue IJsonModel<KeyValue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationSetting JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual KeyValue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyValue)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConfigurationSetting(document.RootElement, options);
+            return DeserializeKeyValue(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ConfigurationSetting DeserializeConfigurationSetting(JsonElement element, ModelReaderWriterOptions options)
+        internal static KeyValue DeserializeKeyValue(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,8 +134,8 @@ namespace Azure.Data.AppConfiguration
             string value = default;
             DateTimeOffset? lastModified = default;
             IDictionary<string, string> tags = default;
-            bool? isReadOnly = default;
-            ETag eTag = default;
+            bool? locked = default;
+            string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,12 +195,12 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    isReadOnly = prop.Value.GetBoolean();
+                    locked = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
                 {
-                    DeserializeEtag(prop, ref eTag);
+                    etag = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -205,75 +208,75 @@ namespace Azure.Data.AppConfiguration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConfigurationSetting(
+            return new KeyValue(
                 key,
                 label,
                 contentType,
                 value,
                 lastModified,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                isReadOnly,
-                eTag,
+                locked,
+                etag,
                 additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ConfigurationSetting>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<KeyValue>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureDataAppConfigurationContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyValue)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ConfigurationSetting IPersistableModel<ConfigurationSetting>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KeyValue IPersistableModel<KeyValue>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ConfigurationSetting PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual KeyValue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSetting>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<KeyValue>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeConfigurationSetting(document.RootElement, options);
+                        return DeserializeKeyValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyValue)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ConfigurationSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyValue>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="configurationSetting"> The <see cref="ConfigurationSetting"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ConfigurationSetting configurationSetting)
+        /// <param name="keyValue"> The <see cref="KeyValue"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(KeyValue keyValue)
         {
-            if (configurationSetting == null)
+            if (keyValue == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(configurationSetting, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(keyValue, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfigurationSetting"/> from. </param>
-        public static explicit operator ConfigurationSetting(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyValue"/> from. </param>
+        public static explicit operator KeyValue(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeConfigurationSetting(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeKeyValue(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
