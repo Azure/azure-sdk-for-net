@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Information about resource association. </summary>
-    public partial class NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
+    public partial class ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
-        internal NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
+        internal ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name, ResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name, ServiceBusResourceAssociationAccessMode? accessMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AccessMode = accessMode;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string Name { get; }
         /// <summary> Access Mode of the resource association. </summary>
         [WirePath("accessMode")]
-        public ResourceAssociationAccessMode? AccessMode { get; }
+        public ServiceBusResourceAssociationAccessMode? AccessMode { get; }
     }
 }

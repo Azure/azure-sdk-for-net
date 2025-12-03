@@ -16,11 +16,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class NspAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<NspAccessRuleProperties>
+    public partial class ServiceBusNspAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<ServiceBusNspAccessRuleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspAccessRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNspAccessRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceBusNspAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRuleProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNspAccessRuleProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Direction))
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        NspAccessRuleProperties IJsonModel<NspAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceBusNspAccessRuleProperties IJsonModel<ServiceBusNspAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRuleProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNspAccessRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspAccessRuleProperties(document.RootElement, options);
+            return DeserializeServiceBusNspAccessRuleProperties(document.RootElement, options);
         }
 
-        internal static NspAccessRuleProperties DeserializeNspAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceBusNspAccessRuleProperties DeserializeServiceBusNspAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            NspAccessRuleDirection? direction = default;
+            ServiceBusNspAccessRuleDirection? direction = default;
             IReadOnlyList<string> addressPrefixes = default;
             IReadOnlyList<SubResource> subscriptions = default;
-            IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters = default;
+            IReadOnlyList<ServiceBusNetworkSecurityPerimeter> networkSecurityPerimeters = default;
             IReadOnlyList<string> fullyQualifiedDomainNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    direction = new NspAccessRuleDirection(property.Value.GetString());
+                    direction = new ServiceBusNspAccessRuleDirection(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("addressPrefixes"u8))
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    List<NetworkSecurityPerimeter> array = new List<NetworkSecurityPerimeter>();
+                    List<ServiceBusNetworkSecurityPerimeter> array = new List<ServiceBusNetworkSecurityPerimeter>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkSecurityPerimeter.DeserializeNetworkSecurityPerimeter(item, options));
+                        array.Add(ServiceBusNetworkSecurityPerimeter.DeserializeServiceBusNetworkSecurityPerimeter(item, options));
                     }
                     networkSecurityPerimeters = array;
                     continue;
@@ -199,11 +199,11 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspAccessRuleProperties(
+            return new ServiceBusNspAccessRuleProperties(
                 direction,
                 addressPrefixes ?? new ChangeTrackingList<string>(),
                 subscriptions ?? new ChangeTrackingList<SubResource>(),
-                networkSecurityPerimeters ?? new ChangeTrackingList<NetworkSecurityPerimeter>(),
+                networkSecurityPerimeters ?? new ChangeTrackingList<ServiceBusNetworkSecurityPerimeter>(),
                 fullyQualifiedDomainNames ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
@@ -356,9 +356,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NspAccessRuleProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceBusNspAccessRuleProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -367,26 +367,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRuleProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNspAccessRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspAccessRuleProperties IPersistableModel<NspAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceBusNspAccessRuleProperties IPersistableModel<ServiceBusNspAccessRuleProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNspAccessRuleProperties(document.RootElement, options);
+                        return DeserializeServiceBusNspAccessRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRuleProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNspAccessRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceBusNspAccessRuleProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

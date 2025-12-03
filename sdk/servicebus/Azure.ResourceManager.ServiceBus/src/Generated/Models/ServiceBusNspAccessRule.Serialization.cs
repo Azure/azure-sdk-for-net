@@ -15,11 +15,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class NspAccessRule : IUtf8JsonSerializable, IJsonModel<NspAccessRule>
+    public partial class ServiceBusNspAccessRule : IUtf8JsonSerializable, IJsonModel<ServiceBusNspAccessRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NspAccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNspAccessRule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NspAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceBusNspAccessRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNspAccessRule)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -49,19 +49,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        NspAccessRule IJsonModel<NspAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceBusNspAccessRule IJsonModel<ServiceBusNspAccessRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NspAccessRule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNspAccessRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNspAccessRule(document.RootElement, options);
+            return DeserializeServiceBusNspAccessRule(document.RootElement, options);
         }
 
-        internal static NspAccessRule DeserializeNspAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceBusNspAccessRule DeserializeServiceBusNspAccessRule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             string type = default;
-            NspAccessRuleProperties properties = default;
+            ServiceBusNspAccessRuleProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type0 = default;
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    properties = NspAccessRuleProperties.DeserializeNspAccessRuleProperties(property.Value, options);
+                    properties = ServiceBusNspAccessRuleProperties.DeserializeServiceBusNspAccessRuleProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NspAccessRule(
+            return new ServiceBusNspAccessRule(
                 id,
                 name,
                 type0,
@@ -228,9 +228,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NspAccessRule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceBusNspAccessRule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -239,26 +239,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNspAccessRule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NspAccessRule IPersistableModel<NspAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceBusNspAccessRule IPersistableModel<ServiceBusNspAccessRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspAccessRule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNspAccessRule(document.RootElement, options);
+                        return DeserializeServiceBusNspAccessRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NspAccessRule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNspAccessRule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NspAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceBusNspAccessRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of <see cref="ConfidentialCompute"/>. </summary>
         /// <param name="mode"> Setting to Enable or Disable Confidential Compute. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfidentialCompute(Mode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConfidentialCompute(ServiceBusConfidentialComputeMode? mode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("mode")]
-        public Mode? Mode { get; set; }
+        public ServiceBusConfidentialComputeMode? Mode { get; set; }
     }
 }

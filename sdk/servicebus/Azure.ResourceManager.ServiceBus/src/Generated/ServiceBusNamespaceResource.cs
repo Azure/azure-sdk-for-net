@@ -975,12 +975,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ServiceBusNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceBusNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityPerimeterConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ServiceBusNetworkSecurityPerimeterConfiguration.DeserializeServiceBusNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1001,12 +1001,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ServiceBusNetworkSecurityPerimeterConfiguration"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceBusNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _networkSecurityPerimeterConfigurationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ServiceBusNetworkSecurityPerimeterConfiguration.DeserializeServiceBusNetworkSecurityPerimeterConfiguration(e), _networkSecurityPerimeterConfigurationClientDiagnostics, Pipeline, "ServiceBusNamespaceResource.GetNetworkSecurityPerimeterConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1030,7 +1030,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual async Task<Response<NetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(string resourceAssociationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusNetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
 
@@ -1069,7 +1069,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual Response<NetworkSecurityPerimeterConfiguration> GetResourceAssociationNameNetworkSecurityPerimeterConfiguration(string resourceAssociationName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusNetworkSecurityPerimeterConfiguration> GetResourceAssociationNameNetworkSecurityPerimeterConfiguration(string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
 

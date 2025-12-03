@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Properties of Access Rule. </summary>
-    public partial class NspAccessRuleProperties
+    public partial class ServiceBusNspAccessRuleProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRuleProperties"/>. </summary>
-        internal NspAccessRuleProperties()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNspAccessRuleProperties"/>. </summary>
+        internal ServiceBusNspAccessRuleProperties()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
             Subscriptions = new ChangeTrackingList<SubResource>();
-            NetworkSecurityPerimeters = new ChangeTrackingList<NetworkSecurityPerimeter>();
+            NetworkSecurityPerimeters = new ChangeTrackingList<ServiceBusNetworkSecurityPerimeter>();
             FullyQualifiedDomainNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNspAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRuleProperties(NspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<NetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusNspAccessRuleProperties(ServiceBusNspAccessRuleDirection? direction, IReadOnlyList<string> addressPrefixes, IReadOnlyList<SubResource> subscriptions, IReadOnlyList<ServiceBusNetworkSecurityPerimeter> networkSecurityPerimeters, IReadOnlyList<string> fullyQualifiedDomainNames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Direction = direction;
             AddressPrefixes = addressPrefixes;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <summary> Direction of Access Rule. </summary>
         [WirePath("direction")]
-        public NspAccessRuleDirection? Direction { get; }
+        public ServiceBusNspAccessRuleDirection? Direction { get; }
         /// <summary> Address prefixes in the CIDR format for inbound rules. </summary>
         [WirePath("addressPrefixes")]
         public IReadOnlyList<string> AddressPrefixes { get; }
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public IReadOnlyList<SubResource> Subscriptions { get; }
         /// <summary> NetworkSecurityPerimeters for inbound rules. </summary>
         [WirePath("networkSecurityPerimeters")]
-        public IReadOnlyList<NetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
+        public IReadOnlyList<ServiceBusNetworkSecurityPerimeter> NetworkSecurityPerimeters { get; }
         /// <summary> FQDN for outbound rules. </summary>
         [WirePath("fullyQualifiedDomainNames")]
         public IReadOnlyList<string> FullyQualifiedDomainNames { get; }

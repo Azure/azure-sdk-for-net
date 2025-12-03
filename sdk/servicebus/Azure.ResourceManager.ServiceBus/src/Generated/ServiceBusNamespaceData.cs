@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ServiceBus
         internal PlatformCapabilities PlatformCapabilities { get; set; }
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
-        public Mode? ConfidentialComputeMode
+        public ServiceBusConfidentialComputeMode? ConfidentialComputeMode
         {
             get => PlatformCapabilities is null ? default : PlatformCapabilities.ConfidentialComputeMode;
             set

@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class NetworkSecurityPerimeterConfigurationPropertiesProfile : IUtf8JsonSerializable, IJsonModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>
+    public partial class ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile : IUtf8JsonSerializable, IJsonModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Name))
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        NetworkSecurityPerimeterConfigurationPropertiesProfile IJsonModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile IJsonModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkSecurityPerimeterConfigurationPropertiesProfile(document.RootElement, options);
+            return DeserializeServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(document.RootElement, options);
         }
 
-        internal static NetworkSecurityPerimeterConfigurationPropertiesProfile DeserializeNetworkSecurityPerimeterConfigurationPropertiesProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile DeserializeServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
             string name = default;
             string accessRulesVersion = default;
-            IReadOnlyList<NspAccessRule> accessRules = default;
+            IReadOnlyList<ServiceBusNspAccessRule> accessRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,10 +116,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    List<NspAccessRule> array = new List<NspAccessRule>();
+                    List<ServiceBusNspAccessRule> array = new List<ServiceBusNspAccessRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NspAccessRule.DeserializeNspAccessRule(item, options));
+                        array.Add(ServiceBusNspAccessRule.DeserializeServiceBusNspAccessRule(item, options));
                     }
                     accessRules = array;
                     continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkSecurityPerimeterConfigurationPropertiesProfile(name, accessRulesVersion, accessRules ?? new ChangeTrackingList<NspAccessRule>(), serializedAdditionalRawData);
+            return new ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(name, accessRulesVersion, accessRules ?? new ChangeTrackingList<ServiceBusNspAccessRule>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -217,9 +217,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -228,26 +228,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkSecurityPerimeterConfigurationPropertiesProfile IPersistableModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile IPersistableModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkSecurityPerimeterConfigurationPropertiesProfile(document.RootElement, options);
+                        return DeserializeServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkSecurityPerimeterConfigurationPropertiesProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

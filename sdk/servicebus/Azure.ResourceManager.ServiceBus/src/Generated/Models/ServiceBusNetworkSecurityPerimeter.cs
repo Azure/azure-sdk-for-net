@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Namespace replication properties. </summary>
-    public partial class NamespaceReplicaLocation
+    /// <summary> NetworkSecurityPerimeter related information. </summary>
+    public partial class ServiceBusNetworkSecurityPerimeter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,32 +46,32 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceReplicaLocation"/>. </summary>
-        public NamespaceReplicaLocation()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeter"/>. </summary>
+        public ServiceBusNetworkSecurityPerimeter()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceReplicaLocation"/>. </summary>
-        /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
-        /// <param name="roleType"> GeoDR Role Types. </param>
-        /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeter"/>. </summary>
+        /// <param name="id"> Fully qualified identifier of the resource. </param>
+        /// <param name="perimeterGuid"> Guid of the resource. </param>
+        /// <param name="location"> Location of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceReplicaLocation(string locationName, GeoDRRoleType? roleType, string clusterArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusNetworkSecurityPerimeter(ResourceIdentifier id, string perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LocationName = locationName;
-            RoleType = roleType;
-            ClusterArmId = clusterArmId;
+            Id = id;
+            PerimeterGuid = perimeterGuid;
+            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Azure regions where a replica of the namespace is maintained. </summary>
-        [WirePath("locationName")]
-        public string LocationName { get; set; }
-        /// <summary> GeoDR Role Types. </summary>
-        [WirePath("roleType")]
-        public GeoDRRoleType? RoleType { get; set; }
-        /// <summary> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </summary>
-        [WirePath("clusterArmId")]
-        public string ClusterArmId { get; set; }
+        /// <summary> Fully qualified identifier of the resource. </summary>
+        [WirePath("id")]
+        public ResourceIdentifier Id { get; set; }
+        /// <summary> Guid of the resource. </summary>
+        [WirePath("perimeterGuid")]
+        public string PerimeterGuid { get; set; }
+        /// <summary> Location of the resource. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; set; }
     }
 }

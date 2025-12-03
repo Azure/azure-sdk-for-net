@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         internal ConfidentialCompute ConfidentialCompute { get; set; }
         /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
         [WirePath("confidentialCompute.mode")]
-        public Mode? ConfidentialComputeMode
+        public ServiceBusConfidentialComputeMode? ConfidentialComputeMode
         {
             get => ConfidentialCompute is null ? default : ConfidentialCompute.Mode;
             set

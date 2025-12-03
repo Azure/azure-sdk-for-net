@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Network Security Perimeter related configurations of a given namespace. </summary>
-    public partial class NetworkSecurityPerimeterConfiguration : ResourceData
+    public partial class ServiceBusNetworkSecurityPerimeterConfiguration : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
-        public NetworkSecurityPerimeterConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfiguration"/>. </summary>
+        public ServiceBusNetworkSecurityPerimeterConfiguration()
         {
             ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
             ApplicableFeatures = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfiguration"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="parentAssociationName"> Source Resource Association name. </param>
         /// <param name="sourceResourceId"> ARM Id of source resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, NetworkSecurityPerimeter networkSecurityPerimeter, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, NetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -90,19 +90,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public AzureLocation? Location { get; }
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
         [WirePath("properties.provisioningState")]
-        public NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
+        public ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> List of Provisioning Issues if any. </summary>
         [WirePath("properties.provisioningIssues")]
         public IList<ProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> NetworkSecurityPerimeter related information. </summary>
         [WirePath("properties.networkSecurityPerimeter")]
-        public NetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
+        public ServiceBusNetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }
         /// <summary> Information about resource association. </summary>
         [WirePath("properties.resourceAssociation")]
-        public NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
+        public ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
         /// <summary> Information about current network profile. </summary>
         [WirePath("properties.profile")]
-        public NetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
+        public ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
         /// <summary> True if the ServiceBus namespace is backed by another Azure resource and not visible to end users. </summary>
         [WirePath("properties.isBackingResource")]
         public bool? IsBackingResource { get; }

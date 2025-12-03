@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameAsync(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
+        public async Task<Response<ServiceBusNetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameAsync(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,9 +95,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        NetworkSecurityPerimeterConfiguration value = default;
+                        ServiceBusNetworkSecurityPerimeterConfiguration value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(document.RootElement);
+                        value = ServiceBusNetworkSecurityPerimeterConfiguration.DeserializeServiceBusNetworkSecurityPerimeterConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkSecurityPerimeterConfiguration> GetResourceAssociationName(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
+        public Response<ServiceBusNetworkSecurityPerimeterConfiguration> GetResourceAssociationName(string subscriptionId, string resourceGroupName, string namespaceName, string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -126,9 +126,9 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case 200:
                     {
-                        NetworkSecurityPerimeterConfiguration value = default;
+                        ServiceBusNetworkSecurityPerimeterConfiguration value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = NetworkSecurityPerimeterConfiguration.DeserializeNetworkSecurityPerimeterConfiguration(document.RootElement);
+                        value = ServiceBusNetworkSecurityPerimeterConfiguration.DeserializeServiceBusNetworkSecurityPerimeterConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

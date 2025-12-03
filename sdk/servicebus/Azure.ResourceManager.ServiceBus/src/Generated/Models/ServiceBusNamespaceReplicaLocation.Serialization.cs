@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class NamespaceReplicaLocation : IUtf8JsonSerializable, IJsonModel<NamespaceReplicaLocation>
+    public partial class ServiceBusNamespaceReplicaLocation : IUtf8JsonSerializable, IJsonModel<ServiceBusNamespaceReplicaLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NamespaceReplicaLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNamespaceReplicaLocation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NamespaceReplicaLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceBusNamespaceReplicaLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceReplicaLocation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNamespaceReplicaLocation)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(LocationName))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        NamespaceReplicaLocation IJsonModel<NamespaceReplicaLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceBusNamespaceReplicaLocation IJsonModel<ServiceBusNamespaceReplicaLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceReplicaLocation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNamespaceReplicaLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNamespaceReplicaLocation(document.RootElement, options);
+            return DeserializeServiceBusNamespaceReplicaLocation(document.RootElement, options);
         }
 
-        internal static NamespaceReplicaLocation DeserializeNamespaceReplicaLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceBusNamespaceReplicaLocation DeserializeServiceBusNamespaceReplicaLocation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NamespaceReplicaLocation(locationName, roleType, clusterArmId, serializedAdditionalRawData);
+            return new ServiceBusNamespaceReplicaLocation(locationName, roleType, clusterArmId, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<NamespaceReplicaLocation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceBusNamespaceReplicaLocation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -209,26 +209,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceReplicaLocation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNamespaceReplicaLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NamespaceReplicaLocation IPersistableModel<NamespaceReplicaLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceBusNamespaceReplicaLocation IPersistableModel<ServiceBusNamespaceReplicaLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceReplicaLocation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNamespaceReplicaLocation(document.RootElement, options);
+                        return DeserializeServiceBusNamespaceReplicaLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceReplicaLocation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNamespaceReplicaLocation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NamespaceReplicaLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceBusNamespaceReplicaLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Information of Access Rule in Network Profile. </summary>
-    public partial class NspAccessRule : ResourceData
+    /// <summary> Information about current network profile. </summary>
+    public partial class ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,31 +45,33 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRule"/>. </summary>
-        internal NspAccessRule()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
+        internal ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile()
         {
+            AccessRules = new ChangeTrackingList<ServiceBusNspAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NspAccessRule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="nspAccessRuleType"> Type of the resource. </param>
-        /// <param name="properties"> Properties of Access Rule. </param>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="accessRulesVersion"> Current access rules version. </param>
+        /// <param name="accessRules"> List of Access Rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NspAccessRule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string nspAccessRuleType, NspAccessRuleProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(string name, string accessRulesVersion, IReadOnlyList<ServiceBusNspAccessRule> accessRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            NspAccessRuleType = nspAccessRuleType;
-            Properties = properties;
+            Name = name;
+            AccessRulesVersion = accessRulesVersion;
+            AccessRules = accessRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of the resource. </summary>
-        [WirePath("type")]
-        public string NspAccessRuleType { get; }
-        /// <summary> Properties of Access Rule. </summary>
-        [WirePath("properties")]
-        public NspAccessRuleProperties Properties { get; }
+        /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
+        public string Name { get; }
+        /// <summary> Current access rules version. </summary>
+        [WirePath("accessRulesVersion")]
+        public string AccessRulesVersion { get; }
+        /// <summary> List of Access Rules. </summary>
+        [WirePath("accessRules")]
+        public IReadOnlyList<ServiceBusNspAccessRule> AccessRules { get; }
     }
 }

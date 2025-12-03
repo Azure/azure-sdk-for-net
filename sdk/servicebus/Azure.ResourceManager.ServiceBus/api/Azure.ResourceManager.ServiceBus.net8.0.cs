@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ServiceBus
     {
         public ServiceBusNamespaceData(Azure.Core.AzureLocation location) { }
         public string AlternateName { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.Mode? ConfidentialComputeMode { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode? ConfidentialComputeMode { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption Encryption { get { throw null; } set { } }
@@ -293,12 +293,12 @@ namespace Azure.ResourceManager.ServiceBus
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource> GetMigrationConfiguration(Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName configName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.MigrationConfigurationResource>> GetMigrationConfigurationAsync(Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName configName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceBus.MigrationConfigurationCollection GetMigrationConfigurations() { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterConfigurationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource> GetPrivateLinkResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkResource> GetPrivateLinkResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration> GetResourceAssociationNameNetworkSecurityPerimeterConfiguration(string resourceAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(string resourceAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration> GetResourceAssociationNameNetworkSecurityPerimeterConfiguration(string resourceAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(string resourceAssociationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryCollection GetServiceBusDisasterRecoveries() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource> GetServiceBusDisasterRecovery(string alias, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusDisasterRecoveryResource>> GetServiceBusDisasterRecoveryAsync(string alias, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -327,11 +327,9 @@ namespace Azure.ResourceManager.ServiceBus
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
         public virtual Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> Update(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> UpdateAsync(Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -807,11 +805,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static Azure.ResourceManager.ServiceBus.MigrationConfigurationData MigrationConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string provisioningState = null, long? pendingReplicationOperationsCount = default(long?), Azure.Core.ResourceIdentifier targetServiceBusNamespace = null, string postMigrationName = null, string migrationState = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceBus.MigrationConfigurationData MigrationConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null, long? pendingReplicationOperationsCount = default(long?), Azure.Core.ResourceIdentifier targetServiceBusNamespace = null, string postMigrationName = null, string migrationState = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile profile = null, bool? isBackingResource = default(bool?), System.Collections.Generic.IEnumerable<string> applicableFeatures = null, string parentAssociationName = null, Azure.Core.ResourceIdentifier sourceResourceId = null) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile NetworkSecurityPerimeterConfigurationPropertiesProfile(string name = null, string accessRulesVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.NspAccessRule> accessRules = null) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name = null, Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode?)) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.NspAccessRule NspAccessRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string nspAccessRuleType = null, Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties NspAccessRuleProperties(Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection? direction = default(Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.Models.ProvisioningIssue ProvisioningIssue(string name = null, Azure.ResourceManager.ServiceBus.Models.ProvisioningIssueProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.Models.ProvisioningIssueProperties ProvisioningIssueProperties(string issueType = null, string description = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys ServiceBusAccessKeys(string primaryConnectionString = null, string secondaryConnectionString = null, string aliasPrimaryConnectionString = null, string aliasSecondaryConnectionString = null, string primaryKey = null, string secondaryKey = null, string keyName = null) { throw null; }
@@ -824,11 +817,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNameAvailabilityResult ServiceBusNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusNameUnavailableReason? reason = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusNameUnavailableReason?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData ServiceBusNamespaceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.ServiceBus.Models.ServiceBusSku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, System.DateTimeOffset? createdOn, System.DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption encryption, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData ServiceBusNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceBus.Models.ServiceBusSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion?), string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess?), int? premiumMessagingPartitions = default(int?), Azure.ResourceManager.ServiceBus.Models.Mode? confidentialComputeMode = default(Azure.ResourceManager.ServiceBus.Models.Mode?), Azure.ResourceManager.ServiceBus.Models.GeoDataReplicationProperties geoDataReplication = null) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData ServiceBusNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceBus.Models.ServiceBusSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusMinimumTlsVersion?), string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccess?), int? premiumMessagingPartitions = default(int?), Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode? confidentialComputeMode = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode?), Azure.ResourceManager.ServiceBus.Models.GeoDataReplicationProperties geoDataReplication = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch ServiceBusNamespacePatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceBus.Models.ServiceBusSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string provisioningState = null, string status = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? updatedOn = default(System.DateTimeOffset?), string serviceBusEndpoint = null, string metricId = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusEncryption encryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = default(bool?), string alternateName = null) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), bool? isTrustedServiceAccessEnabled = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction? defaultAction = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules> ipRules = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceBus.ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, bool? isTrustedServiceAccessEnabled = default(bool?), Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction? defaultAction = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetDefaultAction?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetIPRules> ipRules = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPublicNetworkAccessFlag?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration ServiceBusNetworkSecurityPerimeterConfiguration(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile = null, bool? isBackingResource = default(bool?), System.Collections.Generic.IEnumerable<string> applicableFeatures = null, string parentAssociationName = null, Azure.Core.ResourceIdentifier sourceResourceId = null) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(string name = null, string accessRulesVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule> accessRules = null) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode? accessMode = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode?)) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule ServiceBusNspAccessRule(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string nspAccessRuleType = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties ServiceBusNspAccessRuleProperties(Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection? direction = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> subscriptions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter> networkSecurityPerimeters = null, System.Collections.Generic.IEnumerable<string> fullyQualifiedDomainNames = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState?), Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.ServiceBus.ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState?)) { throw null; }
@@ -873,7 +871,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
     public partial class GeoDataReplicationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.GeoDataReplicationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.GeoDataReplicationProperties>
     {
         public GeoDataReplicationProperties() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation> Locations { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation> Locations { get { throw null; } }
         public int? MaxReplicationLagDurationInSeconds { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceBus.Models.GeoDataReplicationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.GeoDataReplicationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -932,167 +930,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName left, Azure.ResourceManager.ServiceBus.Models.MigrationConfigurationName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct Mode : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.Mode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public Mode(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.Mode Disabled { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.Mode Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.Mode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.Mode left, Azure.ResourceManager.ServiceBus.Models.Mode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.Mode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.Mode left, Azure.ResourceManager.ServiceBus.Models.Mode right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NamespaceReplicaLocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation>
-    {
-        public NamespaceReplicaLocation() { }
-        public string ClusterArmId { get { throw null; } set { } }
-        public string LocationName { get { throw null; } set { } }
-        public Azure.ResourceManager.ServiceBus.Models.GeoDRRoleType? RoleType { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NamespaceReplicaLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter>
-    {
-        public NetworkSecurityPerimeter() { }
-        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public string PerimeterGuid { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>
-    {
-        public NetworkSecurityPerimeterConfiguration() { }
-        public System.Collections.Generic.IReadOnlyList<string> ApplicableFeatures { get { throw null; } }
-        public bool? IsBackingResource { get { throw null; } }
-        public Azure.Core.AzureLocation? Location { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } set { } }
-        public string ParentAssociationName { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssue> ProvisioningIssues { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get { throw null; } }
-        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterConfigurationPropertiesProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>
-    {
-        internal NetworkSecurityPerimeterConfigurationPropertiesProfile() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceBus.Models.NspAccessRule> AccessRules { get { throw null; } }
-        public string AccessRulesVersion { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>
-    {
-        internal NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation() { }
-        public Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode? AccessMode { get { throw null; } }
-        public string Name { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NetworkSecurityPerimeterConfigurationProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Deleted { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState InvalidResponse { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState SucceededWithIssues { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Unknown { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NspAccessRule : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRule>
-    {
-        internal NspAccessRule() { }
-        public string NspAccessRuleType { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties Properties { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NspAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NspAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct NspAccessRuleDirection : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public NspAccessRuleDirection(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection Inbound { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection Outbound { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection left, Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection left, Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class NspAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties>
-    {
-        internal NspAccessRuleProperties() { }
-        public System.Collections.Generic.IReadOnlyList<string> AddressPrefixes { get { throw null; } }
-        public Azure.ResourceManager.ServiceBus.Models.NspAccessRuleDirection? Direction { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<string> FullyQualifiedDomainNames { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceBus.Models.NetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Subscriptions { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.NspAccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class ProvisioningIssue : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssue>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssue>
     {
         public ProvisioningIssue() { }
@@ -1116,27 +953,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Azure.ResourceManager.ServiceBus.Models.ProvisioningIssueProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssueProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssueProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssueProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ResourceAssociationAccessMode(string value) { throw null; }
-        public static Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode AuditMode { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode EnforcedMode { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode LearningMode { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode NoAssociationMode { get { throw null; } }
-        public static Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode UnspecifiedMode { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode right) { throw null; }
-        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode left, Azure.ResourceManager.ServiceBus.Models.ResourceAssociationAccessMode right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class ServiceBusAccessKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusAccessKeys>
     {
@@ -1178,6 +994,24 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusClientAffineProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceBusConfidentialComputeMode : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceBusConfidentialComputeMode(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode left, Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode left, Azure.ResourceManager.ServiceBus.Models.ServiceBusConfidentialComputeMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ServiceBusCorrelationFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusCorrelationFilter>
     {
@@ -1350,6 +1184,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ServiceBusNamespaceReplicaLocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation>
+    {
+        public ServiceBusNamespaceReplicaLocation() { }
+        public string ClusterArmId { get { throw null; } set { } }
+        public string LocationName { get { throw null; } set { } }
+        public Azure.ResourceManager.ServiceBus.Models.GeoDRRoleType? RoleType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNamespaceReplicaLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public enum ServiceBusNameUnavailableReason
     {
         None = 0,
@@ -1417,6 +1264,136 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkRuleSetVirtualNetworkRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceBusNetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter>
+    {
+        public ServiceBusNetworkSecurityPerimeter() { }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        public string PerimeterGuid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceBusNetworkSecurityPerimeterConfiguration : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>
+    {
+        public ServiceBusNetworkSecurityPerimeterConfiguration() { }
+        public System.Collections.Generic.IReadOnlyList<string> ApplicableFeatures { get { throw null; } }
+        public bool? IsBackingResource { get { throw null; } }
+        public Azure.Core.AzureLocation? Location { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter NetworkSecurityPerimeter { get { throw null; } set { } }
+        public string ParentAssociationName { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.ServiceBus.Models.ProvisioningIssue> ProvisioningIssues { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get { throw null; } }
+        public Azure.Core.ResourceIdentifier SourceResourceId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>
+    {
+        internal ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule> AccessRules { get { throw null; } }
+        public string AccessRulesVersion { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>
+    {
+        internal ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation() { }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode? AccessMode { get { throw null; } }
+        public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Deleted { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState InvalidResponse { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState SucceededWithIssues { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Unknown { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState left, Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ServiceBusNspAccessRule : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule>
+    {
+        internal ServiceBusNspAccessRule() { }
+        public string NspAccessRuleType { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties Properties { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceBusNspAccessRuleDirection : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceBusNspAccessRuleDirection(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection Inbound { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection Outbound { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection left, Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection left, Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ServiceBusNspAccessRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties>
+    {
+        internal ServiceBusNspAccessRuleProperties() { }
+        public System.Collections.Generic.IReadOnlyList<string> AddressPrefixes { get { throw null; } }
+        public Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleDirection? Direction { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> FullyQualifiedDomainNames { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ServiceBus.Models.ServiceBusNetworkSecurityPerimeter> NetworkSecurityPerimeters { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Subscriptions { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusNspAccessRuleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ServiceBusPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusPrivateEndpointConnectionProvisioningState>
@@ -1533,6 +1510,27 @@ namespace Azure.ResourceManager.ServiceBus.Models
         Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusRegenerateAccessKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ServiceBusResourceAssociationAccessMode : System.IEquatable<Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ServiceBusResourceAssociationAccessMode(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode AuditMode { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode EnforcedMode { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode LearningMode { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode NoAssociationMode { get { throw null; } }
+        public static Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode UnspecifiedMode { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode left, Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode left, Azure.ResourceManager.ServiceBus.Models.ServiceBusResourceAssociationAccessMode right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ServiceBusSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceBus.Models.ServiceBusSku>
     {

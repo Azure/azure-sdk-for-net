@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="confidentialComputeMode"></param>
         /// <param name="geoDataReplication"> Geo Data Replication settings for the namespace. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusNamespaceData"/> instance for mocking. </returns>
-        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ServiceBusSku sku = null, ManagedServiceIdentity identity = null, ServiceBusMinimumTlsVersion? minimumTlsVersion = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = null, ServiceBusEncryption encryption = null, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = null, string alternateName = null, ServiceBusPublicNetworkAccess? publicNetworkAccess = null, int? premiumMessagingPartitions = null, Mode? confidentialComputeMode = null, GeoDataReplicationProperties geoDataReplication = null)
+        public static ServiceBusNamespaceData ServiceBusNamespaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ServiceBusSku sku = null, ManagedServiceIdentity identity = null, ServiceBusMinimumTlsVersion? minimumTlsVersion = null, string provisioningState = null, string status = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string serviceBusEndpoint = null, string metricId = null, bool? isZoneRedundant = null, ServiceBusEncryption encryption = null, IEnumerable<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections = null, bool? disableLocalAuth = null, string alternateName = null, ServiceBusPublicNetworkAccess? publicNetworkAccess = null, int? premiumMessagingPartitions = null, ServiceBusConfidentialComputeMode? confidentialComputeMode = null, GeoDataReplicationProperties geoDataReplication = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<ServiceBusPrivateEndpointConnectionData>();
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNetworkSecurityPerimeterConfiguration"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -313,13 +313,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="applicableFeatures"> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </param>
         /// <param name="parentAssociationName"> Source Resource Association name. </param>
         /// <param name="sourceResourceId"> ARM Id of source resource. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfiguration NetworkSecurityPerimeterConfiguration(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, NetworkSecurityPerimeter networkSecurityPerimeter = null, NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, NetworkSecurityPerimeterConfigurationPropertiesProfile profile = null, bool? isBackingResource = null, IEnumerable<string> applicableFeatures = null, string parentAssociationName = null, ResourceIdentifier sourceResourceId = null)
+        /// <returns> A new <see cref="Models.ServiceBusNetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
+        public static ServiceBusNetworkSecurityPerimeterConfiguration ServiceBusNetworkSecurityPerimeterConfiguration(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter = null, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile = null, bool? isBackingResource = null, IEnumerable<string> applicableFeatures = null, string parentAssociationName = null, ResourceIdentifier sourceResourceId = null)
         {
             provisioningIssues ??= new List<ProvisioningIssue>();
             applicableFeatures ??= new List<string>();
 
-            return new NetworkSecurityPerimeterConfiguration(
+            return new ServiceBusNetworkSecurityPerimeterConfiguration(
                 id,
                 name,
                 resourceType,
@@ -355,38 +355,38 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ProvisioningIssueProperties(issueType, description, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name = null, ResourceAssociationAccessMode? accessMode = null)
+        /// <returns> A new <see cref="Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/> instance for mocking. </returns>
+        public static ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(string name = null, ServiceBusResourceAssociationAccessMode? accessMode = null)
         {
-            return new NetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
+            return new ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation(name, accessMode, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile"/>. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
-        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationPropertiesProfile"/> instance for mocking. </returns>
-        public static NetworkSecurityPerimeterConfigurationPropertiesProfile NetworkSecurityPerimeterConfigurationPropertiesProfile(string name = null, string accessRulesVersion = null, IEnumerable<NspAccessRule> accessRules = null)
+        /// <returns> A new <see cref="Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile"/> instance for mocking. </returns>
+        public static ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(string name = null, string accessRulesVersion = null, IEnumerable<ServiceBusNspAccessRule> accessRules = null)
         {
-            accessRules ??= new List<NspAccessRule>();
+            accessRules ??= new List<ServiceBusNspAccessRule>();
 
-            return new NetworkSecurityPerimeterConfigurationPropertiesProfile(name, accessRulesVersion, accessRules?.ToList(), serializedAdditionalRawData: null);
+            return new ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile(name, accessRulesVersion, accessRules?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NspAccessRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNspAccessRule"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="nspAccessRuleType"> Type of the resource. </param>
         /// <param name="properties"> Properties of Access Rule. </param>
-        /// <returns> A new <see cref="Models.NspAccessRule"/> instance for mocking. </returns>
-        public static NspAccessRule NspAccessRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nspAccessRuleType = null, NspAccessRuleProperties properties = null)
+        /// <returns> A new <see cref="Models.ServiceBusNspAccessRule"/> instance for mocking. </returns>
+        public static ServiceBusNspAccessRule ServiceBusNspAccessRule(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string nspAccessRuleType = null, ServiceBusNspAccessRuleProperties properties = null)
         {
-            return new NspAccessRule(
+            return new ServiceBusNspAccessRule(
                 id,
                 name,
                 resourceType,
@@ -396,21 +396,21 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NspAccessRuleProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNspAccessRuleProperties"/>. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> NetworkSecurityPerimeters for inbound rules. </param>
         /// <param name="fullyQualifiedDomainNames"> FQDN for outbound rules. </param>
-        /// <returns> A new <see cref="Models.NspAccessRuleProperties"/> instance for mocking. </returns>
-        public static NspAccessRuleProperties NspAccessRuleProperties(NspAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<SubResource> subscriptions = null, IEnumerable<NetworkSecurityPerimeter> networkSecurityPerimeters = null, IEnumerable<string> fullyQualifiedDomainNames = null)
+        /// <returns> A new <see cref="Models.ServiceBusNspAccessRuleProperties"/> instance for mocking. </returns>
+        public static ServiceBusNspAccessRuleProperties ServiceBusNspAccessRuleProperties(ServiceBusNspAccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<SubResource> subscriptions = null, IEnumerable<ServiceBusNetworkSecurityPerimeter> networkSecurityPerimeters = null, IEnumerable<string> fullyQualifiedDomainNames = null)
         {
             addressPrefixes ??= new List<string>();
             subscriptions ??= new List<SubResource>();
-            networkSecurityPerimeters ??= new List<NetworkSecurityPerimeter>();
+            networkSecurityPerimeters ??= new List<ServiceBusNetworkSecurityPerimeter>();
             fullyQualifiedDomainNames ??= new List<string>();
 
-            return new NspAccessRuleProperties(
+            return new ServiceBusNspAccessRuleProperties(
                 direction,
                 addressPrefixes?.ToList(),
                 subscriptions?.ToList(),

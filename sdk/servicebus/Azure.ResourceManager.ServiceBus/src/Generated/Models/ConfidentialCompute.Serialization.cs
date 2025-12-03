@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 return null;
             }
-            Mode? mode = default;
+            ServiceBusConfidentialComputeMode? mode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    mode = new Mode(property.Value.GetString());
+                    mode = new ServiceBusConfidentialComputeMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

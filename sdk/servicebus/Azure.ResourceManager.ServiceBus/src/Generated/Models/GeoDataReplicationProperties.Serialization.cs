@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 return null;
             }
             int? maxReplicationLagDurationInSeconds = default;
-            IList<NamespaceReplicaLocation> locations = default;
+            IList<ServiceBusNamespaceReplicaLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     {
                         continue;
                     }
-                    List<NamespaceReplicaLocation> array = new List<NamespaceReplicaLocation>();
+                    List<ServiceBusNamespaceReplicaLocation> array = new List<ServiceBusNamespaceReplicaLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespaceReplicaLocation.DeserializeNamespaceReplicaLocation(item, options));
+                        array.Add(ServiceBusNamespaceReplicaLocation.DeserializeServiceBusNamespaceReplicaLocation(item, options));
                     }
                     locations = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new GeoDataReplicationProperties(maxReplicationLagDurationInSeconds, locations ?? new ChangeTrackingList<NamespaceReplicaLocation>(), serializedAdditionalRawData);
+            return new GeoDataReplicationProperties(maxReplicationLagDurationInSeconds, locations ?? new ChangeTrackingList<ServiceBusNamespaceReplicaLocation>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

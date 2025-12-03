@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of <see cref="GeoDataReplicationProperties"/>. </summary>
         public GeoDataReplicationProperties()
         {
-            Locations = new ChangeTrackingList<NamespaceReplicaLocation>();
+            Locations = new ChangeTrackingList<ServiceBusNamespaceReplicaLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoDataReplicationProperties"/>. </summary>
         /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
         /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<NamespaceReplicaLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<ServiceBusNamespaceReplicaLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxReplicationLagDurationInSeconds = maxReplicationLagDurationInSeconds;
             Locations = locations;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public int? MaxReplicationLagDurationInSeconds { get; set; }
         /// <summary> A list of regions where replicas of the namespace are maintained. </summary>
         [WirePath("locations")]
-        public IList<NamespaceReplicaLocation> Locations { get; }
+        public IList<ServiceBusNamespaceReplicaLocation> Locations { get; }
     }
 }

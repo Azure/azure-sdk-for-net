@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.ServiceBus.Samples
                 GeoDataReplication = new GeoDataReplicationProperties
                 {
                     MaxReplicationLagDurationInSeconds = 300,
-                    Locations = {new NamespaceReplicaLocation
+                    Locations = {new ServiceBusNamespaceReplicaLocation
 {
 LocationName = "eastus",
 RoleType = GeoDRRoleType.Primary,
-}, new NamespaceReplicaLocation
+}, new ServiceBusNamespaceReplicaLocation
 {
 LocationName = "southcentralus",
 RoleType = GeoDRRoleType.Secondary,
