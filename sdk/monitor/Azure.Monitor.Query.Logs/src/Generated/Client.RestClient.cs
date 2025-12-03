@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Monitor.Query.Logs
 {
     /// <summary></summary>
-    public partial class LogsQueryClient
+    public partial class Client
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
 

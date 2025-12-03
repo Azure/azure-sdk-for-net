@@ -7,7 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Linq;
+using Azure;
 using Azure.Monitor.Query.Logs;
 
 namespace Azure.Monitor.Query.Logs.Models
@@ -16,28 +17,28 @@ namespace Azure.Monitor.Query.Logs.Models
     public partial class LogsBatchQueryResult
     {
         /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
-        /// <param name="allTables"> The results of the query in tabular format. </param>
-        internal LogsBatchQueryResult(IEnumerable<LogsTable> allTables) : base(allTables)
+        /// <param name="tables"> The results of the query in tabular format. </param>
+        internal LogsBatchQueryResult(IEnumerable<LogsTable> tables) : base(tables)
         {
-            Tables = new ChangeTrackingList<LogsTable>();
+            Tables = tables.ToList();
             Statistics = new ChangeTrackingDictionary<string, BinaryData>();
             Render = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LogsBatchQueryResult"/>. </summary>
-        /// <param name="allTables"> The results of the query in tabular format. </param>
-        /// <param name="error"> The code and message for an error. </param>
-        /// <param name="statistics"> Statistics represented in JSON format. </param>
-        /// <param name="visualization"> Visualization data in JSON format. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tables"> The results of the query in tabular format. </param>
-        /// <param name="statistics0"> Statistics represented in JSON format. </param>
+        /// <param name="statistics"> Statistics represented in JSON format. </param>
         /// <param name="render"> Visualization data in JSON format. </param>
-        internal LogsBatchQueryResult(IReadOnlyList<LogsTable> allTables, JsonElement error, JsonElement statistics, JsonElement visualization, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<LogsTable> tables, IDictionary<string, BinaryData> statistics0, IDictionary<string, BinaryData> render) : base(allTables, error, statistics, visualization, additionalBinaryDataProperties)
+        /// <param name="error"> The code and message for an error. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="tables0"> The results of the query in tabular format. </param>
+        /// <param name="statistics0"> Statistics represented in JSON format. </param>
+        /// <param name="render0"> Visualization data in JSON format. </param>
+        internal LogsBatchQueryResult(IList<LogsTable> tables, IDictionary<string, BinaryData> statistics, IDictionary<string, BinaryData> render, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<LogsTable> tables0, IDictionary<string, BinaryData> statistics0, IDictionary<string, BinaryData> render0) : base(tables, statistics, render, error, additionalBinaryDataProperties)
         {
-            Tables = tables;
+            Tables = tables0;
             Statistics = statistics0;
-            Render = render;
+            Render = render0;
         }
     }
 }
