@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    internal partial class TaskSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<TaskSchedulingPolicy>
+    public partial class TaskSchedulingPolicy : IUtf8JsonSerializable, IJsonModel<TaskSchedulingPolicy>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TaskSchedulingPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Batch.Models
                 throw new FormatException($"The model {nameof(TaskSchedulingPolicy)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(JobDefaultOrder))
+            {
+                writer.WritePropertyName("jobDefaultOrder"u8);
+                writer.WriteStringValue(JobDefaultOrder.Value.ToString());
+            }
             writer.WritePropertyName("nodeFillType"u8);
             writer.WriteStringValue(NodeFillType.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -73,11 +78,21 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
+            JobDefaultOrder? jobDefaultOrder = default;
             BatchNodeFillType nodeFillType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("jobDefaultOrder"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    jobDefaultOrder = new JobDefaultOrder(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("nodeFillType"u8))
                 {
                     nodeFillType = property.Value.GetString().ToBatchNodeFillType();
@@ -89,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TaskSchedulingPolicy(nodeFillType, serializedAdditionalRawData);
+            return new TaskSchedulingPolicy(jobDefaultOrder, nodeFillType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TaskSchedulingPolicy>.Write(ModelReaderWriterOptions options)

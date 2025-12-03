@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolCustomImage()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_SharedImageGallery.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_SharedImageGallery.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Batch.Samples
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "STANDARD_D4",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                }, "batch.node.ubuntu 18.04"),
+                }, "batch.node.ubuntu 24.04"),
             };
             ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
             BatchAccountPoolResource result = lro.Value;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Batch.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolFullVirtualMachineConfiguration()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_VirtualMachineConfiguration.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Batch.Samples
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "STANDARD_D4",
+                VmSize = "Standard_D4d_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
-                    Sku = "2016-Datacenter-SmallDisk",
+                    Sku = "2025-datacenter-smalldisk",
                     Version = "latest",
                 }, "batch.node.windows amd64")
                 {
@@ -108,7 +108,10 @@ Caching = BatchDiskCachingType.None,
 StorageAccountType = BatchStorageAccountType.StandardLrs,
 }},
                     LicenseType = "Windows_Server",
-                    DiskEncryptionTargets = { BatchDiskEncryptionTarget.OSDisk, BatchDiskEncryptionTarget.TemporaryDisk },
+                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration
+                    {
+                        Targets = { BatchDiskEncryptionTarget.OSDisk, BatchDiskEncryptionTarget.TemporaryDisk },
+                    },
                     NodePlacementPolicy = BatchNodePlacementPolicyType.Zonal,
                     OSDisk = new BatchOSDisk
                     {
@@ -150,7 +153,7 @@ SourcePortRanges = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolMinimalVirtualMachineConfiguration()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_MinimalVirtualMachineConfiguration.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_MinimalVirtualMachineConfiguration.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -173,14 +176,14 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "STANDARD_D4",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Publisher = "Canonical",
-                    Offer = "UbuntuServer",
-                    Sku = "18.04-LTS",
+                    Publisher = "canonical",
+                    Offer = "ubuntu-24_04-lts",
+                    Sku = "server",
                     Version = "latest",
-                }, "batch.node.ubuntu 18.04"),
+                }, "batch.node.ubuntu 24.04"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
                 {
                     AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
@@ -203,7 +206,7 @@ SourcePortRanges = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolNoPublicIP()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_NoPublicIPAddresses.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_NoPublicIPAddresses.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,11 +229,11 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "STANDARD_D4",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                }, "batch.node.ubuntu 18.04"),
+                }, "batch.node.ubuntu 24.04"),
                 NetworkConfiguration = new BatchNetworkConfiguration
                 {
                     SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
@@ -254,7 +257,7 @@ SourcePortRanges = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolPublicIPs()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_PublicIPs.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_PublicIPs.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -277,11 +280,11 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "STANDARD_D4",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/networking-group/providers/Microsoft.Compute/galleries/testgallery/images/testimagedef/versions/0.0.1"),
-                }, "batch.node.ubuntu 18.04"),
+                }, "batch.node.ubuntu 24.04"),
                 NetworkConfiguration = new BatchNetworkConfiguration
                 {
                     SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1234/providers/Microsoft.Network/virtualNetworks/network1234/subnets/subnet123"),
@@ -304,68 +307,9 @@ SourcePortRanges = {"*"},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreatePoolResourceTags()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_ResourceTags.json
-            // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchAccountPoolResource
-            BatchAccountPoolCollection collection = batchAccount.GetBatchAccountPools();
-
-            // invoke the operation
-            string poolName = "testpool";
-            BatchAccountPoolData data = new BatchAccountPoolData
-            {
-                VmSize = "Standard_d4s_v3",
-                DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
-                {
-                    Publisher = "Canonical",
-                    Offer = "UbuntuServer",
-                    Sku = "18_04-lts-gen2",
-                    Version = "latest",
-                }, "batch.node.ubuntu 18.04"),
-                ScaleSettings = new BatchAccountPoolScaleSettings
-                {
-                    FixedScale = new BatchAccountFixedScaleSettings
-                    {
-                        TargetDedicatedNodes = 1,
-                        TargetLowPriorityNodes = 0,
-                    },
-                },
-                ResourceTags =
-{
-["TagName1"] = "TagValue1",
-["TagName2"] = "TagValue2"
-},
-            };
-            ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
-            BatchAccountPoolResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolSecurityProfile()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_SecurityProfile.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_SecurityProfile.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -388,14 +332,14 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_d4s_v3",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Publisher = "Canonical",
-                    Offer = "UbuntuServer",
-                    Sku = "18_04-lts-gen2",
+                    Publisher = "canonical",
+                    Offer = "ubuntu-24_04-lts",
+                    Sku = "server",
                     Version = "latest",
-                }, "batch.node.ubuntu 18.04")
+                }, "batch.node.ubuntu 24.04")
                 {
                     SecurityProfile = new BatchSecurityProfile
                     {
@@ -431,7 +375,7 @@ SourcePortRanges = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolTags()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_Tags.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_Tags.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -454,14 +398,14 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_d4s_v3",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "Canonical",
-                    Offer = "0001-com-ubuntu-server-jammy",
-                    Sku = "22_04-lts",
+                    Offer = "ubuntu-24_04-lts",
+                    Sku = "server",
                     Version = "latest",
-                }, "batch.node.ubuntu 22.04"),
+                }, "batch.node.ubuntu 24.04"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
                 {
                     FixedScale = new BatchAccountFixedScaleSettings
@@ -490,7 +434,7 @@ SourcePortRanges = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolUpgradePolicy()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_UpgradePolicy.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_UpgradePolicy.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -513,7 +457,7 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_d4s_v3",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
@@ -568,7 +512,7 @@ SourcePortRanges = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolUserAssignedIdentities()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_UserAssignedIdentities.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_UserAssignedIdentities.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -599,14 +543,14 @@ SourcePortRanges = {"*"},
 [new ResourceIdentifier("/subscriptions/subid/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
 },
                 },
-                VmSize = "STANDARD_D4",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
-                    Publisher = "Canonical",
-                    Offer = "UbuntuServer",
-                    Sku = "18.04-LTS",
+                    Publisher = "canonical",
+                    Offer = "ubuntu-24_04-lts",
+                    Sku = "server",
                     Version = "latest",
-                }, "batch.node.ubuntu 18.04"),
+                }, "batch.node.ubuntu 24.04"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
                 {
                     AutoScale = new BatchAccountAutoScaleSettings("$TargetDedicatedNodes=1")
@@ -629,7 +573,7 @@ SourcePortRanges = {"*"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationExtensions()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_Extensions.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_VirtualMachineConfiguration_Extensions.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -652,13 +596,13 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "STANDARD_D4",
+                VmSize = "Standard_D4d_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "Canonical",
-                    Offer = "0001-com-ubuntu-server-focal",
-                    Sku = "20_04-lts",
-                }, "batch.node.ubuntu 20.04")
+                    Offer = "ubuntu-24_04-lts",
+                    Sku = "server",
+                }, "batch.node.ubuntu 24.04")
                 {
                     Extensions = {new BatchVmExtension("batchextension1", "Microsoft.Azure.KeyVault", "KeyVaultForLinux")
 {
@@ -679,7 +623,6 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
                         EvaluationInterval = XmlConvert.ToTimeSpan("PT5M"),
                     },
                 },
-                TargetNodeCommunicationMode = NodeCommunicationMode.Default,
             };
             ArmOperation<BatchAccountPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, poolName, data);
             BatchAccountPoolResource result = lro.Value;
@@ -695,7 +638,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationOSDisk()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_ManagedOSDisk.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_VirtualMachineConfiguration_ManagedOSDisk.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -718,7 +661,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_d2s_v3",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "microsoftwindowsserver",
@@ -760,7 +703,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolVirtualMachineConfigurationServiceArtifactReference()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_VirtualMachineConfiguration_ServiceArtifactReference.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -783,7 +726,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "Standard_d4s_v3",
+                VmSize = "Standard_D4ds_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
@@ -825,7 +768,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreatePoolAcceleratedNetworking()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolCreate_AcceleratedNetworking.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolCreate_AcceleratedNetworking.json
             // this example is just showing the usage of "Pool_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -848,12 +791,12 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                VmSize = "STANDARD_D1_V2",
+                VmSize = "Standard_D4d_v5",
                 DeploymentVmConfiguration = new BatchVmConfiguration(new BatchImageReference
                 {
                     Publisher = "MicrosoftWindowsServer",
                     Offer = "WindowsServer",
-                    Sku = "2016-datacenter-smalldisk",
+                    Sku = "2025-datacenter-smalldisk",
                     Version = "latest",
                 }, "batch.node.windows amd64"),
                 ScaleSettings = new BatchAccountPoolScaleSettings
@@ -884,7 +827,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -918,7 +861,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolAcceleratedNetworking()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_AcceleratedNetworking.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -952,7 +895,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolSecurityProfile()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_SecurityProfile.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -986,7 +929,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolUpgradePolicy()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_UpgradePolicy.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1020,7 +963,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationExtensions()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1054,7 +997,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationOSDisk()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1088,7 +1031,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPoolVirtualMachineConfigurationServiceArtifactReference()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1122,7 +1065,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolList.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolList.json
             // this example is just showing the usage of "Pool_ListByBatchAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1158,7 +1101,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPoolWithFilter()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolListWithFilter.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolListWithFilter.json
             // this example is just showing the usage of "Pool_ListByBatchAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1179,7 +1122,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
 
             // invoke the operation and iterate over the result
             string select = "properties/allocationState,properties/provisioningStateTransitionTime,properties/currentDedicatedNodes,properties/currentLowPriorityNodes";
-            string filter = "startswith(name, 'po') or (properties/allocationState eq 'Steady' and properties/provisioningStateTransitionTime lt datetime'2017-02-02')";
+            string filter = "startswith(name, 'po') or (properties/allocationState eq 'Steady' and properties/provisioningStateTransitionTime lt datetime'2025-02-02')";
             await foreach (BatchAccountPoolResource item in collection.GetAllAsync(select: select, filter: filter))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -1196,7 +1139,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1226,7 +1169,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolAcceleratedNetworking()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_AcceleratedNetworking.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1256,7 +1199,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolSecurityProfile()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_SecurityProfile.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1286,7 +1229,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolUpgradePolicy()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_UpgradePolicy.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1316,7 +1259,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolVirtualMachineConfigurationExtensions()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1346,7 +1289,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolVirtualMachineConfigurationOSDisk()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1376,7 +1319,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPoolVirtualMachineConfigurationServiceArtifactReference()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1406,7 +1349,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPool()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1448,7 +1391,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolAcceleratedNetworking()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_AcceleratedNetworking.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_AcceleratedNetworking.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1490,7 +1433,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolSecurityProfile()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_SecurityProfile.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_SecurityProfile.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1532,7 +1475,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolUpgradePolicy()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_UpgradePolicy.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_UpgradePolicy.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1574,7 +1517,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolVirtualMachineConfigurationExtensions()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_Extensions.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1616,7 +1559,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolVirtualMachineConfigurationOSDisk()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_MangedOSDisk.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1658,7 +1601,7 @@ secretsManagementSettingsKey = "secretsManagementSettingsValue",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPoolVirtualMachineConfigurationServiceArtifactReference()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2025-06-01/examples/PoolGet_VirtualMachineConfiguration_ServiceArtifactReference.json
             // this example is just showing the usage of "Pool_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

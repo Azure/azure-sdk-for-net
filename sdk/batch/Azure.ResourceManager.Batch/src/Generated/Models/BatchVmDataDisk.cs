@@ -72,13 +72,15 @@ namespace Azure.ResourceManager.Batch.Models
         ///  Standard_LRS - The data disk should use standard locally redundant storage.
         ///  Premium_LRS - The data disk should use premium locally redundant storage.
         /// </param>
+        /// <param name="managedDisk"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType, ManagedDisk managedDisk, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Lun = lun;
             Caching = caching;
             DiskSizeInGB = diskSizeInGB;
             StorageAccountType = storageAccountType;
+            ManagedDisk = managedDisk;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -108,5 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
         ///  Premium_LRS - The data disk should use premium locally redundant storage.
         /// </summary>
         public BatchStorageAccountType? StorageAccountType { get; set; }
+        /// <summary> Gets or sets the managed disk. </summary>
+        public ManagedDisk ManagedDisk { get; set; }
     }
 }

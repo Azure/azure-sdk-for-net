@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies how tasks should be distributed across compute nodes. </summary>
-    internal partial class TaskSchedulingPolicy
+    public partial class TaskSchedulingPolicy
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -53,10 +53,12 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TaskSchedulingPolicy"/>. </summary>
+        /// <param name="jobDefaultOrder"> If not specified, the default is none. </param>
         /// <param name="nodeFillType"> How tasks should be distributed across compute nodes. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TaskSchedulingPolicy(BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TaskSchedulingPolicy(JobDefaultOrder? jobDefaultOrder, BatchNodeFillType nodeFillType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            JobDefaultOrder = jobDefaultOrder;
             NodeFillType = nodeFillType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -66,6 +68,8 @@ namespace Azure.ResourceManager.Batch.Models
         {
         }
 
+        /// <summary> If not specified, the default is none. </summary>
+        public JobDefaultOrder? JobDefaultOrder { get; set; }
         /// <summary> How tasks should be distributed across compute nodes. </summary>
         public BatchNodeFillType NodeFillType { get; set; }
     }
