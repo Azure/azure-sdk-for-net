@@ -355,7 +355,6 @@ namespace Azure.Security.CodeTransparency
 
             Dictionary<string, CodeTransparencyClient> clientInstances = new Dictionary<string, CodeTransparencyClient>();
 
-            // Prepare authorized list state. If no authorized list provided, implicitly authorized all detected issuer domains encountered in receipts.
             var configuredAuthorizedList = verificationOptions?.AuthorizedDomains ?? Array.Empty<string>();
             bool userProvidedAuthorizedList = configuredAuthorizedList.Count > 0;
             HashSet<string> authorizedListNormalized = new(StringComparer.OrdinalIgnoreCase);
@@ -368,6 +367,12 @@ namespace Azure.Security.CodeTransparency
                         authorizedListNormalized.Add(domain.Trim());
                     }
                 }
+            }
+
+            // if no authorized domains are provided and the remaining ones are set to be ignored, then all receipts would be ignored
+            if (authorizedListNormalized.Count == 0 && verificationOptions.UnauthorizedReceiptBehavior == UnauthorizedReceiptBehavior.IgnoreAll)
+            {
+                throw new InvalidOperationException("No receipts would be verified as no authorized domains were provided and the unauthorized receipt behavior is set to ignore all.");
             }
 
             // Tracking for behaviors
@@ -462,7 +467,7 @@ namespace Azure.Security.CodeTransparency
             switch (verificationOptions.AuthorizedReceiptBehavior)
             {
                 case AuthorizedReceiptBehavior.VerifyAnyMatching:
-                    if (validAuthorizedDomainsEncountered.Count == 0)
+                    if (authorizedListNormalized.Count > 0 && validAuthorizedDomainsEncountered.Count == 0)
                     {
                         authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
@@ -474,7 +479,7 @@ namespace Azure.Security.CodeTransparency
                     break;
                 case AuthorizedReceiptBehavior.VerifyAllMatching:
                     // All receipts from authorized domains must be valid: i.e., any receipt from an authorized domain that failed adds failure (already captured) -> if any authorized domain had receipt but not all successful? We check failures now.
-                    if (authorizedDomainsWithReceipt.Count == 0)
+                    if (authorizedListNormalized.Count > 0 && authorizedDomainsWithReceipt.Count == 0)
                     {
                         authorizedFailures.Add(new InvalidOperationException("No valid receipts found for any authorized issuer domain."));
                     }
