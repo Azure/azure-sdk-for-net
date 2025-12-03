@@ -787,6 +787,9 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             // iteration will stop after 1 item because item 2 was removed and therefore it won't have an id
             Assert.AreEqual(1, index);
+            Assert.AreEqual("{ \"id\": 3, \"name\": \"Item3\" }", patch.GetJson("$.items[2]"u8).ToString());
+            Assert.AreEqual(3, patch.GetInt32("$.items[2].id"u8));
+            Assert.AreEqual("Item3", patch.GetString("$.items[2].name"u8));
         }
 
         [Test]
