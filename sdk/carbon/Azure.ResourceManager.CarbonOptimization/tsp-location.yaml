@@ -1,3 +1,4 @@
 directory: specification/carbon/Carbon.Management
 commit: 0d9b7c40c5000052f4eec806896c674fd8ba5688
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/legacy-emitter-package.json

@@ -1,3 +1,4 @@
 directory: specification/elastic/Elastic.Management
 commit: 60e8d747271525128340693930aa153376afb656
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/legacy-emitter-package.json
