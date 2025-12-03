@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -90,6 +92,400 @@ namespace Azure.AI.DocumentIntelligence
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
+        /// <summary> Analyzes document with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale">
+        /// Locale hint for text recognition and document analysis.  Value may contain only
+        /// the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US").
+        /// </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="outputContentFormat"> Format of the analyze result top-level content. </param>
+        /// <param name="output"> Additional outputs to generate during analysis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="analyzeRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, string modelId, AnalyzeDocumentOptions analyzeRequest, string pages = default, string locale = default, StringIndexType? stringIndexType = default, IEnumerable<DocumentAnalysisFeature> features = default, IEnumerable<string> queryFields = default, DocumentContentFormat? outputContentFormat = default, IEnumerable<AnalyzeOutputOption> output = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(analyzeRequest, nameof(analyzeRequest));
+
+            return AnalyzeDocument(waitUntil, modelId, analyzeRequest, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), output, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Analyzes document with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="analyzeRequest"> Analyze request parameters. </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale">
+        /// Locale hint for text recognition and document analysis.  Value may contain only
+        /// the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US").
+        /// </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="outputContentFormat"> Format of the analyze result top-level content. </param>
+        /// <param name="output"> Additional outputs to generate during analysis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="analyzeRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, AnalyzeDocumentOptions analyzeRequest, string pages = default, string locale = default, StringIndexType? stringIndexType = default, IEnumerable<DocumentAnalysisFeature> features = default, IEnumerable<string> queryFields = default, DocumentContentFormat? outputContentFormat = default, IEnumerable<AnalyzeOutputOption> output = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(analyzeRequest, nameof(analyzeRequest));
+
+            return await AnalyzeDocumentAsync(waitUntil, modelId, analyzeRequest, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), output, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the generated searchable PDF output from document analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAnalyzeResultPdf(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeResultPdf");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateGetAnalyzeResultPdfRequest(modelId, resultId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the generated searchable PDF output from document analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAnalyzeResultPdfAsync(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeResultPdf");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateGetAnalyzeResultPdfRequest(modelId, resultId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the generated searchable PDF output from document analysis. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<BinaryData> GetAnalyzeResultPdf(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Response result = GetAnalyzeResultPdf(modelId, resultId, cancellationToken.ToRequestContext());
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary> Gets the generated searchable PDF output from document analysis. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<BinaryData>> GetAnalyzeResultPdfAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Response result = await GetAnalyzeResultPdfAsync(modelId, resultId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the generated cropped image of specified figure from document analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="figureId"> Figure ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAnalyzeResultFigure(string modelId, Guid resultId, string figureId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeResultFigure");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                Argument.AssertNotNullOrEmpty(figureId, nameof(figureId));
+
+                using HttpMessage message = CreateGetAnalyzeResultFigureRequest(modelId, resultId, figureId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the generated cropped image of specified figure from document analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="figureId"> Figure ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAnalyzeResultFigureAsync(string modelId, Guid resultId, string figureId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeResultFigure");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+                Argument.AssertNotNullOrEmpty(figureId, nameof(figureId));
+
+                using HttpMessage message = CreateGetAnalyzeResultFigureRequest(modelId, resultId, figureId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the generated cropped image of specified figure from document analysis. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="figureId"> Figure ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<BinaryData> GetAnalyzeResultFigure(string modelId, Guid resultId, string figureId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(figureId, nameof(figureId));
+
+            Response result = GetAnalyzeResultFigure(modelId, resultId, figureId, cancellationToken.ToRequestContext());
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary> Gets the generated cropped image of specified figure from document analysis. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="figureId"> Figure ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<BinaryData>> GetAnalyzeResultFigureAsync(string modelId, Guid resultId, string figureId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNullOrEmpty(figureId, nameof(figureId));
+
+            Response result = await GetAnalyzeResultFigureAsync(modelId, resultId, figureId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue(result.Content, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Mark the result of document analysis for deletion.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeleteAnalyzeResult(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.DeleteAnalyzeResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateDeleteAnalyzeResultRequest(modelId, resultId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Mark the result of document analysis for deletion.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteAnalyzeResultAsync(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.DeleteAnalyzeResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateDeleteAnalyzeResultRequest(modelId, resultId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Mark the result of document analysis for deletion. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteAnalyzeResult(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            return DeleteAnalyzeResult(modelId, resultId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Mark the result of document analysis for deletion. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAnalyzeResultAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            return await DeleteAnalyzeResultAsync(modelId, resultId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary> Analyzes batch documents with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="analyzeBatchRequest"> Analyze batch request parameters. </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale">
+        /// Locale hint for text recognition and document analysis.  Value may contain only
+        /// the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US").
+        /// </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="outputContentFormat"> Format of the analyze result top-level content. </param>
+        /// <param name="output"> Additional outputs to generate during analysis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="analyzeBatchRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsOptions analyzeBatchRequest, string pages = default, string locale = default, StringIndexType? stringIndexType = default, IEnumerable<DocumentAnalysisFeature> features = default, IEnumerable<string> queryFields = default, DocumentContentFormat? outputContentFormat = default, IEnumerable<AnalyzeOutputOption> output = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(analyzeBatchRequest, nameof(analyzeBatchRequest));
+
+            return AnalyzeBatchDocuments(waitUntil, modelId, analyzeBatchRequest, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), output, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Analyzes batch documents with document model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="analyzeBatchRequest"> Analyze batch request parameters. </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="locale">
+        /// Locale hint for text recognition and document analysis.  Value may contain only
+        /// the language code (ex. "en", "fr") or BCP 47 language tag (ex. "en-US").
+        /// </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="features"> List of optional analysis features. </param>
+        /// <param name="queryFields"> List of additional fields to extract.  Ex. "NumberOfGuests,StoreNumber". </param>
+        /// <param name="outputContentFormat"> Format of the analyze result top-level content. </param>
+        /// <param name="output"> Additional outputs to generate during analysis. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="analyzeBatchRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(WaitUntil waitUntil, string modelId, AnalyzeBatchDocumentsOptions analyzeBatchRequest, string pages = default, string locale = default, StringIndexType? stringIndexType = default, IEnumerable<DocumentAnalysisFeature> features = default, IEnumerable<string> queryFields = default, DocumentContentFormat? outputContentFormat = default, IEnumerable<AnalyzeOutputOption> output = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(analyzeBatchRequest, nameof(analyzeBatchRequest));
+
+            return await AnalyzeBatchDocumentsAsync(waitUntil, modelId, analyzeBatchRequest, pages, locale, stringIndexType?.ToString(), features, queryFields, outputContentFormat?.ToString(), output, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// [Protocol Method] List batch document analysis results.
         /// <list type="bullet">
@@ -156,6 +552,232 @@ namespace Azure.AI.DocumentIntelligence
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
             return new DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(this, modelId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary>
+        /// [Protocol Method] Mark the batch document analysis result for deletion.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeleteAnalyzeBatchResult(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.DeleteAnalyzeBatchResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateDeleteAnalyzeBatchResultRequest(modelId, resultId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Mark the batch document analysis result for deletion.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteAnalyzeBatchResultAsync(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.DeleteAnalyzeBatchResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateDeleteAnalyzeBatchResultRequest(modelId, resultId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Mark the batch document analysis result for deletion. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteAnalyzeBatchResult(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            return DeleteAnalyzeBatchResult(modelId, resultId, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Mark the batch document analysis result for deletion. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteAnalyzeBatchResultAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            return await DeleteAnalyzeBatchResultAsync(modelId, resultId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the result of batch document analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetAnalyzeBatchResult(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateGetAnalyzeBatchResultRequest(modelId, resultId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets the result of batch document analysis.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAnalyzeBatchResultAsync(string modelId, Guid resultId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentIntelligenceClient.GetAnalyzeBatchResult");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+                using HttpMessage message = CreateGetAnalyzeBatchResultRequest(modelId, resultId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets the result of batch document analysis. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AnalyzeBatchOperationDetails> GetAnalyzeBatchResult(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Response result = GetAnalyzeBatchResult(modelId, resultId, cancellationToken.ToRequestContext());
+            return Response.FromValue((AnalyzeBatchOperationDetails)result, result);
+        }
+
+        /// <summary> Gets the result of batch document analysis. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="resultId"> Analyze batch operation result ID. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AnalyzeBatchOperationDetails>> GetAnalyzeBatchResultAsync(string modelId, Guid resultId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+
+            Response result = await GetAnalyzeBatchResultAsync(modelId, resultId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AnalyzeBatchOperationDetails)result, result);
+        }
+
+        /// <summary> Classifies document with document classifier. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="split"> Document splitting mode. </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="classifyRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<AnalyzeResult> ClassifyDocument(WaitUntil waitUntil, string classifierId, ClassifyDocumentOptions classifyRequest, StringIndexType? stringIndexType = default, SplitMode? split = default, string pages = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
+
+            return ClassifyDocument(waitUntil, classifierId, classifyRequest, stringIndexType?.ToString(), split?.ToString(), pages, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Classifies document with document classifier. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="classifyRequest"> Classify request parameters. </param>
+        /// <param name="stringIndexType"> Method used to compute string offset and length. </param>
+        /// <param name="split"> Document splitting mode. </param>
+        /// <param name="pages"> 1-based page numbers to analyze.  Ex. "1-3,5,7-9". </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="classifyRequest"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(WaitUntil waitUntil, string classifierId, ClassifyDocumentOptions classifyRequest, StringIndexType? stringIndexType = default, SplitMode? split = default, string pages = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(classifyRequest, nameof(classifyRequest));
+
+            return await ClassifyDocumentAsync(waitUntil, classifierId, classifyRequest, stringIndexType?.ToString(), split?.ToString(), pages, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }
