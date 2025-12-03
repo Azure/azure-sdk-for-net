@@ -52,7 +52,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 
 ### Using API key
 
-> **⚠️ Security Warning:** API key authentication is **not secure** for production use. API keys are sensitive credentials that should not be hardcoded or committed to source control. This method is **only recommended for testing purposes with test resources**. For production applications, use `DefaultAzureCredential` or other Azure AD-based authentication methods.
+> **⚠️ Security Warning:** API key authentication is **not secure** for production use. API keys are sensitive credentials that should not be hardcoded or committed to source control. This method is **only recommended for testing purposes with test resources**. For production applications, use `DefaultAzureCredential` or other Microsoft Entra ID-based authentication methods.
 
 You can authenticate using an API key from your Microsoft Foundry resource:
 
