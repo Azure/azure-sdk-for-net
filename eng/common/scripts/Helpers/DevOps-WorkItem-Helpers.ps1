@@ -517,7 +517,6 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $pkgType = $pkg.Type
   $pkgNewLibrary = $pkg.New
   $pkgRepoPath = $pkg.RepoPath
-  $specProjectPath = $pkg.SpecProjectPath
   $serviceName = $pkg.ServiceName
   $title = $lang + " - " + $pkg.DisplayName + " - " + $verMajorMinor
 
