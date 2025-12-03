@@ -27,3 +27,4 @@ T:Azure.Monitor.Query.Metrics.CodeGenSuppressAttribute
 T:Azure.Messaging.EventGrid.Namespaces.CodeGenTypeAttribute
 T:Azure.Messaging.EventGrid.Namespaces.CodeGenSuppressAttribute
 T:Azure.Messaging.EventGrid.Namespaces.CodeGenSerializationAttribute
+T:Azure.Monitor.Query.Metrics.CodeGenTypeAttribute
