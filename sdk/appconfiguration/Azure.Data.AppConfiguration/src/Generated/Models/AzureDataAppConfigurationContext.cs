@@ -14,11 +14,17 @@ namespace Azure.Data.AppConfiguration
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(ConfigurationSetting))]
-    [ModelReaderWriterBuildable(typeof(ConfigurationSettingsFilter))]
-    [ModelReaderWriterBuildable(typeof(ConfigurationSnapshot))]
+    [ModelReaderWriterBuildable(typeof(Key))]
+    [ModelReaderWriterBuildable(typeof(KeyListResult))]
+    [ModelReaderWriterBuildable(typeof(KeyValue))]
+    [ModelReaderWriterBuildable(typeof(KeyValueFilter))]
+    [ModelReaderWriterBuildable(typeof(KeyValueListResult))]
+    [ModelReaderWriterBuildable(typeof(Label))]
+    [ModelReaderWriterBuildable(typeof(LabelListResult))]
+    [ModelReaderWriterBuildable(typeof(OperationDetails))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SettingLabel))]
+    [ModelReaderWriterBuildable(typeof(Snapshot))]
+    [ModelReaderWriterBuildable(typeof(SnapshotListResult))]
     [ModelReaderWriterBuildable(typeof(SnapshotUpdateParameters))]
     public partial class AzureDataAppConfigurationContext : ModelReaderWriterContext
     {

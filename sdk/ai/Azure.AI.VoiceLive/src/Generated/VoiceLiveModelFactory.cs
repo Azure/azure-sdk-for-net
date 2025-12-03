@@ -43,60 +43,6 @@ namespace Azure.AI.VoiceLive
             return new LogProbProperties(token, logprob, bytes, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base for session configuration shared between request and response. </summary>
-        /// <param name="model"> The model for the session. </param>
-        /// <param name="modalities"> The modalities to be used in the session. </param>
-        /// <param name="animation"> The animation configuration for the session. </param>
-        /// <param name="voice"> The voice configuration for the session. </param>
-        /// <param name="instructions"> Optional instructions to guide the model's behavior throughout the session. </param>
-        /// <param name="inputAudioSamplingRate">
-        /// Input audio sampling rate in Hz. Available values:
-        /// 
-        /// - For pcm16: 8000, 16000, 24000
-        /// 
-        /// - For g711_alaw/g711_ulaw: 8000
-        /// </param>
-        /// <param name="inputAudioFormat"> Input audio format. Default is 'pcm16'. </param>
-        /// <param name="outputAudioFormat"> Output audio format. Default is 'pcm16'. </param>
-        /// <param name="inputAudioNoiseReduction"> Configuration for input audio noise reduction. </param>
-        /// <param name="inputAudioEchoCancellation"> Configuration for echo cancellation during server-side audio processing. </param>
-        /// <param name="avatar"> Configuration for avatar streaming and behavior during the session. </param>
-        /// <param name="inputAudioTranscription"> Configuration for input audio transcription. </param>
-        /// <param name="outputAudioTimestampTypes"> Types of timestamps to include in audio response content. </param>
-        /// <param name="tools"> Configuration for tools to be used during the session, if applicable. </param>
-        /// <param name="toolChoice"> Specifies which tools the model is allowed to call during the session. </param>
-        /// <param name="temperature"> Controls the randomness of the model's output. Range: 0.0 to 1.0. Default is 0.7. </param>
-        /// <param name="maxResponseOutputTokens"> Maximum number of tokens to generate in the response. Default is unlimited. </param>
-        /// <param name="turnDetection"> Type of turn detection to use. </param>
-        /// <returns> A new <see cref="VoiceLive.VoiceLiveSessionOptions"/> instance for mocking. </returns>
-        public static VoiceLiveSessionOptions VoiceLiveSessionOptions(string model = default, IEnumerable<InteractionModality> modalities = default, AnimationOptions animation = default, VoiceProvider voice = default, string instructions = default, int? inputAudioSamplingRate = default, InputAudioFormat? inputAudioFormat = default, OutputAudioFormat? outputAudioFormat = default, AudioNoiseReduction inputAudioNoiseReduction = default, AudioEchoCancellation inputAudioEchoCancellation = default, AvatarConfiguration avatar = default, AudioInputTranscriptionOptions inputAudioTranscription = default, IEnumerable<AudioTimestampType> outputAudioTimestampTypes = default, IEnumerable<VoiceLiveToolDefinition> tools = default, ToolChoiceOption toolChoice = default, float? temperature = default, MaxResponseOutputTokensOption maxResponseOutputTokens = default, BinaryData turnDetection = default)
-        {
-            modalities ??= new ChangeTrackingList<InteractionModality>();
-            outputAudioTimestampTypes ??= new ChangeTrackingList<AudioTimestampType>();
-            tools ??= new ChangeTrackingList<VoiceLiveToolDefinition>();
-
-            return new VoiceLiveSessionOptions(
-                model,
-                modalities.ToList(),
-                animation,
-                voice,
-                instructions,
-                inputAudioSamplingRate,
-                inputAudioFormat,
-                outputAudioFormat,
-                inputAudioNoiseReduction,
-                inputAudioEchoCancellation,
-                avatar,
-                inputAudioTranscription,
-                outputAudioTimestampTypes.ToList(),
-                tools.ToList(),
-                toolChoice,
-                temperature,
-                maxResponseOutputTokens,
-                turnDetection,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Configuration for animation outputs including blendshapes and visemes metadata. </summary>
         /// <param name="modelName"> The name of the animation model to use. </param>
         /// <param name="outputs"> Set of output data types requested from the animation system. </param>
