@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 return null;
             }
             int? maxReplicationLagDurationInSeconds = default;
-            IList<NamespaceReplicaLocation> locations = default;
+            IList<EventHubsNamespaceReplicaLocation> locations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.EventHubs.Models
                     {
                         continue;
                     }
-                    List<NamespaceReplicaLocation> array = new List<NamespaceReplicaLocation>();
+                    List<EventHubsNamespaceReplicaLocation> array = new List<EventHubsNamespaceReplicaLocation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamespaceReplicaLocation.DeserializeNamespaceReplicaLocation(item, options));
+                        array.Add(EventHubsNamespaceReplicaLocation.DeserializeEventHubsNamespaceReplicaLocation(item, options));
                     }
                     locations = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NamespaceGeoDataReplicationProperties(maxReplicationLagDurationInSeconds, locations ?? new ChangeTrackingList<NamespaceReplicaLocation>(), serializedAdditionalRawData);
+            return new NamespaceGeoDataReplicationProperties(maxReplicationLagDurationInSeconds, locations ?? new ChangeTrackingList<EventHubsNamespaceReplicaLocation>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

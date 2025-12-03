@@ -1264,7 +1264,7 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        internal RequestUriBuilder CreateFailoverRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceFailOverContent content)
+        internal RequestUriBuilder CreateFailoverRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, EventHubsNamespaceFailOver eventHubsNamespaceFailOver)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1279,7 +1279,7 @@ namespace Azure.ResourceManager.EventHubs
             return uri;
         }
 
-        internal HttpMessage CreateFailoverRequest(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceFailOverContent content)
+        internal HttpMessage CreateFailoverRequest(string subscriptionId, string resourceGroupName, string namespaceName, EventHubsNamespaceFailOver eventHubsNamespaceFailOver)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1297,9 +1297,9 @@ namespace Azure.ResourceManager.EventHubs
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content, ModelSerializationExtensions.WireOptions);
-            request.Content = content0;
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(eventHubsNamespaceFailOver, ModelSerializationExtensions.WireOptions);
+            request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
@@ -1308,18 +1308,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="content"> Parameters for updating a namespace resource. </param>
+        /// <param name="eventHubsNamespaceFailOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubsNamespaceFailOver"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string namespaceName, EventHubsNamespaceFailOver eventHubsNamespaceFailOver, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(eventHubsNamespaceFailOver, nameof(eventHubsNamespaceFailOver));
 
-            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, content);
+            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, eventHubsNamespaceFailOver);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -1335,18 +1335,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The Namespace name. </param>
-        /// <param name="content"> Parameters for updating a namespace resource. </param>
+        /// <param name="eventHubsNamespaceFailOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="eventHubsNamespaceFailOver"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Failover(string subscriptionId, string resourceGroupName, string namespaceName, NamespaceFailOverContent content, CancellationToken cancellationToken = default)
+        public Response Failover(string subscriptionId, string resourceGroupName, string namespaceName, EventHubsNamespaceFailOver eventHubsNamespaceFailOver, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(content, nameof(content));
+            Argument.AssertNotNull(eventHubsNamespaceFailOver, nameof(eventHubsNamespaceFailOver));
 
-            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, content);
+            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, eventHubsNamespaceFailOver);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.EventHubs.Samples
             EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
 
             // invoke the operation
-            NamespaceFailOverContent content = new NamespaceFailOverContent
+            EventHubsNamespaceFailOver eventHubsNamespaceFailOver = new EventHubsNamespaceFailOver
             {
                 PrimaryLocation = new AzureLocation("centralus"),
                 Force = true,
             };
-            ArmOperation<NamespaceFailOverContent> lro = await eventHubsNamespace.FailOverAsync(WaitUntil.Completed, content);
-            NamespaceFailOverContent result = lro.Value;
+            ArmOperation<EventHubsNamespaceFailOver> lro = await eventHubsNamespace.FailOverAsync(WaitUntil.Completed, eventHubsNamespaceFailOver);
+            EventHubsNamespaceFailOver result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceAssociationNameNetworkSecurityPerimeterConfiguration_NetworkSecurityPerimeterConfigurationassociationProxyName()
+        public async Task GetNetworkSecurityPerimeterAssociationName_NetworkSecurityPerimeterConfigurationassociationProxyName()
         {
             // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/Eventhub/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationAssociationproxy.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_GetResourceAssociationName" operation, for the dependent resources, they will have to be created separately.
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            EventHubsNetworkSecurityPerimeterConfiguration result = await eventHubsNamespace.GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
+            EventHubsNetworkSecurityPerimeterConfiguration result = await eventHubsNamespace.GetNetworkSecurityPerimeterAssociationNameAsync(resourceAssociationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

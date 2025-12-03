@@ -13,18 +13,18 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal class NamespaceFailOverContentOperationSource : IOperationSource<NamespaceFailOverContent>
+    internal class EventHubsNamespaceFailOverOperationSource : IOperationSource<EventHubsNamespaceFailOver>
     {
-        NamespaceFailOverContent IOperationSource<NamespaceFailOverContent>.CreateResult(Response response, CancellationToken cancellationToken)
+        EventHubsNamespaceFailOver IOperationSource<EventHubsNamespaceFailOver>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NamespaceFailOverContent.DeserializeNamespaceFailOverContent(document.RootElement);
+            return EventHubsNamespaceFailOver.DeserializeEventHubsNamespaceFailOver(document.RootElement);
         }
 
-        async ValueTask<NamespaceFailOverContent> IOperationSource<NamespaceFailOverContent>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<EventHubsNamespaceFailOver> IOperationSource<EventHubsNamespaceFailOver>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NamespaceFailOverContent.DeserializeNamespaceFailOverContent(document.RootElement);
+            return EventHubsNamespaceFailOver.DeserializeEventHubsNamespaceFailOver(document.RootElement);
         }
     }
 }

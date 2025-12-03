@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Namespace replication properties. </summary>
-    public partial class NamespaceReplicaLocation
+    public partial class EventHubsNamespaceReplicaLocation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,18 +46,18 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceReplicaLocation"/>. </summary>
-        public NamespaceReplicaLocation()
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceReplicaLocation"/>. </summary>
+        public EventHubsNamespaceReplicaLocation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceReplicaLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceReplicaLocation"/>. </summary>
         /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
         /// <param name="roleType"> GeoDR Role Types. </param>
         /// <param name="replicaState"> state of Namespace replica. </param>
         /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceReplicaLocation(string locationName, NamespaceGeoDRRoleType? roleType, string replicaState, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventHubsNamespaceReplicaLocation(string locationName, NamespaceGeoDRRoleType? roleType, string replicaState, ResourceIdentifier clusterArmId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocationName = locationName;
             RoleType = roleType;

@@ -34,6 +34,8 @@ override-operation-name:
     Namespaces_CheckNameAvailability: CheckEventHubsNamespaceNameAvailability
     DisasterRecoveryConfigs_CheckNameAvailability: CheckEventHubsDisasterRecoveryNameAvailability
     Namespaces_Failover: FailOver
+    NetworkSecurityPerimeterConfigurations_GetResourceAssociationName: GetNetworkSecurityPerimeterAssociationName
+
 
 request-path-is-non-resource:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/networkSecurityPerimeterConfigurations/{resourceAssociationName}
@@ -133,7 +135,7 @@ rename-mapping:
   CheckNameAvailabilityParameter: EventHubsNameAvailabilityContent
   CheckNameAvailabilityResult: EventHubsNameAvailabilityResult
   UnavailableReason: EventHubsNameUnavailableReason
-  FailOver: NamespaceFailOverContent
+  FailOver: EventHubsNamespaceFailOver
   FailOver.properties.primaryLocation: -|azure-location
   GeoDataReplicationProperties: NamespaceGeoDataReplicationProperties
   GeoDRRoleType: NamespaceGeoDRRoleType
@@ -141,6 +143,8 @@ rename-mapping:
   Mode: EventHubsConfidentialComputeMode
   TimestampType: EventHubsTimestampType
   EncryptionKeySource: EventHubsKeySource
+  NamespaceReplicaLocation: EventHubsNamespaceReplicaLocation
+  NamespaceGeoDRRoleType: EventHubsNamespaceGeoDRRoleType 
 
 directive:
   # remove messageRetentionInDays and eTag format

@@ -163,15 +163,15 @@ namespace Azure.ResourceManager.EventHubs.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NamespaceReplicaLocation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EventHubsNamespaceReplicaLocation"/>. </summary>
         /// <param name="locationName"> Azure regions where a replica of the namespace is maintained. </param>
         /// <param name="roleType"> GeoDR Role Types. </param>
         /// <param name="replicaState"> state of Namespace replica. </param>
         /// <param name="clusterArmId"> Optional property that denotes the ARM ID of the Cluster. This is required, if a namespace replica should be placed in a Dedicated Event Hub Cluster. </param>
-        /// <returns> A new <see cref="Models.NamespaceReplicaLocation"/> instance for mocking. </returns>
-        public static NamespaceReplicaLocation NamespaceReplicaLocation(string locationName = null, NamespaceGeoDRRoleType? roleType = null, string replicaState = null, ResourceIdentifier clusterArmId = null)
+        /// <returns> A new <see cref="Models.EventHubsNamespaceReplicaLocation"/> instance for mocking. </returns>
+        public static EventHubsNamespaceReplicaLocation EventHubsNamespaceReplicaLocation(string locationName = null, NamespaceGeoDRRoleType? roleType = null, string replicaState = null, ResourceIdentifier clusterArmId = null)
         {
-            return new NamespaceReplicaLocation(locationName, roleType, replicaState, clusterArmId, serializedAdditionalRawData: null);
+            return new EventHubsNamespaceReplicaLocation(locationName, roleType, replicaState, clusterArmId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubs.EventHubsApplicationGroupData"/>. </summary>

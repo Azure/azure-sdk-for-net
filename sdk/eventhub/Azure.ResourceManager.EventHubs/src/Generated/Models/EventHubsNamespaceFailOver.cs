@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> The NamespaceFailOverContent. </summary>
-    public partial class NamespaceFailOverContent
+    /// <summary> The EventHubsNamespaceFailOver. </summary>
+    public partial class EventHubsNamespaceFailOver
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceFailOverContent"/>. </summary>
-        public NamespaceFailOverContent()
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceFailOver"/>. </summary>
+        public EventHubsNamespaceFailOver()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceFailOverContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsNamespaceFailOver"/>. </summary>
         /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
         /// <param name="force"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceFailOverContent(AzureLocation? primaryLocation, bool? force, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventHubsNamespaceFailOver(AzureLocation? primaryLocation, bool? force, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryLocation = primaryLocation;
             Force = force;

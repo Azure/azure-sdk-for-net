@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of <see cref="NamespaceGeoDataReplicationProperties"/>. </summary>
         public NamespaceGeoDataReplicationProperties()
         {
-            Locations = new ChangeTrackingList<NamespaceReplicaLocation>();
+            Locations = new ChangeTrackingList<EventHubsNamespaceReplicaLocation>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NamespaceGeoDataReplicationProperties"/>. </summary>
         /// <param name="maxReplicationLagDurationInSeconds"> The maximum acceptable lag for data replication operations from the primary replica to a quorum of secondary replicas.  When the lag exceeds the configured amount, operations on the primary replica will be failed. The allowed values are 0 and 5 minutes to 1 day. </param>
         /// <param name="locations"> A list of regions where replicas of the namespace are maintained. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceGeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<NamespaceReplicaLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NamespaceGeoDataReplicationProperties(int? maxReplicationLagDurationInSeconds, IList<EventHubsNamespaceReplicaLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxReplicationLagDurationInSeconds = maxReplicationLagDurationInSeconds;
             Locations = locations;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.EventHubs.Models
         public int? MaxReplicationLagDurationInSeconds { get; set; }
         /// <summary> A list of regions where replicas of the namespace are maintained. </summary>
         [WirePath("locations")]
-        public IList<NamespaceReplicaLocation> Locations { get; }
+        public IList<EventHubsNamespaceReplicaLocation> Locations { get; }
     }
 }

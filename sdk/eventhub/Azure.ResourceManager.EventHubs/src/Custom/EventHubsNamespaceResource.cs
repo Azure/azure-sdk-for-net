@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Task<Response<EventHubsNamespaceResource>> UpdateAsync(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsNamespaceResource>> UpdateAsync(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method is no longer supported.");
+            var lro = await UpdateAsync(WaitUntil.Completed, data, cancellationToken).ConfigureAwait(false);
+            return Response.FromValue(lro.Value, lro.GetRawResponse());
         }
 
         /// <summary>
@@ -71,11 +71,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        [Obsolete("This method is obsolete and will be removed in a future release.")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response<EventHubsNamespaceResource> Update(EventHubsNamespaceData data, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException("This method is no longer supported.");
+            var lro = Update(WaitUntil.Completed, data, cancellationToken);
+            return Response.FromValue(lro.Value, lro.GetRawResponse());
         }
     }
 }

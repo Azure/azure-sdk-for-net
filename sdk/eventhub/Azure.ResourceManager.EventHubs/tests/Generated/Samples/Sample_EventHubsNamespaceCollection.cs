@@ -66,11 +66,11 @@ UserAssignedIdentity = "/subscriptions/SampleSubscription/resourceGroups/Resurce
                 GeoDataReplication = new NamespaceGeoDataReplicationProperties
                 {
                     MaxReplicationLagDurationInSeconds = 300,
-                    Locations = {new NamespaceReplicaLocation
+                    Locations = {new EventHubsNamespaceReplicaLocation
 {
 LocationName = "eastus",
 RoleType = NamespaceGeoDRRoleType.Primary,
-}, new NamespaceReplicaLocation
+}, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "southcentralus",
 RoleType = NamespaceGeoDRRoleType.Secondary,
@@ -116,15 +116,15 @@ RoleType = NamespaceGeoDRRoleType.Secondary,
                 GeoDataReplication = new NamespaceGeoDataReplicationProperties
                 {
                     MaxReplicationLagDurationInSeconds = 60,
-                    Locations = {new NamespaceReplicaLocation
+                    Locations = {new EventHubsNamespaceReplicaLocation
 {
 LocationName = "eastus",
 RoleType = NamespaceGeoDRRoleType.Primary,
-}, new NamespaceReplicaLocation
+}, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "westus",
 RoleType = NamespaceGeoDRRoleType.Secondary,
-}, new NamespaceReplicaLocation
+}, new EventHubsNamespaceReplicaLocation
 {
 LocationName = "centralus",
 RoleType = NamespaceGeoDRRoleType.Secondary,
