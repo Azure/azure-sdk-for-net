@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkSecurityPerimeterConfiguration"/>. </summary>
         public ServiceBusNetworkSecurityPerimeterConfiguration()
         {
-            ProvisioningIssues = new ChangeTrackingList<ProvisioningIssue>();
+            ProvisioningIssues = new ChangeTrackingList<ServiceBusNSPConfigurationProvisioningIssue>();
             ApplicableFeatures = new ChangeTrackingList<string>();
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="parentAssociationName"> Source Resource Association name. </param>
         /// <param name="sourceResourceId"> ARM Id of source resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<ProvisioningIssue> provisioningIssues, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<ServiceBusNSPConfigurationProvisioningIssue> provisioningIssues, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             ProvisioningState = provisioningState;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> List of Provisioning Issues if any. </summary>
         [WirePath("properties.provisioningIssues")]
-        public IList<ProvisioningIssue> ProvisioningIssues { get; }
+        public IList<ServiceBusNSPConfigurationProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> NetworkSecurityPerimeter related information. </summary>
         [WirePath("properties.networkSecurityPerimeter")]
         public ServiceBusNetworkSecurityPerimeter NetworkSecurityPerimeter { get; set; }

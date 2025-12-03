@@ -314,9 +314,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="parentAssociationName"> Source Resource Association name. </param>
         /// <param name="sourceResourceId"> ARM Id of source resource. </param>
         /// <returns> A new <see cref="Models.ServiceBusNetworkSecurityPerimeterConfiguration"/> instance for mocking. </returns>
-        public static ServiceBusNetworkSecurityPerimeterConfiguration ServiceBusNetworkSecurityPerimeterConfiguration(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<ProvisioningIssue> provisioningIssues = null, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter = null, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile = null, bool? isBackingResource = null, IEnumerable<string> applicableFeatures = null, string parentAssociationName = null, ResourceIdentifier sourceResourceId = null)
+        public static ServiceBusNetworkSecurityPerimeterConfiguration ServiceBusNetworkSecurityPerimeterConfiguration(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = null, IEnumerable<ServiceBusNSPConfigurationProvisioningIssue> provisioningIssues = null, ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter = null, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = null, ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile = null, bool? isBackingResource = null, IEnumerable<string> applicableFeatures = null, string parentAssociationName = null, ResourceIdentifier sourceResourceId = null)
         {
-            provisioningIssues ??= new List<ProvisioningIssue>();
+            provisioningIssues ??= new List<ServiceBusNSPConfigurationProvisioningIssue>();
             applicableFeatures ??= new List<string>();
 
             return new ServiceBusNetworkSecurityPerimeterConfiguration(
@@ -337,22 +337,22 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNSPConfigurationProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Properties of Provisioning Issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
-        public static ProvisioningIssue ProvisioningIssue(string name = null, ProvisioningIssueProperties properties = null)
+        /// <returns> A new <see cref="Models.ServiceBusNSPConfigurationProvisioningIssue"/> instance for mocking. </returns>
+        public static ServiceBusNSPConfigurationProvisioningIssue ServiceBusNSPConfigurationProvisioningIssue(string name = null, ServiceBusNSPConfigurationProvisioningIssueProperties properties = null)
         {
-            return new ProvisioningIssue(name, properties, serializedAdditionalRawData: null);
+            return new ServiceBusNSPConfigurationProvisioningIssue(name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNSPConfigurationProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of Issue. </param>
         /// <param name="description"> Description of the issue. </param>
-        /// <returns> A new <see cref="Models.ProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static ProvisioningIssueProperties ProvisioningIssueProperties(string issueType = null, string description = null)
+        /// <returns> A new <see cref="Models.ServiceBusNSPConfigurationProvisioningIssueProperties"/> instance for mocking. </returns>
+        public static ServiceBusNSPConfigurationProvisioningIssueProperties ServiceBusNSPConfigurationProvisioningIssueProperties(string issueType = null, string description = null)
         {
-            return new ProvisioningIssueProperties(issueType, description, serializedAdditionalRawData: null);
+            return new ServiceBusNSPConfigurationProvisioningIssueProperties(issueType, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation"/>. </summary>

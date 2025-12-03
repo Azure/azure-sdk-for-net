@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> Describes Provisioning issue for given NetworkSecurityPerimeterConfiguration. </summary>
-    public partial class ProvisioningIssue
+    /// <summary> Properties of Provisioning Issue. </summary>
+    public partial class ServiceBusNSPConfigurationProvisioningIssueProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        public ProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNSPConfigurationProvisioningIssueProperties"/>. </summary>
+        internal ServiceBusNSPConfigurationProvisioningIssueProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProvisioningIssue"/>. </summary>
-        /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"> Properties of Provisioning Issue. </param>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNSPConfigurationProvisioningIssueProperties"/>. </summary>
+        /// <param name="issueType"> Type of Issue. </param>
+        /// <param name="description"> Description of the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProvisioningIssue(string name, ProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusNSPConfigurationProvisioningIssueProperties(string issueType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Properties = properties;
+            IssueType = issueType;
+            Description = description;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the issue. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> Properties of Provisioning Issue. </summary>
-        [WirePath("properties")]
-        public ProvisioningIssueProperties Properties { get; }
+        /// <summary> Type of Issue. </summary>
+        [WirePath("issueType")]
+        public string IssueType { get; }
+        /// <summary> Description of the issue. </summary>
+        [WirePath("description")]
+        public string Description { get; }
     }
 }
