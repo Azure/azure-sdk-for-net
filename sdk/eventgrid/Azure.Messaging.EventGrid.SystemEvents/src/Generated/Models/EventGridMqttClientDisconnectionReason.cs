@@ -62,6 +62,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The client-server connection is lost. (EXCHANGE ONLINE PROTECTION). </summary>
         public static EventGridMqttClientDisconnectionReason ConnectionLost { get; } = new EventGridMqttClientDisconnectionReason(ConnectionLostValue);
 
+        /// <summary> The client's IP address is blocked by IP filter or Private links configuration. </summary>
+        public static EventGridMqttClientDisconnectionReason IpForbidden { get; } = new EventGridMqttClientDisconnectionReason(IpForbiddenValue);
+
         /// <summary> The client exceeded one or more of the throttling limits that resulted in a connection termination by the service. </summary>
         public static EventGridMqttClientDisconnectionReason QuotaExceeded { get; } = new EventGridMqttClientDisconnectionReason(QuotaExceededValue);
 

@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryEventData"/>. </summary>
         /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
-        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway, ApiManagementGatewayTokenNearExpiryProperties token)
+        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway, ApiManagementNearExpiryGatewayTokenProperties token)
         {
             Gateway = gateway;
             Token = token;
@@ -29,7 +29,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
         /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway, ApiManagementGatewayTokenNearExpiryProperties token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway, ApiManagementNearExpiryGatewayTokenProperties token, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Gateway = gateway;
             Token = token;
@@ -40,6 +40,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public ApiManagementGatewayProperties Gateway { get; }
 
         /// <summary> Information related to a an expired gateway token for a self-hosted gateway deployment. </summary>
-        public ApiManagementGatewayTokenNearExpiryProperties Token { get; }
+        public ApiManagementNearExpiryGatewayTokenProperties Token { get; }
     }
 }

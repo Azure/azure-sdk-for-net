@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Messaging.EventGrid.Models;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -43,10 +44,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(Operator))
+            if (Optional.IsDefined(LabelOperator))
             {
                 writer.WritePropertyName("labelOperator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
+                writer.WriteStringValue(LabelOperator.Value.ToString());
             }
             writer.WritePropertyName("value"u8);
             writer.WriteObjectValue<object>(LabelValue, options);
@@ -105,7 +106,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string key = default;
-            AcsRouterLabelOperator? @operator = default;
+            Models.AcsRouterLabelOperator? labelOperator = default;
             object labelValue = default;
             double? ttlSeconds = default;
             AcsRouterWorkerSelectorState? selectorState = default;
@@ -124,7 +125,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    @operator = new AcsRouterLabelOperator(prop.Value.GetString());
+                    labelOperator = new Models.AcsRouterLabelOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -162,7 +163,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsRouterWorkerSelector(
                 key,
-                @operator,
+                labelOperator,
                 labelValue,
                 ttlSeconds,
                 selectorState,

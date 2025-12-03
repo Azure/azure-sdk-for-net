@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -43,11 +44,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIpAddress);
             }
-            if (Optional.IsDefined(MethodString))
-            {
-                writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(MethodString);
-            }
+            writer.WritePropertyName("method"u8);
+            writer.WriteObjectValue(Method, options);
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
@@ -97,7 +95,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string clientRequestId = default;
             string clientIpAddress = default;
-            string methodString = default;
+            RequestMethod @method = default;
             string url = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -114,7 +112,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("method"u8))
                 {
-                    methodString = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    @method = RequestMethod.DeserializeRequestMethod(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("url"u8))
@@ -127,7 +129,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceHttpRequest(clientRequestId, clientIpAddress, methodString, url, additionalBinaryDataProperties);
+            return new ResourceHttpRequest(clientRequestId, clientIpAddress, @method, url, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

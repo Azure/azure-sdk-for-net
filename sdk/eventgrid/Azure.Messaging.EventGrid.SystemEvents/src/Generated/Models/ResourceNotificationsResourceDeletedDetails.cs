@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,27 +20,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
-        /// <param name="resource"> id of the resource for which the event is being emitted. </param>
+        /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="type"> the type of the resource for which the event is being emitted. </param>
-        internal ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource, string name, string @type)
+        internal ResourceNotificationsResourceDeletedDetails(string id, string name, string @type)
         {
-            Resource = resource;
+            Id = id;
             Name = name;
             Type = @type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
-        /// <param name="resource"> id of the resource for which the event is being emitted. </param>
+        /// <param name="id"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="type"> the type of the resource for which the event is being emitted. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceNotificationsResourceDeletedDetails(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Resource = resource;
+            Id = id;
             Name = name;
             Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> id of the resource for which the event is being emitted. </summary>
+        public string Id { get; }
     }
 }

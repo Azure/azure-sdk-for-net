@@ -60,10 +60,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Url);
             }
-            if (Optional.IsDefined(RecursiveString))
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteStringValue(RecursiveString);
+                writer.WriteBooleanValue(Recursive.Value);
             }
             if (Optional.IsDefined(Sequencer))
             {
@@ -123,7 +123,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string clientRequestId = default;
             string requestId = default;
             string url = default;
-            string recursiveString = default;
+            bool? recursive = default;
             string sequencer = default;
             string identity = default;
             object storageDiagnostics = default;
@@ -152,7 +152,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (prop.NameEquals("recursive"u8))
                 {
-                    recursiveString = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recursive = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("sequencer"u8))
@@ -180,7 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 clientRequestId,
                 requestId,
                 url,
-                recursiveString,
+                recursive,
                 sequencer,
                 identity,
                 storageDiagnostics,

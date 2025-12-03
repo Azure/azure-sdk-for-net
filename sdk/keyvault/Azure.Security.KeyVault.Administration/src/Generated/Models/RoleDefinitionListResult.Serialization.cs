@@ -38,7 +38,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (KeyVaultRoleDefinition item in Value)
+                foreach (RoleDefinition item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            IList<KeyVaultRoleDefinition> value = default;
+            IList<RoleDefinition> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -102,10 +102,10 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    List<KeyVaultRoleDefinition> array = new List<KeyVaultRoleDefinition>();
+                    List<RoleDefinition> array = new List<RoleDefinition>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(item, options));
+                        array.Add(RoleDefinition.DeserializeRoleDefinition(item, options));
                     }
                     value = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<KeyVaultRoleDefinition>(), nextLink, additionalBinaryDataProperties);
+            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<RoleDefinition>(), nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
