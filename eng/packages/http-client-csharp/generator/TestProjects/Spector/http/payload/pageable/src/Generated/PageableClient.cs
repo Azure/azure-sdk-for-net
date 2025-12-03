@@ -6,9 +6,8 @@
 #nullable disable
 
 using System;
-using System.Threading;
-using Azure;
 using Azure.Core.Pipeline;
+using Payload.Pageable._PageSize;
 using Payload.Pageable._ServerDrivenPagination;
 
 namespace Payload.Pageable
@@ -21,14 +20,8 @@ namespace Payload.Pageable
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Pageable<BinaryData> GetWithoutContinuation(RequestContext context) => throw null;
-
-        public virtual AsyncPageable<BinaryData> GetWithoutContinuationAsync(RequestContext context) => throw null;
-
-        public virtual Pageable<Pet> GetWithoutContinuation(CancellationToken cancellationToken = default) => throw null;
-
-        public virtual AsyncPageable<Pet> GetWithoutContinuationAsync(CancellationToken cancellationToken = default) => throw null;
-
         public virtual ServerDrivenPagination GetServerDrivenPaginationClient() => throw null;
+
+        public virtual PageSize GetPageSizeClient() => throw null;
     }
 }

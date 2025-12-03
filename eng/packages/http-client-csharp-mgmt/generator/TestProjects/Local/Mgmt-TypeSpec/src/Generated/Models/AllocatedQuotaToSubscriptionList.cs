@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> Quota allocated to subscriptions. </summary>
     internal partial class AllocatedQuotaToSubscriptionList
@@ -33,6 +33,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> List of Group Quota Limit allocated to subscriptions. </summary>
+        [WirePath("value")]
         public IList<AllocatedToSubscription> Value { get; }
     }
 }

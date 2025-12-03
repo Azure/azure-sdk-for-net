@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -275,10 +275,11 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The parameters to provide for the required Azure Health Bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<HealthBotResource>> UpdateAsync(HealthBotPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HealthBotResource>> UpdateAsync(WaitUntil waitUntil, HealthBotPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -287,7 +288,10 @@ namespace Azure.ResourceManager.HealthBot
             try
             {
                 var response = await _healthBotBotsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new HealthBotResource(Client, response.Value), response.GetRawResponse());
+                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
             }
             catch (Exception e)
             {
@@ -309,7 +313,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,10 +321,11 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="patch"> The parameters to provide for the required Azure Health Bot. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<HealthBotResource> Update(HealthBotPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HealthBotResource> Update(WaitUntil waitUntil, HealthBotPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -329,7 +334,162 @@ namespace Azure.ResourceManager.HealthBot
             try
             {
                 var response = _healthBotBotsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new HealthBotResource(Client, response.Value), response.GetRawResponse());
+                var operation = new HealthBotArmOperation<HealthBotResource>(new HealthBotOperationSource(Client), _healthBotBotsClientDiagnostics, Pipeline, _healthBotBotsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all secrets of a HealthBot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}/listSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_ListSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HealthBotKeysResult>> GetSecretsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotResource.GetSecrets");
+            scope.Start();
+            try
+            {
+                var response = await _healthBotBotsRestClient.ListSecretsAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all secrets of a HealthBot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}/listSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_ListSecrets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<HealthBotKeysResult> GetSecrets(CancellationToken cancellationToken = default)
+        {
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotResource.GetSecrets");
+            scope.Start();
+            try
+            {
+                var response = _healthBotBotsRestClient.ListSecrets(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate the API JWT Secret of a HealthBot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}/regenerateApiJwtSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_RegenerateApiJwtSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<HealthBotKey>> RegenerateApiJwtSecretAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotResource.RegenerateApiJwtSecret");
+            scope.Start();
+            try
+            {
+                var response = await _healthBotBotsRestClient.RegenerateApiJwtSecretAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate the API JWT Secret of a HealthBot.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthBot/healthBots/{botName}/regenerateApiJwtSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Bots_RegenerateApiJwtSecret</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-05-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthBotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<HealthBotKey> RegenerateApiJwtSecret(CancellationToken cancellationToken = default)
+        {
+            using var scope = _healthBotBotsClientDiagnostics.CreateScope("HealthBotResource.RegenerateApiJwtSecret");
+            scope.Start();
+            try
+            {
+                var response = _healthBotBotsRestClient.RegenerateApiJwtSecret(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -351,7 +511,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -389,8 +549,8 @@ namespace Azure.ResourceManager.HealthBot
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -413,7 +573,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -451,8 +611,8 @@ namespace Azure.ResourceManager.HealthBot
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -475,7 +635,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -508,8 +668,8 @@ namespace Azure.ResourceManager.HealthBot
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     var patch = new HealthBotPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -532,7 +692,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -565,8 +725,8 @@ namespace Azure.ResourceManager.HealthBot
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
                     var patch = new HealthBotPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -589,7 +749,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -625,8 +785,8 @@ namespace Azure.ResourceManager.HealthBot
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -649,7 +809,7 @@ namespace Azure.ResourceManager.HealthBot
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -685,8 +845,8 @@ namespace Azure.ResourceManager.HealthBot
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)

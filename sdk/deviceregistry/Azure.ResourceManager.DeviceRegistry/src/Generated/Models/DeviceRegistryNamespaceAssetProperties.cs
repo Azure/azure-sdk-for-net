@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the asset properties. </summary>
     public partial class DeviceRegistryNamespaceAssetProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceAssetProperties"/>. </summary>
         /// <param name="deviceRef"> Reference to the device that provides data for this asset. Must provide device name &amp; endpoint on the device to use. </param>
@@ -89,29 +62,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="defaultEventsConfiguration"> Stringified JSON that contains connector-specific default configuration for all events. Each event can have its own configuration that overrides the default settings here. </param>
         /// <param name="defaultStreamsConfiguration"> Stringified JSON that contains connector-specific default configuration for all streams. Each stream can have its own configuration that overrides the default settings here. </param>
         /// <param name="defaultManagementGroupsConfiguration"> Stringified JSON that contains connector-specific default configuration for all management groups. Each management group can have its own configuration that overrides the default settings here. </param>
-        /// <param name="defaultDatasetsDestinations">
-        /// Default destinations for a dataset.
-        /// Please note <see cref="DatasetDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetBrokerStateStoreDestination"/>, <see cref="DatasetMqttDestination"/> and <see cref="DatasetStorageDestination"/>.
-        /// </param>
-        /// <param name="defaultEventsDestinations">
-        /// Default destinations for an event.
-        /// Please note <see cref="EventDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventMqttDestination"/> and <see cref="EventStorageDestination"/>.
-        /// </param>
-        /// <param name="defaultStreamsDestinations">
-        /// Default destinations for a stream.
-        /// Please note <see cref="StreamDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="StreamMqttDestination"/> and <see cref="StreamStorageDestination"/>.
-        /// </param>
+        /// <param name="defaultDatasetsDestinations"> Default destinations for a dataset. </param>
+        /// <param name="defaultEventsDestinations"> Default destinations for an event. </param>
+        /// <param name="defaultStreamsDestinations"> Default destinations for a stream. </param>
         /// <param name="datasets"> Array of datasets that are part of the asset. Each dataset describes the data points that make up the set. </param>
         /// <param name="eventGroups"> Array of event groups that are part of the asset. Each event group can have per-event group configuration. </param>
         /// <param name="streams"> Array of streams that are part of the asset. Each stream can have a per-stream configuration. </param>
         /// <param name="managementGroups"> Array of management groups that are part of the asset. Each management group can have a per-group configuration. </param>
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryNamespaceAssetProperties(string uuid, bool? enabled, string externalAssetId, string displayName, string description, DeviceRef deviceRef, IList<string> assetTypeRefs, long? version, DateTimeOffset? lastTransitionOn, string manufacturer, string manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, string documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, string defaultStreamsConfiguration, string defaultManagementGroupsConfiguration, IList<DatasetDestination> defaultDatasetsDestinations, IList<EventDestination> defaultEventsDestinations, IList<StreamDestination> defaultStreamsDestinations, IList<NamespaceDataset> datasets, IList<NamespaceEventGroup> eventGroups, IList<NamespaceStream> streams, IList<ManagementGroup> managementGroups, DeviceRegistryNamespaceAssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistryNamespaceAssetProperties(string uuid, bool? enabled, string externalAssetId, string displayName, string description, DeviceRef deviceRef, IList<string> assetTypeRefs, long? version, DateTimeOffset? lastTransitionOn, string manufacturer, string manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, string documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, string defaultStreamsConfiguration, string defaultManagementGroupsConfiguration, IList<DatasetDestination> defaultDatasetsDestinations, IList<EventDestination> defaultEventsDestinations, IList<StreamDestination> defaultStreamsDestinations, IList<NamespaceDataset> datasets, IList<NamespaceEventGroup> eventGroups, IList<NamespaceStream> streams, IList<ManagementGroup> managementGroups, DeviceRegistryNamespaceAssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uuid = uuid;
             Enabled = enabled;
@@ -145,117 +106,127 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             ManagementGroups = managementGroups;
             Status = status;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryNamespaceAssetProperties"/> for deserialization. </summary>
-        internal DeviceRegistryNamespaceAssetProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Globally unique, immutable, non-reusable ID. </summary>
         public string Uuid { get; }
+
         /// <summary> Enabled/disabled status of the asset. </summary>
         public bool? Enabled { get; set; }
+
         /// <summary> Asset ID provided by the customer. </summary>
         public string ExternalAssetId { get; set; }
+
         /// <summary> Human-readable display name. </summary>
         public string DisplayName { get; set; }
+
         /// <summary> Human-readable description of the asset. </summary>
         public string Description { get; set; }
+
         /// <summary> Reference to the device that provides data for this asset. Must provide device name &amp; endpoint on the device to use. </summary>
         public DeviceRef DeviceRef { get; set; }
+
         /// <summary> URIs or type definition IDs. </summary>
         public IList<string> AssetTypeRefs { get; }
+
         /// <summary> An integer that is incremented each time the resource is modified. </summary>
         public long? Version { get; }
+
         /// <summary> A timestamp (in UTC) that is updated each time the resource is modified. </summary>
         public DateTimeOffset? LastTransitionOn { get; }
+
         /// <summary> Asset manufacturer. </summary>
         public string Manufacturer { get; set; }
+
         /// <summary> Asset manufacturer URI. </summary>
         public string ManufacturerUri { get; set; }
+
         /// <summary> Asset model. </summary>
         public string Model { get; set; }
+
         /// <summary> Asset product code. </summary>
         public string ProductCode { get; set; }
+
         /// <summary> Asset hardware revision number. </summary>
         public string HardwareRevision { get; set; }
+
         /// <summary> Asset software revision number. </summary>
         public string SoftwareRevision { get; set; }
+
         /// <summary> Asset documentation reference. </summary>
         public string DocumentationUri { get; set; }
+
         /// <summary> Asset serial number. </summary>
         public string SerialNumber { get; set; }
+
         /// <summary>
         /// A set of key-value pairs that contain custom attributes set by the customer.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Attributes { get; }
+
         /// <summary> Reference to a list of discovered assets. Populated only if the asset has been created from discovery flow. Discovered asset names must be provided. </summary>
         public IList<string> DiscoveredAssetRefs { get; }
+
         /// <summary> Stringified JSON that contains connector-specific default configuration for all datasets. Each dataset can have its own configuration that overrides the default settings here. </summary>
         public string DefaultDatasetsConfiguration { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific default configuration for all events. Each event can have its own configuration that overrides the default settings here. </summary>
         public string DefaultEventsConfiguration { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific default configuration for all streams. Each stream can have its own configuration that overrides the default settings here. </summary>
         public string DefaultStreamsConfiguration { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific default configuration for all management groups. Each management group can have its own configuration that overrides the default settings here. </summary>
         public string DefaultManagementGroupsConfiguration { get; set; }
-        /// <summary>
-        /// Default destinations for a dataset.
-        /// Please note <see cref="DatasetDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetBrokerStateStoreDestination"/>, <see cref="DatasetMqttDestination"/> and <see cref="DatasetStorageDestination"/>.
-        /// </summary>
+
+        /// <summary> Default destinations for a dataset. </summary>
         public IList<DatasetDestination> DefaultDatasetsDestinations { get; }
-        /// <summary>
-        /// Default destinations for an event.
-        /// Please note <see cref="EventDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="EventMqttDestination"/> and <see cref="EventStorageDestination"/>.
-        /// </summary>
+
+        /// <summary> Default destinations for an event. </summary>
         public IList<EventDestination> DefaultEventsDestinations { get; }
-        /// <summary>
-        /// Default destinations for a stream.
-        /// Please note <see cref="StreamDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="StreamMqttDestination"/> and <see cref="StreamStorageDestination"/>.
-        /// </summary>
+
+        /// <summary> Default destinations for a stream. </summary>
         public IList<StreamDestination> DefaultStreamsDestinations { get; }
+
         /// <summary> Array of datasets that are part of the asset. Each dataset describes the data points that make up the set. </summary>
         public IList<NamespaceDataset> Datasets { get; }
+
         /// <summary> Array of event groups that are part of the asset. Each event group can have per-event group configuration. </summary>
         public IList<NamespaceEventGroup> EventGroups { get; }
+
         /// <summary> Array of streams that are part of the asset. Each stream can have a per-stream configuration. </summary>
         public IList<NamespaceStream> Streams { get; }
+
         /// <summary> Array of management groups that are part of the asset. Each management group can have a per-group configuration. </summary>
         public IList<ManagementGroup> ManagementGroups { get; }
+
         /// <summary> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </summary>
         public DeviceRegistryNamespaceAssetStatus Status { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public DeviceRegistryProvisioningState? ProvisioningState { get; }
     }

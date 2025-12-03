@@ -76,5 +76,58 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudVirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, CancellationToken cancellationToken)
             => CreateOrUpdate(waitUntil, virtualMachineName, data, null, null, cancellationToken);
+
+        /// <summary>
+        /// Get a list of virtual machines in the provided resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<NetworkCloudVirtualMachineResource> GetAllAsync(CancellationToken cancellationToken)
+			=> GetAllAsync(null, null, cancellationToken);
+
+        /// <summary>
+        /// Get a list of virtual machines in the provided resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-07-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<NetworkCloudVirtualMachineResource> GetAll(CancellationToken cancellationToken)
+			=> GetAll(null, null, cancellationToken);
+
     }
 }

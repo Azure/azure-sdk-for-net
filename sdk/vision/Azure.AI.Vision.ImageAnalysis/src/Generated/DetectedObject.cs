@@ -14,47 +14,14 @@ namespace Azure.AI.Vision.ImageAnalysis
     /// <summary> Represents a physical object detected in an image. </summary>
     public partial class DetectedObject
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DetectedObject"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> or <paramref name="tags"/> is null. </exception>
         internal DetectedObject(ImageBoundingBox boundingBox, IEnumerable<DetectedTag> tags)
         {
-            Argument.AssertNotNull(boundingBox, nameof(boundingBox));
-            Argument.AssertNotNull(tags, nameof(tags));
-
             BoundingBox = boundingBox;
             Tags = tags.ToList();
         }
@@ -62,21 +29,17 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <summary> Initializes a new instance of <see cref="DetectedObject"/>. </summary>
         /// <param name="boundingBox"> A rectangular boundary where the object was detected. </param>
         /// <param name="tags"> A single-item list containing the object information. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<DetectedTag> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DetectedObject(ImageBoundingBox boundingBox, IReadOnlyList<DetectedTag> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BoundingBox = boundingBox;
             Tags = tags;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DetectedObject"/> for deserialization. </summary>
-        internal DetectedObject()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A rectangular boundary where the object was detected. </summary>
         public ImageBoundingBox BoundingBox { get; }
+
         /// <summary> A single-item list containing the object information. </summary>
         public IReadOnlyList<DetectedTag> Tags { get; }
     }

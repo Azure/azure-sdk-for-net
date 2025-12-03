@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Playwright
 {
-    internal class PlaywrightWorkspaceOperationSource : IOperationSource<PlaywrightWorkspaceResource>
+    /// <summary></summary>
+    internal partial class PlaywrightWorkspaceOperationSource : IOperationSource<PlaywrightWorkspaceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal PlaywrightWorkspaceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         PlaywrightWorkspaceResource IOperationSource<PlaywrightWorkspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlaywrightWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlaywrightContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            PlaywrightWorkspaceData data = PlaywrightWorkspaceData.DeserializePlaywrightWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new PlaywrightWorkspaceResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<PlaywrightWorkspaceResource> IOperationSource<PlaywrightWorkspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlaywrightWorkspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPlaywrightContext.Default);
-            return await Task.FromResult(new PlaywrightWorkspaceResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            PlaywrightWorkspaceData data = PlaywrightWorkspaceData.DeserializePlaywrightWorkspaceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new PlaywrightWorkspaceResource(_client, data);
         }
     }
 }

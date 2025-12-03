@@ -1,7 +1,8 @@
 #!/bin/env pwsh
 param(
   [string] $StorageAccountName = 'azuresdkartifacts',
-  [string] $StorageContainerName = 'public-vcpkg-container'
+  [string] $StorageContainerName = 'public-vcpkg-container',
+  [int] $TokenTimeoutInHours = 1
 )
 
 $ctx = New-AzStorageContext `
@@ -12,7 +13,7 @@ $vcpkgBinarySourceSas = New-AzStorageContainerSASToken `
   -Name $StorageContainerName `
   -Permission "rwcl" `
   -Context $ctx `
-  -ExpiryTime (Get-Date).AddHours(1)
+  -ExpiryTime (Get-Date).AddHours($TokenTimeoutInHours)
 
 # Ensure redaction of SAS tokens in logs
 Write-Host "##vso[task.setvariable variable=VCPKG_BINARY_SAS_TOKEN;issecret=true;]$vcpkgBinarySourceSas"

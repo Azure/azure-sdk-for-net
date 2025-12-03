@@ -17,7 +17,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="ZooResource"/> and their operations.
@@ -42,9 +42,9 @@ namespace MgmtTypeSpec
         internal ZooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ZooResource.ResourceType, out string zooApiVersion);
-            _zoosClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
+            _zoosClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ZooResource.ResourceType.Namespace, Diagnostics);
             _zoosRestClient = new Zoos(_zoosClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
-            _zooRecommendationClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ZooResource.ResourceType.Namespace, Diagnostics);
+            _zooRecommendationClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ZooResource.ResourceType.Namespace, Diagnostics);
             _zooRecommendationRestClient = new ZooRecommendation(_zooRecommendationClientDiagnostics, Pipeline, Endpoint, zooApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -81,7 +81,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
+                TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,
@@ -123,7 +123,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _zoosRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, zooName, ZooData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<ZooResource> operation = new MgmtTypeSpecArmOperation<ZooResource>(
+                TestsArmOperation<ZooResource> operation = new TestsArmOperation<ZooResource>(
                     new ZooOperationSource(Client),
                     _zoosClientDiagnostics,
                     Pipeline,

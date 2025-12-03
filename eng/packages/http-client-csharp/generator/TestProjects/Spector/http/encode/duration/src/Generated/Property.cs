@@ -59,6 +59,30 @@ namespace Encode.Duration._Property
 
         public virtual Task<Response<Float64SecondsDurationProperty>> Float64SecondsAsync(Float64SecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
 
+        public virtual Response Int32Milliseconds(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> Int32MillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<Int32MillisecondsDurationProperty> Int32Milliseconds(Int32MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<Int32MillisecondsDurationProperty>> Int32MillisecondsAsync(Int32MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatMilliseconds(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<FloatMillisecondsDurationProperty> FloatMilliseconds(FloatMillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<FloatMillisecondsDurationProperty>> FloatMillisecondsAsync(FloatMillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response Float64Milliseconds(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> Float64MillisecondsAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<Float64MillisecondsDurationProperty> Float64Milliseconds(Float64MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<Float64MillisecondsDurationProperty>> Float64MillisecondsAsync(Float64MillisecondsDurationProperty body, CancellationToken cancellationToken = default) => throw null;
+
         public virtual Response FloatSecondsArray(RequestContent content, RequestContext context = null) => throw null;
 
         public virtual Task<Response> FloatSecondsArrayAsync(RequestContent content, RequestContext context = null) => throw null;
@@ -66,5 +90,13 @@ namespace Encode.Duration._Property
         public virtual Response<FloatSecondsDurationArrayProperty> FloatSecondsArray(FloatSecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response<FloatSecondsDurationArrayProperty>> FloatSecondsArrayAsync(FloatSecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response FloatMillisecondsArray(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> FloatMillisecondsArrayAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response<FloatMillisecondsDurationArrayProperty> FloatMillisecondsArray(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response<FloatMillisecondsDurationArrayProperty>> FloatMillisecondsArrayAsync(FloatMillisecondsDurationArrayProperty body, CancellationToken cancellationToken = default) => throw null;
     }
 }

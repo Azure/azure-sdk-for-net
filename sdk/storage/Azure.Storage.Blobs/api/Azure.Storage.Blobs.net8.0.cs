@@ -315,6 +315,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.AppendBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
@@ -660,6 +661,8 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode EmptyMetadataKey { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode FeatureVersionMismatch { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyBlobMismatch { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierSnapshotNotAllowed { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEarlierVersionSnapshotNotAllowed { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Storage.Blobs.Models.BlobErrorCode IncrementalCopyOfEralierVersionSnapshotNotAllowed { get { throw null; } }
@@ -1035,6 +1038,8 @@ namespace Azure.Storage.Blobs.Models
     public partial class BlobRequestConditions : Azure.Storage.Blobs.Models.BlobLeaseRequestConditions
     {
         public BlobRequestConditions() { }
+        public System.DateTimeOffset? AccessTierIfModifiedSince { get { throw null; } set { } }
+        public System.DateTimeOffset? AccessTierIfUnmodifiedSince { get { throw null; } set { } }
         public string LeaseId { get { throw null; } set { } }
         public override string ToString() { throw null; }
     }
@@ -1208,6 +1213,7 @@ namespace Azure.Storage.Blobs.Models
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobRequestConditions SourceConditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
     }
@@ -1476,6 +1482,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.PageBlobRequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }
     public partial class PageBlobUploadPagesOptions
@@ -1579,6 +1586,9 @@ namespace Azure.Storage.Blobs.Models
         StandardRagrs = 2,
         StandardZrs = 3,
         PremiumLrs = 4,
+        StandardGzrs = 5,
+        PremiumZrs = 6,
+        StandardRagzrs = 7,
     }
     public partial class StageBlockFromUriOptions
     {
@@ -1587,6 +1597,7 @@ namespace Azure.Storage.Blobs.Models
         public Azure.HttpAuthorization SourceAuthentication { get { throw null; } set { } }
         public Azure.RequestConditions SourceConditions { get { throw null; } set { } }
         public byte[] SourceContentHash { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.CustomerProvidedKey? SourceCustomerProvidedKey { get { throw null; } set { } }
         public Azure.HttpRange SourceRange { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.FileShareTokenIntent? SourceShareTokenIntent { get { throw null; } set { } }
     }

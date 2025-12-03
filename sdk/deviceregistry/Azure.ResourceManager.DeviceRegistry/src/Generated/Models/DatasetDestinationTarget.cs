@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     internal readonly partial struct DatasetDestinationTarget : IEquatable<DatasetDestinationTarget>
     {
         private readonly string _value;
+        /// <summary> MQTT target. </summary>
+        private const string MqttValue = "Mqtt";
+        /// <summary> Broker State Store target. </summary>
+        private const string BrokerStateStoreValue = "BrokerStateStore";
+        /// <summary> Storage target. </summary>
+        private const string StorageValue = "Storage";
 
         /// <summary> Initializes a new instance of <see cref="DatasetDestinationTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DatasetDestinationTarget(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MqttValue = "Mqtt";
-        private const string BrokerStateStoreValue = "BrokerStateStore";
-        private const string StorageValue = "Storage";
+            _value = value;
+        }
 
         /// <summary> MQTT target. </summary>
         public static DatasetDestinationTarget Mqtt { get; } = new DatasetDestinationTarget(MqttValue);
+
         /// <summary> Broker State Store target. </summary>
         public static DatasetDestinationTarget BrokerStateStore { get; } = new DatasetDestinationTarget(BrokerStateStoreValue);
+
         /// <summary> Storage target. </summary>
         public static DatasetDestinationTarget Storage { get; } = new DatasetDestinationTarget(StorageValue);
+
         /// <summary> Determines if two <see cref="DatasetDestinationTarget"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DatasetDestinationTarget left, DatasetDestinationTarget right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DatasetDestinationTarget"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DatasetDestinationTarget left, DatasetDestinationTarget right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DatasetDestinationTarget"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DatasetDestinationTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DatasetDestinationTarget(string value) => new DatasetDestinationTarget(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DatasetDestinationTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DatasetDestinationTarget?(string value) => value == null ? null : new DatasetDestinationTarget(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DatasetDestinationTarget other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DatasetDestinationTarget other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

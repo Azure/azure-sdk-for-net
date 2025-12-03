@@ -765,7 +765,7 @@ namespace Azure.Storage.Files.Shares
                 MaxBurstCreditsForIops = response.Headers.MaxBurstCreditsForIops,
                 NextAllowedProvisionedIopsDowngradeTime = response.Headers.NextAllowedProvisionedIopsDowngradeTime,
                 NextAllowedProvisionedBandwidthDowngradeTime = response.Headers.NextAllowedProvisionedBandwidthDowngradeTime,
-                EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
+                //EnableDirectoryLease = response.Headers.EnableSmbDirectoryLease,
             };
         }
 
@@ -887,7 +887,7 @@ namespace Azure.Storage.Files.Shares
                 MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
                 NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
                 NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
-                EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
+                //EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
             };
         }
 

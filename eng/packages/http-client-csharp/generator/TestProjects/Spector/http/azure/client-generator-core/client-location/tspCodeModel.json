@@ -803,7 +803,7 @@
                         "isApiVersion": false,
                         "explode": false,
                         "optional": false,
-                        "scope": "Method",
+                        "scope": "Client",
                         "decorators": [],
                         "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.storageAccount",
                         "readOnly": false
@@ -893,31 +893,10 @@
                     {
                       "$id": "70",
                       "kind": "method",
-                      "name": "storageAccount",
-                      "serializedName": "storageAccount",
-                      "type": {
-                        "$id": "71",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "location": "Query",
-                      "isApiVersion": false,
-                      "optional": false,
-                      "scope": "Method",
-                      "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.ClientLocation.MoveMethodParameterToClient.BlobOperations.getBlob.storageAccount",
-                      "readOnly": false,
-                      "access": "public",
-                      "decorators": []
-                    },
-                    {
-                      "$id": "72",
-                      "kind": "method",
                       "name": "container",
                       "serializedName": "container",
                       "type": {
-                        "$id": "73",
+                        "$id": "71",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -933,12 +912,12 @@
                       "decorators": []
                     },
                     {
-                      "$id": "74",
+                      "$id": "72",
                       "kind": "method",
                       "name": "blob",
                       "serializedName": "blob",
                       "type": {
-                        "$id": "75",
+                        "$id": "73",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -954,7 +933,7 @@
                       "decorators": []
                     },
                     {
-                      "$id": "76",
+                      "$id": "74",
                       "kind": "method",
                       "name": "accept",
                       "serializedName": "Accept",
@@ -984,13 +963,13 @@
               ],
               "parameters": [
                 {
-                  "$id": "77",
+                  "$id": "75",
                   "kind": "endpoint",
                   "name": "endpoint",
                   "serializedName": "endpoint",
                   "doc": "Service host",
                   "type": {
-                    "$id": "78",
+                    "$id": "76",
                     "kind": "url",
                     "name": "endpoint",
                     "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1001,7 +980,7 @@
                   "isEndpoint": true,
                   "defaultValue": {
                     "type": {
-                      "$id": "79",
+                      "$id": "77",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string"
@@ -1024,19 +1003,19 @@
           ]
         },
         {
-          "$id": "80",
+          "$id": "78",
           "kind": "client",
           "name": "ArchiveOperations",
           "namespace": "_Specs_.Azure.ClientGenerator.Core.ClientLocation",
           "methods": [
             {
-              "$id": "81",
+              "$id": "79",
               "kind": "basic",
               "name": "archiveProduct",
               "accessibility": "public",
               "apiVersions": [],
               "operation": {
-                "$id": "82",
+                "$id": "80",
                 "name": "archiveProduct",
                 "resourceName": "ProductOperations",
                 "accessibility": "public",
@@ -1069,13 +1048,13 @@
           ],
           "parameters": [
             {
-              "$id": "83",
+              "$id": "81",
               "kind": "endpoint",
               "name": "endpoint",
               "serializedName": "endpoint",
               "doc": "Service host",
               "type": {
-                "$id": "84",
+                "$id": "82",
                 "kind": "url",
                 "name": "endpoint",
                 "crossLanguageDefinitionId": "TypeSpec.url"
@@ -1086,7 +1065,7 @@
               "isEndpoint": true,
               "defaultValue": {
                 "type": {
-                  "$id": "85",
+                  "$id": "83",
                   "kind": "string",
                   "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"

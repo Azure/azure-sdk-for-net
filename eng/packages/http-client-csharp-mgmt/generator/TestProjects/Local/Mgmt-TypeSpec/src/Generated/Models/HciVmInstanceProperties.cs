@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The HciVmInstanceProperties. </summary>
     internal partial class HciVmInstanceProperties
@@ -33,6 +34,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> Gets the Sku. </summary>
+        [WirePath("sku")]
         public string Sku { get; }
     }
 }

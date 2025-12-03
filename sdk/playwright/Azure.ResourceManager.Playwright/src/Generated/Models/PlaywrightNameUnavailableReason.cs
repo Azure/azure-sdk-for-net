@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Playwright;
 
 namespace Azure.ResourceManager.Playwright.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Playwright.Models
     public readonly partial struct PlaywrightNameUnavailableReason : IEquatable<PlaywrightNameUnavailableReason>
     {
         private readonly string _value;
+        /// <summary> Name is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> Name already exists. </summary>
+        private const string AlreadyExistsValue = "AlreadyExists";
 
         /// <summary> Initializes a new instance of <see cref="PlaywrightNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PlaywrightNameUnavailableReason(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InvalidValue = "Invalid";
-        private const string AlreadyExistsValue = "AlreadyExists";
+            _value = value;
+        }
 
         /// <summary> Name is invalid. </summary>
         public static PlaywrightNameUnavailableReason Invalid { get; } = new PlaywrightNameUnavailableReason(InvalidValue);
+
         /// <summary> Name already exists. </summary>
         public static PlaywrightNameUnavailableReason AlreadyExists { get; } = new PlaywrightNameUnavailableReason(AlreadyExistsValue);
+
         /// <summary> Determines if two <see cref="PlaywrightNameUnavailableReason"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PlaywrightNameUnavailableReason left, PlaywrightNameUnavailableReason right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PlaywrightNameUnavailableReason"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PlaywrightNameUnavailableReason left, PlaywrightNameUnavailableReason right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PlaywrightNameUnavailableReason"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PlaywrightNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PlaywrightNameUnavailableReason(string value) => new PlaywrightNameUnavailableReason(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PlaywrightNameUnavailableReason"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PlaywrightNameUnavailableReason?(string value) => value == null ? null : new PlaywrightNameUnavailableReason(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PlaywrightNameUnavailableReason other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PlaywrightNameUnavailableReason other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

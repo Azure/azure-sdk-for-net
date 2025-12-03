@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             AllowedFqdnList = new ChangeTrackingList<string>();
             Endpoints = new ChangeTrackingDictionary<string, string>();
             CommitmentPlanAssociations = new ChangeTrackingList<CommitmentPlanAssociation>();
+            AIFoundryNetworkInjections = new ChangeTrackingList<AIFoundryNetworkInjection>();
             AssociatedProjects = new ChangeTrackingList<string>();
         }
 
@@ -87,12 +88,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="commitmentPlanAssociations"> The commitment plan associations of Cognitive Services account. </param>
         /// <param name="abusePenalty"> The abuse penalty. </param>
         /// <param name="raiMonitorConfig"> Cognitive Services Rai Monitor Config. </param>
-        /// <param name="networkInjections"> Specifies in AI Foundry where virtual network injection occurs to secure scenarios like Agents entirely within the user's private network, eliminating public internet exposure while maintaining control over network configurations and resources. </param>
+        /// <param name="aiFoundryNetworkInjections"></param>
         /// <param name="allowProjectManagement"> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </param>
         /// <param name="defaultProject"> Specifies the project, by project name, that is targeted when data plane endpoints are called without a project parameter. </param>
         /// <param name="associatedProjects"> Specifies the projects, by project name, that are associated with this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, AIFoundryNetworkInjection networkInjections, bool? allowProjectManagement, string defaultProject, IList<string> associatedProjects, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CognitiveServicesAccountProperties(ServiceAccountProvisioningState? provisioningState, string endpoint, IReadOnlyList<CognitiveServicesSkuCapability> capabilities, bool? isMigrated, string migrationToken, CognitiveServicesSkuChangeInfo skuChangeInfo, string customSubDomainName, CognitiveServicesNetworkRuleSet networkAcls, ServiceAccountEncryptionProperties encryption, IList<ServiceAccountUserOwnedStorage> userOwnedStorage, UserOwnedAmlWorkspace amlWorkspace, IReadOnlyList<CognitiveServicesPrivateEndpointConnectionData> privateEndpointConnections, ServiceAccountPublicNetworkAccess? publicNetworkAccess, ServiceAccountApiProperties apiProperties, DateTimeOffset? createdOn, ServiceAccountCallRateLimit callRateLimit, bool? enableDynamicThrottling, ServiceAccountQuotaLimit quotaLimit, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, bool? disableLocalAuth, IReadOnlyDictionary<string, string> endpoints, bool? restore, DateTimeOffset? deletedOn, string scheduledPurgeDate, CognitiveServicesMultiRegionSettings locations, IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations, AbusePenalty abusePenalty, RaiMonitorConfig raiMonitorConfig, IList<AIFoundryNetworkInjection> aiFoundryNetworkInjections, bool? allowProjectManagement, string defaultProject, IList<string> associatedProjects, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Endpoint = endpoint;
@@ -123,7 +124,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CommitmentPlanAssociations = commitmentPlanAssociations;
             AbusePenalty = abusePenalty;
             RaiMonitorConfig = raiMonitorConfig;
-            NetworkInjections = networkInjections;
+            AIFoundryNetworkInjections = aiFoundryNetworkInjections;
             AllowProjectManagement = allowProjectManagement;
             DefaultProject = defaultProject;
             AssociatedProjects = associatedProjects;
@@ -217,9 +218,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <summary> Cognitive Services Rai Monitor Config. </summary>
         [WirePath("raiMonitorConfig")]
         public RaiMonitorConfig RaiMonitorConfig { get; set; }
-        /// <summary> Specifies in AI Foundry where virtual network injection occurs to secure scenarios like Agents entirely within the user's private network, eliminating public internet exposure while maintaining control over network configurations and resources. </summary>
+        /// <summary> Gets the ai foundry network injections. </summary>
         [WirePath("networkInjections")]
-        public AIFoundryNetworkInjection NetworkInjections { get; set; }
+        public IList<AIFoundryNetworkInjection> AIFoundryNetworkInjections { get; }
         /// <summary> Specifies whether this resource support project management as child resources, used as containers for access management, data isolation and cost in AI Foundry. </summary>
         [WirePath("allowProjectManagement")]
         public bool? AllowProjectManagement { get; set; }

@@ -14,7 +14,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a HciVmInstance along with the instance operations that can be performed on it.
@@ -49,7 +49,7 @@ namespace MgmtTypeSpec
         internal HciVmInstanceResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string hciVmInstanceApiVersion);
-            _hciVmInstancesClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _hciVmInstancesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _hciVmInstancesRestClient = new HciVmInstances(_hciVmInstancesClientDiagnostics, Pipeline, Endpoint, hciVmInstanceApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -21,31 +22,31 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Argument.AssertNotNull(configuration, nameof(configuration));
 
             Configuration = configuration;
-            Target = DatasetDestinationTarget.BrokerStateStore;
         }
 
         /// <summary> Initializes a new instance of <see cref="DatasetBrokerStateStoreDestination"/>. </summary>
         /// <param name="target"> Target destination. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="configuration"> The MQTT broker state store destination configuration. </param>
-        internal DatasetBrokerStateStoreDestination(DatasetDestinationTarget? target, IDictionary<string, BinaryData> serializedAdditionalRawData, BrokerStateStoreDestinationConfiguration configuration) : base(target, serializedAdditionalRawData)
+        internal DatasetBrokerStateStoreDestination(DatasetDestinationTarget? target, IDictionary<string, BinaryData> additionalBinaryDataProperties, BrokerStateStoreDestinationConfiguration configuration) : base(target, additionalBinaryDataProperties)
         {
             Configuration = configuration;
-            Target = target;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DatasetBrokerStateStoreDestination"/> for deserialization. </summary>
-        internal DatasetBrokerStateStoreDestination()
-        {
         }
 
         /// <summary> The MQTT broker state store destination configuration. </summary>
         internal BrokerStateStoreDestinationConfiguration Configuration { get; set; }
+
         /// <summary> The MQTT broker state store destination key. </summary>
         public string Key
         {
-            get => Configuration is null ? default : Configuration.Key;
-            set => Configuration = new BrokerStateStoreDestinationConfiguration(value);
+            get
+            {
+                return Configuration is null ? default : Configuration.Key;
+            }
+            set
+            {
+                Configuration = new BrokerStateStoreDestinationConfiguration(value);
+            }
         }
     }
 }
