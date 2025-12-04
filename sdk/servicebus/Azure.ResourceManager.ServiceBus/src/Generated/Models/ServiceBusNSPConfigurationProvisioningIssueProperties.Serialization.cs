@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class ServiceBusNSPConfigurationProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<ServiceBusNSPConfigurationProvisioningIssueProperties>
+    public partial class ServiceBusNspConfigurationProvisioningIssueProperties : IUtf8JsonSerializable, IJsonModel<ServiceBusNspConfigurationProvisioningIssueProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNSPConfigurationProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNspConfigurationProvisioningIssueProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ServiceBusNSPConfigurationProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceBusNspConfigurationProvisioningIssueProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNSPConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNSPConfigurationProvisioningIssueProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNspConfigurationProvisioningIssueProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(IssueType))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        ServiceBusNSPConfigurationProvisioningIssueProperties IJsonModel<ServiceBusNSPConfigurationProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceBusNspConfigurationProvisioningIssueProperties IJsonModel<ServiceBusNspConfigurationProvisioningIssueProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNSPConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNSPConfigurationProvisioningIssueProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNspConfigurationProvisioningIssueProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceBusNSPConfigurationProvisioningIssueProperties(document.RootElement, options);
+            return DeserializeServiceBusNspConfigurationProvisioningIssueProperties(document.RootElement, options);
         }
 
-        internal static ServiceBusNSPConfigurationProvisioningIssueProperties DeserializeServiceBusNSPConfigurationProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceBusNspConfigurationProvisioningIssueProperties DeserializeServiceBusNspConfigurationProvisioningIssueProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServiceBusNSPConfigurationProvisioningIssueProperties(issueType, description, serializedAdditionalRawData);
+            return new ServiceBusNspConfigurationProvisioningIssueProperties(issueType, description, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -168,9 +168,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ServiceBusNSPConfigurationProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceBusNspConfigurationProvisioningIssueProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNSPConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -179,26 +179,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNSPConfigurationProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNspConfigurationProvisioningIssueProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ServiceBusNSPConfigurationProvisioningIssueProperties IPersistableModel<ServiceBusNSPConfigurationProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceBusNspConfigurationProvisioningIssueProperties IPersistableModel<ServiceBusNspConfigurationProvisioningIssueProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNSPConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNspConfigurationProvisioningIssueProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeServiceBusNSPConfigurationProvisioningIssueProperties(document.RootElement, options);
+                        return DeserializeServiceBusNspConfigurationProvisioningIssueProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNSPConfigurationProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNspConfigurationProvisioningIssueProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ServiceBusNSPConfigurationProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceBusNspConfigurationProvisioningIssueProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

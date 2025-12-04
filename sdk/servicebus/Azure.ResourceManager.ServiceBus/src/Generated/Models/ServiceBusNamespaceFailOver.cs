@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The FailOver. </summary>
-    public partial class FailOver
+    /// <summary> The ServiceBusNamespaceFailOver. </summary>
+    public partial class ServiceBusNamespaceFailOver
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FailOver"/>. </summary>
-        public FailOver()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespaceFailOver"/>. </summary>
+        public ServiceBusNamespaceFailOver()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FailOver"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespaceFailOver"/>. </summary>
         /// <param name="primaryLocation"> Query parameter for the new primary location after failover. </param>
         /// <param name="force"> If Force is false then graceful failover is attempted after ensuring no data loss. If Force flag is set to true, Forced failover is attempted with possible data loss. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FailOver(string primaryLocation, bool? force, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusNamespaceFailOver(string primaryLocation, bool? force, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryLocation = primaryLocation;
             Force = force;

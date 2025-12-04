@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Describes Provisioning issue for given NetworkSecurityPerimeterConfiguration. </summary>
-    public partial class ServiceBusNSPConfigurationProvisioningIssue
+    public partial class ServiceBusNspConfigurationProvisioningIssue
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBusNSPConfigurationProvisioningIssue"/>. </summary>
-        public ServiceBusNSPConfigurationProvisioningIssue()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNspConfigurationProvisioningIssue"/>. </summary>
+        public ServiceBusNspConfigurationProvisioningIssue()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBusNSPConfigurationProvisioningIssue"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNspConfigurationProvisioningIssue"/>. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Properties of Provisioning Issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusNSPConfigurationProvisioningIssue(string name, ServiceBusNSPConfigurationProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusNspConfigurationProvisioningIssue(string name, ServiceBusNspConfigurationProvisioningIssueProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Properties = properties;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public string Name { get; set; }
         /// <summary> Properties of Provisioning Issue. </summary>
         [WirePath("properties")]
-        public ServiceBusNSPConfigurationProvisioningIssueProperties Properties { get; }
+        public ServiceBusNspConfigurationProvisioningIssueProperties Properties { get; }
     }
 }

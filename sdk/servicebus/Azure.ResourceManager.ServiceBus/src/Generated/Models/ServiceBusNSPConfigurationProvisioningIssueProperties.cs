@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceBus.Models
 {
     /// <summary> Properties of Provisioning Issue. </summary>
-    public partial class ServiceBusNSPConfigurationProvisioningIssueProperties
+    public partial class ServiceBusNspConfigurationProvisioningIssueProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBusNSPConfigurationProvisioningIssueProperties"/>. </summary>
-        internal ServiceBusNSPConfigurationProvisioningIssueProperties()
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNspConfigurationProvisioningIssueProperties"/>. </summary>
+        internal ServiceBusNspConfigurationProvisioningIssueProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceBusNSPConfigurationProvisioningIssueProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNspConfigurationProvisioningIssueProperties"/>. </summary>
         /// <param name="issueType"> Type of Issue. </param>
         /// <param name="description"> Description of the issue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusNSPConfigurationProvisioningIssueProperties(string issueType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceBusNspConfigurationProvisioningIssueProperties(string issueType, string description, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IssueType = issueType;
             Description = description;

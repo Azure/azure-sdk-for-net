@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
-        internal RequestUriBuilder CreateFailoverRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, FailOver failOver)
+        internal RequestUriBuilder CreateFailoverRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceFailOver serviceBusNamespaceFailOver)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.ServiceBus
             return uri;
         }
 
-        internal HttpMessage CreateFailoverRequest(string subscriptionId, string resourceGroupName, string namespaceName, FailOver failOver)
+        internal HttpMessage CreateFailoverRequest(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceFailOver serviceBusNamespaceFailOver)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.ServiceBus
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(failOver, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(serviceBusNamespaceFailOver, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -792,18 +792,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="failOver"> Parameters for updating a namespace resource. </param>
+        /// <param name="serviceBusNamespaceFailOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="failOver"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="serviceBusNamespaceFailOver"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string namespaceName, FailOver failOver, CancellationToken cancellationToken = default)
+        public async Task<Response> FailoverAsync(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceFailOver serviceBusNamespaceFailOver, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(failOver, nameof(failOver));
+            Argument.AssertNotNull(serviceBusNamespaceFailOver, nameof(serviceBusNamespaceFailOver));
 
-            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, failOver);
+            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, serviceBusNamespaceFailOver);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -819,18 +819,18 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="namespaceName"> The namespace name. </param>
-        /// <param name="failOver"> Parameters for updating a namespace resource. </param>
+        /// <param name="serviceBusNamespaceFailOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="failOver"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="namespaceName"/> or <paramref name="serviceBusNamespaceFailOver"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="namespaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Failover(string subscriptionId, string resourceGroupName, string namespaceName, FailOver failOver, CancellationToken cancellationToken = default)
+        public Response Failover(string subscriptionId, string resourceGroupName, string namespaceName, ServiceBusNamespaceFailOver serviceBusNamespaceFailOver, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(namespaceName, nameof(namespaceName));
-            Argument.AssertNotNull(failOver, nameof(failOver));
+            Argument.AssertNotNull(serviceBusNamespaceFailOver, nameof(serviceBusNamespaceFailOver));
 
-            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, failOver);
+            using var message = CreateFailoverRequest(subscriptionId, resourceGroupName, namespaceName, serviceBusNamespaceFailOver);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    public partial class FailOver : IUtf8JsonSerializable, IJsonModel<FailOver>
+    public partial class ServiceBusNamespaceFailOver : IUtf8JsonSerializable, IJsonModel<ServiceBusNamespaceFailOver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FailOver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceBusNamespaceFailOver>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FailOver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ServiceBusNamespaceFailOver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FailOver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailOver)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNamespaceFailOver)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("properties"u8);
@@ -65,19 +65,19 @@ namespace Azure.ResourceManager.ServiceBus.Models
             }
         }
 
-        FailOver IJsonModel<FailOver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ServiceBusNamespaceFailOver IJsonModel<ServiceBusNamespaceFailOver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FailOver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailOver)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNamespaceFailOver)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFailOver(document.RootElement, options);
+            return DeserializeServiceBusNamespaceFailOver(document.RootElement, options);
         }
 
-        internal static FailOver DeserializeFailOver(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ServiceBusNamespaceFailOver DeserializeServiceBusNamespaceFailOver(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FailOver(primaryLocation, force, serializedAdditionalRawData);
+            return new ServiceBusNamespaceFailOver(primaryLocation, force, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -183,9 +183,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<FailOver>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ServiceBusNamespaceFailOver>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FailOver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -194,26 +194,26 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(FailOver)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNamespaceFailOver)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FailOver IPersistableModel<FailOver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ServiceBusNamespaceFailOver IPersistableModel<ServiceBusNamespaceFailOver>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FailOver>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNamespaceFailOver>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFailOver(document.RootElement, options);
+                        return DeserializeServiceBusNamespaceFailOver(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FailOver)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNamespaceFailOver)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FailOver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ServiceBusNamespaceFailOver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -132,13 +132,13 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusNamespaceResource serviceBusNamespace = client.GetServiceBusNamespaceResource(serviceBusNamespaceResourceId);
 
             // invoke the operation
-            FailOver failOver = new FailOver
+            ServiceBusNamespaceFailOver serviceBusNamespaceFailOver = new ServiceBusNamespaceFailOver
             {
                 PrimaryLocation = "centralus",
                 Force = true,
             };
-            ArmOperation<FailOver> lro = await serviceBusNamespace.FailoverAsync(WaitUntil.Completed, failOver);
-            FailOver result = lro.Value;
+            ArmOperation<ServiceBusNamespaceFailOver> lro = await serviceBusNamespace.FailoverAsync(WaitUntil.Completed, serviceBusNamespaceFailOver);
+            ServiceBusNamespaceFailOver result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

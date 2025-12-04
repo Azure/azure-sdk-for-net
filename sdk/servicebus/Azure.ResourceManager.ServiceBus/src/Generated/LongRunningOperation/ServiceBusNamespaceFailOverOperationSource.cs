@@ -13,18 +13,18 @@ using Azure.ResourceManager.ServiceBus.Models;
 
 namespace Azure.ResourceManager.ServiceBus
 {
-    internal class FailOverOperationSource : IOperationSource<FailOver>
+    internal class ServiceBusNamespaceFailOverOperationSource : IOperationSource<ServiceBusNamespaceFailOver>
     {
-        FailOver IOperationSource<FailOver>.CreateResult(Response response, CancellationToken cancellationToken)
+        ServiceBusNamespaceFailOver IOperationSource<ServiceBusNamespaceFailOver>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return FailOver.DeserializeFailOver(document.RootElement);
+            return ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement);
         }
 
-        async ValueTask<FailOver> IOperationSource<FailOver>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        async ValueTask<ServiceBusNamespaceFailOver> IOperationSource<ServiceBusNamespaceFailOver>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return FailOver.DeserializeFailOver(document.RootElement);
+            return ServiceBusNamespaceFailOver.DeserializeServiceBusNamespaceFailOver(document.RootElement);
         }
     }
 }

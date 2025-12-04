@@ -803,19 +803,19 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="failOver"> Parameters for updating a namespace resource. </param>
+        /// <param name="serviceBusNamespaceFailOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="failOver"/> is null. </exception>
-        public virtual async Task<ArmOperation<FailOver>> FailoverAsync(WaitUntil waitUntil, FailOver failOver, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceBusNamespaceFailOver"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceBusNamespaceFailOver>> FailoverAsync(WaitUntil waitUntil, ServiceBusNamespaceFailOver serviceBusNamespaceFailOver, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(failOver, nameof(failOver));
+            Argument.AssertNotNull(serviceBusNamespaceFailOver, nameof(serviceBusNamespaceFailOver));
 
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.Failover");
             scope.Start();
             try
             {
-                var response = await _serviceBusNamespaceNamespacesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failOver, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceBusArmOperation<FailOver>(new FailOverOperationSource(), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failOver).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _serviceBusNamespaceNamespacesRestClient.FailoverAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceBusNamespaceFailOver, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceBusArmOperation<ServiceBusNamespaceFailOver>(new ServiceBusNamespaceFailOverOperationSource(), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceBusNamespaceFailOver).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -849,19 +849,19 @@ namespace Azure.ResourceManager.ServiceBus
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="failOver"> Parameters for updating a namespace resource. </param>
+        /// <param name="serviceBusNamespaceFailOver"> Parameters for updating a namespace resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="failOver"/> is null. </exception>
-        public virtual ArmOperation<FailOver> Failover(WaitUntil waitUntil, FailOver failOver, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="serviceBusNamespaceFailOver"/> is null. </exception>
+        public virtual ArmOperation<ServiceBusNamespaceFailOver> Failover(WaitUntil waitUntil, ServiceBusNamespaceFailOver serviceBusNamespaceFailOver, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(failOver, nameof(failOver));
+            Argument.AssertNotNull(serviceBusNamespaceFailOver, nameof(serviceBusNamespaceFailOver));
 
             using var scope = _serviceBusNamespaceNamespacesClientDiagnostics.CreateScope("ServiceBusNamespaceResource.Failover");
             scope.Start();
             try
             {
-                var response = _serviceBusNamespaceNamespacesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failOver, cancellationToken);
-                var operation = new ServiceBusArmOperation<FailOver>(new FailOverOperationSource(), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, failOver).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _serviceBusNamespaceNamespacesRestClient.Failover(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceBusNamespaceFailOver, cancellationToken);
+                var operation = new ServiceBusArmOperation<ServiceBusNamespaceFailOver>(new ServiceBusNamespaceFailOverOperationSource(), _serviceBusNamespaceNamespacesClientDiagnostics, Pipeline, _serviceBusNamespaceNamespacesRestClient.CreateFailoverRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serviceBusNamespaceFailOver).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

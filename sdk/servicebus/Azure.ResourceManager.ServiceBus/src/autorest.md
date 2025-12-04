@@ -125,9 +125,9 @@ rename-mapping:
   NspAccessRuleProperties: ServiceBusNspAccessRuleProperties
   ResourceAssociationAccessMode: ServiceBusResourceAssociationAccessMode
   Mode: ServiceBusConfidentialComputeMode
-  ProvisioningIssue: ServiceBusNSPConfigurationProvisioningIssue
-  ProvisioningIssueProperties: ServiceBusNSPConfigurationProvisioningIssueProperties
-
+  ProvisioningIssue: ServiceBusNspConfigurationProvisioningIssue
+  ProvisioningIssueProperties: ServiceBusNspConfigurationProvisioningIssueProperties
+  FailOver: ServiceBusNamespaceFailOver
 
 
 

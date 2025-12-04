@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             ResourceType type = default;
             SystemData systemData = default;
             ServiceBusNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default;
-            IList<ServiceBusNSPConfigurationProvisioningIssue> provisioningIssues = default;
+            IList<ServiceBusNspConfigurationProvisioningIssue> provisioningIssues = default;
             ServiceBusNetworkSecurityPerimeter networkSecurityPerimeter = default;
             ServiceBusNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation = default;
             ServiceBusNetworkSecurityPerimeterConfigurationPropertiesProfile profile = default;
@@ -198,10 +198,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
                             {
                                 continue;
                             }
-                            List<ServiceBusNSPConfigurationProvisioningIssue> array = new List<ServiceBusNSPConfigurationProvisioningIssue>();
+                            List<ServiceBusNspConfigurationProvisioningIssue> array = new List<ServiceBusNspConfigurationProvisioningIssue>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ServiceBusNSPConfigurationProvisioningIssue.DeserializeServiceBusNSPConfigurationProvisioningIssue(item, options));
+                                array.Add(ServiceBusNspConfigurationProvisioningIssue.DeserializeServiceBusNspConfigurationProvisioningIssue(item, options));
                             }
                             provisioningIssues = array;
                             continue;
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 systemData,
                 location,
                 provisioningState,
-                provisioningIssues ?? new ChangeTrackingList<ServiceBusNSPConfigurationProvisioningIssue>(),
+                provisioningIssues ?? new ChangeTrackingList<ServiceBusNspConfigurationProvisioningIssue>(),
                 networkSecurityPerimeter,
                 resourceAssociation,
                 profile,
