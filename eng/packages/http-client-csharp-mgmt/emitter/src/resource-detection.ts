@@ -289,6 +289,7 @@ function parseResourceOperation(
         break;
       case legacyResourceOperationName:
       case legacyExtensionResourceOperationName:
+      case legacyResourceOperationName:
         switch (decorator.args[1].jsValue) {
           case "read":
             return [
