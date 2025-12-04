@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.14 (Unreleased)
+## 1.4.0-beta.14 (2025-12-05)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag from 'package-preview-2024-12-01' to 'package-2025-10-15'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/60bcde388a845febb60fc2bda17983ca59af219a/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/readme.md.
 
 ## 1.4.0-beta.13 (2025-08-04)
 
