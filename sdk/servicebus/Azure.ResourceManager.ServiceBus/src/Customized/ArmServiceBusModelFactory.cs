@@ -3,14 +3,10 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -29,9 +25,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.MigrationConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MigrationConfigurationData MigrationConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount, ResourceIdentifier targetServiceBusNamespace, string postMigrationName, string migrationState, AzureLocation? location)
+        public static MigrationConfigurationData MigrationConfigurationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string provisioningState, long? pendingReplicationOperationsCount = null, ResourceIdentifier targetServiceBusNamespace = null, string postMigrationName = null, string migrationState = null, AzureLocation? location = null)
         {
-            return new MigrationConfigurationData(
+            return MigrationConfigurationData(
                 id,
                 name,
                 resourceType,
@@ -41,8 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 pendingReplicationOperationsCount,
                 targetServiceBusNamespace,
                 postMigrationName,
-                migrationState,
-                serializedAdditionalRawData: null);
+                migrationState);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusAuthorizationRuleData"/>. </summary>
@@ -54,18 +49,15 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="rights"> The rights associated with the rule. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusAuthorizationRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceBusAuthorizationRuleData ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<ServiceBusAccessRight> rights, AzureLocation? location)
+        public static ServiceBusAuthorizationRuleData ServiceBusAuthorizationRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IEnumerable<ServiceBusAccessRight> rights, AzureLocation? location = null)
         {
-            rights ??= new List<ServiceBusAccessRight>();
-
-            return new ServiceBusAuthorizationRuleData(
+            return ServiceBusAuthorizationRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 location,
-                rights?.ToList(),
-                serializedAdditionalRawData: null);
+                rights);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusDisasterRecoveryData"/>. </summary>
@@ -81,9 +73,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusDisasterRecoveryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceBusDisasterRecoveryData ServiceBusDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceBusDisasterRecoveryProvisioningState? provisioningState, long? pendingReplicationOperationsCount, string partnerNamespace, string alternateName, ServiceBusDisasterRecoveryRole? role, AzureLocation? location)
+        public static ServiceBusDisasterRecoveryData ServiceBusDisasterRecoveryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceBusDisasterRecoveryProvisioningState? provisioningState, long? pendingReplicationOperationsCount = null, string partnerNamespace = null, string alternateName = null, ServiceBusDisasterRecoveryRole? role = null, AzureLocation? location = null)
         {
-            return new ServiceBusDisasterRecoveryData(
+            return ServiceBusDisasterRecoveryData(
                 id,
                 name,
                 resourceType,
@@ -93,8 +85,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 pendingReplicationOperationsCount,
                 partnerNamespace,
                 alternateName,
-                role,
-                serializedAdditionalRawData: null);
+                role);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/>. </summary>
@@ -110,12 +101,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusNetworkRuleSetData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isTrustedServiceAccessEnabled, ServiceBusNetworkRuleSetDefaultAction? defaultAction, IEnumerable<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules, IEnumerable<ServiceBusNetworkRuleSetIPRules> ipRules, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess, AzureLocation? location)
+        public static ServiceBusNetworkRuleSetData ServiceBusNetworkRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, bool? isTrustedServiceAccessEnabled, ServiceBusNetworkRuleSetDefaultAction? defaultAction = null, IEnumerable<ServiceBusNetworkRuleSetVirtualNetworkRules> virtualNetworkRules = null, IEnumerable<ServiceBusNetworkRuleSetIPRules> ipRules = null, ServiceBusPublicNetworkAccessFlag? publicNetworkAccess = null, AzureLocation? location = null)
         {
-            virtualNetworkRules ??= new List<ServiceBusNetworkRuleSetVirtualNetworkRules>();
-            ipRules ??= new List<ServiceBusNetworkRuleSetIPRules>();
-
-            return new ServiceBusNetworkRuleSetData(
+            return ServiceBusNetworkRuleSetData(
                 id,
                 name,
                 resourceType,
@@ -123,10 +111,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 location,
                 isTrustedServiceAccessEnabled,
                 defaultAction,
-                virtualNetworkRules?.ToList(),
-                ipRules?.ToList(),
-                publicNetworkAccess,
-                serializedAdditionalRawData: null);
+                virtualNetworkRules,
+                ipRules,
+                publicNetworkAccess);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusPrivateEndpointConnectionData"/>. </summary>
@@ -140,18 +127,17 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusPrivateEndpointConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, ServiceBusPrivateLinkServiceConnectionState connectionState, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState, AzureLocation? location)
+        public static ServiceBusPrivateEndpointConnectionData ServiceBusPrivateEndpointConnectionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier privateEndpointId, ServiceBusPrivateLinkServiceConnectionState connectionState = null, ServiceBusPrivateEndpointConnectionProvisioningState? provisioningState = null, AzureLocation? location = null)
         {
-            return new ServiceBusPrivateEndpointConnectionData(
+            return ServiceBusPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 location,
-                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                privateEndpointId,
                 connectionState,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceBus.ServiceBusRuleData"/>. </summary>
@@ -166,9 +152,9 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <returns> A new <see cref="ServiceBus.ServiceBusRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ServiceBusRuleData ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceBusFilterAction action, ServiceBusFilterType? filterType, ServiceBusSqlFilter sqlFilter, ServiceBusCorrelationFilter correlationFilter, AzureLocation? location)
+        public static ServiceBusRuleData ServiceBusRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ServiceBusFilterAction action, ServiceBusFilterType? filterType = null, ServiceBusSqlFilter sqlFilter = null, ServiceBusCorrelationFilter correlationFilter = null, AzureLocation? location = null)
         {
-            return new ServiceBusRuleData(
+            return ServiceBusRuleData(
                 id,
                 name,
                 resourceType,
@@ -177,8 +163,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 action,
                 filterType,
                 sqlFilter,
-                correlationFilter,
-                serializedAdditionalRawData: null);
+                correlationFilter);
         }
     }
 }
