@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using Azure.Core;
 using Azure.ResourceManager.Quota.Models;
@@ -37,6 +38,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual AsyncPageable<GroupQuotaResourceUsages> ListAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetGroupQuotaUsagesAsync(resourceProviderName, location, cancellationToken);
@@ -69,6 +72,8 @@ namespace Azure.ResourceManager.Quota
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="GroupQuotaResourceUsages"/> that may take multiple service requests to iterate over. </returns>
+        [ForwardsClientCalls]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Pageable<GroupQuotaResourceUsages> List(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             return GetGroupQuotaUsages(resourceProviderName, location, cancellationToken);
