@@ -32,6 +32,7 @@ override-operation-name:
   DisasterRecoveryConfigs_CheckNameAvailability: CheckServiceBusDisasterRecoveryNameAvailability
   Topics_ListKeys: GetKeys
   Queues_ListKeys: GetKeys
+  NetworkSecurityPerimeterConfigurations_GetResourceAssociationName: GetNetworkSecurityPerimeterAssociationName
 
 format-by-name-rules:
   'tenantId': 'uuid'

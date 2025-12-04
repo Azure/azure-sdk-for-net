@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetResourceAssociationNameNetworkSecurityPerimeterConfiguration_NetworkSecurityPerimeterConfigurationassociationProxyName()
+        public async Task GetNetworkSecurityPerimeterAssociationName_NetworkSecurityPerimeterConfigurationassociationProxyName()
         {
             // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/NameSpaces/NetworkSecurityPerimeterConfigurationAssociationproxy.json
             // this example is just showing the usage of "NetworkSecurityPerimeterConfigurations_GetResourceAssociationName" operation, for the dependent resources, they will have to be created separately.
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // invoke the operation
             string resourceAssociationName = "resourceAssociation1";
-            ServiceBusNetworkSecurityPerimeterConfiguration result = await serviceBusNamespace.GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(resourceAssociationName);
+            ServiceBusNetworkSecurityPerimeterConfiguration result = await serviceBusNamespace.GetNetworkSecurityPerimeterAssociationNameAsync(resourceAssociationName);
 
             Console.WriteLine($"Succeeded: {result}");
         }

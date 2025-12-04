@@ -1030,11 +1030,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual async Task<Response<ServiceBusNetworkSecurityPerimeterConfiguration>> GetResourceAssociationNameNetworkSecurityPerimeterConfigurationAsync(string resourceAssociationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceBusNetworkSecurityPerimeterConfiguration>> GetNetworkSecurityPerimeterAssociationNameAsync(string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
 
-            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("ServiceBusNamespaceResource.GetResourceAssociationNameNetworkSecurityPerimeterConfiguration");
+            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("ServiceBusNamespaceResource.GetNetworkSecurityPerimeterAssociationName");
             scope.Start();
             try
             {
@@ -1069,11 +1069,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="resourceAssociationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceAssociationName"/> is null. </exception>
-        public virtual Response<ServiceBusNetworkSecurityPerimeterConfiguration> GetResourceAssociationNameNetworkSecurityPerimeterConfiguration(string resourceAssociationName, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceBusNetworkSecurityPerimeterConfiguration> GetNetworkSecurityPerimeterAssociationName(string resourceAssociationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceAssociationName, nameof(resourceAssociationName));
 
-            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("ServiceBusNamespaceResource.GetResourceAssociationNameNetworkSecurityPerimeterConfiguration");
+            using var scope = _networkSecurityPerimeterConfigurationsClientDiagnostics.CreateScope("ServiceBusNamespaceResource.GetNetworkSecurityPerimeterAssociationName");
             scope.Start();
             try
             {
