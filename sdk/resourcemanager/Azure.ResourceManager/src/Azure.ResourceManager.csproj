@@ -10,6 +10,7 @@
     <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <UseDefaultNamespaceAndOutputFolder>false</UseDefaultNamespaceAndOutputFolder>
     <IsAotCompatible Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">true</IsAotCompatible>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 
   <ItemGroup>

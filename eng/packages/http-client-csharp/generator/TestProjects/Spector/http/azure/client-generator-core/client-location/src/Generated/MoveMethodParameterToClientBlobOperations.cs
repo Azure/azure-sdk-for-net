@@ -18,12 +18,12 @@ namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation._MoveMethodParameter
 
         public virtual HttpPipeline Pipeline => throw null;
 
-        public virtual Response GetBlob(string storageAccount, string container, string blob, RequestContext context) => throw null;
+        public virtual Response GetBlob(string container, string blob, RequestContext context) => throw null;
 
-        public virtual Task<Response> GetBlobAsync(string storageAccount, string container, string blob, RequestContext context) => throw null;
+        public virtual Task<Response> GetBlobAsync(string container, string blob, RequestContext context) => throw null;
 
-        public virtual Response<Blob> GetBlob(string storageAccount, string container, string blob, CancellationToken cancellationToken = default) => throw null;
+        public virtual Response<Blob> GetBlob(string container, string blob, CancellationToken cancellationToken = default) => throw null;
 
-        public virtual Task<Response<Blob>> GetBlobAsync(string storageAccount, string container, string blob, CancellationToken cancellationToken = default) => throw null;
+        public virtual Task<Response<Blob>> GetBlobAsync(string container, string blob, CancellationToken cancellationToken = default) => throw null;
     }
 }

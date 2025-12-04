@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class EventMqttDestination : IUtf8JsonSerializable, IJsonModel<EventMqttDestination>
+    /// <summary> The type for a MQTT destination. </summary>
+    public partial class EventMqttDestination : EventDestination, IJsonModel<EventMqttDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventMqttDestination>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="EventMqttDestination"/> for deserialization. </summary>
+        internal EventMqttDestination()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<EventMqttDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,70 +34,75 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventMqttDestination)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("configuration"u8);
             writer.WriteObjectValue(Configuration, options);
         }
 
-        EventMqttDestination IJsonModel<EventMqttDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventMqttDestination IJsonModel<EventMqttDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EventMqttDestination)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(EventMqttDestination)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeEventMqttDestination(document.RootElement, options);
         }
 
-        internal static EventMqttDestination DeserializeEventMqttDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static EventMqttDestination DeserializeEventMqttDestination(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            MqttDestinationConfiguration configuration = default;
             EventDestinationTarget? target = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            MqttDestinationConfiguration configuration = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("configuration"u8))
+                if (prop.NameEquals("target"u8))
                 {
-                    configuration = MqttDestinationConfiguration.DeserializeMqttDestinationConfiguration(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("target"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    target = new EventDestinationTarget(property.Value.GetString());
+                    target = new EventDestinationTarget(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("configuration"u8))
+                {
+                    configuration = MqttDestinationConfiguration.DeserializeMqttDestinationConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new EventMqttDestination(target, serializedAdditionalRawData, configuration);
+            return new EventMqttDestination(target, additionalBinaryDataProperties, configuration);
         }
 
-        BinaryData IPersistableModel<EventMqttDestination>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<EventMqttDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -101,15 +112,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        EventMqttDestination IPersistableModel<EventMqttDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        EventMqttDestination IPersistableModel<EventMqttDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventMqttDestination)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override EventDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<EventMqttDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEventMqttDestination(document.RootElement, options);
                     }
                 default:
@@ -117,6 +133,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<EventMqttDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

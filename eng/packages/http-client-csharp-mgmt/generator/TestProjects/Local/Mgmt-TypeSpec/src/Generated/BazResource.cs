@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a Baz along with the instance operations that can be performed on it.
@@ -51,7 +51,7 @@ namespace MgmtTypeSpec
         internal BazResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string bazApiVersion);
-            _bazsClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceType.Namespace, Diagnostics);
+            _bazsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
             _bazsRestClient = new Bazs(_bazsClientDiagnostics, Pipeline, Endpoint, bazApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
@@ -163,7 +163,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -192,7 +192,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation operation = new MgmtTypeSpecArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                TestsArmOperation operation = new TestsArmOperation(_bazsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -225,7 +225,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                MgmtTypeSpecArmOperation<BazResource> operation = new MgmtTypeSpecArmOperation<BazResource>(
+                TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,
@@ -264,7 +264,7 @@ namespace MgmtTypeSpec
                 };
                 HttpMessage message = _bazsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BazData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                MgmtTypeSpecArmOperation<BazResource> operation = new MgmtTypeSpecArmOperation<BazResource>(
+                TestsArmOperation<BazResource> operation = new TestsArmOperation<BazResource>(
                     new BazOperationSource(Client),
                     _bazsClientDiagnostics,
                     Pipeline,

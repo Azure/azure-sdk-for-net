@@ -5,13 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Monitor.Query" />
+    <PackageReference Include="Azure.Monitor.Query.Logs" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.Authentication" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
 
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj" />
-    <ProjectReference Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" /> 
+    <ProjectReference Include="..\..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BarQuotaProperties. </summary>
     internal partial class BarQuotaProperties
@@ -33,6 +34,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> enabled. </summary>
+        [WirePath("left")]
         public int Left { get; set; }
     }
 }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The type used for update operations of the FooSettings. </summary>
     public partial class FooSettingsPatch
@@ -31,9 +32,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal FooSettingsUpdateProperties Properties { get; set; }
 
         /// <summary> Gets or sets the AccessControlEnabled. </summary>
+        [WirePath("properties.accessControlEnabled")]
         public bool? AccessControlEnabled
         {
             get

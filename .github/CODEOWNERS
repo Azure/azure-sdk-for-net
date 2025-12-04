@@ -175,9 +175,6 @@
 # ServiceLabel: %Blueprint
 # ServiceOwners:                                                   @alex-frankel @filizt
 
-# ServiceLabel: %Bot Service
-# ServiceOwners:                                                   @sgellock
-
 # PRLabel: %Cognitive - Anomaly Detector
 /sdk/anomalydetector/                                              @conhua @mengaims @juaduan @moreOver0
 

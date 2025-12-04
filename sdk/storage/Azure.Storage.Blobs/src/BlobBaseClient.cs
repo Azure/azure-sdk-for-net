@@ -1023,6 +1023,13 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    BlobRequestConditionProperty.AccessTierIfModifiedSince
+                    | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                operationName: nameof(BlobBaseClient.Download),
+                parameterName: nameof(conditions));
+
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
@@ -1557,6 +1564,13 @@ namespace Azure.Storage.Blobs.Specialized
                         disposableBucket.Add(Shared.StorageExtensions.CreateClientSideEncryptionScope(ClientSideEncryption.EncryptionVersion));
                     }
 
+                    conditions.ValidateConditionsNotPresent(
+                        invalidConditions:
+                            BlobRequestConditionProperty.AccessTierIfModifiedSince
+                            | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                        operationName: nameof(BlobBaseClient.DownloadStreaming),
+                        parameterName: nameof(conditions));
+
                     // Start downloading the blob
                     Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
                         range,
@@ -1742,9 +1756,10 @@ namespace Azure.Storage.Blobs.Specialized
 
             ResponseWithHeaders<Stream, BlobDownloadHeaders> response;
 
-            // All BlobRequestConditions are valid.
             conditions.ValidateConditionsNotPresent(
-                invalidConditions: BlobRequestConditionProperty.None,
+                invalidConditions:
+                    BlobRequestConditionProperty.AccessTierIfModifiedSince
+                    | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                 operationName: nameof(BlobBaseClient.Download),
                 parameterName: nameof(conditions));
 
@@ -2342,6 +2357,13 @@ namespace Azure.Storage.Blobs.Specialized
             bool async,
             CancellationToken cancellationToken)
         {
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    BlobRequestConditionProperty.AccessTierIfModifiedSince
+                    | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                operationName: nameof(BlobBaseClient.DownloadContent),
+                parameterName: nameof(conditions));
+
             Response<BlobDownloadStreamingResult> response = await DownloadStreamingDirect(
                 range,
                 conditions,
@@ -3317,6 +3339,14 @@ namespace Azure.Storage.Blobs.Specialized
 
                 string operationName = $"{nameof(BlobBaseClient)}.{nameof(OpenRead)}";
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    operationName: nameof(BlobBaseClient.OpenRead),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -3815,15 +3845,18 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(StartCopyFromUri)}");
 
-                // All BlobRequestConditions are valid.
                 destinationConditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.StartCopyFromUri),
                     parameterName: nameof(destinationConditions));
 
                 sourceConditions.ValidateConditionsNotPresent(
                     invalidConditions:
-                        BlobRequestConditionProperty.LeaseId,
+                        BlobRequestConditionProperty.LeaseId
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.StartCopyFromUri),
                     parameterName: nameof(sourceConditions));
 
@@ -4039,7 +4072,9 @@ namespace Azure.Storage.Blobs.Specialized
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.IfMatch
                         | BlobRequestConditionProperty.IfNoneMatch
-                        | BlobRequestConditionProperty.TagConditions,
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.AbortCopyFromUri),
                     parameterName: nameof(conditions));
 
@@ -4289,14 +4324,18 @@ namespace Azure.Storage.Blobs.Specialized
             {
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SyncCopyFromUri)}");
 
-                // All BlobRequestConditions are valid for destinationConditions.
                 destinationConditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.SyncCopyFromUri),
                     parameterName: nameof(destinationConditions));
 
                 sourceConditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.LeaseId,
+                    invalidConditions:
+                        BlobRequestConditionProperty.LeaseId
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.SyncCopyFromUri),
                     parameterName: nameof(sourceConditions));
 
@@ -4722,6 +4761,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
+                            accessTierIfModifiedSince: conditions?.AccessTierIfModifiedSince,
+                            accessTierIfUnmodifiedSince: conditions?.AccessTierIfUnmodifiedSince,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4735,6 +4776,8 @@ namespace Azure.Storage.Blobs.Specialized
                             ifMatch: conditions?.IfMatch?.ToString(),
                             ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             ifTags: conditions?.TagConditions,
+                            accessTierIfModifiedSince: conditions?.AccessTierIfModifiedSince,
+                            accessTierIfUnmodifiedSince: conditions?.AccessTierIfUnmodifiedSince,
                             cancellationToken: cancellationToken);
                     }
 
@@ -5133,9 +5176,10 @@ namespace Azure.Storage.Blobs.Specialized
                 operationName ??= $"{nameof(BlobBaseClient)}.{nameof(GetProperties)}";
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope(operationName);
 
-                // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.GetProperties),
                     parameterName: nameof(conditions));
 
@@ -5321,9 +5365,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetHttpHeaders)}");
 
-                // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.SetHttpHeaders),
                     parameterName: nameof(conditions));
 
@@ -5516,9 +5561,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetMetadata)}");
 
-                // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.SetMetadata),
                     parameterName: nameof(conditions));
 
@@ -5709,9 +5755,10 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(CreateSnapshot)}");
 
-                // All BlobRequestConditions are valid.
                 conditions.ValidateConditionsNotPresent(
-                    invalidConditions: BlobRequestConditionProperty.None,
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.CreateSnapshot),
                     parameterName: nameof(conditions));
 
@@ -5949,7 +5996,9 @@ namespace Azure.Storage.Blobs.Specialized
                         BlobRequestConditionProperty.IfModifiedSince
                         | BlobRequestConditionProperty.IfUnmodifiedSince
                         | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
+                        | BlobRequestConditionProperty.IfNoneMatch
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.SetAccessTier),
                     parameterName: nameof(conditions));
 
@@ -6105,6 +6154,13 @@ namespace Azure.Storage.Blobs.Specialized
                     $"{nameof(Uri)}: {Uri}");
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(GetTags)}");
+
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    operationName: nameof(BlobBaseClient.GetTags),
+                    parameterName: nameof(conditions));
 
                 try
                 {
@@ -6295,6 +6351,13 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetTags)}");
 
+                conditions.ValidateConditionsNotPresent(
+                    invalidConditions:
+                        BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                    operationName: nameof(BlobBaseClient.SetTags),
+                    parameterName: nameof(conditions));
+
                 try
                 {
                     scope.Start();
@@ -6477,7 +6540,9 @@ namespace Azure.Storage.Blobs.Specialized
                         | BlobRequestConditionProperty.IfNoneMatch
                         | BlobRequestConditionProperty.IfModifiedSince
                         | BlobRequestConditionProperty.LeaseId
-                        | BlobRequestConditionProperty.TagConditions,
+                        | BlobRequestConditionProperty.TagConditions
+                        | BlobRequestConditionProperty.AccessTierIfModifiedSince
+                        | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
                     operationName: nameof(BlobBaseClient.SetImmutabilityPolicy),
                     parameterName: nameof(conditions));
 
@@ -7092,7 +7157,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -7125,7 +7190,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.
@@ -7164,7 +7229,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <returns>
         /// A <see cref="Uri"/> containing the SAS Uri.
@@ -7192,7 +7257,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// </param>
         /// <param name="userDelegationKey">
         /// Required. A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="stringToSign">
         /// For debugging purposes only.  This string will be overwritten with the string to sign that was used to generate the SAS Uri.

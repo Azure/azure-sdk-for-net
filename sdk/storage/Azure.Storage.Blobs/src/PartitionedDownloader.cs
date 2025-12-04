@@ -149,6 +149,14 @@ namespace Azure.Storage.Blobs
             DiagnosticScope scope = _client.ClientConfiguration.ClientDiagnostics.CreateScope(_operationName);
             using DisposableBucket disposables = new DisposableBucket();
             Queue<Task<Response<BlobDownloadStreamingResult>>> runningTasks = null;
+
+            conditions.ValidateConditionsNotPresent(
+                invalidConditions:
+                    BlobRequestConditionProperty.AccessTierIfModifiedSince
+                    | BlobRequestConditionProperty.AccessTierIfUnmodifiedSince,
+                operationName: nameof(BlobBaseClient.DownloadTo),
+                parameterName: nameof(conditions));
+
             try
             {
                 scope.Start();

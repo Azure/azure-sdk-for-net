@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public readonly partial struct MqttDestinationQo : IEquatable<MqttDestinationQo>
     {
         private readonly string _value;
+        /// <summary> QoS 0. </summary>
+        private const string Qos0Value = "Qos0";
+        /// <summary> QoS 1. </summary>
+        private const string Qos1Value = "Qos1";
 
         /// <summary> Initializes a new instance of <see cref="MqttDestinationQo"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MqttDestinationQo(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string Qos0Value = "Qos0";
-        private const string Qos1Value = "Qos1";
+            _value = value;
+        }
 
         /// <summary> QoS 0. </summary>
         public static MqttDestinationQo Qos0 { get; } = new MqttDestinationQo(Qos0Value);
+
         /// <summary> QoS 1. </summary>
         public static MqttDestinationQo Qos1 { get; } = new MqttDestinationQo(Qos1Value);
+
         /// <summary> Determines if two <see cref="MqttDestinationQo"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MqttDestinationQo left, MqttDestinationQo right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MqttDestinationQo"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MqttDestinationQo left, MqttDestinationQo right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MqttDestinationQo"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MqttDestinationQo"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MqttDestinationQo(string value) => new MqttDestinationQo(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MqttDestinationQo"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MqttDestinationQo?(string value) => value == null ? null : new MqttDestinationQo(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MqttDestinationQo other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MqttDestinationQo other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

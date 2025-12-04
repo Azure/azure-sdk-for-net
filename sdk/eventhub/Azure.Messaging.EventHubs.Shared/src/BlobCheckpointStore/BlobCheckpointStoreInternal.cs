@@ -603,10 +603,6 @@ namespace Azure.Messaging.EventHubs.Primitives
                 {
                     startingPosition ??= EventPosition.FromOffset(offset, false);
                 }
-                else if (sequenceNumber.HasValue && sequenceNumber.Value != long.MinValue)
-                {
-                    startingPosition = EventPosition.FromSequenceNumber(sequenceNumber.Value, false);
-                }
                 else
                 {
                     // Skip checkpoints without an offset without logging an error.

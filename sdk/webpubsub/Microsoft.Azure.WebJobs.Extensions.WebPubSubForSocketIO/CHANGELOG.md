@@ -1,5 +1,17 @@
 # Release History
 
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
+- Updated `Microsoft.IdentityModel.Tokens` dependency to 8.14.0
+
 ## 1.0.0 (2025-04-15)
 
 ### Other Changes

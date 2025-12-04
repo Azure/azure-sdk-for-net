@@ -6,5 +6,6 @@
     <PackageId>Azure.ResourceManager.SecurityCenter</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Security.</Description>
     <PackageTags>azure;management;arm;resource manager;securitycenter</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

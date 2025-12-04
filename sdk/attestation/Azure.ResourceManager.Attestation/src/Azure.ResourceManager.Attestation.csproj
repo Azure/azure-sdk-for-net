@@ -4,6 +4,7 @@
     <PackageId>Azure.ResourceManager.Attestation</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Attestation.</Description>
     <PackageTags>azure;management;arm;resource manager;attestation</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Custom\Models\" />

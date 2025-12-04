@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the schema version properties. </summary>
     public partial class DeviceRegistrySchemaVersionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaVersionProperties"/>. </summary>
         /// <param name="schemaContent"> Schema content. </param>
@@ -61,30 +33,29 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="schemaContent"> Schema content. </param>
         /// <param name="hash"> Hash of the schema content. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistrySchemaVersionProperties(string uuid, string description, string schemaContent, string hash, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceRegistrySchemaVersionProperties(string uuid, string description, string schemaContent, string hash, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uuid = uuid;
             Description = description;
             SchemaContent = schemaContent;
             Hash = hash;
             ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaVersionProperties"/> for deserialization. </summary>
-        internal DeviceRegistrySchemaVersionProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Globally unique, immutable, non-reusable id. </summary>
         public string Uuid { get; }
+
         /// <summary> Human-readable description of the schema. </summary>
         public string Description { get; set; }
+
         /// <summary> Schema content. </summary>
         public string SchemaContent { get; set; }
+
         /// <summary> Hash of the schema content. </summary>
         public string Hash { get; }
+
         /// <summary> Provisioning state of the resource. </summary>
         public DeviceRegistryProvisioningState? ProvisioningState { get; }
     }

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,18 +10,31 @@
 
 ### Other Changes
 
+## 1.2.0 (2025-10-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2020-11-20' to 'package-2024-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/247a38a5fea02ac50132f591f3b53fec06e9377b/specification/providerhub/resource-manager/readme.md.
+- Make `Azure.ResourceManager.ProviderHub` AOT-compatible.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.49.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.2
+- Obsoleted property 'IList<BinaryData> ResourceAccessRoles' in type Azure.ResourceManager.ProviderHub.Models.ResourceProviderManagement
+
 ## 1.1.1 (2025-03-11)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.1.0 (2023-11-29)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -31,7 +44,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

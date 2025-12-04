@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.DependencyMap</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider DependencyMap.</Description>
     <PackageTags>azure;management;arm;resource manager;dependencymap</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>
