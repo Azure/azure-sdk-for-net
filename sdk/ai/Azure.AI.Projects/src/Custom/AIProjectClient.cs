@@ -4,6 +4,7 @@
 global using System.ClientModel;
 global using System.ClientModel.Primitives;
 global using System.ComponentModel;
+global using Microsoft.TypeSpec.Generator.Customizations;
 using System;
 using System.Collections.Generic;
 using System.Threading;
