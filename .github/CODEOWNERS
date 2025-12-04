@@ -1042,7 +1042,7 @@
 /sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %NetApp Files
-/sdk/netapp/Azure.ResourceManager.*/							                 @audunn @Azure/azure-sdk-write-netappfiles
+/sdk/netapp/Azure.ResourceManager.*/                               @audunn @Azure/azure-sdk-write-netappfiles
 
 # ServiceLabel: %NetApp Files %Mgmt
 # ServiceOwners:                                                   @audunn
