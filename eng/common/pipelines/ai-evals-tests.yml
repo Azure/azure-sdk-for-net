@@ -43,6 +43,6 @@ extends:
     EvalRepoOwner: ${{ parameters.EvalRepoOwner }}
     EvalRepoName: ${{ parameters.EvalRepoName }}
     EvalRepoCommit: ${{ parameters.EvalRepoCommit }}
-    TargetRepoOwner: ${{ variables.TargetRepoOwner }}
-    TargetRepoName: ${{ variables.TargetRepoName }}
-    TargetRepoCommit: ${{ variables.TargetRepoCommit }}
+    TargetRepoOwner: $(TargetRepoOwner)
+    TargetRepoName: $(TargetRepoName)
+    TargetRepoCommit: $(TargetRepoCommit)
