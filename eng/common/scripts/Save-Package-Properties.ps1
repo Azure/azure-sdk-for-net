@@ -30,7 +30,7 @@ package properties JSON file. If the package properties JSON file already
 exists, read the Version property from the existing package properties JSON file
 and set that as the Version property for the new output. This has the effect of
 "adding" a DevVersion property to the file which could be different from the
-Verison property in that file.
+Version property in that file.
 
 .PARAMETER artifactList
 Optional array of artifact names to filter the package properties. Only packages
@@ -150,6 +150,12 @@ if ($artifactList)
   
   Write-Host "Filtering package properties to match artifact list: $($filteredArtifacts -join ', ')"
   $artifactSet = [System.Collections.Generic.HashSet[string]]::new($filteredArtifacts, [System.StringComparer]::OrdinalIgnoreCase)
+  
+  # Warn about packages missing ArtifactName property
+  $missingArtifactName = $allPackageProperties | Where-Object { -not $_.PSObject.Properties.Match('ArtifactName') }
+  foreach ($pkg in $missingArtifactName) {
+    Write-Warning "Package '$($pkg.PackageName)' does not have an 'ArtifactName' property and will be excluded from artifact filtering."
+  }
   $allPackageProperties = $allPackageProperties | Where-Object { $_.ArtifactName -and $artifactSet.Contains($_.ArtifactName) }
   
   if (!$allPackageProperties)
