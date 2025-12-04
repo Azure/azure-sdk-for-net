@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Quota
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetAllRequest(nextLink, _managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, _filter, _context) : _client.CreateGetAllRequest(_managementGroupId, _subscriptionId, _groupQuotaName, _resourceProviderName, _filter, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableQuotaManagementGroupResource.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("QuotaAllocationRequestStatusCollection.GetAll");
             scope.Start();
             try
             {

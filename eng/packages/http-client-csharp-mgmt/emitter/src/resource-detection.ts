@@ -37,6 +37,7 @@ import {
   armResourceUpdateName,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
+  legacyResourceOperationName,
   nonResourceMethodMetadata,
   parentResourceName,
   readsResourceName,
@@ -286,6 +287,7 @@ function parseResourceOperation(
             ];
         }
         break;
+      case legacyResourceOperationName:
       case legacyExtensionResourceOperationName:
         switch (decorator.args[1].jsValue) {
           case "read":
