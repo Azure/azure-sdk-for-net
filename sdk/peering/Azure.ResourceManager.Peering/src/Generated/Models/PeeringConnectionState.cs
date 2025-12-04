@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Peering.Models
         private const string ActiveValue = "Active";
         private const string TypeChangeRequestedValue = "TypeChangeRequested";
         private const string TypeChangeInProgressValue = "TypeChangeInProgress";
+        private const string ExternalBlockerValue = "ExternalBlocker";
 
         /// <summary> None. </summary>
         public static PeeringConnectionState None { get; } = new PeeringConnectionState(NoneValue);
@@ -53,6 +54,8 @@ namespace Azure.ResourceManager.Peering.Models
         public static PeeringConnectionState TypeChangeRequested { get; } = new PeeringConnectionState(TypeChangeRequestedValue);
         /// <summary> TypeChangeInProgress. </summary>
         public static PeeringConnectionState TypeChangeInProgress { get; } = new PeeringConnectionState(TypeChangeInProgressValue);
+        /// <summary> ExternalBlocker. </summary>
+        public static PeeringConnectionState ExternalBlocker { get; } = new PeeringConnectionState(ExternalBlockerValue);
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are the same. </summary>
         public static bool operator ==(PeeringConnectionState left, PeeringConnectionState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeeringConnectionState"/> values are not the same. </summary>

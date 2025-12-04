@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeering.json
             // this example is just showing the usage of "Peerings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAPeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/DeletePeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/DeletePeering.json
             // this example is just showing the usage of "Peerings_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdatePeeringTags()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/UpdatePeeringTags.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/UpdatePeeringTags.json
             // this example is just showing the usage of "Peerings_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetReceivedRoutes_ListsThePrefixesReceivedOverTheSpecifiedPeeringUnderTheGivenSubscriptionAndResourceGroup()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeeringReceivedRoutes.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeeringReceivedRoutes.json
             // this example is just showing the usage of "ReceivedRoutes_ListByPeering" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetRpUnbilledPrefixes_ListAllTheRPUnbilledPrefixesAdvertisedAtAParticularPeeringLocation()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/ListRpUnbilledPrefixes.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/ListRpUnbilledPrefixes.json
             // this example is just showing the usage of "RpUnbilledPrefixes_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

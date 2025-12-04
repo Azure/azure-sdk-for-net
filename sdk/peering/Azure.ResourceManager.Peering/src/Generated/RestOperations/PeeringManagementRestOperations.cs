@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Checks if the peering service provider is present within 1000 miles of customer's location. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Checks if the peering service provider is present within 1000 miles of customer's location. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="content"> The CheckServiceProviderAvailabilityInput indicating customer location and service provider. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>

@@ -32,8 +32,112 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateListByPeeringServiceRequestUri(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
+            uri.AppendPath(peeringServiceName, true);
+            uri.AppendPath("/prefixes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
+        internal HttpMessage CreateListByPeeringServiceRequest(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
+            uri.AppendPath(peeringServiceName, true);
+            uri.AppendPath("/prefixes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Lists all prefixes under the given subscription, resource group and peering service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
+        /// <param name="expand"> The properties to be expanded. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<PeeringServicePrefixListResult>> ListByPeeringServiceAsync(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
+
+            using var message = CreateListByPeeringServiceRequest(subscriptionId, resourceGroupName, peeringServiceName, expand);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PeeringServicePrefixListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Lists all prefixes under the given subscription, resource group and peering service. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
+        /// <param name="expand"> The properties to be expanded. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<PeeringServicePrefixListResult> ListByPeeringService(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
+
+            using var message = CreateListByPeeringServiceRequest(subscriptionId, resourceGroupName, peeringServiceName, expand);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PeeringServicePrefixListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string peeringServiceName, string prefixName, string expand)
@@ -48,11 +152,11 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath(peeringServiceName, true);
             uri.AppendPath("/prefixes/", false);
             uri.AppendPath(prefixName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -71,11 +175,11 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath(peeringServiceName, true);
             uri.AppendPath("/prefixes/", false);
             uri.AppendPath(prefixName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (expand != null)
             {
                 uri.AppendQuery("$expand", expand, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -83,9 +187,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Gets an existing prefix with the specified name under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -117,9 +221,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Gets an existing prefix with the specified name under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,9 +297,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Creates a new prefix with the specified name under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="data"> The properties needed to create a prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -227,9 +331,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Creates a new prefix with the specified name under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="data"> The properties needed to create a prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -299,9 +403,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Deletes an existing prefix with the specified name under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringServiceName"/> or <paramref name="prefixName"/> is null. </exception>
@@ -326,9 +430,9 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Deletes an existing prefix with the specified name under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="prefixName"> The name of the prefix. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="peeringServiceName"/> or <paramref name="prefixName"/> is null. </exception>
@@ -347,110 +451,6 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                 case 204:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByPeeringServiceRequestUri(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
-            uri.AppendPath(peeringServiceName, true);
-            uri.AppendPath("/prefixes", false);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByPeeringServiceRequest(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Peering/peeringServices/", false);
-            uri.AppendPath(peeringServiceName, true);
-            uri.AppendPath("/prefixes", false);
-            if (expand != null)
-            {
-                uri.AppendQuery("$expand", expand, true);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Lists all prefixes under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
-        /// <param name="expand"> The properties to be expanded. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<PeeringServicePrefixListResult>> ListByPeeringServiceAsync(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
-
-            using var message = CreateListByPeeringServiceRequest(subscriptionId, resourceGroupName, peeringServiceName, expand);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PeeringServicePrefixListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Lists all prefixes under the given subscription, resource group and peering service. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
-        /// <param name="expand"> The properties to be expanded. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<PeeringServicePrefixListResult> ListByPeeringService(string subscriptionId, string resourceGroupName, string peeringServiceName, string expand = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
-
-            using var message = CreateListByPeeringServiceRequest(subscriptionId, resourceGroupName, peeringServiceName, expand);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        PeeringServicePrefixListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = PeeringServicePrefixListResult.DeserializePeeringServicePrefixListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -480,9 +480,9 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all prefixes under the given subscription, resource group and peering service. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is null. </exception>
@@ -512,9 +512,9 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists all prefixes under the given subscription, resource group and peering service. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
-        /// <param name="peeringServiceName"> The name of the peering service. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="peeringServiceName"> The name of the peering. </param>
         /// <param name="expand"> The properties to be expanded. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="peeringServiceName"/> is null. </exception>

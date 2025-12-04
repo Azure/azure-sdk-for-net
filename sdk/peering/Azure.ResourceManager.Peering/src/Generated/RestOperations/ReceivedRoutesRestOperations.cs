@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Peering
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2025-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/receivedRoutes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (prefix != null)
             {
                 uri.AppendQuery("prefix", prefix, true);
@@ -67,7 +68,6 @@ namespace Azure.ResourceManager.Peering
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
@@ -85,6 +85,7 @@ namespace Azure.ResourceManager.Peering
             uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
             uri.AppendPath(peeringName, true);
             uri.AppendPath("/receivedRoutes", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (prefix != null)
             {
                 uri.AppendQuery("prefix", prefix, true);
@@ -105,7 +106,6 @@ namespace Azure.ResourceManager.Peering
             {
                 uri.AppendQuery("$skipToken", skipToken, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -113,8 +113,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists the prefixes received over the specified peering under the given subscription and resource group. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
         /// <param name="asPath"> The optional AS path that can be used to filter the routes. </param>
@@ -147,8 +147,8 @@ namespace Azure.ResourceManager.Peering
         }
 
         /// <summary> Lists the prefixes received over the specified peering under the given subscription and resource group. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
         /// <param name="asPath"> The optional AS path that can be used to filter the routes. </param>
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists the prefixes received over the specified peering under the given subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
         /// <param name="asPath"> The optional AS path that can be used to filter the routes. </param>
@@ -240,8 +240,8 @@ namespace Azure.ResourceManager.Peering
 
         /// <summary> Lists the prefixes received over the specified peering under the given subscription and resource group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="peeringName"> The name of the peering. </param>
         /// <param name="prefix"> The optional prefix that can be used to filter the routes. </param>
         /// <param name="asPath"> The optional AS path that can be used to filter the routes. </param>

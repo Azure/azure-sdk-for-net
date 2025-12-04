@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    /// <summary> The paginated list of peering service countries. </summary>
+    /// <summary> The response of a PeeringServiceCountry list operation. </summary>
     internal partial class PeeringServiceCountryListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.Peering.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceCountryListResult"/>. </summary>
-        internal PeeringServiceCountryListResult()
+        /// <param name="value"> The PeeringServiceCountry items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal PeeringServiceCountryListResult(IEnumerable<PeeringServiceCountry> value)
         {
-            Value = new ChangeTrackingList<PeeringServiceCountry>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringServiceCountryListResult"/>. </summary>
-        /// <param name="value"> The list of peering service countries. </param>
-        /// <param name="nextLink"> The link to fetch the next page of peering service countries. </param>
+        /// <param name="value"> The PeeringServiceCountry items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringServiceCountryListResult(IReadOnlyList<PeeringServiceCountry> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PeeringServiceCountryListResult(IReadOnlyList<PeeringServiceCountry> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of peering service countries. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringServiceCountryListResult"/> for deserialization. </summary>
+        internal PeeringServiceCountryListResult()
+        {
+        }
+
+        /// <summary> The PeeringServiceCountry items on this page. </summary>
         public IReadOnlyList<PeeringServiceCountry> Value { get; }
-        /// <summary> The link to fetch the next page of peering service countries. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateAPeerASN()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/CreatePeerAsn.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/CreatePeerAsn.json
             // this example is just showing the usage of "PeerAsns_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,7 +75,7 @@ Phone = "+1 (234) 567-8900",
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAPeerASN()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeerAsn.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeerAsn.json
             // this example is just showing the usage of "PeerAsns_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -107,7 +107,7 @@ Phone = "+1 (234) 567-8900",
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListPeerASNsInASubscription()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/ListPeerAsnsBySubscription.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/ListPeerAsnsBySubscription.json
             // this example is just showing the usage of "PeerAsns_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ Phone = "+1 (234) 567-8900",
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAPeerASN()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeerAsn.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeerAsn.json
             // this example is just showing the usage of "PeerAsns_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -169,7 +169,7 @@ Phone = "+1 (234) 567-8900",
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAPeerASN()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetPeerAsn.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetPeerAsn.json
             // this example is just showing the usage of "PeerAsns_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

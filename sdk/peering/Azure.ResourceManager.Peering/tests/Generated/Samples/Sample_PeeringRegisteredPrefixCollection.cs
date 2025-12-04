@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateARegisteredPrefixForThePeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/CreateRegisteredPrefix.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/CreateRegisteredPrefix.json
             // this example is just showing the usage of "RegisteredPrefixes_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetARegisteredPrefixAssociatedWithThePeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetRegisteredPrefix.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetRegisteredPrefix.json
             // this example is just showing the usage of "RegisteredPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllTheRegisteredPrefixesAssociatedWithThePeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/ListRegisteredPrefixesByPeering.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/ListRegisteredPrefixesByPeering.json
             // this example is just showing the usage of "RegisteredPrefixes_ListByPeering" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetARegisteredPrefixAssociatedWithThePeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetRegisteredPrefix.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetRegisteredPrefix.json
             // this example is just showing the usage of "RegisteredPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Peering.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetARegisteredPrefixAssociatedWithThePeering()
         {
-            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/stable/2022-10-01/examples/GetRegisteredPrefix.json
+            // Generated from example definition: specification/peering/resource-manager/Microsoft.Peering/Peering/stable/2025-05-01/examples/GetRegisteredPrefix.json
             // this example is just showing the usage of "RegisteredPrefixes_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
