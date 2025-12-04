@@ -2046,6 +2046,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2023_04_01;
             public static readonly string V2024_05_01;
             public static readonly string V2025_01_01;
+            public static readonly string V2025_03_01;
         }
     }
     public partial class ManagementGroupPolicySetDefinition : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2079,6 +2080,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2023_04_01;
             public static readonly string V2024_05_01;
             public static readonly string V2025_01_01;
+            public static readonly string V2025_03_01;
         }
     }
     public partial class ManagementGroupSubscription : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2205,6 +2207,7 @@ namespace Azure.Provisioning.Resources
             public static readonly string V2024_04_01;
             public static readonly string V2024_05_01;
             public static readonly string V2025_01_01;
+            public static readonly string V2025_03_01;
         }
     }
     public partial class PolicyDefinitionGroup : Azure.Provisioning.Primitives.ProvisionableConstruct

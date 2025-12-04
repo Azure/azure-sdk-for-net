@@ -15,12 +15,12 @@ using System;
 namespace Azure.Provisioning.CognitiveServices;
 
 /// <summary>
-/// DefenderForAISetting.
+/// CognitiveServicesProject.
 /// </summary>
-public partial class DefenderForAISetting : ProvisionableResource
+public partial class CognitiveServicesProject : ProvisionableResource
 {
     /// <summary>
-    /// The name of the defender for AI setting.
+    /// The name of Cognitive Services account&apos;s project.
     /// </summary>
     public BicepValue<string> Name 
     {
@@ -30,17 +30,37 @@ public partial class DefenderForAISetting : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
-    /// Defender for AI state on the AI resource.
+    /// Gets or sets the Location.
     /// </summary>
-    public BicepValue<DefenderForAISettingState> State 
+    public BicepValue<AzureLocation> Location 
     {
-        get { Initialize(); return _state!; }
-        set { Initialize(); _state!.Assign(value); }
+        get { Initialize(); return _location!; }
+        set { Initialize(); _location!.Assign(value); }
     }
-    private BicepValue<DefenderForAISettingState>? _state;
+    private BicepValue<AzureLocation>? _location;
 
     /// <summary>
-    /// Resource tags.
+    /// Identity for the resource.
+    /// </summary>
+    public ManagedServiceIdentity Identity 
+    {
+        get { Initialize(); return _identity!; }
+        set { Initialize(); AssignOrReplace(ref _identity, value); }
+    }
+    private ManagedServiceIdentity? _identity;
+
+    /// <summary>
+    /// Properties of Cognitive Services project.
+    /// </summary>
+    public CognitiveServicesProjectProperties Properties 
+    {
+        get { Initialize(); return _properties!; }
+        set { Initialize(); AssignOrReplace(ref _properties, value); }
+    }
+    private CognitiveServicesProjectProperties? _properties;
+
+    /// <summary>
+    /// Gets or sets the Tags.
     /// </summary>
     public BicepDictionary<string> Tags 
     {
@@ -87,28 +107,30 @@ public partial class DefenderForAISetting : ProvisionableResource
     private ResourceReference<CognitiveServicesAccount>? _parent;
 
     /// <summary>
-    /// Creates a new DefenderForAISetting.
+    /// Creates a new CognitiveServicesProject.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the DefenderForAISetting resource.
+    /// The the Bicep identifier name of the CognitiveServicesProject resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the DefenderForAISetting.</param>
-    public DefenderForAISetting(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/defenderForAISettings", resourceVersion ?? "2025-09-01")
+    /// <param name="resourceVersion">Version of the CognitiveServicesProject.</param>
+    public CognitiveServicesProject(string bicepIdentifier, string? resourceVersion = default)
+        : base(bicepIdentifier, "Microsoft.CognitiveServices/accounts/projects", resourceVersion ?? "2025-09-01")
     {
     }
 
     /// <summary>
-    /// Define all the provisionable properties of DefenderForAISetting.
+    /// Define all the provisionable properties of CognitiveServicesProject.
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
-        _state = DefineProperty<DefenderForAISettingState>("State", ["properties", "state"]);
+        _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
+        _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
+        _properties = DefineModelProperty<CognitiveServicesProjectProperties>("Properties", ["properties"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
@@ -117,7 +139,7 @@ public partial class DefenderForAISetting : ProvisionableResource
     }
 
     /// <summary>
-    /// Supported DefenderForAISetting resource versions.
+    /// Supported CognitiveServicesProject resource versions.
     /// </summary>
     public static class ResourceVersions
     {
@@ -130,59 +152,19 @@ public partial class DefenderForAISetting : ProvisionableResource
         /// 2025-06-01.
         /// </summary>
         public static readonly string V2025_06_01 = "2025-06-01";
-
-        /// <summary>
-        /// 2024-10-01.
-        /// </summary>
-        public static readonly string V2024_10_01 = "2024-10-01";
-
-        /// <summary>
-        /// 2023-05-01.
-        /// </summary>
-        public static readonly string V2023_05_01 = "2023-05-01";
-
-        /// <summary>
-        /// 2022-12-01.
-        /// </summary>
-        public static readonly string V2022_12_01 = "2022-12-01";
-
-        /// <summary>
-        /// 2022-10-01.
-        /// </summary>
-        public static readonly string V2022_10_01 = "2022-10-01";
-
-        /// <summary>
-        /// 2022-03-01.
-        /// </summary>
-        public static readonly string V2022_03_01 = "2022-03-01";
-
-        /// <summary>
-        /// 2021-10-01.
-        /// </summary>
-        public static readonly string V2021_10_01 = "2021-10-01";
-
-        /// <summary>
-        /// 2021-04-30.
-        /// </summary>
-        public static readonly string V2021_04_30 = "2021-04-30";
-
-        /// <summary>
-        /// 2017-04-18.
-        /// </summary>
-        public static readonly string V2017_04_18 = "2017-04-18";
     }
 
     /// <summary>
-    /// Creates a reference to an existing DefenderForAISetting.
+    /// Creates a reference to an existing CognitiveServicesProject.
     /// </summary>
     /// <param name="bicepIdentifier">
-    /// The the Bicep identifier name of the DefenderForAISetting resource.
+    /// The the Bicep identifier name of the CognitiveServicesProject resource.
     /// This can be used to refer to the resource in expressions, but is not
     /// the Azure name of the resource.  This value can contain letters,
     /// numbers, and underscores.
     /// </param>
-    /// <param name="resourceVersion">Version of the DefenderForAISetting.</param>
-    /// <returns>The existing DefenderForAISetting resource.</returns>
-    public static DefenderForAISetting FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
+    /// <param name="resourceVersion">Version of the CognitiveServicesProject.</param>
+    /// <returns>The existing CognitiveServicesProject resource.</returns>
+    public static CognitiveServicesProject FromExisting(string bicepIdentifier, string? resourceVersion = default) =>
         new(bicepIdentifier, resourceVersion) { IsExistingResource = true };
 }
