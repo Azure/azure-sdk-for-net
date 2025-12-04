@@ -56,18 +56,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="canUndelete"> A state of this graph to identify if this graph is restorable in same account. </param>
         /// <param name="canUndeleteReason"> The reason why this graph can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this graph event happened. </param>
-        /// <param name="graphName"> The name of this Gremlin graph. </param>
-        /// <param name="graphId"> The resource ID of this Gremlin graph. </param>
+        /// <param name="ownerId"> The name of this Gremlin graph. </param>
+        /// <param name="ownerResourceId"> The resource ID of this Gremlin graph. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableGremlinGraphResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string graphName, string graphId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExtendedRestorableGremlinGraphResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string ownerId, string ownerResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
             CanUndelete = canUndelete;
             CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
-            GraphName = graphName;
-            GraphId = graphId;
+            OwnerId = ownerId;
+            OwnerResourceId = ownerResourceId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get; }
         /// <summary> The name of this Gremlin graph. </summary>
         [WirePath("ownerId")]
-        public string GraphName { get; }
+        public string OwnerId { get; }
         /// <summary> The resource ID of this Gremlin graph. </summary>
         [WirePath("ownerResourceId")]
-        public string GraphId { get; }
+        public string OwnerResourceId { get; }
     }
 }

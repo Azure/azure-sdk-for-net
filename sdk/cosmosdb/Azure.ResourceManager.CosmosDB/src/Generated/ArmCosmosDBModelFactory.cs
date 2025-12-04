@@ -2509,10 +2509,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
         /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
-        /// <param name="databaseName"> The name of this Gremlin database. </param>
-        /// <param name="databaseId"> The resource ID of this Gremlin database. </param>
+        /// <param name="ownerId"> The name of this Gremlin database. </param>
+        /// <param name="ownerResourceId"> The resource ID of this Gremlin database. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableGremlinDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinDatabaseResourceInfo ExtendedRestorableGremlinDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
+        public static ExtendedRestorableGremlinDatabaseResourceInfo ExtendedRestorableGremlinDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string ownerId = null, string ownerResourceId = null)
         {
             return new ExtendedRestorableGremlinDatabaseResourceInfo(
                 rid,
@@ -2520,8 +2520,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 canUndelete,
                 canUndeleteReason,
                 eventTimestamp,
-                databaseName,
-                databaseId,
+                ownerId,
+                ownerResourceId,
                 serializedAdditionalRawData: null);
         }
 
@@ -2549,10 +2549,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="canUndelete"> A state of this graph to identify if this graph is restorable in same account. </param>
         /// <param name="canUndeleteReason"> The reason why this graph can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this graph event happened. </param>
-        /// <param name="graphName"> The name of this Gremlin graph. </param>
-        /// <param name="graphId"> The resource ID of this Gremlin graph. </param>
+        /// <param name="ownerId"> The name of this Gremlin graph. </param>
+        /// <param name="ownerResourceId"> The resource ID of this Gremlin graph. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableGremlinGraphResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinGraphResourceInfo ExtendedRestorableGremlinGraphResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string graphName = null, string graphId = null)
+        public static ExtendedRestorableGremlinGraphResourceInfo ExtendedRestorableGremlinGraphResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string ownerId = null, string ownerResourceId = null)
         {
             return new ExtendedRestorableGremlinGraphResourceInfo(
                 rid,
@@ -2560,8 +2560,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 canUndelete,
                 canUndeleteReason,
                 eventTimestamp,
-                graphName,
-                graphId,
+                ownerId,
+                ownerResourceId,
                 serializedAdditionalRawData: null);
         }
 
@@ -2680,7 +2680,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.FleetResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2688,12 +2688,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> A provisioning state of the Fleet. </param>
-        /// <returns> A new <see cref="CosmosDB.FleetResourceData"/> instance for mocking. </returns>
-        public static FleetResourceData FleetResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBStatus? provisioningState = null)
+        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetData"/> instance for mocking. </returns>
+        public static CosmosDBFleetData CosmosDBFleetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBStatus? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FleetResourceData(
+            return new CosmosDBFleetData(
                 id,
                 name,
                 resourceType,
@@ -2704,7 +2704,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.FleetspaceResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetspaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -2714,12 +2714,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="serviceTier"> Service Tier for the fleetspace. GeneralPurpose types refers to single write region accounts that can be added to this fleetspace, whereas BusinessCritical refers to multi write region. </param>
         /// <param name="dataRegions"> List of data regions assigned to the fleetspace. Eg [westus2]. </param>
         /// <param name="throughputPoolConfiguration"> Configuration for throughput pool in the fleetspace. </param>
-        /// <returns> A new <see cref="CosmosDB.FleetspaceResourceData"/> instance for mocking. </returns>
-        public static FleetspaceResourceData FleetspaceResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, FleetspacePropertiesFleetspaceApiKind? fleetspaceApiKind = null, FleetspacePropertiesServiceTier? serviceTier = null, IEnumerable<string> dataRegions = null, FleetspacePropertiesThroughputPoolConfiguration throughputPoolConfiguration = null)
+        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceData"/> instance for mocking. </returns>
+        public static CosmosDBFleetspaceData CosmosDBFleetspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, CosmosDBFleetspaceApiKind? fleetspaceApiKind = null, CosmosDBFleetspaceServiceTier? serviceTier = null, IEnumerable<AzureLocation> dataRegions = null, CosmosDBFleetspaceThroughputPoolConfiguration throughputPoolConfiguration = null)
         {
-            dataRegions ??= new List<string>();
+            dataRegions ??= new List<AzureLocation>();
 
-            return new FleetspaceResourceData(
+            return new CosmosDBFleetspaceData(
                 id,
                 name,
                 resourceType,
@@ -2732,17 +2732,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.FleetspaceAccountResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBFleetspaceAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="provisioningState"> A provisioning state of the Fleetspace Account. </param>
         /// <param name="globalDatabaseAccountProperties"> Configuration for fleetspace Account in the fleetspace. </param>
-        /// <returns> A new <see cref="CosmosDB.FleetspaceAccountResourceData"/> instance for mocking. </returns>
-        public static FleetspaceAccountResourceData FleetspaceAccountResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, FleetspaceAccountPropertiesGlobalDatabaseAccountProperties globalDatabaseAccountProperties = null)
+        /// <returns> A new <see cref="CosmosDB.CosmosDBFleetspaceAccountData"/> instance for mocking. </returns>
+        public static CosmosDBFleetspaceAccountData CosmosDBFleetspaceAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, CosmosDBFleetspaceAccountConfiguration globalDatabaseAccountProperties = null)
         {
-            return new FleetspaceAccountResourceData(
+            return new CosmosDBFleetspaceAccountData(
                 id,
                 name,
                 resourceType,

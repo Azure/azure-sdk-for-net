@@ -443,39 +443,39 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FleetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FleetResource.CreateResourceIdentifier" /> to create a <see cref="FleetResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CosmosDBFleetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBFleetResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBFleetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetResource"/> object. </returns>
-        public virtual FleetResource GetFleetResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBFleetResource"/> object. </returns>
+        public virtual CosmosDBFleetResource GetCosmosDBFleetResource(ResourceIdentifier id)
         {
-            FleetResource.ValidateResourceId(id);
-            return new FleetResource(Client, id);
+            CosmosDBFleetResource.ValidateResourceId(id);
+            return new CosmosDBFleetResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FleetspaceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FleetspaceResource.CreateResourceIdentifier" /> to create a <see cref="FleetspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CosmosDBFleetspaceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBFleetspaceResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBFleetspaceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetspaceResource"/> object. </returns>
-        public virtual FleetspaceResource GetFleetspaceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBFleetspaceResource"/> object. </returns>
+        public virtual CosmosDBFleetspaceResource GetCosmosDBFleetspaceResource(ResourceIdentifier id)
         {
-            FleetspaceResource.ValidateResourceId(id);
-            return new FleetspaceResource(Client, id);
+            CosmosDBFleetspaceResource.ValidateResourceId(id);
+            return new CosmosDBFleetspaceResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FleetspaceAccountResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FleetspaceAccountResource.CreateResourceIdentifier" /> to create a <see cref="FleetspaceAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="CosmosDBFleetspaceAccountResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="CosmosDBFleetspaceAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBFleetspaceAccountResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FleetspaceAccountResource"/> object. </returns>
-        public virtual FleetspaceAccountResource GetFleetspaceAccountResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="CosmosDBFleetspaceAccountResource"/> object. </returns>
+        public virtual CosmosDBFleetspaceAccountResource GetCosmosDBFleetspaceAccountResource(ResourceIdentifier id)
         {
-            FleetspaceAccountResource.ValidateResourceId(id);
-            return new FleetspaceAccountResource(Client, id);
+            CosmosDBFleetspaceAccountResource.ValidateResourceId(id);
+            return new CosmosDBFleetspaceAccountResource(Client, id);
         }
     }
 }

@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/> or <paramref name="fleetspaceAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/> or <paramref name="fleetspaceAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FleetspaceAccountResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CancellationToken cancellationToken = default)
+        public async Task<Response<CosmosDBFleetspaceAccountData>> GetAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -203,13 +203,13 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        FleetspaceAccountResourceData value = default;
+                        CosmosDBFleetspaceAccountData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = FleetspaceAccountResourceData.DeserializeFleetspaceAccountResourceData(document.RootElement);
+                        value = CosmosDBFleetspaceAccountData.DeserializeCosmosDBFleetspaceAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FleetspaceAccountResourceData)null, message.Response);
+                    return Response.FromValue((CosmosDBFleetspaceAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/> or <paramref name="fleetspaceAccountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/> or <paramref name="fleetspaceAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FleetspaceAccountResourceData> Get(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CancellationToken cancellationToken = default)
+        public Response<CosmosDBFleetspaceAccountData> Get(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -238,19 +238,19 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 case 200:
                     {
-                        FleetspaceAccountResourceData value = default;
+                        CosmosDBFleetspaceAccountData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = FleetspaceAccountResourceData.DeserializeFleetspaceAccountResourceData(document.RootElement);
+                        value = CosmosDBFleetspaceAccountData.DeserializeCosmosDBFleetspaceAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FleetspaceAccountResourceData)null, message.Response);
+                    return Response.FromValue((CosmosDBFleetspaceAccountData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, FleetspaceAccountResourceData data)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CosmosDBFleetspaceAccountData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.CosmosDB
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, FleetspaceAccountResourceData data)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CosmosDBFleetspaceAccountData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/>, <paramref name="fleetspaceAccountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/> or <paramref name="fleetspaceAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, FleetspaceAccountResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CosmosDBFleetspaceAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/>, <paramref name="fleetspaceAccountName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fleetName"/>, <paramref name="fleetspaceName"/> or <paramref name="fleetspaceAccountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Create(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, FleetspaceAccountResourceData data, CancellationToken cancellationToken = default)
+        public Response Create(string subscriptionId, string resourceGroupName, string fleetName, string fleetspaceName, string fleetspaceAccountName, CosmosDBFleetspaceAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

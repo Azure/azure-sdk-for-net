@@ -22,8 +22,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         private CassandraClustersRestOperations _cassandraClusterRestClient;
         private ClientDiagnostics _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics;
         private RestorableDatabaseAccountsRestOperations _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient;
-        private ClientDiagnostics _fleetResourceFleetClientDiagnostics;
-        private FleetRestOperations _fleetResourceFleetRestClient;
+        private ClientDiagnostics _cosmosDBFleetFleetClientDiagnostics;
+        private FleetRestOperations _cosmosDBFleetFleetRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableCosmosDBSubscriptionResource"/> class for mocking. </summary>
         protected MockableCosmosDBSubscriptionResource()
@@ -43,8 +43,8 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         private CassandraClustersRestOperations CassandraClusterRestClient => _cassandraClusterRestClient ??= new CassandraClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CassandraClusterResource.ResourceType));
         private ClientDiagnostics RestorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics => _restorableCosmosDBAccountRestorableDatabaseAccountsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", RestorableCosmosDBAccountResource.ResourceType.Namespace, Diagnostics);
         private RestorableDatabaseAccountsRestOperations RestorableCosmosDBAccountRestorableDatabaseAccountsRestClient => _restorableCosmosDBAccountRestorableDatabaseAccountsRestClient ??= new RestorableDatabaseAccountsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RestorableCosmosDBAccountResource.ResourceType));
-        private ClientDiagnostics FleetResourceFleetClientDiagnostics => _fleetResourceFleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", FleetResource.ResourceType.Namespace, Diagnostics);
-        private FleetRestOperations FleetResourceFleetRestClient => _fleetResourceFleetRestClient ??= new FleetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(FleetResource.ResourceType));
+        private ClientDiagnostics CosmosDBFleetFleetClientDiagnostics => _cosmosDBFleetFleetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CosmosDBFleetResource.ResourceType.Namespace, Diagnostics);
+        private FleetRestOperations CosmosDBFleetFleetRestClient => _cosmosDBFleetFleetRestClient ??= new FleetRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(CosmosDBFleetResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -308,17 +308,17 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="CosmosDBFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FleetResource> GetFleetResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="CosmosDBFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CosmosDBFleetResource> GetCosmosDBFleetsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FleetResourceFleetRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FleetResourceFleetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FleetResource(Client, FleetResourceData.DeserializeFleetResourceData(e)), FleetResourceFleetClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetFleetResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBFleetFleetRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBFleetFleetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new CosmosDBFleetResource(Client, CosmosDBFleetData.DeserializeCosmosDBFleetData(e)), CosmosDBFleetFleetClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -338,17 +338,17 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="CosmosDBFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FleetResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FleetResource> GetFleetResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CosmosDBFleetResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CosmosDBFleetResource> GetCosmosDBFleets(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => FleetResourceFleetRestClient.CreateListRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => FleetResourceFleetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FleetResource(Client, FleetResourceData.DeserializeFleetResourceData(e)), FleetResourceFleetClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetFleetResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CosmosDBFleetFleetRestClient.CreateListRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CosmosDBFleetFleetRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new CosmosDBFleetResource(Client, CosmosDBFleetData.DeserializeCosmosDBFleetData(e)), CosmosDBFleetFleetClientDiagnostics, Pipeline, "MockableCosmosDBSubscriptionResource.GetCosmosDBFleets", "value", "nextLink", cancellationToken);
         }
     }
 }

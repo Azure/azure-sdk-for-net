@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
+            if (options.Format != "W" && Optional.IsDefined(OwnerId))
             {
                 writer.WritePropertyName("ownerId"u8);
-                writer.WriteStringValue(DatabaseName);
+                writer.WriteStringValue(OwnerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(DatabaseId))
+            if (options.Format != "W" && Optional.IsDefined(OwnerResourceId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
-                writer.WriteStringValue(DatabaseId);
+                writer.WriteStringValue(OwnerResourceId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OwnerId), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  ownerId: ");
@@ -300,22 +300,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             else
             {
-                if (Optional.IsDefined(DatabaseName))
+                if (Optional.IsDefined(OwnerId))
                 {
                     builder.Append("  ownerId: ");
-                    if (DatabaseName.Contains(Environment.NewLine))
+                    if (OwnerId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabaseName}'''");
+                        builder.AppendLine($"{OwnerId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{DatabaseName}'");
+                        builder.AppendLine($"'{OwnerId}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabaseId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OwnerResourceId), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  ownerResourceId: ");
@@ -323,17 +323,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             else
             {
-                if (Optional.IsDefined(DatabaseId))
+                if (Optional.IsDefined(OwnerResourceId))
                 {
                     builder.Append("  ownerResourceId: ");
-                    if (DatabaseId.Contains(Environment.NewLine))
+                    if (OwnerResourceId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{DatabaseId}'''");
+                        builder.AppendLine($"{OwnerResourceId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{DatabaseId}'");
+                        builder.AppendLine($"'{OwnerResourceId}'");
                     }
                 }
             }

@@ -60,15 +60,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp);
             }
-            if (options.Format != "W" && Optional.IsDefined(GraphName))
+            if (options.Format != "W" && Optional.IsDefined(OwnerId))
             {
                 writer.WritePropertyName("ownerId"u8);
-                writer.WriteStringValue(GraphName);
+                writer.WriteStringValue(OwnerId);
             }
-            if (options.Format != "W" && Optional.IsDefined(GraphId))
+            if (options.Format != "W" && Optional.IsDefined(OwnerResourceId))
             {
                 writer.WritePropertyName("ownerResourceId"u8);
-                writer.WriteStringValue(GraphId);
+                writer.WriteStringValue(OwnerResourceId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GraphName), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OwnerId), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  ownerId: ");
@@ -300,22 +300,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             else
             {
-                if (Optional.IsDefined(GraphName))
+                if (Optional.IsDefined(OwnerId))
                 {
                     builder.Append("  ownerId: ");
-                    if (GraphName.Contains(Environment.NewLine))
+                    if (OwnerId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{GraphName}'''");
+                        builder.AppendLine($"{OwnerId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{GraphName}'");
+                        builder.AppendLine($"'{OwnerId}'");
                     }
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GraphId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OwnerResourceId), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  ownerResourceId: ");
@@ -323,17 +323,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             else
             {
-                if (Optional.IsDefined(GraphId))
+                if (Optional.IsDefined(OwnerResourceId))
                 {
                     builder.Append("  ownerResourceId: ");
-                    if (GraphId.Contains(Environment.NewLine))
+                    if (OwnerResourceId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{GraphId}'''");
+                        builder.AppendLine($"{OwnerResourceId}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{GraphId}'");
+                        builder.AppendLine($"'{OwnerResourceId}'");
                     }
                 }
             }

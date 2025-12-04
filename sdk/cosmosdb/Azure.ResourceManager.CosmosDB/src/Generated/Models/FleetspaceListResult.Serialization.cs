@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<FleetspaceResourceData> value = default;
+            IReadOnlyList<CosmosDBFleetspaceData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<FleetspaceResourceData> array = new List<FleetspaceResourceData>();
+                    List<CosmosDBFleetspaceData> array = new List<CosmosDBFleetspaceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FleetspaceResourceData.DeserializeFleetspaceResourceData(item, options));
+                        array.Add(CosmosDBFleetspaceData.DeserializeCosmosDBFleetspaceData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FleetspaceListResult(value ?? new ChangeTrackingList<FleetspaceResourceData>(), nextLink, serializedAdditionalRawData);
+            return new FleetspaceListResult(value ?? new ChangeTrackingList<CosmosDBFleetspaceData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

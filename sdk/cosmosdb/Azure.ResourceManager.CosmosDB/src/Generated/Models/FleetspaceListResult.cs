@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="FleetspaceListResult"/>. </summary>
         internal FleetspaceListResult()
         {
-            Value = new ChangeTrackingList<FleetspaceResourceData>();
+            Value = new ChangeTrackingList<CosmosDBFleetspaceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FleetspaceListResult"/>. </summary>
         /// <param name="value"> List of fleetspaces and their properties. </param>
         /// <param name="nextLink"> The link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FleetspaceListResult(IReadOnlyList<FleetspaceResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FleetspaceListResult(IReadOnlyList<CosmosDBFleetspaceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of fleetspaces and their properties. </summary>
-        public IReadOnlyList<FleetspaceResourceData> Value { get; }
+        public IReadOnlyList<CosmosDBFleetspaceData> Value { get; }
         /// <summary> The link used to get the next page of results. </summary>
         public string NextLink { get; }
     }

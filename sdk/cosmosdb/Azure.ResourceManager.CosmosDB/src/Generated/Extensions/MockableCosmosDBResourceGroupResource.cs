@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
             return GetCassandraClusters().Get(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FleetResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of FleetResources and their operations over a FleetResource. </returns>
-        public virtual FleetResourceCollection GetFleetResources()
+        /// <summary> Gets a collection of CosmosDBFleetResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of CosmosDBFleetResources and their operations over a CosmosDBFleetResource. </returns>
+        public virtual CosmosDBFleetCollection GetCosmosDBFleets()
         {
-            return GetCachedClient(client => new FleetResourceCollection(client, Id));
+            return GetCachedClient(client => new CosmosDBFleetCollection(client, Id));
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="CosmosDBFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FleetResource>> GetFleetResourceAsync(string fleetName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBFleetResource>> GetCosmosDBFleetAsync(string fleetName, CancellationToken cancellationToken = default)
         {
-            return await GetFleetResources().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
+            return await GetCosmosDBFleets().GetAsync(fleetName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="FleetResource"/></description>
+        /// <description><see cref="CosmosDBFleetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,9 +235,9 @@ namespace Azure.ResourceManager.CosmosDB.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="fleetName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fleetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FleetResource> GetFleetResource(string fleetName, CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBFleetResource> GetCosmosDBFleet(string fleetName, CancellationToken cancellationToken = default)
         {
-            return GetFleetResources().Get(fleetName, cancellationToken);
+            return GetCosmosDBFleets().Get(fleetName, cancellationToken);
         }
     }
 }
