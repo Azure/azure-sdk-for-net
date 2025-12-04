@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         public DeploymentSettingInfrastructureNetwork()
         {
             IPPools = new ChangeTrackingList<DeploymentSettingIPPools>();
+            DnsZones = new ChangeTrackingList<DnsZones>();
             DnsServers = new ChangeTrackingList<string>();
         }
 
@@ -56,14 +57,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="subnetMask"> Subnet mask that matches the provided IP address space. </param>
         /// <param name="gateway"> Default gateway that should be used for the provided IP address space. </param>
         /// <param name="ipPools"> Range of IP addresses from which addresses are allocated for nodes within a subnet. </param>
+        /// <param name="dnsServerConfig"> Specifies how DNS servers are configured for the infrastructure network. Allowed values are 'UseDnsServer' to use the provided DNS servers, and 'UseForwarder' to use DNS forwarders. </param>
+        /// <param name="dnsZones"> Details of the DNS Zones to be configured. </param>
         /// <param name="dnsServers"> IPv4 address of the DNS servers in your environment. </param>
         /// <param name="useDhcp"> Allows customers to use DHCP for Hosts and Cluster IPs. If not declared, the deployment will default to static IPs. When true, GW and DNS servers are not required. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentSettingInfrastructureNetwork(string subnetMask, string gateway, IList<DeploymentSettingIPPools> ipPools, IList<string> dnsServers, bool? useDhcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentSettingInfrastructureNetwork(string subnetMask, string gateway, IList<DeploymentSettingIPPools> ipPools, DnsServerConfig? dnsServerConfig, IList<DnsZones> dnsZones, IList<string> dnsServers, bool? useDhcp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetMask = subnetMask;
             Gateway = gateway;
             IPPools = ipPools;
+            DnsServerConfig = dnsServerConfig;
+            DnsZones = dnsZones;
             DnsServers = dnsServers;
             UseDhcp = useDhcp;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -78,6 +83,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Range of IP addresses from which addresses are allocated for nodes within a subnet. </summary>
         [WirePath("ipPools")]
         public IList<DeploymentSettingIPPools> IPPools { get; }
+        /// <summary> Specifies how DNS servers are configured for the infrastructure network. Allowed values are 'UseDnsServer' to use the provided DNS servers, and 'UseForwarder' to use DNS forwarders. </summary>
+        [WirePath("dnsServerConfig")]
+        public DnsServerConfig? DnsServerConfig { get; set; }
+        /// <summary> Details of the DNS Zones to be configured. </summary>
+        [WirePath("dnsZones")]
+        public IList<DnsZones> DnsZones { get; }
         /// <summary> IPv4 address of the DNS servers in your environment. </summary>
         [WirePath("dnsServers")]
         public IList<string> DnsServers { get; }

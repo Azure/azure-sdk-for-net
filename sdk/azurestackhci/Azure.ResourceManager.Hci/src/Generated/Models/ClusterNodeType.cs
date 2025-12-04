@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The node type of all the nodes of the cluster. </summary>
+    /// <summary> Specifies the type of hardware vendor for all nodes in the cluster. Indicates whether the nodes are provided by Microsoft or a third-party vendor. </summary>
     public readonly partial struct ClusterNodeType : IEquatable<ClusterNodeType>
     {
         private readonly string _value;
@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string FirstPartyValue = "FirstParty";
         private const string ThirdPartyValue = "ThirdParty";
 
-        /// <summary> FirstParty. </summary>
+        /// <summary> All nodes in the cluster are provided and managed by Microsoft. </summary>
         public static ClusterNodeType FirstParty { get; } = new ClusterNodeType(FirstPartyValue);
-        /// <summary> ThirdParty. </summary>
+        /// <summary> All nodes in the cluster are provided and managed by a third-party vendor. </summary>
         public static ClusterNodeType ThirdParty { get; } = new ClusterNodeType(ThirdPartyValue);
         /// <summary> Determines if two <see cref="ClusterNodeType"/> values are the same. </summary>
         public static bool operator ==(ClusterNodeType left, ClusterNodeType right) => left.Equals(right);

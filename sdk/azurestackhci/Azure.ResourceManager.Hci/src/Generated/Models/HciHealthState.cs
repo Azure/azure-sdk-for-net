@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> The HciHealthState. </summary>
+    /// <summary> Overall health state for update-specific health checks. Indicates whether the system is functioning correctly, has warnings or errors, or is undergoing a health evaluation. </summary>
     public readonly partial struct HciHealthState : IEquatable<HciHealthState>
     {
         private readonly string _value;
@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ErrorValue = "Error";
         private const string InProgressValue = "InProgress";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> The health state is not known or cannot be determined. </summary>
         public static HciHealthState Unknown { get; } = new HciHealthState(UnknownValue);
-        /// <summary> Success. </summary>
+        /// <summary> The health check completed successfully and the system is healthy. </summary>
         public static HciHealthState Success { get; } = new HciHealthState(SuccessValue);
-        /// <summary> Failure. </summary>
+        /// <summary> The health check failed, indicating a critical issue. </summary>
         public static HciHealthState Failure { get; } = new HciHealthState(FailureValue);
-        /// <summary> Warning. </summary>
+        /// <summary> The health check detected a non-critical issue that may require attention. </summary>
         public static HciHealthState Warning { get; } = new HciHealthState(WarningValue);
-        /// <summary> Error. </summary>
+        /// <summary> An error occurred during the health check process. </summary>
         public static HciHealthState Error { get; } = new HciHealthState(ErrorValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> The health check is currently in progress. </summary>
         public static HciHealthState InProgress { get; } = new HciHealthState(InProgressValue);
         /// <summary> Determines if two <see cref="HciHealthState"/> values are the same. </summary>
         public static bool operator ==(HciHealthState left, HciHealthState right) => left.Equals(right);

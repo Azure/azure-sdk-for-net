@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> IMDS attestation is disabled for the cluster. </summary>
         public static ImdsAttestationState Disabled { get; } = new ImdsAttestationState(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary> IMDS attestation is enabled for the cluster. </summary>
         public static ImdsAttestationState Enabled { get; } = new ImdsAttestationState(EnabledValue);
         /// <summary> Determines if two <see cref="ImdsAttestationState"/> values are the same. </summary>
         public static bool operator ==(ImdsAttestationState left, ImdsAttestationState right) => left.Equals(right);

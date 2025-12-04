@@ -25,11 +25,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="networkProfile"> HCI device network information. </param>
         /// <param name="osProfile"> HCI device OS specific information. </param>
         /// <param name="sbeDeploymentPackageInfo"> Solution builder extension (SBE) deployment package information. </param>
-        internal HciReportedProperties(HciEdgeDeviceState? deviceState, HciEdgeDeviceExtensionProfile extensionProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo) : base(deviceState, extensionProfile, serializedAdditionalRawData)
+        /// <param name="storageProfile"> Hci device storage specific information. </param>
+        /// <param name="hardwareProfile"> Hci device hardware specific information. </param>
+        internal HciReportedProperties(HciEdgeDeviceState? deviceState, HciEdgeDeviceExtensionProfile extensionProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, HciNetworkProfile networkProfile, HciOSProfile osProfile, SbeDeploymentPackageInfo sbeDeploymentPackageInfo, HciStorageProfile storageProfile, HciHardwareProfile hardwareProfile) : base(deviceState, extensionProfile, serializedAdditionalRawData)
         {
             NetworkProfile = networkProfile;
             OSProfile = osProfile;
             SbeDeploymentPackageInfo = sbeDeploymentPackageInfo;
+            StorageProfile = storageProfile;
+            HardwareProfile = hardwareProfile;
         }
 
         /// <summary> HCI device network information. </summary>
@@ -41,5 +45,22 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Solution builder extension (SBE) deployment package information. </summary>
         [WirePath("sbeDeploymentPackageInfo")]
         public SbeDeploymentPackageInfo SbeDeploymentPackageInfo { get; }
+        /// <summary> Hci device storage specific information. </summary>
+        internal HciStorageProfile StorageProfile { get; }
+        /// <summary> Number of storage disks in the device with $CanPool as true. </summary>
+        [WirePath("storageProfile.poolableDisksCount")]
+        public long? StoragePoolableDisksCount
+        {
+            get => StorageProfile?.PoolableDisksCount;
+        }
+
+        /// <summary> Hci device hardware specific information. </summary>
+        internal HciHardwareProfile HardwareProfile { get; }
+        /// <summary> Process type of the device. </summary>
+        [WirePath("hardwareProfile.processorType")]
+        public string HardwareProcessorType
+        {
+            get => HardwareProfile?.ProcessorType;
+        }
     }
 }

@@ -56,14 +56,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="witnessPath"> Specify the fileshare path for the local witness for your Azure Stack HCI cluster. </param>
         /// <param name="cloudAccountName"> Specify the Azure Storage account name for cloud witness for your Azure Stack HCI cluster. </param>
         /// <param name="azureServiceEndpoint"> For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net. </param>
+        /// <param name="hardwareClass"> Hardware class of the cluster. </param>
+        /// <param name="clusterPattern"> Cluster Pattern supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciDeploymentCluster(string name, string witnessType, string witnessPath, string cloudAccountName, string azureServiceEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciDeploymentCluster(string name, string witnessType, string witnessPath, string cloudAccountName, string azureServiceEndpoint, HardwareClass? hardwareClass, ClusterPattern? clusterPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             WitnessType = witnessType;
             WitnessPath = witnessPath;
             CloudAccountName = cloudAccountName;
             AzureServiceEndpoint = azureServiceEndpoint;
+            HardwareClass = hardwareClass;
+            ClusterPattern = clusterPattern;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -82,5 +86,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> For Azure blob service endpoint type, select either Default or Custom domain. If you selected **Custom domain, enter the domain for the blob service in this format core.windows.net. </summary>
         [WirePath("azureServiceEndpoint")]
         public string AzureServiceEndpoint { get; set; }
+        /// <summary> Hardware class of the cluster. </summary>
+        [WirePath("hardwareClass")]
+        public HardwareClass? HardwareClass { get; }
+        /// <summary> Cluster Pattern supported. </summary>
+        [WirePath("clusterPattern")]
+        public ClusterPattern? ClusterPattern { get; set; }
     }
 }

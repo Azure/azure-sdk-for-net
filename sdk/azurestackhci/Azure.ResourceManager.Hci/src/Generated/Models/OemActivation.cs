@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary> Disabled. </summary>
+        /// <summary> OEM activation is disabled for the cluster. </summary>
         public static OemActivation Disabled { get; } = new OemActivation(DisabledValue);
-        /// <summary> Enabled. </summary>
+        /// <summary> OEM activation is enabled for the cluster. </summary>
         public static OemActivation Enabled { get; } = new OemActivation(EnabledValue);
         /// <summary> Determines if two <see cref="OemActivation"/> values are the same. </summary>
         public static bool operator ==(OemActivation left, OemActivation right) => left.Equals(right);

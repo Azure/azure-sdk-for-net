@@ -41,41 +41,41 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ProvisioningValue = "Provisioning";
         private const string DisableInProgressValue = "DisableInProgress";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> The aggregate state is not specified. </summary>
         public static ArcSettingAggregateState NotSpecified { get; } = new ArcSettingAggregateState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+        /// <summary> An error occurred in the aggregate state. </summary>
         public static ArcSettingAggregateState Error { get; } = new ArcSettingAggregateState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The operation successfully completed across all nodes. </summary>
         public static ArcSettingAggregateState Succeeded { get; } = new ArcSettingAggregateState(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The operation was canceled across the nodes. </summary>
         public static ArcSettingAggregateState Canceled { get; } = new ArcSettingAggregateState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The operation failed on all or most nodes. </summary>
         public static ArcSettingAggregateState Failed { get; } = new ArcSettingAggregateState(FailedValue);
-        /// <summary> Connected. </summary>
+        /// <summary> All nodes are connected. </summary>
         public static ArcSettingAggregateState Connected { get; } = new ArcSettingAggregateState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary> All nodes are disconnected. </summary>
         public static ArcSettingAggregateState Disconnected { get; } = new ArcSettingAggregateState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> The Arc agent has been deleted from all nodes. </summary>
         public static ArcSettingAggregateState Deleted { get; } = new ArcSettingAggregateState(DeletedValue);
-        /// <summary> Creating. </summary>
+        /// <summary> The Arc agent is being created across the nodes. </summary>
         public static ArcSettingAggregateState Creating { get; } = new ArcSettingAggregateState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary> The Arc agent is being updated across the nodes. </summary>
         public static ArcSettingAggregateState Updating { get; } = new ArcSettingAggregateState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> The Arc agent is being deleted across the nodes. </summary>
         public static ArcSettingAggregateState Deleting { get; } = new ArcSettingAggregateState(DeletingValue);
-        /// <summary> Moving. </summary>
+        /// <summary> The Arc agent is being moved across the nodes. </summary>
         public static ArcSettingAggregateState Moving { get; } = new ArcSettingAggregateState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+        /// <summary> The operation succeeded on some nodes. </summary>
         public static ArcSettingAggregateState PartiallySucceeded { get; } = new ArcSettingAggregateState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+        /// <summary> Some nodes are connected, others are not. </summary>
         public static ArcSettingAggregateState PartiallyConnected { get; } = new ArcSettingAggregateState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> The operation is currently in progress across the nodes. </summary>
         public static ArcSettingAggregateState InProgress { get; } = new ArcSettingAggregateState(InProgressValue);
-        /// <summary> Accepted. </summary>
+        /// <summary> The operation has been accepted and is pending execution. </summary>
         public static ArcSettingAggregateState Accepted { get; } = new ArcSettingAggregateState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary> The Arc agent is being provisioned across the nodes. </summary>
         public static ArcSettingAggregateState Provisioning { get; } = new ArcSettingAggregateState(ProvisioningValue);
-        /// <summary> DisableInProgress. </summary>
+        /// <summary> The Arc agent is being disabled across the nodes. </summary>
         public static ArcSettingAggregateState DisableInProgress { get; } = new ArcSettingAggregateState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="ArcSettingAggregateState"/> values are the same. </summary>
         public static bool operator ==(ArcSettingAggregateState left, ArcSettingAggregateState right) => left.Equals(right);

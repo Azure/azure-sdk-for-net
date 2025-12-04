@@ -67,8 +67,9 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicType"> The type of NIC, physical, virtual, management. </param>
         /// <param name="vlanId"> The VLAN ID of the physical NIC. </param>
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
+        /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IReadOnlyList<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IReadOnlyList<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus, RdmaCapability? rdmaCapability, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdapterName = adapterName;
             InterfaceDescription = interfaceDescription;
@@ -85,6 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
             NicType = nicType;
             VlanId = vlanId;
             NicStatus = nicStatus;
+            RdmaCapability = rdmaCapability;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -133,5 +135,8 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The status of NIC, up, disconnected. </summary>
         [WirePath("nicStatus")]
         public string NicStatus { get; }
+        /// <summary> Describes the RDMA capability of the network adapter. </summary>
+        [WirePath("rdmaCapability")]
+        public RdmaCapability? RdmaCapability { get; }
     }
 }

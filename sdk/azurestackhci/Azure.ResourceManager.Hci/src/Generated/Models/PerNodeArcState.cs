@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="name"> Name of the Node in HCI Cluster. </param>
         /// <param name="arcInstance"> Fully qualified resource ID for the Arc agent of this node. </param>
         /// <param name="arcNodeServicePrincipalObjectId"> The service principal id of the arc for server node. </param>
-        /// <param name="state"> State of Arc agent in this node. </param>
+        /// <param name="state"> State of the Arc agent in this node. Indicates the current lifecycle status of the agent, such as whether it's being provisioned, connected, updated, or has encountered an error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PerNodeArcState(string name, string arcInstance, Guid? arcNodeServicePrincipalObjectId, NodeArcState? state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The service principal id of the arc for server node. </summary>
         [WirePath("arcNodeServicePrincipalObjectId")]
         public Guid? ArcNodeServicePrincipalObjectId { get; }
-        /// <summary> State of Arc agent in this node. </summary>
+        /// <summary> State of the Arc agent in this node. Indicates the current lifecycle status of the agent, such as whether it's being provisioned, connected, updated, or has encountered an error. </summary>
         [WirePath("state")]
         public NodeArcState? State { get; }
     }

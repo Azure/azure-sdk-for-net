@@ -25,9 +25,9 @@ namespace Azure.ResourceManager.Hci.Models
         private const string EnableValue = "Enable";
         private const string RevokeValue = "Revoke";
 
-        /// <summary> Enable. </summary>
+        /// <summary> Enable remote support for the cluster. </summary>
         public static RemoteSupportType Enable { get; } = new RemoteSupportType(EnableValue);
-        /// <summary> Revoke. </summary>
+        /// <summary> Revoke previously enabled remote support for the cluster. </summary>
         public static RemoteSupportType Revoke { get; } = new RemoteSupportType(RevokeValue);
         /// <summary> Determines if two <see cref="RemoteSupportType"/> values are the same. </summary>
         public static bool operator ==(RemoteSupportType left, RemoteSupportType right) => left.Equals(right);

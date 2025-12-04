@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="ArcExtensionInstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
-        /// <param name="level"> The level code. </param>
+        /// <param name="level"> The level code. Indicates the severity or importance of the status message. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
         /// <param name="message"> The detailed status message, including for alerts and error messages. </param>
         /// <param name="time"> The time of the status. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> The status code. </summary>
         [WirePath("code")]
         public string Code { get; }
-        /// <summary> The level code. </summary>
+        /// <summary> The level code. Indicates the severity or importance of the status message. </summary>
         [WirePath("level")]
         public HciStatusLevelType? Level { get; }
         /// <summary> The short localizable label for the status. </summary>

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> State of Arc agent in this node. </summary>
+    /// <summary> State of the Arc agent in this node. Indicates the current lifecycle status of the agent, such as whether it's being provisioned, connected, updated, or has encountered an error. </summary>
     public readonly partial struct NodeArcState : IEquatable<NodeArcState>
     {
         private readonly string _value;
@@ -41,41 +41,41 @@ namespace Azure.ResourceManager.Hci.Models
         private const string ProvisioningValue = "Provisioning";
         private const string DisableInProgressValue = "DisableInProgress";
 
-        /// <summary> NotSpecified. </summary>
+        /// <summary> The state is not specified. </summary>
         public static NodeArcState NotSpecified { get; } = new NodeArcState(NotSpecifiedValue);
-        /// <summary> Error. </summary>
+        /// <summary> An error occurred during the agent's lifecycle. </summary>
         public static NodeArcState Error { get; } = new NodeArcState(ErrorValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> The operation completed successfully. </summary>
         public static NodeArcState Succeeded { get; } = new NodeArcState(SucceededValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> The operation was canceled before completion. </summary>
         public static NodeArcState Canceled { get; } = new NodeArcState(CanceledValue);
-        /// <summary> Failed. </summary>
+        /// <summary> The operation failed. </summary>
         public static NodeArcState Failed { get; } = new NodeArcState(FailedValue);
-        /// <summary> Connected. </summary>
+        /// <summary> The Arc agent is connected on this node. </summary>
         public static NodeArcState Connected { get; } = new NodeArcState(ConnectedValue);
-        /// <summary> Disconnected. </summary>
+        /// <summary> The Arc agent is disconnected on this node. </summary>
         public static NodeArcState Disconnected { get; } = new NodeArcState(DisconnectedValue);
-        /// <summary> Deleted. </summary>
+        /// <summary> The Arc agent has been deleted from this node. </summary>
         public static NodeArcState Deleted { get; } = new NodeArcState(DeletedValue);
-        /// <summary> Creating. </summary>
+        /// <summary> The Arc agent is being created on this node. </summary>
         public static NodeArcState Creating { get; } = new NodeArcState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary> The Arc agent is being updated on this node. </summary>
         public static NodeArcState Updating { get; } = new NodeArcState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> The Arc agent is being deleted from this node. </summary>
         public static NodeArcState Deleting { get; } = new NodeArcState(DeletingValue);
-        /// <summary> Moving. </summary>
+        /// <summary> The Arc agent is being moved on this node. </summary>
         public static NodeArcState Moving { get; } = new NodeArcState(MovingValue);
-        /// <summary> PartiallySucceeded. </summary>
+        /// <summary> The operation partially succeeded. </summary>
         public static NodeArcState PartiallySucceeded { get; } = new NodeArcState(PartiallySucceededValue);
-        /// <summary> PartiallyConnected. </summary>
+        /// <summary> The Arc agent is partially connected on this node. </summary>
         public static NodeArcState PartiallyConnected { get; } = new NodeArcState(PartiallyConnectedValue);
-        /// <summary> InProgress. </summary>
+        /// <summary> The operation is currently in progress. </summary>
         public static NodeArcState InProgress { get; } = new NodeArcState(InProgressValue);
-        /// <summary> Accepted. </summary>
+        /// <summary> The operation has been accepted and is pending execution. </summary>
         public static NodeArcState Accepted { get; } = new NodeArcState(AcceptedValue);
-        /// <summary> Provisioning. </summary>
+        /// <summary> The Arc agent is currently being provisioned on this node. </summary>
         public static NodeArcState Provisioning { get; } = new NodeArcState(ProvisioningValue);
-        /// <summary> DisableInProgress. </summary>
+        /// <summary> The Arc agent is in the process of being disabled on this node. </summary>
         public static NodeArcState DisableInProgress { get; } = new NodeArcState(DisableInProgressValue);
         /// <summary> Determines if two <see cref="NodeArcState"/> values are the same. </summary>
         public static bool operator ==(NodeArcState left, NodeArcState right) => left.Equals(right);

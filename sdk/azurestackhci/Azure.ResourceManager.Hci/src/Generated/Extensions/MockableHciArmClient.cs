@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-04-01</description>
+        /// <description>2025-11-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,15 +110,27 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArcSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HciEdgeDeviceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="HciEdgeDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
-        public virtual ArcSettingResource GetArcSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciEdgeDeviceResource"/> object. </returns>
+        public virtual HciEdgeDeviceResource GetHciEdgeDeviceResource(ResourceIdentifier id)
         {
-            ArcSettingResource.ValidateResourceId(id);
-            return new ArcSettingResource(Client, id);
+            HciEdgeDeviceResource.ValidateResourceId(id);
+            return new HciEdgeDeviceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="EdgeDeviceJobResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="EdgeDeviceJobResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeviceJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeDeviceJobResource"/> object. </returns>
+        public virtual EdgeDeviceJobResource GetEdgeDeviceJobResource(ResourceIdentifier id)
+        {
+            EdgeDeviceJobResource.ValidateResourceId(id);
+            return new EdgeDeviceJobResource(Client, id);
         }
 
         /// <summary>
@@ -134,27 +146,63 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciClusterDeploymentSettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterDeploymentSettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterDeploymentSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OSImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OSImageResource.CreateResourceIdentifier" /> to create an <see cref="OSImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterDeploymentSettingResource"/> object. </returns>
-        public virtual HciClusterDeploymentSettingResource GetHciClusterDeploymentSettingResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OSImageResource"/> object. </returns>
+        public virtual OSImageResource GetOSImageResource(ResourceIdentifier id)
         {
-            HciClusterDeploymentSettingResource.ValidateResourceId(id);
-            return new HciClusterDeploymentSettingResource(Client, id);
+            OSImageResource.ValidateResourceId(id);
+            return new OSImageResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciEdgeDeviceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciEdgeDeviceResource.CreateResourceIdentifier" /> to create a <see cref="HciEdgeDeviceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="PlatformUpdateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PlatformUpdateResource.CreateResourceIdentifier" /> to create a <see cref="PlatformUpdateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciEdgeDeviceResource"/> object. </returns>
-        public virtual HciEdgeDeviceResource GetHciEdgeDeviceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PlatformUpdateResource"/> object. </returns>
+        public virtual PlatformUpdateResource GetPlatformUpdateResource(ResourceIdentifier id)
         {
-            HciEdgeDeviceResource.ValidateResourceId(id);
-            return new HciEdgeDeviceResource(Client, id);
+            PlatformUpdateResource.ValidateResourceId(id);
+            return new PlatformUpdateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="UpdateContentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="UpdateContentResource.CreateResourceIdentifier" /> to create an <see cref="UpdateContentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="UpdateContentResource"/> object. </returns>
+        public virtual UpdateContentResource GetUpdateContentResource(ResourceIdentifier id)
+        {
+            UpdateContentResource.ValidateResourceId(id);
+            return new UpdateContentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ValidatedSolutionRecipeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ValidatedSolutionRecipeResource.CreateResourceIdentifier" /> to create a <see cref="ValidatedSolutionRecipeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ValidatedSolutionRecipeResource"/> object. </returns>
+        public virtual ValidatedSolutionRecipeResource GetValidatedSolutionRecipeResource(ResourceIdentifier id)
+        {
+            ValidatedSolutionRecipeResource.ValidateResourceId(id);
+            return new ValidatedSolutionRecipeResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArcSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArcSettingResource.CreateResourceIdentifier" /> to create an <see cref="ArcSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArcSettingResource"/> object. </returns>
+        public virtual ArcSettingResource GetArcSettingResource(ResourceIdentifier id)
+        {
+            ArcSettingResource.ValidateResourceId(id);
+            return new ArcSettingResource(Client, id);
         }
 
         /// <summary>
@@ -167,6 +215,18 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             ArcExtensionResource.ValidateResourceId(id);
             return new ArcExtensionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HciClusterDeploymentSettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterDeploymentSettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterDeploymentSettingResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciClusterDeploymentSettingResource"/> object. </returns>
+        public virtual HciClusterDeploymentSettingResource GetHciClusterDeploymentSettingResource(ResourceIdentifier id)
+        {
+            HciClusterDeploymentSettingResource.ValidateResourceId(id);
+            return new HciClusterDeploymentSettingResource(Client, id);
         }
 
         /// <summary>
@@ -194,18 +254,6 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciClusterSecuritySettingResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterSecuritySettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterSecuritySettingResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
-        public virtual HciClusterSecuritySettingResource GetHciClusterSecuritySettingResource(ResourceIdentifier id)
-        {
-            HciClusterSecuritySettingResource.ValidateResourceId(id);
-            return new HciClusterSecuritySettingResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="HciSkuResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HciSkuResource.CreateResourceIdentifier" /> to create a <see cref="HciSkuResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -218,15 +266,15 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="HciClusterUpdateRunResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="HciClusterUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterUpdateRunResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HciClusterSecuritySettingResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterSecuritySettingResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterSecuritySettingResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HciClusterUpdateRunResource"/> object. </returns>
-        public virtual HciClusterUpdateRunResource GetHciClusterUpdateRunResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciClusterSecuritySettingResource"/> object. </returns>
+        public virtual HciClusterSecuritySettingResource GetHciClusterSecuritySettingResource(ResourceIdentifier id)
         {
-            HciClusterUpdateRunResource.ValidateResourceId(id);
-            return new HciClusterUpdateRunResource(Client, id);
+            HciClusterSecuritySettingResource.ValidateResourceId(id);
+            return new HciClusterSecuritySettingResource(Client, id);
         }
 
         /// <summary>
@@ -251,6 +299,18 @@ namespace Azure.ResourceManager.Hci.Mocking
         {
             HciClusterUpdateResource.ValidateResourceId(id);
             return new HciClusterUpdateResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HciClusterUpdateRunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciClusterUpdateRunResource.CreateResourceIdentifier" /> to create a <see cref="HciClusterUpdateRunResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="HciClusterUpdateRunResource"/> object. </returns>
+        public virtual HciClusterUpdateRunResource GetHciClusterUpdateRunResource(ResourceIdentifier id)
+        {
+            HciClusterUpdateRunResource.ValidateResourceId(id);
+            return new HciClusterUpdateRunResource(Client, id);
         }
     }
 }

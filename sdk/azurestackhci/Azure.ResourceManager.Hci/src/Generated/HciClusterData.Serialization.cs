@@ -39,6 +39,40 @@ namespace Azure.ResourceManager.Hci
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            writer.WritePropertyName("identity"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(TypeIdentityType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(TypeIdentityType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
+            {
+                writer.WritePropertyName("userAssignedIdentities"u8);
+                writer.WriteStartObject();
+                foreach (var item in UserAssignedIdentities)
+                {
+                    writer.WritePropertyName(item.Key);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -56,10 +90,20 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("connectivityStatus"u8);
                 writer.WriteStringValue(ConnectivityStatus.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(SupportStatus))
+            {
+                writer.WritePropertyName("supportStatus"u8);
+                writer.WriteStringValue(SupportStatus.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(CloudId))
             {
                 writer.WritePropertyName("cloudId"u8);
                 writer.WriteStringValue(CloudId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Ring))
+            {
+                writer.WritePropertyName("ring"u8);
+                writer.WriteStringValue(Ring);
             }
             if (Optional.IsDefined(CloudManagementEndpoint))
             {
@@ -90,6 +134,11 @@ namespace Azure.ResourceManager.Hci
             {
                 writer.WritePropertyName("softwareAssuranceProperties"u8);
                 writer.WriteObjectValue(SoftwareAssuranceProperties, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsManagementCluster))
+            {
+                writer.WritePropertyName("isManagementCluster"u8);
+                writer.WriteBooleanValue(IsManagementCluster.Value);
             }
             if (Optional.IsDefined(LogCollectionProperties))
             {
@@ -151,34 +200,35 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("resourceProviderObjectId"u8);
                 writer.WriteStringValue(ResourceProviderObjectId);
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("identity"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            if (Optional.IsCollectionDefined(SecretsLocations))
             {
-                writer.WritePropertyName("principalId"u8);
-                writer.WriteStringValue(PrincipalId.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
-            if (Optional.IsDefined(TypeIdentityType))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(TypeIdentityType.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(UserAssignedIdentities))
-            {
-                writer.WritePropertyName("userAssignedIdentities"u8);
-                writer.WriteStartObject();
-                foreach (var item in UserAssignedIdentities)
+                writer.WritePropertyName("secretsLocations"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecretsLocations)
                 {
-                    writer.WritePropertyName(item.Key);
-                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
-                writer.WriteEndObject();
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClusterPattern))
+            {
+                writer.WritePropertyName("clusterPattern"u8);
+                writer.WriteStringValue(ClusterPattern.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(LocalAvailabilityZones))
+            {
+                writer.WritePropertyName("localAvailabilityZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in LocalAvailabilityZones)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IdentityProvider))
+            {
+                writer.WritePropertyName("identityProvider"u8);
+                writer.WriteStringValue(IdentityProvider.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -203,22 +253,30 @@ namespace Azure.ResourceManager.Hci
             {
                 return null;
             }
+            string kind = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
+            HciManagedServiceIdentityType? type0 = default;
+            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
             HciProvisioningState? provisioningState = default;
             HciClusterStatus? status = default;
             HciClusterConnectivityStatus? connectivityStatus = default;
+            SupportStatus? supportStatus = default;
             Guid? cloudId = default;
+            string ring = default;
             string cloudManagementEndpoint = default;
             Guid? aadClientId = default;
             Guid? aadTenantId = default;
             Guid? aadApplicationObjectId = default;
             Guid? aadServicePrincipalObjectId = default;
             SoftwareAssuranceProperties softwareAssuranceProperties = default;
+            bool? isManagementCluster = default;
             LogCollectionProperties logCollectionProperties = default;
             RemoteSupportProperties remoteSupportProperties = default;
             HciClusterDesiredProperties desiredProperties = default;
@@ -231,14 +289,19 @@ namespace Azure.ResourceManager.Hci
             DateTimeOffset? lastBillingTimestamp = default;
             string serviceEndpoint = default;
             string resourceProviderObjectId = default;
-            Guid? principalId = default;
-            Guid? tenantId = default;
-            HciManagedServiceIdentityType? type0 = default;
-            IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
+            IList<SecretsLocationDetails> secretsLocations = default;
+            ClusterPattern? clusterPattern = default;
+            IList<LocalAvailabilityZones> localAvailabilityZones = default;
+            IdentityProvider? identityProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -282,6 +345,59 @@ namespace Azure.ResourceManager.Hci
                     systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerHciContext.Default);
                     continue;
                 }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("principalId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            principalId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("tenantId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            tenantId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("type"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            type0 = new HciManagedServiceIdentityType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("userAssignedIdentities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property1.Value.GetRawText())), options, AzureResourceManagerHciContext.Default));
+                            }
+                            userAssignedIdentities = dictionary;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -318,6 +434,15 @@ namespace Azure.ResourceManager.Hci
                             connectivityStatus = new HciClusterConnectivityStatus(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("supportStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            supportStatus = new SupportStatus(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("cloudId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -325,6 +450,11 @@ namespace Azure.ResourceManager.Hci
                                 continue;
                             }
                             cloudId = property0.Value.GetGuid();
+                            continue;
+                        }
+                        if (property0.NameEquals("ring"u8))
+                        {
+                            ring = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("cloudManagementEndpoint"u8))
@@ -375,6 +505,15 @@ namespace Azure.ResourceManager.Hci
                                 continue;
                             }
                             softwareAssuranceProperties = SoftwareAssuranceProperties.DeserializeSoftwareAssuranceProperties(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("isManagementCluster"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isManagementCluster = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("logCollectionProperties"u8))
@@ -473,57 +612,50 @@ namespace Azure.ResourceManager.Hci
                             resourceProviderObjectId = property0.Value.GetString();
                             continue;
                         }
-                    }
-                    continue;
-                }
-                if (property.NameEquals("identity"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("principalId"u8))
+                        if (property0.NameEquals("secretsLocations"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            principalId = property0.Value.GetGuid();
+                            List<SecretsLocationDetails> array = new List<SecretsLocationDetails>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(SecretsLocationDetails.DeserializeSecretsLocationDetails(item, options));
+                            }
+                            secretsLocations = array;
                             continue;
                         }
-                        if (property0.NameEquals("tenantId"u8))
+                        if (property0.NameEquals("clusterPattern"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            tenantId = property0.Value.GetGuid();
+                            clusterPattern = new ClusterPattern(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("type"u8))
+                        if (property0.NameEquals("localAvailabilityZones"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            type0 = new HciManagedServiceIdentityType(property0.Value.GetString());
+                            List<LocalAvailabilityZones> array = new List<LocalAvailabilityZones>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.LocalAvailabilityZones.DeserializeLocalAvailabilityZones(item, options));
+                            }
+                            localAvailabilityZones = array;
                             continue;
                         }
-                        if (property0.NameEquals("userAssignedIdentities"u8))
+                        if (property0.NameEquals("identityProvider"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property1.Value.GetRawText())), options, AzureResourceManagerHciContext.Default));
-                            }
-                            userAssignedIdentities = dictionary;
+                            identityProvider = new IdentityProvider(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -542,16 +674,24 @@ namespace Azure.ResourceManager.Hci
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                kind,
+                principalId,
+                tenantId,
+                type0,
+                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
                 provisioningState,
                 status,
                 connectivityStatus,
+                supportStatus,
                 cloudId,
+                ring,
                 cloudManagementEndpoint,
                 aadClientId,
                 aadTenantId,
                 aadApplicationObjectId,
                 aadServicePrincipalObjectId,
                 softwareAssuranceProperties,
+                isManagementCluster,
                 logCollectionProperties,
                 remoteSupportProperties,
                 desiredProperties,
@@ -564,10 +704,10 @@ namespace Azure.ResourceManager.Hci
                 lastBillingTimestamp,
                 serviceEndpoint,
                 resourceProviderObjectId,
-                principalId,
-                tenantId,
-                type0,
-                userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(),
+                secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>(),
+                clusterPattern,
+                localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
+                identityProvider,
                 serializedAdditionalRawData);
         }
 
@@ -654,6 +794,29 @@ namespace Azure.ResourceManager.Hci
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
+                {
+                    builder.Append("  kind: ");
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -684,6 +847,78 @@ namespace Azure.ResourceManager.Hci
                 }
             }
 
+            builder.Append("  identity:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    principalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalId))
+                {
+                    builder.Append("    principalId: ");
+                    builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    tenantId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
+                {
+                    builder.Append("    tenantId: ");
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeIdentityType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TypeIdentityType))
+                {
+                    builder.Append("    type: ");
+                    builder.AppendLine($"'{TypeIdentityType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    userAssignedIdentities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UserAssignedIdentities))
+                {
+                    if (UserAssignedIdentities.Any())
+                    {
+                        builder.Append("    userAssignedIdentities: ");
+                        builder.AppendLine("{");
+                        foreach (var item in UserAssignedIdentities)
+                        {
+                            builder.Append($"        '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    userAssignedIdentities: ");
+                        }
+                        builder.AppendLine("    }");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
@@ -731,6 +966,21 @@ namespace Azure.ResourceManager.Hci
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportStatus), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    supportStatus: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportStatus))
+                {
+                    builder.Append("    supportStatus: ");
+                    builder.AppendLine($"'{SupportStatus.Value.ToString()}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CloudId), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -743,6 +993,29 @@ namespace Azure.ResourceManager.Hci
                 {
                     builder.Append("    cloudId: ");
                     builder.AppendLine($"'{CloudId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Ring), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ring: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Ring))
+                {
+                    builder.Append("    ring: ");
+                    if (Ring.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Ring}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Ring}'");
+                    }
                 }
             }
 
@@ -841,6 +1114,22 @@ namespace Azure.ResourceManager.Hci
                 {
                     builder.Append("    softwareAssuranceProperties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SoftwareAssuranceProperties, options, 4, false, "    softwareAssuranceProperties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsManagementCluster), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    isManagementCluster: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsManagementCluster))
+                {
+                    builder.Append("    isManagementCluster: ");
+                    var boolValue = IsManagementCluster.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -1051,75 +1340,79 @@ namespace Azure.ResourceManager.Hci
                 }
             }
 
-            builder.AppendLine("  }");
-            builder.Append("  identity:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretsLocations), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    principalId: ");
+                builder.Append("    secretsLocations: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(PrincipalId))
+                if (Optional.IsCollectionDefined(SecretsLocations))
                 {
-                    builder.Append("    principalId: ");
-                    builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    tenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TenantId))
-                {
-                    builder.Append("    tenantId: ");
-                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TypeIdentityType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(TypeIdentityType))
-                {
-                    builder.Append("    type: ");
-                    builder.AppendLine($"'{TypeIdentityType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAssignedIdentities), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    userAssignedIdentities: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(UserAssignedIdentities))
-                {
-                    if (UserAssignedIdentities.Any())
+                    if (SecretsLocations.Any())
                     {
-                        builder.Append("    userAssignedIdentities: ");
-                        builder.AppendLine("{");
-                        foreach (var item in UserAssignedIdentities)
+                        builder.Append("    secretsLocations: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SecretsLocations)
                         {
-                            builder.Append($"        '{item.Key}': ");
-                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 6, false, "    userAssignedIdentities: ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    secretsLocations: ");
                         }
-                        builder.AppendLine("    }");
+                        builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterPattern), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    clusterPattern: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterPattern))
+                {
+                    builder.Append("    clusterPattern: ");
+                    builder.AppendLine($"'{ClusterPattern.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocalAvailabilityZones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    localAvailabilityZones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LocalAvailabilityZones))
+                {
+                    if (LocalAvailabilityZones.Any())
+                    {
+                        builder.Append("    localAvailabilityZones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in LocalAvailabilityZones)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    localAvailabilityZones: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IdentityProvider), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    identityProvider: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IdentityProvider))
+                {
+                    builder.Append("    identityProvider: ");
+                    builder.AppendLine($"'{IdentityProvider.Value.ToString()}'");
                 }
             }
 
