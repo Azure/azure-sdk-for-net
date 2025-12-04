@@ -11,7 +11,7 @@ Set-StrictMode -Version 3
 
 function ShouldVerifyChangeLog ($PkgArtifactDetails) {
   if ($PkgArtifactDetails) {
-    if ($PkgArtifactDetails.PSObject.Properties["skipVerifyChangeLog"] -eq $true) {
+    if ($PkgArtifactDetails.skipVerifyChangelog -eq $true) {
       return $false
     }
 
