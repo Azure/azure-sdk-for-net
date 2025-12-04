@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+		<PackageReference Include="CommandLineParser" VersionOverride="2.9.1"/>
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
 
@@ -25,6 +26,7 @@
     <PackageReference Include="Azure.ResourceManager.AppContainers" />
     <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
     <PackageReference Include="Azure.ResourceManager.AppService" />
+    <PackageReference Include="Azure.ResourceManager.Cdn" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
     <PackageReference Include="Azure.ResourceManager.Communication" />
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
@@ -62,9 +64,7 @@
   <!-- Copy XML generated docs into our bin dir -->
   <Target Name="_ResolveCopyLocalNuGetPkgXmls" AfterTargets="ResolveReferences">
     <ItemGroup>
-      <ReferenceCopyLocalPaths
-        Include="@(ReferenceCopyLocalPaths -> '%(RootDir)%(Directory)%(Filename).xml')"
-        Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != '' and Exists('%(RootDir)%(Directory)%(Filename).xml')" />
+      <ReferenceCopyLocalPaths Include="@(ReferenceCopyLocalPaths -> '%(RootDir)%(Directory)%(Filename).xml')" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' != '' and Exists('%(RootDir)%(Directory)%(Filename).xml')" />
     </ItemGroup>
   </Target>
 </Project>

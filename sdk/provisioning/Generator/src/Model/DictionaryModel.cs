@@ -18,4 +18,13 @@ public class DictionaryModel(ModelBase elementType)
 
     public override string GetTypeReference() =>
         $"IDictionary<string, {ElementType.GetTypeReference()}>";
+
+    public override void GenerateSchema(IndentWriter writer)
+    {
+        using (writer.Scope("{", "}"))
+        {
+            writer.WriteLine("{customized property}: ");
+            ElementType.GenerateSchema(writer);
+        }
+    }
 }

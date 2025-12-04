@@ -51,7 +51,7 @@ public abstract partial class Specification : ModelBase
 
     public override string ToString() => $"<Specification {Name}>";
 
-    public void Build()
+    public void Build(bool generateSchema = false)
     {
         Analyze();
         Customize();
@@ -82,6 +82,20 @@ public abstract partial class Specification : ModelBase
                     GenerateBuiltInRoles();
                 }
             });
+        if (generateSchema)
+        {
+            ContextualException.WithContext(
+                $"Generating schema for spec {Namespace}",
+                () =>
+                {
+                    var writer = new IndentWriter();
+                    foreach (var resource in Resources)
+                    {
+                        resource.GenerateSchema(writer);
+                    }
+                    Spec!.SaveFile($"{Name}Schema.log", writer.ToString());
+                });
+        }
     }
 
     public override void Lint()

@@ -29,4 +29,24 @@ public class ExternalModel : ModelBase
         ArmType == typeof(double) ? "double" :
         ArmType == typeof(string) ? "string" :
         base.GetTypeReference();
+
+    public override void GenerateSchema(IndentWriter writer)
+    {
+        if (ArmType == typeof(bool))
+        {
+            writer.WriteLine("'boolean'");
+        }
+        else if (ArmType == typeof(int) || ArmType == typeof(long) || ArmType == typeof(float) || ArmType == typeof(double))
+        {
+            writer.WriteLine("'number'");
+        }
+        else if (ArmType == typeof(string))
+        {
+            writer.WriteLine("'string'");
+        }
+        else
+        {
+            writer.WriteLine("'object'");
+        }
+    }
 }
