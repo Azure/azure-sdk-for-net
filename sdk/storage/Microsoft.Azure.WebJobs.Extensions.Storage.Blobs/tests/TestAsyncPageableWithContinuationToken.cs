@@ -10,6 +10,11 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Tests
 {
+    /// <summary>
+    /// This is based on the TestAsyncPageable in Common tests. It adds the ability to specify whether a continuation token is returned.
+    /// This will allow the strategy to determine whether there are more pages and continue listing.
+    /// It will NOT use the passed in continuation token to determine what to return; it always returns the page.
+    /// </summary>
     public class TestAsyncPageableWithContinuationToken : AsyncPageable<BlobItem>
     {
         private readonly List<BlobItem> _page;
