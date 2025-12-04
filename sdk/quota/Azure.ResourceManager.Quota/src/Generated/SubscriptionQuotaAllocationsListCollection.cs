@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetAllAsync(Guid subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SubscriptionQuotaAllocationsListResource>> GetAsync(Guid subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetAll");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
             scope.Start();
             try
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -130,12 +130,12 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupQuotaName"/> or <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SubscriptionQuotaAllocationsListResource> GetAll(Guid subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<SubscriptionQuotaAllocationsListResource> Get(Guid subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupQuotaName, nameof(groupQuotaName));
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.GetAll");
+            using DiagnosticScope scope = _subscriptionQuotaAllocationsListsClientDiagnostics.CreateScope("SubscriptionQuotaAllocationsListCollection.Get");
             scope.Start();
             try
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Name, subscriptionId, groupQuotaName, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<SubscriptionQuotaAllocationsListData> response = default;

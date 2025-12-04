@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<GroupQuotaLimitListResource>> GetAllAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GroupQuotaLimitListResource>> GetAsync(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetAll");
+            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetAllRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<GroupQuotaLimitListData> response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceProviderName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<GroupQuotaLimitListResource> GetAll(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<GroupQuotaLimitListResource> Get(string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(resourceProviderName, nameof(resourceProviderName));
 
-            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.GetAll");
+            using DiagnosticScope scope = _groupQuotaLimitListsClientDiagnostics.CreateScope("GroupQuotaLimitListCollection.Get");
             scope.Start();
             try
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetAllRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<GroupQuotaLimitListData> response = Response.FromValue(GroupQuotaLimitListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetAllRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetAllRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetAllRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetAllRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
+                HttpMessage message = _groupQuotaLimitListsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, resourceProviderName, location, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<GroupQuotaLimitListData> response = default;

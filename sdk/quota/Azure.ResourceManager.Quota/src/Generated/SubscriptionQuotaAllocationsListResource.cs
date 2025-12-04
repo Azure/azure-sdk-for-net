@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetAllRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                HttpMessage message = _subscriptionQuotaAllocationsListsRestClient.CreateGetRequest(Id.Parent.Parent.Parent.Parent.Name, Guid.Parse(Id.Parent.Parent.Parent.Name), Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<SubscriptionQuotaAllocationsListData> response = Response.FromValue(SubscriptionQuotaAllocationsListData.FromResponse(result), result);
                 if (response.Value == null)

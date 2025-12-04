@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Quota
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetAllRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context)
+        internal HttpMessage CreateGetRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

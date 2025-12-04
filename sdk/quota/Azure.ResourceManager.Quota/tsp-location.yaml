@@ -1,4 +1,4 @@
 directory: specification\quota\resource-manager\Microsoft.Quota\Quota\
-commit: 85fc0b5f12d9a6da2c96228640f8672dbf32f20f
+commit: 242ed70de22aa6094a5e1ef597192bbe5fca9868
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
