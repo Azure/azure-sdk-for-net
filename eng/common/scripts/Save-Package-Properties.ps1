@@ -149,7 +149,10 @@ if ($artifactList)
   else
   {
     Write-Host "Filtering package properties to match artifact list: $($filteredArtifacts -join ', ')"
-    $artifactSet = [System.Collections.Generic.HashSet[string]]::new($filteredArtifacts, [System.StringComparer]::OrdinalIgnoreCase)
+    $artifactSet = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+    foreach ($artifact in $filteredArtifacts) {
+      $artifactSet.Add($artifact) | Out-Null
+    }
 
     # Warn about packages missing ArtifactName property
     $missingArtifactName = $allPackageProperties | Where-Object { $_.PSObject.Properties.Name -notcontains 'ArtifactName' }
