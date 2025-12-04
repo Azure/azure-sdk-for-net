@@ -51,6 +51,26 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
+        /// <summary>
+        /// Serializes the CodeTransparencyOfflineKeys to JSON bytes.
+        /// </summary>
+        public BinaryData ToBinaryData()
+        {
+            using (var stream = new System.IO.MemoryStream())
+            using (var writer = new Utf8JsonWriter(stream))
+            {
+                writer.WriteStartObject();
+                foreach (var kvp in _keysByIssuer)
+                {
+                    writer.WritePropertyName(kvp.Key);
+                    writer.WriteObjectValue(kvp.Value);
+                }
+                writer.WriteEndObject();
+                writer.Flush();
+                return new BinaryData(stream.ToArray());
+            }
+        }
+
         internal static CodeTransparencyOfflineKeys FromJsonDocument(JsonDocument jsonDocument)
         {
             return DeserializeKeys(jsonDocument.RootElement);
