@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <returns> A new <see cref="Peering.PeeringData"/> instance for mocking. </returns>
-        public static PeeringData PeeringData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PeeringSku sku = null, PeeringKind kind = default, DirectPeeringProperties direct = null, ExchangePeeringProperties exchange = null, IEnumerable<ConnectivityProbe> connectivityProbes = null, string peeringLocation = null, PeeringProvisioningState? provisioningState = null)
+        public static PeeringData PeeringData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PeeringSku sku = null, PeeringKind kind = default, DirectPeeringProperties direct = null, ExchangePeeringProperties exchange = null, IEnumerable<PeeringConnectivityProbe> connectivityProbes = null, string peeringLocation = null, PeeringProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
-            connectivityProbes ??= new List<ConnectivityProbe>();
+            connectivityProbes ??= new List<PeeringConnectivityProbe>();
 
             return new PeeringData(
                 id,
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Peering.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectivityProbe"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PeeringConnectivityProbe"/>. </summary>
         /// <param name="endpoint"> The endpoint IP address where traffic will be sent to from Azure for the connectivity probe. </param>
         /// <param name="azureRegion"> The Azure region where traffic will originate from for the connectivity probe. </param>
         /// <param name="protocol"> The protocol of the traffic that will be sent for the connectivity probe. </param>
@@ -178,12 +178,12 @@ namespace Azure.ResourceManager.Peering.Models
         /// Set to contain the prefixes that agents in Azure will send traffic from. For peers to allow into their
         /// network the connectivity probe traffic can reach their endpoint for the connectivity probe.
         /// </param>
-        /// <returns> A new <see cref="Models.ConnectivityProbe"/> instance for mocking. </returns>
-        public static ConnectivityProbe ConnectivityProbe(string endpoint = null, string azureRegion = null, Protocol? protocol = null, IEnumerable<string> prefixesToAccesslist = null)
+        /// <returns> A new <see cref="Models.PeeringConnectivityProbe"/> instance for mocking. </returns>
+        public static PeeringConnectivityProbe PeeringConnectivityProbe(string endpoint = null, string azureRegion = null, PeeringConnectivityProbeTrafficProtocol? protocol = null, IEnumerable<string> prefixesToAccesslist = null)
         {
             prefixesToAccesslist ??= new List<string>();
 
-            return new ConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist?.ToList(), serializedAdditionalRawData: null);
+            return new PeeringConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringSku"/>. </summary>

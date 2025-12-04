@@ -103,6 +103,8 @@ rename-mapping:
   PeeringServiceLocation.properties.azureRegion: -|azure-location
   RpUnbilledPrefix.azureRegion: -|azure-location
   CheckServiceProviderAvailabilityResponse: PeeringServiceProviderAvailability
+  ConnectivityProbe: PeeringConnectivityProbe
+  Protocol: PeeringConnectivityProbeTrafficProtocol
 
 directive:
 # there are multiple patch operations using the same definition of body parameter schema. This is very likely to be a source of future breaking changes.
@@ -137,8 +139,4 @@ directive:
           "$ref": "#/definitions/Resource"
         }
       ];
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.Resource['x-ms-azure-resource'] = true;
 ```

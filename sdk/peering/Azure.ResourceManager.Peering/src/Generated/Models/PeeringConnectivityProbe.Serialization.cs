@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class ConnectivityProbe : IUtf8JsonSerializable, IJsonModel<ConnectivityProbe>
+    public partial class PeeringConnectivityProbe : IUtf8JsonSerializable, IJsonModel<PeeringConnectivityProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringConnectivityProbe>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ConnectivityProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PeeringConnectivityProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Peering.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityProbe)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringConnectivityProbe)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Endpoint))
@@ -76,19 +76,19 @@ namespace Azure.ResourceManager.Peering.Models
             }
         }
 
-        ConnectivityProbe IJsonModel<ConnectivityProbe>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PeeringConnectivityProbe IJsonModel<PeeringConnectivityProbe>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityProbe)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringConnectivityProbe)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeConnectivityProbe(document.RootElement, options);
+            return DeserializePeeringConnectivityProbe(document.RootElement, options);
         }
 
-        internal static ConnectivityProbe DeserializeConnectivityProbe(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PeeringConnectivityProbe DeserializePeeringConnectivityProbe(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Peering.Models
             }
             string endpoint = default;
             string azureRegion = default;
-            Protocol? protocol = default;
+            PeeringConnectivityProbeTrafficProtocol? protocol = default;
             IReadOnlyList<string> prefixesToAccesslist = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    protocol = new Protocol(property.Value.GetString());
+                    protocol = new PeeringConnectivityProbeTrafficProtocol(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("prefixesToAccesslist"u8))
@@ -143,38 +143,38 @@ namespace Azure.ResourceManager.Peering.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PeeringConnectivityProbe(endpoint, azureRegion, protocol, prefixesToAccesslist ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ConnectivityProbe>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PeeringConnectivityProbe>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPeeringContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityProbe)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringConnectivityProbe)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ConnectivityProbe IPersistableModel<ConnectivityProbe>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PeeringConnectivityProbe IPersistableModel<PeeringConnectivityProbe>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringConnectivityProbe>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConnectivityProbe(document.RootElement, options);
+                        return DeserializePeeringConnectivityProbe(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityProbe)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringConnectivityProbe)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ConnectivityProbe>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PeeringConnectivityProbe>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

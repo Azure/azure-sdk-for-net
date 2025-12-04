@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Peering
             SystemData systemData = default;
             DirectPeeringProperties direct = default;
             ExchangePeeringProperties exchange = default;
-            IList<ConnectivityProbe> connectivityProbes = default;
+            IList<PeeringConnectivityProbe> connectivityProbes = default;
             string peeringLocation = default;
             PeeringProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -200,10 +200,10 @@ namespace Azure.ResourceManager.Peering
                             {
                                 continue;
                             }
-                            List<ConnectivityProbe> array = new List<ConnectivityProbe>();
+                            List<PeeringConnectivityProbe> array = new List<PeeringConnectivityProbe>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityProbe.DeserializeConnectivityProbe(item, options));
+                                array.Add(PeeringConnectivityProbe.DeserializePeeringConnectivityProbe(item, options));
                             }
                             connectivityProbes = array;
                             continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Peering
                 kind,
                 direct,
                 exchange,
-                connectivityProbes ?? new ChangeTrackingList<ConnectivityProbe>(),
+                connectivityProbes ?? new ChangeTrackingList<PeeringConnectivityProbe>(),
                 peeringLocation,
                 provisioningState,
                 serializedAdditionalRawData);

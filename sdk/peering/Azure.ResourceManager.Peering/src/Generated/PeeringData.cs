@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Peering
 
             Sku = sku;
             Kind = kind;
-            ConnectivityProbes = new ChangeTrackingList<ConnectivityProbe>();
+            ConnectivityProbes = new ChangeTrackingList<PeeringConnectivityProbe>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PeeringData"/>. </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Peering
         /// <param name="peeringLocation"> The location of the peering. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, IList<ConnectivityProbe> connectivityProbes, string peeringLocation, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal PeeringData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, PeeringSku sku, PeeringKind kind, DirectPeeringProperties direct, ExchangePeeringProperties exchange, IList<PeeringConnectivityProbe> connectivityProbes, string peeringLocation, PeeringProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Peering
         /// <summary> The properties that define an exchange peering. </summary>
         public ExchangePeeringProperties Exchange { get; set; }
         /// <summary> The connectivity probes associated with the peering. </summary>
-        public IList<ConnectivityProbe> ConnectivityProbes { get; }
+        public IList<PeeringConnectivityProbe> ConnectivityProbes { get; }
         /// <summary> The location of the peering. </summary>
         public string PeeringLocation { get; set; }
         /// <summary> The provisioning state of the resource. </summary>

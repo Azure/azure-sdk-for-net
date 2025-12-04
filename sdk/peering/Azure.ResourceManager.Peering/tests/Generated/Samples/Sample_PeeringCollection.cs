@@ -75,11 +75,11 @@ ConnectionIdentifier = "8AB00818-D533-4504-A25A-03A17F61201C",
                     PeerAsnId = new ResourceIdentifier("/subscriptions/subId/providers/Microsoft.Peering/peerAsns/myAsn1"),
                     DirectPeeringType = DirectPeeringType.Edge,
                 },
-                ConnectivityProbes = {new ConnectivityProbe
+                ConnectivityProbes = {new PeeringConnectivityProbe
 {
 Endpoint = "192.168.0.1",
 AzureRegion = "eastus",
-Protocol = Protocol.Icmp,
+Protocol = PeeringConnectivityProbeTrafficProtocol.Icmp,
 }},
                 PeeringLocation = "peeringLocation0",
             };
@@ -143,11 +143,11 @@ ConnectionIdentifier = "5F4CB5C7-6B43-4444-9338-9ABC72606C16",
                     PeerAsnId = new ResourceIdentifier("/subscriptions/subId/providers/Microsoft.Peering/peerAsns/myAsn1"),
                     DirectPeeringType = DirectPeeringType.IxRs,
                 },
-                ConnectivityProbes = {new ConnectivityProbe
+                ConnectivityProbes = {new PeeringConnectivityProbe
 {
 Endpoint = "192.168.0.1",
 AzureRegion = "eastus",
-Protocol = Protocol.TCP,
+Protocol = PeeringConnectivityProbeTrafficProtocol.TCP,
 }},
                 PeeringLocation = "peeringLocation0",
             };
@@ -219,11 +219,11 @@ ConnectionIdentifier = Guid.Parse("CDD8E673-CB07-47E6-84DE-3739F778762B"),
 }},
                     PeerAsnId = new ResourceIdentifier("/subscriptions/subId/providers/Microsoft.Peering/peerAsns/myAsn1"),
                 },
-                ConnectivityProbes = {new ConnectivityProbe
+                ConnectivityProbes = {new PeeringConnectivityProbe
 {
 Endpoint = "192.168.0.1",
 AzureRegion = "eastus",
-Protocol = Protocol.Icmp,
+Protocol = PeeringConnectivityProbeTrafficProtocol.Icmp,
 }},
                 PeeringLocation = "peeringLocation0",
             };
