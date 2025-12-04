@@ -2509,10 +2509,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
         /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
-        /// <param name="ownerId"> The name of this Gremlin database. </param>
-        /// <param name="ownerResourceId"> The resource ID of this Gremlin database. </param>
+        /// <param name="databaseName"> The name of this Gremlin database. </param>
+        /// <param name="databaseId"> The resource ID of this Gremlin database. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableGremlinDatabaseResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinDatabaseResourceInfo ExtendedRestorableGremlinDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string ownerId = null, string ownerResourceId = null)
+        public static ExtendedRestorableGremlinDatabaseResourceInfo ExtendedRestorableGremlinDatabaseResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string databaseName = null, string databaseId = null)
         {
             return new ExtendedRestorableGremlinDatabaseResourceInfo(
                 rid,
@@ -2520,8 +2520,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 canUndelete,
                 canUndeleteReason,
                 eventTimestamp,
-                ownerId,
-                ownerResourceId,
+                databaseName,
+                databaseId,
                 serializedAdditionalRawData: null);
         }
 
@@ -2549,10 +2549,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="canUndelete"> A state of this graph to identify if this graph is restorable in same account. </param>
         /// <param name="canUndeleteReason"> The reason why this graph can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this graph event happened. </param>
-        /// <param name="ownerId"> The name of this Gremlin graph. </param>
-        /// <param name="ownerResourceId"> The resource ID of this Gremlin graph. </param>
+        /// <param name="graphName"> The name of this Gremlin graph. </param>
+        /// <param name="graphId"> The resource ID of this Gremlin graph. </param>
         /// <returns> A new <see cref="Models.ExtendedRestorableGremlinGraphResourceInfo"/> instance for mocking. </returns>
-        public static ExtendedRestorableGremlinGraphResourceInfo ExtendedRestorableGremlinGraphResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string ownerId = null, string ownerResourceId = null)
+        public static ExtendedRestorableGremlinGraphResourceInfo ExtendedRestorableGremlinGraphResourceInfo(string rid = null, CosmosDBOperationType? operationType = null, string canUndelete = null, string canUndeleteReason = null, string eventTimestamp = null, string graphName = null, string graphId = null)
         {
             return new ExtendedRestorableGremlinGraphResourceInfo(
                 rid,
@@ -2560,8 +2560,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 canUndelete,
                 canUndeleteReason,
                 eventTimestamp,
-                ownerId,
-                ownerResourceId,
+                graphName,
+                graphId,
                 serializedAdditionalRawData: null);
         }
 

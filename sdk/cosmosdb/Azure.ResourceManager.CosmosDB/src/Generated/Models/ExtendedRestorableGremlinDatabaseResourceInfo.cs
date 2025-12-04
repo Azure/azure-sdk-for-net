@@ -56,18 +56,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="canUndelete"> A state of this database to identify if this database is restorable in same account. </param>
         /// <param name="canUndeleteReason"> The reason why this database can not be restored in same account. </param>
         /// <param name="eventTimestamp"> The time when this database event happened. </param>
-        /// <param name="ownerId"> The name of this Gremlin database. </param>
-        /// <param name="ownerResourceId"> The resource ID of this Gremlin database. </param>
+        /// <param name="databaseName"> The name of this Gremlin database. </param>
+        /// <param name="databaseId"> The resource ID of this Gremlin database. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExtendedRestorableGremlinDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string ownerId, string ownerResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExtendedRestorableGremlinDatabaseResourceInfo(string rid, CosmosDBOperationType? operationType, string canUndelete, string canUndeleteReason, string eventTimestamp, string databaseName, string databaseId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Rid = rid;
             OperationType = operationType;
             CanUndelete = canUndelete;
             CanUndeleteReason = canUndeleteReason;
             EventTimestamp = eventTimestamp;
-            OwnerId = ownerId;
-            OwnerResourceId = ownerResourceId;
+            DatabaseName = databaseName;
+            DatabaseId = databaseId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string EventTimestamp { get; }
         /// <summary> The name of this Gremlin database. </summary>
         [WirePath("ownerId")]
-        public string OwnerId { get; }
+        public string DatabaseName { get; }
         /// <summary> The resource ID of this Gremlin database. </summary>
         [WirePath("ownerResourceId")]
-        public string OwnerResourceId { get; }
+        public string DatabaseId { get; }
     }
 }

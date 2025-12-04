@@ -259,7 +259,11 @@ rename-mapping:
   PrivilegeResource.db: DBName
   RegionalServiceResource: CosmosDBRegionalService
   RestorableGremlinDatabasePropertiesResource: ExtendedRestorableGremlinDatabaseResourceInfo
+  RestorableGremlinDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableGremlinDatabasePropertiesResource.ownerResourceId: DatabaseId
   RestorableGremlinGraphPropertiesResource: ExtendedRestorableGremlinGraphResourceInfo
+  RestorableGremlinGraphPropertiesResource.ownerId: GraphName
+  RestorableGremlinGraphPropertiesResource.ownerResourceId: GraphId
   RestorableGremlinResourcesGetResult : RestorableGremlinResourceData
   RestorableLocationResource: RestorableLocationResourceInfo
   RestorableMongodbCollectionGetResult: RestorableMongoDBCollection
