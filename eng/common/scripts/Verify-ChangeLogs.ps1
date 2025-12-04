@@ -11,7 +11,7 @@ Set-StrictMode -Version 3
 
 function ShouldVerifyChangeLog ($PkgArtifactDetails) {
   if ($PkgArtifactDetails) {
-    if ($PkgArtifactDetails.skipVerifyChangelog -eq $true) {
+    if ($PkgArtifactDetails.skipVerifyChangeLog -eq $true) {
       return $false
     }
 
