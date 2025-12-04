@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Quota
 {
-    public partial class QuotaExtensions
+    public static partial class QuotaExtensions
     {
         /// <summary>
         /// Gets all the quota allocated to a subscription for the specified resource provider and location for resource names passed in $filter=resourceName eq {SKU}. This will include the GroupQuota and total quota allocated to the subscription. Only the Group quota allocated to the subscription can be allocated back to the MG Group Quota.
@@ -33,7 +33,9 @@ namespace Azure.ResourceManager.Quota
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static async Task<Response<SubscriptionQuotaAllocationsListResource>> GetSubscriptionQuotaAllocationsListAsync(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await managementGroupResource.GetSubscriptionQuotaAllocationsListAsync(Guid.Parse(subscriptionId), groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return await GetMockableQuotaManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsListAsync(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -54,7 +56,9 @@ namespace Azure.ResourceManager.Quota
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static Response<SubscriptionQuotaAllocationsListResource> GetSubscriptionQuotaAllocationsList(this ManagementGroupResource managementGroupResource, string subscriptionId, string groupQuotaName, string resourceProviderName, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionQuotaAllocationsList(managementGroupResource, Guid.Parse(subscriptionId), groupQuotaName, resourceProviderName, location, cancellationToken);
+            Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
+
+            return GetMockableQuotaManagementGroupResource(managementGroupResource).GetSubscriptionQuotaAllocationsList(subscriptionId, groupQuotaName, resourceProviderName, location, cancellationToken);
         }
 
         /// <summary>
