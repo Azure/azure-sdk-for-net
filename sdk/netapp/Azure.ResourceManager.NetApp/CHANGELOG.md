@@ -1,5 +1,15 @@
 # Release History
 
+## 1.15.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.15.0-beta.1 (2025-12-01)
 
 ### Features Added
@@ -24,7 +34,7 @@
 - Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-09-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1da0ccefea2127820defac6496bf4710c0902d78/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
 - Added `ExcludeReplicationsFilter` to `GetReplicationsAsync` to filter out replications 
 
-## 1.13.0-beta.1 (2025-10-22)   
+## 1.13.0-beta.1 (2025-10-22)
 
 ### Features Added
 - Upgraded api-version tag from 'package-2025-06-01' to 'package-2025-07-01-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c2c7ee70dea80830fe9ea94aed2cec6182c4e9e6/specification/netapp/resource-manager/readme.md.
