@@ -31,6 +31,10 @@ exists, read the Version property from the existing package properties JSON file
 and set that as the Version property for the new output. This has the effect of
 "adding" a DevVersion property to the file which could be different from the
 Verison property in that file.
+
+.PARAMETER artifactList
+Optional array of artifact names to filter the package properties. Only packages
+with artifact names matching entries in this list will be processed.
 #>
 
 [CmdletBinding()]
@@ -39,7 +43,8 @@ Param (
   [Parameter(Mandatory = $True)]
   [string] $outDirectory,
   [string] $prDiff,
-  [switch] $addDevVersion
+  [switch] $addDevVersion,
+  [array] $artifactList
 )
 
 . (Join-Path $PSScriptRoot common.ps1)
@@ -130,6 +135,28 @@ else
 if (-not (Test-Path -Path $outDirectory))
 {
   New-Item -ItemType Directory -Force -Path $outDirectory | Out-Null
+}
+
+if ($artifactList)
+{
+  # Filter out null, empty, or whitespace-only entries
+  $filteredArtifacts = @($artifactList | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+  
+  if ($filteredArtifacts.Count -eq 0)
+  {
+    Write-Warning "Artifact list contains no valid entries"
+    exit 1
+  }
+  
+  Write-Host "Filtering package properties to match artifact list: $($filteredArtifacts -join ', ')"
+  $artifactSet = [System.Collections.Generic.HashSet[string]]::new($filteredArtifacts, [System.StringComparer]::OrdinalIgnoreCase)
+  $allPackageProperties = $allPackageProperties | Where-Object { $_.ArtifactName -and $artifactSet.Contains($_.ArtifactName) }
+  
+  if (!$allPackageProperties)
+  {
+    Write-Error "No packages found matching the provided artifact list"
+    exit 1
+  }
 }
 
 foreach ($pkg in $allPackageProperties)
