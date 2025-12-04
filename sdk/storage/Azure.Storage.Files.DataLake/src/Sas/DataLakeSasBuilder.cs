@@ -207,6 +207,18 @@ namespace Azure.Storage.Sas
         public string DelegatedUserObjectId { get; set; }
 
         /// <summary>
+        /// Optional. Custom Request Headers to include in the SAS. Any usage of the SAS must
+        /// include these headers and values in the request.
+        /// </summary>
+        public Dictionary<string, string> RequestHeaders { get; set; }
+
+        /// <summary>
+        /// Optional. Custom Request Query Parameters to include in the SAS. Any usage of the SAS must
+        /// include these query parameters and values in the request.
+        /// </summary>
+        public Dictionary<string, string> RequestQueryParameters { get; set; }
+
+        /// <summary>
         /// Optional. Required when <see cref="Resource"/> is set to d to indicate the
         /// depth of the directory specified in the canonicalizedresource field of the
         /// string-to-sign to indicate the depth of the directory specified in the
@@ -513,7 +525,9 @@ namespace Azure.Storage.Sas
                 directoryDepth: _directoryDepth,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
-                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
+                requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
+                requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
             return p;
         }
 
@@ -523,6 +537,8 @@ namespace Azure.Storage.Sas
             string expiryTime = SasExtensions.FormatTimesForSasSigning(ExpiresOn);
             string signedStart = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedStartsOn);
             string signedExpiry = SasExtensions.FormatTimesForSasSigning(userDelegationKey.SignedExpiresOn);
+            string canonicalizedSignedRequestHeaders = SasExtensions.FormatRequestHeadersForSasSigning(RequestHeaders);
+            string canonicalizedSignedRequestQueryParameters = SasExtensions.FormatRequestQueryParametersForSasSigning(RequestQueryParameters);
 
             // See http://msdn.microsoft.com/en-us/library/azure/dn140255.aspx
             return string.Join("\n",
@@ -547,8 +563,8 @@ namespace Azure.Storage.Sas
                 Resource,
                 null, // snapshot
                 EncryptionScope,
-                null, // RequestHeader
-                null, // RequestQueryParameter
+                canonicalizedSignedRequestHeaders,
+                canonicalizedSignedRequestQueryParameters,
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,

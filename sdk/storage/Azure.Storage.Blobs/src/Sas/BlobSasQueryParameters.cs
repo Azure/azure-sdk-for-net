@@ -69,7 +69,7 @@ namespace Azure.Storage.Sas
         /// <summary>
         /// Creates a new BlobSasQueryParameters instance.
         /// </summary>
-        internal BlobSasQueryParameters (
+        internal BlobSasQueryParameters(
             string version,
             AccountSasServices? services,
             AccountSasResourceTypes? resourceTypes,
@@ -97,7 +97,9 @@ namespace Azure.Storage.Sas
             string correlationId = default,
             string encryptionScope = default,
             string delegatedUserObjectId = default,
-            string keyDelegatedUserTenantId = default)
+            string keyDelegatedUserTenantId = default,
+            List<string> requestHeaders = default,
+            List<string> requestQueryParameters = default)
             : base(
                 version,
                 services,
@@ -120,7 +122,9 @@ namespace Azure.Storage.Sas
                 correlationId,
                 directoryDepth: null,
                 encryptionScope,
-                delegatedUserObjectId)
+                delegatedUserObjectId,
+                requestHeaders,
+                requestQueryParameters)
         {
             KeyProperties = new UserDelegationKeyProperties
             {
@@ -141,7 +145,7 @@ namespace Azure.Storage.Sas
         /// <paramref name="values"/>.
         /// </summary>
         /// <param name="values">URI query parameters</param>
-        internal BlobSasQueryParameters (
+        internal BlobSasQueryParameters(
             IDictionary<string, string> values)
             : base(values)
         {

@@ -100,7 +100,9 @@ namespace Azure.Storage.Sas
             int? directoryDepth = default,
             string encryptionScope = default,
             string delegatedUserObjectId = default,
-            string keyDelegatedUserTenantId = default)
+            string keyDelegatedUserTenantId = default,
+            List<string> requestHeaders = default,
+            List<string> requestQueryParameters = default)
             : base(
                 version: version,
                 services: services,
@@ -123,7 +125,9 @@ namespace Azure.Storage.Sas
                 correlationId: correlationId,
                 directoryDepth: directoryDepth,
                 encryptionScope: encryptionScope,
-                delegatedUserObjectId: delegatedUserObjectId)
+                delegatedUserObjectId: delegatedUserObjectId,
+                requestHeaders: requestHeaders,
+                requestQueryParameter: requestQueryParameters)
         {
             KeyProperties = new UserDelegationKeyProperties
             {

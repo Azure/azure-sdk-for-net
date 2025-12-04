@@ -776,6 +776,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeSasBuilder dataLakeSasBuilder = BuildDataLakeSasBuilder(
                 includePath: true,
                 includeDelegatedObjectId: true,
+                includeRequestHeaders: true,
+                includeRequestQueryParameters: true,
                 fileSystemName: containerName,
                 path: fileName,
                 constants);
@@ -805,6 +807,8 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
             Assert.AreEqual(_sasPermissions.ToPermissionsString(), sasQueryParameters.Permissions);
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
+            Assert.AreEqual(SasExtensions.ConvertRequestDictToKeyList(constants.Sas.RequestHeaders), sasQueryParameters.RequestHeaders);
+            Assert.AreEqual(SasExtensions.ConvertRequestDictToKeyList(constants.Sas.RequestQueryParameters), sasQueryParameters.RequestQueryParameters);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
         }
@@ -812,6 +816,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         private DataLakeSasBuilder BuildDataLakeSasBuilder(
             bool includePath,
             bool includeDelegatedObjectId,
+            bool includeRequestHeaders,
+            bool includeRequestQueryParameters,
             string fileSystemName,
             string path,
             TestConstants constants)
@@ -837,6 +843,14 @@ namespace Azure.Storage.Files.DataLake.Tests
             if (includeDelegatedObjectId)
             {
                 builder.DelegatedUserObjectId = constants.Sas.DelegatedObjectId;
+            }
+            if (includeRequestHeaders)
+            {
+                builder.RequestHeaders = constants.Sas.RequestHeaders;
+            }
+            if (includeRequestQueryParameters)
+            {
+                builder.RequestQueryParameters = constants.Sas.RequestQueryParameters;
             }
 
             builder.SetPermissions(_sasPermissions);
@@ -881,8 +895,8 @@ namespace Azure.Storage.Files.DataLake.Tests
                 resource,
                 null,
                 constants.Sas.EncryptionScope,
-                null,
-                null,
+                SasExtensions.FormatRequestHeadersForSasSigning(constants.Sas.RequestHeaders),
+                SasExtensions.FormatRequestQueryParametersForSasSigning(constants.Sas.RequestQueryParameters),
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,
