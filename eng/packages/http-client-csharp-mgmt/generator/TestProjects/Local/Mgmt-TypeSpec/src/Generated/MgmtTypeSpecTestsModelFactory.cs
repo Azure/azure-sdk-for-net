@@ -556,6 +556,52 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new AllocatedToSubscription(subscriptionId, quotaAllocated, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupQuotaLimitListNextLink"> The URL to use for getting the next set of results. </param>
+        /// <returns> A new <see cref="Tests.GroupQuotaLimitListData"/> instance for mocking. </returns>
+        public static GroupQuotaLimitListData GroupQuotaLimitListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupQuotaLimitListNextLink = default)
+        {
+            return new GroupQuotaLimitListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                groupQuotaLimitListNextLink is null ? default : new GroupQuotaLimitListProperties(groupQuotaLimitListNextLink, null));
+        }
+
+        /// <summary> Subscription quota list. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
+        {
+            return new SubscriptionQuotaAllocationsListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The SubscriptionQuotaAllocationsListProperties. </summary>
+        /// <param name="value"> Subscription quota list. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsListProperties"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(IEnumerable<string> value = default, string nextLink = default)
+        {
+            value ??= new ChangeTrackingList<string>();
+
+            return new SubscriptionQuotaAllocationsListProperties(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Request for querying network sibling set. </summary>
         /// <param name="location"> Location to query. </param>
         /// <param name="subscriptionId"> Subscription ID to query. </param>

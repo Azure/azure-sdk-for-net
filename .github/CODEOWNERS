@@ -241,6 +241,12 @@
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
 
+# PRLabel: %Cognitive - Language
+/sdk/cognitivelanguage/*.QuestionAnswering.Inference/              @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+
+# PRLabel: %Cognitive - Language
+/sdk/cognitivelanguage/*.QuestionAnswering.Authoring/              @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson
 
@@ -800,9 +806,6 @@
 
 # ServiceLabel: %Search
 # ServiceOwners:                                                   @efrainretana @kuanlu95 @mattgotteiner
-
-# ServiceLabel: %Security
-# ServiceOwners:                                                   @chlahav
 
 # ServiceLabel: %SecurityInsights
 # ServiceOwners:                                                   @amirkeren
