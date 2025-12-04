@@ -100,12 +100,9 @@ namespace Azure.Storage.Sas
             int? directoryDepth = default,
             string encryptionScope = default,
             string delegatedUserObjectId = default,
-<<<<<<< HEAD
+            string keyDelegatedUserTenantId = default,
             List<string> requestHeaders = default,
             List<string> requestQueryParameters = default)
-=======
-            string keyDelegatedUserTenantId = default)
->>>>>>> feature/storage/stg101base
             : base(
                 version: version,
                 services: services,

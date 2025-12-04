@@ -525,12 +525,9 @@ namespace Azure.Storage.Sas
                 directoryDepth: _directoryDepth,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
-<<<<<<< HEAD
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
                 requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
                 requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
-=======
-                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
->>>>>>> feature/storage/stg101base
             return p;
         }
 
@@ -566,13 +563,8 @@ namespace Azure.Storage.Sas
                 Resource,
                 null, // snapshot
                 EncryptionScope,
-<<<<<<< HEAD
                 canonicalizedSignedRequestHeaders,
                 canonicalizedSignedRequestQueryParameters,
-=======
-                null, // RequestHeader
-                null, // RequestQueryParameter
->>>>>>> feature/storage/stg101base
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,

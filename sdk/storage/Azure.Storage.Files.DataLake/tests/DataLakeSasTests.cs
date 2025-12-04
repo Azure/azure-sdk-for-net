@@ -666,9 +666,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
             await file.CreateAsync();
 
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
@@ -743,9 +743,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
             await file.CreateAsync();
 
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
@@ -800,9 +800,9 @@ namespace Azure.Storage.Files.DataLake.Tests
             DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(fileName));
             await file.CreateAsync();
 
+            DataLakeGetUserDelegationKeyOptions options = new DataLakeGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {

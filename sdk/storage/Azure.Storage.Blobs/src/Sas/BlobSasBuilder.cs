@@ -505,12 +505,9 @@ namespace Azure.Storage.Sas
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
-<<<<<<< HEAD
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId,
                 requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
                 requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
-=======
-                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
->>>>>>> feature/storage/stg101base
             return p;
         }
 
@@ -546,13 +543,8 @@ namespace Azure.Storage.Sas
                     Resource,
                     Snapshot ?? BlobVersionId,
                     EncryptionScope,
-<<<<<<< HEAD
                     canonicalizedSignedRequestHeaders,
                     canonicalizedSignedRequestQueryParameters,
-=======
-                    null, // RequestHeader
-                    null, // RequestQueryParameter
->>>>>>> feature/storage/stg101base
                     CacheControl,
                     ContentDisposition,
                     ContentEncoding,

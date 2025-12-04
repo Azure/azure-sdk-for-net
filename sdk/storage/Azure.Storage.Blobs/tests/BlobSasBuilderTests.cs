@@ -775,13 +775,8 @@ namespace Azure.Storage.Blobs.Test
                 resource,
                 includeSnapshot ? Snapshot : null,
                 constants.Sas.EncryptionScope,
-<<<<<<< HEAD
                 SasExtensions.FormatRequestHeadersForSasSigning(constants.Sas.RequestHeaders),
                 SasExtensions.FormatRequestQueryParametersForSasSigning(constants.Sas.RequestQueryParameters),
-=======
-                null,
-                null,
->>>>>>> feature/storage/stg101base
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,

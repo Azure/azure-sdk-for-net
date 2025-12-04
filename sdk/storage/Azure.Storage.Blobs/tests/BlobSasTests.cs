@@ -559,9 +559,8 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
-            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
+            Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(options: options);
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
@@ -634,9 +633,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {
@@ -690,9 +689,9 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             BlobBaseClient blob = await GetNewBlobClient(test.Container, blobName);
 
+            BlobGetUserDelegationKeyOptions options = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: options);
 
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>()
             {

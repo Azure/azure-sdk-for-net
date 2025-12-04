@@ -97,12 +97,9 @@ namespace Azure.Storage.Sas
             string correlationId = default,
             string encryptionScope = default,
             string delegatedUserObjectId = default,
-<<<<<<< HEAD
+            string keyDelegatedUserTenantId = default,
             List<string> requestHeaders = default,
             List<string> requestQueryParameters = default)
-=======
-            string keyDelegatedUserTenantId = default)
->>>>>>> feature/storage/stg101base
             : base(
                 version,
                 services,
