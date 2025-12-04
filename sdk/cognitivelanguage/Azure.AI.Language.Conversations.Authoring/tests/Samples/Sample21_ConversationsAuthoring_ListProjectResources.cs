@@ -25,12 +25,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample21_ConversationsAuthoring_ListProjectResources
             string projectName = "{projectName}";
 
-            // Get the project-scoped client
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
             // Retrieve resources assigned to this project
             Pageable<ConversationAuthoringAssignedProjectResource> pageable =
-                projectClient.GetProjectResources();
+                client.GetProjectResources(projectName);
 
             foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
             {
@@ -61,12 +58,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample21_ConversationsAuthoring_ListProjectResourcesAsync
             string projectName = "{projectName}";
 
-            // Get the project-scoped client
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
             // Retrieve resources assigned to this project (async)
             AsyncPageable<ConversationAuthoringAssignedProjectResource> pageable =
-                projectClient.GetProjectResourcesAsync();
+                client.GetProjectResourcesAsync(projectName);
 
             await foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
             {

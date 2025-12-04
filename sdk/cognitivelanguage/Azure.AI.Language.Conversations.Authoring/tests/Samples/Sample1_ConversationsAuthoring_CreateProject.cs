@@ -24,6 +24,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample1_ConversationsAuthoring_CreateProject
             string projectName = "{projectName}";
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
             ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
                   projectName: projectName,
@@ -34,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Description = "Project description"
             };
 
-            Response response = client.CreateProject(projectName, projectData);
+            Response response = projectClient.CreateProject(projectData);
 
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion
@@ -51,9 +52,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             #region Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
             string projectName = "{projectName}";
             ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
             ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
-                   projectName: projectName,
+                  projectName: projectName,
                   language: "en-us"
                 )
             {
@@ -61,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 Description = "Project description"
             };
 
-            Response response = await client.CreateProjectAsync(projectName, projectData);
+            Response response = await projectClient.CreateProjectAsync(projectData);
 
             Console.WriteLine($"Project created with status: {response.Status}");
             #endregion

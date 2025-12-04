@@ -55,5 +55,33 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = FromCancellationToken(cancellationToken);
             return Import(waitUntil, content, projectFormat?.ToString(), context);
         }
+
+        /// <summary> Creates a new project or replaces an existing one. </summary>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response> CreateProjectAsync(
+            ConversationAuthoringCreateProjectDetails details,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await CreateProjectAsync(content, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Creates a new project or replaces an existing one. </summary>
+        /// <param name="details"> The new deployment info. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response CreateProject(
+            ConversationAuthoringCreateProjectDetails details,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(details, nameof(details));
+
+            using RequestContent content = details.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return CreateProject(content, context);
+        }
     }
 }

@@ -56,39 +56,5 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             return new ConversationAuthoringTrainedModel(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, projectName, trainedModelLabel, _apiVersion);
         }
-
-        /// <summary> Creates a new project or replaces an existing one. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="details"> The new deployment info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> CreateProjectAsync(
-            string projectName,
-            ConversationAuthoringCreateProjectDetails details,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(details, nameof(details));
-
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await CreateProjectAsync(projectName, content, context).ConfigureAwait(false);
-        }
-
-        /// <summary> Creates a new project or replaces an existing one. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="details"> The new deployment info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response CreateProject(
-            string projectName,
-            ConversationAuthoringCreateProjectDetails details,
-            CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(details, nameof(details));
-
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return CreateProject(projectName, content, context);
-        }
     }
 }

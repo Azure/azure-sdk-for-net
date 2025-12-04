@@ -24,10 +24,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProject
             string projectName = "{projectName}";
-
-            Operation operation = client.DeleteProject(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            Operation operation = projectClient.DeleteProject(
+                waitUntil: WaitUntil.Completed
             );
 
              // Extract the operation-location header
@@ -48,9 +47,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             #region Snippet:Sample5_ConversationsAuthoring_DeleteProjectAsync
             string projectName = "{projectName}";
-
-            Operation operation = await client.DeleteProjectAsync(
-                projectName: projectName,
+            ConversationAuthoringProject projectClient = client.GetProject(projectName);
+            Operation operation = await projectClient.DeleteProjectAsync(
                 waitUntil: WaitUntil.Completed
             );
 

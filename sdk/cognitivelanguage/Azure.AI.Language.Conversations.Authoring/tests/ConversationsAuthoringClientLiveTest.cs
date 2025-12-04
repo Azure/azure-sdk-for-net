@@ -29,6 +29,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         {
             // Arrange
             string projectName = "NewProject1201";
+
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
+
             var projectData = new ConversationAuthoringCreateProjectDetails(
                   projectKind: "Conversation",
                   projectName: projectName,
@@ -40,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
             };
 
             // Act
-            Response response = await client.CreateProjectAsync(projectName, projectData);
+            Response response = await projectAuthoringClient.CreateProjectAsync(projectData);
 
             // Assert
             Assert.IsNotNull(response);
@@ -392,11 +395,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         {
             // Arrange
             string projectName = "NewProject1201";
-
+            ConversationAuthoringProject projectAuthoringClient = client.GetProject(projectName);
             // Act
-            Operation operation = await client.DeleteProjectAsync(
-                waitUntil: WaitUntil.Completed,
-                projectName: projectName
+            Operation operation = await projectAuthoringClient.DeleteProjectAsync(
+                waitUntil: WaitUntil.Completed
             );
 
             // Assert
@@ -842,12 +844,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
         {
             // Arrange
             string projectName = "EmailApp";
-            ConversationAuthoringProject projectClient = client.GetProject(projectName);
 
             // Act
             // Method returns an AsyncPageable; no await on the call itself.
             AsyncPageable<ConversationAuthoringAssignedProjectResource> pageable =
-                projectClient.GetProjectResourcesAsync();
+                client.GetProjectResourcesAsync(projectName);
 
             // Assert each resource item as we stream results
             await foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
