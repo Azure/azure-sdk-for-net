@@ -12,11 +12,11 @@
 
 ## Summary
 
-- Total libraries: 396
-- Management Plane (MPG): 225
-  - Autorest/Swagger: 158
-  - New Emitter (TypeSpec): 27
-  - Old TypeSpec: 40
+- Total libraries: 397
+- Management Plane (MPG): 226
+  - Autorest/Swagger: 159
+  - New Emitter (TypeSpec): 28
+  - Old TypeSpec: 39
 - Data Plane (DPG): 171
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 19
@@ -168,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 27 / 67 (40.3%)
+**Migration Status**: 28 / 67 (41.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -220,7 +220,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock |  |
 | qumulo | Azure.ResourceManager.Qumulo |  |
-| quota | Azure.ResourceManager.Quota |  |
+| quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
@@ -243,7 +243,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 158
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 159
 
 | Service | Library |
 | ------- | ------- |
@@ -315,6 +315,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
+| hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers |
 | healthbot | Azure.ResourceManager.HealthBot |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |
