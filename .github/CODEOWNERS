@@ -1044,6 +1044,12 @@
 # ServiceLabel: %Neon Postgres %Mgmt
 # ServiceOwners:                                                   @alluri02
 
+# PRLabel: %NetApp Files
+/sdk/netapp/Azure.ResourceManager.*/							   @audunn @Azure/azure-sdk-write-netappfiles
+
+# ServiceLabel: %NetApp Files %Mgmt
+# ServiceOwners:                                                   @audunn
+
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
