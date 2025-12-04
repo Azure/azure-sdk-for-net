@@ -171,18 +171,11 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
             BinaryData serialized = ModelReaderWriter.Write(options);
             return serialized.ToString().Contains(value);
         }
-        async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens, bool isSentilel=false)
+        async Task AssertExpectedSerializationAsync(bool hasOldMaxTokens, bool hasNewMaxCompletionTokens)
         {
             _ = await client.CompleteChatAsync(["Just mocking, no call here"], options);
-            if (isSentilel)
-            {
-                Assert.True(GetSerializedOptionsContains("max_tokens"));
-                Assert.True(GetSerializedOptionsContains("__EMPTY__"));
-            }
-            else
-            {
-                Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
-            }
+            Assert.False(GetSerializedOptionsContains("__EMPTY__"));
+            Assert.That(GetSerializedOptionsContains("max_tokens"), Is.EqualTo(hasOldMaxTokens));
             Assert.That(GetSerializedOptionsContains("max_completion_tokens"), Is.EqualTo(hasNewMaxCompletionTokens));
         }
 
@@ -203,7 +196,7 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         // Invoking a chat completion call with a null value will
         // clear the new property usage flag if it was present
         options.MaxOutputTokenCount = null;
-        await AssertExpectedSerializationAsync(false, false, true);
+        await AssertExpectedSerializationAsync(false, false);
         options.MaxOutputTokenCount = 42;
         await AssertExpectedSerializationAsync(true, false);
 
@@ -580,16 +573,15 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
 
         string serializedOptionsAfterUse = ModelReaderWriter.Write(options).ToString();
 
-        Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
         if (useNewProperty)
         {
             Assert.That(serializedOptionsAfterUse, Does.Contain("max_completion_tokens"));
-            Assert.That(serializedOptionsAfterUse, Does.Contain("__EMPTY__"));
+            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_tokens"));
         }
         else
         {
+            Assert.That(serializedOptionsAfterUse, Does.Contain("max_tokens"));
             Assert.That(serializedOptionsAfterUse, Does.Not.Contain("max_completion_tokens"));
-            Assert.That(serializedOptionsAfterUse, Does.Not.Contain("__EMPTY__"));
         }
     }
     #endregion
