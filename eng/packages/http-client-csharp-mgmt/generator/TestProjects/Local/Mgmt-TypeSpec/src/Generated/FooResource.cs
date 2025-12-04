@@ -406,7 +406,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Foo
+        /// Update a Foo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -465,7 +465,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Foo
+        /// Update a Foo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

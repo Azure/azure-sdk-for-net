@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Microsoft.TypeSpec.Generator.Customizations;
 using static Azure.Core.Pipeline.TaskExtensions;
 
 #pragma warning disable AZC0007

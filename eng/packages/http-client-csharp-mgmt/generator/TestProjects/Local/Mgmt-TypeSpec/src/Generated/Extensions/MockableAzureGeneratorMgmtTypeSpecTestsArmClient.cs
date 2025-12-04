@@ -236,6 +236,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new GroupQuotaLimitListResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="SubscriptionQuotaAllocationsListResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SubscriptionQuotaAllocationsListResource"/> object. </returns>
+        public virtual SubscriptionQuotaAllocationsListResource GetSubscriptionQuotaAllocationsListResource(ResourceIdentifier id)
+        {
+            SubscriptionQuotaAllocationsListResource.ValidateResourceId(id);
+            return new SubscriptionQuotaAllocationsListResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="JooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="JooResource"/> object. </returns>

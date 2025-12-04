@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of NetworkSecurityPerimeter configuration propagation. </param>
         /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
         /// <param name="networkSecurityPerimeter"> NetworkSecurityPerimeter related information. </param>
@@ -68,10 +69,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="applicableFeatures"> Indicates that the NSP controls related to backing association are only applicable to a specific feature in backing resource's data plane. </param>
         /// <param name="parentAssociationName"> Source Resource Association name. </param>
         /// <param name="sourceResourceId"> ARM Id of source resource. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<EventHubsProvisioningIssue> provisioningIssues, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal EventHubsNetworkSecurityPerimeterConfiguration(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState, IList<EventHubsProvisioningIssue> provisioningIssues, EventHubsNetworkSecurityPerimeter networkSecurityPerimeter, EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation resourceAssociation, EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile profile, bool? isBackingResource, IReadOnlyList<string> applicableFeatures, string parentAssociationName, ResourceIdentifier sourceResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Location = location;
             ProvisioningState = provisioningState;
             ProvisioningIssues = provisioningIssues;
             NetworkSecurityPerimeter = networkSecurityPerimeter;
@@ -81,10 +82,12 @@ namespace Azure.ResourceManager.EventHubs.Models
             ApplicableFeatures = applicableFeatures;
             ParentAssociationName = parentAssociationName;
             SourceResourceId = sourceResourceId;
-            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
         [WirePath("properties.provisioningState")]
         public EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; set; }
@@ -112,8 +115,5 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> ARM Id of source resource. </summary>
         [WirePath("properties.sourceResourceId")]
         public ResourceIdentifier SourceResourceId { get; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
     }
 }
