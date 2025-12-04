@@ -35,6 +35,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [Bing Custom Search](#bing-custom-search)
   - [MCP tool](#mcp-tool)
   - [MCP tool with project connection](#mcp-tool-with-project-connection)
+  - [OpenAPI tool](#openapi-tool)
+  - [OpenAPI tool with project connection](#openapi-tool-project-connection)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -1009,6 +1011,87 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 In this scenario the agent can be asked questions about GitHub profile, the token is attributed to. The responses from Agent with project connection should be
 handled the same way as described in the MCP tool section.
 
+## OpenAPI tool
+OpenAPI tool allows Agent to get information from Web services using [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification).
+To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` object and provide the specification file to its constructor. `OpenAPIAgentTool` contains a `Description` property, serving as a hint when this tool should be used.
+
+```C# Snippet:Sample_CreateAgent_OpenAPI_Async
+string filePath = GetFile();
+OpenAPIFunctionDefinition toolDefinition = new(
+    name: "get_weather",
+    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
+    auth: new OpenAPIAnonymousAuthenticationDetails()
+);
+toolDefinition.Description = "Retrieve weather information for a location.";
+OpenAPIAgentTool openapiTool = new(toolDefinition);
+
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant.",
+    Tools = {openapiTool}
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+The Agent created this way can be asked questions, specific to the Web service.
+
+```C# Snippet:Sample_CreateResponse_OpenAPI_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+OpenAIResponse response = await responseClient.CreateResponseAsync(
+        userInputText: "Use the OpenAPI tool to print out, what is the weather in Seattle, WA today."
+    );
+Console.WriteLine(response.GetOutputText());
+```
+
+## OpenAPI tool with project connection
+Some Web services, using OpenAPI specification, may require authentication, which can be done through the Microsoft Foundry project connection.
+In our example we are using TripAdvisor  specification, which use key authentication.
+To create a connection, in the Azure portal open Microsoft Foundry you are using, at the left panel select "Management center" and then select "Connected resources", and, finally, create new connection of "Custom keys" type; name it and add a key value pair.
+Add key called "Key" and value with the actual TripAdvisor key.
+Contrary to OpenAPI tool without authentication, in this scenario we need to provide tool constructor with `OpenAPIProjectConnectionAuthenticationDetails` initialized with `OpenAPIProjectConnectionSecurityScheme`.
+
+```C# Snippet:Sample_CreateAgent_OpenAPIProjectConnection_Sync
+string filePath = GetFile();
+AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
+OpenAPIFunctionDefinition toolDefinition = new(
+    name: "tripadvisor",
+    spec: BinaryData.FromBytes(BinaryData.FromBytes(File.ReadAllBytes(filePath))),
+    auth: new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
+        projectConnectionId: tripadvisorConnection.Id
+    ))
+);
+toolDefinition.Description = "Trip Advisor API to get travel information.";
+OpenAPIAgentTool openapiTool = new(toolDefinition);
+
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant.",
+    Tools = { openapiTool }
+};
+AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+We recommend testing the Web service access before running production scenarios. It can be done by setting
+`ToolChoice = ResponseToolChoice.CreateRequiredChoice()` in the `ResponseCreationOptions`. This setting will
+force Agent to use tool and will trigger the error if it is not accessible.
+
+```C# Snippet:Sample_CreateResponse_OpenAPIProjectConnection_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ResponseCreationOptions responseOptions = new()
+{
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+};
+OpenAIResponse response = await responseClient.CreateResponseAsync(
+        userInputText: "Recommend me 5 top hotels in paris, France.",
+        options: responseOptions
+    );
+Console.WriteLine(response.GetOutputText());
+```
+
 ## Tracing
 **Note:** The tracing functionality is currently in preview with limited scope. Only agent creation operations generate dedicated gen_ai traces currently. As a preview feature, the trace structure including spans, attributes, and events may change in future releases.
 
@@ -1109,7 +1192,7 @@ See the [Azure SDK CONTRIBUTING.md][aiprojects_contrib] for details on building,
 [nuget]: https://dev.azure.com/azure-sdk/public/_artifacts/feed/azure-sdk-for-net/NuGet/Azure.AI.Projects.OpenAI
 <!-- replace  feature/ai-foundry/agents-v2 -> main -->
 [source_code]: https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI
-[product_doc]: https://learn.microsoft.com/azure/ai-studio/
+[product_doc]: https://learn.microsoft.com//azure/ai-foundry/
 [azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
 [azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
 [aiprojects_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md

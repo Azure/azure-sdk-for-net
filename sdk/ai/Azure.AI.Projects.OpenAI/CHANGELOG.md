@@ -1,4 +1,10 @@
 # Release History
+## 1.0.0-beta.5 (Unreleased)
+
+## Features Added
+
+- Added possibility of authentication to MCP server using project connection.
+
 
 ## 1.0.0-beta.4 (2025-11-17)
 
