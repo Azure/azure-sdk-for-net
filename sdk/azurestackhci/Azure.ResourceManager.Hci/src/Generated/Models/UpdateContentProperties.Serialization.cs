@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IList<ContentPayload> updatePayloads = default;
+            IList<HciUpdateContentPayload> updatePayloads = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("updatePayloads"u8))
                 {
-                    List<ContentPayload> array = new List<ContentPayload>();
+                    List<HciUpdateContentPayload> array = new List<HciUpdateContentPayload>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentPayload.DeserializeContentPayload(item, options));
+                        array.Add(HciUpdateContentPayload.DeserializeHciUpdateContentPayload(item, options));
                     }
                     updatePayloads = array;
                     continue;

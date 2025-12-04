@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Hci.Samples
             // invoke the operation
             SecretsLocationsChangeContent content = new SecretsLocationsChangeContent
             {
-                Properties = { new SecretsLocationDetails(SecretsType.BackupSecrets, "https://kvname.vault.azure.net/") },
+                Properties = { new SecretsLocationDetails(HciSecretsLocationType.BackupSecrets, "https://kvname.vault.azure.net/") },
             };
             ArmOperation<HciClusterResource> lro = await hciCluster.UpdateSecretsLocationsAsync(WaitUntil.Completed, content);
             HciClusterResource result = lro.Value;

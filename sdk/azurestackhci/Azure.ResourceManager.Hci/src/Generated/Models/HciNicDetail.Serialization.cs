@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Hci.Models
             string nicType = default;
             string vlanId = default;
             string nicStatus = default;
-            RdmaCapability? rdmaCapability = default;
+            HciNicRdmaCapability? rdmaCapability = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    rdmaCapability = new RdmaCapability(property.Value.GetString());
+                    rdmaCapability = new HciNicRdmaCapability(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

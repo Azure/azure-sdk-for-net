@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class PlatformPayload : IUtf8JsonSerializable, IJsonModel<PlatformPayload>
+    public partial class HciPlatformPayload : IUtf8JsonSerializable, IJsonModel<HciPlatformPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlatformPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciPlatformPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PlatformPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciPlatformPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciPlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformPayload)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPlatformPayload)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(PayloadUri))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        PlatformPayload IJsonModel<PlatformPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciPlatformPayload IJsonModel<HciPlatformPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciPlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlatformPayload)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPlatformPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlatformPayload(document.RootElement, options);
+            return DeserializeHciPlatformPayload(document.RootElement, options);
         }
 
-        internal static PlatformPayload DeserializePlatformPayload(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HciPlatformPayload DeserializeHciPlatformPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PlatformPayload(payloadUrl, payloadHash, payloadPackageSizeInBytes, payloadIdentifier, serializedAdditionalRawData);
+            return new HciPlatformPayload(payloadUrl, payloadHash, payloadPackageSizeInBytes, payloadIdentifier, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.Hci.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<PlatformPayload>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HciPlatformPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciPlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -243,26 +243,26 @@ namespace Azure.ResourceManager.Hci.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PlatformPayload)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPlatformPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PlatformPayload IPersistableModel<PlatformPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HciPlatformPayload IPersistableModel<HciPlatformPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciPlatformPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePlatformPayload(document.RootElement, options);
+                        return DeserializeHciPlatformPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlatformPayload)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPlatformPayload)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PlatformPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciPlatformPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

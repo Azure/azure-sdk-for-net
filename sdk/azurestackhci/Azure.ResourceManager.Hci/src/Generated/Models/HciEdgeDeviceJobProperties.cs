@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="status"> Status of Edge device job. </param>
         /// <param name="jobType"> Job Type to support polymorphic resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciEdgeDeviceJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciEdgeDeviceJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciEdgeDeviceJobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentMode = deploymentMode;
             ProvisioningState = provisioningState;
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
         public DateTimeOffset? EndTimeUtc { get; }
         /// <summary> Status of Edge device job. </summary>
         [WirePath("status")]
-        public JobStatus? Status { get; }
+        public HciEdgeDeviceJobStatus? Status { get; }
         /// <summary> Job Type to support polymorphic resource. </summary>
         internal HciEdgeDeviceJobType JobType { get; set; }
     }

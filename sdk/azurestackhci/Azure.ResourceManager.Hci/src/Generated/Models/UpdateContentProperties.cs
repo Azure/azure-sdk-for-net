@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="UpdateContentProperties"/>. </summary>
         /// <param name="updatePayloads"> Represents the payloads of a update content resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="updatePayloads"/> is null. </exception>
-        public UpdateContentProperties(IEnumerable<ContentPayload> updatePayloads)
+        public UpdateContentProperties(IEnumerable<HciUpdateContentPayload> updatePayloads)
         {
             Argument.AssertNotNull(updatePayloads, nameof(updatePayloads));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="UpdateContentProperties"/>. </summary>
         /// <param name="updatePayloads"> Represents the payloads of a update content resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateContentProperties(IList<ContentPayload> updatePayloads, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateContentProperties(IList<HciUpdateContentPayload> updatePayloads, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdatePayloads = updatePayloads;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Represents the payloads of a update content resource. </summary>
         [WirePath("updatePayloads")]
-        public IList<ContentPayload> UpdatePayloads { get; }
+        public IList<HciUpdateContentPayload> UpdatePayloads { get; }
     }
 }

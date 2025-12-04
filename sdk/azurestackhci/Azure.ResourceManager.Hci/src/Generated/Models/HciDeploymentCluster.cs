@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="hardwareClass"> Hardware class of the cluster. </param>
         /// <param name="clusterPattern"> Cluster Pattern supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciDeploymentCluster(string name, string witnessType, string witnessPath, string cloudAccountName, string azureServiceEndpoint, HardwareClass? hardwareClass, ClusterPattern? clusterPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciDeploymentCluster(string name, string witnessType, string witnessPath, string cloudAccountName, string azureServiceEndpoint, HciClusterHardwareClass? hardwareClass, HciClusterPattern? clusterPattern, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             WitnessType = witnessType;
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Hci.Models
         public string AzureServiceEndpoint { get; set; }
         /// <summary> Hardware class of the cluster. </summary>
         [WirePath("hardwareClass")]
-        public HardwareClass? HardwareClass { get; }
+        public HciClusterHardwareClass? HardwareClass { get; }
         /// <summary> Cluster Pattern supported. </summary>
         [WirePath("clusterPattern")]
-        public ClusterPattern? ClusterPattern { get; set; }
+        public HciClusterPattern? ClusterPattern { get; set; }
     }
 }

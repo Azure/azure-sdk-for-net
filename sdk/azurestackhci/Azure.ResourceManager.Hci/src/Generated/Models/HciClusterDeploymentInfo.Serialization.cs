@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Hci.Models
             HciClusterDeploymentSecuritySettings securitySettings = default;
             DeploymentSettingObservability observability = default;
             HciDeploymentCluster cluster = default;
-            IdentityProvider? identityProvider = default;
+            HciDeploymentIdentityProvider? identityProvider = default;
             DeploymentSettingStorage storage = default;
             string namingPrefix = default;
             string domainFqdn = default;
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Hci.Models
             IList<EceDeploymentSecrets> secrets = default;
             OptionalServices optionalServices = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
-            AssemblyInfo assemblyInfo = default;
+            HciDeploymentAssemblyInfo assemblyInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    identityProvider = new IdentityProvider(property.Value.GetString());
+                    identityProvider = new HciDeploymentIdentityProvider(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("storage"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    assemblyInfo = AssemblyInfo.DeserializeAssemblyInfo(property.Value, options);
+                    assemblyInfo = HciDeploymentAssemblyInfo.DeserializeHciDeploymentAssemblyInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -144,7 +144,7 @@ IPPools = {new DeploymentSettingIPPools
 StartingAddress = "10.57.48.60",
 EndingAddress = "10.57.48.66",
 }},
-DnsServerConfig = DnsServerConfig.UseDnsServer,
+DnsServerConfig = HciNetworkDnsServerConfig.UseDnsServer,
 DnsServers = {"10.57.50.90"},
 }},
 PhysicalNodes = {new DeploymentSettingPhysicalNodes
@@ -326,7 +326,7 @@ WitnessPath = "Cloud",
 CloudAccountName = "myasestoragacct",
 AzureServiceEndpoint = "core.windows.net",
 },
-IdentityProvider = IdentityProvider.LocalIdentity,
+IdentityProvider = HciDeploymentIdentityProvider.LocalIdentity,
 StorageConfigurationMode = "Express",
 NamingPrefix = "ms169",
 DomainFqdn = "ASZ1PLab8.nttest.microsoft.com",
@@ -339,7 +339,7 @@ IPPools = {new DeploymentSettingIPPools
 StartingAddress = "10.57.48.60",
 EndingAddress = "10.57.48.66",
 }},
-DnsZones = {new DnsZones
+DnsZones = {new HciNetworkDnsZones
 {
 DnsZoneName = "contoso.com",
 DnsForwarder = {"192.168.1.1"},

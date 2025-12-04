@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Represents details of a specific update content payload. </summary>
-    public partial class ContentPayload
+    public partial class HciUpdateContentPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContentPayload"/>. </summary>
-        public ContentPayload()
+        /// <summary> Initializes a new instance of <see cref="HciUpdateContentPayload"/>. </summary>
+        public HciUpdateContentPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContentPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciUpdateContentPayload"/>. </summary>
         /// <param name="uri"> Represents url of a update payload. </param>
         /// <param name="hash"> Represents hash of a update payload. </param>
         /// <param name="hashAlgorithm"> Represents hash algorithm of a update payload. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="group"> Represents the group of a update payload. </param>
         /// <param name="fileName"> Represents the file name of a update payload. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContentPayload(Uri uri, string hash, string hashAlgorithm, string identifier, string packageSizeInBytes, string group, string fileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciUpdateContentPayload(Uri uri, string hash, string hashAlgorithm, string identifier, string packageSizeInBytes, string group, string fileName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Hash = hash;

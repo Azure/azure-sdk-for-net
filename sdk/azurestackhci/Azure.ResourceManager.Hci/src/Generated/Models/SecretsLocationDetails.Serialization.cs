@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            SecretsType secretsType = default;
+            HciSecretsLocationType secretsType = default;
             string secretsLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("secretsType"u8))
                 {
-                    secretsType = new SecretsType(property.Value.GetString());
+                    secretsType = new HciSecretsLocationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("secretsLocation"u8))

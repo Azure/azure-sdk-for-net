@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string validatedSolutionRecipeVersion = default;
             string platformVersion = default;
-            IList<PlatformPayload> platformPayloads = default;
+            IList<HciPlatformPayload> platformPayloads = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (property.NameEquals("platformPayloads"u8))
                 {
-                    List<PlatformPayload> array = new List<PlatformPayload>();
+                    List<HciPlatformPayload> array = new List<HciPlatformPayload>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlatformPayload.DeserializePlatformPayload(item, options));
+                        array.Add(HciPlatformPayload.DeserializeHciPlatformPayload(item, options));
                     }
                     platformPayloads = array;
                     continue;

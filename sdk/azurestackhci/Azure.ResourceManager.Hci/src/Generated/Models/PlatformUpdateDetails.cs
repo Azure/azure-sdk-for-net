@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="PlatformUpdateDetails"/>. </summary>
         /// <param name="platformPayloads"> Represents the platform payloads of a platform update. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="platformPayloads"/> is null. </exception>
-        public PlatformUpdateDetails(IEnumerable<PlatformPayload> platformPayloads)
+        public PlatformUpdateDetails(IEnumerable<HciPlatformPayload> platformPayloads)
         {
             Argument.AssertNotNull(platformPayloads, nameof(platformPayloads));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="platformVersion"> Represents version of a platform update. </param>
         /// <param name="platformPayloads"> Represents the platform payloads of a platform update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformUpdateDetails(string validatedSolutionRecipeVersion, string platformVersion, IList<PlatformPayload> platformPayloads, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlatformUpdateDetails(string validatedSolutionRecipeVersion, string platformVersion, IList<HciPlatformPayload> platformPayloads, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ValidatedSolutionRecipeVersion = validatedSolutionRecipeVersion;
             PlatformVersion = platformVersion;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.Hci.Models
         public string PlatformVersion { get; set; }
         /// <summary> Represents the platform payloads of a platform update. </summary>
         [WirePath("platformPayloads")]
-        public IList<PlatformPayload> PlatformPayloads { get; }
+        public IList<HciPlatformPayload> PlatformPayloads { get; }
     }
 }

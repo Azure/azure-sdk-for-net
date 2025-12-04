@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="nicStatus"> The status of NIC, up, disconnected. </param>
         /// <param name="rdmaCapability"> Describes the RDMA capability of the network adapter. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IReadOnlyList<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus, RdmaCapability? rdmaCapability, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciNicDetail(string adapterName, string interfaceDescription, string componentId, string driverVersion, string ipv4Address, string subnetMask, string defaultGateway, IReadOnlyList<string> dnsServers, string defaultIsolationId, string macAddress, string slot, string switchName, string nicType, string vlanId, string nicStatus, HciNicRdmaCapability? rdmaCapability, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdapterName = adapterName;
             InterfaceDescription = interfaceDescription;
@@ -137,6 +137,6 @@ namespace Azure.ResourceManager.Hci.Models
         public string NicStatus { get; }
         /// <summary> Describes the RDMA capability of the network adapter. </summary>
         [WirePath("rdmaCapability")]
-        public RdmaCapability? RdmaCapability { get; }
+        public HciNicRdmaCapability? RdmaCapability { get; }
     }
 }

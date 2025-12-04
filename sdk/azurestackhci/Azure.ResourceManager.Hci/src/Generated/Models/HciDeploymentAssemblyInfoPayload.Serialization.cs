@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class AssemblyInfoPayload : IUtf8JsonSerializable, IJsonModel<AssemblyInfoPayload>
+    public partial class HciDeploymentAssemblyInfoPayload : IUtf8JsonSerializable, IJsonModel<HciDeploymentAssemblyInfoPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssemblyInfoPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciDeploymentAssemblyInfoPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AssemblyInfoPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciDeploymentAssemblyInfoPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciDeploymentAssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssemblyInfoPayload)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciDeploymentAssemblyInfoPayload)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Identifier))
@@ -72,19 +72,19 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        AssemblyInfoPayload IJsonModel<AssemblyInfoPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciDeploymentAssemblyInfoPayload IJsonModel<HciDeploymentAssemblyInfoPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciDeploymentAssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssemblyInfoPayload)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciDeploymentAssemblyInfoPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAssemblyInfoPayload(document.RootElement, options);
+            return DeserializeHciDeploymentAssemblyInfoPayload(document.RootElement, options);
         }
 
-        internal static AssemblyInfoPayload DeserializeAssemblyInfoPayload(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HciDeploymentAssemblyInfoPayload DeserializeHciDeploymentAssemblyInfoPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssemblyInfoPayload(identifier, hash, fileName, url, serializedAdditionalRawData);
+            return new HciDeploymentAssemblyInfoPayload(identifier, hash, fileName, url, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -232,9 +232,9 @@ namespace Azure.ResourceManager.Hci.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<AssemblyInfoPayload>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HciDeploymentAssemblyInfoPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciDeploymentAssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -243,26 +243,26 @@ namespace Azure.ResourceManager.Hci.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AssemblyInfoPayload)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciDeploymentAssemblyInfoPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AssemblyInfoPayload IPersistableModel<AssemblyInfoPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HciDeploymentAssemblyInfoPayload IPersistableModel<HciDeploymentAssemblyInfoPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciDeploymentAssemblyInfoPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAssemblyInfoPayload(document.RootElement, options);
+                        return DeserializeHciDeploymentAssemblyInfoPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssemblyInfoPayload)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciDeploymentAssemblyInfoPayload)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AssemblyInfoPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciDeploymentAssemblyInfoPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

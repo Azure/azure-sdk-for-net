@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="expirationTimestamp"> Remote support expiration timestamp. </param>
         /// <param name="remoteSupportType"> Remote support type. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal HciRemoteSupportJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, JobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType remoteSupportType, RemoteSupportJobReportedProperties reportedProperties) : base(deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, jobType, serializedAdditionalRawData)
+        internal HciRemoteSupportJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciEdgeDeviceJobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, RemoteSupportAccessLevel accessLevel, DateTimeOffset expirationTimestamp, RemoteSupportType remoteSupportType, RemoteSupportJobReportedProperties reportedProperties) : base(deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, jobType, serializedAdditionalRawData)
         {
             AccessLevel = accessLevel;
             ExpirationTimestamp = expirationTimestamp;

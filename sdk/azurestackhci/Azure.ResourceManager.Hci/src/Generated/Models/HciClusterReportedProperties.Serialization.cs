@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Hci.Models
             ClusterNodeType? clusterType = default;
             string manufacturer = default;
             OemActivation? oemActivation = default;
-            HardwareClass? hardwareClass = default;
+            HciClusterHardwareClass? hardwareClass = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hardwareClass = new HardwareClass(property.Value.GetString());
+                    hardwareClass = new HciClusterHardwareClass(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

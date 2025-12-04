@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Hci.Models
             string witnessPath = default;
             string cloudAccountName = default;
             string azureServiceEndpoint = default;
-            HardwareClass? hardwareClass = default;
-            ClusterPattern? clusterPattern = default;
+            HciClusterHardwareClass? hardwareClass = default;
+            HciClusterPattern? clusterPattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    hardwareClass = new HardwareClass(property.Value.GetString());
+                    hardwareClass = new HciClusterHardwareClass(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("clusterPattern"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    clusterPattern = new ClusterPattern(property.Value.GetString());
+                    clusterPattern = new HciClusterPattern(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

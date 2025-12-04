@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class ContentPayload : IUtf8JsonSerializable, IJsonModel<ContentPayload>
+    public partial class HciUpdateContentPayload : IUtf8JsonSerializable, IJsonModel<HciUpdateContentPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciUpdateContentPayload>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ContentPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciUpdateContentPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateContentPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentPayload)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciUpdateContentPayload)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Uri))
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        ContentPayload IJsonModel<ContentPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciUpdateContentPayload IJsonModel<HciUpdateContentPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateContentPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentPayload)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciUpdateContentPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentPayload(document.RootElement, options);
+            return DeserializeHciUpdateContentPayload(document.RootElement, options);
         }
 
-        internal static ContentPayload DeserializeContentPayload(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HciUpdateContentPayload DeserializeHciUpdateContentPayload(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContentPayload(
+            return new HciUpdateContentPayload(
                 url,
                 hash,
                 hashAlgorithm,
@@ -342,9 +342,9 @@ namespace Azure.ResourceManager.Hci.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ContentPayload>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HciUpdateContentPayload>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateContentPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -353,26 +353,26 @@ namespace Azure.ResourceManager.Hci.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentPayload)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciUpdateContentPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ContentPayload IPersistableModel<ContentPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HciUpdateContentPayload IPersistableModel<HciUpdateContentPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ContentPayload>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciUpdateContentPayload>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeContentPayload(document.RootElement, options);
+                        return DeserializeHciUpdateContentPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentPayload)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciUpdateContentPayload)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ContentPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciUpdateContentPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

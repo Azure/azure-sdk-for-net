@@ -194,6 +194,20 @@ rename-mapping:
   ExtensionProfile: HciEdgeDeviceExtensionProfile
   PerNodeExtensionState.instanceView: ExtensionInstanceView
   KubernetesVersion: HciLocationKubernetesVersion
+  SupportStatus: HciClusterSupportStatus
+  SecretsType: HciSecretsLocationType
+  RdmaCapability: HciNicRdmaCapability
+  PlatformPayload: HciPlatformPayload
+  OSImageProperties: HciOSImageProperties
+  JobStatus: HciEdgeDeviceJobStatus
+  IdentityProvider: HciDeploymentIdentityProvider
+  HardwareClass: HciClusterHardwareClass
+  DnsZones: HciNetworkDnsZones
+  DnsServerConfig: HciNetworkDnsServerConfig
+  ContentPayload: HciUpdateContentPayload
+  ClusterPattern: HciClusterPattern
+  AssemblyInfo: HciDeploymentAssemblyInfo
+  AssemblyInfoPayload: HciDeploymentAssemblyInfoPayload
 
 directive:
   - from: hci.json

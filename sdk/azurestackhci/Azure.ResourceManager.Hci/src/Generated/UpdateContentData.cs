@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci
         internal UpdateContentProperties Properties { get; set; }
         /// <summary> Represents the payloads of a update content resource. </summary>
         [WirePath("properties.updatePayloads")]
-        public IList<ContentPayload> UpdatePayloads
+        public IList<HciUpdateContentPayload> UpdatePayloads
         {
             get => Properties is null ? default : Properties.UpdatePayloads;
             set => Properties = new UpdateContentProperties(value);

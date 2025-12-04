@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class DnsZones : IUtf8JsonSerializable, IJsonModel<DnsZones>
+    public partial class HciNetworkDnsZones : IUtf8JsonSerializable, IJsonModel<HciNetworkDnsZones>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZones>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciNetworkDnsZones>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DnsZones>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HciNetworkDnsZones>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsZones>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkDnsZones>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZones)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HciNetworkDnsZones)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DnsZoneName))
@@ -68,19 +68,19 @@ namespace Azure.ResourceManager.Hci.Models
             }
         }
 
-        DnsZones IJsonModel<DnsZones>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HciNetworkDnsZones IJsonModel<HciNetworkDnsZones>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsZones>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkDnsZones>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZones)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HciNetworkDnsZones)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDnsZones(document.RootElement, options);
+            return DeserializeHciNetworkDnsZones(document.RootElement, options);
         }
 
-        internal static DnsZones DeserializeDnsZones(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HciNetworkDnsZones DeserializeHciNetworkDnsZones(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DnsZones(dnsZoneName, dnsForwarder ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new HciNetworkDnsZones(dnsZoneName, dnsForwarder ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -196,9 +196,9 @@ namespace Azure.ResourceManager.Hci.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DnsZones>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HciNetworkDnsZones>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsZones>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkDnsZones>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -207,26 +207,26 @@ namespace Azure.ResourceManager.Hci.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsZones)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciNetworkDnsZones)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DnsZones IPersistableModel<DnsZones>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HciNetworkDnsZones IPersistableModel<HciNetworkDnsZones>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DnsZones>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HciNetworkDnsZones>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDnsZones(document.RootElement, options);
+                        return DeserializeHciNetworkDnsZones(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsZones)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciNetworkDnsZones)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DnsZones>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HciNetworkDnsZones>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

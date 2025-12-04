@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
-    public partial class AssemblyInfo
+    public partial class HciDeploymentAssemblyInfo
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssemblyInfo"/>. </summary>
-        public AssemblyInfo()
+        /// <summary> Initializes a new instance of <see cref="HciDeploymentAssemblyInfo"/>. </summary>
+        public HciDeploymentAssemblyInfo()
         {
-            Payload = new ChangeTrackingList<AssemblyInfoPayload>();
+            Payload = new ChangeTrackingList<HciDeploymentAssemblyInfoPayload>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssemblyInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciDeploymentAssemblyInfo"/>. </summary>
         /// <param name="packageVersion"> Assembly Package version for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="payload"> Payload properties for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssemblyInfo(string packageVersion, IReadOnlyList<AssemblyInfoPayload> payload, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciDeploymentAssemblyInfo(string packageVersion, IReadOnlyList<HciDeploymentAssemblyInfoPayload> payload, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PackageVersion = packageVersion;
             Payload = payload;
@@ -67,6 +67,6 @@ namespace Azure.ResourceManager.Hci.Models
         public string PackageVersion { get; }
         /// <summary> Payload properties for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
         [WirePath("payload")]
-        public IReadOnlyList<AssemblyInfoPayload> Payload { get; }
+        public IReadOnlyList<HciDeploymentAssemblyInfoPayload> Payload { get; }
     }
 }

@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    /// <summary> Details of the DNS Zones to be configured. </summary>
-    public partial class DnsZones
+    /// <summary> Represents details of a specific platform update payload. </summary>
+    public partial class HciPlatformPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,28 +45,37 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DnsZones"/>. </summary>
-        public DnsZones()
+        /// <summary> Initializes a new instance of <see cref="HciPlatformPayload"/>. </summary>
+        public HciPlatformPayload()
         {
-            DnsForwarder = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsZones"/>. </summary>
-        /// <param name="dnsZoneName"> Name of the DNS Zone to be configured. </param>
-        /// <param name="dnsForwarder"> Forwarder details of the DNS Zone to be configured. </param>
+        /// <summary> Initializes a new instance of <see cref="HciPlatformPayload"/>. </summary>
+        /// <param name="payloadUri"> Represents url of a platform update payload. </param>
+        /// <param name="payloadHash"> Represents hash of a platform update payload. </param>
+        /// <param name="payloadPackageSizeInBytes"> Represents size in bytes of a platform update payload. </param>
+        /// <param name="payloadIdentifier"> Represents identifier of a platform update payload. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsZones(string dnsZoneName, IList<string> dnsForwarder, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciPlatformPayload(Uri payloadUri, string payloadHash, string payloadPackageSizeInBytes, string payloadIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DnsZoneName = dnsZoneName;
-            DnsForwarder = dnsForwarder;
+            PayloadUri = payloadUri;
+            PayloadHash = payloadHash;
+            PayloadPackageSizeInBytes = payloadPackageSizeInBytes;
+            PayloadIdentifier = payloadIdentifier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the DNS Zone to be configured. </summary>
-        [WirePath("dnsZoneName")]
-        public string DnsZoneName { get; set; }
-        /// <summary> Forwarder details of the DNS Zone to be configured. </summary>
-        [WirePath("dnsForwarder")]
-        public IList<string> DnsForwarder { get; }
+        /// <summary> Represents url of a platform update payload. </summary>
+        [WirePath("payloadUrl")]
+        public Uri PayloadUri { get; set; }
+        /// <summary> Represents hash of a platform update payload. </summary>
+        [WirePath("payloadHash")]
+        public string PayloadHash { get; set; }
+        /// <summary> Represents size in bytes of a platform update payload. </summary>
+        [WirePath("payloadPackageSizeInBytes")]
+        public string PayloadPackageSizeInBytes { get; set; }
+        /// <summary> Represents identifier of a platform update payload. </summary>
+        [WirePath("payloadIdentifier")]
+        public string PayloadIdentifier { get; set; }
     }
 }

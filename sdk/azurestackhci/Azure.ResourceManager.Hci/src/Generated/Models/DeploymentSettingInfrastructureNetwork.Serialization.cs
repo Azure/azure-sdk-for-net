@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.Hci.Models
             string subnetMask = default;
             string gateway = default;
             IList<DeploymentSettingIPPools> ipPools = default;
-            DnsServerConfig? dnsServerConfig = default;
-            IList<DnsZones> dnsZones = default;
+            HciNetworkDnsServerConfig? dnsServerConfig = default;
+            IList<HciNetworkDnsZones> dnsZones = default;
             IList<string> dnsServers = default;
             bool? useDhcp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    dnsServerConfig = new DnsServerConfig(property.Value.GetString());
+                    dnsServerConfig = new HciNetworkDnsServerConfig(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("dnsZones"u8))
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<DnsZones> array = new List<DnsZones>();
+                    List<HciNetworkDnsZones> array = new List<HciNetworkDnsZones>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DnsZones.DeserializeDnsZones(item, options));
+                        array.Add(HciNetworkDnsZones.DeserializeHciNetworkDnsZones(item, options));
                     }
                     dnsZones = array;
                     continue;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Hci.Models
                 gateway,
                 ipPools ?? new ChangeTrackingList<DeploymentSettingIPPools>(),
                 dnsServerConfig,
-                dnsZones ?? new ChangeTrackingList<DnsZones>(),
+                dnsZones ?? new ChangeTrackingList<HciNetworkDnsZones>(),
                 dnsServers ?? new ChangeTrackingList<string>(),
                 useDhcp,
                 serializedAdditionalRawData);

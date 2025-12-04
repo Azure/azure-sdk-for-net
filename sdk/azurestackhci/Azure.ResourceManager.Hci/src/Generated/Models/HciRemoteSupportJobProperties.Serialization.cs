@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Hci.Models
             string jobId = default;
             DateTimeOffset? startTimeUtc = default;
             DateTimeOffset? endTimeUtc = default;
-            JobStatus? status = default;
+            HciEdgeDeviceJobStatus? status = default;
             HciEdgeDeviceJobType jobType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    status = new JobStatus(property.Value.GetString());
+                    status = new HciEdgeDeviceJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("jobType"u8))

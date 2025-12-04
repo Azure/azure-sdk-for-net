@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Payload properties for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
-    public partial class AssemblyInfoPayload
+    public partial class HciDeploymentAssemblyInfoPayload
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.Hci.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssemblyInfoPayload"/>. </summary>
-        internal AssemblyInfoPayload()
+        /// <summary> Initializes a new instance of <see cref="HciDeploymentAssemblyInfoPayload"/>. </summary>
+        internal HciDeploymentAssemblyInfoPayload()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AssemblyInfoPayload"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HciDeploymentAssemblyInfoPayload"/>. </summary>
         /// <param name="identifier"> assembly identifier for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="hash"> Hash of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="fileName"> File name of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="uri"> Url of assembly package for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssemblyInfoPayload(string identifier, string hash, string fileName, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciDeploymentAssemblyInfoPayload(string identifier, string hash, string fileName, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identifier = identifier;
             Hash = hash;

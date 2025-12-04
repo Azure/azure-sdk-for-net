@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Hci
             HciProvisioningState? provisioningState = default;
             HciClusterStatus? status = default;
             HciClusterConnectivityStatus? connectivityStatus = default;
-            SupportStatus? supportStatus = default;
+            HciClusterSupportStatus? supportStatus = default;
             Guid? cloudId = default;
             string ring = default;
             string cloudManagementEndpoint = default;
@@ -290,9 +290,9 @@ namespace Azure.ResourceManager.Hci
             string serviceEndpoint = default;
             string resourceProviderObjectId = default;
             IList<SecretsLocationDetails> secretsLocations = default;
-            ClusterPattern? clusterPattern = default;
+            HciClusterPattern? clusterPattern = default;
             IList<LocalAvailabilityZones> localAvailabilityZones = default;
-            IdentityProvider? identityProvider = default;
+            HciDeploymentIdentityProvider? identityProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            supportStatus = new SupportStatus(property0.Value.GetString());
+                            supportStatus = new HciClusterSupportStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("cloudId"u8))
@@ -632,7 +632,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            clusterPattern = new ClusterPattern(property0.Value.GetString());
+                            clusterPattern = new HciClusterPattern(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("localAvailabilityZones"u8))
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            identityProvider = new IdentityProvider(property0.Value.GetString());
+                            identityProvider = new HciDeploymentIdentityProvider(property0.Value.GetString());
                             continue;
                         }
                     }

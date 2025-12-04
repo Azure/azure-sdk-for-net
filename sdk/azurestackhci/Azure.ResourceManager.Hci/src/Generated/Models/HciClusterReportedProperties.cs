@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="oemActivation"> OEM activation status of the cluster. </param>
         /// <param name="hardwareClass"> Hardware class of the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, DateTimeOffset? msiExpirationTimeStamp, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, HardwareClass? hardwareClass, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterReportedProperties(string clusterName, Guid? clusterId, string clusterVersion, IReadOnlyList<HciClusterNode> nodes, DateTimeOffset? lastUpdatedOn, DateTimeOffset? msiExpirationTimeStamp, ImdsAttestationState? imdsAttestation, HciClusterDiagnosticLevel? diagnosticLevel, IReadOnlyList<string> supportedCapabilities, ClusterNodeType? clusterType, string manufacturer, OemActivation? oemActivation, HciClusterHardwareClass? hardwareClass, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterName = clusterName;
             ClusterId = clusterId;
@@ -123,6 +123,6 @@ namespace Azure.ResourceManager.Hci.Models
         public OemActivation? OemActivation { get; }
         /// <summary> Hardware class of the cluster. </summary>
         [WirePath("hardwareClass")]
-        public HardwareClass? HardwareClass { get; }
+        public HciClusterHardwareClass? HardwareClass { get; }
     }
 }
