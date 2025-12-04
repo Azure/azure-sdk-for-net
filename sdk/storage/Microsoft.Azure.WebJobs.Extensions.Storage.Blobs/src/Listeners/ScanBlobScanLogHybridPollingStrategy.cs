@@ -73,7 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             if (!_scanInfo.TryGetValue(container, out ContainerScanInfo containerScanInfo))
             {
                 // First, try to load serialized scanInfo for this container.
-                DateTime? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
+                DateTimeOffset? latestStoredScan = await _blobScanInfoManager.LoadLatestScanAsync(blobServiceClient.AccountName, container.Name).ConfigureAwait(false);
 
                 containerScanInfo = new ContainerScanInfo()
                 {
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             List<BlobNotification> failedNotifications, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            DateTime lastScan = containerScanInfo.LastSweepCycleLatestModified;
+            DateTimeOffset lastScan = containerScanInfo.LastSweepCycleLatestModified;
 
             // For tracking
             string clientRequestId = Guid.NewGuid().ToString();
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // if the 'LatestModified' has changed, update it in the manager
             if (containerScanInfo.LastSweepCycleLatestModified > lastScan)
             {
-                DateTime latestScan = containerScanInfo.LastSweepCycleLatestModified;
+                DateTimeOffset latestScan = containerScanInfo.LastSweepCycleLatestModified;
 
                 // It's possible that we had some blobs that we failed to move to the queue. We want to make sure
                 // we continue to find these if the host needs to restart.

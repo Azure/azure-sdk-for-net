@@ -307,7 +307,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // delay slightly so we guarantee a later timestamp
             await Task.Delay(10);
 
-            await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTime.UtcNow);
+            await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTimeOffset.UtcNow);
             await product.RegisterAsync(_blobClientMock.Object, container, executor, CancellationToken.None);
 
             // delay slightly so we guarantee a later timestamp
@@ -404,7 +404,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             RunExecuteWithMultiPollingInterval(expectedNames, product, executor, testScanBlobLimitPerPoll);
 
-            DateTime? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, ContainerName);
+            DateTimeOffset? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, ContainerName);
             Assert.True(storedTime < earliestErrorTime);
             Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
             _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             containerMock.Setup(x => x.Name).Returns(ContainerName);
             containerMock.Setup(x => x.AccountName).Returns(AccountName);
 
-            // Create first pages of blob to list from
+            // Create first page of blobs to list from
             List<BlobItem> blobItems = new List<BlobItem>();
             List<string> expectedNames = new List<string>();
             for (int i = 0; i < 5; i++)
@@ -460,7 +460,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // Add blob with LMT after polling started to the second polling expected names.
             secondSetExpectedNames.Add(blobNameWithLmtAfterStartedPolling);
 
-            // Set up GetBlobsAsync to return pages with contination token for each page, but not at the end of each polling
+            // Set up GetBlobsAsync to return pages with continuation token for each page, but not at the end of each polling
             containerMock.SetupSequence(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                 // First polling
                 .Returns(() =>
@@ -488,7 +488,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             RunExecuteWithMultiPollingInterval(expectedNames, product, executor, blobItems.Count);
 
             // Wait 5 seconds to ensure that the blob with LMT after polling started is detected as a new blob.
-            Thread.Sleep(5000);
+            await Task.Delay(TimeSpan.FromSeconds(5));
 
             // Act / Assert - Second Polling
             // We expect all the blobs we updated above to be detected and the blob that was created after the first polling started that wasn't detected
@@ -619,23 +619,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
         private class TestBlobScanInfoManager : IBlobScanInfoManager
         {
-            private IDictionary<string, IDictionary<string, DateTime>> _latestScans;
+            private IDictionary<string, IDictionary<string, DateTimeOffset>> _latestScans;
 
             public TestBlobScanInfoManager()
             {
-                _latestScans = new Dictionary<string, IDictionary<string, DateTime>>();
+                _latestScans = new Dictionary<string, IDictionary<string, DateTimeOffset>>();
                 UpdateCounts = new Dictionary<string, IDictionary<string, int>>();
             }
 
             public IDictionary<string, IDictionary<string, int>> UpdateCounts { get; private set; }
 
-            public Task<DateTime?> LoadLatestScanAsync(string storageAccountName, string containerName)
+            public Task<DateTimeOffset?> LoadLatestScanAsync(string storageAccountName, string containerName)
             {
-                DateTime? value = null;
-                IDictionary<string, DateTime> accounts;
+                DateTimeOffset? value = null;
+                IDictionary<string, DateTimeOffset> accounts;
                 if (_latestScans.TryGetValue(storageAccountName, out accounts))
                 {
-                    DateTime latestScan;
+                    DateTimeOffset latestScan;
                     if (accounts.TryGetValue(containerName, out latestScan))
                     {
                         value = latestScan;
@@ -645,20 +645,20 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 return Task.FromResult(value);
             }
 
-            public Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTime latestScan)
+            public Task UpdateLatestScanAsync(string storageAccountName, string containerName, DateTimeOffset latestScan)
             {
                 SetScanInfo(storageAccountName, containerName, latestScan);
                 IncrementCount(storageAccountName, containerName);
                 return Task.FromResult(0);
             }
 
-            public void SetScanInfo(string storageAccountName, string containerName, DateTime latestScan)
+            public void SetScanInfo(string storageAccountName, string containerName, DateTimeOffset latestScan)
             {
-                IDictionary<string, DateTime> containers;
+                IDictionary<string, DateTimeOffset> containers;
 
                 if (!_latestScans.TryGetValue(storageAccountName, out containers))
                 {
-                    _latestScans[storageAccountName] = new Dictionary<string, DateTime>();
+                    _latestScans[storageAccountName] = new Dictionary<string, DateTimeOffset>();
                     containers = _latestScans[storageAccountName];
                 }
 

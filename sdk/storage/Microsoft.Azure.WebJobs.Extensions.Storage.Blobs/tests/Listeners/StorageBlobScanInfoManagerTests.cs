@@ -106,8 +106,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             var container = blobServiceClient.GetBlobContainerClient(HostContainerNames.Hosts);
             await container.CreateIfNotExistsAsync();
 
-            DateTime now = DateTime.UtcNow;
-            DateTime past = now.AddMinutes(-1);
+            DateTimeOffset now = DateTimeOffset.UtcNow;
+            DateTimeOffset past = now.AddMinutes(-1);
 
             var blob = GetBlockBlobReference(blobServiceClient, hostId, storageAccountName, containerName);
             await blob.UploadTextAsync(string.Format("{{ 'LatestScan' : '{0}' }}", past.ToString("o")));
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             var scanInfo = GetBlockBlobReference(blobServiceClient, hostId, storageAccountName, containerName).DownloadText();
             var scanInfoJson = JObject.Parse(scanInfo);
-            var storedTime = (DateTime)scanInfoJson["LatestScan"];
+            var storedTime = (DateTimeOffset)scanInfoJson["LatestScan"];
 
             Assert.AreEqual(now, storedTime);
             Assert.AreEqual(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
