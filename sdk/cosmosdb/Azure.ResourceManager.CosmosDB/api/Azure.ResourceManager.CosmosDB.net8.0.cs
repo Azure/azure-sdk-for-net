@@ -3338,8 +3338,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
     public partial class CosmosDBFleetspaceAccountConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFleetspaceAccountConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFleetspaceAccountConfiguration>
     {
         public CosmosDBFleetspaceAccountConfiguration() { }
-        public string ArmLocation { get { throw null; } set { } }
-        public string ResourceId { get { throw null; } set { } }
+        public Azure.Core.AzureLocation? ArmLocation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.CosmosDB.Models.CosmosDBFleetspaceAccountConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFleetspaceAccountConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CosmosDB.Models.CosmosDBFleetspaceAccountConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

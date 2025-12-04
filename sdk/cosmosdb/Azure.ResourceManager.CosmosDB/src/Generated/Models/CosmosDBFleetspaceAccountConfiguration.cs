@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="resourceId"> The resource identifier of global database account in the Fleetspace Account. </param>
         /// <param name="armLocation"> The location of  global database account in the Fleetspace Account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBFleetspaceAccountConfiguration(string resourceId, string armLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBFleetspaceAccountConfiguration(ResourceIdentifier resourceId, AzureLocation? armLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ArmLocation = armLocation;
@@ -63,9 +64,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The resource identifier of global database account in the Fleetspace Account. </summary>
         [WirePath("resourceId")]
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The location of  global database account in the Fleetspace Account. </summary>
         [WirePath("armLocation")]
-        public string ArmLocation { get; set; }
+        public AzureLocation? ArmLocation { get; set; }
     }
 }

@@ -202,6 +202,8 @@ rename-mapping:
   DistanceFunction: VectorDistanceFunction
   FleetResource: CosmosDBFleet
   FleetspaceAccountPropertiesGlobalDatabaseAccountProperties: CosmosDBFleetspaceAccountConfiguration
+  FleetspaceAccountPropertiesGlobalDatabaseAccountProperties.armLocation: -|azure-location
+  FleetspaceAccountPropertiesGlobalDatabaseAccountProperties.resourceId: -|arm-id
   FleetspaceAccountResource: CosmosDBFleetspaceAccount
   FleetspacePropertiesFleetspaceApiKind: CosmosDBFleetspaceApiKind
   FleetspacePropertiesServiceTier: CosmosDBFleetspaceServiceTier

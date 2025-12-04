@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             {
                 GlobalDatabaseAccountProperties = new CosmosDBFleetspaceAccountConfiguration
                 {
-                    ResourceId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/providers/Microsoft.DocumentDB/resourceGroup/rg1/databaseAccounts/db1",
-                    ArmLocation = "West US",
+                    ResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/providers/Microsoft.DocumentDB/resourceGroup/rg1/databaseAccounts/db1"),
+                    ArmLocation = new AzureLocation("West US"),
                 },
             };
             ArmOperation<CosmosDBFleetspaceAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fleetspaceAccountName, data);
