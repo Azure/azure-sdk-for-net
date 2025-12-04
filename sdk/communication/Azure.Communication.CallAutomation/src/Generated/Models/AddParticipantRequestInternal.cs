@@ -42,7 +42,8 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
         /// <param name="customCallingContext"> Used by customer to send custom calling context to targets. </param>
-        internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, string operationCallbackUri, CustomCallingContextInternal customCallingContext)
+        /// <param name="postDialTones"> DTMF tones to send as part of the call for a participant. </param>
+        internal AddParticipantRequestInternal(PhoneNumberIdentifierModel sourceCallerIdNumber, string sourceDisplayName, CommunicationIdentifierModel participantToAdd, int? invitationTimeoutInSeconds, string operationContext, string operationCallbackUri, CustomCallingContextInternal customCallingContext, string postDialTones)
         {
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
@@ -51,6 +52,7 @@ namespace Azure.Communication.CallAutomation
             OperationContext = operationContext;
             OperationCallbackUri = operationCallbackUri;
             CustomCallingContext = customCallingContext;
+            PostDialTones = postDialTones;
         }
 
         /// <summary>
@@ -79,5 +81,7 @@ namespace Azure.Communication.CallAutomation
         public string OperationCallbackUri { get; set; }
         /// <summary> Used by customer to send custom calling context to targets. </summary>
         public CustomCallingContextInternal CustomCallingContext { get; set; }
+        /// <summary> DTMF tones to send as part of the call for a participant. </summary>
+        public string PostDialTones { get; set; }
     }
 }

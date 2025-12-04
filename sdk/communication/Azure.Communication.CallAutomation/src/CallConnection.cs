@@ -390,6 +390,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),
                 SourceDisplayName = options.ParticipantToAdd.SourceDisplayName,
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
+                PostDialTones = options.PostDialTones,
                 InvitationTimeoutInSeconds = options.InvitationTimeoutInSeconds,
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
             };

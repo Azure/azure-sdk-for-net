@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Communication.CallAutomation.Models.Events;
 using Azure.Messaging;
 
 namespace Azure.Communication.CallAutomation
@@ -180,6 +181,10 @@ namespace Azure.Communication.CallAutomation
                     return MoveParticipantFailed.Deserialize(eventData);
                 case nameof(MoveParticipantSucceeded):
                     return MoveParticipantSucceeded.Deserialize(eventData);
+                case nameof(PostDialDtmfTonesCompleted):
+                    return PostDialDtmfTonesCompleted.Deserialize(eventData);
+                case nameof(PostDialDtmfTonesFailed):
+                    return PostDialDtmfTonesFailed.Deserialize(eventData);
                 #region Dialog
                 case nameof(DialogCompleted):
                     return DialogCompleted.Deserialize(eventData);

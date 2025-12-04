@@ -74,6 +74,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("dtmfOptions"u8);
                 writer.WriteObjectValue(DtmfOptions);
             }
+            if (Optional.IsDefined(PostDialTones))
+            {
+                writer.WritePropertyName("postDialTones"u8);
+                writer.WriteStringValue(PostDialTones);
+            }
             writer.WriteEndObject();
         }
 

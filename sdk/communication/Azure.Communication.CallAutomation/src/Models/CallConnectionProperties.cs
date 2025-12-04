@@ -69,7 +69,8 @@ namespace Azure.Communication.CallAutomation
               new MediaStreamingSubscription(
                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.Id,
                   callConnectionPropertiesDtoInternal.MediaStreamingSubscription.State,
-                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes)
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.SubscribedContentTypes,
+                  callConnectionPropertiesDtoInternal.MediaStreamingSubscription.StreamUrl)
               : null;
             DtmfConfigurationOptions = callConnectionPropertiesDtoInternal.DtmfConfigurationOptions == null
                 ? null

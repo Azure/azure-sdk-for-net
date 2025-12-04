@@ -56,23 +56,23 @@ namespace Azure.Communication.CallAutomation.Tests.Models
         public void CallAutomationModelFactoryCanInstantiateTranscriptionData()
         {
             var text = "Hello World";
-            var format = "display";
+            var format = "Display";
             var confidence = 0.95;
             ulong offset = 1000;
             ulong duration = 2000;
             var words = new List<WordData> { new WordData { Text = "Hello", Offset = 1000, Duration = 500 } };
             var participantRawID = "participant123";
-            var resultState = "final";
+            var resultState = "Final";
 
             var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format, confidence, offset, duration, words, participantRawID, resultState);
 
             Assert.AreEqual(text, transcriptionData.Text);
-            Assert.AreEqual(format, transcriptionData.Format);
+            Assert.AreEqual(format, transcriptionData.Format.ToString());
             Assert.AreEqual(confidence, transcriptionData.Confidence);
             Assert.AreEqual(offset, transcriptionData.Offset);
             Assert.AreEqual(duration, transcriptionData.Duration);
             Assert.AreEqual(CommunicationIdentifier.FromRawId(participantRawID), transcriptionData.Participant);
-            Assert.AreEqual(resultState, transcriptionData.ResultStatus);
+            Assert.AreEqual(resultState, transcriptionData.ResultStatus.ToString());
             Assert.IsNotNull(transcriptionData.Words);
             Assert.AreEqual(1, transcriptionData.Words.Count());
         }

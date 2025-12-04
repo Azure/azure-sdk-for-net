@@ -47,6 +47,11 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("customCallingContext"u8);
                 writer.WriteObjectValue(CustomCallingContext);
             }
+            if (Optional.IsDefined(PostDialTones))
+            {
+                writer.WritePropertyName("postDialTones"u8);
+                writer.WriteStringValue(PostDialTones);
+            }
             writer.WriteEndObject();
         }
 
