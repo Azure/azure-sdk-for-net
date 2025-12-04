@@ -27,12 +27,8 @@ namespace Azure.Health.Deidentification
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public DeidentificationClientGetJobDocumentsInternalCollectionResultOfT(DeidentificationClient client, string jobName, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
             _client = client;
             _jobName = jobName;
             _maxpagesize = maxpagesize;

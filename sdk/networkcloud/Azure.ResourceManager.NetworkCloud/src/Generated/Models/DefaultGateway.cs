@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    /// <summary>
-    /// The indicator of whether this is the default gateway.
-    /// Only one of the attached networks (including the CloudServicesNetwork attachment) for a single machine may be specified as True.
-    /// </summary>
+    /// <summary> The indicator of whether this is the default gateway. Only one of the attached networks (including the CloudServicesNetwork attachment) for a single machine may be specified as True. </summary>
     public readonly partial struct DefaultGateway : IEquatable<DefaultGateway>
     {
         private readonly string _value;
