@@ -90,9 +90,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                                                         ex.ErrorCode == BlobErrorCode.InsufficientAccountPermissions ||
                                                         ex.ErrorCode == BlobErrorCode.AuthorizationFailure)
                 {
-                    // Log which account we couldn't enable logging on due to permissions. Ensure that no SAS token is logged on the Uri.
-                    BlobUriBuilder blobUriBuilder = new BlobUriBuilder(blobServiceClient.Uri);
-                    Logger.LoggingNotEnabledOnTargetAccount(_logger, blobUriBuilder.AccountName);
+                    // Log which account we couldn't enable logging on due to permissions.
+                    Logger.LoggingNotEnabledOnTargetAccount(_logger, blobServiceClient.AccountName);
                 }
             }
         }
