@@ -33,6 +33,6 @@ public partial class DnsTxtRecordInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _values = DefineListProperty<string>("Values", ["value"]);
+        _values = DefineListProperty<string>(nameof(Values), ["value"]);
     }
 }

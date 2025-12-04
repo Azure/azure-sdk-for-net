@@ -2,3 +2,4 @@ directory: specification/servicefabricmanagedclusters/resource-manager/Microsoft
 commit: 8933ca1338d1a5ba0a44b2c240f10c9fb7ec8037
 repo: Azure/azure-rest-api-specs
 
+emitterPackageJsonPath: eng/legacy-emitter-package.json

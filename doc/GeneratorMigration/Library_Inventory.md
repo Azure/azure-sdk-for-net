@@ -12,15 +12,15 @@
 
 ## Summary
 
-- Total libraries: 394
+- Total libraries: 396
 - Management Plane (MPG): 225
-  - Autorest/Swagger: 159
-  - New Emitter (TypeSpec): 25
+  - Autorest/Swagger: 158
+  - New Emitter (TypeSpec): 26
   - Old TypeSpec: 41
-- Data Plane (DPG): 169
+- Data Plane (DPG): 171
   - Autorest/Swagger: 86
-  - New Emitter (TypeSpec): 18
-  - Old TypeSpec: 16
+  - New Emitter (TypeSpec): 19
+  - Old TypeSpec: 17
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 18 / 34 (52.9%)
+**Migration Status**: 19 / 36 (52.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -40,6 +40,8 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | batch | Azure.Compute.Batch |  |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
 | communication | Azure.Communication.JobRouter |  |
@@ -58,7 +60,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | monitor | Azure.Monitor.Ingestion | ✅ |
 | monitor | Azure.Monitor.Query.Logs | ✅ |
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
-| onlineexperimentation | Azure.Analytics.OnlineExperimentation |  |
+| onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |
 | openai | Azure.AI.OpenAI | ✅ |
 | purview | Azure.Analytics.Purview.DataMap |  |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
@@ -166,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 25 / 66 (37.9%)
+**Migration Status**: 26 / 67 (38.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -192,6 +194,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure |  |
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations |  |
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
+| dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric |  |
@@ -240,7 +243,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 159
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 158
 
 | Service | Library |
 | ------- | ------- |
@@ -301,7 +304,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
-| dynatrace | Azure.ResourceManager.Dynatrace |
 | edgeorder | Azure.ResourceManager.EdgeOrder |
 | edgezones | Azure.ResourceManager.EdgeZones |
 | eventgrid | Azure.ResourceManager.EventGrid |

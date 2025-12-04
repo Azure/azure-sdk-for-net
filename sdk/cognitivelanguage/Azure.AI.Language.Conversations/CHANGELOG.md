@@ -1,5 +1,15 @@
 # Release History
 
+## 2.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 2.0.0-beta.5 (2025-11-25)
 
 This version of the client library defaults to the service API version `2025-11-15-preview`.

@@ -32,5 +32,10 @@ interface Bazs {
 
   list is ArmResourceListByParent<Baz>;
 
-  listBySubscription is ArmListBySubscription<Baz>;
+  listBySubscription is ArmListBySubscription<
+    Baz,
+    Parameters = {
+      @query("$top")
+      $top?: int32;
+    }>;
 }
