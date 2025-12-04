@@ -434,6 +434,7 @@ namespace Azure.Communication.JobRouter
         protected JobRouterAdministrationClient() { }
         public JobRouterAdministrationClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterAdministrationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
+        public JobRouterAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public JobRouterAdministrationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.JobRouter.ClassificationPolicy> CreateClassificationPolicy(Azure.Communication.JobRouter.CreateClassificationPolicyOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -506,6 +507,7 @@ namespace Azure.Communication.JobRouter
         protected JobRouterClient() { }
         public JobRouterClient(string connectionString, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public JobRouterClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
+        public JobRouterClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public JobRouterClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.JobRouter.JobRouterClientOptions options = null) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response AcceptJobOffer(string workerId, string offerId, Azure.RequestContext context) { throw null; }

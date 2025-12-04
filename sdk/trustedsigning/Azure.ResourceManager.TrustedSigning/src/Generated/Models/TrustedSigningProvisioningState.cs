@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     public readonly partial struct TrustedSigningProvisioningState : IEquatable<TrustedSigningProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Updating in progress. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deletion in progress. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Resource creation started. </summary>
+        private const string AcceptedValue = "Accepted";
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TrustedSigningProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string AcceptedValue = "Accepted";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static TrustedSigningProvisioningState Succeeded { get; } = new TrustedSigningProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static TrustedSigningProvisioningState Failed { get; } = new TrustedSigningProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static TrustedSigningProvisioningState Canceled { get; } = new TrustedSigningProvisioningState(CanceledValue);
+
         /// <summary> Updating in progress. </summary>
         public static TrustedSigningProvisioningState Updating { get; } = new TrustedSigningProvisioningState(UpdatingValue);
+
         /// <summary> Deletion in progress. </summary>
         public static TrustedSigningProvisioningState Deleting { get; } = new TrustedSigningProvisioningState(DeletingValue);
+
         /// <summary> Resource creation started. </summary>
         public static TrustedSigningProvisioningState Accepted { get; } = new TrustedSigningProvisioningState(AcceptedValue);
+
         /// <summary> Determines if two <see cref="TrustedSigningProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrustedSigningProvisioningState left, TrustedSigningProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrustedSigningProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrustedSigningProvisioningState left, TrustedSigningProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrustedSigningProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrustedSigningProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrustedSigningProvisioningState(string value) => new TrustedSigningProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrustedSigningProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrustedSigningProvisioningState?(string value) => value == null ? null : new TrustedSigningProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrustedSigningProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrustedSigningProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

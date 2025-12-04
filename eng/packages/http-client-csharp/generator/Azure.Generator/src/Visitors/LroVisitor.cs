@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Generator.Providers;
@@ -14,6 +15,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -57,16 +59,24 @@ namespace Azure.Generator.Visitors
 
             foreach (var statement in explicitOperator.BodyStatements!)
             {
-                if (statement is ExpressionStatement { Expression: KeywordExpression
-                        { Keyword: "return", Expression: InvokeMethodExpression invokeMethodExpression } })
+                if (statement is ExpressionStatement
+                    {
+                        Expression: KeywordExpression
+                        {
+                            Keyword: "return", Expression: InvokeMethodExpression invokeMethodExpression
+                        }
+                    })
                 {
-                    invokeMethodExpression.Update(
-                        arguments:
-                        [
-                            invokeMethodExpression.Arguments[0]
-                                .Invoke("GetProperty", Literal(resultSegment)),
-                            ..invokeMethodExpression.Arguments.Skip(1)
-                        ]);
+                    if (invokeMethodExpression.Arguments.Count > 0 && invokeMethodExpression.Arguments[0] is ScopedApi<JsonElement>)
+                    {
+                        invokeMethodExpression.Update(
+                            arguments:
+                            [
+                                invokeMethodExpression.Arguments[0]
+                                    .Invoke("GetProperty", Literal(resultSegment)),
+                                ..invokeMethodExpression.Arguments.Skip(1)
+                            ]);
+                    }
                 }
             }
         }

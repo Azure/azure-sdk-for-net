@@ -22,5 +22,7 @@ namespace Azure.AI.VoiceLive
         /// inclusive of tool calls, that was used in this response.
         /// </summary>
         public MaxResponseOutputTokensOption MaxOutputTokens { get; }
+
+        internal string Object { get; }
     }
 }

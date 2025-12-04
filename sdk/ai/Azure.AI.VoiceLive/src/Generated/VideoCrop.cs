@@ -18,8 +18,8 @@ namespace Azure.AI.VoiceLive
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
-        /// <param name="topLeftInternal"> Top-left corner of the crop region. </param>
-        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. </param>
+        /// <param name="topLeftInternal"> Top-left corner of the crop region. Array of [x, y], must be non-negative integers. </param>
+        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. Array of [x, y], must be non-negative integers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topLeftInternal"/> or <paramref name="bottomRightInternal"/> is null. </exception>
         public VideoCrop(IEnumerable<int> topLeftInternal, IEnumerable<int> bottomRightInternal)
         {
@@ -31,8 +31,8 @@ namespace Azure.AI.VoiceLive
         }
 
         /// <summary> Initializes a new instance of <see cref="VideoCrop"/>. </summary>
-        /// <param name="topLeftInternal"> Top-left corner of the crop region. </param>
-        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. </param>
+        /// <param name="topLeftInternal"> Top-left corner of the crop region. Array of [x, y], must be non-negative integers. </param>
+        /// <param name="bottomRightInternal"> Bottom-right corner of the crop region. Array of [x, y], must be non-negative integers. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal VideoCrop(IList<int> topLeftInternal, IList<int> bottomRightInternal, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {

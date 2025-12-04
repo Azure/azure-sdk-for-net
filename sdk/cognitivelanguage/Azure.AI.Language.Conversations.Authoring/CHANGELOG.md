@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed diagnostic scope names in `ConversationAuthoringProject` methods.
+
 ### Other Changes
 
 ## 1.0.0-beta.2 (2025-07-24)

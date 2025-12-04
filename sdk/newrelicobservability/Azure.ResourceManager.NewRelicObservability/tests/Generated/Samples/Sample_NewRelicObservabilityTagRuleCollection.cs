@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TagRulesCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_TagRulesCreateOrUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_CreateOrUpdate_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_CreateOrUpdate_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -150,7 +150,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_TagRulesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,7 +184,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TagRulesListByNewRelicMonitorResourceMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_ListByNewRelicMonitorResource_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_ListByNewRelicMonitorResource_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_ListByNewRelicMonitorResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -220,7 +220,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TagRulesListByNewRelicMonitorResourceMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_ListByNewRelicMonitorResource_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_ListByNewRelicMonitorResource_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_ListByNewRelicMonitorResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -256,7 +256,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_TagRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -286,7 +286,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_TagRulesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -316,7 +316,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TagRulesGetMaximumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -358,7 +358,7 @@ Action = NewRelicObservabilityTagAction.Include,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_TagRulesGetMinimumSetGen()
         {
-            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/stable/2024-03-01/examples/TagRules_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/newrelic/resource-manager/NewRelic.Observability/preview/2025-05-01-preview/examples/TagRules_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "TagRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

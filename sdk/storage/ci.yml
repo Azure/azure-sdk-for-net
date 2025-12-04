@@ -81,7 +81,3 @@ extends:
       skipSmokeTests: true
     TestSetupSteps:
     - template: /sdk/storage/tests-install-azurite.yml
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Storage.Blobs
-      ExpectedWarningsFilepath: None

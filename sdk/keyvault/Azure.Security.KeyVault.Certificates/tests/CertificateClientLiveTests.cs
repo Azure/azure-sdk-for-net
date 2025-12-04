@@ -3,7 +3,6 @@
 
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Keys.Cryptography;
-using Azure.Security.KeyVault.Tests;
 using NUnit.Framework;
 using Org.BouncyCastle.Asn1;
 using Org.BouncyCastle.Asn1.Pkcs;

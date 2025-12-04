@@ -83,10 +83,10 @@ namespace Azure.Storage.DataMovement
             _isChunkHandlerRunning = true;
         }
 
-        public Task CleanUpAsync()
+        public async Task CleanUpAsync()
         {
             _isChunkHandlerRunning = false;
-            return _stageChunkProcessor.CleanUpAsync();
+            await _stageChunkProcessor.CleanUpAsync().ConfigureAwait(false);
         }
 
         public async ValueTask QueueChunkAsync(QueueStageChunkArgs args, CancellationToken cancellationToken = default)
@@ -137,7 +137,21 @@ namespace Azure.Storage.DataMovement
                 if (_isChunkHandlerRunning)
                 {
                     // This will trigger the job part to call Dispose on this object
-                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                    _ = Task.Run(async () =>
+                    {
+                        try
+                        {
+                            await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                        }
+                        catch
+                        {
+                            // Log and swallow any exceptions to prevent crashing the process
+                            DataMovementEventSource.Singleton
+                                .UnexpectedTransferFailed(
+                                    nameof(CommitChunkHandler),
+                                    ex.ToString());
+                        }
+                    });
                 }
             }
         }

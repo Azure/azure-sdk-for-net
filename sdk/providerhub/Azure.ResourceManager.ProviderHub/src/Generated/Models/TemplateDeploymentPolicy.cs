@@ -46,22 +46,24 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
-        /// <param name="capabilities"></param>
-        /// <param name="preflightOptions"></param>
-        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="preflightOptions"> The preflight options. </param>
+        public TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions)
         {
             Capabilities = capabilities;
             PreflightOptions = preflightOptions;
         }
 
         /// <summary> Initializes a new instance of <see cref="TemplateDeploymentPolicy"/>. </summary>
-        /// <param name="capabilities"></param>
-        /// <param name="preflightOptions"></param>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="preflightOptions"> The preflight options. </param>
+        /// <param name="preflightNotifications"> The preflight notifications. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities, TemplateDeploymentPreflightOption preflightOptions, TemplateDeploymentPreflightNotification? preflightNotifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capabilities = capabilities;
             PreflightOptions = preflightOptions;
+            PreflightNotifications = preflightNotifications;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,9 +72,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets the capabilities. </summary>
-        public TemplateDeploymentCapability Capabilities { get; }
-        /// <summary> Gets the preflight options. </summary>
-        public TemplateDeploymentPreflightOption PreflightOptions { get; }
+        /// <summary> The capabilities. </summary>
+        public TemplateDeploymentCapability Capabilities { get; set; }
+        /// <summary> The preflight options. </summary>
+        public TemplateDeploymentPreflightOption PreflightOptions { get; set; }
+        /// <summary> The preflight notifications. </summary>
+        public TemplateDeploymentPreflightNotification? PreflightNotifications { get; set; }
     }
 }

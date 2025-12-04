@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            StorageDiscoveryWorkspacePropertiesUpdate properties = default;
+            StorageDiscoveryWorkspacePatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                     {
                         continue;
                     }
-                    properties = StorageDiscoveryWorkspacePropertiesUpdate.DeserializeStorageDiscoveryWorkspacePropertiesUpdate(prop.Value, options);
+                    properties = StorageDiscoveryWorkspacePatchProperties.DeserializeStorageDiscoveryWorkspacePatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

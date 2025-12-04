@@ -17,7 +17,7 @@ namespace Azure.Core.Foundations
 
         /// <summary> Initializes a new instance of <see cref="PagedDeployment"/>. </summary>
         /// <param name="value"> The Deployment items on this page. </param>
-        internal PagedDeployment(IEnumerable<AssetDeployment> value)
+        internal PagedDeployment(IEnumerable<AIProjectDeployment> value)
         {
             Value = value.ToList();
         }
@@ -27,7 +27,7 @@ namespace Azure.Core.Foundations
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedDeployment(IList<AssetDeployment> value, Uri nextLink, string clientRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedDeployment(IList<AIProjectDeployment> value, Uri nextLink, string clientRequestId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.Core.Foundations
         }
 
         /// <summary> The Deployment items on this page. </summary>
-        public IList<AssetDeployment> Value { get; }
+        public IList<AIProjectDeployment> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

@@ -41,16 +41,22 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The path to use for the health probe. Default is /. </summary>
+        [WirePath("properties.path")]
         public string Path { get; set; }
         /// <summary> Protocol scheme to use for this probe. </summary>
+        [WirePath("properties.protocol")]
         public FrontDoorProtocol? Protocol { get; set; }
         /// <summary> The number of seconds between health probes. </summary>
+        [WirePath("properties.intervalInSeconds")]
         public int? IntervalInSeconds { get; set; }
         /// <summary> Configures which HTTP method to use to probe the backends defined under backendPools. </summary>
+        [WirePath("properties.healthProbeMethod")]
         public FrontDoorHealthProbeMethod? HealthProbeMethod { get; set; }
         /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
+        [WirePath("properties.enabledState")]
         public HealthProbeEnabled? EnabledState { get; set; }
         /// <summary> Resource status. </summary>
+        [WirePath("properties.resourceState")]
         public FrontDoorResourceState? ResourceState { get; }
     }
 }

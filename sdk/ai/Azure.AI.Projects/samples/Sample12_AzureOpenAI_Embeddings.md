@@ -17,8 +17,18 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+var credential = new DefaultAzureCredential();
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+{
+    throw new InvalidOperationException("Invalid URI.");
+}
+uri = new Uri($"https://{uri.Host}");
+
+AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
 EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Generate an embedding");
@@ -32,8 +42,18 @@ var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDINGS_MODEL_DEPLOYMENT_NAME");
 var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 Console.WriteLine("Create the Azure OpenAI embedding client");
-AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-AzureOpenAIClient azureOpenAIClient = (AzureOpenAIClient)projectClient.GetOpenAIClient(connectionName: connectionName, apiVersion: null);
+var credential = new DefaultAzureCredential();
+AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), credential);
+
+ClientConnection connection = projectClient.GetConnection(typeof(AzureOpenAIClient).FullName!);
+
+if (!connection.TryGetLocatorAsUri(out Uri uri) || uri is null)
+{
+    throw new InvalidOperationException("Invalid URI.");
+}
+uri = new Uri($"https://{uri.Host}");
+
+AzureOpenAIClient azureOpenAIClient = new AzureOpenAIClient(uri, credential);
 EmbeddingClient embeddingsClient = azureOpenAIClient.GetEmbeddingClient(deploymentName: modelDeploymentName);
 
 Console.WriteLine("Generate an embedding");

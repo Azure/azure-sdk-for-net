@@ -10,8 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Monitor.Query;
-using Azure.Monitor.Query.Models;
+using Azure.Monitor.Query.Logs;
+using Azure.Monitor.Query.Logs.Models;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Tests.Samples
@@ -91,7 +91,7 @@ namespace Azure.Monitor.Ingestion.Tests.Samples
             string countQueryId = batch.AddWorkspaceQuery(
                 workspaceId,
                 query,
-                new QueryTimeRange(TimeSpan.FromDays(1)));
+                new LogsQueryTimeRange(TimeSpan.FromDays(1)));
 
             Response<LogsBatchQueryResultCollection> queryResponse =
                 await logsQueryClient.QueryBatchAsync(batch).ConfigureAwait(false);

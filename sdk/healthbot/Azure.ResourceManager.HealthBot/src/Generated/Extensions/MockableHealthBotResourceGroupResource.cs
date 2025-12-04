@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HealthBot.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-08-24</description>
+        /// <description>2025-05-25</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

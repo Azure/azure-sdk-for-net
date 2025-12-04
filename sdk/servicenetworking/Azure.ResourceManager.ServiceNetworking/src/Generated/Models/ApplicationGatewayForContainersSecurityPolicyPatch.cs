@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -66,17 +65,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal SecurityPolicyUpdateProperties Properties { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafPolicyId
-        {
-            get => Properties is null ? default : Properties.WafPolicyId;
-            set
-            {
-                if (Properties is null)
-                    Properties = new SecurityPolicyUpdateProperties();
-                Properties.WafPolicyId = value;
-            }
-        }
+        public SecurityPolicyUpdateProperties Properties { get; set; }
     }
 }

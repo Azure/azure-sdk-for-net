@@ -34,12 +34,25 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 throw new FormatException($"The model {nameof(ExportDependenciesContent)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("focusedMachineId"u8);
-            writer.WriteStringValue(FocusedMachineId);
+            if (Optional.IsDefined(FocusedMachineId))
+            {
+                writer.WritePropertyName("focusedMachineId"u8);
+                writer.WriteStringValue(FocusedMachineId);
+            }
             if (Optional.IsDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteObjectValue(Filters, options);
+            }
+            if (Optional.IsCollectionDefined(ApplianceNameList))
+            {
+                writer.WritePropertyName("applianceNameList"u8);
+                writer.WriteStartArray();
+                foreach (var item in ApplianceNameList)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,12 +93,17 @@ namespace Azure.ResourceManager.DependencyMap.Models
             }
             ResourceIdentifier focusedMachineId = default;
             DependencyMapVisualizationFilter filters = default;
+            IList<string> applianceNameList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("focusedMachineId"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     focusedMachineId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
@@ -98,13 +116,27 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     filters = DependencyMapVisualizationFilter.DeserializeDependencyMapVisualizationFilter(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("applianceNameList"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    applianceNameList = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExportDependenciesContent(focusedMachineId, filters, serializedAdditionalRawData);
+            return new ExportDependenciesContent(focusedMachineId, filters, applianceNameList ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExportDependenciesContent>.Write(ModelReaderWriterOptions options)

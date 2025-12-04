@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="PendingUploadResult"/>. </summary>
         /// <param name="blobReference"> Container-level read, write, list SAS. </param>
         /// <param name="pendingUploadId"> ID for this upload request. </param>
-        internal PendingUploadResult(BlobReference blobReference, string pendingUploadId)
+        internal PendingUploadResult(AIProjectBlobReference blobReference, string pendingUploadId)
         {
             BlobReference = blobReference;
             PendingUploadId = pendingUploadId;
@@ -28,7 +28,7 @@ namespace Azure.AI.Projects
         /// <param name="version"> Version of asset to be created if user did not specify version when initially creating upload. </param>
         /// <param name="pendingUploadType"> BlobReference is the only supported type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PendingUploadResult(BlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PendingUploadResult(AIProjectBlobReference blobReference, string pendingUploadId, string version, PendingUploadType pendingUploadType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobReference = blobReference;
             PendingUploadId = pendingUploadId;
@@ -38,7 +38,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Container-level read, write, list SAS. </summary>
-        public BlobReference BlobReference { get; }
+        public AIProjectBlobReference BlobReference { get; }
 
         /// <summary> ID for this upload request. </summary>
         public string PendingUploadId { get; }

@@ -89,7 +89,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            BlobReference blobReference = default;
+            AIProjectBlobReference blobReference = default;
             string pendingUploadId = default;
             string version = default;
             PendingUploadType pendingUploadType = default;
@@ -98,7 +98,7 @@ namespace Azure.AI.Projects
             {
                 if (prop.NameEquals("blobReference"u8))
                 {
-                    blobReference = BlobReference.DeserializeBlobReference(prop.Value, options);
+                    blobReference = AIProjectBlobReference.DeserializeAIProjectBlobReference(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("pendingUploadId"u8))

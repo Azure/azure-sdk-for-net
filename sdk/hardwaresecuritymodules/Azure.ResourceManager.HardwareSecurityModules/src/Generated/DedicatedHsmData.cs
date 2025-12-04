@@ -53,17 +53,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="sku"> SKU details. </param>
         /// <param name="properties"> Properties of the dedicated HSM. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sku"/> or <paramref name="properties"/> is null. </exception>
-        public DedicatedHsmData(AzureLocation location, DedicatedHsmSku sku, DedicatedHsmProperties properties) : base(location)
+        /// <param name="sku"> SKU details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> or <paramref name="sku"/> is null. </exception>
+        public DedicatedHsmData(AzureLocation location, DedicatedHsmProperties properties, DedicatedHsmSku sku) : base(location)
         {
-            Argument.AssertNotNull(sku, nameof(sku));
             Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(sku, nameof(sku));
 
+            Properties = properties;
             Sku = sku;
             Zones = new ChangeTrackingList<string>();
-            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DedicatedHsmData"/>. </summary>
@@ -73,15 +73,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <param name="sku"> SKU details. </param>
         /// <param name="zones"> The availability zones. </param>
-        /// <param name="properties"> Properties of the dedicated HSM. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedHsmSku sku, IList<string> zones, DedicatedHsmProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DedicatedHsmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DedicatedHsmProperties properties, DedicatedHsmSku sku, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Sku = sku;
             Zones = zones;
-            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,6 +90,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
         }
 
+        /// <summary> Properties of the dedicated HSM. </summary>
+        public DedicatedHsmProperties Properties { get; set; }
         /// <summary> SKU details. </summary>
         internal DedicatedHsmSku Sku { get; set; }
         /// <summary> SKU of the dedicated HSM. </summary>
@@ -106,7 +108,5 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 
         /// <summary> The availability zones. </summary>
         public IList<string> Zones { get; }
-        /// <summary> Properties of the dedicated HSM. </summary>
-        public DedicatedHsmProperties Properties { get; set; }
     }
 }

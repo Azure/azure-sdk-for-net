@@ -54,6 +54,15 @@ function Invoke-LoggedCommand
       if($LastExitCode -notin $AllowedExitCodes)
       {
           LogError "Command failed to execute ($duration): $Command`n"
+
+          # This fix reproduces behavior that existed before 
+          # https://github.com/Azure/azure-sdk-tools/pull/12235 
+          # Before that change, if a command failed Write-Error was always 
+          # invoked in the failure case. Today, LogError only does Write-Error
+          # when running locally (not in a CI environment)
+          if ((Test-SupportsDevOpsLogging) -or (Test-SupportsGitHubLogging)) {
+              Write-Error "Command failed to execute ($duration): $Command`n"
+          }
       }
       else {
           Write-Host "Command succeeded ($duration)`n"

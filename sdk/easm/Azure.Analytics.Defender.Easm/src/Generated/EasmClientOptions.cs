@@ -13,13 +13,17 @@ namespace Azure.Analytics.Defender.Easm
     /// <summary> Client options for EasmClient. </summary>
     public partial class EasmClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2023_03_01_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_10_01_Preview;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
             /// <summary> Service version "2023-03-01-preview". </summary>
             V2023_03_01_Preview = 1,
+            /// <summary> Service version "2024-03-01-preview". </summary>
+            V2024_03_01_Preview = 2,
+            /// <summary> Service version "2024-10-01-preview". </summary>
+            V2024_10_01_Preview = 3,
         }
 
         internal string Version { get; }
@@ -30,6 +34,8 @@ namespace Azure.Analytics.Defender.Easm
             Version = version switch
             {
                 ServiceVersion.V2023_03_01_Preview => "2023-03-01-preview",
+                ServiceVersion.V2024_03_01_Preview => "2024-03-01-preview",
+                ServiceVersion.V2024_10_01_Preview => "2024-10-01-preview",
                 _ => throw new NotSupportedException()
             };
         }

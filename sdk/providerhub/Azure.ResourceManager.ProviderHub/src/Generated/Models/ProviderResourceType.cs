@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         internal ProviderResourceType()
         {
             AllowedUnauthorizedActions = new ChangeTrackingList<string>();
+            AllowedUnauthorizedActionsExtensions = new ChangeTrackingList<AllowedUnauthorizedActionsExtension>();
             AuthorizationActionMappings = new ChangeTrackingList<AuthorizationActionMapping>();
             LinkedAccessChecks = new ChangeTrackingList<LinkedAccessCheck>();
             LoggingRules = new ChangeTrackingList<LoggingRule>();
@@ -60,40 +61,52 @@ namespace Azure.ResourceManager.ProviderHub.Models
             DisallowedActionVerbs = new ChangeTrackingList<string>();
             ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
             LinkedOperationRules = new ChangeTrackingList<LinkedOperationRule>();
+            Notifications = new ChangeTrackingList<ProviderNotification>();
+            LinkedNotificationRules = new ChangeTrackingList<LinkedNotificationRule>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="routingType"></param>
-        /// <param name="resourceValidation"></param>
-        /// <param name="allowedUnauthorizedActions"></param>
-        /// <param name="authorizationActionMappings"></param>
-        /// <param name="linkedAccessChecks"></param>
-        /// <param name="defaultApiVersion"></param>
-        /// <param name="loggingRules"></param>
-        /// <param name="throttlingRules"></param>
-        /// <param name="endpoints"></param>
-        /// <param name="marketplaceType"></param>
-        /// <param name="identityManagement"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="featuresRule"></param>
-        /// <param name="subscriptionStateRules"></param>
-        /// <param name="serviceTreeInfos"></param>
-        /// <param name="requestHeaderOptions"></param>
-        /// <param name="skuLink"></param>
-        /// <param name="disallowedActionVerbs"></param>
-        /// <param name="templateDeploymentPolicy"></param>
-        /// <param name="extendedLocations"></param>
-        /// <param name="linkedOperationRules"></param>
-        /// <param name="resourceDeletionPolicy"></param>
+        /// <param name="name"> The resource type name. </param>
+        /// <param name="routingType"> The resource routing type. </param>
+        /// <param name="additionalOptions"> The additional options. </param>
+        /// <param name="crossTenantTokenValidation"> The cross tenant token validation. </param>
+        /// <param name="resourceValidation"> The resource validation. </param>
+        /// <param name="allowedUnauthorizedActions"> The allowed unauthorized actions. </param>
+        /// <param name="allowedUnauthorizedActionsExtensions"> The allowed unauthorized actions extensions. </param>
+        /// <param name="authorizationActionMappings"> The authorization action mappings. </param>
+        /// <param name="linkedAccessChecks"> The linked access checks. </param>
+        /// <param name="defaultApiVersion"> The default api version. </param>
+        /// <param name="loggingRules"> The logging rules. </param>
+        /// <param name="throttlingRules"> The throttling rules. </param>
+        /// <param name="endpoints"> The endpoints. </param>
+        /// <param name="marketplaceType"> The marketplace type. </param>
+        /// <param name="identityManagement"> The identity management. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="featuresRule"> The features rule. </param>
+        /// <param name="subscriptionStateRules"> The subscription state rules. </param>
+        /// <param name="serviceTreeInfos"> The service tree infos. </param>
+        /// <param name="requestHeaderOptions"> The request header options. </param>
+        /// <param name="skuLink"> The sku link. </param>
+        /// <param name="disallowedActionVerbs"> The disallowed action verbs. </param>
+        /// <param name="templateDeploymentPolicy"> The template deployment policy. </param>
+        /// <param name="extendedLocations"> The extended locations. </param>
+        /// <param name="linkedOperationRules"> The linked operation rules. </param>
+        /// <param name="resourceDeletionPolicy"> The resource deletion policy. </param>
+        /// <param name="quotaRule"> The quota rule. </param>
+        /// <param name="notifications"> The notifications. </param>
+        /// <param name="linkedNotificationRules"> The linked notification rules. </param>
+        /// <param name="resourceProviderAuthorizationRules"> The resource provider authorization rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderResourceType(string name, ResourceRoutingType? routingType, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, IdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, FeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, RequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProviderResourceType(string name, ResourceRoutingType? routingType, AdditionalOptionResourceType? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceValidation? resourceValidation, IReadOnlyList<string> allowedUnauthorizedActions, IReadOnlyList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IReadOnlyList<AuthorizationActionMapping> authorizationActionMappings, IReadOnlyList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IReadOnlyList<LoggingRule> loggingRules, IReadOnlyList<ThrottlingRule> throttlingRules, IReadOnlyList<ResourceProviderEndpoint> endpoints, MarketplaceType? marketplaceType, IdentityManagement identityManagement, BinaryData metadata, IReadOnlyList<string> requiredFeatures, ProviderFeaturesRule featuresRule, IReadOnlyList<ProviderSubscriptionStateRule> subscriptionStateRules, IReadOnlyList<ServiceTreeInfo> serviceTreeInfos, ProviderRequestHeaderOptions requestHeaderOptions, string skuLink, IReadOnlyList<string> disallowedActionVerbs, TemplateDeploymentPolicy templateDeploymentPolicy, IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations, IReadOnlyList<LinkedOperationRule> linkedOperationRules, ManifestResourceDeletionPolicy? resourceDeletionPolicy, ProviderQuotaRule quotaRule, IReadOnlyList<ProviderNotification> notifications, IReadOnlyList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             RoutingType = routingType;
+            AdditionalOptions = additionalOptions;
+            CrossTenantTokenValidation = crossTenantTokenValidation;
             ResourceValidation = resourceValidation;
             AllowedUnauthorizedActions = allowedUnauthorizedActions;
+            AllowedUnauthorizedActionsExtensions = allowedUnauthorizedActionsExtensions;
             AuthorizationActionMappings = authorizationActionMappings;
             LinkedAccessChecks = linkedAccessChecks;
             DefaultApiVersion = defaultApiVersion;
@@ -114,41 +127,51 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = extendedLocations;
             LinkedOperationRules = linkedOperationRules;
             ResourceDeletionPolicy = resourceDeletionPolicy;
+            QuotaRule = quotaRule;
+            Notifications = notifications;
+            LinkedNotificationRules = linkedNotificationRules;
+            ResourceProviderAuthorizationRules = resourceProviderAuthorizationRules;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The resource type name. </summary>
         public string Name { get; }
-        /// <summary> Gets the routing type. </summary>
+        /// <summary> The resource routing type. </summary>
         public ResourceRoutingType? RoutingType { get; }
-        /// <summary> Gets the resource validation. </summary>
+        /// <summary> The additional options. </summary>
+        public AdditionalOptionResourceType? AdditionalOptions { get; }
+        /// <summary> The cross tenant token validation. </summary>
+        public CrossTenantTokenValidation? CrossTenantTokenValidation { get; }
+        /// <summary> The resource validation. </summary>
         public ResourceValidation? ResourceValidation { get; }
-        /// <summary> Gets the allowed unauthorized actions. </summary>
+        /// <summary> The allowed unauthorized actions. </summary>
         public IReadOnlyList<string> AllowedUnauthorizedActions { get; }
-        /// <summary> Gets the authorization action mappings. </summary>
+        /// <summary> The allowed unauthorized actions extensions. </summary>
+        public IReadOnlyList<AllowedUnauthorizedActionsExtension> AllowedUnauthorizedActionsExtensions { get; }
+        /// <summary> The authorization action mappings. </summary>
         public IReadOnlyList<AuthorizationActionMapping> AuthorizationActionMappings { get; }
-        /// <summary> Gets the linked access checks. </summary>
+        /// <summary> The linked access checks. </summary>
         public IReadOnlyList<LinkedAccessCheck> LinkedAccessChecks { get; }
-        /// <summary> Gets the default api version. </summary>
+        /// <summary> The default api version. </summary>
         public string DefaultApiVersion { get; }
-        /// <summary> Gets the logging rules. </summary>
+        /// <summary> The logging rules. </summary>
         public IReadOnlyList<LoggingRule> LoggingRules { get; }
-        /// <summary> Gets the throttling rules. </summary>
+        /// <summary> The throttling rules. </summary>
         public IReadOnlyList<ThrottlingRule> ThrottlingRules { get; }
-        /// <summary> Gets the endpoints. </summary>
+        /// <summary> The endpoints. </summary>
         public IReadOnlyList<ResourceProviderEndpoint> Endpoints { get; }
-        /// <summary> Gets the marketplace type. </summary>
+        /// <summary> The marketplace type. </summary>
         public MarketplaceType? MarketplaceType { get; }
-        /// <summary> Gets the identity management. </summary>
+        /// <summary> The identity management. </summary>
         internal IdentityManagement IdentityManagement { get; }
-        /// <summary> Gets the management type. </summary>
+        /// <summary> The type. </summary>
         public IdentityManagementType? ManagementType
         {
             get => IdentityManagement?.ManagementType;
         }
 
         /// <summary>
-        /// Anything
+        /// The metadata.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -178,39 +201,46 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// </para>
         /// </summary>
         public BinaryData Metadata { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> The required features. </summary>
         public IReadOnlyList<string> RequiredFeatures { get; }
-        /// <summary> Gets the features rule. </summary>
-        internal FeaturesRule FeaturesRule { get; }
-        /// <summary> Gets the required features policy. </summary>
+        /// <summary> The features rule. </summary>
+        internal ProviderFeaturesRule FeaturesRule { get; }
+        /// <summary> The required feature policy. </summary>
         public FeaturesPolicy? RequiredFeaturesPolicy
         {
             get => FeaturesRule?.RequiredFeaturesPolicy;
         }
 
-        /// <summary> Gets the subscription state rules. </summary>
+        /// <summary> The subscription state rules. </summary>
         public IReadOnlyList<ProviderSubscriptionStateRule> SubscriptionStateRules { get; }
-        /// <summary> Gets the service tree infos. </summary>
+        /// <summary> The service tree infos. </summary>
         public IReadOnlyList<ServiceTreeInfo> ServiceTreeInfos { get; }
-        /// <summary> Gets the request header options. </summary>
-        internal RequestHeaderOptions RequestHeaderOptions { get; }
-        /// <summary> Gets the opt in headers. </summary>
-        public OptInHeaderType? OptInHeaders
-        {
-            get => RequestHeaderOptions?.OptInHeaders;
-        }
-
-        /// <summary> Gets the sku link. </summary>
+        /// <summary> The request header options. </summary>
+        public ProviderRequestHeaderOptions RequestHeaderOptions { get; }
+        /// <summary> The sku link. </summary>
         public string SkuLink { get; }
-        /// <summary> Gets the disallowed action verbs. </summary>
+        /// <summary> The disallowed action verbs. </summary>
         public IReadOnlyList<string> DisallowedActionVerbs { get; }
-        /// <summary> Gets the template deployment policy. </summary>
+        /// <summary> The template deployment policy. </summary>
         public TemplateDeploymentPolicy TemplateDeploymentPolicy { get; }
-        /// <summary> Gets the extended locations. </summary>
+        /// <summary> The extended locations. </summary>
         public IReadOnlyList<ProviderHubExtendedLocationOptions> ExtendedLocations { get; }
-        /// <summary> Gets the linked operation rules. </summary>
+        /// <summary> The linked operation rules. </summary>
         public IReadOnlyList<LinkedOperationRule> LinkedOperationRules { get; }
-        /// <summary> Gets the resource deletion policy. </summary>
+        /// <summary> The resource deletion policy. </summary>
         public ManifestResourceDeletionPolicy? ResourceDeletionPolicy { get; }
+        /// <summary> The quota rule. </summary>
+        public ProviderQuotaRule QuotaRule { get; }
+        /// <summary> The notifications. </summary>
+        public IReadOnlyList<ProviderNotification> Notifications { get; }
+        /// <summary> The linked notification rules. </summary>
+        public IReadOnlyList<LinkedNotificationRule> LinkedNotificationRules { get; }
+        /// <summary> The resource provider authorization rules. </summary>
+        internal ResourceProviderAuthorizationRules ResourceProviderAuthorizationRules { get; }
+        /// <summary> The async operation polling rules. </summary>
+        public AsyncOperationPollingRules AsyncOperationPollingRules
+        {
+            get => ResourceProviderAuthorizationRules?.AsyncOperationPollingRules;
+        }
     }
 }

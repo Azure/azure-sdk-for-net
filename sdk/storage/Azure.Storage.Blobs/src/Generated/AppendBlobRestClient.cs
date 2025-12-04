@@ -29,7 +29,7 @@ namespace Azure.Storage.Blobs
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, container, or blob that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2026-02-06". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2026-04-06". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public AppendBlobRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
@@ -386,7 +386,7 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        internal HttpMessage CreateAppendBlockFromUrlRequest(string sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, FileShareTokenIntent? fileRequestIntent)
+        internal HttpMessage CreateAppendBlockFromUrlRequest(string sourceUrl, long contentLength, string sourceRange, byte[] sourceContentMD5, byte[] sourceContentcrc64, int? timeout, byte[] transactionalContentMD5, string encryptionKey, string encryptionKeySha256, EncryptionAlgorithmTypeInternal? encryptionAlgorithm, string encryptionScope, string leaseId, long? maxSize, long? appendPosition, DateTimeOffset? ifModifiedSince, DateTimeOffset? ifUnmodifiedSince, string ifMatch, string ifNoneMatch, string ifTags, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string copySourceAuthorization, FileShareTokenIntent? fileRequestIntent, string sourceEncryptionKey, string sourceEncryptionKeySha256, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -485,6 +485,18 @@ namespace Azure.Storage.Blobs
             {
                 request.Headers.Add("x-ms-file-request-intent", fileRequestIntent.Value.ToString());
             }
+            if (sourceEncryptionKey != null)
+            {
+                request.Headers.Add("x-ms-source-encryption-key", sourceEncryptionKey);
+            }
+            if (sourceEncryptionKeySha256 != null)
+            {
+                request.Headers.Add("x-ms-source-encryption-key-sha256", sourceEncryptionKeySha256);
+            }
+            if (sourceEncryptionAlgorithm != null)
+            {
+                request.Headers.Add("x-ms-source-encryption-algorithm", sourceEncryptionAlgorithm.Value.ToSerialString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -515,16 +527,19 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
+        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/> is null. </exception>
-        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, FileShareTokenIntent? fileRequestIntent = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders>> AppendBlockFromUrlAsync(string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, FileShareTokenIntent? fileRequestIntent = null, string sourceEncryptionKey = null, string sourceEncryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent);
+            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)
@@ -562,16 +577,19 @@ namespace Azure.Storage.Blobs
         /// <param name="sourceIfNoneMatch"> Specify an ETag value to operate only on blobs without a matching value. </param>
         /// <param name="copySourceAuthorization"> Only Bearer type is supported. Credentials should be a valid OAuth access token to copy source. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
+        /// <param name="sourceEncryptionKey"> Optional. Specifies the source encryption key to use to encrypt the source data provided in the request. </param>
+        /// <param name="sourceEncryptionKeySha256"> The SHA-256 hash of the provided source encryption key. Must be provided if the x-ms-source-encryption-key header is provided. </param>
+        /// <param name="sourceEncryptionAlgorithm"> The algorithm used to produce the source encryption key hash. Currently, the only accepted value is "AES256". Must be provided if the x-ms-source-encryption-key is provided. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sourceUrl"/> is null. </exception>
-        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, FileShareTokenIntent? fileRequestIntent = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<AppendBlobAppendBlockFromUrlHeaders> AppendBlockFromUrl(string sourceUrl, long contentLength, string sourceRange = null, byte[] sourceContentMD5 = null, byte[] sourceContentcrc64 = null, int? timeout = null, byte[] transactionalContentMD5 = null, string encryptionKey = null, string encryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = null, string encryptionScope = null, string leaseId = null, long? maxSize = null, long? appendPosition = null, DateTimeOffset? ifModifiedSince = null, DateTimeOffset? ifUnmodifiedSince = null, string ifMatch = null, string ifNoneMatch = null, string ifTags = null, DateTimeOffset? sourceIfModifiedSince = null, DateTimeOffset? sourceIfUnmodifiedSince = null, string sourceIfMatch = null, string sourceIfNoneMatch = null, string copySourceAuthorization = null, FileShareTokenIntent? fileRequestIntent = null, string sourceEncryptionKey = null, string sourceEncryptionKeySha256 = null, EncryptionAlgorithmTypeInternal? sourceEncryptionAlgorithm = null, CancellationToken cancellationToken = default)
         {
             if (sourceUrl == null)
             {
                 throw new ArgumentNullException(nameof(sourceUrl));
             }
 
-            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent);
+            using var message = CreateAppendBlockFromUrlRequest(sourceUrl, contentLength, sourceRange, sourceContentMD5, sourceContentcrc64, timeout, transactionalContentMD5, encryptionKey, encryptionKeySha256, encryptionAlgorithm, encryptionScope, leaseId, maxSize, appendPosition, ifModifiedSince, ifUnmodifiedSince, ifMatch, ifNoneMatch, ifTags, sourceIfModifiedSince, sourceIfUnmodifiedSince, sourceIfMatch, sourceIfNoneMatch, copySourceAuthorization, fileRequestIntent, sourceEncryptionKey, sourceEncryptionKeySha256, sourceEncryptionAlgorithm);
             _pipeline.Send(message, cancellationToken);
             var headers = new AppendBlobAppendBlockFromUrlHeaders(message.Response);
             switch (message.Response.Status)

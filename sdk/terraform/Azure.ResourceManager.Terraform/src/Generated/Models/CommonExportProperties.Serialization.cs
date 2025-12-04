@@ -51,6 +51,16 @@ namespace Azure.ResourceManager.Terraform.Models
                 writer.WritePropertyName("maskSensitive"u8);
                 writer.WriteBooleanValue(IsMaskSensitiveEnabled.Value);
             }
+            if (Optional.IsDefined(IncludeRoleAssignment))
+            {
+                writer.WritePropertyName("includeRoleAssignment"u8);
+                writer.WriteBooleanValue(IncludeRoleAssignment.Value);
+            }
+            if (Optional.IsDefined(IncludeManagedResource))
+            {
+                writer.WritePropertyName("includeManagedResource"u8);
+                writer.WriteBooleanValue(IncludeManagedResource.Value);
+            }
             if (Optional.IsCollectionDefined(AzureResourcesToExclude))
             {
                 writer.WritePropertyName("excludeAzureResource"u8);

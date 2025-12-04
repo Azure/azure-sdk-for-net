@@ -25,30 +25,32 @@ npm ci
 
 ## Usage
 
-After installation, you can run tsp-client by navigating to the directory and using npm exec:
+After installation, you can run `tsp-client` using `npm exec --prefix {path_to_the_eng/common/tsp-client}`. 
+Note that you should *not* navigate into the `eng/common/tsp-client` folder, since several `tsp-client` commands require the current working directory to be the client library's root.
 
 ```bash
-cd eng/common/tsp-client
+# Set the tsp-client directory path relative to your current working directory
+_TspClientDir=eng/common/tsp-client
 
 # Get help
-npm exec --no -- tsp-client --help
+npm exec --prefix ${_TspClientDir} --no -- tsp-client --help
 
 # Check version
-npm exec --no -- tsp-client version
+npm exec --prefix ${_TspClientDir} --no -- tsp-client version
 
 # Generate client code
-npm exec --no -- tsp-client generate --output-dir ./generated
+npm exec --prefix ${_TspClientDir} --no -- tsp-client generate --output-dir ./generated
 
 # Initialize a new project
-npm exec --no -- tsp-client init --tsp-config ./tspconfig.yaml
+npm exec --prefix ${_TspClientDir} --no -- tsp-client init --tsp-config ./tspconfig.yaml
 ```
 
 ## CI/CD Best Practices
 
 ```bash
-cd eng/common/tsp-client
-npm ci
-npm exec --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
+_TspClientDir=eng/common/tsp-client
+npm ci --prefix ${_TspClientDir}
+npm exec --prefix ${_TspClientDir} --no -- tsp-client init --update-if-exists --tsp-config https://github.com/Azure/azure-rest-api-specs/blob/dee71463cbde1d416c47cf544e34f7966a94ddcb/specification/contosowidgetmanager/Contoso.WidgetManager/tspconfig.yaml
 ```
 
 ## Package Management

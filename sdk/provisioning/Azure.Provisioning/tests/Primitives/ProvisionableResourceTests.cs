@@ -124,6 +124,44 @@ namespace Azure.Provisioning.Tests.Primitives
         }
 
         [Test]
+        public async Task ValidateListProperties_Unset()
+        {
+            await using var test = new Trycep();
+
+            test.Define(
+                ctx =>
+                {
+                    Infrastructure infra = new();
+
+                    // Create a test resource with three basic property types: string, location, and enum
+                    var storageAccount = new StorageAccount("storageAccount")
+                    {
+                        // Test basic string property
+                        Name = "test-storage",
+
+                        // Test location property
+                        Location = AzureLocation.WestUS2,
+
+                        // Test enum property
+                        StorageTier = StorageTier.Standard
+                    };
+
+                    infra.Add(storageAccount);
+                    return infra;
+                })
+                .Compare(
+                    """
+                    resource storageAccount 'Test.Provider/storageAccounts@2024-01-01' = {
+                      name: 'test-storage'
+                      location: 'westus2'
+                      properties: {
+                        tier: 'Standard'
+                      }
+                    }
+                    """);
+        }
+
+        [Test]
         public async Task ValidateResourceReference()
         {
             await using var test = new Trycep();

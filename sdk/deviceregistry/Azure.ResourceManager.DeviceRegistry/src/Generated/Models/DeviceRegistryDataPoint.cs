@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -21,22 +22,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(dataSource, nameof(dataSource));
+
         }
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistryDataPoint"/>. </summary>
         /// <param name="name"> The name of the data point. </param>
         /// <param name="dataSource"> The address of the source of the data in the asset (e.g. URL) so that a client can access the data source on the asset. </param>
         /// <param name="dataPointConfiguration"> Stringified JSON that contains connector-specific configuration for the data point. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="observabilityMode"> An indication of how the data point should be mapped to OpenTelemetry. </param>
-        internal DeviceRegistryDataPoint(string name, string dataSource, string dataPointConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData, DataPointObservabilityMode? observabilityMode) : base(name, dataSource, dataPointConfiguration, serializedAdditionalRawData)
+        internal DeviceRegistryDataPoint(string name, string dataSource, string dataPointConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties, DataPointObservabilityMode? observabilityMode) : base(name, dataSource, dataPointConfiguration, additionalBinaryDataProperties)
         {
             ObservabilityMode = observabilityMode;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryDataPoint"/> for deserialization. </summary>
-        internal DeviceRegistryDataPoint()
-        {
         }
 
         /// <summary> An indication of how the data point should be mapped to OpenTelemetry. </summary>

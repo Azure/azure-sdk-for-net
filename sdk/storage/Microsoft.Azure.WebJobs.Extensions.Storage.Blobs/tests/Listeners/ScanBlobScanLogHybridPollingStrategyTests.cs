@@ -73,12 +73,27 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 {
                     return new TestAsyncPageable<BlobItem>(_blobItems);
                 });
+            _blobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<GetBlobsOptions>(), It.IsAny<CancellationToken>()))
+                .Returns(() =>
+                {
+                    return new TestAsyncPageable<BlobItem>(_blobItems);
+                });
             _secondBlobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
                  .Returns(() =>
                  {
                      return new TestAsyncPageable<BlobItem>(_secondBlobItems);
                  });
+            _secondBlobContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<GetBlobsOptions>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(_secondBlobItems);
+                 });
             _logsContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
+                 .Returns(() =>
+                 {
+                     return new TestAsyncPageable<BlobItem>(new List<BlobItem>());
+                 });
+            _logsContainerMock.Setup(x => x.GetBlobsAsync(It.IsAny<GetBlobsOptions>(), It.IsAny<CancellationToken>()))
                  .Returns(() =>
                  {
                      return new TestAsyncPageable<BlobItem>(new List<BlobItem>());
@@ -231,7 +246,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // We should see the new item. We'll see 2 blobs, but only process 1 (due to receipt).
             RunExecuterWithExpectedBlobs(expectedNames, product, executor, 1);
 
-            _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<GetBlobsOptions>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
             Assert.AreEqual(expectedNames, executor.BlobReceipts);
         }
@@ -269,7 +284,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             // We should see the new item. We'll see 2 blobs, but only process 1 (due to receipt).
             RunExecuterWithExpectedBlobs(expectedNames, product, executor, 1);
 
-            _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<GetBlobsOptions>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
             Assert.AreEqual(expectedNames, executor.BlobReceipts);
         }
@@ -391,7 +406,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             DateTime? storedTime = await testScanInfoManager.LoadLatestScanAsync(accountName, ContainerName);
             Assert.True(storedTime < earliestErrorTime);
             Assert.AreEqual(1, testScanInfoManager.UpdateCounts[accountName][ContainerName]);
-            _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<BlobTraits>(), It.IsAny<BlobStates>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            _blobContainerMock.Verify(x => x.GetBlobsAsync(It.IsAny<GetBlobsOptions>(), It.IsAny<CancellationToken>()),
                 Times.Exactly(2));
         }
 

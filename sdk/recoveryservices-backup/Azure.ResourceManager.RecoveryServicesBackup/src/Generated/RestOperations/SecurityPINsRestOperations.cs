@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Get the security PIN. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         }
 
         /// <summary> Get the security PIN. </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>

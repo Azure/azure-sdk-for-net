@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ResourceTypeSkuSetting(string name)
         {
@@ -62,18 +62,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuSetting"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="tier"></param>
-        /// <param name="size"></param>
-        /// <param name="family"></param>
-        /// <param name="kind"></param>
-        /// <param name="locations"></param>
-        /// <param name="locationInfo"></param>
-        /// <param name="requiredQuotaIds"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="capacity"></param>
-        /// <param name="costs"></param>
-        /// <param name="capabilities"></param>
+        /// <param name="name"> The name. </param>
+        /// <param name="tier"> The tier. </param>
+        /// <param name="size"> The size. </param>
+        /// <param name="family"> The family. </param>
+        /// <param name="kind"> The kind. </param>
+        /// <param name="locations"> The locations. </param>
+        /// <param name="locationInfo"> The location info. </param>
+        /// <param name="requiredQuotaIds"> The required quota ids. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="capacity"> The capacity. </param>
+        /// <param name="costs"> The costs. </param>
+        /// <param name="capabilities"> The capabilities. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeSkuSetting(string name, string tier, string size, string family, string kind, IList<string> locations, IList<ResourceTypeSkuLocationInfo> locationInfo, IList<string> requiredQuotaIds, IList<string> requiredFeatures, ResourceTypeSkuCapacity capacity, IList<ResourceTypeSkuCost> costs, IList<ResourceSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -97,29 +97,29 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> The name. </summary>
         public string Name { get; set; }
-        /// <summary> Gets or sets the tier. </summary>
+        /// <summary> The tier. </summary>
         public string Tier { get; set; }
-        /// <summary> Gets or sets the size. </summary>
+        /// <summary> The size. </summary>
         public string Size { get; set; }
-        /// <summary> Gets or sets the family. </summary>
+        /// <summary> The family. </summary>
         public string Family { get; set; }
-        /// <summary> Gets or sets the kind. </summary>
+        /// <summary> The kind. </summary>
         public string Kind { get; set; }
-        /// <summary> Gets the locations. </summary>
+        /// <summary> The locations. </summary>
         public IList<string> Locations { get; }
-        /// <summary> Gets the location info. </summary>
+        /// <summary> The location info. </summary>
         public IList<ResourceTypeSkuLocationInfo> LocationInfo { get; }
-        /// <summary> Gets the required quota ids. </summary>
+        /// <summary> The required quota ids. </summary>
         public IList<string> RequiredQuotaIds { get; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
-        /// <summary> Gets or sets the capacity. </summary>
+        /// <summary> The capacity. </summary>
         public ResourceTypeSkuCapacity Capacity { get; set; }
-        /// <summary> Gets the costs. </summary>
+        /// <summary> The costs. </summary>
         public IList<ResourceTypeSkuCost> Costs { get; }
-        /// <summary> Gets the capabilities. </summary>
+        /// <summary> The capabilities. </summary>
         public IList<ResourceSkuCapability> Capabilities { get; }
     }
 }

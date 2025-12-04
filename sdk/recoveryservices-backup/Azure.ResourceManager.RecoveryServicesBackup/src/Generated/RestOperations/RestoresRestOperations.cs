@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Restores the specified backed up data. This is an asynchronous operation. To know the status of this API call, use
         /// GetProtectedItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="containerName"> Container name associated with the backed up items. </param>
-        /// <param name="protectedItemName"> Backed up item to be restored. </param>
-        /// <param name="recoveryPointId"> Recovery point ID which represents the backed up data to be restored. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="content"> resource restore request. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// Restores the specified backed up data. This is an asynchronous operation. To know the status of this API call, use
         /// GetProtectedItemOperationResult API.
         /// </summary>
-        /// <param name="subscriptionId"> The subscription Id. </param>
-        /// <param name="resourceGroupName"> The name of the resource group where the recovery services vault is present. </param>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="fabricName"> Fabric name associated with the backed up items. </param>
-        /// <param name="containerName"> Container name associated with the backed up items. </param>
-        /// <param name="protectedItemName"> Backed up item to be restored. </param>
-        /// <param name="recoveryPointId"> Recovery point ID which represents the backed up data to be restored. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="vaultName"> The name of the VaultResource. </param>
+        /// <param name="fabricName"> The name of the BackupFabricResource. </param>
+        /// <param name="containerName"> Name of the container whose details need to be fetched. </param>
+        /// <param name="protectedItemName"> Backed up item name whose details are to be fetched. </param>
+        /// <param name="recoveryPointId"> RecoveryPointID represents the backed up data to be fetched. </param>
         /// <param name="content"> resource restore request. </param>
         /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

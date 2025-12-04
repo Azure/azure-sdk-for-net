@@ -47,34 +47,29 @@ namespace Azure.ResourceManager.DependencyMap.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
-        /// <param name="focusedMachineId"> Machine arm id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="focusedMachineId"/> is null. </exception>
-        public ExportDependenciesContent(ResourceIdentifier focusedMachineId)
+        public ExportDependenciesContent()
         {
-            Argument.AssertNotNull(focusedMachineId, nameof(focusedMachineId));
-
-            FocusedMachineId = focusedMachineId;
+            ApplianceNameList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/>. </summary>
         /// <param name="focusedMachineId"> Machine arm id. </param>
         /// <param name="filters"> Filters for ExportDependencies. </param>
+        /// <param name="applianceNameList"> List of Appliance Names. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExportDependenciesContent(ResourceIdentifier focusedMachineId, DependencyMapVisualizationFilter filters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportDependenciesContent(ResourceIdentifier focusedMachineId, DependencyMapVisualizationFilter filters, IList<string> applianceNameList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FocusedMachineId = focusedMachineId;
             Filters = filters;
+            ApplianceNameList = applianceNameList;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExportDependenciesContent"/> for deserialization. </summary>
-        internal ExportDependenciesContent()
-        {
-        }
-
         /// <summary> Machine arm id. </summary>
-        public ResourceIdentifier FocusedMachineId { get; }
+        public ResourceIdentifier FocusedMachineId { get; set; }
         /// <summary> Filters for ExportDependencies. </summary>
         public DependencyMapVisualizationFilter Filters { get; set; }
+        /// <summary> List of Appliance Names. </summary>
+        public IList<string> ApplianceNameList { get; }
     }
 }

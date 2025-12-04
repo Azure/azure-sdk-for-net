@@ -94,22 +94,31 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Describes the name of the rule. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </summary>
+        [WirePath("priority")]
         public int Priority { get; set; }
         /// <summary> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
+        [WirePath("enabledState")]
         public CustomRuleEnabledState? EnabledState { get; set; }
         /// <summary> Describes type of rule. </summary>
+        [WirePath("ruleType")]
         public WebApplicationRuleType RuleType { get; set; }
         /// <summary> Time window for resetting the rate limit count. Default is 1 minute. </summary>
+        [WirePath("rateLimitDurationInMinutes")]
         public int? RateLimitDurationInMinutes { get; set; }
         /// <summary> Number of allowed requests per client within the time window. </summary>
+        [WirePath("rateLimitThreshold")]
         public int? RateLimitThreshold { get; set; }
         /// <summary> Describes the list of variables to group the rate limit requests. </summary>
+        [WirePath("groupBy")]
         public IList<FrontDoorWebApplicationFirewallPolicyGroupByVariable> GroupBy { get; }
         /// <summary> List of match conditions. </summary>
+        [WirePath("matchConditions")]
         public IList<WebApplicationRuleMatchCondition> MatchConditions { get; }
         /// <summary> Describes what action to be applied when rule matches. </summary>
+        [WirePath("action")]
         public RuleMatchActionType Action { get; set; }
     }
 }

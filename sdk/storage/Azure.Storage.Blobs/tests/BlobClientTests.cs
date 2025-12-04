@@ -1397,7 +1397,7 @@ namespace Azure.Storage.Blobs.Test
             try
             {
                 // Create a CancellationToken that times out after 60s
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(60));
                 CancellationToken token = source.Token;
 
                 // Keep uploading a GB
@@ -1449,7 +1449,7 @@ namespace Azure.Storage.Blobs.Test
                 // Create a CancellationToken that times out after .01s
                 // Intentionally not delaying here, as DownloadToAsync operation should always cancel
                 // since it buffers the full response.
-                CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
+                using CancellationTokenSource source = new CancellationTokenSource(TimeSpan.FromSeconds(.01));
                 CancellationToken token = source.Token;
 
                 // Verifying DownloadTo will cancel

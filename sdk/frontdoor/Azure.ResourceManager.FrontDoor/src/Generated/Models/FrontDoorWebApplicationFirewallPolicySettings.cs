@@ -79,24 +79,34 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Describes if the policy is in enabled or disabled state. Defaults to Enabled if not specified. </summary>
+        [WirePath("enabledState")]
         public PolicyEnabledState? EnabledState { get; set; }
         /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
+        [WirePath("mode")]
         public FrontDoorWebApplicationFirewallPolicyMode? Mode { get; set; }
         /// <summary> If action type is redirect, this field represents redirect URL for the client. </summary>
+        [WirePath("redirectUrl")]
         public Uri RedirectUri { get; set; }
         /// <summary> If the action type is block, customer can override the response status code. </summary>
+        [WirePath("customBlockResponseStatusCode")]
         public int? CustomBlockResponseStatusCode { get; set; }
         /// <summary> If the action type is block, customer can override the response body. The body must be specified in base64 encoding. </summary>
+        [WirePath("customBlockResponseBody")]
         public string CustomBlockResponseBody { get; set; }
         /// <summary> Describes if policy managed rules will inspect the request body content. </summary>
+        [WirePath("requestBodyCheck")]
         public PolicyRequestBodyCheck? RequestBodyCheck { get; set; }
         /// <summary> Defines the JavaScript challenge cookie validity lifetime in minutes. This setting is only applicable to Premium_AzureFrontDoor. Value must be an integer between 5 and 1440 with the default value being 30. </summary>
+        [WirePath("javascriptChallengeExpirationInMinutes")]
         public int? JavascriptChallengeExpirationInMinutes { get; set; }
         /// <summary> Defines the Captcha cookie validity lifetime in minutes. This setting is only applicable to Premium_AzureFrontDoor. Value must be an integer between 5 and 1440 with the default value being 30. </summary>
+        [WirePath("captchaExpirationInMinutes")]
         public int? CaptchaExpirationInMinutes { get; set; }
         /// <summary> State of the log scrubbing config. Default value is Enabled. </summary>
+        [WirePath("logScrubbing.state")]
         public WebApplicationFirewallScrubbingState? State { get; set; }
         /// <summary> List of log scrubbing rules applied to the Web Application Firewall logs. </summary>
+        [WirePath("logScrubbing.scrubbingRules")]
         public IList<WebApplicationFirewallScrubbingRules> ScrubbingRules { get; }
     }
 }

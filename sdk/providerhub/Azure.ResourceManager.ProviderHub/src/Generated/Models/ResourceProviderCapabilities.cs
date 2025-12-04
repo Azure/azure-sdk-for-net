@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/>. </summary>
-        /// <param name="quotaId"></param>
-        /// <param name="effect"></param>
+        /// <param name="quotaId"> The quota id. </param>
+        /// <param name="effect"> The effect. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="quotaId"/> is null. </exception>
         public ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect)
         {
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceProviderCapabilities"/>. </summary>
-        /// <param name="quotaId"></param>
-        /// <param name="effect"></param>
-        /// <param name="requiredFeatures"></param>
+        /// <param name="quotaId"> The quota id. </param>
+        /// <param name="effect"> The effect. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceProviderCapabilities(string quotaId, ResourceProviderCapabilitiesEffect effect, IList<string> requiredFeatures, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the quota id. </summary>
+        /// <summary> The quota id. </summary>
         public string QuotaId { get; set; }
-        /// <summary> Gets or sets the effect. </summary>
+        /// <summary> The effect. </summary>
         public ResourceProviderCapabilitiesEffect Effect { get; set; }
-        /// <summary> Gets the required features. </summary>
+        /// <summary> The required features. </summary>
         public IList<string> RequiredFeatures { get; }
     }
 }

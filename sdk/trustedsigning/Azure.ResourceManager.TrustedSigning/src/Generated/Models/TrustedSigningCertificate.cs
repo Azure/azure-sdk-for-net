@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     /// <summary> Properties of the certificate. </summary>
     public partial class TrustedSigningCertificate
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificate"/>. </summary>
         internal TrustedSigningCertificate()
@@ -52,58 +23,103 @@ namespace Azure.ResourceManager.TrustedSigning.Models
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificate"/>. </summary>
         /// <param name="serialNumber"> Serial number of the certificate. </param>
+        /// <param name="enhancedKeyUsage"> Enhanced key usage of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="thumbprint"> Thumbprint of the certificate. </param>
         /// <param name="createOn"> Certificate created date. </param>
         /// <param name="expireOn"> Certificate expiry date. </param>
         /// <param name="status"> Status of the certificate. </param>
-        /// <param name="requestedOn"> The timestamp when the revocation is requested. </param>
-        /// <param name="effectiveOn"> The timestamp when the revocation is effective. </param>
-        /// <param name="reason"> Reason for revocation. </param>
-        /// <param name="remarks"> Remarks for the revocation. </param>
-        /// <param name="statusRevocationStatus"> Status of the revocation. </param>
-        /// <param name="failureReason"> Reason for the revocation failure. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedSigningCertificate(string serialNumber, string subjectName, string thumbprint, DateTimeOffset? createOn, DateTimeOffset? expireOn, TrustedSigningCertificateStatus? status, DateTimeOffset? requestedOn, DateTimeOffset? effectiveOn, string reason, string remarks, CertificateRevocationStatus? statusRevocationStatus, string failureReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="revocation"> Revocations history of a certificate. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TrustedSigningCertificate(string serialNumber, string enhancedKeyUsage, string subjectName, string thumbprint, DateTimeOffset? createOn, DateTimeOffset? expireOn, TrustedSigningCertificateStatus? status, Revocation revocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SerialNumber = serialNumber;
+            EnhancedKeyUsage = enhancedKeyUsage;
             SubjectName = subjectName;
             Thumbprint = thumbprint;
             CreateOn = createOn;
             ExpireOn = expireOn;
             Status = status;
-            RequestedOn = requestedOn;
-            EffectiveOn = effectiveOn;
-            Reason = reason;
-            Remarks = remarks;
-            StatusRevocationStatus = statusRevocationStatus;
-            FailureReason = failureReason;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Revocation = revocation;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Serial number of the certificate. </summary>
         public string SerialNumber { get; }
+
+        /// <summary> Enhanced key usage of the certificate. </summary>
+        public string EnhancedKeyUsage { get; }
+
         /// <summary> Subject name of the certificate. </summary>
         public string SubjectName { get; }
+
         /// <summary> Thumbprint of the certificate. </summary>
         public string Thumbprint { get; }
+
         /// <summary> Certificate created date. </summary>
         public DateTimeOffset? CreateOn { get; }
+
         /// <summary> Certificate expiry date. </summary>
         public DateTimeOffset? ExpireOn { get; }
+
         /// <summary> Status of the certificate. </summary>
         public TrustedSigningCertificateStatus? Status { get; }
+
+        /// <summary> Revocations history of a certificate. </summary>
+        internal Revocation Revocation { get; }
+
         /// <summary> The timestamp when the revocation is requested. </summary>
-        public DateTimeOffset? RequestedOn { get; }
+        public DateTimeOffset? RequestedOn
+        {
+            get
+            {
+                return Revocation.RequestedOn;
+            }
+        }
+
         /// <summary> The timestamp when the revocation is effective. </summary>
-        public DateTimeOffset? EffectiveOn { get; }
+        public DateTimeOffset? EffectiveOn
+        {
+            get
+            {
+                return Revocation.EffectiveOn;
+            }
+        }
+
         /// <summary> Reason for revocation. </summary>
-        public string Reason { get; }
+        public string Reason
+        {
+            get
+            {
+                return Revocation.Reason;
+            }
+        }
+
         /// <summary> Remarks for the revocation. </summary>
-        public string Remarks { get; }
+        public string Remarks
+        {
+            get
+            {
+                return Revocation.Remarks;
+            }
+        }
+
         /// <summary> Status of the revocation. </summary>
-        public CertificateRevocationStatus? StatusRevocationStatus { get; }
+        public CertificateRevocationStatus? RevocationStatus
+        {
+            get
+            {
+                return Revocation.RevocationStatus;
+            }
+        }
+
         /// <summary> Reason for the revocation failure. </summary>
-        public string FailureReason { get; }
+        public string FailureReason
+        {
+            get
+            {
+                return Revocation.FailureReason;
+            }
+        }
     }
 }

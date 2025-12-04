@@ -91,6 +91,9 @@ internal static class ChannelProcessing
         {
             _channel.Writer.TryComplete();
             await _processorTaskCompletionSource.Task.ConfigureAwait(false);
+
+            // Null out the Process delegate to release references
+            Interlocked.Exchange(ref _process, null);
         }
 
         protected abstract ValueTask NotifyOfPendingItemProcessing();

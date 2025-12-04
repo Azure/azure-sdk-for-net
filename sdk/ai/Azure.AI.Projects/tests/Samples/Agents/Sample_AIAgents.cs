@@ -38,7 +38,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
             instructions: "You are a personal math tutor. Write and run code to answer math questions."
         );
 
-        //// Step 2: Create a thread
+        // Step 2: Create a thread
         PersistentAgentThread thread = agentsClient.Threads.CreateThread();
 
         // Step 3: Add a message to a thread
@@ -122,7 +122,7 @@ public class Sample_AIAgents : SamplesBase<AIProjectsTestEnvironment>
         );
         #endregion
 
-        //// Step 2: Create a thread
+        // Step 2: Create a thread
         #region Snippet:AI_Projects_ExtensionsAgentsOverviewCreateThread
         PersistentAgentThread thread = await agentsClient.Threads.CreateThreadAsync();
         #endregion

@@ -60,11 +60,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterServiceEndpoint"/>. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
+        /// <param name="networkIdentifier"> Specifies the resource id of the service endpoint to be used in the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterServiceEndpoint(string service, IList<AzureLocation> locations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedClusterServiceEndpoint(string service, IList<AzureLocation> locations, ResourceIdentifier networkIdentifier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Service = service;
             Locations = locations;
+            NetworkIdentifier = networkIdentifier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -77,5 +79,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string Service { get; set; }
         /// <summary> A list of locations. </summary>
         public IList<AzureLocation> Locations { get; }
+        /// <summary> Specifies the resource id of the service endpoint to be used in the cluster. </summary>
+        public ResourceIdentifier NetworkIdentifier { get; set; }
     }
 }

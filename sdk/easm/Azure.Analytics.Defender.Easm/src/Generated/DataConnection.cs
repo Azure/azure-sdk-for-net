@@ -56,13 +56,13 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Initializes a new instance of <see cref="DataConnection"/>. </summary>
         /// <param name="kind"> Discriminator property for DataConnection. </param>
-        /// <param name="id"> The system generated unique id for the resource. </param>
+        /// <param name="id"> This is typically the same as the name but might be different for different models. </param>
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
         /// <param name="createdDate"> The date the data connection was created. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
-        /// <param name="frequencyOffset"> The day to update the data connection on. </param>
+        /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
         /// <param name="updatedDate"> The date the data connection was last updated. </param>
         /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
@@ -87,7 +87,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <summary> Discriminator property for DataConnection. </summary>
         internal string Kind { get; set; }
-        /// <summary> The system generated unique id for the resource. </summary>
+        /// <summary> This is typically the same as the name but might be different for different models. </summary>
         public string Id { get; }
         /// <summary> The caller provided unique name for the resource. </summary>
         public string Name { get; }
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Defender.Easm
         public DateTimeOffset? CreatedDate { get; }
         /// <summary> The rate at which the data connection will receive updates. </summary>
         public DataConnectionFrequency? Frequency { get; }
-        /// <summary> The day to update the data connection on. </summary>
+        /// <summary> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </summary>
         public int? FrequencyOffset { get; }
         /// <summary> The date the data connection was last updated. </summary>
         public DateTimeOffset? UpdatedDate { get; }

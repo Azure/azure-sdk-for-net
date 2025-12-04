@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
             writer.WriteStringValue(DisplayName);
             writer.WritePropertyName("resourceTypes"u8);
             writer.WriteStartArray();
-            foreach (StorageDiscoveryResourceType item in ResourceTypes)
+            foreach (StorageDiscoveryResourceKind item in ResourceTypes)
             {
                 writer.WriteStringValue(item.ToString());
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 return null;
             }
             string displayName = default;
-            IList<StorageDiscoveryResourceType> resourceTypes = default;
+            IList<StorageDiscoveryResourceKind> resourceTypes = default;
             IList<string> tagKeysOnly = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.StorageDiscovery.Models
                 }
                 if (prop.NameEquals("resourceTypes"u8))
                 {
-                    List<StorageDiscoveryResourceType> array = new List<StorageDiscoveryResourceType>();
+                    List<StorageDiscoveryResourceKind> array = new List<StorageDiscoveryResourceKind>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(new StorageDiscoveryResourceType(item.GetString()));
+                        array.Add(new StorageDiscoveryResourceKind(item.GetString()));
                     }
                     resourceTypes = array;
                     continue;

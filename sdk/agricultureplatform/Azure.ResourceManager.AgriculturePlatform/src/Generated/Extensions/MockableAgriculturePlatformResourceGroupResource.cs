@@ -8,59 +8,37 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AgriculturePlatform;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AgriculturePlatform.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableAgriculturePlatformResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableAgriculturePlatformResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableAgriculturePlatformResourceGroupResource for mocking. </summary>
         protected MockableAgriculturePlatformResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableAgriculturePlatformResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableAgriculturePlatformResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableAgriculturePlatformResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of AgricultureServiceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AgricultureServiceResources and their operations over a AgricultureServiceResource. </returns>
+        /// <summary> Gets a collection of AgricultureServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of AgricultureServices and their operations over a AgricultureServiceResource. </returns>
         public virtual AgricultureServiceCollection GetAgricultureServices()
         {
             return GetCachedClient(client => new AgricultureServiceCollection(client, Id));
         }
 
-        /// <summary>
-        /// Get a AgriServiceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgriServiceResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AgricultureServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a AgriServiceResource. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -68,30 +46,12 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<AgricultureServiceResource>> GetAgricultureServiceAsync(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
+
             return await GetAgricultureServices().GetAsync(agriServiceResourceName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Get a AgriServiceResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AgriculturePlatform/agriServices/{agriServiceResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AgriServiceResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="AgricultureServiceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a AgriServiceResource. </summary>
         /// <param name="agriServiceResourceName"> The name of the AgriService resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="agriServiceResourceName"/> is null. </exception>
@@ -99,6 +59,8 @@ namespace Azure.ResourceManager.AgriculturePlatform.Mocking
         [ForwardsClientCalls]
         public virtual Response<AgricultureServiceResource> GetAgricultureService(string agriServiceResourceName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(agriServiceResourceName, nameof(agriServiceResourceName));
+
             return GetAgricultureServices().Get(agriServiceResourceName, cancellationToken);
         }
     }

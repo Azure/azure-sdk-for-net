@@ -34,6 +34,11 @@ namespace Azure.ResourceManager.Support.Models
                 throw new FormatException($"The model {nameof(ServicesListResult)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -81,11 +86,17 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
+            string nextLink = default;
             IReadOnlyList<SupportAzureServiceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("nextLink"u8))
+                {
+                    nextLink = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("value"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,7 +117,7 @@ namespace Azure.ResourceManager.Support.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ServicesListResult(value ?? new ChangeTrackingList<SupportAzureServiceData>(), serializedAdditionalRawData);
+            return new ServicesListResult(nextLink, value ?? new ChangeTrackingList<SupportAzureServiceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServicesListResult>.Write(ModelReaderWriterOptions options)

@@ -1144,8 +1144,8 @@
                   "$id": "104",
                   "kind": "string",
                   "decorators": [],
-                  "name": "string",
                   "doc": "A sequence of textual characters.",
+                  "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "name": "filename",
@@ -1177,8 +1177,8 @@
                   "$id": "106",
                   "kind": "string",
                   "decorators": [],
-                  "name": "string",
                   "doc": "A sequence of textual characters.",
+                  "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "name": "contentType",
@@ -1375,8 +1375,8 @@
                   "$id": "118",
                   "kind": "string",
                   "decorators": [],
-                  "name": "string",
                   "doc": "A sequence of textual characters.",
+                  "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "name": "filename",
@@ -1413,8 +1413,8 @@
                     "$id": "121",
                     "kind": "string",
                     "decorators": [],
-                    "name": "string",
                     "doc": "A sequence of textual characters.",
+                    "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
                   "name": "FileSpecificContentTypeContentType",
@@ -1565,8 +1565,8 @@
                   "$id": "130",
                   "kind": "string",
                   "decorators": [],
-                  "name": "string",
                   "doc": "A sequence of textual characters.",
+                  "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "name": "filename",
@@ -1600,8 +1600,8 @@
                   "$id": "132",
                   "kind": "string",
                   "decorators": [],
-                  "name": "string",
                   "doc": "A sequence of textual characters.",
+                  "name": "string",
                   "crossLanguageDefinitionId": "TypeSpec.string"
                 },
                 "name": "contentType",
@@ -1683,8 +1683,8 @@
                     "$id": "138",
                     "kind": "string",
                     "decorators": [],
-                    "name": "string",
                     "doc": "A sequence of textual characters.",
+                    "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string"
                   },
                   "name": "FloatRequestTemperatureContentType",

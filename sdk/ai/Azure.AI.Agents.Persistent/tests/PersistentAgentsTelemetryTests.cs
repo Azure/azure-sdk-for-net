@@ -25,6 +25,7 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
 {
     public const string TraceContentsEnvironmentVariable = "AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED";
     public const string EnableOpenTelemetryEnvironmentVariable = "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE";
+    private const string STREAMING_CONSTRAINT = "The test framework does not support iteration of stream in Sync mode.";
     private MemoryTraceExporter _exporter;
     private TracerProvider _tracerProvider;
     private GenAiTraceVerifier _traceVerifier;
@@ -859,6 +860,8 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     [RecordedTest]
     public async Task TestAgentStreamingWithTracingContentRecordingEnabled()
     {
+        if (!IsAsync)
+            Assert.Inconclusive(STREAMING_CONSTRAINT);
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
         var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
         var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
@@ -933,6 +936,8 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     [RecordedTest]
     public async Task TestAgentStreamingWithTracingContentRecordingDisabled()
     {
+        if (!IsAsync)
+            Assert.Inconclusive(STREAMING_CONSTRAINT);
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
         var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
         var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
@@ -1006,6 +1011,8 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     [RecordedTest]
     public async Task TestAgentStreamingWithFunctionToolTracingContentRecordingEnabled()
     {
+        if (!IsAsync)
+            Assert.Inconclusive(STREAMING_CONSTRAINT);
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
         var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
         var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);
@@ -1150,6 +1157,8 @@ public partial class PersistentAgentTelemetryTests : RecordedTestBase<AIAgentsTe
     [RecordedTest]
     public async Task TestAgentStreamingWithFunctionToolTracingContentRecordingDisabled()
     {
+        if (!IsAsync)
+            Assert.Inconclusive(STREAMING_CONSTRAINT);
         Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "false", EnvironmentVariableTarget.Process);
         var type = typeof(Azure.AI.Agents.Persistent.Telemetry.OpenTelemetryScope);
         var methodInfo = type.GetMethod("ReinitializeConfiguration", BindingFlags.Static | BindingFlags.NonPublic);

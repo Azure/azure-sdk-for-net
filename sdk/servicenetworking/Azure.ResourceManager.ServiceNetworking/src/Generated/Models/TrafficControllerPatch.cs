@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -67,15 +66,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public IDictionary<string, string> Tags { get; }
         /// <summary> The resource-specific properties for this resource. </summary>
         internal TrafficControllerUpdateProperties Properties { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafSecurityPolicyId
+        /// <summary> Security Policy Configuration. </summary>
+        public SecurityPolicyConfigurations TrafficControllerUpdateSecurityPolicyConfigurations
         {
-            get => Properties is null ? default : Properties.WafSecurityPolicyId;
+            get => Properties is null ? default : Properties.SecurityPolicyConfigurations;
             set
             {
                 if (Properties is null)
                     Properties = new TrafficControllerUpdateProperties();
-                Properties.WafSecurityPolicyId = value;
+                Properties.SecurityPolicyConfigurations = value;
             }
         }
     }

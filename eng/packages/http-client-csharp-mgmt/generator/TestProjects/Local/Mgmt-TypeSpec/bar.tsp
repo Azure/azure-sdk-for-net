@@ -52,6 +52,7 @@ model BarSettingsResource is ProxyResource<BarSettingsProperties> {
   anotherProperty: BarQuotaProperties;
   flattenedNestedProperty: BarNestedQuotaProperties;
   optionalFlattenProperty?: optionalFlattenPropertyType;
+  discriminatorProperty: LimitJsonObject;
 }
 
 @parentResource(Bar)
@@ -76,6 +77,26 @@ model optionalFlattenPropertyType {
 model BarDeeplyNestedQuotaProperties {
   innerProp1?: int32;
   innerProp2: string;
+}
+
+/**
+ * LimitJson abstract class.
+ */
+@discriminator("limitObjectType")
+model LimitJsonObject {
+  /**
+   * The limit object type.
+   */
+  limitObjectType: LimitType;
+}
+
+/**
+ * The limit object type.
+ */
+union LimitType {
+  string,
+  #suppress "@azure-tools/typespec-azure-core/documentation-required" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+  LimitValue: "LimitValue",
 }
 
 model BarQuotaProperties {
