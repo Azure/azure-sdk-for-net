@@ -9,8 +9,8 @@
 
 ### Breaking Changes
 
-- Deprecated models `RedisEnterprisePrivateEndpointConnectionData`. Please use `RedisEnterprisePrivateEndpointConnection` instead.
-- Deprecated properties `RedisEnterpriseCluster.PrivateEndpointConnections`. Please use `RedisEnterpriseCluster.PrivateEndpointConnectionResources` instead.
+- Removed model `RedisEnterprisePrivateEndpointConnectionData`. Please use `RedisEnterprisePrivateEndpointConnection` instead.
+- Changed the type of property `RedisEnterpriseCluster.PrivateEndpointConnections` from `BicepList<RedisEnterprisePrivateEndpointConnectionData>` to `BicepList<RedisEnterprisePrivateEndpointConnection>`.
 
 ## 1.0.0 (2025-08-26)
 
