@@ -145,23 +145,24 @@ if ($artifactList)
   if ($filteredArtifacts.Count -eq 0)
   {
     Write-Warning "Artifact list contains no valid entries"
-    exit 1
   }
-  
-  Write-Host "Filtering package properties to match artifact list: $($filteredArtifacts -join ', ')"
-  $artifactSet = [System.Collections.Generic.HashSet[string]]::new($filteredArtifacts, [System.StringComparer]::OrdinalIgnoreCase)
-  
-  # Warn about packages missing ArtifactName property
-  $missingArtifactName = $allPackageProperties | Where-Object { -not $_.PSObject.Properties.Match('ArtifactName') }
-  foreach ($pkg in $missingArtifactName) {
-    Write-Warning "Package '$($pkg.PackageName)' does not have an 'ArtifactName' property and will be excluded from artifact filtering."
-  }
-  $allPackageProperties = $allPackageProperties | Where-Object { $_.ArtifactName -and $artifactSet.Contains($_.ArtifactName) }
-  
-  if (!$allPackageProperties)
+  else
   {
-    Write-Error "No packages found matching the provided artifact list"
-    exit 1
+    Write-Host "Filtering package properties to match artifact list: $($filteredArtifacts -join ', ')"
+    $artifactSet = [System.Collections.Generic.HashSet[string]]::new($filteredArtifacts, [System.StringComparer]::OrdinalIgnoreCase)
+
+    # Warn about packages missing ArtifactName property
+    $missingArtifactName = $allPackageProperties | Where-Object { $_.PSObject.Properties.Name -notcontains 'ArtifactName' }
+    foreach ($pkg in $missingArtifactName) {
+      Write-Warning "Package '$($pkg.PackageName)' does not have an 'ArtifactName' property and will be excluded from artifact filtering."
+    }
+    $allPackageProperties = $allPackageProperties | Where-Object { $_.ArtifactName -and $artifactSet.Contains($_.ArtifactName) }
+
+    if (!$allPackageProperties)
+    {
+      Write-Error "No packages found matching the provided artifact list"
+      exit 1
+    }
   }
 }
 
