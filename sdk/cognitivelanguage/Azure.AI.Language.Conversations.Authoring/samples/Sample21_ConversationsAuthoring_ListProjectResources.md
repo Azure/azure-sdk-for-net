@@ -18,17 +18,14 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 
 ## List Project Resources
 
-To list all Azure resources assigned to a specific project, first retrieve a project-scoped client using `GetProject`, then call `GetProjectResources`.
+To list all Azure resources assigned to a specific project, call `GetProjectResources` on the `ConversationAnalysisAuthoringClient`.
 
 ```C# Snippet:Sample21_ConversationsAuthoring_ListProjectResources
 string projectName = "{projectName}";
 
-// Get the project-scoped client
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
 // Retrieve resources assigned to this project
 Pageable<ConversationAuthoringAssignedProjectResource> pageable =
-    projectClient.GetProjectResources();
+    client.GetProjectResources(projectName);
 
 foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
 {
@@ -53,12 +50,9 @@ To list project resources asynchronously, call `GetProjectResourcesAsync`.
 ```C# Snippet:Sample21_ConversationsAuthoring_ListProjectResourcesAsync
 string projectName = "{projectName}";
 
-// Get the project-scoped client
-ConversationAuthoringProject projectClient = client.GetProject(projectName);
-
 // Retrieve resources assigned to this project (async)
 AsyncPageable<ConversationAuthoringAssignedProjectResource> pageable =
-    projectClient.GetProjectResourcesAsync();
+    client.GetProjectResourcesAsync(projectName);
 
 await foreach (ConversationAuthoringAssignedProjectResource resource in pageable)
 {

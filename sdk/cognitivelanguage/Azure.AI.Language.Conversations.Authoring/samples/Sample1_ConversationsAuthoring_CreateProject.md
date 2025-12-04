@@ -24,6 +24,7 @@ To create a new project synchronously, call CreateProject on the `ConversationAu
 
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProject
 string projectName = "{projectName}";
+ConversationAuthoringProject projectClient = client.GetProject(projectName);
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
       projectName: projectName,
@@ -34,7 +35,7 @@ ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthorin
     Description = "Project description"
 };
 
-Response response = client.CreateProject(projectName, projectData);
+Response response = projectClient.CreateProject(projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```
@@ -46,9 +47,10 @@ To create a new project, call `CreateProjectAsync` on the `ConversationAuthoring
 ```C# Snippet:Sample1_ConversationsAuthoring_CreateProjectAsync
 string projectName = "{projectName}";
 ConversationAuthoringProject projectClient = client.GetProject(projectName);
+
 ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthoringCreateProjectDetails(
       projectKind: "Conversation",
-       projectName: projectName,
+      projectName: projectName,
       language: "en-us"
     )
 {
@@ -56,7 +58,7 @@ ConversationAuthoringCreateProjectDetails projectData = new ConversationAuthorin
     Description = "Project description"
 };
 
-Response response = await client.CreateProjectAsync(projectName, projectData);
+Response response = await projectClient.CreateProjectAsync(projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```
