@@ -5,6 +5,8 @@
 ### Features Added
 - Added support for service version 2025-11-15-preview.
 
+- Added support for service version 2025-11-01.
+
 ### Breaking Changes
 - Changed parameter type from `DeleteDeploymentDetails` to `ProjectResourceIds` when calling `begin_delete_deployment_from_resources`, with property name changed from `assigned_resource_ids` to `azure_resource_ids`.
 
@@ -18,7 +20,7 @@
 
 - Changed function name from `get_unassign_deployment_resources_status` to `get_unassign_project_resources_status`, change its return type from `DeploymentResourcesState` to `ProjectResourcesState`.
 
-- move create project to main client
+- createProjectOptions. add projectName parameter
 
 ### Other Changes
 - Add samples for the following functions(sync and async):
