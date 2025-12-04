@@ -92,5 +92,17 @@ namespace Azure.ResourceManager.Quota.Models
         {
             return GroupQuotasEntityProperties(displayName: displayName, groupType: default, provisioningState: provisioningState);
         }
+
+        // Will remove this custom code while https://github.com/Azure/azure-sdk-for-net/issues/54298 is fixed.
+        /// <summary> Initializes a new instance of <see cref="Models.QuotaAllocationRequestBase"/>. </summary>
+        /// <param name="limit"> The new quota limit for the subscription. The incremental quota will be allocated from pre-approved group quota. </param>
+        /// <param name="value"> Resource name. </param>
+        /// <param name="localizedValue"> Resource display name. </param>
+        /// <param name="region"> The location for which the subscription is allocated. </param>
+        /// <returns> A new <see cref="Models.QuotaAllocationRequestBase"/> instance for mocking. </returns>
+        public static QuotaAllocationRequestBase QuotaAllocationRequestBase(long? limit = null, string value = null, string localizedValue = null, string region = null)
+        {
+            return new QuotaAllocationRequestBase(new QuotaAllocationRequestBaseProperties(limit, new QuotaAllocationRequestBasePropertiesName(value, localizedValue, additionalBinaryDataProperties: null), region, additionalBinaryDataProperties: null), additionalBinaryDataProperties: null);
+        }
     }
 }
