@@ -19,9 +19,11 @@ namespace _Specs_.Azure.ClientGenerator.Core.ClientLocation
 {
     public partial class ClientLocationClient
     {
-        public ClientLocationClient() : this(new Uri("http://localhost:3000"), new ClientLocationClientOptions()) => throw null;
+        protected ClientLocationClient() => throw null;
 
-        public ClientLocationClient(Uri endpoint, ClientLocationClientOptions options) => throw null;
+        public ClientLocationClient(string storageAccount) : this(new Uri("http://localhost:3000"), storageAccount, new ClientLocationClientOptions()) => throw null;
+
+        public ClientLocationClient(Uri endpoint, string storageAccount, ClientLocationClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 

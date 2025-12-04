@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class AssetEndpointProfileUpdateProperties : IUtf8JsonSerializable, IJsonModel<AssetEndpointProfileUpdateProperties>
+    /// <summary> The updatable properties of the AssetEndpointProfile. </summary>
+    public partial class AssetEndpointProfileUpdateProperties : IJsonModel<AssetEndpointProfileUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssetEndpointProfileUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<AssetEndpointProfileUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssetEndpointProfileUpdateProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(TargetAddress))
             {
                 writer.WritePropertyName("targetAddress"u8);
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("additionalConfiguration"u8);
                 writer.WriteStringValue(AdditionalConfiguration);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -71,22 +71,27 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        AssetEndpointProfileUpdateProperties IJsonModel<AssetEndpointProfileUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetEndpointProfileUpdateProperties IJsonModel<AssetEndpointProfileUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetEndpointProfileUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(AssetEndpointProfileUpdateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeAssetEndpointProfileUpdateProperties(document.RootElement, options);
         }
 
-        internal static AssetEndpointProfileUpdateProperties DeserializeAssetEndpointProfileUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static AssetEndpointProfileUpdateProperties DeserializeAssetEndpointProfileUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,51 +100,52 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string endpointProfileType = default;
             DeviceRegistryAuthentication authentication = default;
             string additionalConfiguration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("targetAddress"u8))
+                if (prop.NameEquals("targetAddress"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetAddress = new Uri(property.Value.GetString());
+                    targetAddress = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("endpointProfileType"u8))
+                if (prop.NameEquals("endpointProfileType"u8))
                 {
-                    endpointProfileType = property.Value.GetString();
+                    endpointProfileType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("authentication"u8))
+                if (prop.NameEquals("authentication"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    authentication = DeviceRegistryAuthentication.DeserializeDeviceRegistryAuthentication(property.Value, options);
+                    authentication = DeviceRegistryAuthentication.DeserializeDeviceRegistryAuthentication(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("additionalConfiguration"u8))
+                if (prop.NameEquals("additionalConfiguration"u8))
                 {
-                    additionalConfiguration = property.Value.GetString();
+                    additionalConfiguration = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new AssetEndpointProfileUpdateProperties(targetAddress, endpointProfileType, authentication, additionalConfiguration, serializedAdditionalRawData);
+            return new AssetEndpointProfileUpdateProperties(targetAddress, endpointProfileType, authentication, additionalConfiguration, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<AssetEndpointProfileUpdateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<AssetEndpointProfileUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -149,15 +155,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        AssetEndpointProfileUpdateProperties IPersistableModel<AssetEndpointProfileUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        AssetEndpointProfileUpdateProperties IPersistableModel<AssetEndpointProfileUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual AssetEndpointProfileUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AssetEndpointProfileUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAssetEndpointProfileUpdateProperties(document.RootElement, options);
                     }
                 default:
@@ -165,6 +176,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AssetEndpointProfileUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

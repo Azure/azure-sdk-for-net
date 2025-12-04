@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2025-10-24)
+## 1.0.0 (Unreleased)
 
 This release is the first stable release of the Trusted Signing Management client library.
 

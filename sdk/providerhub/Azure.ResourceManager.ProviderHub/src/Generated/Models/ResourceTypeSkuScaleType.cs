@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ResourceTypeSkuScaleType. </summary>
+    /// <summary> The scale type. </summary>
     public readonly partial struct ResourceTypeSkuScaleType : IEquatable<ResourceTypeSkuScaleType>
     {
         private readonly string _value;

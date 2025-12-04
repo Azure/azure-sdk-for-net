@@ -17,3 +17,5 @@ T:Azure.Core.CodeGenSuppressAttribute
 T:Azure.Core.CodeGenSuppressTypeAttribute
 T:Azure.Core.CodeGenSerializationAttribute
 T:System.ClientModel.Primitives.ModelReaderWriterBuildableAttribute
+T:Azure.Monitor.Query.Logs.CodeGenSuppressAttribute
+T:Azure.Monitor.Query.Metrics.CodeGenSuppressAttribute

@@ -15,6 +15,7 @@ using Azure.Storage.Blobs.Tests;
 using Azure.Storage.Sas;
 using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
+using Microsoft.Rest;
 using NUnit.Framework;
 
 namespace Azure.Storage.Blobs.Test
@@ -38,6 +39,7 @@ namespace Azure.Storage.Blobs.Test
                 SignedExpiresOn = constants.Sas.KeyExpiry,
                 SignedService = constants.Sas.KeyService,
                 SignedVersion = constants.Sas.KeyVersion,
+                SignedDelegatedUserTenantId = constants.Sas.KeyDelegatedTenantId,
                 Value = constants.Sas.KeyValue
             };
 
@@ -116,6 +118,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
             Assert.AreEqual(Constants.Sas.Resource.Container, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
@@ -202,6 +205,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
             Assert.AreEqual(Constants.Sas.Resource.Blob, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
@@ -290,6 +294,7 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(constants.Sas.KeyExpiry, sasQueryParameters.KeyExpiresOn);
             Assert.AreEqual(constants.Sas.KeyService, sasQueryParameters.KeyService);
             Assert.AreEqual(constants.Sas.KeyVersion, sasQueryParameters.KeyVersion);
+            Assert.AreEqual(constants.Sas.KeyDelegatedTenantId, sasQueryParameters.KeyDelegatedUserTenantId);
             Assert.AreEqual(Constants.Sas.Resource.BlobSnapshot, sasQueryParameters.Resource);
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(constants.Sas.DelegatedObjectId, sasQueryParameters.DelegatedUserObjectId);
@@ -580,9 +585,9 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
 
             // Arrange
+            BlobGetUserDelegationKeyOptions getUserDelegationKeyOptions = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             BlobSasBuilder BlobSasBuilder = new BlobSasBuilder
             {
@@ -617,9 +622,9 @@ namespace Azure.Storage.Blobs.Test
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
 
             // Arrange
+            BlobGetUserDelegationKeyOptions getUserDelegationKeyOptions = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1));
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: null,
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder
             {
@@ -654,9 +659,12 @@ namespace Azure.Storage.Blobs.Test
 
             await using DisposingContainer test = await GetTestContainerAsync(service: oauthService, containerName: containerName);
 
+            BlobGetUserDelegationKeyOptions getUserDelegationKeyOptions = new BlobGetUserDelegationKeyOptions(expiresOn: Recording.UtcNow.AddHours(1))
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1)
+            };
             Response<UserDelegationKey> userDelegationKey = await oauthService.GetUserDelegationKeyAsync(
-                startsOn: Recording.UtcNow.AddHours(-1),
-                expiresOn: Recording.UtcNow.AddHours(1));
+                options: getUserDelegationKeyOptions);
 
             BlobSasBuilder blobSasBuilder = new BlobSasBuilder
             {
@@ -759,7 +767,7 @@ namespace Azure.Storage.Blobs.Test
                 null,
                 null,
                 null,
-                null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                constants.Sas.KeyDelegatedTenantId,
                 constants.Sas.DelegatedObjectId,
                 constants.Sas.IPRange.ToString(),
                 SasExtensions.ToProtocolString(constants.Sas.Protocol),
@@ -767,8 +775,13 @@ namespace Azure.Storage.Blobs.Test
                 resource,
                 includeSnapshot ? Snapshot : null,
                 constants.Sas.EncryptionScope,
+<<<<<<< HEAD
                 SasExtensions.FormatRequestHeadersForSasSigning(constants.Sas.RequestHeaders),
                 SasExtensions.FormatRequestQueryParametersForSasSigning(constants.Sas.RequestQueryParameters),
+=======
+                null,
+                null,
+>>>>>>> feature/storage/stg101base
                 constants.Sas.CacheControl,
                 constants.Sas.ContentDisposition,
                 constants.Sas.ContentEncoding,

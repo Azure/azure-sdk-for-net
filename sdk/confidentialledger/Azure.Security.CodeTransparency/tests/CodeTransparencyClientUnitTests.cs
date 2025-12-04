@@ -50,11 +50,75 @@ namespace Azure.Security.CodeTransparency.Tests
             _fileQualifierPrefix = resourceName.Split(new String[] { mustExistFilename }, StringSplitOptions.None)[0];
         }
 
-        private MockResponse createValidIdentityResponse()
+        private MockResponse createValidCanaryIdentityResponse()
         {
             var mockedResponse = new MockResponse(200);
             mockedResponse.SetContent(_serviceIdentityJson);
             return mockedResponse;
+        }
+
+        private MockResponse createValidSignedStatementPublicKeyResponse()
+        {
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+            return content;
+        }
+
+        private MockResponse createInvalidSignedStatementPublicKeyResponseWithWrongKid()
+        {
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"99954f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+            return content;
+        }
+
+        private MockResponse createInvalidSignedStatementPublicKeyResponseWithWrongCurve()
+        {
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-512\"," +
+                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+            return content;
+        }
+
+        private MockResponse createInvalidSignedStatementPublicKeyResponseWithWrongParams()
+        {
+            var content = new MockResponse(200);
+            content.SetContent("{\"keys\":" +
+                "[{\"crv\": \"P-384\"," +
+                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
+                "\"kty\":\"EC\"," +
+                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
+                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
+                "}]}");
+            return content;
+        }
+
+        private (MockTransport MockedTransport, CodeTransparencyClientOptions MockedClientOptions) createClientOptionsWithValidPublicKeyResponse()
+        {
+            var content = createValidSignedStatementPublicKeyResponse();
+            var mockTransport = new MockTransport(content);
+            var options = new CodeTransparencyClientOptions
+            {
+                Transport = mockTransport,
+                IdentityClientEndpoint = "https://foo.bar.com"
+            };
+            return (mockTransport, options);
         }
 
         public CodeTransparencyClientUnitTests(bool isAsync) : base(isAsync)
@@ -64,7 +128,7 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public void CodeTransparencyClient_constructor_does_not_request_to_get_cert()
         {
-            var mockTransport = new MockTransport(createValidIdentityResponse());
+            var mockTransport = new MockTransport(createValidCanaryIdentityResponse());
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
@@ -354,15 +418,7 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public void GetPublicKeys_Success_After_retry()
         {
-            var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
-
+            var content = createValidSignedStatementPublicKeyResponse();
             var mockTransport = new MockTransport(new MockResponse(503), content);
             var options = new CodeTransparencyClientOptions
             {
@@ -379,119 +435,185 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
-        public void RunTransparentStatementVerification_InvalidParameters_ShouldThrowCryptographicException()
+        public void VerifyTransparentStatement_InvalidParameters_ShouldThrowCryptographicException()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
-            var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"1dd54f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"WAHDpC-ECgc7LvCxlaOPsY-xVYF9iStcEPU3XGF8dlhtb6dMHZSYVPMs2gliK-gc\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
-
+            var content = createInvalidSignedStatementPublicKeyResponseWithWrongParams();
             var mockTransport = new MockTransport(content);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+            };
             byte[] transparentStatementCoseSign1Bytes = new byte[] { 0x01, 0x02, 0x03 /* invalid bytes */ };
 
-            Assert.Throws<CryptographicException>(() => client.RunTransparentStatementVerification(transparentStatementCoseSign1Bytes));
+            Assert.Throws<CryptographicException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementCoseSign1Bytes, verificationOptions, options));
 #endif
         }
 
         [Test]
-        public void RunTransparentStatementVerification_success()
+        public void VerifyTransparentStatement_success()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
-            var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
-
-            var mockTransport = new MockTransport(content);
-            var options = new CodeTransparencyClientOptions
+            var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
+            var verificationOptions = new CodeTransparencyVerificationOptions
             {
-                Transport = mockTransport,
-                IdentityClientEndpoint = "https://foo.bar.com"
+                AuthorizedDomains = new string[] { "foo.bar.com" },
             };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-
             byte[] transparentStatementBytes = readFileBytes(name: "transparent_statement.cose");
 
-            client.RunTransparentStatementVerification(transparentStatementBytes);
+            CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options);
 #endif
         }
 
         [Test]
-        public void RunTransparentStatementVerification_InvalidCurve_InvalidOperationException()
+        public void VerifyTransparentStatement_InvalidCurve_InvalidOperationException()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
-            var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-512\"," +
-                "\"kid\":\"fb29ce6d6b37e7a0b03a5fc94205490e1c37de1f41f68b92e3620021e9981d01\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
-
+            var content = createInvalidSignedStatementPublicKeyResponseWithWrongCurve();
             var mockTransport = new MockTransport(content);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+            };
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
-            var exception = Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes));
+            var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
             Assert.AreEqual("The ECDsa key uses the wrong algorithm. Expected -39 Found -35", exception.InnerExceptions[0].Message);
 #endif
         }
 
         [Test]
-        public void RunTransparentStatementVerification_Invalidkid_InvalidOperationException()
+        public void VerifyTransparentStatement_Invalidkid_InvalidOperationException()
         {
 #if NET462
             Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
 #else
-            var content = new MockResponse(200);
-            content.SetContent("{\"keys\":" +
-                "[{\"crv\": \"P-384\"," +
-                "\"kid\":\"99954f9b6272971320c95850f74a9459c283b375531173c3d5d9bfd5822163cb\"," +
-                "\"kty\":\"EC\"," +
-                "\"x\": \"Tv_tP9eJIb5oJY9YB6iAzMfds4v3N84f8pgcPYLaxd_Nj3Nb_dBm6Fc8ViDZQhGR\"," +
-                "\"y\": \"xJ7fI2kA8gs11XDc9h2zodU-fZYRrE0UJHpzPfDVJrOpTvPcDoC5EWOBx9Fks0bZ\"" +
-                "}]}");
-
+            var content = createInvalidSignedStatementPublicKeyResponseWithWrongKid();
             var mockTransport = new MockTransport(content);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
-            var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com" },
+            };
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_UnauthorizedReceiptBehavior_FailIfPresent()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "wetrustsomethingelse.com" },
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.FailIfPresent
+            };
+
+            var exception = Assert.Throws<InvalidOperationException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions));
+            Assert.AreEqual("Receipt issuer 'foo.bar.com' is not in the authorized domain list.", exception.Message);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_AuthorizedDomains_not_found()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "wetrustsomethingelse.com" },
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
+            };
+
+            var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions));
+            StringAssert.Contains("No valid receipts found for any authorized issuer domain.", exception.Message);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_DefuleVerificationOptions_fails()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+            var exception = Assert.Throws<InvalidOperationException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, null, options));
+            StringAssert.Contains("Receipt issuer 'foo.bar.com' is not in the authorized domain list.", exception.Message);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_RequireAll_fails()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
 
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
-            Assert.Throws<AggregateException>(() => client.RunTransparentStatementVerification(transparentStatementBytes));
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com", "wetrustsomethingelse.com" },
+                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.RequireAll,
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
+            };
+
+            var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
+            StringAssert.Contains("No valid receipt found for a required domain 'wetrustsomethingelse.com'.", exception.Message);
+#endif
+        }
+
+        [Test]
+        public void VerifyTransparentStatement_VerifyAnyMatching_succeeds()
+        {
+#if NET462
+            Assert.Ignore("JsonWebKey to ECDsa is not supported on net462.");
+#else
+            var (mockTransport, options) = createClientOptionsWithValidPublicKeyResponse();
+
+            byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
+
+            var verificationOptions = new CodeTransparencyVerificationOptions
+            {
+                AuthorizedDomains = new string[] { "foo.bar.com", "doesnotexist.com" },
+                AuthorizedReceiptBehavior = AuthorizedReceiptBehavior.VerifyAnyMatching,
+                UnauthorizedReceiptBehavior = UnauthorizedReceiptBehavior.IgnoreAll
+            };
+
+            Assert.DoesNotThrow(() =>
+                CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
+            Assert.AreEqual(1, mockTransport.Requests.Count);
 #endif
         }
     }

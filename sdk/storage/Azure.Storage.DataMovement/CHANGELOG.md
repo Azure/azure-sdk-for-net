@@ -1,8 +1,6 @@
 # Release History
 
-## 12.3.0-beta.2 (Unreleased)
-
-### Features Added
+## 12.3.0 (2025-10-21)
 
 ### Breaking Changes
 - [BREAKING BEHAVIOR CHANGE] Transfers that are in a `Paused` or `Completed` state will now throw an `ArgumentException` when attempting to call `PauseAsync` on them. Before transfers in a `Paused` or `Completed` state would not throw an exception when calling `PauseAsync`.
@@ -14,8 +12,6 @@
     - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
 - Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
 - Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
-
-### Other Changes
 
 ## 12.3.0-beta.1 (2025-09-16)
 

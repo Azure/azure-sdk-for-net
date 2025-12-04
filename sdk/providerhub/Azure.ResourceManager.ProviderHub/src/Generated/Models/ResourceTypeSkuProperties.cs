@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuProperties"/>. </summary>
-        /// <param name="skuSettings"></param>
+        /// <param name="skuSettings"> The sku settings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="skuSettings"/> is null. </exception>
         public ResourceTypeSkuProperties(IEnumerable<ResourceTypeSkuSetting> skuSettings)
         {
@@ -57,8 +57,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuProperties"/>. </summary>
-        /// <param name="skuSettings"></param>
-        /// <param name="provisioningState"></param>
+        /// <param name="skuSettings"> The sku settings. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourceTypeSkuProperties(IList<ResourceTypeSkuSetting> skuSettings, ProviderHubProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +72,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets the sku settings. </summary>
+        /// <summary> The sku settings. </summary>
         public IList<ResourceTypeSkuSetting> SkuSettings { get; }
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProviderHubProvisioningState? ProvisioningState { get; set; }
     }
 }

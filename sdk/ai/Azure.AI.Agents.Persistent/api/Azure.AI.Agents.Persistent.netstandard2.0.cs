@@ -823,7 +823,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class MCPApproval
     {
         public MCPApproval(Azure.AI.Agents.Persistent.MCPApprovalPerTool perToolApproval) { }
-        public MCPApproval(string trust) { }
+        public MCPApproval(string requireApproval) { }
         public bool AlwaysRequireApproval { get { throw null; } }
         public bool NeverRequireApproval { get { throw null; } }
         public Azure.AI.Agents.Persistent.MCPApprovalPerTool PerToolApproval { get { throw null; } }

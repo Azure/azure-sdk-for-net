@@ -8,70 +8,48 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Playwright;
 using Azure.ResourceManager.Playwright.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Playwright.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockablePlaywrightSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _playwrightWorkspaceClientDiagnostics;
-        private PlaywrightWorkspacesRestOperations _playwrightWorkspaceRestClient;
+        private ClientDiagnostics _playwrightWorkspacesClientDiagnostics;
+        private PlaywrightWorkspaces _playwrightWorkspacesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePlaywrightSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockablePlaywrightSubscriptionResource for mocking. </summary>
         protected MockablePlaywrightSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockablePlaywrightSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockablePlaywrightSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockablePlaywrightSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics PlaywrightWorkspaceClientDiagnostics => _playwrightWorkspaceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Playwright", PlaywrightWorkspaceResource.ResourceType.Namespace, Diagnostics);
-        private PlaywrightWorkspacesRestOperations PlaywrightWorkspaceRestClient => _playwrightWorkspaceRestClient ??= new PlaywrightWorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PlaywrightWorkspaceResource.ResourceType));
+        private ClientDiagnostics PlaywrightWorkspacesClientDiagnostics => _playwrightWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Playwright.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private PlaywrightWorkspaces PlaywrightWorkspacesRestClient => _playwrightWorkspacesRestClient ??= new PlaywrightWorkspaces(PlaywrightWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-09-01");
 
-        /// <summary> Gets a collection of PlaywrightQuotaResources in the SubscriptionResource. </summary>
-        /// <param name="location"> The name of the Azure region. </param>
-        /// <returns> An object representing collection of PlaywrightQuotaResources and their operations over a PlaywrightQuotaResource. </returns>
+        /// <summary> Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>. </summary>
+        /// <param name="location"> The location for the resource. </param>
+        /// <returns> An object representing collection of PlaywrightQuotas and their operations over a PlaywrightQuotaResource. </returns>
         public virtual PlaywrightQuotaCollection GetAllPlaywrightQuota(AzureLocation location)
         {
-            return new PlaywrightQuotaCollection(Client, Id, location);
+            return GetCachedClient(client => new PlaywrightQuotaCollection(client, Id, location));
         }
 
-        /// <summary>
-        /// Gets a subscription-level location-based Playwright quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/playwrightQuotas/{playwrightQuotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -80,28 +58,8 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return await GetAllPlaywrightQuota(location).GetAsync(playwrightQuotaName, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary>
-        /// Gets a subscription-level location-based Playwright quota resource by name.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/locations/{location}/playwrightQuotas/{playwrightQuotaName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightQuota_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightQuotaResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <summary> Gets a subscription-level location-based Playwright quota resource by name. </summary>
+        /// <param name="location"> The location for the resource. </param>
         /// <param name="playwrightQuotaName"> The name of the PlaywrightQuota. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
@@ -110,87 +68,31 @@ namespace Azure.ResourceManager.Playwright.Mocking
             return GetAllPlaywrightQuota(location).Get(playwrightQuotaName, cancellationToken);
         }
 
-        /// <summary>
-        /// List PlaywrightWorkspace resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/playwrightWorkspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List PlaywrightWorkspace resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightWorkspaceResource> GetPlaywrightWorkspacesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PlaywrightWorkspaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlaywrightWorkspaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlaywrightWorkspaceResource(Client, PlaywrightWorkspaceData.DeserializePlaywrightWorkspaceData(e)), PlaywrightWorkspaceClientDiagnostics, Pipeline, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionAsyncCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
-        /// <summary>
-        /// List PlaywrightWorkspace resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/playwrightWorkspaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspace_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> List PlaywrightWorkspace resources by subscription ID. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="PlaywrightWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightWorkspaceResource> GetPlaywrightWorkspaces(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PlaywrightWorkspaceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PlaywrightWorkspaceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightWorkspaceResource(Client, PlaywrightWorkspaceData.DeserializePlaywrightWorkspaceData(e)), PlaywrightWorkspaceClientDiagnostics, Pipeline, "MockablePlaywrightSubscriptionResource.GetPlaywrightWorkspaces", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<PlaywrightWorkspaceData, PlaywrightWorkspaceResource>(new PlaywrightWorkspacesGetBySubscriptionCollectionResultOfT(PlaywrightWorkspacesRestClient, Guid.Parse(Id.SubscriptionId), context), data => new PlaywrightWorkspaceResource(Client, data));
         }
 
-        /// <summary>
-        /// Checks if a Playwright workspace name is available globally.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaces_CheckPlaywrightNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -198,11 +100,21 @@ namespace Azure.ResourceManager.Playwright.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightWorkspaceClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailability");
+            using DiagnosticScope scope = PlaywrightWorkspacesClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailability");
             scope.Start();
             try
             {
-                var response = await PlaywrightWorkspaceRestClient.CheckPlaywrightNameAvailabilityAsync(Id.SubscriptionId, content, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PlaywrightWorkspacesRestClient.CreateCheckPlaywrightNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PlaywrightNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<PlaywrightNameAvailabilityResult> response = Response.FromValue(PlaywrightNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)
@@ -212,27 +124,7 @@ namespace Azure.ResourceManager.Playwright.Mocking
             }
         }
 
-        /// <summary>
-        /// Checks if a Playwright workspace name is available globally.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.LoadTestService/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PlaywrightWorkspaces_CheckPlaywrightNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PlaywrightWorkspaceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Checks if a Playwright workspace name is available globally. </summary>
         /// <param name="content"> The CheckAvailability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -240,11 +132,21 @@ namespace Azure.ResourceManager.Playwright.Mocking
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = PlaywrightWorkspaceClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailability");
+            using DiagnosticScope scope = PlaywrightWorkspacesClientDiagnostics.CreateScope("MockablePlaywrightSubscriptionResource.CheckPlaywrightNameAvailability");
             scope.Start();
             try
             {
-                var response = PlaywrightWorkspaceRestClient.CheckPlaywrightNameAvailability(Id.SubscriptionId, content, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PlaywrightWorkspacesRestClient.CreateCheckPlaywrightNameAvailabilityRequest(Guid.Parse(Id.SubscriptionId), PlaywrightNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<PlaywrightNameAvailabilityResult> response = Response.FromValue(PlaywrightNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return response;
             }
             catch (Exception e)

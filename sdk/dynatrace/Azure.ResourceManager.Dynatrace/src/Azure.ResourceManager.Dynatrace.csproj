@@ -6,6 +6,7 @@
     <PackageId>Azure.ResourceManager.Dynatrace</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Dynatrace.Observability.</Description>
     <PackageTags>azure;management;arm;resource manager;dynatrace</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
     <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 </Project>

@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DefaultRolloutProperties"/>. </summary>
-        /// <param name="provisioningState"></param>
-        /// <param name="specification"></param>
-        /// <param name="status"></param>
+        /// <param name="provisioningState"> The provisioned state of the resource. </param>
+        /// <param name="specification"> The default rollout specification. </param>
+        /// <param name="status"> The default rollout status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DefaultRolloutProperties(ProviderHubProvisioningState? provisioningState, DefaultRolloutSpecification specification, DefaultRolloutStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,12 +62,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> Gets or sets the provisioning state. </summary>
-        public ProviderHubProvisioningState? ProvisioningState { get; set; }
-        /// <summary> Gets or sets the specification. </summary>
+        /// <summary> The default rollout specification. </summary>
         public DefaultRolloutSpecification Specification { get; set; }
-        /// <summary> Gets or sets the status. </summary>
+        /// <summary> The default rollout status. </summary>
         public DefaultRolloutStatus Status { get; set; }
     }
 }

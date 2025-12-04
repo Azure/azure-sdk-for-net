@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Defines the dataset properties. </summary>
     public partial class NamespaceDataset
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NamespaceDataset"/>. </summary>
         /// <param name="name"> Name of the dataset. </param>
@@ -62,14 +34,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="dataSource"> Reference to a data source for a given dataset. </param>
         /// <param name="typeRef"> URI or type definition ID. </param>
         /// <param name="datasetConfiguration"> Stringified JSON that contains connector-specific JSON string that describes configuration for the specific dataset. </param>
-        /// <param name="destinations">
-        /// Destinations for a dataset.
-        /// Please note <see cref="DatasetDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetBrokerStateStoreDestination"/>, <see cref="DatasetMqttDestination"/> and <see cref="DatasetStorageDestination"/>.
-        /// </param>
+        /// <param name="destinations"> Destinations for a dataset. </param>
         /// <param name="dataPoints"> Array of data points that are part of the dataset. Each data point can have per-data point configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceDataset(string name, string dataSource, string typeRef, string datasetConfiguration, IList<DatasetDestination> destinations, IList<NamespaceDatasetDataPoint> dataPoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceDataset(string name, string dataSource, string typeRef, string datasetConfiguration, IList<DatasetDestination> destinations, IList<NamespaceDatasetDataPoint> dataPoints, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DataSource = dataSource;
@@ -77,28 +45,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             DatasetConfiguration = datasetConfiguration;
             Destinations = destinations;
             DataPoints = dataPoints;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="NamespaceDataset"/> for deserialization. </summary>
-        internal NamespaceDataset()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the dataset. </summary>
         public string Name { get; set; }
+
         /// <summary> Reference to a data source for a given dataset. </summary>
         public string DataSource { get; set; }
+
         /// <summary> URI or type definition ID. </summary>
         public string TypeRef { get; set; }
+
         /// <summary> Stringified JSON that contains connector-specific JSON string that describes configuration for the specific dataset. </summary>
         public string DatasetConfiguration { get; set; }
-        /// <summary>
-        /// Destinations for a dataset.
-        /// Please note <see cref="DatasetDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DatasetBrokerStateStoreDestination"/>, <see cref="DatasetMqttDestination"/> and <see cref="DatasetStorageDestination"/>.
-        /// </summary>
+
+        /// <summary> Destinations for a dataset. </summary>
         public IList<DatasetDestination> Destinations { get; }
+
         /// <summary> Array of data points that are part of the dataset. Each data point can have per-data point configuration. </summary>
         public IList<NamespaceDatasetDataPoint> DataPoints { get; }
     }

@@ -54,6 +54,11 @@ namespace Azure.Storage.Sas
         public string KeyVersion => KeyProperties?.Version;
 
         /// <summary>
+        /// Gets the delegated user tenant id.
+        /// </summary>
+        public string KeyDelegatedUserTenantId => KeyProperties?.DelegatedUserTenantId;
+
+        /// <summary>
         /// Gets empty shared access signature query parameters.
         /// </summary>
         public static new DataLakeSasQueryParameters Empty => new DataLakeSasQueryParameters();
@@ -95,8 +100,12 @@ namespace Azure.Storage.Sas
             int? directoryDepth = default,
             string encryptionScope = default,
             string delegatedUserObjectId = default,
+<<<<<<< HEAD
             List<string> requestHeaders = default,
             List<string> requestQueryParameters = default)
+=======
+            string keyDelegatedUserTenantId = default)
+>>>>>>> feature/storage/stg101base
             : base(
                 version: version,
                 services: services,
@@ -130,7 +139,8 @@ namespace Azure.Storage.Sas
                 StartsOn = keyStart,
                 ExpiresOn = keyExpiry,
                 Service = keyService,
-                Version = keyVersion
+                Version = keyVersion,
+                DelegatedUserTenantId = keyDelegatedUserTenantId
             };
         }
 

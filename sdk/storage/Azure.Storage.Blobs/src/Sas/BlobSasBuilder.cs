@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -440,7 +441,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -457,7 +458,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="Azure.Storage.Blobs.BlobServiceClient.GetUserDelegationKeyAsync(BlobGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -504,8 +505,12 @@ namespace Azure.Storage.Sas
                 correlationId: CorrelationId,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
+<<<<<<< HEAD
                 requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
                 requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
+=======
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
+>>>>>>> feature/storage/stg101base
             return p;
         }
 
@@ -533,7 +538,7 @@ namespace Azure.Storage.Sas
                     PreauthorizedAgentObjectId,
                     null, // AgentObjectId - enabled only in HNS accounts
                     CorrelationId,
-                    null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                    userDelegationKey.SignedDelegatedUserTenantId,
                     DelegatedUserObjectId,
                     IPRange.ToString(),
                     SasExtensions.ToProtocolString(Protocol),
@@ -541,8 +546,13 @@ namespace Azure.Storage.Sas
                     Resource,
                     Snapshot ?? BlobVersionId,
                     EncryptionScope,
+<<<<<<< HEAD
                     canonicalizedSignedRequestHeaders,
                     canonicalizedSignedRequestQueryParameters,
+=======
+                    null, // RequestHeader
+                    null, // RequestQueryParameter
+>>>>>>> feature/storage/stg101base
                     CacheControl,
                     ContentDisposition,
                     ContentEncoding,

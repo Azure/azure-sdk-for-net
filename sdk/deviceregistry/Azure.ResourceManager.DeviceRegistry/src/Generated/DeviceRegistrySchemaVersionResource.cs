@@ -6,47 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
-    /// A Class representing a DeviceRegistrySchemaVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceRegistrySchemaVersionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetDeviceRegistrySchemaVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DeviceRegistrySchemaResource"/> using the GetDeviceRegistrySchemaVersion method.
+    /// A class representing a DeviceRegistrySchemaVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DeviceRegistrySchemaVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DeviceRegistrySchemaResource"/> using the GetDeviceRegistrySchemaVersions method.
     /// </summary>
     public partial class DeviceRegistrySchemaVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="DeviceRegistrySchemaVersionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="schemaRegistryName"> The schemaRegistryName. </param>
-        /// <param name="schemaName"> The schemaName. </param>
-        /// <param name="schemaVersionName"> The schemaVersionName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schemaRegistryName, string schemaName, string schemaVersionName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics;
-        private readonly SchemaVersionsRestOperations _deviceRegistrySchemaVersionSchemaVersionsRestClient;
+        private readonly ClientDiagnostics _schemaVersionsClientDiagnostics;
+        private readonly SchemaVersions _schemaVersionsRestClient;
         private readonly DeviceRegistrySchemaVersionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DeviceRegistry/schemaRegistries/schemas/schemaVersions";
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistrySchemaVersionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceRegistrySchemaVersionResource for mocking. </summary>
         protected DeviceRegistrySchemaVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistrySchemaVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DeviceRegistrySchemaVersionResource(ArmClient client, DeviceRegistrySchemaVersionData data) : this(client, data.Id)
@@ -55,71 +43,74 @@ namespace Azure.ResourceManager.DeviceRegistry
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceRegistrySchemaVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceRegistrySchemaVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string deviceRegistrySchemaVersionSchemaVersionsApiVersion);
-            _deviceRegistrySchemaVersionSchemaVersionsRestClient = new SchemaVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistrySchemaVersionSchemaVersionsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string deviceRegistrySchemaVersionApiVersion);
+            _schemaVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
+            _schemaVersionsRestClient = new SchemaVersions(_schemaVersionsClientDiagnostics, Pipeline, Endpoint, deviceRegistrySchemaVersionApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual DeviceRegistrySchemaVersionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="schemaRegistryName"> The schemaRegistryName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
+        /// <param name="schemaVersionName"> The schemaVersionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string schemaRegistryName, string schemaName, string schemaVersionName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
-        /// <summary>
-        /// Get a SchemaVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a SchemaVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<DeviceRegistrySchemaVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Get");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _deviceRegistrySchemaVersionSchemaVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -129,37 +120,25 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Get a SchemaVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Get a SchemaVersion. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<DeviceRegistrySchemaVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Get");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _deviceRegistrySchemaVersionSchemaVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceRegistrySchemaVersionData> response = Response.FromValue(DeviceRegistrySchemaVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -169,39 +148,26 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Delete a SchemaVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a SchemaVersion. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Delete");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _deviceRegistrySchemaVersionSchemaVersionsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new DeviceRegistryArmOperation(_deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _deviceRegistrySchemaVersionSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_schemaVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -211,135 +177,26 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary>
-        /// Delete a SchemaVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Delete a SchemaVersion. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Delete");
+            using DiagnosticScope scope = _schemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = _deviceRegistrySchemaVersionSchemaVersionsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new DeviceRegistryArmOperation(_deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics, Pipeline, _deviceRegistrySchemaVersionSchemaVersionsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _schemaVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                DeviceRegistryArmOperation operation = new DeviceRegistryArmOperation(_schemaVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create a SchemaVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_CreateOrReplace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DeviceRegistrySchemaVersionResource>> UpdateAsync(WaitUntil waitUntil, DeviceRegistrySchemaVersionData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _deviceRegistrySchemaVersionSchemaVersionsRestClient.CreateOrReplaceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _deviceRegistrySchemaVersionSchemaVersionsRestClient.CreateCreateOrReplaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaVersionResource>(Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Create a SchemaVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/schemaRegistries/{schemaRegistryName}/schemas/{schemaName}/schemaVersions/{schemaVersionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaVersion_CreateOrReplace</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-10-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceRegistrySchemaVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Resource create parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DeviceRegistrySchemaVersionResource> Update(WaitUntil waitUntil, DeviceRegistrySchemaVersionData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var scope = _deviceRegistrySchemaVersionSchemaVersionsClientDiagnostics.CreateScope("DeviceRegistrySchemaVersionResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _deviceRegistrySchemaVersionSchemaVersionsRestClient.CreateOrReplace(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _deviceRegistrySchemaVersionSchemaVersionsRestClient.CreateCreateOrReplaceRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DeviceRegistryArmOperation<DeviceRegistrySchemaVersionResource>(Response.FromValue(new DeviceRegistrySchemaVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

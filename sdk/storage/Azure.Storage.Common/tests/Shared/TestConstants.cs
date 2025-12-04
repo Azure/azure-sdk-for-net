@@ -47,6 +47,7 @@ namespace Azure.Storage.Test
             public string KeyTenantId { get; } = "KeyTid";
             public string KeyService { get; } = "KeyService";
             public string KeyVersion { get; } = "KeyVersion";
+            public string KeyDelegatedTenantId { get; } = "DelegatedTid";
             public string DelegatedObjectId { get; } = "DelegatedOid";
             public Dictionary<string, string> RequestHeaders { get; } = new Dictionary<string, string>()
             {

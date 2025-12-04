@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Storage.Files.DataLake;
 using Azure.Storage.Files.DataLake.Models;
@@ -458,7 +459,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <returns>
@@ -475,7 +476,7 @@ namespace Azure.Storage.Sas
         /// </summary>
         /// <param name="userDelegationKey">
         /// A <see cref="UserDelegationKey"/> returned from
-        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync"/>.
+        /// <see cref="DataLakeServiceClient.GetUserDelegationKeyAsync(DataLakeGetUserDelegationKeyOptions, CancellationToken)"/>.
         /// </param>
         /// <param name="accountName">The name of the storage account.</param>
         /// <param name="stringToSign">
@@ -524,8 +525,12 @@ namespace Azure.Storage.Sas
                 directoryDepth: _directoryDepth,
                 encryptionScope: EncryptionScope,
                 delegatedUserObjectId: DelegatedUserObjectId,
+<<<<<<< HEAD
                 requestHeaders: SasExtensions.ConvertRequestDictToKeyList(RequestHeaders),
                 requestQueryParameters: SasExtensions.ConvertRequestDictToKeyList(RequestQueryParameters));
+=======
+                keyDelegatedUserTenantId: userDelegationKey.SignedDelegatedUserTenantId);
+>>>>>>> feature/storage/stg101base
             return p;
         }
 
@@ -553,7 +558,7 @@ namespace Azure.Storage.Sas
                 PreauthorizedAgentObjectId,
                 AgentObjectId,
                 CorrelationId,
-                null, // SignedKeyDelegatedUserTenantId, will be added in a future release.
+                userDelegationKey.SignedDelegatedUserTenantId,
                 DelegatedUserObjectId,
                 IPRange.ToString(),
                 SasExtensions.ToProtocolString(Protocol),
@@ -561,8 +566,13 @@ namespace Azure.Storage.Sas
                 Resource,
                 null, // snapshot
                 EncryptionScope,
+<<<<<<< HEAD
                 canonicalizedSignedRequestHeaders,
                 canonicalizedSignedRequestQueryParameters,
+=======
+                null, // RequestHeader
+                null, // RequestQueryParameter
+>>>>>>> feature/storage/stg101base
                 CacheControl,
                 ContentDisposition,
                 ContentEncoding,
