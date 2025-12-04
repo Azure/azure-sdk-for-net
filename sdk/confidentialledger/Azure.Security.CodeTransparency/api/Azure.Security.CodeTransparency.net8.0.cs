@@ -80,6 +80,7 @@ namespace Azure.Security.CodeTransparency
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Security.CodeTransparency.JwksDocument> ByIssuer { get { throw null; } }
         public void Add(string ledgerDomain, Azure.Security.CodeTransparency.JwksDocument jwksDocument) { }
         public static Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys FromBinaryData(System.BinaryData json) { throw null; }
+        public System.BinaryData ToBinaryData() { throw null; }
     }
     public enum CodeTransparencyOperationStatus
     {
