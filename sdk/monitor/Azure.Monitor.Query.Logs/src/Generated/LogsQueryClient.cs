@@ -130,7 +130,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<LogsQueryResult> QueryWorkspace(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryWorkspace(workspaceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = QueryWorkspace(workspaceId, body, prefer, cancellationToken.ToRequestContext());
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -152,7 +152,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<LogsQueryResult>> QueryWorkspaceAsync(string workspaceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryWorkspaceAsync(workspaceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await QueryWorkspaceAsync(workspaceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -244,7 +244,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<LogsQueryResult> QueryResource(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = QueryResource(resourceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = QueryResource(resourceId, body, prefer, cancellationToken.ToRequestContext());
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -266,7 +266,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<LogsQueryResult>> QueryResourceAsync(string resourceId, QueryBody body, string prefer = default, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryResourceAsync(resourceId, body, prefer, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await QueryResourceAsync(resourceId, body, prefer, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((LogsQueryResult)result, result);
         }
 
@@ -340,7 +340,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Response<BatchResponse> QueryBatch(BatchRequest body, CancellationToken cancellationToken = default)
         {
-            Response result = QueryBatch(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = QueryBatch(body, cancellationToken.ToRequestContext());
             return Response.FromValue((BatchResponse)result, result);
         }
 
@@ -354,7 +354,7 @@ namespace Azure.Monitor.Query.Logs
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual async Task<Response<BatchResponse>> QueryBatchAsync(BatchRequest body, CancellationToken cancellationToken = default)
         {
-            Response result = await QueryBatchAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await QueryBatchAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((BatchResponse)result, result);
         }
     }

@@ -220,7 +220,7 @@
     <ExcludeMgmtCoreShared Condition="'$(ExcludeMgmtCoreShared)' == ''">false</ExcludeMgmtCoreShared>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(ExcludeMgmtCoreShared)' == 'false'">
+  <ItemGroup Condition="('$(IsGeneratorLibraryGenerationTest)' == 'true' or ('$(IsMgmtSubLibrary)' == 'true' and '$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' != 'true')) and '$(ExcludeMgmtCoreShared)' == 'false'">
     <Compile Include="$(MgmtCoreShared)/**/*.cs"
                  LinkBase="Shared/Management" />
   </ItemGroup>

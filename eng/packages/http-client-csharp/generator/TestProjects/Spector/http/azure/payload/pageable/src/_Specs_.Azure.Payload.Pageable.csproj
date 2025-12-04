@@ -3,7 +3,7 @@
     <Description>This is the _Specs_.Azure.Payload.Pageable client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation _Specs_.Azure.Payload.Pageable</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>_Specs_.Azure.Payload.Pageable</PackageTags>
+    <PackageTags>Specs.Azure.Payload.Pageable</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 

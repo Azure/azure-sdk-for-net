@@ -3,8 +3,12 @@
 ## 12.26.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2026-04-06.
+- Added support for Content Validation via Structured Message
+- Added cross-tenant support for Principal-Bound User Delegation SAS.
+- Added support for Dynamic User Delegation SAS.
 
-## 12.25.0-beta.1 (Unreleased)
+## 12.25.0-beta.1 (2025-11-17)
 
 ### Features Added
 - Added support for service version 2026-02-06.

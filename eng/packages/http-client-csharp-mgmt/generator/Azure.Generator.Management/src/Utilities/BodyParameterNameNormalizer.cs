@@ -15,7 +15,7 @@ namespace Azure.Generator.Management.Utilities
         /// </summary>
         /// <param name="parameter">The parameter to normalize.</param>
         /// <returns>The normalized parameter name, or null if no normalization is needed.</returns>
-        public static string? GetNormalizedParameterNameForNonResourceMethod(ParameterProvider parameter)
+        public static string? GetNormalizedBodyParameterName(ParameterProvider parameter)
         {
             if (parameter.Location != ParameterLocation.Body || !parameter.Type.IsModelType())
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DurableTask.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetSchedulers_SchedulersListBySubscription()
+        public async Task GetDurableTaskSchedulers_SchedulersListBySubscription()
         {
             // Generated from example definition: 2025-11-01/Schedulers_ListBySubscription.json
             // this example is just showing the usage of "Scheduler_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.DurableTask.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SchedulerResource item in subscriptionResource.GetSchedulersAsync())
+            await foreach (DurableTaskSchedulerResource item in subscriptionResource.GetDurableTaskSchedulersAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SchedulerData resourceData = item.Data;
+                DurableTaskSchedulerData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

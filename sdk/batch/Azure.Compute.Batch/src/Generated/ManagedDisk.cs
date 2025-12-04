@@ -51,16 +51,20 @@ namespace Azure.Compute.Batch
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedDisk"/>. </summary>
+        /// <param name="diskEncryptionSet"> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </param>
         /// <param name="storageAccountType"> The storage account type for managed disk. </param>
         /// <param name="securityProfile"> Specifies the security profile settings for the managed disk. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedDisk(StorageAccountType? storageAccountType, BatchVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedDisk(DiskEncryptionSetParameters diskEncryptionSet, StorageAccountType? storageAccountType, BatchVmDiskSecurityProfile securityProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            DiskEncryptionSet = diskEncryptionSet;
             StorageAccountType = storageAccountType;
             SecurityProfile = securityProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Specifies the customer managed disk encryption set resource id for the managed disk. It can be set only in UserSubscription mode. </summary>
+        public DiskEncryptionSetParameters DiskEncryptionSet { get; set; }
         /// <summary> The storage account type for managed disk. </summary>
         public StorageAccountType? StorageAccountType { get; set; }
         /// <summary> Specifies the security profile settings for the managed disk. </summary>

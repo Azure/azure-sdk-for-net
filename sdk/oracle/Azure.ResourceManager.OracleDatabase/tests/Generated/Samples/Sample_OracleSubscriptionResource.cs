@@ -19,6 +19,162 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetOracleSubscriptionGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/OracleSubscriptions_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "OracleSubscription_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            OracleSubscriptionResource result = await oracleSubscription.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OracleSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetOracleSubscriptionGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/OracleSubscriptions_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "OracleSubscription_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            OracleSubscriptionResource result = await oracleSubscription.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OracleSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_OracleSubscriptionsGet()
+        {
+            // Generated from example definition: 2025-09-01/oracleSubscriptions_get.json
+            // this example is just showing the usage of "OracleSubscription_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            OracleSubscriptionResource result = await oracleSubscription.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OracleSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteOracleSubscriptionGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/OracleSubscriptions_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "OracleSubscription_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            await oracleSubscription.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteOracleSubscriptionGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/OracleSubscriptions_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "OracleSubscription_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            await oracleSubscription.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_OracleSubscriptionsDelete()
+        {
+            // Generated from example definition: 2025-09-01/oracleSubscriptions_delete.json
+            // this example is just showing the usage of "OracleSubscription_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            await oracleSubscription.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchOracleSubscriptionGeneratedByMaximumSetRule()
         {
             // Generated from example definition: 2025-09-01/OracleSubscriptions_Update_MaximumSet_Gen.json
@@ -110,6 +266,117 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             // invoke the operation
             OracleSubscriptionPatch patch = new OracleSubscriptionPatch();
             ArmOperation<OracleSubscriptionResource> lro = await oracleSubscription.UpdateAsync(WaitUntil.Completed, patch);
+            OracleSubscriptionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OracleSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateOracleSubscriptionGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/OracleSubscriptions_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "OracleSubscription_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            OracleSubscriptionData data = new OracleSubscriptionData
+            {
+                Properties = new OracleSubscriptionProperties
+                {
+                    TermUnit = "akzq",
+                    ProductCode = "aujimmjxyetnqkmjqrwapn",
+                    Intent = OracleSubscriptionUpdateIntent.Retain,
+                },
+                Plan = new ArmPlan("plan1", "publisher1", "product1")
+                {
+                    PromotionCode = "none",
+                    Version = "alpha",
+                },
+            };
+            ArmOperation<OracleSubscriptionResource> lro = await oracleSubscription.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            OracleSubscriptionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OracleSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateOracleSubscriptionGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/OracleSubscriptions_CreateOrUpdate_MinimumSet_Gen.json
+            // this example is just showing the usage of "OracleSubscription_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            OracleSubscriptionData data = new OracleSubscriptionData();
+            ArmOperation<OracleSubscriptionResource> lro = await oracleSubscription.CreateOrUpdateAsync(WaitUntil.Completed, data);
+            OracleSubscriptionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OracleSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_OracleSubscriptionsCreateOrUpdate()
+        {
+            // Generated from example definition: 2025-09-01/oracleSubscriptions_create.json
+            // this example is just showing the usage of "OracleSubscription_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OracleSubscriptionResource created on azure
+            // for more information of creating OracleSubscriptionResource, please refer to the document of OracleSubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier oracleSubscriptionResourceId = OracleSubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            OracleSubscriptionResource oracleSubscription = client.GetOracleSubscriptionResource(oracleSubscriptionResourceId);
+
+            // invoke the operation
+            OracleSubscriptionData data = new OracleSubscriptionData
+            {
+                Properties = new OracleSubscriptionProperties(),
+                Plan = new ArmPlan("plan1", "publisher1", "product1")
+                {
+                    PromotionCode = "none",
+                    Version = "alpha",
+                },
+            };
+            ArmOperation<OracleSubscriptionResource> lro = await oracleSubscription.CreateOrUpdateAsync(WaitUntil.Completed, data);
             OracleSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

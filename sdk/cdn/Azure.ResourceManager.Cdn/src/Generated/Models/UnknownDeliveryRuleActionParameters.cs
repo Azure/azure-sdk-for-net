@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Cdn.Models
     internal partial class UnknownDeliveryRuleActionParameters : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleActionParameters"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UnknownDeliveryRuleActionParameters(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(typeName, serializedAdditionalRawData)
         {

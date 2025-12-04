@@ -30,11 +30,11 @@ namespace Azure.Messaging.EventGrid.Namespaces
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxEvents != null)
             {
-                uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents, null), true);
+                uri.AppendQuery("maxEvents", TypeFormatters.ConvertToString(maxEvents), true);
             }
             if (maxWaitTime != null)
             {
-                uri.AppendQuery("maxWaitTime", TypeFormatters.ConvertToString(maxWaitTime, "%s"), true);
+                uri.AppendQuery("maxWaitTime", TypeFormatters.ConvertToString(maxWaitTime, SerializationFormat.Duration_Seconds), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

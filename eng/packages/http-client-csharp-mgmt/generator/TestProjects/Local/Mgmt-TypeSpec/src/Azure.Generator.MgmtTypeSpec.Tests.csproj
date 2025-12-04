@@ -6,8 +6,4 @@
     <PackageTags>Azure.Generator.MgmtTypeSpec.Tests</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../sdk/resourcemanager/Azure.ResourceManager/src/Shared/SharedExtensions.cs" LinkBase="Shared/Arm" />
-  </ItemGroup>
 </Project>

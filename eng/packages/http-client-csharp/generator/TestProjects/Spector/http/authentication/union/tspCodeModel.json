@@ -123,6 +123,7 @@
           "crossLanguageDefinitionId": "Authentication.Union.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Authentication.Union",
       "apiVersions": []

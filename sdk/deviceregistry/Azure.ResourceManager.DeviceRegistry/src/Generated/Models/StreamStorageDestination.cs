@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Argument.AssertNotNull(configuration, nameof(configuration));
 
             Configuration = configuration;
+            Target = StreamDestinationTarget.Storage;
         }
 
         /// <summary> Initializes a new instance of <see cref="StreamStorageDestination"/>. </summary>

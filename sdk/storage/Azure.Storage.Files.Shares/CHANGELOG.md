@@ -3,16 +3,19 @@
 ## 12.26.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2026-04-06.
+- Added support for Content Validation via Structured Message
+- Added cross-tenant support for Principal-Bound User Delegation SAS.
+- Added support for Dynamic User Delegation SAS.
+- Added support for Files Provisioned V2 Guardrails
 
-## 12.25.0-beta.1 (Unreleased)
+## 12.25.0-beta.1 (2025-11-17)
 
 ### Features Added
 - Added support for service version 2026-02-06.
 - Added support for User Delegation SAS.
 - Added support for Principal-Bound Identity User Delegation SAS.
 - Added support for the ShareServiceProperties.Protocol.SMB.EncryptionInTransit parameter on ShareServiceClient.SetProperties() and .SetPropertiesAsync().
-- Added support for uploading data with the new Content parameter on ShareFileClient.Create() and .CreateAsync().
-- Added support for the PropertySemantics parameter on ShareFileClient.Create(), .CreateAsync(), ShareDirectoryClient.Create(), and .CreateAsync().
 
 ## 12.24.0 (2025-10-13)
 

@@ -354,6 +354,7 @@
           "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive",
       "apiVersions": []

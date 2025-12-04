@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Kubernetes.Models;
 using Azure.ResourceManager.Models;
 
@@ -32,6 +33,7 @@ namespace Azure.ResourceManager.Kubernetes
     [ModelReaderWriterBuildable(typeof(ListClusterUserCredentialProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(OidcIssuerProfile))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecurityProfile))]
     [ModelReaderWriterBuildable(typeof(SecurityProfileWorkloadIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemComponent))]

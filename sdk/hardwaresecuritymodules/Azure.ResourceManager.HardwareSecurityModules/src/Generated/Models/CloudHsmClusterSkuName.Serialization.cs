@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     internal static partial class CloudHsmClusterSkuNameExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this CloudHsmClusterSkuName value) => value switch
         {
             CloudHsmClusterSkuName.StandardB1 => "Standard_B1",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CloudHsmClusterSkuName value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static CloudHsmClusterSkuName ToCloudHsmClusterSkuName(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_B1")) return CloudHsmClusterSkuName.StandardB1;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard B10")) return CloudHsmClusterSkuName.StandardB10;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard_B1"))
+            {
+                return CloudHsmClusterSkuName.StandardB1;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Standard B10"))
+            {
+                return CloudHsmClusterSkuName.StandardB10;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown CloudHsmClusterSkuName value.");
         }
     }

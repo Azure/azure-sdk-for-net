@@ -42,7 +42,7 @@ namespace Azure.Monitor.Query.Metrics
             uri.AppendQuery("metricnamespace", metricNamespace, true);
             if (metricNames != null && !(metricNames is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("metricnames", metricNames, ",", null, true);
+                uri.AppendQueryDelimited("metricnames", metricNames, ",", escape: true);
             }
             if (aggregation != null)
             {
@@ -50,7 +50,7 @@ namespace Azure.Monitor.Query.Metrics
             }
             if (top != null)
             {
-                uri.AppendQuery("top", TypeFormatters.ConvertToString(top, null), true);
+                uri.AppendQuery("top", TypeFormatters.ConvertToString(top), true);
             }
             if (orderBy != null)
             {
