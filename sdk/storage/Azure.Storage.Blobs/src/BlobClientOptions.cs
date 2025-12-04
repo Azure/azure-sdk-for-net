@@ -343,6 +343,8 @@ namespace Azure.Storage.Blobs
             Diagnostics.LoggedHeaderNames.Add("x-ms-encryption-key-sha256");
             Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-error-code");
             Diagnostics.LoggedHeaderNames.Add("x-ms-copy-source-status-code");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-structured-body");
+            Diagnostics.LoggedHeaderNames.Add("x-ms-structured-content-length");
 
             Diagnostics.LoggedQueryParameters.Add("comp");
             Diagnostics.LoggedQueryParameters.Add("maxresults");

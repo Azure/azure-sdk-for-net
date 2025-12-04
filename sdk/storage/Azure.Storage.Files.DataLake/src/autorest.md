@@ -23,7 +23,7 @@ directive:
         if (property.includes('/{filesystem}/{path}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem") && false == param['$ref'].endsWith("#/parameters/Path"))});
-        } 
+        }
         else if (property.includes('/{filesystem}'))
         {
             $[property]["parameters"] = $[property]["parameters"].filter(function(param) { return (typeof param['$ref'] === "undefined") || (false == param['$ref'].endsWith("#/parameters/FileSystem"))});
@@ -127,7 +127,7 @@ directive:
             }
             $[newName] = $[oldName];
             delete $[oldName];
-        } 
+        }
         else if (property.includes('/{filesystem}'))
         {
             var oldName = property;

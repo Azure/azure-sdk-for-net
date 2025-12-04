@@ -2590,51 +2590,70 @@ namespace Azure.Storage.Files.Shares
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    initialResponse.Value.Content = RetriableStream.Create(
-                        stream,
-                        startOffset =>
+                    async ValueTask<Response<ShareFileDownloadInfo>> Factory(long offset, bool async, CancellationToken cancellationToken)
+                    {
+                        (Response<ShareFileDownloadInfo> response, Stream contentStream) = await StartDownloadAsync(
+                            range,
+                            validationOptions,
+                            conditions,
+                            offset,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        if (etag != response.GetRawResponse().Headers.ETag)
                         {
-                            (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = StartDownloadAsync(
-                                range,
-                                validationOptions,
-                                conditions,
-                                startOffset,
-                                async,
-                                cancellationToken)
-                                .EnsureCompleted();
-                            if (etag != Response.GetRawResponse().Headers.ETag)
+                            throw new ShareFileModifiedException(
+                                "File has been modified concurrently",
+                                Uri, etag, response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
+                        }
+                        return response;
+                    }
+                    async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
+                        long offset, bool async, CancellationToken cancellationToken)
+                    {
+                        Response<ShareFileDownloadInfo> result = await Factory(offset, async, cancellationToken).ConfigureAwait(false);
+                        return StructuredMessageDecodingStream.WrapStream(result.Value.Content, result.Value.ContentLength);
+                    }
+
+                    if (initialResponse.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
+                    {
+                        (Stream decodingStream, StructuredMessageDecodingStream.RawDecodedData decodedData) = StructuredMessageDecodingStream.WrapStream(
+                            initialResponse.Value.Content, initialResponse.Value.ContentLength);
+                        initialResponse.Value.Content = new StructuredMessageDecodingRetriableStream(
+                            decodingStream,
+                            decodedData,
+                            StructuredMessage.Flags.StorageCrc64,
+                            startOffset => StructuredMessageFactory(startOffset, async: false, cancellationToken)
+                                .EnsureCompleted(),
+                            async startOffset => await StructuredMessageFactory(startOffset, async: true, cancellationToken)
+                                .ConfigureAwait(false),
+                            decodedData =>
                             {
-                                throw new ShareFileModifiedException(
-                                    "File has been modified concurrently",
-                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
-                            }
-                            return ContentStream;
-                        },
-                        async startOffset =>
-                        {
-                            (Response<ShareFileDownloadInfo> Response, Stream ContentStream) = await StartDownloadAsync(
-                                range,
-                                validationOptions,
-                                conditions,
-                                startOffset,
-                                async,
-                                cancellationToken)
-                                .ConfigureAwait(false);
-                            if (etag != Response.GetRawResponse().Headers.ETag)
-                            {
-                                throw new ShareFileModifiedException(
-                                    "File has been modified concurrently",
-                                    Uri, etag, Response.GetRawResponse().Headers.ETag.GetValueOrDefault(), range);
-                            }
-                            return ContentStream;
-                        },
-                        ClientConfiguration.Pipeline.ResponseClassifier,
-                        Constants.MaxReliabilityRetries);
+                                initialResponse.Value.ContentCrc = new byte[StructuredMessage.Crc64Length];
+                                decodedData.Crc.WriteCrc64(initialResponse.Value.ContentCrc);
+                            },
+                            ClientConfiguration.Pipeline.ResponseClassifier,
+                            Constants.MaxReliabilityRetries);
+                    }
+                    else
+                    {
+                        initialResponse.Value.Content = RetriableStream.Create(
+                            initialResponse.Value.Content,
+                            startOffset => Factory(startOffset, async: false, cancellationToken)
+                                .EnsureCompleted().Value.Content,
+                            async startOffset => (await Factory(startOffset, async: true, cancellationToken)
+                                .ConfigureAwait(false)).Value.Content,
+                            ClientConfiguration.Pipeline.ResponseClassifier,
+                            Constants.MaxReliabilityRetries);
+                    }
 
                     // buffer response stream and ensure it matches the transactional hash if any
                     // Storage will not return a hash for payload >4MB, so this buffer is capped similarly
                     // hashing is opt-in, so this buffer is part of that opt-in
-                    if (validationOptions != default && validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None && validationOptions.AutoValidateChecksum)
+                    if (validationOptions != default &&
+                        validationOptions.ChecksumAlgorithm != StorageChecksumAlgorithm.None &&
+                        validationOptions.AutoValidateChecksum &&
+                        // structured message decoding does the validation for us
+                        !initialResponse.GetRawResponse().Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
                     {
                         // safe-buffer; transactional hash download limit well below maxInt
                         var readDestStream = new MemoryStream((int)initialResponse.Value.ContentLength);
@@ -2717,8 +2736,6 @@ namespace Azure.Storage.Files.Shares
             bool async = true,
             CancellationToken cancellationToken = default)
         {
-            ShareErrors.AssertAlgorithmSupport(transferValidationOverride?.ChecksumAlgorithm);
-
             // calculation gets illegible with null coalesce; just pre-initialize
             var pageRange = range;
             pageRange = new HttpRange(
@@ -2728,13 +2745,27 @@ namespace Azure.Storage.Files.Shares
                     (long?)null);
             ClientConfiguration.Pipeline.LogTrace($"Download {Uri} with range: {pageRange}");
 
-            ResponseWithHeaders<Stream, FileDownloadHeaders> response;
+            bool? rangeGetContentMD5 = null;
+            string structuredBodyType = null;
+            switch (transferValidationOverride?.ChecksumAlgorithm.ResolveAuto())
+            {
+                case StorageChecksumAlgorithm.MD5:
+                    rangeGetContentMD5 = true;
+                    break;
+                case StorageChecksumAlgorithm.StorageCrc64:
+                    structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                    break;
+                default:
+                    break;
+            }
 
+            ResponseWithHeaders<Stream, FileDownloadHeaders> response;
             if (async)
             {
                 response = await FileRestClient.DownloadAsync(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: rangeGetContentMD5,
+                    structuredBodyType: structuredBodyType,
                     shareFileRequestConditions: conditions,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
@@ -2743,7 +2774,8 @@ namespace Azure.Storage.Files.Shares
             {
                 response = FileRestClient.Download(
                     range: pageRange == default ? null : pageRange.ToString(),
-                    rangeGetContentMD5: transferValidationOverride?.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.MD5 ? true : null,
+                    rangeGetContentMD5: rangeGetContentMD5,
+                    structuredBodyType: structuredBodyType,
                     shareFileRequestConditions: conditions,
                     cancellationToken: cancellationToken);
             }
@@ -4899,7 +4931,6 @@ namespace Azure.Storage.Files.Shares
             CancellationToken cancellationToken)
         {
             UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
-            ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
 
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
@@ -4915,14 +4946,38 @@ namespace Azure.Storage.Files.Shares
                     scope.Start();
                     Errors.VerifyStreamPosition(content, nameof(content));
 
-                    // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                        content,
-                        validationOptions,
-                        async,
-                        cancellationToken).ConfigureAwait(false);
-
-                    content = content.WithNoDispose().WithProgress(progressHandler);
+                    ContentHasher.GetHashResult hashResult = null;
+                    long contentLength = (content?.Length - content?.Position) ?? 0;
+                    long? structuredContentLength = default;
+                    string structuredBodyType = null;
+                    if (validationOptions != null &&
+                        validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64)
+                    {
+                        // report progress in terms of caller bytes, not encoded bytes
+                        structuredContentLength = contentLength;
+                        contentLength = (content?.Length - content?.Position) ?? 0;
+                        structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                        content = content.WithNoDispose().WithProgress(progressHandler);
+                        content = validationOptions.PrecalculatedChecksum.IsEmpty
+                            ? new StructuredMessageEncodingStream(
+                                content,
+                                Constants.StructuredMessage.DefaultSegmentContentLength,
+                                StructuredMessage.Flags.StorageCrc64)
+                            : new StructuredMessagePrecalculatedCrcWrapperStream(
+                                content,
+                                validationOptions.PrecalculatedChecksum.Span);
+                        contentLength = (content?.Length - content?.Position) ?? 0;
+                    }
+                    else
+                    {
+                        // compute hash BEFORE attaching progress handler
+                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                            content,
+                            validationOptions,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                        content = content.WithNoDispose().WithProgress(progressHandler);
+                    }
 
                     ResponseWithHeaders<FileUploadRangeHeaders> response;
 
@@ -4935,6 +4990,8 @@ namespace Azure.Storage.Files.Shares
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
                             contentMD5: hashResult?.MD5AsArray,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -4948,6 +5005,8 @@ namespace Azure.Storage.Files.Shares
                             fileLastWrittenMode: fileLastWrittenMode,
                             optionalbody: content,
                             contentMD5: hashResult?.MD5AsArray,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             shareFileRequestConditions: conditions,
                             cancellationToken: cancellationToken);
                     }

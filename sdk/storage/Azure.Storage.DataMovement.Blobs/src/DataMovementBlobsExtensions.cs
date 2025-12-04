@@ -101,7 +101,7 @@ namespace Azure.Storage.DataMovement.Blobs
             ContentRange contentRange = !string.IsNullOrWhiteSpace(result?.Details?.ContentRange) ? ContentRange.Parse(result.Details.ContentRange) : default;
             if (contentRange != default)
             {
-                size = contentRange.Size;
+                size = contentRange.TotalResourceLength;
             }
 
             return new StorageResourceItemProperties()
@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs
             if (contentRange != default)
             {
                 range = ContentRange.ToHttpRange(contentRange);
-                size = contentRange.Size;
+                size = contentRange.TotalResourceLength;
             }
             else if (result.Details.ContentLength > 0)
             {
