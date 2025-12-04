@@ -91,6 +91,6 @@ namespace Azure.ResourceManager.Hci
         public SecurityComplianceStatus SecurityComplianceStatus { get; }
         /// <summary> The status of the last operation. </summary>
         [WirePath("properties.provisioningState")]
-        public HciProvisioningState? ProvisioningState { get; }
+        public HciProvisioningState? ProvisioningState { get; set; }
     }
 }

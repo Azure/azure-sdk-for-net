@@ -204,6 +204,7 @@ directive:
     where: $.definitions.UpdateRunPropertiesState
     transform: >
       delete $.readOnly;
+  # Add missing value to Status enum
   - from: hci.json
     where: $.definitions.Status
     transform: >
@@ -225,10 +226,7 @@ directive:
           "description": "The operation is currently in progress."
         }
       );
-  - from: hci.json
-    where: $.definitions.ArcConnectivityProperties
-    transform: >
-      $.additionalProperties = false;
+  # modify connectivityProperties to be an object of ArcConnectivityProperties
   - from: hci.json
     where: $.definitions.ArcSettingsPatchProperties.properties.connectivityProperties
     transform: >
@@ -242,11 +240,9 @@ directive:
       $.items = { '$ref': '#/definitions/ArcConnectivityProperties' };
       delete $['$ref'];
   - from: hci.json
-    where: $.definitions.SecurityProperties.properties.provisioningState
+    where: $.definitions
     transform: >
-      if ($.readOnly) {
-        delete $.readOnly;
-      }
-      return $;
+      delete $.ProvisioningState.readOnly;
+      delete $.SecurityProperties.properties.provisioningState.readOnly;
 
 ```  

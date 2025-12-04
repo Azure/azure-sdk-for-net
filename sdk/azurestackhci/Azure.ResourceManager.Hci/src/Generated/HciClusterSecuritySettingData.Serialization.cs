@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WritePropertyName("securityComplianceStatus"u8);
                 writer.WriteObjectValue(SecurityComplianceStatus, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
