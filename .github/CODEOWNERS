@@ -350,10 +350,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @Tewatia5355 @msftsettiy @weirenlai
+/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @Tewatia5355 @msftsettiy @weirenlai
+# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai
 
 # ServiceLabel: %Connected Kubernetes
 # ServiceOwners:                                                   @akashkeshari
