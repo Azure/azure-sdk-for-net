@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string virtualEndpointName = "examplebasename";
             ResourceIdentifier virtualEndpointResourceId = VirtualEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, virtualEndpointName);
-            VirtualEndpointResource virtualEndpoint = client.GetVirtualEndpointResource(virtualEndpointResourceId);
+            VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
 
             // invoke the operation
-            VirtualEndpointResource result = await virtualEndpoint.GetAsync();
+            VirtualEndpointResource result = await virtualEndpointResource.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            VirtualEndpointData resourceData = result.Data;
+            VirtualEndpointResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string virtualEndpointName = "examplebasename";
             ResourceIdentifier virtualEndpointResourceId = VirtualEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, virtualEndpointName);
-            VirtualEndpointResource virtualEndpoint = client.GetVirtualEndpointResource(virtualEndpointResourceId);
+            VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
 
             // invoke the operation
-            await virtualEndpoint.DeleteAsync(WaitUntil.Completed);
+            await virtualEndpointResource.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -93,20 +93,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             string virtualEndpointName = "examplebasename";
             ResourceIdentifier virtualEndpointResourceId = VirtualEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, virtualEndpointName);
-            VirtualEndpointResource virtualEndpoint = client.GetVirtualEndpointResource(virtualEndpointResourceId);
+            VirtualEndpointResource virtualEndpointResource = client.GetVirtualEndpointResource(virtualEndpointResourceId);
 
             // invoke the operation
-            VirtualEndpointPatch patch = new VirtualEndpointPatch
+            VirtualEndpointResourcePatch patch = new VirtualEndpointResourcePatch
             {
                 EndpointType = VirtualEndpointType.ReadWrite,
                 Members = { "exampleprimaryserver" },
             };
-            ArmOperation<VirtualEndpointResource> lro = await virtualEndpoint.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<VirtualEndpointResource> lro = await virtualEndpointResource.UpdateAsync(WaitUntil.Completed, patch);
             VirtualEndpointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            VirtualEndpointData resourceData = result.Data;
+            VirtualEndpointResourceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

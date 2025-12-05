@@ -39,60 +39,60 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AdministratorMicrosoftEntraResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdministratorMicrosoftEntraResource.CreateResourceIdentifier" /> to create an <see cref="AdministratorMicrosoftEntraResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetAdministratorMicrosoftEntraResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetPostgreSqlFlexibleServerActiveDirectoryAdministratorResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AdministratorMicrosoftEntraResource"/> object. </returns>
-        public static AdministratorMicrosoftEntraResource GetAdministratorMicrosoftEntraResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> object. </returns>
+        public static PostgreSqlFlexibleServerActiveDirectoryAdministratorResource GetPostgreSqlFlexibleServerActiveDirectoryAdministratorResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetAdministratorMicrosoftEntraResource(id);
+            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetPostgreSqlFlexibleServerActiveDirectoryAdministratorResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AdvancedThreatProtectionSettingsModelResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AdvancedThreatProtectionSettingsModelResource.CreateResourceIdentifier" /> to create an <see cref="AdvancedThreatProtectionSettingsModelResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ServerThreatProtectionSettingsModelResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerThreatProtectionSettingsModelResource.CreateResourceIdentifier" /> to create a <see cref="ServerThreatProtectionSettingsModelResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetAdvancedThreatProtectionSettingsModelResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetServerThreatProtectionSettingsModelResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AdvancedThreatProtectionSettingsModelResource"/> object. </returns>
-        public static AdvancedThreatProtectionSettingsModelResource GetAdvancedThreatProtectionSettingsModelResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ServerThreatProtectionSettingsModelResource"/> object. </returns>
+        public static ServerThreatProtectionSettingsModelResource GetServerThreatProtectionSettingsModelResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetAdvancedThreatProtectionSettingsModelResource(id);
+            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetServerThreatProtectionSettingsModelResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupAutomaticAndOnDemandResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupAutomaticAndOnDemandResource.CreateResourceIdentifier" /> to create a <see cref="BackupAutomaticAndOnDemandResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerBackupResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetBackupAutomaticAndOnDemandResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetPostgreSqlFlexibleServerBackupResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BackupAutomaticAndOnDemandResource"/> object. </returns>
-        public static BackupAutomaticAndOnDemandResource GetBackupAutomaticAndOnDemandResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerBackupResource"/> object. </returns>
+        public static PostgreSqlFlexibleServerBackupResource GetPostgreSqlFlexibleServerBackupResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetBackupAutomaticAndOnDemandResource(id);
+            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetPostgreSqlFlexibleServerBackupResource(id);
         }
 
         /// <summary>
@@ -153,41 +153,41 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BackupsLongTermRetentionOperationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BackupsLongTermRetentionOperationResource.CreateResourceIdentifier" /> to create a <see cref="BackupsLongTermRetentionOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetBackupsLongTermRetentionOperationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetPostgreSqlLtrServerBackupOperationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BackupsLongTermRetentionOperationResource"/> object. </returns>
-        public static BackupsLongTermRetentionOperationResource GetBackupsLongTermRetentionOperationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlLtrServerBackupOperationResource"/> object. </returns>
+        public static PostgreSqlLtrServerBackupOperationResource GetPostgreSqlLtrServerBackupOperationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetBackupsLongTermRetentionOperationResource(id);
+            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetPostgreSqlLtrServerBackupOperationResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MigrationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MigrationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="PostgreSqlMigrationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetMigrationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockablePostgreSqlFlexibleServersArmClient.GetPostgreSqlMigrationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MigrationResource"/> object. </returns>
-        public static MigrationResource GetMigrationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
+        public static PostgreSqlMigrationResource GetPostgreSqlMigrationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetMigrationResource(id);
+            return GetMockablePostgreSqlFlexibleServersArmClient(client).GetPostgreSqlMigrationResource(id);
         }
 
         /// <summary>
@@ -403,8 +403,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<Capability> GetCapabilitiesByLocationsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocationsAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -436,8 +436,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<Capability> GetCapabilitiesByLocations(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocations(this SubscriptionResource subscriptionResource, AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityModel>> CheckGloballyNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckGloballyNameAvailabilityAsync(this SubscriptionResource subscriptionResource, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailabilityModel> CheckGloballyNameAvailability(this SubscriptionResource subscriptionResource, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckGloballyNameAvailability(this SubscriptionResource subscriptionResource, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<NameAvailabilityModel>> CheckWithLocationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckWithLocationNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
-        public static Response<NameAvailabilityModel> CheckWithLocationNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckWithLocationNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public static async Task<Response<VirtualNetworkSubnetUsageModel>> GetVirtualNetworkSubnetUsageAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public static async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> GetVirtualNetworkSubnetUsageAsync(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -771,7 +771,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public static Response<VirtualNetworkSubnetUsageModel> GetVirtualNetworkSubnetUsage(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public static Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> GetVirtualNetworkSubnetUsage(this SubscriptionResource subscriptionResource, AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

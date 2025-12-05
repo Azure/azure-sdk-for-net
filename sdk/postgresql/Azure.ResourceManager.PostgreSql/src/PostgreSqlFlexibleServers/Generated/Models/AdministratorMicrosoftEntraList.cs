@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="AdministratorMicrosoftEntraList"/>. </summary>
         internal AdministratorMicrosoftEntraList()
         {
-            Value = new ChangeTrackingList<AdministratorMicrosoftEntraData>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AdministratorMicrosoftEntraList"/>. </summary>
         /// <param name="value"> List of server administrators associated to Microsoft Entra principals. </param>
         /// <param name="nextLink"> Link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdministratorMicrosoftEntraList(IReadOnlyList<AdministratorMicrosoftEntraData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdministratorMicrosoftEntraList(IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of server administrators associated to Microsoft Entra principals. </summary>
-        public IReadOnlyList<AdministratorMicrosoftEntraData> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> Value { get; }
         /// <summary> Link used to get the next page of results. </summary>
         public Uri NextLink { get; }
     }

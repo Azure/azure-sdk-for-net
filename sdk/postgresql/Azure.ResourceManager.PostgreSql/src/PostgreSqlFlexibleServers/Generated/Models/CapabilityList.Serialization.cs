@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<Capability> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<Capability> array = new List<Capability>();
+                    List<PostgreSqlFlexibleServerCapabilityProperties> array = new List<PostgreSqlFlexibleServerCapabilityProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Capability.DeserializeCapability(item, options));
+                        array.Add(PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CapabilityList(value ?? new ChangeTrackingList<Capability>(), nextLink, serializedAdditionalRawData);
+            return new CapabilityList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerCapabilityProperties>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             PostgreSqlMigrationState? state = default;
             string error = default;
-            MigrationSubstateDetails currentSubStateDetails = default;
+            PostgreSqlMigrationSubStateDetails currentSubStateDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    currentSubStateDetails = MigrationSubstateDetails.DeserializeMigrationSubstateDetails(property.Value, options);
+                    currentSubStateDetails = PostgreSqlMigrationSubStateDetails.DeserializePostgreSqlMigrationSubStateDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="BackupAutomaticAndOnDemandList"/>. </summary>
         internal BackupAutomaticAndOnDemandList()
         {
-            Value = new ChangeTrackingList<BackupAutomaticAndOnDemandData>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerBackupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackupAutomaticAndOnDemandList"/>. </summary>
         /// <param name="value"> List of available backups. </param>
         /// <param name="nextLink"> Link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackupAutomaticAndOnDemandList(IReadOnlyList<BackupAutomaticAndOnDemandData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BackupAutomaticAndOnDemandList(IReadOnlyList<PostgreSqlFlexibleServerBackupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of available backups. </summary>
-        public IReadOnlyList<BackupAutomaticAndOnDemandData> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerBackupData> Value { get; }
         /// <summary> Link used to get the next page of results. </summary>
         public Uri NextLink { get; }
     }
