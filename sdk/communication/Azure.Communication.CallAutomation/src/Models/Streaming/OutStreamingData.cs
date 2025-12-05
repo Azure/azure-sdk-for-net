@@ -35,11 +35,6 @@ namespace Azure.Communication.CallAutomation
         public StopAudio StopAudio { get; internal set; }
 
         /// <summary>
-        /// Out streaming Mark Data
-        /// </summary>
-        public MarkData MarkData { get; internal set; }
-
-        /// <summary>
         /// Get the streaming data for outbound
         /// </summary>
         /// <param name="audioData"></param>

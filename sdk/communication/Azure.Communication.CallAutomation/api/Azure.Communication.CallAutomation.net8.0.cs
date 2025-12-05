@@ -1046,7 +1046,6 @@ namespace Azure.Communication.CallAutomation
     {
         AudioData = 0,
         StopAudio = 1,
-        MarkData = 2,
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MediaStreamingAudioChannel : System.IEquatable<Azure.Communication.CallAutomation.MediaStreamingAudioChannel>
@@ -1271,7 +1270,6 @@ namespace Azure.Communication.CallAutomation
         internal OutStreamingData() { }
         public Azure.Communication.CallAutomation.AudioData AudioData { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaKind Kind { get { throw null; } }
-        public Azure.Communication.CallAutomation.MarkData MarkData { get { throw null; } }
         public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } }
         public static string GetAudioDataForOutbound(byte[] audioData) { throw null; }
         public static string GetAudioDataForOutbound(byte[] audioData, string markId) { throw null; }
