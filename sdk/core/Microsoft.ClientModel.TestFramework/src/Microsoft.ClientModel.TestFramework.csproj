@@ -5,6 +5,7 @@
     <PackageTags>Microsoft.ClientModel.TestFramework</PackageTags>
     <RequiredTargetFrameworks>$(AllActiveCurrentTargetFrameworks);$(NetFxTargetFramework)</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <SupportsNetStandard20>false</SupportsNetStandard20>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
     <NoWarn>AZC0015;AZC0007</NoWarn>

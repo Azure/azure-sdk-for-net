@@ -15,6 +15,11 @@
         "Pool": "env:LINUXPOOL",
         "TestTargetFramework": "net9.0"
       },
+      "Ubuntu-24.04_NET10.0": {
+        "OSVmImage": "env:LINUXVMIMAGE",
+        "Pool": "env:LINUXPOOL",
+        "TestTargetFramework": "net10.0"
+      },
       "Windows2022_NET462": {
         "OSVmImage": "env:WINDOWSVMIMAGE",
         "Pool": "env:WINDOWSPOOL",
