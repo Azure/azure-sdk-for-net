@@ -396,7 +396,6 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
             await retryPolicy.WaitSyncOrAsync(delay, cts.Token, IsAsync));
     }
 
-    #region Helpers
     [Test]
     public async Task DelayCalculationsIncreasePerRetry()
     {
@@ -422,6 +421,8 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         Assert.Greater(capturingPolicy.Delays[1], capturingPolicy.Delays[0]);
     }
 
+
+    #region Helpers
     public static IEnumerable<object[]> RetryAfterTestValues()
     {
         // Retry-After header is larger - wait Retry-After time
