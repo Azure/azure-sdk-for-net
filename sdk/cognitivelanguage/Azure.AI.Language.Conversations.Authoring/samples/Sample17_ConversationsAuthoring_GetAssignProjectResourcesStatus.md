@@ -10,9 +10,9 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 
 ## Get Deployment Assignment Status
 
-To retrieve the status of a deployment assignment operation, call `GetAssignDeploymentResourcesStatus` on the `ConversationAuthoringProject` client. This allows you to monitor the progress and outcome of the operation.
+To retrieve the status of a deployment assignment operation, call `GetAssignProjectResourcesStatus` on the `ConversationAuthoringProject` client. This allows you to monitor the progress and outcome of the operation.
 
-```C# Snippet:Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatus
+```C# Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatus
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
@@ -48,9 +48,9 @@ Console.WriteLine($"Deployment assignment status: {sampleStatusResponse.Value.St
 
 ## Get Deployment Assignment Status Async
 
-To retrieve the status of a deployment assignment operation asynchronously, call `GetAssignDeploymentResourcesStatusAsync` on the `ConversationAuthoringProject` client. This allows you to monitor the progress and outcome of the operation.
+To retrieve the status of a deployment assignment operation asynchronously, call `GetAssignProjectResourcesStatusAsync` on the `ConversationAuthoringProject` client. This allows you to monitor the progress and outcome of the operation.
 
-```C# Snippet:Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatusAsync
+```C# Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatusAsync
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 

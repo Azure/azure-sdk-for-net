@@ -13,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample18_ConversationsAuthoring_UnassignDeploymentResources : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample18_ConversationsAuthoring_UnassignProjectResources : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
-        public void UnassignDeploymentResources()
+        public void UnassignProjectResources()
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
             var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
 
-            #region Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResources
+            #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
             // Set project name and create client for the project
             string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
@@ -43,7 +43,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 details: sampleUnassignIds
             );
 
-            Console.WriteLine($"UnassignDeploymentResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
+            Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
 
             // Print jobId from Operation-Location
             if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
@@ -60,13 +60,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task UnassignDeploymentResourcesAsync()
+        public async Task UnassignProjectResourcesAsync()
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
             var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
 
-            #region Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResourcesAsync
+            #region Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
             // Set project name and create client for the project
             string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
@@ -86,7 +86,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
                 details: sampleUnassignIds
             );
 
-            Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
+            Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
 
             // Print jobId from Operation-Location
             if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))

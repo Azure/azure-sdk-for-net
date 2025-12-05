@@ -13,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample16_ConversationsAuthoring_AssignDeploymentResources : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample16_ConversationsAuthoring_AssignProjectResources : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
-        public void AssignDeploymentResources()
+        public void AssignProjectResources()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential credential = new DefaultAzureCredential();
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample16_ConversationsAuthoring_AssignDeploymentResources
+            #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResources
             // Arrange
             string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
@@ -68,13 +68,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task AssignDeploymentResourcesAsync()
+        public async Task AssignProjectResourcesAsync()
         {
             Uri endpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential credential = new DefaultAzureCredential();
             ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
-            #region Snippet:Sample16_ConversationsAuthoring_AssignDeploymentResourcesAsync
+            #region Snippet:Sample16_ConversationsAuthoring_AssignProjectResourcesAsync
             // Arrange
             string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);

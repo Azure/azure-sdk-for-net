@@ -10,9 +10,9 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 
 ## Unassign Deployment Resources
 
-To unassign deployment resources, call `UnassignDeploymentResources` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource.
+To unassign deployment resources, call `UnassignProjectResources` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource.
 
-```C# Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResources
+```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
@@ -32,7 +32,7 @@ Operation sampleOperation = sampleProjectClient.UnassignProjectResources(
     details: sampleUnassignIds
 );
 
-Console.WriteLine($"UnassignDeploymentResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
+Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleOperation.GetRawResponse().Status}");
 
 // Print jobId from Operation-Location
 if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))
@@ -48,9 +48,9 @@ else
 
 ## Unassign Deployment Resources Async
 
-To unassign deployment resources asynchronously, call `UnassignDeploymentResourcesAsync` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource asynchronously.
+To unassign deployment resources asynchronously, call `UnassignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource asynchronously.
 
-```C# Snippet:Sample18_ConversationsAuthoring_UnassignDeploymentResourcesAsync
+```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
 // Set project name and create client for the project
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
@@ -70,7 +70,7 @@ Operation sampleOperation = await sampleProjectClient.UnassignProjectResourcesAs
     details: sampleUnassignIds
 );
 
-Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
+Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleOperation.GetRawResponse().Status}");
 
 // Print jobId from Operation-Location
 if (sampleOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location))

@@ -10,9 +10,9 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 
 ## Assign Deployment Resources
 
-To assign deployment resources, call `AssignDeploymentResources` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
+To assign deployment resources, call `AssignProjectResources` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
 
-```C# Snippet:Sample16_ConversationsAuthoring_AssignDeploymentResources
+```C# Snippet:Sample16_ConversationsAuthoring_AssignProjectResources
 // Arrange
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);
@@ -56,9 +56,9 @@ else
 
 ## Assign Deployment Resources Async
 
-To assign deployment resources asynchronously, call `AssignDeploymentResourcesAsync` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
+To assign deployment resources asynchronously, call `AssignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
 
-```C# Snippet:Sample16_ConversationsAuthoring_AssignDeploymentResourcesAsync
+```C# Snippet:Sample16_ConversationsAuthoring_AssignProjectResourcesAsync
 // Arrange
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = client.GetProject(sampleProjectName);

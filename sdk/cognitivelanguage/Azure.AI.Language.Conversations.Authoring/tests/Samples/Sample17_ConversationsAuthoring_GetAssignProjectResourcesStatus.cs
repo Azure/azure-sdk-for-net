@@ -13,17 +13,17 @@ using System.Threading.Tasks;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatus : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatus : SamplesBase<AuthoringClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
-        public void GetAssignDeploymentResourcesStatus()
+        public void GetAssignProjectResourcesStatus()
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
             var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
 
-            #region Snippet:Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatus
+            #region Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatus
             string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
@@ -60,13 +60,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        public async Task GetAssignDeploymentResourcesStatusAsync()
+        public async Task GetAssignProjectResourcesStatusAsync()
         {
             Uri sampleEndpoint = TestEnvironment.Endpoint;
             DefaultAzureCredential sampleCredential = new DefaultAzureCredential();
             var sampleClient = new ConversationAnalysisAuthoringClient(sampleEndpoint, sampleCredential);
 
-            #region Snippet:Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatusAsync
+            #region Snippet:Sample17_ConversationsAuthoring_GetAssignProjectResourcesStatusAsync
             string sampleProjectName = "{projectName}";
             ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 

@@ -9,9 +9,9 @@ For details on how to set up AAD authentication, refer to the [Create a client u
 
 ## Get the Status of an Unassign Deployment Resources Job
 
-To check the status of an unassign operation, call `GetUnassignDeploymentResourcesStatus` on the `ConversationAuthoringProject` client, passing the `jobId` you obtained from the `Operation-Location` header after starting the unassign operation.
+To check the status of an unassign operation, call `GetUnassignProjectResourcesStatus` on the `ConversationAuthoringProject` client, passing the `jobId` you obtained from the `Operation-Location` header after starting the unassign operation.
 
-```C# Snippet:Sample19_ConversationsAuthoring_GetUnassignDeploymentResourcesStatus
+```C# Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatus
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
@@ -30,7 +30,7 @@ Operation sampleUnassignOperation = sampleProjectClient.UnassignProjectResources
     details: sampleUnassignIds
 );
 
-Console.WriteLine($"UnassignDeploymentResources initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
+Console.WriteLine($"UnassignProjectResources initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
 
 // Extract jobId from Operation-Location
 string sampleJobId = sampleUnassignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
@@ -57,9 +57,9 @@ if (sampleStatusResponse.Value.Errors != null && sampleStatusResponse.Value.Erro
 
 ## Get the Status of an Unassign Deployment Resources Job Async
 
-To check the status of an unassign operation asynchronously, call `GetUnassignDeploymentResourcesStatusAsync` on the `ConversationAuthoringProject` client, passing the `jobId` you obtained from the `Operation-Location` header after starting the unassign operation.
+To check the status of an unassign operation asynchronously, call `GetUnassignProjectResourcesStatusAsync` on the `ConversationAuthoringProject` client, passing the `jobId` you obtained from the `Operation-Location` header after starting the unassign operation.
 
-```C# Snippet:Sample19_ConversationsAuthoring_GetUnassignDeploymentResourcesStatusAsync
+```C# Snippet:Sample19_ConversationsAuthoring_GetUnassignProjectResourcesStatusAsync
 string sampleProjectName = "{projectName}";
 ConversationAuthoringProject sampleProjectClient = sampleClient.GetProject(sampleProjectName);
 
@@ -78,7 +78,7 @@ Operation sampleUnassignOperation = await sampleProjectClient.UnassignProjectRes
     details: sampleUnassignIds
 );
 
-Console.WriteLine($"UnassignDeploymentResourcesAsync initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
+Console.WriteLine($"UnassignProjectResourcesAsync initiated. Status: {sampleUnassignOperation.GetRawResponse().Status}");
 
 // Extract jobId from Operation-Location
 string sampleJobId = sampleUnassignOperation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string location)
