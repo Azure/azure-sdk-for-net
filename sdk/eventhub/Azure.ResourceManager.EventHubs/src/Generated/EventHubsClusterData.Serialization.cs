@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.EventHubs
                 writer.WritePropertyName("supportsScaling"u8);
                 writer.WriteBooleanValue(SupportsScaling.Value);
             }
+            if (Optional.IsDefined(PlatformCapabilities))
+            {
+                writer.WritePropertyName("platformCapabilities"u8);
+                writer.WriteObjectValue(PlatformCapabilities, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -112,6 +117,7 @@ namespace Azure.ResourceManager.EventHubs
             string metricId = default;
             string status = default;
             bool? supportsScaling = default;
+            PlatformCapabilities platformCapabilities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,6 +229,15 @@ namespace Azure.ResourceManager.EventHubs
                             supportsScaling = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("platformCapabilities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            platformCapabilities = PlatformCapabilities.DeserializePlatformCapabilities(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -246,6 +261,7 @@ namespace Azure.ResourceManager.EventHubs
                 metricId,
                 status,
                 supportsScaling,
+                platformCapabilities,
                 serializedAdditionalRawData);
         }
 
@@ -485,6 +501,28 @@ namespace Azure.ResourceManager.EventHubs
                     builder.Append("    supportsScaling: ");
                     var boolValue = SupportsScaling.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ConfidentialComputeMode", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    platformCapabilities: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      platformCapabilities: {");
+                builder.AppendLine("        confidentialCompute: {");
+                builder.Append("          mode: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("        }");
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(PlatformCapabilities))
+                {
+                    builder.Append("    platformCapabilities: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, PlatformCapabilities, options, 4, false, "    platformCapabilities: ");
                 }
             }
 

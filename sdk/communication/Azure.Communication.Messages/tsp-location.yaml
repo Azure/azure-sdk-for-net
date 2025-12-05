@@ -2,3 +2,4 @@ commit: 5fda13cee42cecc2e7da20bb4fd82bec5be9d0c7
 directory: specification/communication/Communication.Messages
 additionalDirectories: []
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/legacy-emitter-package.json

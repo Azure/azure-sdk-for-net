@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
     /// <summary> Marketplace SaaS resource details linked to the given tenant Id. </summary>
     public partial class MarketplaceSaaSResourceDetailsResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MarketplaceSaaSResourceDetailsResult"/>. </summary>
         internal MarketplaceSaaSResourceDetailsResult()
@@ -56,22 +27,25 @@ namespace Azure.ResourceManager.Dynatrace.Models
         /// <param name="planId"> Id of the plan. </param>
         /// <param name="marketplaceSubscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="marketplaceSaaSResourceName"> Name of the Marketplace SaaS Resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSResourceDetailsResult(ResourceIdentifier marketplaceSaaSResourceId, string planId, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSaaSResourceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MarketplaceSaaSResourceDetailsResult(ResourceIdentifier marketplaceSaaSResourceId, string planId, DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus, string marketplaceSaaSResourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceSaaSResourceId = marketplaceSaaSResourceId;
             PlanId = planId;
             MarketplaceSubscriptionStatus = marketplaceSubscriptionStatus;
             MarketplaceSaaSResourceName = marketplaceSaaSResourceName;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Id of the Marketplace SaaS Resource. </summary>
         public ResourceIdentifier MarketplaceSaaSResourceId { get; }
+
         /// <summary> Id of the plan. </summary>
         public string PlanId { get; }
+
         /// <summary> Marketplace subscription status. </summary>
         public DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; }
+
         /// <summary> Name of the Marketplace SaaS Resource. </summary>
         public string MarketplaceSaaSResourceName { get; }
     }

@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enabledFilteringCriteria"u8);
                 writer.WriteStringValue(EnabledFilteringCriteria);
             }
+            if (Optional.IsDefined(RecordTypes))
+            {
+                writer.WritePropertyName("recordTypes"u8);
+                writer.WriteStringValue(RecordTypes);
+            }
             if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
@@ -130,6 +135,7 @@ namespace Azure.ResourceManager.Network
             Guid? targetResourceGuid = default;
             ResourceIdentifier storageId = default;
             string enabledFilteringCriteria = default;
+            string recordTypes = default;
             bool? enabled = default;
             RetentionPolicyParameters retentionPolicy = default;
             FlowLogProperties format = default;
@@ -244,6 +250,11 @@ namespace Azure.ResourceManager.Network
                             enabledFilteringCriteria = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("recordTypes"u8))
+                        {
+                            recordTypes = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("enabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -311,6 +322,7 @@ namespace Azure.ResourceManager.Network
                 targetResourceGuid,
                 storageId,
                 enabledFilteringCriteria,
+                recordTypes,
                 enabled,
                 retentionPolicy,
                 format,
@@ -515,6 +527,29 @@ namespace Azure.ResourceManager.Network
                     else
                     {
                         builder.AppendLine($"'{EnabledFilteringCriteria}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecordTypes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    recordTypes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RecordTypes))
+                {
+                    builder.Append("    recordTypes: ");
+                    if (RecordTypes.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecordTypes}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecordTypes}'");
                     }
                 }
             }

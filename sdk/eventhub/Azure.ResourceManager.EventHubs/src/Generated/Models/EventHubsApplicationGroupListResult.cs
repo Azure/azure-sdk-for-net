@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> The response from the List Application Groups operation. </summary>
+    /// <summary> The response of a ApplicationGroup list operation. </summary>
     internal partial class EventHubsApplicationGroupListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.EventHubs.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupListResult"/>. </summary>
-        internal EventHubsApplicationGroupListResult()
+        /// <param name="value"> The ApplicationGroup items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal EventHubsApplicationGroupListResult(IEnumerable<EventHubsApplicationGroupData> value)
         {
-            Value = new ChangeTrackingList<EventHubsApplicationGroupData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupListResult"/>. </summary>
-        /// <param name="value"> Result of the List Application Groups operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains an incomplete list of Authorization Rules. </param>
+        /// <param name="value"> The ApplicationGroup items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsApplicationGroupListResult(IReadOnlyList<EventHubsApplicationGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventHubsApplicationGroupListResult(IReadOnlyList<EventHubsApplicationGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the List Application Groups operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupListResult"/> for deserialization. </summary>
+        internal EventHubsApplicationGroupListResult()
+        {
+        }
+
+        /// <summary> The ApplicationGroup items on this page. </summary>
         public IReadOnlyList<EventHubsApplicationGroupData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains an incomplete list of Authorization Rules. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
