@@ -59,7 +59,7 @@ public static class RequestConverterExtensions
                         var content = rawContent == null
                             ? null
                             : rawContent.ToObject<IList<ItemContent>>() ??
-                              [new ItemContentInputText(rawContent.ToString())];
+                              [new ItemContentInputText(rawContent.ToObject<string>())];
 
                         var aiContents = (content ?? ReadOnlyCollection<ItemContent>.Empty)
                             .Select(c => c is ItemContentInputText textContent ? textContent : null)
@@ -74,7 +74,7 @@ public static class RequestConverterExtensions
             return messages as IReadOnlyCollection<ChatMessage>;
         }
 
-        var strMessage = request.Input.ToString();
+        var strMessage = request.Input.ToObject<string>();
         return [new ChatMessage(ChatRole.User, strMessage)];
     }
 

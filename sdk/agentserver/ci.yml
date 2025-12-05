@@ -26,6 +26,8 @@ extends:
   parameters:
     SDKType: client
     ServiceDirectory: agentserver
+    MatrixFilters:
+      - TestTargetFramework=^net(?:8\.0|9\.0)$
     ArtifactName: packages
     Artifacts:
       - name: Azure.AI.AgentServer.Core

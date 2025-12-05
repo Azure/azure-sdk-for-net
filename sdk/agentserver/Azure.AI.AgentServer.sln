@@ -6,13 +6,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Contra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.AgentFramework", "Azure.AI.AgentServer.AgentFramework\src\Azure.AI.AgentServer.AgentFramework.csproj", "{46BCF299-464F-4DF3-BB24-53C0156D496D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Tests", "tests\Azure.AI.AgentServer.Tests\Azure.AI.AgentServer.Tests.csproj", "{18A7D57E-368D-4A89-89F6-1CE6DD7FFC77}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.AgentServer.Core.Integration.Tests", "Azure.AI.AgentServer.Core\tests\Core.Integration.Tests\Azure.AI.AgentServer.Core.Integration.Tests.csproj", "{18A7D57E-368D-4A89-89F6-1CE6DD7FFC77}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{32A6272F-5202-4670-8194-332F300CA6FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.TestFramework", "..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{7858B66C-12BD-41B8-A0C7-498B1AA9FCA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agents.Customized.Integration.Tests", "tests\Agents.Customized.Integration.Tests\Agents.Customized.Integration.Tests.csproj", "{C58869A9-CCB3-4D2A-B4E4-EFC7276B5E3B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Agents.Customized.Integration.Tests", "Azure.AI.AgentServer.Core\tests\Agents.Customized.Integration.Tests\Agents.Customized.Integration.Tests.csproj", "{C58869A9-CCB3-4D2A-B4E4-EFC7276B5E3B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
