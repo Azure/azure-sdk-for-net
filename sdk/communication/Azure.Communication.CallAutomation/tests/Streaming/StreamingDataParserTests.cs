@@ -63,6 +63,20 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             ValidateMarkData(streamingAudio);
         }
 
+        [Test]
+        public void ParseMarkDataWithEmptyStatus_Test()
+        {
+            string markJson = "{"
+                + "\"kind\": \"MarkData\","
+                + "\"markData\": {"
+                + "\"id\": \"test\""
+                + "}"
+                + "}";
+
+            MarkData streamingAudio = (MarkData)StreamingData.Parse(markJson);
+            ValidateMarkData(streamingAudio, true);
+        }
+
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
         {
             Assert.IsNotNull(streamingAudioMetadata);
@@ -92,11 +106,12 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.IsFalse(streamingAudio.IsSilent);
         }
 
-        private static void ValidateMarkData(MarkData streamingAudio)
+        private static void ValidateMarkData(MarkData streamingAudio, bool emptyStatus = false)
         {
             Assert.IsNotNull(streamingAudio);
             Assert.AreEqual("test", streamingAudio.Id);
-            Assert.AreEqual(MarkStatus.Cancelled, streamingAudio.Status);
+            if (!emptyStatus)
+                Assert.AreEqual(MarkStatus.Cancelled, streamingAudio.Status);
         }
         #endregion
 
