@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (2025-12-03)
+## 1.0.0-beta.3 (2025-12-05)
 
 ### Features Added
 - Added support for service version 2025-11-15-preview.
@@ -8,26 +8,26 @@
 - Added support for service version 2025-11-01.
 
 ### Breaking Changes
-- Changed parameter type from `DeleteDeploymentDetails` to `ProjectResourceIds` when calling `begin_delete_deployment_from_resources`, with property name changed from `assigned_resource_ids` to `azure_resource_ids`.
+- Changed parameter type from `ConversationAuthoringDeleteDeploymentDetails` to `ConversationAuthoringProjectResourceIds` when calling `DeleteDeploymentFromResources`, with property name changed from `AssignedResourceIds` to `AzureResourceIds`.
 
-- Changed function name from `list_deployment_Resources` to `list_project_resources`, change its return type from `AssignedDeploymentResource` to `AssignedProjectResource`.
+- Changed function name from `GetDeploymentResources` to `GetProjectResources`, change its return type from `ConversationAuthoringAssignedDeploymentResource` to `ConversationAuthoringAssignedProjectResource`.
 
-- Changed function name from `begin_assign_deployment_resources` to `begin_assign_project_resources`, and its parameter type from `AssignDeploymentResourcesDetails` to `AssignProjectResourcesDetails`.
+- Changed function name from `AssignDeploymentResources` to `AssignProjectResources`, and its parameter type from `ConversationAuthoringAssignDeploymentResourcesDetails` to `ConversationAuthoringAssignProjectResourcesDetails`.
 
-- Changed function name from `begin_unassign_deployment_resources` to `begin_unassign_project_resources`, changed its parameter type from `UnassignDeploymentResourcesDetails` to `ProjectResourceIds`.
+- Changed function name from `UnassignDeploymentResources` to `UnassignProjectResources`, changed its parameter type from `ConversationAuthoringUnassignDeploymentResourcesDetails` to `ConversationAuthoringProjectResourceIds`.
 
-- Changed function name from `get_assign_deployment_resources_status` to `get_assign_project_resources_status`, change its return type from `DeploymentResourcesState` to `ProjectResourcesState`.
+- Changed function name from `GetAssignDeploymentResourcesStatus` to `GetAssignProjectResourcesStatus`, change its return type from `ConversationAuthoringDeploymentResourcesState` to `ConversationAuthoringProjectResourcesState`.
 
-- Changed function name from `get_unassign_deployment_resources_status` to `get_unassign_project_resources_status`, change its return type from `DeploymentResourcesState` to `ProjectResourcesState`.
+- Changed function name from `GetUnassignDeploymentResourcesStatus` to `GetUnassignProjectResourcesStatus`, change its return type from `ConversationAuthoringDeploymentResourcesState` to `ConversationAuthoringProjectResourcesState`.
 
-- createProjectOptions. add projectName parameter
+- For function `CreateProject`, include `projectName` when constructing `ConversationAuthoringCreateProjectDetails`.
 
 ### Other Changes
 - Add samples for the following functions(sync and async):
-    - list_assigned_resource_deployments
-    - list_project_resources
-    - delete_deployment_from_resources
-    - get_deployment_delete_from_resources_status
+    - ListAssignedResourceDeployments
+    - ListProjectResources
+    - DeleteDeploymentFromResources
+    - GetDeploymentDeleteFromResourcesStatus
 
 ### Bugs Fixed
 
