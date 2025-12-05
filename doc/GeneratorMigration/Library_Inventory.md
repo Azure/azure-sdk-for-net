@@ -12,11 +12,11 @@
 
 ## Summary
 
-- Total libraries: 398
-- Management Plane (MPG): 227
-  - Autorest/Swagger: 159
-  - New Emitter (TypeSpec): 28
-  - Old TypeSpec: 40
+- Total libraries: 397
+- Management Plane (MPG): 226
+  - Autorest/Swagger: 158
+  - New Emitter (TypeSpec): 29
+  - Old TypeSpec: 39
 - Data Plane (DPG): 171
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 19
@@ -168,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 28 / 68 (41.2%)
+**Migration Status**: 29 / 68 (42.6%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -204,7 +204,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
-| impactreporting | Azure.ResourceManager.ImpactReporting |  |
+| impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations |  |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
@@ -244,7 +244,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 159
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 158
 
 | Service | Library |
 | ------- | ------- |
@@ -305,7 +305,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 15
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
-| edgeactions | Azure.ResourceManager.EdgeActionsApi |
 | edgeorder | Azure.ResourceManager.EdgeOrder |
 | edgezones | Azure.ResourceManager.EdgeZones |
 | eventgrid | Azure.ResourceManager.EventGrid |
