@@ -70,7 +70,7 @@ ResourceGroupResource resourceGroup = await subscription.GetResourceGroups().Get
 EdgeActionCollection edgeActions = resourceGroup.GetEdgeActions();
 EdgeActionData data = new EdgeActionData(new AzureLocation("WestUS"))
 {
-    Sku = new SkuType("Standard", "Standard")
+    Sku = new EdgeActionSkuType("Standard", "Standard")
 };
 
 ArmOperation<EdgeActionResource> operation = await edgeActions.CreateOrUpdateAsync(
