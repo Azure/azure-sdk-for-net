@@ -421,7 +421,6 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         Assert.Greater(capturingPolicy.Delays[1], capturingPolicy.Delays[0]);
     }
 
-
     #region Helpers
     public static IEnumerable<object[]> RetryAfterTestValues()
     {
