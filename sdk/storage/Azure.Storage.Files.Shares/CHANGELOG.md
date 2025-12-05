@@ -6,7 +6,6 @@
 - Added support for service version 2026-04-06.
 - Added support for Content Validation via Structured Message
 - Added cross-tenant support for Principal-Bound User Delegation SAS.
-- Added support for Dynamic User Delegation SAS.
 - Added support for Files Provisioned V2 Guardrails
 
 ## 12.25.0-beta.1 (2025-11-17)
