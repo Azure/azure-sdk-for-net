@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
                 + "\"kind\": \"MarkData\","
                 + "\"markData\": {"
                 + "\"id\": \"test\","
-                + "\"status\": \"completed\""
+                + "\"status\": \"cancelled\""
                 + "}"
                 + "}";
 
@@ -96,7 +96,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         {
             Assert.IsNotNull(streamingAudio);
             Assert.AreEqual("test", streamingAudio.Id);
-            Assert.AreEqual(MarkStatus.Completed, streamingAudio.Status);
+            Assert.AreEqual(MarkStatus.Cancelled, streamingAudio.Status);
         }
         #endregion
 
