@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeActions.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeActions
 {
     /// <summary>
-    /// A Class representing an EdgeActionVersion along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeActionVersionResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetEdgeActionVersionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EdgeActionResource"/> using the GetEdgeActionVersion method.
+    /// A class representing a EdgeActionVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EdgeActionVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EdgeActionResource"/> using the GetEdgeActionVersions method.
     /// </summary>
     public partial class EdgeActionVersionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="EdgeActionVersionResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="edgeActionName"> The edgeActionName. </param>
-        /// <param name="version"> The version. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string edgeActionName, string version)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _edgeActionVersionClientDiagnostics;
-        private readonly EdgeActionVersionsRestOperations _edgeActionVersionRestClient;
+        private readonly ClientDiagnostics _edgeActionVersionsClientDiagnostics;
+        private readonly EdgeActionVersions _edgeActionVersionsRestClient;
         private readonly EdgeActionVersionData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Cdn/edgeActions/versions";
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeActionVersionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeActionVersionResource for mocking. </summary>
         protected EdgeActionVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeActionVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeActionVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeActionVersionResource(ArmClient client, EdgeActionVersionData data) : this(client, data.Id)
@@ -56,71 +46,93 @@ namespace Azure.ResourceManager.EdgeActions
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeActionVersionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeActionVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeActionVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeActionVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string edgeActionVersionApiVersion);
-            _edgeActionVersionRestClient = new EdgeActionVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _edgeActionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", ResourceType.Namespace, Diagnostics);
+            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Endpoint, edgeActionVersionApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual EdgeActionVersionData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="edgeActionName"> The edgeActionName. </param>
+        /// <param name="version"> The version. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string edgeActionName, string version)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<EdgeActionVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.Get");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.Get");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -134,34 +146,160 @@ namespace Azure.ResourceManager.EdgeActions
         /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<EdgeActionVersionResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.Get");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.Get");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a EdgeActionVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<EdgeActionVersionResource>> UpdateAsync(WaitUntil waitUntil, EdgeActionVersionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionOperationSource(Client),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Update a EdgeActionVersion
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="data"> The resource properties to be updated. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<EdgeActionVersionResource> Update(WaitUntil waitUntil, EdgeActionVersionData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(data, nameof(data));
+
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionOperationSource(Client),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
             }
             catch (Exception e)
             {
@@ -174,20 +312,20 @@ namespace Azure.ResourceManager.EdgeActions
         /// Delete a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,14 +333,21 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.Delete");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeActionsArmOperation(_edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation operation = new EdgeActionsArmOperation(_edgeActionVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -216,20 +361,20 @@ namespace Azure.ResourceManager.EdgeActions
         /// Delete a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,14 +382,21 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.Delete");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.Delete");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EdgeActionsArmOperation(_edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation operation = new EdgeActionsArmOperation(_edgeActionVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -255,88 +407,55 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Update a EdgeActionVersion
+        /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/deployVersionCode. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_DeployVersionCode. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeActionVersionResource>> UpdateAsync(WaitUntil waitUntil, EdgeActionVersionPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<EdgeActionVersionProperties>> DeployVersionCodeAsync(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(patch, nameof(patch));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.Update");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.DeployVersionCode");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(new EdgeActionVersionOperationSource(Client), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionCode.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
+                    new EdgeActionVersionPropertiesOperationSource(),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a EdgeActionVersion
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The resource properties to be updated. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<EdgeActionVersionResource> Update(WaitUntil waitUntil, EdgeActionVersionPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _edgeActionVersionRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                var operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(new EdgeActionVersionOperationSource(Client), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -350,39 +469,107 @@ namespace Azure.ResourceManager.EdgeActions
         /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/deployVersionCode</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/deployVersionCode. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_DeployVersionCode</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_DeployVersionCode. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<EdgeActionVersionProperties>> DeployVersionCodeAsync(WaitUntil waitUntil, VersionCode body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<EdgeActionVersionProperties> DeployVersionCode(WaitUntil waitUntil, EdgeActionVersionCode content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.DeployVersionCode");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.DeployVersionCode");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.DeployVersionCodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(new EdgeActionVersionPropertiesOperationSource(), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateDeployVersionCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateDeployVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, EdgeActionVersionCode.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation<EdgeActionVersionProperties> operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(
+                    new EdgeActionVersionPropertiesOperationSource(),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A long-running resource action.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/getVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_GetVersionCode. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation<EdgeActionVersionCode>> GetVersionCodeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.GetVersionCode");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation<EdgeActionVersionCode> operation = new EdgeActionsArmOperation<EdgeActionVersionCode>(
+                    new EdgeActionVersionCodeOperationSource(),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -396,39 +583,48 @@ namespace Azure.ResourceManager.EdgeActions
         /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/deployVersionCode</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/getVersionCode. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_DeployVersionCode</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_GetVersionCode. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<EdgeActionVersionProperties> DeployVersionCode(WaitUntil waitUntil, VersionCode body, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EdgeActionVersionCode> GetVersionCode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
-
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.DeployVersionCode");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.GetVersionCode");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.DeployVersionCode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body, cancellationToken);
-                var operation = new EdgeActionsArmOperation<EdgeActionVersionProperties>(new EdgeActionVersionPropertiesOperationSource(), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateDeployVersionCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, body).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetVersionCodeRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation<EdgeActionVersionCode> operation = new EdgeActionsArmOperation<EdgeActionVersionCode>(
+                    new EdgeActionVersionCodeOperationSource(),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -442,104 +638,20 @@ namespace Azure.ResourceManager.EdgeActions
         /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/getVersionCode</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/swapDefault. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_GetVersionCode</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_SwapDefault. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<VersionCode>> GetVersionCodeAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.GetVersionCode");
-            scope.Start();
-            try
-            {
-                var response = await _edgeActionVersionRestClient.GetVersionCodeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeActionsArmOperation<VersionCode>(new VersionCodeOperationSource(), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateGetVersionCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// A long-running resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/getVersionCode</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_GetVersionCode</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<VersionCode> GetVersionCode(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.GetVersionCode");
-            scope.Start();
-            try
-            {
-                var response = _edgeActionVersionRestClient.GetVersionCode(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EdgeActionsArmOperation<VersionCode>(new VersionCodeOperationSource(), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateGetVersionCodeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// A long-running resource action.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/swapDefault</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_SwapDefault</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -547,14 +659,21 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> SwapDefaultAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.SwapDefault");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.SwapDefault");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.SwapDefaultAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeActionsArmOperation(_edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateSwapDefaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateSwapDefaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation operation = new EdgeActionsArmOperation(_edgeActionVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -568,20 +687,20 @@ namespace Azure.ResourceManager.EdgeActions
         /// A long-running resource action.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/swapDefault</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}/swapDefault. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_SwapDefault</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_SwapDefault. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="EdgeActionVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -589,14 +708,21 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation SwapDefault(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.SwapDefault");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.SwapDefault");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.SwapDefault(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new EdgeActionsArmOperation(_edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateSwapDefaultRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateSwapDefaultRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation operation = new EdgeActionsArmOperation(_edgeActionVersionsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -606,27 +732,7 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -636,28 +742,34 @@ namespace Azure.ResourceManager.EdgeActions
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.AddTag");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _edgeActionVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new EdgeActionVersionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new EdgeActionVersionPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeActionVersionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EdgeActionVersionData patch = new EdgeActionVersionData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EdgeActionVersionResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,27 +780,7 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -698,28 +790,34 @@ namespace Azure.ResourceManager.EdgeActions
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.AddTag");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _edgeActionVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new EdgeActionVersionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new EdgeActionVersionPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeActionVersionData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EdgeActionVersionData patch = new EdgeActionVersionData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EdgeActionVersionResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -730,53 +828,39 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<EdgeActionVersionResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.SetTags");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _edgeActionVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new EdgeActionVersionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new EdgeActionVersionPatch();
+                    EdgeActionVersionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EdgeActionVersionData patch = new EdgeActionVersionData();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EdgeActionVersionResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -787,53 +871,39 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<EdgeActionVersionResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.SetTags");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _edgeActionVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new EdgeActionVersionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new EdgeActionVersionPatch();
+                    EdgeActionVersionData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EdgeActionVersionData patch = new EdgeActionVersionData();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EdgeActionVersionResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -844,27 +914,7 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -872,28 +922,34 @@ namespace Azure.ResourceManager.EdgeActions
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.RemoveTag");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _edgeActionVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new EdgeActionVersionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new EdgeActionVersionPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeActionVersionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    EdgeActionVersionData patch = new EdgeActionVersionData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<EdgeActionVersionResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -904,27 +960,7 @@ namespace Azure.ResourceManager.EdgeActions
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -932,28 +968,34 @@ namespace Azure.ResourceManager.EdgeActions
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionResource.RemoveTag");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _edgeActionVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new EdgeActionVersionResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                    return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new EdgeActionVersionPatch();
-                    foreach (var tag in current.Tags)
+                    EdgeActionVersionData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    EdgeActionVersionData patch = new EdgeActionVersionData();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<EdgeActionVersionResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

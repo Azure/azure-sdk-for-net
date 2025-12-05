@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.EdgeActions.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,28 +14,26 @@ namespace Azure.ResourceManager.EdgeActions
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(EdgeActionAttachment))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionAttachmentResponse))]
+    [ModelReaderWriterBuildable(typeof(EdgeActionAttachmentResult))]
     [ModelReaderWriterBuildable(typeof(EdgeActionData))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterData))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterListResult))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterPatch))]
+    [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeActionExecutionFilterResource))]
     [ModelReaderWriterBuildable(typeof(EdgeActionListResult))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionPatch))]
+    [ModelReaderWriterBuildable(typeof(EdgeActionProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeActionResource))]
+    [ModelReaderWriterBuildable(typeof(EdgeActionSkuType))]
+    [ModelReaderWriterBuildable(typeof(EdgeActionVersionCode))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionData))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionListResult))]
-    [ModelReaderWriterBuildable(typeof(EdgeActionVersionPatch))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionProperties))]
     [ModelReaderWriterBuildable(typeof(EdgeActionVersionResource))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
-    [ModelReaderWriterBuildable(typeof(SkuType))]
-    [ModelReaderWriterBuildable(typeof(SkuTypeUpdate))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(VersionCode))]
     public partial class AzureResourceManagerEdgeActionsContext : ModelReaderWriterContext
     {
     }

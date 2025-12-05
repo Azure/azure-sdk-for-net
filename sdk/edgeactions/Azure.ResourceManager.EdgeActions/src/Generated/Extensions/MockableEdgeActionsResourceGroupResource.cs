@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeActions;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeActions.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableEdgeActionsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeActionsResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableEdgeActionsResourceGroupResource for mocking. </summary>
         protected MockableEdgeActionsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeActionsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEdgeActionsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEdgeActionsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of EdgeActionResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of EdgeActionResources and their operations over a EdgeActionResource. </returns>
+        /// <summary> Gets a collection of EdgeActions in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of EdgeActions and their operations over a EdgeActionResource. </returns>
         public virtual EdgeActionCollection GetEdgeActions()
         {
             return GetCachedClient(client => new EdgeActionCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// Get a EdgeAction
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<EdgeActionResource>> GetEdgeActionAsync(string edgeActionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+
             return await GetEdgeActions().GetAsync(edgeActionName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// Get a EdgeAction
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         [ForwardsClientCalls]
         public virtual Response<EdgeActionResource> GetEdgeAction(string edgeActionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(edgeActionName, nameof(edgeActionName));
+
             return GetEdgeActions().Get(edgeActionName, cancellationToken);
         }
     }

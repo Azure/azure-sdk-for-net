@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeActions;
 
 namespace Azure.ResourceManager.EdgeActions.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.EdgeActions.Models
     public readonly partial struct EdgeActionVersionDeploymentType : IEquatable<EdgeActionVersionDeploymentType>
     {
         private readonly string _value;
+        /// <summary> ZIP file deployment. </summary>
+        private const string ZipValue = "zip";
+        /// <summary> Single file deployment. </summary>
+        private const string FileValue = "file";
+        /// <summary> Other deployment types. </summary>
+        private const string OthersValue = "others";
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionVersionDeploymentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeActionVersionDeploymentType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ZipValue = "zip";
-        private const string FileValue = "file";
-        private const string OthersValue = "others";
+            _value = value;
+        }
 
         /// <summary> ZIP file deployment. </summary>
         public static EdgeActionVersionDeploymentType Zip { get; } = new EdgeActionVersionDeploymentType(ZipValue);
+
         /// <summary> Single file deployment. </summary>
         public static EdgeActionVersionDeploymentType File { get; } = new EdgeActionVersionDeploymentType(FileValue);
+
         /// <summary> Other deployment types. </summary>
         public static EdgeActionVersionDeploymentType Others { get; } = new EdgeActionVersionDeploymentType(OthersValue);
+
         /// <summary> Determines if two <see cref="EdgeActionVersionDeploymentType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeActionVersionDeploymentType left, EdgeActionVersionDeploymentType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeActionVersionDeploymentType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeActionVersionDeploymentType left, EdgeActionVersionDeploymentType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeActionVersionDeploymentType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeActionVersionDeploymentType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeActionVersionDeploymentType(string value) => new EdgeActionVersionDeploymentType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeActionVersionDeploymentType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeActionVersionDeploymentType?(string value) => value == null ? null : new EdgeActionVersionDeploymentType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeActionVersionDeploymentType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeActionVersionDeploymentType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

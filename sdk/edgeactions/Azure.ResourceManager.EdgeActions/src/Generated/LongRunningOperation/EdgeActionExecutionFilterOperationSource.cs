@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EdgeActions
 {
-    internal class EdgeActionExecutionFilterOperationSource : IOperationSource<EdgeActionExecutionFilterResource>
+    /// <summary></summary>
+    internal partial class EdgeActionExecutionFilterOperationSource : IOperationSource<EdgeActionExecutionFilterResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal EdgeActionExecutionFilterOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         EdgeActionExecutionFilterResource IOperationSource<EdgeActionExecutionFilterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeActionExecutionFilterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeActionsContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EdgeActionExecutionFilterData data = EdgeActionExecutionFilterData.DeserializeEdgeActionExecutionFilterData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new EdgeActionExecutionFilterResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EdgeActionExecutionFilterResource> IOperationSource<EdgeActionExecutionFilterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EdgeActionExecutionFilterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEdgeActionsContext.Default);
-            return await Task.FromResult(new EdgeActionExecutionFilterResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EdgeActionExecutionFilterData data = EdgeActionExecutionFilterData.DeserializeEdgeActionExecutionFilterData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new EdgeActionExecutionFilterResource(_client, data);
         }
     }
 }

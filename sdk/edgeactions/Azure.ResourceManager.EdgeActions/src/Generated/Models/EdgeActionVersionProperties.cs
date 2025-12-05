@@ -13,49 +13,16 @@ namespace Azure.ResourceManager.EdgeActions.Models
     /// <summary> Represents an edge action version. </summary>
     public partial class EdgeActionVersionProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionVersionProperties"/>. </summary>
         /// <param name="deploymentType"> The deployment type. </param>
-        /// <param name="validationStatus"> The validation status. </param>
         /// <param name="isDefaultVersion"> The active state. </param>
-        /// <param name="lastPackageUpdateOn"> The last update time in UTC for package update. </param>
-        internal EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionVersionValidationStatus validationStatus, EdgeActionIsDefaultVersion isDefaultVersion, DateTimeOffset lastPackageUpdateOn)
+        public EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionIsDefaultVersion isDefaultVersion)
         {
             DeploymentType = deploymentType;
-            ValidationStatus = validationStatus;
             IsDefaultVersion = isDefaultVersion;
-            LastPackageUpdateOn = lastPackageUpdateOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionVersionProperties"/>. </summary>
@@ -63,32 +30,31 @@ namespace Azure.ResourceManager.EdgeActions.Models
         /// <param name="validationStatus"> The validation status. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="isDefaultVersion"> The active state. </param>
-        /// <param name="lastPackageUpdateOn"> The last update time in UTC for package update. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionVersionValidationStatus validationStatus, ProvisioningState? provisioningState, EdgeActionIsDefaultVersion isDefaultVersion, DateTimeOffset lastPackageUpdateOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="lastPackageUpdatedOn"> The last update time in UTC for package update. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal EdgeActionVersionProperties(EdgeActionVersionDeploymentType deploymentType, EdgeActionVersionValidationStatus validationStatus, EdgeActionProvisioningState? provisioningState, EdgeActionIsDefaultVersion isDefaultVersion, DateTimeOffset lastPackageUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentType = deploymentType;
             ValidationStatus = validationStatus;
             ProvisioningState = provisioningState;
             IsDefaultVersion = isDefaultVersion;
-            LastPackageUpdateOn = lastPackageUpdateOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EdgeActionVersionProperties"/> for deserialization. </summary>
-        internal EdgeActionVersionProperties()
-        {
+            LastPackageUpdatedOn = lastPackageUpdatedOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The deployment type. </summary>
-        public EdgeActionVersionDeploymentType DeploymentType { get; }
+        public EdgeActionVersionDeploymentType DeploymentType { get; set; }
+
         /// <summary> The validation status. </summary>
         public EdgeActionVersionValidationStatus ValidationStatus { get; }
+
         /// <summary> The provisioning state. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public EdgeActionProvisioningState? ProvisioningState { get; }
+
         /// <summary> The active state. </summary>
-        public EdgeActionIsDefaultVersion IsDefaultVersion { get; }
+        public EdgeActionIsDefaultVersion IsDefaultVersion { get; set; }
+
         /// <summary> The last update time in UTC for package update. </summary>
-        public DateTimeOffset LastPackageUpdateOn { get; }
+        public DateTimeOffset LastPackageUpdatedOn { get; }
     }
 }

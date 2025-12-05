@@ -93,15 +93,15 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionResource edgeAction = client.GetEdgeActionResource(edgeActionResourceId);
 
             // invoke the operation
-            EdgeActionPatch patch = new EdgeActionPatch
+            EdgeActionData data = new EdgeActionData
             {
-                Sku = new SkuTypeUpdate
+                Sku = new EdgeActionSkuType
                 {
                     Name = "Basic",
                     Tier = "Standard",
                 },
             };
-            ArmOperation<EdgeActionResource> lro = await edgeAction.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<EdgeActionResource> lro = await edgeAction.UpdateAsync(WaitUntil.Completed, data);
             EdgeActionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -132,9 +132,9 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionResource edgeAction = client.GetEdgeActionResource(edgeActionResourceId);
 
             // invoke the operation
-            EdgeActionAttachment body = new EdgeActionAttachment(null, new ResourceIdentifier("/subscriptions/sub1/resourceGroups/rs1/providers/Microsoft.Cdn/Profiles/myProfile/afdEndpoints/ep1/routes/route1"));
-            ArmOperation<EdgeActionAttachmentResponse> lro = await edgeAction.AddAttachmentAsync(WaitUntil.Completed, body);
-            EdgeActionAttachmentResponse result = lro.Value;
+            EdgeActionAttachment content = new EdgeActionAttachment(new ResourceIdentifier("/subscriptions/sub1/resourceGroups/rs1/providers/Microsoft.Cdn/Profiles/myProfile/afdEndpoints/ep1/routes/route1"));
+            ArmOperation<EdgeActionAttachmentResult> lro = await edgeAction.AddAttachmentAsync(WaitUntil.Completed, content);
+            EdgeActionAttachmentResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionResource edgeAction = client.GetEdgeActionResource(edgeActionResourceId);
 
             // invoke the operation
-            EdgeActionAttachment body = new EdgeActionAttachment(null, new ResourceIdentifier("/subscriptions/sub1/resourceGroups/rs1/providers/Microsoft.Cdn/Profiles/myProfile/afdEndpoints/ep1/routes/route1"));
-            await edgeAction.DeleteAttachmentAsync(WaitUntil.Completed, body);
+            EdgeActionAttachment content = new EdgeActionAttachment(new ResourceIdentifier("/subscriptions/sub1/resourceGroups/rs1/providers/Microsoft.Cdn/Profiles/myProfile/afdEndpoints/ep1/routes/route1"));
+            await edgeAction.DeleteAttachmentAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");
         }

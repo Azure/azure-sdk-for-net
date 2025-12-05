@@ -8,7 +8,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 using Azure.ResourceManager.EdgeActions.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -17,30 +19,32 @@ namespace Azure.ResourceManager.EdgeActions
     /// <summary> A class to add extension methods to Azure.ResourceManager.EdgeActions. </summary>
     public static partial class EdgeActionsExtensions
     {
+        /// <param name="client"></param>
         private static MockableEdgeActionsArmClient GetMockableEdgeActionsArmClient(ArmClient client)
         {
-            return client.GetCachedClient(client0 => new MockableEdgeActionsArmClient(client0));
+            return client.GetCachedClient(client0 => new MockableEdgeActionsArmClient(client0, ResourceIdentifier.Root));
         }
 
-        private static MockableEdgeActionsResourceGroupResource GetMockableEdgeActionsResourceGroupResource(ArmResource resource)
+        /// <param name="resourceGroupResource"></param>
+        private static MockableEdgeActionsResourceGroupResource GetMockableEdgeActionsResourceGroupResource(ResourceGroupResource resourceGroupResource)
         {
-            return resource.GetCachedClient(client => new MockableEdgeActionsResourceGroupResource(client, resource.Id));
+            return resourceGroupResource.GetCachedClient(client => new MockableEdgeActionsResourceGroupResource(client, resourceGroupResource.Id));
         }
 
-        private static MockableEdgeActionsSubscriptionResource GetMockableEdgeActionsSubscriptionResource(ArmResource resource)
+        /// <param name="subscriptionResource"></param>
+        private static MockableEdgeActionsSubscriptionResource GetMockableEdgeActionsSubscriptionResource(SubscriptionResource subscriptionResource)
         {
-            return resource.GetCachedClient(client => new MockableEdgeActionsSubscriptionResource(client, resource.Id));
+            return subscriptionResource.GetCachedClient(client => new MockableEdgeActionsSubscriptionResource(client, subscriptionResource.Id));
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeActionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeActionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeActionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="EdgeActionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsArmClient.GetEdgeActionResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsArmClient.GetEdgeActionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="EdgeActionResource"/> object. </returns>
@@ -52,33 +56,13 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeActionExecutionFilterResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeActionExecutionFilterResource.CreateResourceIdentifier" /> to create an <see cref="EdgeActionExecutionFilterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="EdgeActionVersionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsArmClient.GetEdgeActionExecutionFilterResource(ResourceIdentifier)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsArmClient.GetEdgeActionVersionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EdgeActionExecutionFilterResource"/> object. </returns>
-        public static EdgeActionExecutionFilterResource GetEdgeActionExecutionFilterResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableEdgeActionsArmClient(client).GetEdgeActionExecutionFilterResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeActionVersionResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeActionVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeActionVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsArmClient.GetEdgeActionVersionResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> Returns a <see cref="EdgeActionVersionResource"/> object. </returns>
@@ -90,15 +74,33 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Gets a collection of EdgeActionResources in the ResourceGroupResource.
+        /// Gets an object representing a <see cref="EdgeActionExecutionFilterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetEdgeActions()"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsArmClient.GetEdgeActionExecutionFilterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="EdgeActionExecutionFilterResource"/> object. </returns>
+        public static EdgeActionExecutionFilterResource GetEdgeActionExecutionFilterResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEdgeActionsArmClient(client).GetEdgeActionExecutionFilterResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of EdgeActions in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetEdgeActions()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of EdgeActionResources and their operations over a EdgeActionResource. </returns>
+        /// <returns> An object representing collection of EdgeActions and their operations over a EdgeActionResource. </returns>
         public static EdgeActionCollection GetEdgeActions(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
@@ -108,34 +110,15 @@ namespace Azure.ResourceManager.EdgeActions
 
         /// <summary>
         /// Get a EdgeAction
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetEdgeActionAsync(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetEdgeActionAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="edgeActionName"> The name of the Edge Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="edgeActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<EdgeActionResource>> GetEdgeActionAsync(this ResourceGroupResource resourceGroupResource, string edgeActionName, CancellationToken cancellationToken = default)
         {
@@ -146,34 +129,15 @@ namespace Azure.ResourceManager.EdgeActions
 
         /// <summary>
         /// Get a EdgeAction
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetEdgeAction(string,CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsResourceGroupResource.GetEdgeAction(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="edgeActionName"> The name of the Edge Action. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="edgeActionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="edgeActionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<EdgeActionResource> GetEdgeAction(this ResourceGroupResource resourceGroupResource, string edgeActionName, CancellationToken cancellationToken = default)
         {
@@ -184,33 +148,15 @@ namespace Azure.ResourceManager.EdgeActions
 
         /// <summary>
         /// List EdgeAction resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/edgeActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsSubscriptionResource.GetEdgeActions(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsSubscriptionResource.GetEdgeActionsAsync(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="EdgeActionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeActionResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<EdgeActionResource> GetEdgeActionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
@@ -220,30 +166,12 @@ namespace Azure.ResourceManager.EdgeActions
 
         /// <summary>
         /// List EdgeAction resources by subscription ID
-        /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/edgeActions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableEdgeActionsSubscriptionResource.GetEdgeActions(CancellationToken)"/> instead.</description>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEdgeActionsSubscriptionResource.GetEdgeActions(CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="EdgeActionResource"/> that may take multiple service requests to iterate over. </returns>

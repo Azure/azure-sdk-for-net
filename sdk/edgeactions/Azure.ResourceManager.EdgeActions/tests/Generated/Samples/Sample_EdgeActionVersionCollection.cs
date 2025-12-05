@@ -43,8 +43,11 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             string version = "version2";
             EdgeActionVersionData data = new EdgeActionVersionData(new AzureLocation("global"))
             {
-                DeploymentType = EdgeActionVersionDeploymentType.Zip,
-                IsDefaultVersion = EdgeActionIsDefaultVersion.True,
+                Properties = new EdgeActionVersionProperties
+                {
+                    DeploymentType = EdgeActionVersionDeploymentType.Zip,
+                    IsDefaultVersion = EdgeActionIsDefaultVersion.True,
+                }
             };
             ArmOperation<EdgeActionVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, version, data);
             EdgeActionVersionResource result = lro.Value;

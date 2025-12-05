@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EdgeActions.Samples
 
             // invoke the operation
             string edgeActionName = "edgeAction1";
-            EdgeActionData data = new EdgeActionData(new AzureLocation("global"), new SkuType("Standard", "Standard"));
+            EdgeActionData data = new EdgeActionData(new AzureLocation("global"), new EdgeActionSkuType("Standard", "Standard"));
             ArmOperation<EdgeActionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, edgeActionName, data);
             EdgeActionResource result = lro.Value;
 

@@ -5,88 +5,81 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeActions;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.EdgeActions.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableEdgeActionsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _edgeActionClientDiagnostics;
-        private EdgeActionsRestOperations _edgeActionRestClient;
+        private ClientDiagnostics _edgeActionsMgmtClientClientDiagnostics;
+        private EdgeActionsMgmtClient _edgeActionsMgmtClientRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeActionsSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableEdgeActionsSubscriptionResource for mocking. </summary>
         protected MockableEdgeActionsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeActionsSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEdgeActionsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEdgeActionsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics EdgeActionClientDiagnostics => _edgeActionClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionResource.ResourceType.Namespace, Diagnostics);
-        private EdgeActionsRestOperations EdgeActionRestClient => _edgeActionRestClient ??= new EdgeActionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(EdgeActionResource.ResourceType));
+        private ClientDiagnostics EdgeActionsMgmtClientClientDiagnostics => _edgeActionsMgmtClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.EdgeActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private EdgeActionsMgmtClient EdgeActionsMgmtClientRestClient => _edgeActionsMgmtClientRestClient ??= new EdgeActionsMgmtClient(EdgeActionsMgmtClientClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
 
         /// <summary>
         /// List EdgeAction resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/edgeActions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/edgeActions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActions_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeActionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeActionResource> GetEdgeActionsAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeActionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeActionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeActionResource(Client, EdgeActionData.DeserializeEdgeActionData(e)), EdgeActionClientDiagnostics, Pipeline, "MockableEdgeActionsSubscriptionResource.GetEdgeActions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeActionData, EdgeActionResource>(new EdgeActionsMgmtClientGetBySubscriptionAsyncCollectionResultOfT(EdgeActionsMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EdgeActionResource(Client, data));
         }
 
         /// <summary>
         /// List EdgeAction resources by subscription ID
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Cdn/edgeActions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Cdn/edgeActions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActions_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActions_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +87,11 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
         /// <returns> A collection of <see cref="EdgeActionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeActionResource> GetEdgeActions(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => EdgeActionRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EdgeActionRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeActionResource(Client, EdgeActionData.DeserializeEdgeActionData(e)), EdgeActionClientDiagnostics, Pipeline, "MockableEdgeActionsSubscriptionResource.GetEdgeActions", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeActionData, EdgeActionResource>(new EdgeActionsMgmtClientGetBySubscriptionCollectionResultOfT(EdgeActionsMgmtClientRestClient, Guid.Parse(Id.SubscriptionId), context), data => new EdgeActionResource(Client, data));
         }
     }
 }

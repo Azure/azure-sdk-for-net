@@ -1,8 +1,8 @@
-# Microsoft Azure EdgeActions management client library for .NET
+# Microsoft Azure Edge Actions management client library for .NET
 
-Azure EdgeActions enables you to deploy and manage serverless edge functions that run on Azure Front Door infrastructure. Execute custom code at the edge to modify requests and responses, implement custom routing logic, and perform other edge computing tasks with low latency.
+Azure Edge Actions enables you to deploy and manage serverless edge functions that run on Azure Front Door infrastructure. Execute custom code at the edge to modify requests and responses, implement custom routing logic, and perform other edge computing tasks with low latency.
 
-This library supports managing Microsoft Azure EdgeActions resources.
+This library supports managing Microsoft Azure Edge Actions resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -16,10 +16,10 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure EdgeActions management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Edge Actions management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.EdgeActions
+dotnet add package Azure.ResourceManager.EdgeActions  --prerelease
 ```
 
 ### Prerequisites

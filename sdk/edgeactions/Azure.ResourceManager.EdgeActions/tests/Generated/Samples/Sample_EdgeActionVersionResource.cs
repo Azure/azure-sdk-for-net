@@ -96,11 +96,14 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionVersionResource edgeActionVersion = client.GetEdgeActionVersionResource(edgeActionVersionResourceId);
 
             // invoke the operation
-            EdgeActionVersionPatch patch = new EdgeActionVersionPatch
+            EdgeActionVersionData data = new EdgeActionVersionData
             {
-                DeploymentType = EdgeActionVersionDeploymentType.Others,
+                Properties = new EdgeActionVersionProperties
+                {
+                    DeploymentType = EdgeActionVersionDeploymentType.Others,
+                }
             };
-            ArmOperation<EdgeActionVersionResource> lro = await edgeActionVersion.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<EdgeActionVersionResource> lro = await edgeActionVersion.UpdateAsync(WaitUntil.Completed, data);
             EdgeActionVersionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -132,7 +135,7 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionVersionResource edgeActionVersion = client.GetEdgeActionVersionResource(edgeActionVersionResourceId);
 
             // invoke the operation
-            VersionCode body = new VersionCode("UEsDBBQAAAAIAI1NzkQAAAAABQAAAA==", "zippedFile");
+            EdgeActionVersionCode body = new EdgeActionVersionCode("UEsDBBQAAAAIAI1NzkQAAAAABQAAAA==", "zippedFile");
             ArmOperation<EdgeActionVersionProperties> lro = await edgeActionVersion.DeployVersionCodeAsync(WaitUntil.Completed, body);
             EdgeActionVersionProperties result = lro.Value;
 
@@ -161,8 +164,8 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionVersionResource edgeActionVersion = client.GetEdgeActionVersionResource(edgeActionVersionResourceId);
 
             // invoke the operation
-            ArmOperation<VersionCode> lro = await edgeActionVersion.GetVersionCodeAsync(WaitUntil.Completed);
-            VersionCode result = lro.Value;
+            ArmOperation<EdgeActionVersionCode> lro = await edgeActionVersion.GetVersionCodeAsync(WaitUntil.Completed);
+            EdgeActionVersionCode result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

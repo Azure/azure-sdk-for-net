@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EdgeActions;
 
 namespace Azure.ResourceManager.EdgeActions.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.EdgeActions.Models
     public readonly partial struct EdgeActionIsDefaultVersion : IEquatable<EdgeActionIsDefaultVersion>
     {
         private readonly string _value;
+        /// <summary> This is the default version. </summary>
+        private const string TrueValue = "True";
+        /// <summary> This is not the default version. </summary>
+        private const string FalseValue = "False";
 
         /// <summary> Initializes a new instance of <see cref="EdgeActionIsDefaultVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EdgeActionIsDefaultVersion(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TrueValue = "True";
-        private const string FalseValue = "False";
+            _value = value;
+        }
 
         /// <summary> This is the default version. </summary>
         public static EdgeActionIsDefaultVersion True { get; } = new EdgeActionIsDefaultVersion(TrueValue);
+
         /// <summary> This is not the default version. </summary>
         public static EdgeActionIsDefaultVersion False { get; } = new EdgeActionIsDefaultVersion(FalseValue);
+
         /// <summary> Determines if two <see cref="EdgeActionIsDefaultVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EdgeActionIsDefaultVersion left, EdgeActionIsDefaultVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EdgeActionIsDefaultVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EdgeActionIsDefaultVersion left, EdgeActionIsDefaultVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EdgeActionIsDefaultVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EdgeActionIsDefaultVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EdgeActionIsDefaultVersion(string value) => new EdgeActionIsDefaultVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EdgeActionIsDefaultVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EdgeActionIsDefaultVersion?(string value) => value == null ? null : new EdgeActionIsDefaultVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EdgeActionIsDefaultVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EdgeActionIsDefaultVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

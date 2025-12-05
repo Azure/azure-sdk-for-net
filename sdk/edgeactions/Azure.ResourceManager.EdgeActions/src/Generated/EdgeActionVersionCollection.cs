@@ -8,67 +8,66 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EdgeActions
 {
     /// <summary>
     /// A class representing a collection of <see cref="EdgeActionVersionResource"/> and their operations.
     /// Each <see cref="EdgeActionVersionResource"/> in the collection will belong to the same instance of <see cref="EdgeActionResource"/>.
-    /// To get an <see cref="EdgeActionVersionCollection"/> instance call the GetEdgeActionVersions method from an instance of <see cref="EdgeActionResource"/>.
+    /// To get a <see cref="EdgeActionVersionCollection"/> instance call the GetEdgeActionVersions method from an instance of <see cref="EdgeActionResource"/>.
     /// </summary>
     public partial class EdgeActionVersionCollection : ArmCollection, IEnumerable<EdgeActionVersionResource>, IAsyncEnumerable<EdgeActionVersionResource>
     {
-        private readonly ClientDiagnostics _edgeActionVersionClientDiagnostics;
-        private readonly EdgeActionVersionsRestOperations _edgeActionVersionRestClient;
+        private readonly ClientDiagnostics _edgeActionVersionsClientDiagnostics;
+        private readonly EdgeActionVersions _edgeActionVersionsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeActionVersionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of EdgeActionVersionCollection for mocking. </summary>
         protected EdgeActionVersionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="EdgeActionVersionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdgeActionVersionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal EdgeActionVersionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _edgeActionVersionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionVersionResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(EdgeActionVersionResource.ResourceType, out string edgeActionVersionApiVersion);
-            _edgeActionVersionRestClient = new EdgeActionVersionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _edgeActionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionVersionResource.ResourceType.Namespace, Diagnostics);
+            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Endpoint, edgeActionVersionApiVersion ?? "2025-09-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != EdgeActionResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, EdgeActionResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, EdgeActionResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<EdgeActionVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string version, EdgeActionVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(new EdgeActionVersionOperationSource(Client), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionOperationSource(Client),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.EdgeActions
         /// Create a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.EdgeActions
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<EdgeActionVersionResource> CreateOrUpdate(WaitUntil waitUntil, string version, EdgeActionVersionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, data, cancellationToken);
-                var operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(new EdgeActionVersionOperationSource(Client), _edgeActionVersionClientDiagnostics, Pipeline, _edgeActionVersionRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
+                    new EdgeActionVersionOperationSource(Client),
+                    _edgeActionVersionsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.EdgeActions
         /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<EdgeActionVersionResource>> GetAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.Get");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.EdgeActions
         /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<EdgeActionVersionResource> Get(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.Get");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.Get");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<EdgeActionVersionData> response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.EdgeActions
         /// List EdgeActionVersion resources by EdgeAction
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_ListByEdgeAction</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_ListByEdgeAction. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EdgeActionVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EdgeActionVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EdgeActionVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeActionVersionRestClient.CreateListByEdgeActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeActionVersionRestClient.CreateListByEdgeActionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new EdgeActionVersionResource(Client, EdgeActionVersionData.DeserializeEdgeActionVersionData(e)), _edgeActionVersionClientDiagnostics, Pipeline, "EdgeActionVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionAsyncCollectionResultOfT(_edgeActionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeActionVersionResource(Client, data));
         }
 
         /// <summary>
         /// List EdgeActionVersion resources by EdgeAction
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_ListByEdgeAction</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_ListByEdgeAction. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.EdgeActions
         /// <returns> A collection of <see cref="EdgeActionVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EdgeActionVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _edgeActionVersionRestClient.CreateListByEdgeActionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _edgeActionVersionRestClient.CreateListByEdgeActionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new EdgeActionVersionResource(Client, EdgeActionVersionData.DeserializeEdgeActionVersionData(e)), _edgeActionVersionClientDiagnostics, Pipeline, "EdgeActionVersionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<EdgeActionVersionData, EdgeActionVersionResource>(new EdgeActionVersionsGetByEdgeActionCollectionResultOfT(_edgeActionVersionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new EdgeActionVersionResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.Exists");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeActionVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeActionVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,39 +382,53 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.Exists");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeActionVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeActionVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,41 +439,57 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<EdgeActionVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _edgeActionVersionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<EdgeActionVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeActionVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeActionVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,41 +500,57 @@ namespace Azure.ResourceManager.EdgeActions
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get a EdgeActionVersion
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/edgeActions/{edgeActionName}/versions/{version}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>EdgeActionVersions_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> EdgeActionVersions_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-09-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeActionVersionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> The name of the Edge Action version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<EdgeActionVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(version, nameof(version));
 
-            using var scope = _edgeActionVersionClientDiagnostics.CreateScope("EdgeActionVersionCollection.GetIfExists");
+            using DiagnosticScope scope = _edgeActionVersionsClientDiagnostics.CreateScope("EdgeActionVersionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _edgeActionVersionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, version, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _edgeActionVersionsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<EdgeActionVersionData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(EdgeActionVersionData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((EdgeActionVersionData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<EdgeActionVersionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new EdgeActionVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.EdgeActions
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<EdgeActionVersionResource> IAsyncEnumerable<EdgeActionVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

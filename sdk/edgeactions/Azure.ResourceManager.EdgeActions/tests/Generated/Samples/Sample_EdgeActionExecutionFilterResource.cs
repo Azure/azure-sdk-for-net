@@ -96,11 +96,14 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionExecutionFilterResource edgeActionExecutionFilter = client.GetEdgeActionExecutionFilterResource(edgeActionExecutionFilterResourceId);
 
             // invoke the operation
-            EdgeActionExecutionFilterPatch patch = new EdgeActionExecutionFilterPatch
+            EdgeActionExecutionFilterData data = new EdgeActionExecutionFilterData
             {
-                ExecutionFilterIdentifierHeaderValue = "header-value2",
+               Properties = new EdgeActionExecutionFilterProperties
+               {
+                   ExecutionFilterIdentifierHeaderValue = "header-value2",
+               }
             };
-            ArmOperation<EdgeActionExecutionFilterResource> lro = await edgeActionExecutionFilter.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<EdgeActionExecutionFilterResource> lro = await edgeActionExecutionFilter.UpdateAsync(WaitUntil.Completed, data);
             EdgeActionExecutionFilterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

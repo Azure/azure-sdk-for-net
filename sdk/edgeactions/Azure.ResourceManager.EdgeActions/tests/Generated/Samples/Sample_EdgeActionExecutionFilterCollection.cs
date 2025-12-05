@@ -42,9 +42,12 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             string executionFilter = "executionFilter1";
             EdgeActionExecutionFilterData data = new EdgeActionExecutionFilterData(new AzureLocation("global"))
             {
-                VersionId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/testrg/providers/Microsoft.Cdn/EdgeActions/edgeAction1/versions/version1"),
-                ExecutionFilterIdentifierHeaderName = "header-key",
-                ExecutionFilterIdentifierHeaderValue = "header-value",
+                Properties = new Models.EdgeActionExecutionFilterProperties()
+                {
+                    VersionId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/testrg/providers/Microsoft.Cdn/EdgeActions/edgeAction1/versions/version1"),
+                    ExecutionFilterIdentifierHeaderName = "header-key",
+                    ExecutionFilterIdentifierHeaderValue = "header-value",
+                }
             };
             ArmOperation<EdgeActionExecutionFilterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, executionFilter, data);
             EdgeActionExecutionFilterResource result = lro.Value;

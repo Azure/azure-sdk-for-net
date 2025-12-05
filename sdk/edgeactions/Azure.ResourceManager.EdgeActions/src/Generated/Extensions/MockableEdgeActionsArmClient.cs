@@ -6,38 +6,27 @@
 #nullable disable
 
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.EdgeActions;
 
 namespace Azure.ResourceManager.EdgeActions.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableEdgeActionsArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeActionsArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableEdgeActionsArmClient for mocking. </summary>
         protected MockableEdgeActionsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableEdgeActionsArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableEdgeActionsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableEdgeActionsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableEdgeActionsArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeActionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeActionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeActionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeActionResource"/> object. </returns>
         public virtual EdgeActionResource GetEdgeActionResource(ResourceIdentifier id)
@@ -46,28 +35,22 @@ namespace Azure.ResourceManager.EdgeActions.Mocking
             return new EdgeActionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeActionExecutionFilterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeActionExecutionFilterResource.CreateResourceIdentifier" /> to create an <see cref="EdgeActionExecutionFilterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeActionExecutionFilterResource"/> object. </returns>
-        public virtual EdgeActionExecutionFilterResource GetEdgeActionExecutionFilterResource(ResourceIdentifier id)
-        {
-            EdgeActionExecutionFilterResource.ValidateResourceId(id);
-            return new EdgeActionExecutionFilterResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeActionVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeActionVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeActionVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeActionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeActionVersionResource"/> object. </returns>
         public virtual EdgeActionVersionResource GetEdgeActionVersionResource(ResourceIdentifier id)
         {
             EdgeActionVersionResource.ValidateResourceId(id);
             return new EdgeActionVersionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeActionExecutionFilterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="EdgeActionExecutionFilterResource"/> object. </returns>
+        public virtual EdgeActionExecutionFilterResource GetEdgeActionExecutionFilterResource(ResourceIdentifier id)
+        {
+            EdgeActionExecutionFilterResource.ValidateResourceId(id);
+            return new EdgeActionExecutionFilterResource(Client, id);
         }
     }
 }

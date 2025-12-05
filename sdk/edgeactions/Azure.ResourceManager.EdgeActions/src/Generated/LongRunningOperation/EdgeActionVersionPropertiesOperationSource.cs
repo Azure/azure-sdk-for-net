@@ -8,23 +8,38 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EdgeActions.Models;
 
 namespace Azure.ResourceManager.EdgeActions
 {
-    internal class EdgeActionVersionPropertiesOperationSource : IOperationSource<EdgeActionVersionProperties>
+    /// <summary></summary>
+    internal partial class EdgeActionVersionPropertiesOperationSource : IOperationSource<EdgeActionVersionProperties>
     {
-        EdgeActionVersionProperties IOperationSource<EdgeActionVersionProperties>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal EdgeActionVersionPropertiesOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return EdgeActionVersionProperties.DeserializeEdgeActionVersionProperties(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        EdgeActionVersionProperties IOperationSource<EdgeActionVersionProperties>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            EdgeActionVersionProperties result = EdgeActionVersionProperties.DeserializeEdgeActionVersionProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<EdgeActionVersionProperties> IOperationSource<EdgeActionVersionProperties>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return EdgeActionVersionProperties.DeserializeEdgeActionVersionProperties(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            EdgeActionVersionProperties result = EdgeActionVersionProperties.DeserializeEdgeActionVersionProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return result;
         }
     }
 }
