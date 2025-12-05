@@ -90,7 +90,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             var scanInfo = GetBlockBlobReference(blobServiceClient, hostId, storageAccountName, containerName).DownloadText();
             var scanInfoJson = JObject.Parse(scanInfo);
-            var storedTime = (DateTime)(scanInfoJson["LatestScan"]);
+            var storedTime = (DateTimeOffset)(scanInfoJson["LatestScan"]);
 
             Assert.AreEqual(now, storedTime);
             Assert.AreEqual(now, await manager.LoadLatestScanAsync(storageAccountName, containerName));
