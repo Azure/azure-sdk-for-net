@@ -93,11 +93,18 @@ namespace Azure.Generator
             }
             else if (inputType is InputUnionType inputUnionType)
             {
-                var dataFactoryElementType = TryCreateDataFactoryElementType(inputUnionType);
+                var dataFactoryElementType = TryCreateDataFactoryElementTypeFromUnion(inputUnionType);
                 if (dataFactoryElementType != null)
                 {
                     return dataFactoryElementType;
                 }
+            }
+            else if (inputType is InputExternalType inputExternalType)
+            {
+                // Handle direct InputExternalType - this occurs when @alternateType is used with external type identity
+                // Currently, the emitter produces InputExternalType without the inner type T information,
+                // so we can't create a properly typed DataFactoryElement<T>.
+                // This case is logged as a warning by the emitter: "unsupported-external-type"
             }
 
             return base.CreateCSharpTypeCore(inputType);
@@ -105,7 +112,7 @@ namespace Azure.Generator
 
         private const string DataFactoryElementIdentity = "Azure.Core.Expressions.DataFactoryElement";
 
-        private CSharpType? TryCreateDataFactoryElementType(InputUnionType inputUnionType)
+        private CSharpType? TryCreateDataFactoryElementTypeFromUnion(InputUnionType inputUnionType)
         {
             // Find the DataFactoryElement external type in the union variants
             InputExternalType? dataFactoryExternalType = null;

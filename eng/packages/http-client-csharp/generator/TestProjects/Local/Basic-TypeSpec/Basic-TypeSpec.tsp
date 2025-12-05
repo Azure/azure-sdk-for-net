@@ -23,70 +23,6 @@ using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
 
-// DataFactoryElement expression model
-@doc("Represents a DataFactory expression")
-model DfeExpression {
-  @doc("The expression type - always 'Expression'")
-  type: "Expression";
-  @doc("The expression value")
-  value: string;
-}
-
-// DataFactoryElement union type for string
-@doc("DataFactoryElement for string values")
-@alternateType(#{
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-}, "csharp")
-union DfeString {
-  string,
-  DfeExpression
-}
-
-// DataFactoryElement union type for int
-@doc("DataFactoryElement for int values")
-@alternateType(#{
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-}, "csharp")
-union DfeInt {
-  int32,
-  DfeExpression
-}
-
-// DataFactoryElement union type for bool
-@doc("DataFactoryElement for bool values")
-@alternateType(#{
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-}, "csharp")
-union DfeBool {
-  boolean,
-  DfeExpression
-}
-
-// DataFactoryElement union type for string array
-@doc("DataFactoryElement for string array values")
-@alternateType(#{
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-}, "csharp")
-union DfeStringArray {
-  string[],
-  DfeExpression
-}
-
-@doc("A model with DataFactoryElement properties")
-model DataFactoryModel {
-  @doc("A string property that can be a literal or expression")
-  stringValue: DfeString;
-
-  @doc("An int property that can be a literal or expression")
-  intValue: DfeInt;
-
-  @doc("A bool property that can be a literal or expression")
-  boolValue: DfeBool;
-
-  @doc("A string array property that can be a literal or expression")
-  stringArrayValue: DfeStringArray;
-}
-
 @doc("The Azure Active Directory OAuth2 Flow")
 model AadToken
   is OAuth2Auth<[
@@ -543,15 +479,3 @@ op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None
 @convenientAPI(true)
 @post
 op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", @multipartBody body: {name: HttpPart<string>}): void;
-
-@route("datafactory")
-@doc("An operation that uses DataFactoryElement properties")
-@convenientAPI(true)
-@post
-op CreateDataFactoryModel(@body body: DataFactoryModel): DataFactoryModel;
-
-@route("datafactory/{id}")
-@doc("Get a DataFactoryModel by id")
-@convenientAPI(true)
-@get
-op GetDataFactoryModel(@path id: string): DataFactoryModel;
