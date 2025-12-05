@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="name"> Name of the property. </param>
         /// <param name="allowedValues"> Allowed values values for the property. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RequiredImpactProperties(string name, IList<string> allowedValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RequiredImpactProperties(string name, IReadOnlyList<string> allowedValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             AllowedValues = allowedValues;
@@ -38,8 +38,5 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Name of the property. </summary>
         public string Name { get; }
-
-        /// <summary> Allowed values values for the property. </summary>
-        public IList<string> AllowedValues { get; }
     }
 }

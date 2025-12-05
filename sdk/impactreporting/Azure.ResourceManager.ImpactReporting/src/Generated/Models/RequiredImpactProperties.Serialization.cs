@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 return null;
             }
             string name = default;
-            IList<string> allowedValues = default;
+            IReadOnlyList<string> allowedValues = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
