@@ -26,6 +26,8 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
+        private const string DataFactoryElementIdentity = "Azure.Core.Expressions.DataFactoryElement";
+
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
@@ -109,8 +111,6 @@ namespace Azure.Generator
 
             return base.CreateCSharpTypeCore(inputType);
         }
-
-        private const string DataFactoryElementIdentity = "Azure.Core.Expressions.DataFactoryElement";
 
         private CSharpType? TryCreateDataFactoryElementTypeFromUnion(InputUnionType inputUnionType)
         {
