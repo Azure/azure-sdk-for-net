@@ -6,7 +6,7 @@ The Question Answering Authoring client library lets you manage Question Answeri
 
 > If you only need to query deployed projects, install the runtime package (`Azure.AI.Language.QuestionAnswering.Inference`).
 >
-> If you need to create/update/deploy projects (authoring), install `Azure.AI.Language.QuestionAnswering` (it already brings inference transitively via type forwarding).
+> If you need to create/update/deploy projects (authoring), use the authoring preview package (`Azure.AI.Language.QuestionAnswering.Authoring`).
 
 ## Getting started
 
@@ -16,14 +16,14 @@ Service API versions:
 
 ### Install the package
 
-Stable (GA) – installs latest released (non-preview) version:
+Stable (GA) - installs latest released (non-preview) version:
 ```dotnetcli
 dotnet add package Azure.AI.Language.QuestionAnswering
 ```
 
 Preview (opt into new features and `2025-05-15-preview` service version):
 ```dotnetcli
-dotnet add package Azure.AI.Language.QuestionAnswering --prerelease
+dotnet add package Azure.AI.Language.QuestionAnswering.Authoring --prerelease
 dotnet add package Azure.AI.Language.QuestionAnswering.Inference --prerelease
 ```
 
@@ -212,10 +212,10 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 See the root repository contributing guide for how to build, test, and submit changes.
 
 <!-- LINKS -->
-[authoring_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
-[authoring_package]: https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering
+[authoring_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/src/
+[authoring_package]: https://www.nuget.org/packages/Azure.AI.Language.QuestionAnswering.Authoring
 [authoring_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering.Authoring
-[authoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/
+[authoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/samples/
 [questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
 [authoring_rest_docs]: https://learn.microsoft.com/rest/api/language/question-answering-authoring/operation-groups?view=rest-language-question-answering-authoring-2025-05-15-preview
 
