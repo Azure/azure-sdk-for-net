@@ -619,14 +619,16 @@ namespace Azure.Communication.CallAutomation
         /// <param name="timestamp">The timestamp of when the audio was captured.</param>
         /// <param name="participantId">The identifier of the participant who sent the audio.</param>
         /// <param name="silent">Indicates if the audio data represents silence.</param>
+        /// <param name="mark">Indicates if the audio data represents mark.</param>
         /// <returns>A new instance of <see cref="AudioData"/> for mocking.</returns>
         public static AudioData AudioData(
             string data,
             DateTime timestamp,
             string participantId,
-            bool silent)
+            bool silent,
+            MarkAudio mark)
         {
-            return new AudioData(data, timestamp, participantId, silent);
+            return new AudioData(data, timestamp, participantId, silent, mark);
         }
 
         /// <summary>

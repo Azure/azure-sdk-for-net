@@ -26,13 +26,18 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var timestamp = _testTimestamp;
             var participantId = "participant123";
             var silent = true;
+            var mark = new MarkAudio
+            {
+                Id = "mark123",
+            };
 
-            var audioData = CallAutomationModelFactory.AudioData(data, timestamp, participantId, silent);
+            var audioData = CallAutomationModelFactory.AudioData(data, timestamp, participantId, silent, mark);
 
             Assert.AreEqual(data, Convert.ToBase64String(audioData.Data.ToArray()));
             Assert.AreEqual(timestamp, audioData.Timestamp.DateTime);
             Assert.AreEqual(participantId, audioData.Participant.RawId);
             Assert.AreEqual(silent, audioData.IsSilent);
+            Assert.AreEqual(mark.Id, audioData.Mark.Id);
         }
 
         [Test]
@@ -64,7 +69,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var participantRawID = "participant123";
             var resultState = "Final";
 
-            var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format, confidence, offset, duration, words, participantRawID, resultState);
+            var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format.ToString(), confidence, offset, duration, words, participantRawID, resultState.ToString());
 
             Assert.AreEqual(text, transcriptionData.Text);
             Assert.AreEqual(format, transcriptionData.Format.ToString());

@@ -19,7 +19,21 @@ namespace Azure.Communication.CallAutomation
             Data = data;
         }
 
-        internal AudioData(string data, DateTime timestamp, string participantId, bool silent)
+        /// <summary>
+        /// The audio data, encoded as a base64 string
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="markId"></param>
+        internal AudioData(byte[] data, string markId)
+        {
+            Data = data;
+            Mark = new MarkAudio()
+            {
+                Id = markId
+            };
+        }
+
+        internal AudioData(string data, DateTime timestamp, string participantId, bool silent, MarkAudio mark)
         {
             Data = !string.IsNullOrWhiteSpace(data) ? Convert.FromBase64String(data) : default;
             Timestamp = timestamp;
@@ -28,6 +42,7 @@ namespace Azure.Communication.CallAutomation
                 Participant = CommunicationIdentifier.FromRawId(participantId);
             }
             IsSilent = silent;
+            Mark = mark;
         }
 
         /// <summary>
@@ -51,5 +66,10 @@ namespace Azure.Communication.CallAutomation
         /// Indicates whether the received audio buffer contains only silence.
         /// </summary>
         public bool IsSilent { get; }
+
+        /// <summary>
+        /// Mark this audio data which signals the player when it reaches the mark position
+        /// </summary>
+        public MarkAudio Mark { get; }
     }
 }

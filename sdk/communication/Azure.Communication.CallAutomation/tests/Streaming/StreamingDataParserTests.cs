@@ -34,17 +34,47 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
         public void ParseAudioData_Test()
         {
             string audioJson = "{"
-                + "\"kind\": \"AudioData\","
-                + "\"audioData\": {"
-                + "\"data\": \"AQIDBAU=\","      // [1, 2, 3, 4, 5]
-                + "\"timestamp\": \"2022-08-23T11:48:05Z\","
-                + "\"participantRawID\": \"participantId\","
-                + "\"silent\": false"
-                + "}"
-                + "}";
+                        + "\"kind\": \"AudioData\","
+                        + "\"audioData\": {"
+                        + "\"data\": \"AQIDBAU=\","
+                        + "\"timestamp\": \"2022-08-23T11:48:05Z\","
+                        + "\"participantRawID\": \"participantId\","
+                        + "\"mark\": {\"Id\": \"mark123\"},"
+                        + "\"silent\": false"
+                        + "}"
+                        + "}";
 
             AudioData streamingAudio = (AudioData)StreamingData.Parse(audioJson);
             ValidateAudioData(streamingAudio);
+        }
+
+        [Test]
+        public void ParseMarkData_Test()
+        {
+            string markJson = "{"
+                + "\"kind\": \"MarkData\","
+                + "\"markData\": {"
+                + "\"id\": \"test\","
+                + "\"status\": \"cancelled\""
+                + "}"
+                + "}";
+
+            MarkData streamingAudio = (MarkData)StreamingData.Parse(markJson);
+            ValidateMarkData(streamingAudio);
+        }
+
+        [Test]
+        public void ParseMarkDataWithEmptyStatus_Test()
+        {
+            string markJson = "{"
+                + "\"kind\": \"MarkData\","
+                + "\"markData\": {"
+                + "\"id\": \"test\""
+                + "}"
+                + "}";
+
+            MarkData streamingAudio = (MarkData)StreamingData.Parse(markJson);
+            ValidateMarkData(streamingAudio, true);
         }
 
         private static void ValidateAudioMetadata(AudioMetadata streamingAudioMetadata)
@@ -64,6 +94,7 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsTrue(streamingAudio.Participant is CommunicationIdentifier);
             Assert.AreEqual("participantId", streamingAudio.Participant.RawId);
+            Assert.AreEqual("mark123", streamingAudio.Mark.Id);
             Assert.IsFalse(streamingAudio.IsSilent);
         }
         private static void ValidateAudioDataNoParticipant(AudioData streamingAudio)
@@ -73,6 +104,14 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual(2022, streamingAudio.Timestamp.Year);
             Assert.IsNull(streamingAudio.Participant);
             Assert.IsFalse(streamingAudio.IsSilent);
+        }
+
+        private static void ValidateMarkData(MarkData streamingAudio, bool emptyStatus = false)
+        {
+            Assert.IsNotNull(streamingAudio);
+            Assert.AreEqual("test", streamingAudio.Id);
+            if (!emptyStatus)
+                Assert.AreEqual(MarkStatus.Cancelled, streamingAudio.Status);
         }
         #endregion
 
