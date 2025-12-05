@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="promoteMode"> Type of operation to apply on the read replica. This property is write only. Standalone means that the read replica will be promoted to a standalone server, and will become a completely independent entity from the replication set. Switchover means that the read replica will roles with the primary server. </param>
         /// <param name="promoteOption"> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role, int? capacity, PostgreSqlFlexibleServersReplicationState? replicationState, ReadReplicaPromoteMode? promoteMode, ReadReplicaPromoteOption? promoteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServersReplica(PostgreSqlFlexibleServerReplicationRole? role, int? capacity, PostgreSqlFlexibleServersReplicationState? replicationState, ReadReplicaPromoteMode? promoteMode, ReplicationPromoteOption? promoteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Role = role;
             Capacity = capacity;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public ReadReplicaPromoteMode? PromoteMode { get; set; }
         /// <summary> Data synchronization option to use when processing the operation specified in the promoteMode property. This property is write only. </summary>
         [WirePath("promoteOption")]
-        public ReadReplicaPromoteOption? PromoteOption { get; set; }
+        public ReplicationPromoteOption? PromoteOption { get; set; }
     }
 }

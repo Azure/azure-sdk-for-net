@@ -46,31 +46,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/>. </summary>
-        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PostgreSqlFlexibleServerSku(string name, PostgreSqlFlexibleServerSkuTier tier)
+        public PostgreSqlFlexibleServerSku()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            Tier = tier;
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/>. </summary>
         /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
         /// <param name="tier"> Tier of the compute assigned to a server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerSku(string name, PostgreSqlFlexibleServerSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerSku(string name, PostgreSqlFlexibleServerSkuTier? tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerSku"/> for deserialization. </summary>
-        internal PostgreSqlFlexibleServerSku()
-        {
         }
 
         /// <summary> Name by which is known a given compute size assigned to a server. </summary>
@@ -78,6 +66,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public string Name { get; set; }
         /// <summary> Tier of the compute assigned to a server. </summary>
         [WirePath("tier")]
-        public PostgreSqlFlexibleServerSkuTier Tier { get; set; }
+        public PostgreSqlFlexibleServerSkuTier? Tier { get; set; }
     }
 }

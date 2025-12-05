@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         internal PostgreSqlFlexibleServerSkuCapability()
         {
             SupportedZones = new ChangeTrackingList<string>();
-            SupportedHaMode = new ChangeTrackingList<PostgreSqlFlexibleServerHighAvailabilityMode>();
+            SupportedHaMode = new ChangeTrackingList<HighAvailabilityMode>();
             SupportedFeatures = new ChangeTrackingList<SupportedFeature>();
         }
 
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="supportedHaMode"> Modes of high availability supported for this compute. </param>
         /// <param name="supportedFeatures"> Features supported. </param>
         /// <param name="securityProfile"> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </param>
-        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<PostgreSqlFlexibleServerHighAvailabilityMode> supportedHaMode, IReadOnlyList<SupportedFeature> supportedFeatures, string securityProfile) : base(capabilityStatus, reason, serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, int? vCores, int? supportedIops, long? supportedMemoryPerVcoreMb, IReadOnlyList<string> supportedZones, IReadOnlyList<HighAvailabilityMode> supportedHaMode, IReadOnlyList<SupportedFeature> supportedFeatures, string securityProfile) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
             VCores = vCores;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public IReadOnlyList<string> SupportedZones { get; }
         /// <summary> Modes of high availability supported for this compute. </summary>
         [WirePath("supportedHaMode")]
-        public IReadOnlyList<PostgreSqlFlexibleServerHighAvailabilityMode> SupportedHaMode { get; }
+        public IReadOnlyList<HighAvailabilityMode> SupportedHaMode { get; }
         /// <summary> Features supported. </summary>
         [WirePath("supportedFeatures")]
         public IReadOnlyList<SupportedFeature> SupportedFeatures { get; }

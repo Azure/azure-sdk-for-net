@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, AdvancedThreatProtectionSettingsModelData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, AdvancedThreatProtectionSettingsModelData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, AdvancedThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serverName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, AdvancedThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string serverName, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

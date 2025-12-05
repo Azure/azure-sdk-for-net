@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("geoBackupUserAssignedIdentityId"u8);
                 writer.WriteStringValue(GeoBackupUserAssignedIdentityId);
             }
-            if (Optional.IsDefined(DataEncryptionType))
+            if (Optional.IsDefined(KeyType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(DataEncryptionType.Value.ToString());
+                writer.WriteStringValue(KeyType.Value.ToString());
             }
             if (Optional.IsDefined(PrimaryEncryptionKeyStatus))
             {
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             Uri primaryKeyUri = default;
-            string primaryUserAssignedIdentityId = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
             Uri geoBackupKeyUri = default;
             string geoBackupUserAssignedIdentityId = default;
-            DataEncryptionType? type = default;
-            EncryptionKeyStatus? primaryEncryptionKeyStatus = default;
-            EncryptionKeyStatus? geoBackupEncryptionKeyStatus = default;
+            PostgreSqlFlexibleServerKeyType? type = default;
+            PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default;
+            PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (property.NameEquals("primaryUserAssignedIdentityId"u8))
                 {
-                    primaryUserAssignedIdentityId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    primaryUserAssignedIdentityId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("geoBackupKeyURI"u8))
@@ -152,7 +156,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    type = new DataEncryptionType(property.Value.GetString());
+                    type = new PostgreSqlFlexibleServerKeyType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("primaryEncryptionKeyStatus"u8))
@@ -161,7 +165,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    primaryEncryptionKeyStatus = new EncryptionKeyStatus(property.Value.GetString());
+                    primaryEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("geoBackupEncryptionKeyStatus"u8))
@@ -170,7 +174,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    geoBackupEncryptionKeyStatus = new EncryptionKeyStatus(property.Value.GetString());
+                    geoBackupEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -227,15 +231,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 if (Optional.IsDefined(PrimaryUserAssignedIdentityId))
                 {
                     builder.Append("  primaryUserAssignedIdentityId: ");
-                    if (PrimaryUserAssignedIdentityId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrimaryUserAssignedIdentityId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrimaryUserAssignedIdentityId}'");
-                    }
+                    builder.AppendLine($"'{PrimaryUserAssignedIdentityId.ToString()}'");
                 }
             }
 
@@ -277,7 +273,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataEncryptionType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -285,10 +281,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             else
             {
-                if (Optional.IsDefined(DataEncryptionType))
+                if (Optional.IsDefined(KeyType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{DataEncryptionType.Value.ToString()}'");
+                    builder.AppendLine($"'{KeyType.Value.ToString()}'");
                 }
             }
 

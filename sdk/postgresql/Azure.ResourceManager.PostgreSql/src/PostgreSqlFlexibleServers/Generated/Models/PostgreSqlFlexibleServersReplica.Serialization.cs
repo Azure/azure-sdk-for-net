@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             int? capacity = default;
             PostgreSqlFlexibleServersReplicationState? replicationState = default;
             ReadReplicaPromoteMode? promoteMode = default;
-            ReadReplicaPromoteOption? promoteOption = default;
+            ReplicationPromoteOption? promoteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    promoteOption = new ReadReplicaPromoteOption(property.Value.GetString());
+                    promoteOption = new ReplicationPromoteOption(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -44,20 +44,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerData data = new PostgreSqlFlexibleServerData(new AzureLocation("eastus"))
             {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new PostgreSqlFlexibleServersSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "examplelogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Sixteen,
+                Version = PostgreSqlFlexibleServerVersion.Sixteen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 256,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P15,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P15,
                 },
-                Backup = new PostgreSqlFlexibleServerBackupProperties
+                Backup = new Backup
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = new PostgreSqlFlexibleServerHighAvailabilityMode("Disabled"),
+                    Mode = new HighAvailabilityMode("Disabled"),
                 },
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
                 Cluster = new Cluster
@@ -110,20 +110,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerData data = new PostgreSqlFlexibleServerData(new AzureLocation("eastus"))
             {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new PostgreSqlFlexibleServersSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
-                Backup = new PostgreSqlFlexibleServerBackupProperties
+                Backup = new Backup
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Enabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
+                    Mode = HighAvailabilityMode.ZoneRedundant,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -177,20 +177,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerData data = new PostgreSqlFlexibleServerData(new AzureLocation("eastus"))
             {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new PostgreSqlFlexibleServersSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
-                Backup = new PostgreSqlFlexibleServerBackupProperties
+                Backup = new Backup
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Enabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Enabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.SameZone,
+                    Mode = HighAvailabilityMode.SameZone,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -336,10 +336,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
                     PrimaryKeyUri = new Uri("https://exampleprimarykeyvault.vault.azure.net/keys/examplekey"),
-                    PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity",
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/examplesourceserver"),
                 PointInTimeUtc = DateTimeOffset.Parse("2025-06-01T18:35:22.123456Z"),
@@ -392,10 +392,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
                     PrimaryKeyUri = new Uri("https://exampleprimarykeyvault.vault.azure.net/keys/examplekey/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
-                    PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity",
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/examplesourceserver"),
                 PointInTimeUtc = DateTimeOffset.Parse("2025-06-01T18:35:22.123456Z"),
@@ -437,30 +437,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerData data = new PostgreSqlFlexibleServerData(new AzureLocation("eastus"))
             {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new PostgreSqlFlexibleServersSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 AuthConfig = new PostgreSqlFlexibleServerAuthConfig
                 {
-                    ActiveDirectoryAuth = MicrosoftEntraAuth.Enabled,
-                    PasswordAuth = PasswordBasedAuth.Enabled,
+                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
+                    PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
                     TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
-                    DataEncryptionType = DataEncryptionType.SystemManaged,
+                    KeyType = PostgreSqlFlexibleServerKeyType.SystemManaged,
                 },
-                Backup = new PostgreSqlFlexibleServerBackupProperties
+                Backup = new Backup
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = new PostgreSqlFlexibleServerHighAvailabilityMode("Disabled"),
+                    Mode = new HighAvailabilityMode("Disabled"),
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerData data = new PostgreSqlFlexibleServerData(new AzureLocation("eastus"))
             {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new PostgreSqlFlexibleServersSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
@@ -520,25 +520,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
                     PrimaryKeyUri = new Uri("https://exampleprimarykeyvault.vault.azure.net/keys/examplekey"),
-                    PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity",
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri(""),
                     GeoBackupUserAssignedIdentityId = "",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
-                Backup = new PostgreSqlFlexibleServerBackupProperties
+                Backup = new Backup
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
+                    Mode = HighAvailabilityMode.ZoneRedundant,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             string serverName = "exampleserver";
             PostgreSqlFlexibleServerData data = new PostgreSqlFlexibleServerData(new AzureLocation("eastus"))
             {
-                Sku = new PostgreSqlFlexibleServerSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Sku = new PostgreSqlFlexibleServersSku("Standard_D4ds_v5", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
@@ -598,25 +598,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 AdministratorLogin = "exampleadministratorlogin",
                 AdministratorLoginPassword = "examplepassword",
-                Version = PostgresMajorVersion.Seventeen,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
                     StorageSizeInGB = 512,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P20,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P20,
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
                     PrimaryKeyUri = new Uri("https://exampleprimarykeyvault.vault.azure.net/keys/examplekey/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
-                    PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity",
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri(""),
                     GeoBackupUserAssignedIdentityId = "",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
-                Backup = new PostgreSqlFlexibleServerBackupProperties
+                Backup = new Backup
                 {
                     BackupRetentionDays = 7,
-                    GeoRedundantBackup = GeographicallyRedundantBackup.Disabled,
+                    GeoRedundantBackup = PostgreSqlFlexibleServerGeoRedundantBackupEnum.Disabled,
                 },
                 Network = new PostgreSqlFlexibleServerNetwork
                 {
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 },
                 HighAvailability = new PostgreSqlFlexibleServerHighAvailability
                 {
-                    Mode = PostgreSqlFlexibleServerHighAvailabilityMode.ZoneRedundant,
+                    Mode = HighAvailabilityMode.ZoneRedundant,
                 },
                 AvailabilityZone = "1",
                 CreateMode = PostgreSqlFlexibleServerCreateMode.Create,
@@ -676,10 +676,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
                     PrimaryKeyUri = new Uri("https://exampleprimarykeyvault.vault.azure.net/keys/examplekey/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
-                    PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity",
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri(""),
                     GeoBackupUserAssignedIdentityId = "",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
                 SourceServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.DBforPostgreSQL/flexibleServers/examplesourceserver"),
                 PointInTimeUtc = DateTimeOffset.Parse("2025-06-01T18:35:22.123456Z"),

@@ -11,6 +11,7 @@ library-name: PostgreSql
 
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 
 batch:
@@ -202,24 +203,28 @@ acronym-mapping:
   Vcores: VCores
   UTC: Utc
 
+no-property-type-replacement:
+  - PostgreSqlFlexibleServerData
+
 rename-mapping:
   Configuration: PostgreSqlFlexibleServerConfiguration
   ConfigurationDataType: PostgreSqlFlexibleServerConfigurationDataType
-  CreateModeForUpdate: PostgreSqlFlexibleServerCreateModeForUpdate
+  CreateModeForPatch: PostgreSqlFlexibleServerCreateModeForUpdate
   FailoverMode: PostgreSqlFlexibleServerFailoverMode
   FlexibleServerEditionCapability: PostgreSqlFlexibleServerEditionCapability
-  GeoRedundantBackupEnum: PostgreSqlFlexibleServerGeoRedundantBackupEnum
+  GeographicallyRedundantBackup: PostgreSqlFlexibleServerGeoRedundantBackupEnum
   Database: PostgreSqlFlexibleServerDatabase
   FirewallRule: PostgreSqlFlexibleServerFirewallRule
   Server: PostgreSqlFlexibleServer
-  ServerVersion: PostgreSqlFlexibleServerVersion
+  PostgresMajorVersion: PostgreSqlFlexibleServerVersion
   MaintenanceWindow: PostgreSqlFlexibleServerMaintenanceWindow
-  Backup: PostgreSqlFlexibleServerBackupProperties
+  BackupForPatch: PostgreSqlFlexibleServerBackupProperties
   Storage: PostgreSqlFlexibleServerStorage
-  Sku: PostgreSqlFlexibleServerSku
+  SkuForPatch: PostgreSqlFlexibleServerSku
   Network: PostgreSqlFlexibleServerNetwork
   HighAvailability: PostgreSqlFlexibleServerHighAvailability
-  HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
+#   HighAvailabilityMode: PostgreSqlFlexibleServerHighAvailabilityMode
+#   PostgreSqlFlexibleServerHighAvailabilityMode: PostgreSqlFlexibleServerHAMode
   ServerListResult: PostgreSqlFlexibleServerListResult
   ServerState: PostgreSqlFlexibleServerState
   FirewallRuleListResult: PostgreSqlFlexibleServerFirewallRuleListResult
@@ -227,7 +232,7 @@ rename-mapping:
   ConfigurationListResult: PostgreSqlFlexibleServerConfigurationListResult
   VirtualNetworkSubnetUsageParameter: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter
   DelegatedSubnetUsage: PostgreSqlFlexibleServerDelegatedSubnetUsage
-  VirtualNetworkSubnetUsageResult: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
+  VirtualNetworkSubnetUsageModel: PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult
   ServerVersionCapability: PostgreSqlFlexibleServerServerVersionCapability
   ServerVersionCapability.supportedVcores: SupportedVCores
   StorageEditionCapability: PostgreSqlFlexibleServerStorageEditionCapability
@@ -236,7 +241,7 @@ rename-mapping:
   CheckNameAvailabilityRequest: PostgreSqlFlexibleServerNameAvailabilityContent
   CheckNameAvailabilityResponse: PostgreSqlFlexibleServerNameAvailabilityResponse
   CheckNameAvailabilityReason: PostgreSqlFlexibleServerNameUnavailableReason
-  NameAvailability: PostgreSqlFlexibleServerNameAvailabilityResult
+  NameAvailabilityModel: PostgreSqlFlexibleServerNameAvailabilityResult
   CreateMode: PostgreSqlFlexibleServerCreateMode
   SkuTier: PostgreSqlFlexibleServerSkuTier
   CheckNameAvailabilityResponse.nameAvailable: IsNameAvailable
@@ -244,93 +249,100 @@ rename-mapping:
   StorageMbCapability.storageSizeMb: StorageSizeInMB
   StorageMbCapability: PostgreSqlFlexibleServerStorageCapability
   RestartParameter: PostgreSqlFlexibleServerRestartParameter
-  ServerHAState: PostgreSqlFlexibleServerHAState
+  HighAvailabilityState: PostgreSqlFlexibleServerHAState
   ServerPublicNetworkAccessState: PostgreSqlFlexibleServerPublicNetworkAccessState
   StorageEditionCapability.supportedStorageMb: SupportedStorageCapabilities
   Server.properties.pointInTimeUTC: PointInTimeUtc
   ActiveDirectoryAdministrator: PostgreSqlFlexibleServerActiveDirectoryAdministrator
-  ActiveDirectoryAuthEnum: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
+  MicrosoftEntraAuth: PostgreSqlFlexibleServerActiveDirectoryAuthEnum
   AdministratorListResult: PostgreSqlFlexibleServerAdministratorListResult
-  ArmServerKeyType: PostgreSqlFlexibleServerKeyType
+  DataEncryptionType: PostgreSqlFlexibleServerKeyType
   AuthConfig: PostgreSqlFlexibleServerAuthConfig
   DataEncryption: PostgreSqlFlexibleServerDataEncryption
   FastProvisioningEditionCapability: PostgreSqlFlexibleServerFastProvisioningEditionCapability
   IdentityType: PostgreSqlFlexibleServerIdentityType
-  Origin: PostgreSqlFlexibleServerBackupOrigin
-  PasswordAuthEnum: PostgreSqlFlexibleServerPasswordAuthEnum
+  BackupType: PostgreSqlFlexibleServerBackupOrigin
+  PasswordBasedAuth: PostgreSqlFlexibleServerPasswordAuthEnum
   PrincipalType: PostgreSqlFlexibleServerPrincipalType
   ReplicationRole: PostgreSqlFlexibleServerReplicationRole
-  ServerBackup: PostgreSqlFlexibleServerBackup
+  BackupAutomaticAndOnDemand: PostgreSqlFlexibleServerBackup
   ServerBackupListResult: PostgreSqlFlexibleServerBackupListResult
   StorageTierCapability: PostgreSqlFlexibleServerStorageTierCapability
-  UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
   AdminCredentials: PostgreSqlMigrationAdminCredentials
   BackupSettings: PostgreSqlFlexibleServerBackupSettings
   BackupStoreDetails: PostgreSqlFlexibleServerBackupStoreDetails
-  CancelEnum: PostgreSqlMigrationCancel
-  LogicalReplicationOnSourceDbEnum: PostgreSqlMigrationLogicalReplicationOnSourceDb
-  OverwriteDbsInTargetEnum: PostgreSqlMigrationOverwriteDbsInTarget
-  StartDataMigrationEnum: PostgreSqlMigrationStartDataMigration
-  TriggerCutoverEnum: PostgreSqlMigrationTriggerCutover
+  Cancel: PostgreSqlMigrationCancel
+  LogicalReplicationOnSourceServer: PostgreSqlMigrationLogicalReplicationOnSourceDb
+  OverwriteDatabasesOnTargetServer: PostgreSqlMigrationOverwriteDbsInTarget
+  StartDataMigration: PostgreSqlMigrationStartDataMigration
+  TriggerCutover: PostgreSqlMigrationTriggerCutover
   CapabilityStatus: PostgreSqlFlexbileServerCapabilityStatus
   DbServerMetadata: PostgreSqlServerMetadata
-  FastProvisioningSupportedEnum: PostgreSqlFlexibleServerFastProvisioningSupported
-  FlexibleServerCapability.fastProvisioningSupported: SupportFastProvisioning
-  FlexibleServerCapability: PostgreSqlFlexibleServerCapabilityProperties
-  LogFile: PostgreSqlFlexibleServerLogFile
+  FastProvisioningSupport: PostgreSqlFlexibleServerFastProvisioningSupported
+  Capability.fastProvisioningSupported: SupportFastProvisioning
+  Capability: PostgreSqlFlexibleServerCapabilityProperties
+  CapturedLog: PostgreSqlFlexibleServerLogFile
   LogFileListResult: PostgreSqlFlexibleServerLogFileListResult
-  GeoBackupSupportedEnum: PostgreSqlFlexibleServerGeoBackupSupported
-  HaMode: PostgreSqlFlexibleServerHAMode
-  ZoneRedundantHaSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaSupported
-  ZoneRedundantHaAndGeoBackupSupportedEnum: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
-  StorageAutoGrowthSupportedEnum: PostgreSqlFlexibleServerStorageAutoGrowthSupported
-  OnlineResizeSupportedEnum: PostgreSqlFlexibleServerOnlineResizeSupported
-  RestrictedEnum: PostgreSqlFlexibleServerZoneRedundantRestricted
+  GeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerGeoBackupSupported
+  ZoneRedundantHighAvailabilitySupport: PostgreSqlFlexibleServerZoneRedundantHaSupported
+  ZoneRedundantHighAvailabilityAndGeographicallyRedundantBackupSupport: PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported
+  StorageAutoGrowthSupport: PostgreSqlFlexibleServerStorageAutoGrowthSupported
+  OnlineStorageResizeSupport: PostgreSqlFlexibleServerOnlineResizeSupported
+  LocationRestricted: PostgreSqlFlexibleServerZoneRedundantRestricted
   ServerSkuCapability: PostgreSqlFlexibleServerSkuCapability
   CapabilityBase.status: CapabilityStatus
   CapabilityBase: PostgreSqlBaseCapability
   ExecutionStatus: PostgreSqlExecutionStatus
-  KeyStatusEnum: PostgreSqlKeyStatus
-  LtrBackupResponse: PostgreSqlFlexibleServerLtrBackupResult
+  EncryptionKeyStatus: PostgreSqlKeyStatus
+  BackupsLongTermRetentionResponse: PostgreSqlFlexibleServerLtrBackupResult
   LtrPreBackupResponse: PostgreSqlFlexibleServerLtrPreBackupResult
-  LtrServerBackupOperation: PostgreSqlLtrServerBackupOperation
-  LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
   MigrationListFilter: PostgreSqlMigrationListFilter
   MigrationMode: PostgreSqlMigrationMode
   MigrationNameAvailabilityReason: PostgreSqlMigrationNameUnavailableReason
   MigrationResourceListResult: PostgreSqlMigrationResourceListResult
-  MigrationNameAvailabilityResource: PostgreSqlCheckMigrationNameAvailabilityContent
-  MigrationNameAvailabilityResource.nameAvailable: IsNameAvailable
+  MigrationNameAvailability: PostgreSqlCheckMigrationNameAvailabilityContent
+  MigrationNameAvailability.nameAvailable: IsNameAvailable
+  MigrationSecretParametersForPatch: PostgreSqlMigrationSecretParametersForUpdate
   MigrationSecretParameters: PostgreSqlMigrationSecretParameters
   MigrationState: PostgreSqlMigrationState
   MigrationStatus: PostgreSqlMigrationStatus
-  MigrationSubState: PostgreSqlMigrationSubState
-  MigrationSubStateDetails: PostgreSqlMigrationSubStateDetails
+  MigrationSubstate: PostgreSqlMigrationSubState
+  MigrationSubstateDetails: PostgreSqlMigrationSubStateDetails
   BackupRequestBase: PostgreSqlBackupContent
-  AzureManagedDiskPerformanceTiers: PostgreSqlManagedDiskPerformanceTier
-  LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
+  AzureManagedDiskPerformanceTier: PostgreSqlManagedDiskPerformanceTier
+  BackupsLongTermRetentionRequest: PostgreSqlFlexibleServerLtrBackupContent
   LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
-  MigrationResource: PostgreSqlMigration
+  Migration: PostgreSqlMigration
+  AdministratorMicrosoftEntra.properties.objectId: -|uuid
+  DataEncryption.primaryUserAssignedIdentityId: -|arm-id
+  AdvancedThreatProtectionSettingsModel: ServerThreatProtectionSettingsModel
+  AdministratorMicrosoftEntra: PostgreSqlFlexibleServerActiveDirectoryAdministrator
+  LtrServerBackupOperationList: PostgreSqlLtrServerBackupOperationList
+  BackupsLongTermRetentionOperation: PostgreSqlLtrServerBackupOperation
+  VirtualEndpoint: VirtualEndpointResource
+  ReadReplicaPromoteOption: ReplicationPromoteOption
+  MigrationDatabaseState: MigrationDbState
+  MigrateRolesAndPermissions: MigrateRolesEnum
+  DatabaseMigrationState: DbMigrationStatus
+  TuningOption: FooTuningOption
+  UserAssignedIdentity: PostgreSqlFlexibleServerUserAssignedIdentity
+
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
   CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
   LogFiles_ListByServer: GetPostgreSqlFlexibleServerLogFiles
+
 directive:
-  - from: Administrators.json
-    where: $.definitions
+  - from: swagger-document
+    where: $.definitions.ServerPropertiesForPatch
     transform: >
-      $.AdministratorProperties.properties.objectId['format'] = 'uuid'
-  - from: FlexibleServers.json
-    where: $.definitions
+      $.properties.location = {"type": "string", "description": "The location the resource resides in."};
+  - from: swagger-document
+    where: $.definitions.CheckNameAvailabilityRequest
     transform: >
-      $.DataEncryption.properties.primaryUserAssignedIdentityId['format'] = 'arm-id';
-      $.ServerForUpdate.properties.location = {"type": "string", "description": "The location the resource resides in."}
-  - from: types.json
-    where: $.definitions
-    transform: >
-      $.CheckNameAvailabilityRequest.required = ['name']
-  - from: Configuration.json
+       $.required = ['name'];
+  - from: openapi.json
     where: $.paths["/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/configurations/{configurationName}"].patch
     transform: >
       const parameters = $.parameters;

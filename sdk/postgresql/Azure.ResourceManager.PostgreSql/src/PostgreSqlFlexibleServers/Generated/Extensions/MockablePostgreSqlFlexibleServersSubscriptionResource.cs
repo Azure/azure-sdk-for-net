@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<Capability> GetCapabilitiesByLocationsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocationsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Capability.DeserializeCapability(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="Capability"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<Capability> GetCapabilitiesByLocations(AzureLocation locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocations(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Capability.DeserializeCapability(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NameAvailabilityModel>> CheckGloballyNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckGloballyNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NameAvailabilityModel> CheckGloballyNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckGloballyNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<NameAvailabilityModel>> CheckWithLocationNameAvailabilityAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckWithLocationNameAvailabilityAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<NameAvailabilityModel> CheckWithLocationNameAvailability(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckWithLocationNameAvailability(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual async Task<Response<VirtualNetworkSubnetUsageModel>> GetVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> GetVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual Response<VirtualNetworkSubnetUsageModel> GetVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> GetVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 

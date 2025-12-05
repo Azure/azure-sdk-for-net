@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="CapabilityList"/>. </summary>
         internal CapabilityList()
         {
-            Value = new ChangeTrackingList<Capability>();
+            Value = new ChangeTrackingList<PostgreSqlFlexibleServerCapabilityProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilityList"/>. </summary>
         /// <param name="value"> List of supported capabilities. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilityList(IReadOnlyList<Capability> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CapabilityList(IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of supported capabilities. </summary>
-        public IReadOnlyList<Capability> Value { get; }
+        public IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> Value { get; }
         /// <summary> Link to retrieve next page of results. </summary>
         public Uri NextLink { get; }
     }
