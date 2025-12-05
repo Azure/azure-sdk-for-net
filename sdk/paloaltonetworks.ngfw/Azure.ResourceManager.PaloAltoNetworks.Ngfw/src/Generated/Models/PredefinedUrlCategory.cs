@@ -13,47 +13,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> Predefined URL category object. </summary>
     public partial class PredefinedUrlCategory
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/>. </summary>
         /// <param name="action"></param>
         /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="action"/> or <paramref name="name"/> is null. </exception>
         internal PredefinedUrlCategory(string action, string name)
         {
-            Argument.AssertNotNull(action, nameof(action));
-            Argument.AssertNotNull(name, nameof(name));
-
             Action = action;
             Name = name;
         }
@@ -61,22 +28,18 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/>. </summary>
         /// <param name="action"></param>
         /// <param name="name"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PredefinedUrlCategory(string action, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PredefinedUrlCategory(string action, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Action = action;
             Name = name;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PredefinedUrlCategory"/> for deserialization. </summary>
-        internal PredefinedUrlCategory()
-        {
-        }
-
-        /// <summary> Gets the action. </summary>
+        /// <summary> Gets the Action. </summary>
         public string Action { get; }
-        /// <summary> Gets the name. </summary>
+
+        /// <summary> Gets the Name. </summary>
         public string Name { get; }
     }
 }

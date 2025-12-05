@@ -1,0 +1,4 @@
+directory: specification/dynatrace/Dynatrace.Management
+commit: a9b38b3704038f7548826d87d3e0fd02c4a856ab
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"

@@ -1,5 +1,27 @@
 # Release History
 
+## 2.7.0-beta.2 (2025-12-01)
+
+### Bugs fixed
+
+- Addressed a Thanksgiving mistake in the `beta.1` release wherein the `SetNewMaxCompletionTokensPropertyEnabled()` extension method was unintentionally removed from the public surface.
+
+## 2.7.0-beta.1 (2025-11-24)
+
+This update restores compatibility with the latest `2.7.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.7.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13).
+
+### Features Added
+
+- A substantial number of new features are carried forward from the `OpenAI` library. Please see [the full OpenAI 2.5.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#270-2025-11-13) for details.
+
+### Breaking Changes
+
+**`[Experimental]` Chat Extensions**
+
+- Explicitly assigning `null` to the `MaxOutputTokens` property of a `ChatCompletionOptions` instance will now reset opt-in to
+  contemporary serialization of `max_output_tokens` via `.SetNewMaxOutputTokensPropertyEnabled()`. Please ensure the extension
+  method is invoked after non-null assignment of `MaxOutputTokens`.
+
 ## 2.5.0-beta.1 (2025-10-03)
 
 This update restores compatibility with the latest `2.5.0` release of `OpenAI` and enables access to the latest features. For details, please see [the full OpenAI 2.5.0 release notes](https://github.com/openai/openai-dotnet/blob/main/CHANGELOG.md#250-2025-09-23).

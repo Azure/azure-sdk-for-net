@@ -26,12 +26,14 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
-        internal RestorePointGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints) : base(tags, serializedAdditionalRawData)
+        /// <param name="instantAccess"> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </param>
+        internal RestorePointGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints, bool? instantAccess) : base(tags, serializedAdditionalRawData)
         {
             Source = source;
             ProvisioningState = provisioningState;
             RestorePointGroupId = restorePointGroupId;
             RestorePoints = restorePoints;
+            InstantAccess = instantAccess;
         }
 
         /// <summary> The properties of the source resource that this restore point collection is created from. </summary>
@@ -42,5 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
         public string RestorePointGroupId { get; }
         /// <summary> A list containing all restore points created under this restore point collection. </summary>
         public IReadOnlyList<RestorePointData> RestorePoints { get; }
+        /// <summary> This property determines whether instant access snapshot is enabled for restore points created under this restore point collection for Premium SSD v2 or Ultra disk. Instant access snapshot for Premium SSD v2 or Ultra disk is instantaneously available for restoring disk with fast restore performance. </summary>
+        public bool? InstantAccess { get; set; }
     }
 }

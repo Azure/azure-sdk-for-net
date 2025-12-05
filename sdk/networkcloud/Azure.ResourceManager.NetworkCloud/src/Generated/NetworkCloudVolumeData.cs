@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="location"> The location. </param>
         /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
-        /// <param name="allocatedSizeMiB"> The allocated size of the volume in Mebibytes. </param>
+        /// <param name="allocatedInSizeMiB"> The allocated size of the volume in Mebibytes. </param>
         /// <param name="attachedTo"> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </param>
         /// <param name="detailedStatus"> The more detailed status of the volume. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="sizeInMiB"> The requested storage allocation for the volume in Mebibytes. </param>
         /// <param name="storageApplianceId"> The resource ID of the storage appliance that hosts the volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long? allocatedSizeMiB, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB, ResourceIdentifier storageApplianceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudVolumeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, long? allocatedInSizeMiB, IReadOnlyList<string> attachedTo, VolumeDetailedStatus? detailedStatus, string detailedStatusMessage, VolumeProvisioningState? provisioningState, string serialNumber, long sizeInMiB, ResourceIdentifier storageApplianceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExtendedLocation = extendedLocation;
-            AllocatedSizeMiB = allocatedSizeMiB;
+            AllocatedInSizeMiB = allocatedInSizeMiB;
             AttachedTo = attachedTo;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The allocated size of the volume in Mebibytes. </summary>
-        public long? AllocatedSizeMiB { get; }
+        public long? AllocatedInSizeMiB { get; }
         /// <summary> The list of resource IDs that attach the volume. It may include virtual machines and Hybrid AKS clusters. </summary>
         public IReadOnlyList<string> AttachedTo { get; }
         /// <summary> The more detailed status of the volume. </summary>

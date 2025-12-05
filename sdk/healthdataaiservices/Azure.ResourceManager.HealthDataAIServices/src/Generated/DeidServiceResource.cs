@@ -409,7 +409,27 @@ namespace Azure.ResourceManager.HealthDataAIServices
             }
         }
 
-        /// <summary> List private links on the given resource. </summary>
+        /// <summary>
+        /// List private links on the given resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinks_ListByDeidService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeidServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthDataAIServicesPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthDataAIServicesPrivateLinkResourceData> GetPrivateLinksAsync(CancellationToken cancellationToken = default)
@@ -421,7 +441,27 @@ namespace Azure.ResourceManager.HealthDataAIServices
             return new PrivateLinksGetPrivateLinksAsyncCollectionResultOfT(_privateLinksRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
-        /// <summary> List private links on the given resource. </summary>
+        /// <summary>
+        /// List private links on the given resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthDataAIServices/deidServices/{deidServiceName}/privateLinkResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> PrivateLinks_ListByDeidService. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-09-20. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="DeidServiceResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthDataAIServicesPrivateLinkResourceData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthDataAIServicesPrivateLinkResourceData> GetPrivateLinks(CancellationToken cancellationToken = default)
@@ -470,7 +510,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -518,7 +558,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -561,7 +601,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     DeidServiceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DeidServicePatch patch = new DeidServicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -604,7 +644,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                     DeidServiceData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DeidServicePatch patch = new DeidServicePatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -650,7 +690,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeidServiceResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -696,7 +736,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeidServiceResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

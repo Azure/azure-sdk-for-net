@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Specifies what scenario the customer wants this CDN endpoint to optimize, e.g. Download, Media services. With this information we can apply scenario driven optimization.
-    /// Serialized Name: OptimizationType
-    /// </summary>
+    /// <summary> Specifies what scenario the customer wants this CDN endpoint to optimize, e.g. Download, Media services. With this information we can apply scenario driven optimization. </summary>
     public readonly partial struct OptimizationType : IEquatable<OptimizationType>
     {
         private readonly string _value;
@@ -31,30 +28,15 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LargeFileDownloadValue = "LargeFileDownload";
         private const string DynamicSiteAccelerationValue = "DynamicSiteAcceleration";
 
-        /// <summary>
-        /// GeneralWebDelivery
-        /// Serialized Name: OptimizationType.GeneralWebDelivery
-        /// </summary>
+        /// <summary> GeneralWebDelivery. </summary>
         public static OptimizationType GeneralWebDelivery { get; } = new OptimizationType(GeneralWebDeliveryValue);
-        /// <summary>
-        /// GeneralMediaStreaming
-        /// Serialized Name: OptimizationType.GeneralMediaStreaming
-        /// </summary>
+        /// <summary> GeneralMediaStreaming. </summary>
         public static OptimizationType GeneralMediaStreaming { get; } = new OptimizationType(GeneralMediaStreamingValue);
-        /// <summary>
-        /// VideoOnDemandMediaStreaming
-        /// Serialized Name: OptimizationType.VideoOnDemandMediaStreaming
-        /// </summary>
+        /// <summary> VideoOnDemandMediaStreaming. </summary>
         public static OptimizationType VideoOnDemandMediaStreaming { get; } = new OptimizationType(VideoOnDemandMediaStreamingValue);
-        /// <summary>
-        /// LargeFileDownload
-        /// Serialized Name: OptimizationType.LargeFileDownload
-        /// </summary>
+        /// <summary> LargeFileDownload. </summary>
         public static OptimizationType LargeFileDownload { get; } = new OptimizationType(LargeFileDownloadValue);
-        /// <summary>
-        /// DynamicSiteAcceleration
-        /// Serialized Name: OptimizationType.DynamicSiteAcceleration
-        /// </summary>
+        /// <summary> DynamicSiteAcceleration. </summary>
         public static OptimizationType DynamicSiteAcceleration { get; } = new OptimizationType(DynamicSiteAccelerationValue);
         /// <summary> Determines if two <see cref="OptimizationType"/> values are the same. </summary>
         public static bool operator ==(OptimizationType left, OptimizationType right) => left.Equals(right);

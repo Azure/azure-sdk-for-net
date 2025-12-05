@@ -52,6 +52,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 writer.WritePropertyName("extendedLocation"u8);
                 ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -88,6 +93,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             AzureLocation location = default;
             FooProperties properties = default;
             ExtendedLocation extendedLocation = default;
+            ManagedServiceIdentity identity = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -162,6 +168,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -176,7 +191,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
-                extendedLocation);
+                extendedLocation,
+                identity);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -207,7 +223,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeFooData(document.RootElement, options);
                     }
@@ -231,11 +247,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FooData"/> from. </param>
-        internal static FooData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="FooData"/> from. </param>
+        internal static FooData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFooData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

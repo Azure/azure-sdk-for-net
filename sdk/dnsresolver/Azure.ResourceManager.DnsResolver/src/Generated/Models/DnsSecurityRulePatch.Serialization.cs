@@ -64,6 +64,16 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ManagedDomainLists))
+            {
+                writer.WritePropertyName("managedDomainLists"u8);
+                writer.WriteStartArray();
+                foreach (var item in ManagedDomainLists)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DnsSecurityRuleState))
             {
                 writer.WritePropertyName("dnsSecurityRuleState"u8);
@@ -115,6 +125,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             IDictionary<string, string> tags = default;
             DnsSecurityRuleAction action = default;
             IList<WritableSubResource> dnsResolverDomainLists = default;
+            IList<ManagedDomainList> managedDomainLists = default;
             DnsSecurityRuleState? dnsSecurityRuleState = default;
             int? priority = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -167,6 +178,20 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             dnsResolverDomainLists = array;
                             continue;
                         }
+                        if (property0.NameEquals("managedDomainLists"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ManagedDomainList> array = new List<ManagedDomainList>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(new ManagedDomainList(item.GetString()));
+                            }
+                            managedDomainLists = array;
+                            continue;
+                        }
                         if (property0.NameEquals("dnsSecurityRuleState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -198,6 +223,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 action,
                 dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>(),
+                managedDomainLists ?? new ChangeTrackingList<ManagedDomainList>(),
                 dnsSecurityRuleState,
                 priority,
                 serializedAdditionalRawData);

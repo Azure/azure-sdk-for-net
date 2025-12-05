@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/c2c7ee70dea80830fe9ea94aed2cec6182c4e9e6/specification/netapp/resource-manager/readme.md
-tag: package-preview-2025-07-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/fc2f9170853d49a99881dcc18377f47c2599a9fc//specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md
+tag: package-preview-2025-09-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,7 +21,7 @@ modelerfour:
 use-model-reader-writer: true
 
 # mgmt-debug:
-# show-serialized-names: true
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -122,6 +122,10 @@ prepend-rp-prefix:
   - BucketCredentialStatus
   - BucketFileSystemUser
   - BucketNfsUser
+  - Cache
+  - CacheList
+  - CacheUpdateProperties
+  - CacheProperties
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
@@ -277,6 +281,15 @@ rename-mapping:
   NfsUser: NetAppBucketNfsUser
   FileSystemUser: NetAppBucketFileSystemUser
   CredentialsStatus: NetAppBucketCredentialStatus
+  CapacityPool.properties.customThroughputMibps: CustomThroughputMibpsInt
+  CapacityPoolPatch.properties.customThroughputMibps: CustomThroughputMibpsInt
+  PoolPropertiesEncryptionType: CapacityPoolEncryptionType
+  RestoreStatus.relationshipStatus: VolumeRestoreRelationshipStatus
+  BackupStatus.relationshipStatus: VolumeBackupRelationshipStatus
+  ListReplicationsRequest.exclude: ExcludeReplicationsFilter
+  Exclude: ExcludeReplicationsFilter
+  CheckElasticResourceAvailabilityResponse: CheckElasticResourceAvailabilityResult
+
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties

@@ -27,6 +27,8 @@ export const armResourceRead = "Azure.ResourceManager.@armResourceRead";
 export const armResourceReadName = "@armResourceRead";
 const armResourceReadRegex = "Azure\\.ResourceManager\\.@armResourceRead";
 
+export const readsResourceName = "@readsResource";
+
 // https://github.com/Azure/typespec-azure/blob/main/packages/typespec-azure-resource-manager/README.md#armresourcecreateorupdate
 export const armResourceCreateOrUpdate =
   "Azure.ResourceManager.@armResourceCreateOrUpdate";
@@ -53,6 +55,10 @@ const armResourceDeleteRegex = "Azure\\.ResourceManager\\.@armResourceDelete";
 export const armResourceUpdate = "Azure.ResourceManager.@armResourceUpdate";
 export const armResourceUpdateName = "@armResourceUpdate";
 const armResourceUpdateRegex = "Azure\\.ResourceManager\\.@armResourceUpdate";
+
+export const extensionResourceOperationName = "@extensionResourceOperation";
+export const legacyExtensionResourceOperationName = "@legacyExtensionResourceOperation";
+export const legacyResourceOperationName = "@legacyResourceOperation";
 
 export const armResourceInternal =
   "Azure.ResourceManager.Private.@armResourceInternal";

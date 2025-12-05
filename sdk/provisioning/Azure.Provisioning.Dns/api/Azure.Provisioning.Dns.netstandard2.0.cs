@@ -30,7 +30,7 @@ namespace Azure.Provisioning.Dns
     public partial class DnsAaaaRecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DnsAaaaRecordInfo() { }
-        public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv6Addresses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv6Address { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DnsARecord : Azure.Provisioning.Primitives.ProvisionableResource
@@ -55,7 +55,7 @@ namespace Azure.Provisioning.Dns
     public partial class DnsARecordInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DnsARecordInfo() { }
-        public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv4Addresses { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Net.IPAddress> Ipv4Address { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DnsCaaRecord : Azure.Provisioning.Primitives.ProvisionableResource

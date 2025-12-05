@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppBucketList"/>. </summary>
-        internal NetAppBucketList()
+        /// <param name="value"> The Bucket items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetAppBucketList(IEnumerable<NetAppBucketData> value)
         {
-            Value = new ChangeTrackingList<NetAppBucketData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetAppBucketList"/>. </summary>
-        /// <param name="value"> List of volume buckets. </param>
-        /// <param name="nextLink"> URL to get the next set of results. </param>
+        /// <param name="value"> The Bucket items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBucketList(IReadOnlyList<NetAppBucketData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppBucketList(IReadOnlyList<NetAppBucketData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of volume buckets. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetAppBucketList"/> for deserialization. </summary>
+        internal NetAppBucketList()
+        {
+        }
+
+        /// <summary> The Bucket items on this page. </summary>
         public IReadOnlyList<NetAppBucketData> Value { get; }
-        /// <summary> URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }
