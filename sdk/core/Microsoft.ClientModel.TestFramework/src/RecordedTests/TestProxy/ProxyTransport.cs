@@ -44,18 +44,26 @@ public class ProxyTransport : PipelineTransport
         bool useFiddler = TestEnvironment.EnableFiddler;
         string certIssuer = useFiddler ? FiddlerCertIssuer : DevCertIssuer;
         _proxyHost = useFiddler ? "ipv4.fiddler" : TestProxyProcess.IpAddress;
-        var handler = new HttpClientHandler
+
+        if (innerTransport is HttpClientPipelineTransport _)
         {
-            ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
-            AllowAutoRedirect = false,
-            UseCookies = false
-        };
-        var httpClient = new HttpClient(handler)
+            var handler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (_, certificate, _, _) => certificate?.Issuer == certIssuer,
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+            var httpClient = new HttpClient(handler)
+            {
+                // Timeouts are handled by the pipeline
+                Timeout = Timeout.InfiniteTimeSpan
+            };
+            _innerTransport = new HttpClientPipelineTransport(httpClient);
+        }
+        else // Use provided custom transport as-is when it's not an HttpClientPipelineTransport
         {
-            // Timeouts are handled by the pipeline
-            Timeout = Timeout.InfiniteTimeSpan
-        };
-        _innerTransport = new HttpClientPipelineTransport(httpClient);
+            _innerTransport = innerTransport;
+        }
     }
 
     /// <inheritdoc/>
