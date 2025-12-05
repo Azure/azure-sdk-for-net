@@ -40,6 +40,7 @@ dotnet add package Azure.AI.Language.Conversations.Authoring --prerelease
 |-------------|----------------------------------------------------------------------
 |1.0.0-beta.1 | 2023-04-01, 2023-04-15-preview, 2024-11-15-preview (default)
 |1.0.0-beta.2 | 2023-04-01, 2023-04-15-preview, 2024-11-15-preview, 2025-05-15-preview (default)
+|1.0.0-beta.3 | 2023-04-01, 2025-11-01, 2025-05-15-preview, 2025-11-15-preview (default)
 
 ### Prerequisites
 
@@ -166,10 +167,15 @@ You can familiarize yourself with different APIs using [Samples](https://github.
 * [Swap Deployments (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample12_ConversationsAuthoring_SwapDeployments.md)
 * [Delete a Deployment (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample13_ConversationsAuthoring_DeleteDeployment.md)
 * [Deploy a Project (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample14_ConversationsAuthoring_DeployProject.md)
+* [Get a Deployment (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample15_ConversationsAuthoring_GetDeployment.md)
 * [Assign Deployment Resources (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample16_ConversationsAuthoring_AssignDeploymentResources.md)
 * [Get Assign Deployment Resources Status (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample17_ConversationsAuthoring_GetAssignDeploymentResourcesStatus.md)
 * [Unassign Deployment Resources (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample18_ConversationsAuthoring_UnassignDeploymentResources.md)
 * [Get Unassign Deployment Resources Status (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample19_ConversationsAuthoring_GetUnassignDeploymentResourcesStatus.md)
+* [List Assigned Resource Deployments (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample20_ConversationsAuthoring_ListAssignedResourceDeployments.md)
+* [List Project Resources (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample21_ConversationsAuthoring_ListProjectResources.md)
+* [Delete Deployment From Resources (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample22_ConversationsAuthoring_DeleteDeploymentFromResources.md)
+* [Get Deployment Delete From Resources Status (Sync)](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/samples/Sample23_ConversationsAuthoring_GetDeploymentDeleteFromResourcesStatus.md)
 
 ## Troubleshooting
 
