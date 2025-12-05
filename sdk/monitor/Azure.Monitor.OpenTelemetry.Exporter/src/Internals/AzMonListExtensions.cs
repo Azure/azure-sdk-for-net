@@ -12,10 +12,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         /// <summary>
         /// Recognized database systems.
-        /// <see href="https://github.com/open-telemetry/semantic-conventions/blob/v1.24.0/docs/database/database-spans.md#connection-level-attributes"/>.
+        /// <see href="https://github.com/open-telemetry/semantic-conventions/blob/v1.38.0/docs/database/database-spans.md#notes-and-well-known-identifiers-for-dbsystemname"/>.
         /// </summary>
-        // TODO: This single item HashSet is used to map "mssql" to "SQL". This could be replaced with a helper method.
-        internal static readonly HashSet<string?> s_dbSystems = new HashSet<string?>() { "mssql" };
+        // TODO: This could be replaced with a helper method.
+        internal static readonly HashSet<string?> s_dbSystems = new HashSet<string?>() { "mssql", "microsoft.sql_server" };
 
         ///<summary>
         /// Gets http request url from activity tag objects.

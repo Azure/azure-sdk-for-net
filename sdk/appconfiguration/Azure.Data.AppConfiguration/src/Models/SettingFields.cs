@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Data.AppConfiguration
 {

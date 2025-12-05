@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="trustPolicy"> The content trust policy for a container registry. </param>
         /// <param name="retentionPolicy"> The retention policy for a container registry. </param>
         /// <param name="exportPolicy"> The export policy for a container registry. </param>
-        /// <param name="azureADAuthenticationAsArmPolicy"> The policy for using ARM audience token for a container registry. </param>
+        /// <param name="azureADAuthenticationAsArmPolicy"> The policy for using Azure Resource Manager audience token for a container registry. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
         }
 
-        /// <summary> The policy for using ARM audience token for a container registry. </summary>
+        /// <summary> The policy for using Azure Resource Manager audience token for a container registry. </summary>
         internal AzureADAuthenticationAsArmPolicy AzureADAuthenticationAsArmPolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
         [WirePath("azureADAuthenticationAsArmPolicy.status")]

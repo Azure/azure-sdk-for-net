@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-05-01</description>
+        /// <description>2025-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

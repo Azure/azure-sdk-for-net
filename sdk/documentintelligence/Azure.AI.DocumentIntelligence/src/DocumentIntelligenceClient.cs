@@ -3,14 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    [CodeGenSuppress("FetchAnalyzeResultFromAnalyzeOperation", typeof(Response))]
     [CodeGenSuppress("AnalyzeDocumentAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeDocumentOptions), typeof(string), typeof(string), typeof(StringIndexType?), typeof(IEnumerable<DocumentAnalysisFeature>), typeof(IEnumerable<string>), typeof(DocumentContentFormat?), typeof(IEnumerable<AnalyzeOutputOption>), typeof(CancellationToken))]
     [CodeGenSuppress("AnalyzeDocument", typeof(WaitUntil), typeof(string), typeof(AnalyzeDocumentOptions), typeof(string), typeof(string), typeof(StringIndexType?), typeof(IEnumerable<DocumentAnalysisFeature>), typeof(IEnumerable<string>), typeof(DocumentContentFormat?), typeof(IEnumerable<AnalyzeOutputOption>), typeof(CancellationToken))]
     [CodeGenSuppress("AnalyzeBatchDocumentsAsync", typeof(WaitUntil), typeof(string), typeof(AnalyzeBatchDocumentsOptions), typeof(string), typeof(string), typeof(StringIndexType?), typeof(IEnumerable<DocumentAnalysisFeature>), typeof(IEnumerable<string>), typeof(DocumentContentFormat?), typeof(IEnumerable<AnalyzeOutputOption>), typeof(CancellationToken))]
@@ -27,8 +26,12 @@ namespace Azure.AI.DocumentIntelligence
     [CodeGenSuppress("GetAnalyzeResultFigure", typeof(string), typeof(Guid), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("DeleteAnalyzeResultAsync", typeof(string), typeof(Guid), typeof(RequestContext))]
     [CodeGenSuppress("DeleteAnalyzeResult", typeof(string), typeof(Guid), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteAnalyzeResultAsync", typeof(string), typeof(Guid), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteAnalyzeResult", typeof(string), typeof(Guid), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteAnalyzeBatchResultAsync", typeof(string), typeof(Guid), typeof(RequestContext))]
     [CodeGenSuppress("DeleteAnalyzeBatchResult", typeof(string), typeof(Guid), typeof(RequestContext))]
+    [CodeGenSuppress("DeleteAnalyzeBatchResultAsync", typeof(string), typeof(Guid), typeof(CancellationToken))]
+    [CodeGenSuppress("DeleteAnalyzeBatchResult", typeof(string), typeof(Guid), typeof(CancellationToken))]
     [CodeGenSuppress("GetAnalyzeBatchResultAsync", typeof(string), typeof(Guid), typeof(CancellationToken))]
     [CodeGenSuppress("GetAnalyzeBatchResult", typeof(string), typeof(Guid), typeof(CancellationToken))]
     [CodeGenSuppress("GetAnalyzeBatchResultAsync", typeof(string), typeof(Guid), typeof(RequestContext))]
@@ -50,15 +53,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> AnalyzeDocumentAsync(WaitUntil waitUntil, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await AnalyzeDocumentAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
+            using RequestContent content = options;
+            RequestContext context = cancellationToken.ToRequestContext();
+            Operation<BinaryData> result = await AnalyzeDocumentAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
         /// <summary> Analyzes document with document model. </summary>
@@ -66,15 +68,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocument(WaitUntil,string,AnalyzeDocumentOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> AnalyzeDocument(WaitUntil waitUntil, AnalyzeDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = AnalyzeDocument(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
+            using RequestContent content = options;
+            RequestContext context = cancellationToken.ToRequestContext();
+            Operation<BinaryData> result = AnalyzeDocument(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
@@ -82,15 +83,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze batch request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocumentsAsync(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeBatchResult>> AnalyzeBatchDocumentsAsync(WaitUntil waitUntil, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await AnalyzeBatchDocumentsAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
+            using RequestContent content = options;
+            RequestContext context = cancellationToken.ToRequestContext();
+            Operation<BinaryData> result = await AnalyzeBatchDocumentsAsync(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, AnalyzeBatchResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Analyzes batch documents with document model. </summary>
@@ -98,15 +98,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Analyze batch request parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocuments(WaitUntil,string,AnalyzeBatchDocumentsOptions,string,string,StringIndexType?,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},DocumentContentFormat?,IEnumerable{AnalyzeOutputOption},CancellationToken)']/*" />
         public virtual Operation<AnalyzeBatchResult> AnalyzeBatchDocuments(WaitUntil waitUntil, AnalyzeBatchDocumentsOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = AnalyzeBatchDocuments(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeBatchResultFromAnalyzeBatchOperationDetails, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
+            using RequestContent content = options;
+            RequestContext context = cancellationToken.ToRequestContext();
+            Operation<BinaryData> result = AnalyzeBatchDocuments(waitUntil, options.ModelId, content, options.Pages, options.Locale, DefaultStringIndexType, options.Features, options.QueryFields, options.OutputContentFormat?.ToString(), options.Output, context);
+            return ProtocolOperationHelpers.Convert(result, AnalyzeBatchResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments");
         }
 
         /// <summary> Classifies document with document classifier. </summary>
@@ -114,15 +113,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Classify request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocumentAsync(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
         public virtual async Task<Operation<AnalyzeResult>> ClassifyDocumentAsync(WaitUntil waitUntil, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await ClassifyDocumentAsync(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
+            using RequestContent content = options;
+            RequestContext context = cancellationToken.ToRequestContext();
+            Operation<BinaryData> result = await ClassifyDocumentAsync(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
         /// <summary> Classifies document with document classifier. </summary>
@@ -130,15 +128,14 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="options"> Classify request options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocument(WaitUntil,string,ClassifyDocumentOptions,StringIndexType?,SplitMode?,string,CancellationToken)']/*" />
         public virtual Operation<AnalyzeResult> ClassifyDocument(WaitUntil waitUntil, ClassifyDocumentOptions options, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(options, nameof(options));
 
-            using RequestContent content = options.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = ClassifyDocument(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context);
-            return ProtocolOperationHelpers.Convert(response, FetchAnalyzeResultFromAnalyzeOperation, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
+            using RequestContent content = options;
+            RequestContext context = cancellationToken.ToRequestContext();
+            Operation<BinaryData> result = ClassifyDocument(waitUntil, options.ClassifierId, content, DefaultStringIndexType, options.Split?.ToString(), options.Pages, context);
+            return ProtocolOperationHelpers.Convert(result, AnalyzeResult.FromLroResponse, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument");
         }
 
         // CUSTOM CODE NOTE: adding overloads for common scenarios of the AnalyzeDocument method.
@@ -268,7 +265,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocumentAsync(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,IEnumerable{AnalyzeOutputOption},RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> AnalyzeDocumentAsync(WaitUntil waitUntil, string modelId, RequestContent content, string pages = null, string locale = null, string stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -278,7 +274,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeDocumentRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -332,7 +328,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeDocument(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,IEnumerable{AnalyzeOutputOption},RequestContext)']/*" />
         public virtual Operation<BinaryData> AnalyzeDocument(WaitUntil waitUntil, string modelId, RequestContent content, string pages = null, string locale = null, string stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -342,7 +337,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeDocumentRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -396,7 +391,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocumentsAsync(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,IEnumerable{AnalyzeOutputOption},RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> AnalyzeBatchDocumentsAsync(WaitUntil waitUntil, string modelId, RequestContent content, string pages = null, string locale = null, string stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -406,7 +400,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeBatchDocumentsRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -460,7 +454,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='AnalyzeBatchDocuments(WaitUntil,string,RequestContent,string,string,string,IEnumerable{DocumentAnalysisFeature},IEnumerable{string},string,IEnumerable{AnalyzeOutputOption},RequestContext)']/*" />
         public virtual Operation<BinaryData> AnalyzeBatchDocuments(WaitUntil waitUntil, string modelId, RequestContent content, string pages = null, string locale = null, string stringIndexType = null, IEnumerable<DocumentAnalysisFeature> features = null, IEnumerable<string> queryFields = null, string outputContentFormat = null, IEnumerable<AnalyzeOutputOption> output = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -470,7 +463,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateAnalyzeBatchDocumentsRequest(modelId, content, pages, locale, stringIndexType, features, queryFields, outputContentFormat, output, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.AnalyzeBatchDocuments", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -517,7 +510,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocumentAsync(WaitUntil,string,RequestContent,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> ClassifyDocumentAsync(WaitUntil waitUntil, string classifierId, RequestContent content, string stringIndexType = null, string split = null, string pages = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
@@ -528,7 +520,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateClassifyDocumentRequest(classifierId, content, stringIndexType, split, pages, context);
-                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
+                var internalOperation = await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started).ConfigureAwait(false);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -575,7 +567,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='ClassifyDocument(WaitUntil,string,RequestContent,string,string,string,RequestContext)']/*" />
         public virtual Operation<BinaryData> ClassifyDocument(WaitUntil waitUntil, string classifierId, RequestContent content, string stringIndexType = null, string split = null, string pages = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
@@ -586,7 +577,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateClassifyDocumentRequest(classifierId, content, stringIndexType, split, pages, context);
-                var internalOperation = ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
+                var internalOperation = ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "DocumentIntelligenceClient.ClassifyDocument", OperationFinalStateVia.OperationLocation, context, WaitUntil.Started);
                 var operationWithId = new OperationWithId(internalOperation);
 
                 // Workaround to obtain the operation ID. The operation-location header is only returned after
@@ -617,12 +608,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultPdfAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetAnalyzeResultPdfAsync(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetAnalyzeResultPdfAsync(modelId, resultId, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
@@ -633,12 +623,11 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultPdf(string,string,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetAnalyzeResultPdf(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetAnalyzeResultPdf(modelId, resultId, context);
             return Response.FromValue(response.Content, response);
         }
@@ -665,7 +654,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultPdfAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAnalyzeResultPdfAsync(string modelId, string resultId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -675,7 +663,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeResultPdfRequest(modelId, resultId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -706,7 +694,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultPdf(string,string,RequestContext)']/*" />
         public virtual Response GetAnalyzeResultPdf(string modelId, string resultId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -716,7 +703,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeResultPdfRequest(modelId, resultId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -732,13 +719,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultFigureAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetAnalyzeResultFigureAsync(string modelId, string resultId, string figureId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNullOrEmpty(figureId, nameof(figureId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetAnalyzeResultFigureAsync(modelId, resultId, figureId, context).ConfigureAwait(false);
             return Response.FromValue(response.Content, response);
         }
@@ -750,13 +736,12 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="figureId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultFigure(string,string,string,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetAnalyzeResultFigure(string modelId, string resultId, string figureId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
             Argument.AssertNotNullOrEmpty(figureId, nameof(figureId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetAnalyzeResultFigure(modelId, resultId, figureId, context);
             return Response.FromValue(response.Content, response);
         }
@@ -784,7 +769,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultFigureAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAnalyzeResultFigureAsync(string modelId, string resultId, string figureId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -795,7 +779,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeResultFigureRequest(modelId, resultId, figureId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -827,7 +811,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> or <paramref name="figureId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeResultFigure(string,string,string,RequestContext)']/*" />
         public virtual Response GetAnalyzeResultFigure(string modelId, string resultId, string figureId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -838,7 +821,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeResultFigureRequest(modelId, resultId, figureId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -865,7 +848,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='DeleteAnalyzeResultAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAnalyzeResultAsync(string modelId, string resultId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -875,7 +857,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeResultRequest(modelId, resultId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -902,7 +884,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='DeleteAnalyzeResult(string,string,RequestContext)']/*" />
         public virtual Response DeleteAnalyzeResult(string modelId, string resultId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -912,7 +893,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeResultRequest(modelId, resultId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -939,7 +920,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='DeleteAnalyzeBatchResultAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteAnalyzeBatchResultAsync(string modelId, string resultId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -949,7 +929,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeBatchResultRequest(modelId, resultId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -976,7 +956,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='DeleteAnalyzeBatchResult(string,string,RequestContext)']/*" />
         public virtual Response DeleteAnalyzeBatchResult(string modelId, string resultId, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -986,7 +965,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateDeleteAnalyzeBatchResultRequest(modelId, resultId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1001,14 +980,13 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResultAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<AnalyzeBatchOperationDetails>> GetAnalyzeBatchResultAsync(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await GetAnalyzeBatchResultAsync(modelId, resultId, context).ConfigureAwait(false);
-            return Response.FromValue(AnalyzeBatchOperationDetails.FromResponse(response), response);
+            return Response.FromValue((AnalyzeBatchOperationDetails)response, response);
         }
 
         /// <summary> Gets the result of batch document analysis. </summary>
@@ -1017,14 +995,13 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResult(string,string,CancellationToken)']/*" />
         public virtual Response<AnalyzeBatchOperationDetails> GetAnalyzeBatchResult(string modelId, string resultId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = GetAnalyzeBatchResult(modelId, resultId, context);
-            return Response.FromValue(AnalyzeBatchOperationDetails.FromResponse(response), response);
+            return Response.FromValue((AnalyzeBatchOperationDetails)response, response);
         }
 
         /// <summary>
@@ -1049,7 +1026,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResultAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAnalyzeBatchResultAsync(string modelId, string resultId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -1059,7 +1035,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeBatchResultRequest(modelId, resultId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1090,7 +1066,6 @@ namespace Azure.AI.DocumentIntelligence
         /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceClient.xml" path="doc/members/member[@name='GetAnalyzeBatchResult(string,string,RequestContext)']/*" />
         public virtual Response GetAnalyzeBatchResult(string modelId, string resultId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
@@ -1100,7 +1075,7 @@ namespace Azure.AI.DocumentIntelligence
             try
             {
                 using HttpMessage message = CreateGetAnalyzeBatchResultRequest(modelId, resultId, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -1111,7 +1086,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateGetAnalyzeResultPdfRequest(string modelId, string resultId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1130,7 +1105,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateGetAnalyzeResultFigureRequest(string modelId, string resultId, string figureId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1150,7 +1125,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateDeleteAnalyzeResultRequest(string modelId, string resultId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1168,7 +1143,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateDeleteAnalyzeBatchResultRequest(string modelId, string resultId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier204);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
@@ -1186,7 +1161,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal HttpMessage CreateGetAnalyzeBatchResultRequest(string modelId, string resultId, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
@@ -1200,17 +1175,6 @@ namespace Azure.AI.DocumentIntelligence
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
-        }
-
-        // CUSTOM CODE NOTE: code generation is mistakenly creating two copies of the
-        // FetchAnalyzeResultFromAnalyzeOperation method, breaking the build.
-        // We're forcibly suppressing their creation with the CodeGenSuppress attribute
-        // and adding a single copy here.
-
-        private AnalyzeResult FetchAnalyzeResultFromAnalyzeOperation(Response response)
-        {
-            var resultJsonElement = JsonDocument.Parse(response.Content).RootElement.GetProperty("analyzeResult");
-            return AnalyzeResult.DeserializeAnalyzeResult(resultJsonElement);
         }
     }
 }

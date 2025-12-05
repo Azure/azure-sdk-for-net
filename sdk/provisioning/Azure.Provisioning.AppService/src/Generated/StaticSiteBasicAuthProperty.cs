@@ -127,7 +127,7 @@ public partial class StaticSiteBasicAuthProperty : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the StaticSiteBasicAuthProperty.</param>
     public StaticSiteBasicAuthProperty(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Web/staticSites/basicAuth", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.Web/staticSites/basicAuth", resourceVersion ?? "2025-03-01")
     {
     }
 
@@ -136,6 +136,7 @@ public partial class StaticSiteBasicAuthProperty : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
         _applicableEnvironmentsMode = DefineProperty<string>("ApplicableEnvironmentsMode", ["properties", "applicableEnvironmentsMode"]);
         _environments = DefineListProperty<string>("Environments", ["properties", "environments"]);
@@ -153,6 +154,11 @@ public partial class StaticSiteBasicAuthProperty : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-03-01.
+        /// </summary>
+        public static readonly string V2025_03_01 = "2025-03-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

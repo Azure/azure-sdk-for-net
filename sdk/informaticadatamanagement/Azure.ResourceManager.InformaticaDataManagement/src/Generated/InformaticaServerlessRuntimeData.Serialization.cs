@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeInformaticaServerlessRuntimeData(document.RootElement, options);
                     }
@@ -186,11 +186,10 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="InformaticaServerlessRuntimeData"/> from. </param>
-        internal static InformaticaServerlessRuntimeData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="InformaticaServerlessRuntimeData"/> from. </param>
+        internal static InformaticaServerlessRuntimeData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeInformaticaServerlessRuntimeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

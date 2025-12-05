@@ -11,9 +11,9 @@ using Azure.Core;
 
 namespace Specs.Azure.Core.Page
 {
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(FirstItem))]
     [ModelReaderWriterBuildable(typeof(ListItemInputBody))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SecondItem))]
     [ModelReaderWriterBuildable(typeof(User))]
     [ModelReaderWriterBuildable(typeof(UserOrder))]

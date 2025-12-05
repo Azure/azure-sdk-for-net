@@ -26,12 +26,12 @@ namespace Azure.Health.Deidentification
     [ModelReaderWriterBuildable(typeof(PagedDeidentificationJob))]
     [ModelReaderWriterBuildable(typeof(PhiEntity))]
     [ModelReaderWriterBuildable(typeof(PhiTaggerResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SimplePhiEntity))]
     [ModelReaderWriterBuildable(typeof(SourceStorageLocation))]
     [ModelReaderWriterBuildable(typeof(StringIndex))]
     [ModelReaderWriterBuildable(typeof(TaggedPhiEntities))]
     [ModelReaderWriterBuildable(typeof(TargetStorageLocation))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     public partial class AzureHealthDeidentificationContext : ModelReaderWriterContext
     {
     }

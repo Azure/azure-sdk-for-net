@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<PineconeVectorDBOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<PineconeVectorDBOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<PineconeVectorDBOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<PineconeVectorDBOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                     PineconeVectorDBOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     PineconeVectorDBOrganizationPatch patch = new PineconeVectorDBOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<PineconeVectorDBOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<PineconeVectorDBOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                     PineconeVectorDBOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     PineconeVectorDBOrganizationPatch patch = new PineconeVectorDBOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<PineconeVectorDBOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<PineconeVectorDBOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<PineconeVectorDBOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<PineconeVectorDBOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.PineconeVectorDB
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<PineconeVectorDBOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<PineconeVectorDBOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

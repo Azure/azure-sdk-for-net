@@ -47,16 +47,16 @@ namespace Azure.Search.Documents
             V2025_09_01 = 4,
 
             /// <summary>
-            /// The 2025-08-01-preview version of the Azure Cognitive Search service.
+            /// The 2025-11-01-preview version of the Azure Cognitive Search service.
             /// </summary>
-            V2025_08_01_Preview = 5,
+            V2025_11_01_Preview = 5,
 #pragma warning restore CA1707
         }
 
         /// <summary>
         /// The Latest service version supported by this client library.
         /// </summary>
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_08_01_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2025_11_01_Preview;
 
         /// <summary>
         /// The service version to use when creating continuation tokens that
@@ -212,7 +212,7 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2023_11_01 => version,
                 SearchClientOptions.ServiceVersion.V2024_07_01 => version,
                 SearchClientOptions.ServiceVersion.V2025_09_01 => version,
-                SearchClientOptions.ServiceVersion.V2025_08_01_Preview => version,
+                SearchClientOptions.ServiceVersion.V2025_11_01_Preview => version,
                 _ => throw CreateInvalidVersionException(version)
             };
 
@@ -238,7 +238,7 @@ namespace Azure.Search.Documents
                 SearchClientOptions.ServiceVersion.V2023_11_01 => "2023-11-01",
                 SearchClientOptions.ServiceVersion.V2024_07_01 => "2024-07-01",
                 SearchClientOptions.ServiceVersion.V2025_09_01 => "2025-09-01",
-                SearchClientOptions.ServiceVersion.V2025_08_01_Preview => "2025-08-01-preview",
+                SearchClientOptions.ServiceVersion.V2025_11_01_Preview => "2025-11-01-preview",
                 _ => throw CreateInvalidVersionException(version)
             };
 

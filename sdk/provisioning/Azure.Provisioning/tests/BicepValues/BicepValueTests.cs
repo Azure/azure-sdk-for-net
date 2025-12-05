@@ -66,7 +66,7 @@ public class BicepValueTests
                 """
                 @description('The location for the resource(s) to be deployed.')
                 param location string = resourceGroup().location
-            
+
                 resource script 'Microsoft.Resources/deploymentScripts@2023-08-01' = {
                   name: take('script${uniqueString(resourceGroup().id)}', 24)
                   location: location

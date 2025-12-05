@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.WeightsAndBiases
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeWeightsAndBiasesInstanceData(document.RootElement, options);
                     }
@@ -237,11 +237,10 @@ namespace Azure.ResourceManager.WeightsAndBiases
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="WeightsAndBiasesInstanceData"/> from. </param>
-        internal static WeightsAndBiasesInstanceData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="WeightsAndBiasesInstanceData"/> from. </param>
+        internal static WeightsAndBiasesInstanceData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWeightsAndBiasesInstanceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
