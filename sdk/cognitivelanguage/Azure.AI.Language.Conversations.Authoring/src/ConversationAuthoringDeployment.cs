@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -52,15 +53,25 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 IList<string> ids = details.AzureResourceIdsStrings ?? GetResourceIdsFromObjects(details.AzureResourceIds);
 
-                var payload = new
+                var buffer = new ArrayBufferWriter<byte>();
+                using (var writer = new Utf8JsonWriter(buffer))
                 {
-                    trainedModelLabel = details.TrainedModelLabel,
-                    azureResourceIds = ids
-                };
+                    writer.WriteStartObject();
 
-                #pragma warning disable IL2026, IL3050 // JSON serialization uses reflection; payload type is simple and known.
-                BinaryData data = BinaryData.FromObjectAsJson(payload);
-                #pragma warning restore IL2026, IL3050
+                    writer.WriteString("trainedModelLabel", details.TrainedModelLabel);
+
+                    writer.WritePropertyName("azureResourceIds");
+                    writer.WriteStartArray();
+                    foreach (var id in ids)
+                    {
+                        writer.WriteStringValue(id);
+                    }
+                    writer.WriteEndArray();
+
+                    writer.WriteEndObject();
+                }
+
+                BinaryData data = new BinaryData(buffer.WrittenMemory);
                 return RequestContent.Create(data);
             }
 
