@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
     /// A class representing a collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> and their operations.
-    /// Each <see cref="ManagedHsmPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ManagedHsmPrivateEndpointConnectionCollection"/> instance call the GetManagedHsmPrivateEndpointConnections method from an instance of the parent resource.
+    /// Each <see cref="ManagedHsmPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ManagedHsmResource"/>.
+    /// To get a <see cref="ManagedHsmPrivateEndpointConnectionCollection"/> instance call the GetManagedHsmPrivateEndpointConnections method from an instance of <see cref="ManagedHsmResource"/>.
     /// </summary>
     public partial class ManagedHsmPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ManagedHsmPrivateEndpointConnectionResource>, IAsyncEnumerable<ManagedHsmPrivateEndpointConnectionResource>
     {
@@ -262,7 +262,23 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> The List operation gets information about the private endpoint connections associated with the managed HSM Pool. </summary>
+        /// <summary>
+        /// The List operation gets information about the private endpoint connections associated with the managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MhsmPrivateEndpointConnections_ListByResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmPrivateEndpointConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -274,7 +290,23 @@ namespace Azure.ResourceManager.KeyVault
             return new AsyncPageableWrapper<ManagedHsmPrivateEndpointConnectionData, ManagedHsmPrivateEndpointConnectionResource>(new MhsmPrivateEndpointConnectionsGetByResourceAsyncCollectionResultOfT(_mhsmPrivateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ManagedHsmPrivateEndpointConnectionResource(Client, data));
         }
 
-        /// <summary> The List operation gets information about the private endpoint connections associated with the managed HSM Pool. </summary>
+        /// <summary>
+        /// The List operation gets information about the private endpoint connections associated with the managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/privateEndpointConnections. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> MhsmPrivateEndpointConnections_ListByResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmPrivateEndpointConnectionResource> GetAll(CancellationToken cancellationToken = default)

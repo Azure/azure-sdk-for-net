@@ -15,26 +15,22 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal partial class ManagedHsmsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<ManagedHsmData>
+    internal partial class VaultsGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<KeyVaultData>
     {
-        private readonly ManagedHsms _client;
+        private readonly Vaults _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly int? _top;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ManagedHsmsGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ManagedHsms client used to send requests. </param>
+        /// <summary> Initializes a new instance of VaultsGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Vaults client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="top"> Maximum number of results to return. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public ManagedHsmsGetByResourceGroupAsyncCollectionResultOfT(ManagedHsms client, Guid subscriptionId, string resourceGroupName, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        public VaultsGetByResourceGroupAsyncCollectionResultOfT(Vaults client, Guid subscriptionId, string resourceGroupName, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
@@ -42,11 +38,11 @@ namespace Azure.ResourceManager.KeyVault
             _context = context;
         }
 
-        /// <summary> Gets the pages of ManagedHsmsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of VaultsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedHsmsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<ManagedHsmData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of VaultsGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<KeyVaultData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,8 +52,8 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     yield break;
                 }
-                ManagedHsmListResult result = ManagedHsmListResult.FromResponse(response);
-                yield return Page<ManagedHsmData>.FromValues((IReadOnlyList<ManagedHsmData>)result.Value, nextPage?.AbsoluteUri, response);
+                VaultListResult result = VaultListResult.FromResponse(response);
+                yield return Page<KeyVaultData>.FromValues((IReadOnlyList<KeyVaultData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -72,7 +68,7 @@ namespace Azure.ResourceManager.KeyVault
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _top, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultCollection.GetAll");
             scope.Start();
             try
             {
