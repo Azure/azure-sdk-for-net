@@ -6,35 +6,38 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.Language.QuestionAnswering.Authoring
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ActiveLearningFeedback))]
     [ModelReaderWriterBuildable(typeof(FeedbackRecord))]
-    [ModelReaderWriterBuildable(typeof(ImportFiles))]
     [ModelReaderWriterBuildable(typeof(ImportJobOptions))]
     [ModelReaderWriterBuildable(typeof(ImportQnaRecord))]
-    [ModelReaderWriterBuildable(typeof(KnowledgeBaseFile))]
+    [ModelReaderWriterBuildable(typeof(PagedProjectDeployment))]
+    [ModelReaderWriterBuildable(typeof(PagedQnaSourceRecord))]
+    [ModelReaderWriterBuildable(typeof(PagedQuestionAnsweringProjectMetadata))]
+    [ModelReaderWriterBuildable(typeof(PagedRetrieveQnaRecord))]
+    [ModelReaderWriterBuildable(typeof(PagedWordAlterations))]
     [ModelReaderWriterBuildable(typeof(ProjectDeployment))]
-    [ModelReaderWriterBuildable(typeof(ProjectDeploymentJobState))]
     [ModelReaderWriterBuildable(typeof(ProjectSettings))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringAssets))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringDialog))]
-    [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringError))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringExportJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringImportJobState))]
-    [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringInnerErrorModel))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringProjectDeletionJobState))]
+    [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringProjectDeploymentJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringPrompt))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringRecord))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringSourceRecord))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringUpdateQnasJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringAuthoringUpdateSourcesJobState))]
     [ModelReaderWriterBuildable(typeof(QuestionAnsweringProject))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RetrieveQnaRecord))]
     [ModelReaderWriterBuildable(typeof(SuggestedQuestion))]
     [ModelReaderWriterBuildable(typeof(SuggestedQuestionsCluster))]
