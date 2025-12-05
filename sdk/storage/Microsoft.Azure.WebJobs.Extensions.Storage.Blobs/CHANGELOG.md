@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
 
 ### Other Changes
 

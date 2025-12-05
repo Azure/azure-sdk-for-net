@@ -1039,13 +1039,22 @@
 # ServiceOwners:                                                   @thomasp98296
 
 # PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978 @alluri02
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
 
-# ServiceLabel: %Neon Postgres %Mgmt
-# ServiceOwners:                                                   @alluri02
+# PRLabel: %NetApp Files
+/sdk/netapp/Azure.ResourceManager.*/                               @audunn @Azure/azure-sdk-write-netappfiles
+
+# ServiceLabel: %NetApp Files %Mgmt
+# ServiceOwners:                                                   @audunn
 
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# PRLabel: %Network - Edge Actions
+/sdk/edgeactions/Azure.ResourceManager.*/                          @tundwed @anamikanupur
+
+# ServiceLabel: %Network - Edge Actions %Mgmt
+# ServiceOwners:                                                   @tundwed @anamikanupur
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ChangeDataCaptureGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Get.json
             // this example is just showing the usage of "ChangeDataCapture_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ChangeDataCaptureDelete()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Delete.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Delete.json
             // this example is just showing the usage of "ChangeDataCapture_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Start_ChangeDataCaptureStart()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Start.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Start.json
             // this example is just showing the usage of "ChangeDataCapture_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Stop_ChangeDataCaptureStop()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Stop.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Stop.json
             // this example is just showing the usage of "ChangeDataCapture_Stop" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Status_ChangeDataCaptureStart()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Status.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ChangeDataCapture_Status.json
             // this example is just showing the usage of "ChangeDataCapture_Status" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

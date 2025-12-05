@@ -74,6 +74,26 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(ExternalReplicationSetupStatus))
+            {
+                writer.WritePropertyName("externalReplicationSetupStatus"u8);
+                writer.WriteStringValue(ExternalReplicationSetupStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExternalReplicationSetupInfo))
+            {
+                writer.WritePropertyName("externalReplicationSetupInfo"u8);
+                writer.WriteStringValue(ExternalReplicationSetupInfo);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MirrorState))
+            {
+                writer.WritePropertyName("mirrorState"u8);
+                writer.WriteStringValue(MirrorState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RelationshipStatus))
+            {
+                writer.WritePropertyName("relationshipStatus"u8);
+                writer.WriteStringValue(RelationshipStatus.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -118,6 +138,10 @@ namespace Azure.ResourceManager.NetApp.Models
             RemotePath remotePath = default;
             string remoteVolumeRegion = default;
             IReadOnlyList<NetAppDestinationReplication> destinationReplications = default;
+            ExternalReplicationSetupStatus? externalReplicationSetupStatus = default;
+            string externalReplicationSetupInfo = default;
+            NetAppMirrorState? mirrorState = default;
+            VolumeReplicationRelationshipStatus? relationshipStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -182,6 +206,38 @@ namespace Azure.ResourceManager.NetApp.Models
                     destinationReplications = array;
                     continue;
                 }
+                if (property.NameEquals("externalReplicationSetupStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    externalReplicationSetupStatus = new ExternalReplicationSetupStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("externalReplicationSetupInfo"u8))
+                {
+                    externalReplicationSetupInfo = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("mirrorState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mirrorState = new NetAppMirrorState(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("relationshipStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    relationshipStatus = new VolumeReplicationRelationshipStatus(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -196,6 +252,10 @@ namespace Azure.ResourceManager.NetApp.Models
                 remotePath,
                 remoteVolumeRegion,
                 destinationReplications ?? new ChangeTrackingList<NetAppDestinationReplication>(),
+                externalReplicationSetupStatus,
+                externalReplicationSetupInfo,
+                mirrorState,
+                relationshipStatus,
                 serializedAdditionalRawData);
         }
 
