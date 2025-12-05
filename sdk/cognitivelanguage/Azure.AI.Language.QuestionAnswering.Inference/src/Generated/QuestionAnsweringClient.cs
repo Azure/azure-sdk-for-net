@@ -8,146 +8,63 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.AI.Language.QuestionAnswering.Inference
 {
-    // Data plane generated client.
-    /// <summary> The QuestionAnswering service client. </summary>
+    /// <summary> The QuestionAnsweringClient. </summary>
     public partial class QuestionAnsweringClient
     {
-        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
-        private readonly AzureKeyCredential _keyCredential;
-        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
-        private readonly TokenCredential _tokenCredential;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "https://cognitiveservices.azure.com/.default" };
         private readonly string _apiVersion;
-
-        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
-        internal ClientDiagnostics ClientDiagnostics { get; }
-
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of QuestionAnsweringClient for mocking. </summary>
         protected QuestionAnsweringClient()
         {
         }
 
-        /// <summary> Answers the specified question using your knowledge base. </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
-        public virtual async Task<Response<AnswersResult>> GetAnswersAsync(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(knowledgeBaseQueryOptions, nameof(knowledgeBaseQueryOptions));
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
 
-            using RequestContent content = knowledgeBaseQueryOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAnswersAsync(projectName, deploymentName, content, context).ConfigureAwait(false);
-            return Response.FromValue(AnswersResult.FromResponse(response), response);
-        }
-
-        /// <summary> Answers the specified question using your knowledge base. </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
-        public virtual Response<AnswersResult> GetAnswers(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(knowledgeBaseQueryOptions, nameof(knowledgeBaseQueryOptions));
-
-            using RequestContent content = knowledgeBaseQueryOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAnswers(projectName, deploymentName, content, context);
-            return Response.FromValue(AnswersResult.FromResponse(response), response);
-        }
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
         /// [Protocol Method] Answers the specified question using your knowledge base.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAnswersAsync(string,string,AnswersOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAnswersAsync(string projectName, string deploymentName, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswers");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAnswersRequest(projectName, deploymentName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Answers the specified question using your knowledge base.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAnswers(string,string,AnswersOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAnswers(string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(projectName, nameof(projectName));
-            Argument.AssertNotNull(deploymentName, nameof(deploymentName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswers");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswers");
             scope.Start();
             try
             {
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateGetAnswersRequest(projectName, deploymentName, content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -156,64 +73,34 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
         }
 
-        /// <summary> Answers the specified question using the provided text in the body. </summary>
-        /// <param name="textQueryOptions"> Post body of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
-        public virtual async Task<Response<AnswersFromTextResult>> GetAnswersFromTextAsync(AnswersFromTextOptions textQueryOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(textQueryOptions, nameof(textQueryOptions));
-
-            using RequestContent content = textQueryOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAnswersFromTextAsync(content, context).ConfigureAwait(false);
-            return Response.FromValue(AnswersFromTextResult.FromResponse(response), response);
-        }
-
-        /// <summary> Answers the specified question using the provided text in the body. </summary>
-        /// <param name="textQueryOptions"> Post body of the request. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
-        public virtual Response<AnswersFromTextResult> GetAnswersFromText(AnswersFromTextOptions textQueryOptions, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(textQueryOptions, nameof(textQueryOptions));
-
-            using RequestContent content = textQueryOptions.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAnswersFromText(content, context);
-            return Response.FromValue(AnswersFromTextResult.FromResponse(response), response);
-        }
-
         /// <summary>
-        /// [Protocol Method] Answers the specified question using the provided text in the body.
+        /// [Protocol Method] Answers the specified question using your knowledge base.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAnswersFromTextAsync(AnswersFromTextOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAnswersFromTextAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> GetAnswersAsync(string projectName, string deploymentName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswersFromText");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswers");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetAnswersFromTextRequest(content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+                Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateGetAnswersRequest(projectName, deploymentName, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -222,36 +109,65 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
         }
 
+        /// <summary> Answers the specified question using your knowledge base. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AnswersResult> GetAnswers(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(knowledgeBaseQueryOptions, nameof(knowledgeBaseQueryOptions));
+
+            Response result = GetAnswers(projectName, deploymentName, knowledgeBaseQueryOptions, cancellationToken.ToRequestContext());
+            return Response.FromValue((AnswersResult)result, result);
+        }
+
+        /// <summary> Answers the specified question using your knowledge base. </summary>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="deploymentName"> The name of the specific deployment of the project to use. </param>
+        /// <param name="knowledgeBaseQueryOptions"> Post body of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="deploymentName"/> or <paramref name="knowledgeBaseQueryOptions"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AnswersResult>> GetAnswersAsync(string projectName, string deploymentName, AnswersOptions knowledgeBaseQueryOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+            Argument.AssertNotNull(knowledgeBaseQueryOptions, nameof(knowledgeBaseQueryOptions));
+
+            Response result = await GetAnswersAsync(projectName, deploymentName, knowledgeBaseQueryOptions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AnswersResult)result, result);
+        }
+
         /// <summary>
         /// [Protocol Method] Answers the specified question using the provided text in the body.
         /// <list type="bullet">
         /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetAnswersFromText(AnswersFromTextOptions,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetAnswersFromText(RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswersFromText");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswersFromText");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateGetAnswersFromTextRequest(content, context);
-                return _pipeline.ProcessMessage(message, context);
+                return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
             {
@@ -260,54 +176,61 @@ namespace Azure.AI.Language.QuestionAnswering.Inference
             }
         }
 
-        internal HttpMessage CreateGetAnswersRequest(string projectName, string deploymentName, RequestContent content, RequestContext context)
+        /// <summary>
+        /// [Protocol Method] Answers the specified question using the provided text in the body.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetAnswersFromTextAsync(RequestContent content, RequestContext context = null)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/:query-knowledgebases", false);
-            uri.AppendQuery("projectName", projectName, true);
-            uri.AppendQuery("deploymentName", deploymentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        internal HttpMessage CreateGetAnswersFromTextRequest(RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/language", false);
-            uri.AppendPath("/:query-text", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
-        }
-
-        private static RequestContext DefaultRequestContext = new RequestContext();
-        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
-        {
-            if (!cancellationToken.CanBeCanceled)
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("QuestionAnsweringClient.GetAnswersFromText");
+            scope.Start();
+            try
             {
-                return DefaultRequestContext;
-            }
+                Argument.AssertNotNull(content, nameof(content));
 
-            return new RequestContext() { CancellationToken = cancellationToken };
+                using HttpMessage message = CreateGetAnswersFromTextRequest(content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        /// <summary> Answers the specified question using the provided text in the body. </summary>
+        /// <param name="textQueryOptions"> Post body of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AnswersFromTextResult> GetAnswersFromText(AnswersFromTextOptions textQueryOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(textQueryOptions, nameof(textQueryOptions));
+
+            Response result = GetAnswersFromText(textQueryOptions, cancellationToken.ToRequestContext());
+            return Response.FromValue((AnswersFromTextResult)result, result);
+        }
+
+        /// <summary> Answers the specified question using the provided text in the body. </summary>
+        /// <param name="textQueryOptions"> Post body of the request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="textQueryOptions"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AnswersFromTextResult>> GetAnswersFromTextAsync(AnswersFromTextOptions textQueryOptions, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(textQueryOptions, nameof(textQueryOptions));
+
+            Response result = await GetAnswersFromTextAsync(textQueryOptions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AnswersFromTextResult)result, result);
+        }
     }
 }
