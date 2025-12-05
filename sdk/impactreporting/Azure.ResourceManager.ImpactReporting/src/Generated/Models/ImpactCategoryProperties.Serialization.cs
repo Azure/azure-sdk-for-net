@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             string categoryId = default;
             string parentCategoryId = default;
             string description = default;
-            IList<RequiredImpactProperties> requiredImpactProperties = default;
+            IReadOnlyList<RequiredImpactProperties> requiredImpactProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

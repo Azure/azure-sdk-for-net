@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="description"> Description of the category. </param>
         /// <param name="requiredImpactProperties"> The workloadImpact properties which are required when reporting with the impact category. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactCategoryProperties(ImpactReportingProvisioningState? provisioningState, string categoryId, string parentCategoryId, string description, IList<RequiredImpactProperties> requiredImpactProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ImpactCategoryProperties(ImpactReportingProvisioningState? provisioningState, string categoryId, string parentCategoryId, string description, IReadOnlyList<RequiredImpactProperties> requiredImpactProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CategoryId = categoryId;
@@ -53,8 +53,5 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
         /// <summary> Description of the category. </summary>
         public string Description { get; }
-
-        /// <summary> The workloadImpact properties which are required when reporting with the impact category. </summary>
-        public IList<RequiredImpactProperties> RequiredImpactProperties { get; }
     }
 }

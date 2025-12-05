@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         public string Description { get { throw null; } }
         public string ParentCategoryId { get { throw null; } }
         public Azure.ResourceManager.ImpactReporting.Models.ImpactReportingProvisioningState? ProvisioningState { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties> RequiredImpactProperties { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties> RequiredImpactProperties { get { throw null; } }
         protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ImpactReporting.Models.ImpactCategoryProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
