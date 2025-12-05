@@ -6,6 +6,8 @@
   -->
   <PropertyGroup>
     <ImportRepoCommonSettings>true</ImportRepoCommonSettings>
+    <IsShippingLibrary>false</IsShippingLibrary>
+    <IsSamplesProject>true</IsSamplesProject>
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
