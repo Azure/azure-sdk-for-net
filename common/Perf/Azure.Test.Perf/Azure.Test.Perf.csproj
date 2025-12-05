@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <ItemGroup>
     <!--
       Perf framework should depend on lowest version of Azure.Core for maximum compat, allowing test
