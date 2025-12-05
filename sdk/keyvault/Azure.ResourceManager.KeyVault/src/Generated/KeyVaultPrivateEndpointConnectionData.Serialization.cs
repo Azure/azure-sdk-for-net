@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.KeyVault
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, options);
                     }
@@ -257,11 +257,10 @@ namespace Azure.ResourceManager.KeyVault
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultPrivateEndpointConnectionData"/> from. </param>
-        internal static KeyVaultPrivateEndpointConnectionData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultPrivateEndpointConnectionData"/> from. </param>
+        internal static KeyVaultPrivateEndpointConnectionData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeKeyVaultPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

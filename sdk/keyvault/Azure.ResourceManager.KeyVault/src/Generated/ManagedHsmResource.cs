@@ -501,7 +501,27 @@ namespace Azure.ResourceManager.KeyVault
             }
         }
 
-        /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
+        /// <summary>
+        /// The List operation gets information about the regions associated with the managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/regions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedHsms_ListByResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedHsmResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmGeoReplicatedRegion"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedHsmGeoReplicatedRegion> GetRegionsAsync(CancellationToken cancellationToken = default)
@@ -513,7 +533,27 @@ namespace Azure.ResourceManager.KeyVault
             return new ManagedHsmsGetRegionsAsyncCollectionResultOfT(_managedHsmsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
-        /// <summary> The List operation gets information about the regions associated with the managed HSM Pool. </summary>
+        /// <summary>
+        /// The List operation gets information about the regions associated with the managed HSM Pool.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/managedHSMs/{name}/regions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ManagedHsms_ListByResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ManagedHsmResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ManagedHsmGeoReplicatedRegion"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedHsmGeoReplicatedRegion> GetRegions(CancellationToken cancellationToken = default)
@@ -562,7 +602,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ManagedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ManagedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -610,7 +650,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<ManagedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<ManagedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -653,7 +693,7 @@ namespace Azure.ResourceManager.KeyVault
                     ManagedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ManagedHsmData patch = new ManagedHsmData();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ManagedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ManagedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -696,7 +736,7 @@ namespace Azure.ResourceManager.KeyVault
                     ManagedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ManagedHsmData patch = new ManagedHsmData();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<ManagedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<ManagedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -742,7 +782,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ManagedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ManagedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -788,7 +828,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<ManagedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<ManagedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

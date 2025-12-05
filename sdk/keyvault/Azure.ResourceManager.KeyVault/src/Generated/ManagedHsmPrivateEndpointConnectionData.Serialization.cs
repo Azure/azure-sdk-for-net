@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.KeyVault
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement, options);
                     }
@@ -289,11 +289,10 @@ namespace Azure.ResourceManager.KeyVault
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ManagedHsmPrivateEndpointConnectionData"/> from. </param>
-        internal static ManagedHsmPrivateEndpointConnectionData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedHsmPrivateEndpointConnectionData"/> from. </param>
+        internal static ManagedHsmPrivateEndpointConnectionData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeManagedHsmPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

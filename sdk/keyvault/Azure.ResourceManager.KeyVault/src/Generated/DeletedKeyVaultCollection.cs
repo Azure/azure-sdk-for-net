@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.KeyVault
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeletedKeyVaultResource"/> and their operations.
-    /// Each <see cref="DeletedKeyVaultResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeletedKeyVaultCollection"/> instance call the GetDeletedKeyVaults method from an instance of the parent resource.
+    /// Each <see cref="DeletedKeyVaultResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="DeletedKeyVaultCollection"/> instance call the GetDeletedKeyVaults method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class DeletedKeyVaultCollection : ArmCollection
     {

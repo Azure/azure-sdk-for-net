@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeDeletedManagedHsmListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeletedManagedHsmListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeletedManagedHsmListResult"/> from. </param>
-        internal static DeletedManagedHsmListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DeletedManagedHsmListResult"/> from. </param>
+        internal static DeletedManagedHsmListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDeletedManagedHsmListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

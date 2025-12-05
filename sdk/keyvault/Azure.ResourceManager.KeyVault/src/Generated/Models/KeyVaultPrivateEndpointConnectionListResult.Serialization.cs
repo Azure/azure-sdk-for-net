@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeKeyVaultPrivateEndpointConnectionListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyVaultPrivateEndpointConnectionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultPrivateEndpointConnectionListResult"/> from. </param>
-        internal static KeyVaultPrivateEndpointConnectionListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="KeyVaultPrivateEndpointConnectionListResult"/> from. </param>
+        internal static KeyVaultPrivateEndpointConnectionListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeKeyVaultPrivateEndpointConnectionListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

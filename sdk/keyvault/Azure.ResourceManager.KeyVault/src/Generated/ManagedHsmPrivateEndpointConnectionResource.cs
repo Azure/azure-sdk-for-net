@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     ManagedHsmPrivateEndpointConnectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     ManagedHsmPrivateEndpointConnectionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = this.Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     ManagedHsmPrivateEndpointConnectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     ManagedHsmPrivateEndpointConnectionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = this.Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     ManagedHsmPrivateEndpointConnectionData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     ManagedHsmPrivateEndpointConnectionData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = this.Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<ManagedHsmPrivateEndpointConnectionResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

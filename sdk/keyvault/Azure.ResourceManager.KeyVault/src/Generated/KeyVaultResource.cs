@@ -528,7 +528,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<KeyVaultResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<KeyVaultResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<KeyVaultResource> result = Update(patch, cancellationToken);
+                    Response<KeyVaultResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.KeyVault
                     KeyVaultData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     KeyVaultPatch patch = new KeyVaultPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<KeyVaultResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<KeyVaultResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.KeyVault
                     KeyVaultData current = Get(cancellationToken: cancellationToken).Value.Data;
                     KeyVaultPatch patch = new KeyVaultPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<KeyVaultResource> result = Update(patch, cancellationToken);
+                    Response<KeyVaultResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<KeyVaultResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<KeyVaultResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.KeyVault
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<KeyVaultResource> result = Update(patch, cancellationToken);
+                    Response<KeyVaultResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

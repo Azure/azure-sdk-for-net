@@ -14,38 +14,34 @@ using Azure.ResourceManager.KeyVault.Models;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    internal partial class ManagedHsmsGetByResourceGroupCollectionResultOfT : Pageable<ManagedHsmData>
+    internal partial class MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT : Pageable<ManagedHsmPrivateEndpointConnectionData>
     {
-        private readonly ManagedHsms _client;
+        private readonly MhsmPrivateEndpointConnections _client;
         private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
-        private readonly int? _top;
+        private readonly string _name;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ManagedHsmsGetByResourceGroupCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The ManagedHsms client used to send requests. </param>
+        /// <summary> Initializes a new instance of MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The MhsmPrivateEndpointConnections client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="top"> Maximum number of results to return. </param>
+        /// <param name="name"> The name of the managed HSM Pool. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public ManagedHsmsGetByResourceGroupCollectionResultOfT(ManagedHsms client, Guid subscriptionId, string resourceGroupName, int? top, RequestContext context) : base(context?.CancellationToken ?? default)
+        public MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT(MhsmPrivateEndpointConnections client, Guid subscriptionId, string resourceGroupName, string name, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
             _client = client;
             _subscriptionId = subscriptionId;
             _resourceGroupName = resourceGroupName;
-            _top = top;
+            _name = name;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ManagedHsmsGetByResourceGroupCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ManagedHsmsGetByResourceGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ManagedHsmData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of MhsmPrivateEndpointConnectionsGetByResourceCollectionResultOfT as an enumerable collection. </returns>
+        public override IEnumerable<Page<ManagedHsmPrivateEndpointConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,8 +51,8 @@ namespace Azure.ResourceManager.KeyVault
                 {
                     yield break;
                 }
-                ManagedHsmListResult result = ManagedHsmListResult.FromResponse(response);
-                yield return Page<ManagedHsmData>.FromValues((IReadOnlyList<ManagedHsmData>)result.Value, nextPage?.AbsoluteUri, response);
+                MHSMPrivateEndpointConnectionsListResult result = MHSMPrivateEndpointConnectionsListResult.FromResponse(response);
+                yield return Page<ManagedHsmPrivateEndpointConnectionData>.FromValues((IReadOnlyList<ManagedHsmPrivateEndpointConnectionData>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {
@@ -70,8 +66,8 @@ namespace Azure.ResourceManager.KeyVault
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _top, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _top, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ManagedHsmCollection.GetAll");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceRequest(nextLink, _subscriptionId, _resourceGroupName, _name, _context) : _client.CreateGetByResourceRequest(_subscriptionId, _resourceGroupName, _name, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ManagedHsmPrivateEndpointConnectionCollection.GetAll");
             scope.Start();
             try
             {

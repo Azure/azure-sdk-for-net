@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeSecretCreateOrUpdateParameters(document.RootElement, options);
                     }

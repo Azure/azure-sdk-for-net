@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeManagedHsmRegionsListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ManagedHsmRegionsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ManagedHsmRegionsListResult"/> from. </param>
-        internal static ManagedHsmRegionsListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ManagedHsmRegionsListResult"/> from. </param>
+        internal static ManagedHsmRegionsListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeManagedHsmRegionsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
