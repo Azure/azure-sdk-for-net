@@ -889,10 +889,10 @@ namespace Azure.AI.ContentUnderstanding
         /// Only return content(s) from additional analyzers specified in contentCategories, if any.
         /// </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
-        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? returnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategory> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? omitContent = default)
+        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? returnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? omitContent = default)
         {
             locales ??= new ChangeTrackingList<string>();
-            contentCategories ??= new ChangeTrackingDictionary<string, ContentCategory>();
+            contentCategories ??= new ChangeTrackingDictionary<string, ContentCategoryDefinition>();
 
             return new ContentAnalyzerConfig(
                 returnDetails,
@@ -918,10 +918,10 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="description"> The description of the category. </param>
         /// <param name="analyzerId"> Optional analyzer used to process the content. </param>
         /// <param name="analyzer"> Optional inline definition of analyzer used to process the content. </param>
-        /// <returns> A new <see cref="ContentUnderstanding.ContentCategory"/> instance for mocking. </returns>
-        public static ContentCategory ContentCategory(string description = default, string analyzerId = default, ContentAnalyzer analyzer = default)
+        /// <returns> A new <see cref="ContentUnderstanding.ContentCategoryDefinition"/> instance for mocking. </returns>
+        public static ContentCategoryDefinition ContentCategoryDefinition(string description = default, string analyzerId = default, ContentAnalyzer analyzer = default)
         {
-            return new ContentCategory(description, analyzerId, analyzer, additionalBinaryDataProperties: null);
+            return new ContentCategoryDefinition(description, analyzerId, analyzer, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Schema of fields to be extracted from documents. </summary>

@@ -9,15 +9,21 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.AI.ContentUnderstanding
 {
-    /// <summary> Content category definition. </summary>
-    public partial class ContentCategory : IJsonModel<ContentCategory>
+    /// <summary> The CopyRequest1. </summary>
+    internal partial class CopyRequest1 : IJsonModel<CopyRequest1>
     {
+        /// <summary> Initializes a new instance of <see cref="CopyRequest1"/> for deserialization. </summary>
+        internal CopyRequest1()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ContentCategory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CopyRequest1>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,26 +34,23 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentCategory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyRequest1>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentCategory)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyRequest1)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(SourceAzureResourceId))
             {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
+                writer.WritePropertyName("sourceAzureResourceId"u8);
+                writer.WriteStringValue(SourceAzureResourceId);
             }
-            if (Optional.IsDefined(AnalyzerId))
+            if (Optional.IsDefined(SourceRegion))
             {
-                writer.WritePropertyName("analyzerId"u8);
-                writer.WriteStringValue(AnalyzerId);
+                writer.WritePropertyName("sourceRegion"u8);
+                writer.WriteStringValue(SourceRegion);
             }
-            if (Optional.IsDefined(Analyzer))
-            {
-                writer.WritePropertyName("analyzer"u8);
-                writer.WriteObjectValue(Analyzer, options);
-            }
+            writer.WritePropertyName("sourceAnalyzerId"u8);
+            writer.WriteStringValue(SourceAnalyzerId);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -67,52 +70,48 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentCategory IJsonModel<ContentCategory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CopyRequest1 IJsonModel<CopyRequest1>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContentCategory JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CopyRequest1 JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentCategory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyRequest1>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentCategory)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyRequest1)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeContentCategory(document.RootElement, options);
+            return DeserializeCopyRequest1(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ContentCategory DeserializeContentCategory(JsonElement element, ModelReaderWriterOptions options)
+        internal static CopyRequest1 DeserializeCopyRequest1(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string description = default;
-            string analyzerId = default;
-            ContentAnalyzer analyzer = default;
+            string sourceAzureResourceId = default;
+            string sourceRegion = default;
+            string sourceAnalyzerId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("description"u8))
+                if (prop.NameEquals("sourceAzureResourceId"u8))
                 {
-                    description = prop.Value.GetString();
+                    sourceAzureResourceId = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("analyzerId"u8))
+                if (prop.NameEquals("sourceRegion"u8))
                 {
-                    analyzerId = prop.Value.GetString();
+                    sourceRegion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("analyzer"u8))
+                if (prop.NameEquals("sourceAnalyzerId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    analyzer = ContentAnalyzer.DeserializeContentAnalyzer(prop.Value, options);
+                    sourceAnalyzerId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,47 +119,59 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContentCategory(description, analyzerId, analyzer, additionalBinaryDataProperties);
+            return new CopyRequest1(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ContentCategory>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CopyRequest1>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentCategory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyRequest1>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureAIContentUnderstandingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ContentCategory)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyRequest1)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ContentCategory IPersistableModel<ContentCategory>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CopyRequest1 IPersistableModel<CopyRequest1>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ContentCategory PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CopyRequest1 PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ContentCategory>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CopyRequest1>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeContentCategory(document.RootElement, options);
+                        return DeserializeCopyRequest1(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentCategory)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyRequest1)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ContentCategory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CopyRequest1>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="copyRequest1"> The <see cref="CopyRequest1"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CopyRequest1 copyRequest1)
+        {
+            if (copyRequest1 == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(copyRequest1, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
     }
 }

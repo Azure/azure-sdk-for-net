@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -158,6 +160,56 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Extract content and fields from input. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        /// <param name="modelDeployments">
+        /// Override default mapping of model names to deployments.
+        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// </param>
+        /// <param name="stringEncoding">
+        ///   The string encoding format for content spans in the response.
+        ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
+        /// </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Operation<AnalyzeResult> Analyze(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput> inputs = default, IDictionary<string, string> modelDeployments = default, string stringEncoding = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+
+            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments, default);
+            Operation<BinaryData> result = Analyze(waitUntil, analyzerId, spreadModel, stringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext());
+            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.Analyze");
+        }
+
+        /// <summary> Extract content and fields from input. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="inputs"> Inputs to analyze.  Currently, only pro mode supports multiple inputs. </param>
+        /// <param name="modelDeployments">
+        /// Override default mapping of model names to deployments.
+        /// Ex. { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }.
+        /// </param>
+        /// <param name="stringEncoding">
+        ///   The string encoding format for content spans in the response.
+        ///   Possible values are 'codePoint', 'utf16', and `utf8`.  Default is `codePoint`.")
+        /// </param>
+        /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Operation<AnalyzeResult>> AnalyzeAsync(WaitUntil waitUntil, string analyzerId, IEnumerable<AnalyzeInput> inputs = default, IDictionary<string, string> modelDeployments = default, string stringEncoding = default, ProcessingLocation? processingLocation = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+
+            AnalyzeRequest1 spreadModel = new AnalyzeRequest1(inputs?.ToList() as IList<AnalyzeInput> ?? new ChangeTrackingList<AnalyzeInput>(), modelDeployments, default);
+            Operation<BinaryData> result = await AnalyzeAsync(waitUntil, analyzerId, spreadModel, stringEncoding, processingLocation?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeAsync");
+        }
+
+        /// <summary> Extract content and fields from input. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="contentType"> Request content type. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="stringEncoding">
@@ -296,7 +348,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(sourceAnalyzerId, nameof(sourceAnalyzerId));
 
-            CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
+            CopyRequest1 spreadModel = new CopyRequest1(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = CopyAnalyzer(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer");
         }
@@ -316,7 +368,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(sourceAnalyzerId, nameof(sourceAnalyzerId));
 
-            CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
+            CopyRequest1 spreadModel = new CopyRequest1(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = await CopyAnalyzerAsync(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzerAsync");
         }
