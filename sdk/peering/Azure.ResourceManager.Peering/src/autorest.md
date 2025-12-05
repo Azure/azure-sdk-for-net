@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Peering
 namespace: Azure.ResourceManager.Peering
-require: https://github.com/Azure/azure-rest-api-specs/blob/c011ec59abe46ac0ae6c7885fb07fd01123b08db/specification/peering/resource-manager/Microsoft.Peering/Peering/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/c962e41380036bf2bbb2e2385ed532c4092f5acd/specification/peering/resource-manager/Microsoft.Peering/Peering/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,7 +17,6 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
-  lenient-model-deduplication: true
 use-model-reader-writer: true
 
 #mgmt-debug:
@@ -131,12 +130,4 @@ directive:
           }
         ]
       };
-  - from: swagger-document
-    where: $.definitions
-    transform: >
-      $.ConnectionMonitorTest['allOf'] = [
-        {
-          "$ref": "#/definitions/Resource"
-        }
-      ];
 ```
