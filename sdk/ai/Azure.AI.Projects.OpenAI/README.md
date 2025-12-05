@@ -37,6 +37,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [MCP tool with project connection](#mcp-tool-with-project-connection)
   - [OpenAPI tool](#openapi-tool)
   - [OpenAPI tool with project connection](#openapi-tool-project-connection)
+  - [Browser automation](#browser-automation)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -1090,6 +1091,76 @@ OpenAIResponse response = await responseClient.CreateResponseAsync(
         options: responseOptions
     );
 Console.WriteLine(response.GetOutputText());
+```
+
+## Browser automation
+
+Playwright is a Node.js library for browser automation. Microsoft offers the
+[Azue Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme),
+allowing to run Playwright-based tasks, which can be triggered by the Agent, equipped with
+`BrowserAutomationAgentTool`. To run this sample, please deploy an Azure Playwright
+workspace and in the "Get started" section select "2. Set up authentication."
+Choose "Service Access Token" and click "Generate Token".
+**Please save the token as when the page is closed, it will not be shown again!**.
+In the Microsoft Foundry you use, at the left panel select "Management center" and then
+select "Connected resources", and, finally, create new connection of "Serverless Model"
+type; name it and add an Access Token to the "Key" field and set Playwright Workspace
+Browser endpoint as a "Target URI". The latter can be found on the "Overview" page
+of Workspace. It should start with `wss://`.
+
+Please note that the Browser automation operations may take longer than usual and
+requiring request timeout to be at least 5 minutes.
+```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+AIProjectClientOptions options = new()
+{
+    NetworkTimeout = TimeSpan.FromMinutes(5)
+};
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+```
+
+To use Azure Playwright workspace we need to create agent with `BrowserAutomationAgentTool`.
+
+```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
+BrowserAutomationAgentTool playwrightTool = new(
+    new BrowserAutomationToolParameters(
+        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+    ));
+
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are an Agent helping with browser automation tasks.\n" +
+    "You can answer questions, provide information, and assist with various tasks\n" +
+    "related to web browsing using the Browser Automation tool available to you.",
+    Tools = {playwrightTool}
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+We have to stream the output from the agent to show visual progress and to avoid timeouts as the task may take long time.
+
+```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ResponseCreationOptions responseOptions = new()
+{
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+};
+await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(
+        userInputText: "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+        "To do that, go to the website finance.yahoo.com.\n" +
+        "At the top of the page, you will find a search bar.\n" +
+        "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+        "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+        "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.",
+        options: responseOptions))
+{
+    ParseResponse(update);
+}
 ```
 
 ## Tracing

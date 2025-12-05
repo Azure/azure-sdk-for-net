@@ -44,5 +44,6 @@ namespace Azure.AI.Projects.Tests
         public string BING_CUSTOM_SEARCH_INSTANCE_NAME => GetRecordedVariable("BING_CUSTOM_SEARCH_INSTANCE_NAME");
         public string MCP_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable("MCP_PROJECT_CONNECTION_NAME");
         public string OPENAPI_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable("OPENAPI_PROJECT_CONNECTION_NAME");
+        public string PLAYWRIGHT_CONNECTION_NAME => GetRecordedOptionalVariable("PLAYWRIGHT_CONNECTION_NAME");
     }
 }

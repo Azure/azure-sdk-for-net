@@ -74,12 +74,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.ConnectedAgent, "What is the Microsoft stock price?"},
         {ToolType.FileSearch,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.AzureFunction, "What is the most prevalent element in the universe? What would foo say?"},
-        {ToolType.BrowserAutomation, "Your goal is to report the percent of Microsoft year-to-date stock price change. " +
-                    "To do that, go to the website finance.yahoo.com. " +
-                    "At the top of the page, you will find a search bar." +
-                    "Enter the value 'MSFT', to get information about the Microsoft stock price." +
-                    "At the top of the resulting page you will see a default chart of Microsoft stock price." +
-                    "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
+        {ToolType.BrowserAutomation, "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+                "To do that, go to the website finance.yahoo.com.\n" +
+                "At the top of the page, you will find a search bar.\n" +
+                "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+                "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+                "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
         {ToolType.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
         {ToolType.Sharepoint, "Hello, summarize the key points of the first document in the list."},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
@@ -104,9 +104,9 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.AzureAISearch, "You are a helpful assistant. You must always provide citations for answers using the tool and render them as: `\u3010message_idx:search_idx\u2020source\u3011`."},
         {ToolType.ConnectedAgent, "You are a helpful assistant, and use the connected agents to get stock prices."},
         {ToolType.FileSearch,  "You are helpful agent."},
-        {ToolType.BrowserAutomation, "You are an Agent helping with browser automation tasks. " +
-                            "You can answer questions, provide information, and assist with various tasks " +
-                            "related to web browsing using the Browser Automation tool available to you." },
+        {ToolType.BrowserAutomation, "You are an Agent helping with browser automation tasks.\n" +
+            "You can answer questions, provide information, and assist with various tasks\n" +
+            "related to web browsing using the Browser Automation tool available to you." },
         {ToolType.MicrosoftFabric, "You are helpful agent."},
         {ToolType.Sharepoint, "You are helpful agent."},
         {ToolType.CodeInterpreter, "You are helpful agent."},
@@ -155,7 +155,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.ImageGeneration, "image_generation_call"},
         {ToolType.CodeInterpreter, "code_interpreter_call"},
         {ToolType.OpenAPI, "openapi_call"},
-        {ToolType.OpenAPIConnection, "openapi_call"}
+        {ToolType.OpenAPIConnection, "openapi_call"},
+        {ToolType.BrowserAutomation, "browser_automation_preview_call"},
     };
     #endregion
 
@@ -182,6 +183,9 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
         ProjectsTestSanitizers.ApplySanitizers(this);
+        // Icrease Test timeout because ComputerUse tool test can take a little
+        // more then 10 sec (default).
+        TestTimeoutInSeconds = 20;
     }
 
     protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, Dictionary<string, string> headers = null)
@@ -200,6 +204,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         where T : ClientPipelineOptions
     {
         options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
+        options.NetworkTimeout = TimeSpan.FromMinutes(5);
         if (headers is not null && headers.Count > 0)
         {
             options.AddPolicy(new HeaderTestPolicy(headers), PipelinePosition.PerCall);
@@ -211,6 +216,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 {
                     // TODO: ...why!?
                     message.Request.Headers.Set("Authorization", "Sanitized");
+                }
+                else
+                {
+                    message.NetworkTimeout = TimeSpan.FromMinutes(5);
                 }
             }),
             PipelinePosition.PerCall);
@@ -474,6 +483,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
             ToolType.OpenAPI => await GetOpenAPITool(projectClient, false),
             ToolType.OpenAPIConnection => await GetOpenAPITool(projectClient, true),
+            ToolType.BrowserAutomation => new BrowserAutomationAgentTool(
+            new BrowserAutomationToolParameters(
+                new BrowserAutomationToolConnectionParameters((await projectClient.Connections.GetConnectionAsync(TestEnvironment.PLAYWRIGHT_CONNECTION_NAME)).Value.Id)
+            )),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
