@@ -275,5 +275,47 @@ namespace Azure.Generator.Tests
             // The inner type should be the model type
             Assert.AreEqual("TestModel", actual.Arguments[0].Name);
         }
+
+        [Test]
+        public void DataFactoryElementSerializationUsesWriteObjectValue()
+        {
+            // Verify that DataFactoryElement<string> uses WriteObjectValue for serialization
+            // which internally leverages IJsonModel
+            var type = typeof(DataFactoryElement<string>);
+            var value = new ParameterProvider("value", $"", type).AsVariable().As(type);
+            var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsVariable().As<Utf8JsonWriter>();
+            var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsVariable().As<ModelReaderWriterOptions>();
+
+            var statement = AzureClientGenerator.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
+            Assert.IsNotNull(statement);
+
+            var displayString = statement.ToDisplayString();
+            // Should use WriteObjectValue pattern which internally uses IJsonModel
+            Assert.IsTrue(
+                displayString.Contains("WriteObjectValue") && displayString.Contains("DataFactoryElement"),
+                $"Expected serialization to use WriteObjectValue pattern for DataFactoryElement, but got: {displayString}");
+        }
+
+        [Test]
+        public void DataFactoryElementDeserializationUsesDeserializeMethod()
+        {
+            // Verify that DataFactoryElement<string> uses its deserialize method
+            var type = typeof(DataFactoryElement<string>);
+            var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsVariable().As<JsonElement>();
+            var data = new ParameterProvider("data", $"", typeof(BinaryData)).AsVariable().As<BinaryData>();
+            var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(
+                type,
+                element,
+                data,
+                new ScopedApi<ModelReaderWriterOptions>(new VariableExpression(typeof(ModelReaderWriterOptions), "options")),
+                SerializationFormat.Default);
+            Assert.IsNotNull(expression);
+
+            var displayString = expression.ToDisplayString();
+            // Should use the DeserializeDataFactoryElement pattern
+            Assert.IsTrue(
+                displayString.Contains("DataFactoryElement") && displayString.Contains("Deserialize"),
+                $"Expected deserialization to use DeserializeDataFactoryElement pattern, but got: {displayString}");
+        }
     }
 }
