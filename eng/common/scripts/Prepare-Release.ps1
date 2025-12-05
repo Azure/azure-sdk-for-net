@@ -158,10 +158,9 @@ if ($null -eq $newVersionParsed)
   exit 1
 }
 
-$fullPackageName = Get-FullPackageName -PackageInfo $packageProperties
-
 $result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
-    -packageName $fullPackageName `
+    -packageName $packageProperties.Name `
+    -groupId $packageProperties.Group `
     -version $newVersion `
     -plannedDate $releaseDateString `
     -packageRepoPath $packageProperties.serviceDirectory `
