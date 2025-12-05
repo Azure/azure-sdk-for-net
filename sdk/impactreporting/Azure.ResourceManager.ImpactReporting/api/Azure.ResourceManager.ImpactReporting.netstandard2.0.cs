@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public partial class RequiredImpactProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties>
     {
         internal RequiredImpactProperties() { }
-        public System.Collections.Generic.IList<string> AllowedValues { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> AllowedValues { get { throw null; } }
         public string Name { get { throw null; } }
         protected virtual Azure.ResourceManager.ImpactReporting.Models.RequiredImpactProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
