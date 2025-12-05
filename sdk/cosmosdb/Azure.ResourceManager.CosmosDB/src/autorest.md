@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-#tag: package-preview-2024-12-01
-require: https://github.com/Azure/azure-rest-api-specs/blob/2afa5b356adf6cf51209d2cf28d38644c69d9832/specification/cosmos-db/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/60bcde388a845febb60fc2bda17983ca59af219a/specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/readme.md
+tag: package-2025-10-15
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -129,247 +129,257 @@ override-operation-name:
   MongoClusters_CheckNameAvailability: CheckMongoClusterNameAailability
 
 rename-mapping:
-  MongoRoleDefinitionGetResults: MongoDBRoleDefinition
-  MongoUserDefinitionGetResults: MongoDBUserDefinition
-  MongoRoleDefinitionType: MongoDBRoleDefinitionType
-  Privilege: MongoDBPrivilege
-  Role: MongoDBRole
-  Role.db: DBName
-  MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
-  MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
-  MongoUserDefinitionListResult: MongoDBUserDefinitionListResult
-  CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
-  CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
-  CreateUpdateOptions: CosmosDBCreateUpdateConfig
-  GremlinDatabasePropertiesOptions: GremlinDatabasePropertiesConfig
-  GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
-  MongoDBCollectionPropertiesOptions: MongoDBCollectionPropertiesConfig
-  MongoDBDatabasePropertiesOptions: MongoDBDatabasePropertiesConfig
-  CosmosDBSqlContainerPropertiesOptions: CosmosDBSqlContainerPropertiesConfig
-  CosmosDBSqlDatabasePropertiesOptions: CosmosDBSqlDatabasePropertiesConfig
-  CosmosDBSqlDatabasePropertiesResource: ExtendedCosmosDBSqlDatabaseResourceInfo
-  AutoscaleSettingsResource: AutoscaleSettingsResourceInfo
-  CassandraKeyspacePropertiesResource: ExtendedCassandraKeyspaceResourceInfo
-  CassandraKeyspaceResource: CassandraKeyspaceResourceInfo
-  CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
-  CassandraTableResource: CassandraTableResourceInfo
-  ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
-  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
-  ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
-  ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
-  ClientEncryptionKeyGetResults: CosmosDBSqlClientEncryptionKey
-  DatabaseRestoreResource: DatabaseRestoreResourceInfo
-  GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
-  GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
-  GremlinDatabaseResource: GremlinDatabaseResourceInfo
-  GremlinGraphPropertiesResource: ExtendedGremlinGraphResourceInfo
-  GremlinGraphResource: GremlinGraphResourceInfo
-  MongoDBCollectionPropertiesResource: ExtendedMongoDBCollectionResourceInfo
-  MongoDBCollectionResource: MongoDBCollectionResourceInfo
-  MongoDBDatabasePropertiesResource: ExtendedMongoDBDatabaseResourceInfo
-  MongoDBDatabaseResource: MongoDBDatabaseResourceInfo
-  OptionsResource: CosmosDBBaseConfig
-  RestorableLocationResource: RestorableLocationResourceInfo
-  RestorableMongodbCollectionPropertiesResource: ExtendedRestorableMongoDBCollectionResourceInfo
-  RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongoDBDatabaseResourceInfo
-  RestorableSqlContainerPropertiesResource: ExtendedRestorableSqlContainerResourceInfo
-  RestorableSqlDatabasePropertiesResource: ExtendedRestorableSqlDatabaseResourceInfo
-  RestorableGremlinDatabasePropertiesResource: ExtendedRestorableGremlinDatabaseResourceInfo
-  RestorableGremlinGraphPropertiesResource: ExtendedRestorableGremlinGraphResourceInfo
-  RestorableTablePropertiesResource: ExtendedRestorableTableResourceInfo
-  CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
-  SqlContainerResource: CosmosDBSqlContainerResourceInfo
-  SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
-  SqlStoredProcedureResource: CosmosDBSqlStoredProcedureResourceInfo
-  SqlTriggerResource: CosmosDBSqlTriggerResourceInfo
-  CosmosDBSqlTriggerPropertiesResource: ExtendedCosmosDBSqlTriggerResourceInfo
-  SqlUserDefinedFunctionResource: CosmosDBSqlUserDefinedFunctionResourceInfo
-  TableResource: CosmosDBTableResourceInfo
-  ThroughputPolicyResource: ThroughputPolicyResourceInfo
-  ThroughputSettingsPropertiesResource: ExtendedThroughputSettingsResourceInfo
-  ThroughputSettingsResource: ThroughputSettingsResourceInfo
-  SqlContainerListResult: CosmosDBSqlContainerListResult
-  SqlDatabaseListResult: CosmosDBSqlDatabaseListResult
-  SqlStoredProcedureListResult: CosmosDBSqlStoredProcedureListResult
-  SqlTriggerListResult: CosmosDBSqlTriggerListResult
-  SqlUserDefinedFunctionListResult: CosmosDBSqlUserDefinedFunctionListResult
-  AutoUpgradePolicyResource: AutoUpgradePolicyResourceInfo
-  CosmosDBSqlStoredProcedurePropertiesResource: ExtendedCosmosDBSqlStoredProcedureResourceInfo
-  CosmosDBSqlUserDefinedFunctionPropertiesResource: ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo
-  DatabaseAccountConnectionString: CosmosDBAccountConnectionString
-  DatabaseAccountKind: CosmosDBAccountKind
-  DatabaseAccountOfferType: CosmosDBAccountOfferType
-  ClusterResource: CassandraCluster
-  ClusterKey: CassandraClusterKey
-  ClusterResourceProperties: CassandraClusterProperties
-  ClusterType: CassandraClusterType
-  DataCenterResource: CassandraDataCenter
-  DataCenterResourceProperties: CassandraDataCenterProperties
-  ListDataCenters: CassandraDataCenterListResult
-  ListClusters: CassandraClusterListResult
-  SeedNode: CassandraDataCenterSeedNode
-  ConnectionError: CassandraConnectionError
-  CommandPostBody: CassandraCommandPostBody
-  CommandOutput: CassandraCommandOutput
-  Certificate: CassandraCertificate
-  RestorableMongodbCollectionGetResult: RestorableMongoDBCollection
-  Usage: CosmosDBBaseUsage
-  AuthenticationMethod: CassandraAuthenticationMethod
-  BackupPolicy: CosmosDBAccountBackupPolicy
-  CorsPolicy: CosmosDBAccountCorsPolicy
-  Capacity: CosmosDBAccountCapacity
-  ConnectionState: CassandraConnectionState
-  CreateMode: CosmosDBAccountCreateMode
-  KeyKind: CosmosDBAccountKeyKind
-  NodeState: CassandraNodeState
-  RestoreMode: CosmosDBAccountRestoreMode
-  RestoreParameters: CosmosDBAccountRestoreParameters
-  RoleDefinitionType: CosmosDBSqlRoleDefinitionType
-  TableListResult: CosmosDBTableListResult
-  TriggerOperation: CosmosDBSqlTriggerOperation
-  TriggerType: CosmosDBSqlTriggerType
-  UnitType: CosmosDBMetricUnitType
-  ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
-  ClusterResourceProperties.deallocated : IsDeallocated
-  ClusterResourceProperties.repairEnabled: IsRepairEnabled
-  ClusterResourceProperties.privateLinkResourceId: -|arm-id
-  CommandPostBody.readwrite: AllowWrite
-  IndexingPolicy.automatic: IsAutomatic
-  ManagedCassandraReaperStatus.healthy: IsHealthy
-  MongoIndexOptions.unique: IsUnique
-  CassandraKeyspaceResource.id: KeyspaceName
-  CassandraTableResource.id: TableName
-  SqlDatabaseResource.id: DatabaseName
-  TableResource.id: TableName
-  GremlinDatabaseResource.id: DatabaseName
-  MongoDBDatabaseResource.id: DatabaseName
-  SqlContainerResource.id: containerName
-  SqlStoredProcedureResource.id: StoredProcedureName
-  SqlTriggerResource.id: TriggerName
-  SqlUserDefinedFunctionResource.id: FunctionName
-  GremlinGraphResource.id: GraphName
-  MongoDBCollectionResource.id: CollectionName
-  RestorableMongodbCollectionPropertiesResource.ownerId: CollectionName
-  RestorableMongodbCollectionPropertiesResource.ownerResourceId: CollectionId
-  RestorableMongodbDatabasePropertiesResource.ownerId: DatabaseName
-  RestorableMongodbDatabasePropertiesResource.ownerResourceId: DatabaseId
-  RestorableSqlContainerPropertiesResource.ownerId: ContainerName
-  RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
-  RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
-  RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
-  RestorableGremlinDatabasePropertiesResource.ownerId: DatabaseName
-  RestorableGremlinDatabasePropertiesResource.ownerResourceId: DatabaseId
-  RestorableGremlinGraphPropertiesResource.ownerId: GraphName
-  RestorableGremlinGraphPropertiesResource.ownerResourceId: GraphId
-  RestorableTablePropertiesResource.ownerId: TableName
-  RestorableTablePropertiesResource.ownerResourceId: TableId
-  CosmosDBAccount.properties.enableFreeTier: IsFreeTierEnabled
-  CosmosDBAccount.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
-  ContainerPartitionKey.systemKey: IsSystemKey
-  DatabaseAccountCreateUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
-  DatabaseAccountCreateUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
-  DatabaseAccountUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
-  DatabaseAccountUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
-  LocationProperties.supportsAvailabilityZone: DoesSupportAvailabilityZone
-  DataCenterResourceProperties.availabilityZone: DoesSupportAvailabilityZone
-  ManagedCassandraProvisioningState: CassandraProvisioningState
-  ManagedCassandraReaperStatus: CassandraReaperStatus
-  MongoIndex: MongoDBIndex
-  MongoIndexOptions: MongoDBIndexConfig
-  BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
-  PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
-  RestorableSqlResourcesGetResult: RestorableSqlResourceData
-  RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
-  RestorableGremlinResourcesGetResult : RestorableGremlinResourceData
-  RestorableTableResourcesGetResult: RestorableTableResourceData
-  ServiceResourceProperties: CosmosDBServiceProperties
-  ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
-  ServiceResource: CosmosDBService
-  ServiceResourceListResult: CosmosDBServiceListResult
-  DataTransferServiceResourceProperties: DataTransferServiceProperties
-  SqlDedicatedGatewayServiceResourceProperties: SqlDedicatedGatewayServiceProperties
-  GraphAPIComputeServiceResourceProperties: GraphApiComputeServiceProperties
-  MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
-  RegionalServiceResource: CosmosDBRegionalService
-  SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
-  GraphAPIComputeRegionalServiceResource: GraphApiComputeRegionalService
-  DataTransferRegionalServiceResource: DataTransferRegionalService
-  MaterializedViewsBuilderRegionalServiceResource: MaterializedViewsBuilderRegionalService
-  ServiceStatus: CosmosDBServiceStatus
-  ServiceSize: CosmosDBServiceSize
-  ServiceType: CosmosDBServiceType
   AccountKeyMetadata.generationTime: GeneratedOn
-  PrivilegeResource: MongoDBPrivilegeResourceInfo
-  PrivilegeResource.db: DBName
-  MinimalTlsVersion: CosmosDBMinimalTlsVersion
+  AuthenticationMethod: CassandraAuthenticationMethod
+  AutoReplicate: CassandraAutoReplicateForm
+  AutoscaleSettingsResource: AutoscaleSettingsResourceInfo
+  AutoUpgradePolicyResource: AutoUpgradePolicyResourceInfo
+  AzureConnectionType: ServiceConnectionType
+  BackupPolicy: CosmosDBAccountBackupPolicy
   BackupResource: CassandraClusterBackupResourceInfo
   BackupSchedule: CassandraClusterBackupSchedule
   BackupState: CassandraClusterBackupState
+  BackupStorageRedundancy: CosmosDBBackupStorageRedundancy
+  Capacity: CosmosDBAccountCapacity
+  CassandraKeyspacePropertiesOptions: CassandraKeyspacePropertiesConfig
+  CassandraKeyspacePropertiesResource: ExtendedCassandraKeyspaceResourceInfo
+  CassandraKeyspaceResource: CassandraKeyspaceResourceInfo
+  CassandraKeyspaceResource.id: KeyspaceName
+  CassandraTablePropertiesOptions: CassandraTablePropertiesConfig
+  CassandraTablePropertiesResource: ExtendedCassandraTableResourceInfo
+  CassandraTableResource: CassandraTableResourceInfo
+  CassandraTableResource.id: TableName
+  Certificate: CassandraCertificate
+  CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
   CheckNameAvailabilityRequest: CheckCosmosDBNameAvailabilityContent
   CheckNameAvailabilityResponse: CheckCosmosDBNameAvailabilityResponse
-  CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
-  NodeGroupProperties.diskSizeGB: DiskSizeInGB
-  IpAddressOrRange: CosmosDBIPAddressOrRange
+  ClientEncryptionIncludedPath: CosmosDBClientEncryptionIncludedPath
+  ClientEncryptionKeyGetPropertiesResource: CosmosDBSqlClientEncryptionKeyProperties
+  ClientEncryptionKeyGetResults: CosmosDBSqlClientEncryptionKey
+  ClientEncryptionKeyResource: CosmosDBSqlClientEncryptionKeyResourceInfo
+  ClientEncryptionPolicy: CosmosDBClientEncryptionPolicy
+  ClusterKey: CassandraClusterKey
+  ClusterResource: CassandraCluster
+  ClusterResourceProperties: CassandraClusterProperties
+  ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
+  ClusterResourceProperties.deallocated : IsDeallocated
+  ClusterResourceProperties.privateLinkResourceId: -|arm-id
+  ClusterResourceProperties.repairEnabled: IsRepairEnabled
+  ClusterType: CassandraClusterType
+  CommandOutput: CassandraCommandOutput
+  CommandPostBody: CassandraCommandPostBody
+  CommandPostBody.readwrite: AllowWrite
   CommandPublicResource: CassandraClusterCommand
   CommandStatus: CassandraClusterCommandStatus
-  ThroughputPoolAccountResource: CosmosDBThroughputPoolAccount
-  ThroughputPoolAccountResource.properties.accountLocation: -|azure-location
-  ThroughputPoolAccountResource.properties.accountResourceIdentifier: -|arm-id
-  ThroughputPoolResource: CosmosDBThroughputPool
-  AutoReplicate: CassandraAutoReplicateForm
-  AzureConnectionType: ServiceConnectionType
+  ConnectionError: CassandraConnectionError
+  ConnectionState: CassandraConnectionState
+  ContainerPartitionKey.systemKey: IsSystemKey
+  CorsPolicy: CosmosDBAccountCorsPolicy
+  CosmosDBAccount.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
+  CosmosDBAccount.properties.enableFreeTier: IsFreeTierEnabled
+  CosmosDBSqlContainerPropertiesOptions: CosmosDBSqlContainerPropertiesConfig
+  CosmosDBSqlContainerPropertiesResource: ExtendedCosmosDBSqlContainerResourceInfo
+  CosmosDBSqlDatabasePropertiesOptions: CosmosDBSqlDatabasePropertiesConfig
+  CosmosDBSqlDatabasePropertiesResource: ExtendedCosmosDBSqlDatabaseResourceInfo
+  CosmosDBSqlStoredProcedurePropertiesResource: ExtendedCosmosDBSqlStoredProcedureResourceInfo
+  CosmosDBSqlTriggerPropertiesResource: ExtendedCosmosDBSqlTriggerResourceInfo
+  CosmosDBSqlUserDefinedFunctionPropertiesResource: ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo
+  CreateMode: CosmosDBAccountCreateMode
+  CreateUpdateOptions: CosmosDBCreateUpdateConfig
+  DatabaseAccountConnectionString: CosmosDBAccountConnectionString
+  DatabaseAccountCreateUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
+  DatabaseAccountCreateUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
+  DatabaseAccountKind: CosmosDBAccountKind
+  DatabaseAccountOfferType: CosmosDBAccountOfferType
+  DatabaseAccountUpdateParameters.properties.enableAnalyticalStorage: IsAnalyticalStorageEnabled
+  DatabaseAccountUpdateParameters.properties.enableFreeTier: IsFreeTierEnabled
+  DatabaseRestoreResource: DatabaseRestoreResourceInfo
+  DataCenterResource: CassandraDataCenter
+  DataCenterResourceProperties: CassandraDataCenterProperties
+  DataCenterResourceProperties.availabilityZone: DoesSupportAvailabilityZone
+  DataTransferRegionalServiceResource: DataTransferRegionalService
+  DataTransferServiceResourceProperties: DataTransferServiceProperties
+  DistanceFunction: VectorDistanceFunction
+  FleetResource: CosmosDBFleet
+  FleetspaceAccountPropertiesGlobalDatabaseAccountProperties: CosmosDBFleetspaceAccountConfiguration
+  FleetspaceAccountPropertiesGlobalDatabaseAccountProperties.armLocation: -|azure-location
+  FleetspaceAccountPropertiesGlobalDatabaseAccountProperties.resourceId: -|arm-id
+  FleetspaceAccountResource: CosmosDBFleetspaceAccount
+  FleetspacePropertiesFleetspaceApiKind: CosmosDBFleetspaceApiKind
+  FleetspacePropertiesServiceTier: CosmosDBFleetspaceServiceTier
+  FleetspacePropertiesThroughputPoolConfiguration: CosmosDBFleetspaceThroughputPoolConfiguration
+  FleetspaceResource: CosmosDBFleetspace
+  FleetspaceResource.properties.dataRegions: -|azure-location
+  GraphAPIComputeRegionalServiceResource: GraphApiComputeRegionalService
+  GraphAPIComputeServiceResourceProperties: GraphApiComputeServiceProperties
+  GremlinDatabasePropertiesOptions: GremlinDatabasePropertiesConfig
+  GremlinDatabasePropertiesResource: ExtendedGremlinDatabaseResourceInfo
+  GremlinDatabaseResource: GremlinDatabaseResourceInfo
+  GremlinDatabaseResource.id: DatabaseName
+  GremlinDatabaseRestoreResource: GremlinDatabaseRestoreResourceInfo
+  GremlinGraphPropertiesOptions: GremlinGraphPropertiesConfig
+  GremlinGraphPropertiesResource: ExtendedGremlinGraphResourceInfo
+  GremlinGraphResource: GremlinGraphResourceInfo
+  GremlinGraphResource.id: GraphName
+  IndexingPolicy.automatic: IsAutomatic
+  IpAddressOrRange: CosmosDBIPAddressOrRange
+  KeyKind: CosmosDBAccountKeyKind
+  ListClusters: CassandraClusterListResult
+  ListDataCenters: CassandraDataCenterListResult
+  LocationProperties.supportsAvailabilityZone: DoesSupportAvailabilityZone
+  ManagedCassandraProvisioningState: CassandraProvisioningState
+  ManagedCassandraReaperStatus: CassandraReaperStatus
+  ManagedCassandraReaperStatus.healthy: IsHealthy
+  MaterializedViewsBuilderRegionalServiceResource: MaterializedViewsBuilderRegionalService
+  MaterializedViewsBuilderServiceResourceProperties: MaterializedViewsBuilderServiceProperties
+  MinimalTlsVersion: CosmosDBMinimalTlsVersion
+  MongoDBCollectionPropertiesOptions: MongoDBCollectionPropertiesConfig
+  MongoDBCollectionPropertiesResource: ExtendedMongoDBCollectionResourceInfo
+  MongoDBCollectionResource: MongoDBCollectionResourceInfo
+  MongoDBCollectionResource.id: CollectionName
+  MongoDBDatabasePropertiesOptions: MongoDBDatabasePropertiesConfig
+  MongoDBDatabasePropertiesResource: ExtendedMongoDBDatabaseResourceInfo
+  MongoDBDatabaseResource: MongoDBDatabaseResourceInfo
+  MongoDBDatabaseResource.id: DatabaseName
+  MongoIndex: MongoDBIndex
+  MongoIndexOptions: MongoDBIndexConfig
+  MongoIndexOptions.unique: IsUnique
+  MongoRoleDefinitionGetResults: MongoDBRoleDefinition
+  MongoRoleDefinitionGetResults.properties.type: RoleDefinitionType
+  MongoRoleDefinitionListResult: MongoDBRoleDefinitionListResult
+  MongoRoleDefinitionType: MongoDBRoleDefinitionType
+  MongoUserDefinitionGetResults: MongoDBUserDefinition
+  MongoUserDefinitionListResult: MongoDBUserDefinitionListResult
+  NodeGroupProperties.diskSizeGB: DiskSizeInGB
+  NodeState: CassandraNodeState
+  OptionsResource: CosmosDBBaseConfig
+  PrimaryAggregationType: CosmosDBMetricPrimaryAggregationType
+  Privilege: MongoDBPrivilege
+  PrivilegeResource: MongoDBPrivilegeResourceInfo
+  PrivilegeResource.db: DBName
+  RegionalServiceResource: CosmosDBRegionalService
+  RestorableGremlinDatabasePropertiesResource: ExtendedRestorableGremlinDatabaseResourceInfo
+  RestorableGremlinDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableGremlinDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableGremlinGraphPropertiesResource: ExtendedRestorableGremlinGraphResourceInfo
+  RestorableGremlinGraphPropertiesResource.ownerId: GraphName
+  RestorableGremlinGraphPropertiesResource.ownerResourceId: GraphId
+  RestorableGremlinResourcesGetResult : RestorableGremlinResourceData
+  RestorableLocationResource: RestorableLocationResourceInfo
+  RestorableMongodbCollectionGetResult: RestorableMongoDBCollection
+  RestorableMongodbCollectionPropertiesResource: ExtendedRestorableMongoDBCollectionResourceInfo
+  RestorableMongodbCollectionPropertiesResource.ownerId: CollectionName
+  RestorableMongodbCollectionPropertiesResource.ownerResourceId: CollectionId
+  RestorableMongodbDatabasePropertiesResource: ExtendedRestorableMongoDBDatabaseResourceInfo
+  RestorableMongodbDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableMongodbDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableMongodbResourcesGetResult: RestorableMongoDBResourceData
+  RestorableSqlContainerPropertiesResource: ExtendedRestorableSqlContainerResourceInfo
+  RestorableSqlContainerPropertiesResource.ownerId: ContainerName
+  RestorableSqlContainerPropertiesResource.ownerResourceId: ContainerId
+  RestorableSqlDatabasePropertiesResource: ExtendedRestorableSqlDatabaseResourceInfo
+  RestorableSqlDatabasePropertiesResource.ownerId: DatabaseName
+  RestorableSqlDatabasePropertiesResource.ownerResourceId: DatabaseId
+  RestorableSqlResourcesGetResult: RestorableSqlResourceData
+  RestorableTablePropertiesResource: ExtendedRestorableTableResourceInfo
+  RestorableTablePropertiesResource.ownerId: TableName
+  RestorableTablePropertiesResource.ownerResourceId: TableId
+  RestorableTableResourcesGetResult: RestorableTableResourceData
+  RestoreMode: CosmosDBAccountRestoreMode
+  RestoreParameters: CosmosDBAccountRestoreParameters
   RestoreParametersBase.restoreWithTtlDisabled: IsRestoreWithTtlDisabled
+  Role: MongoDBRole
+  Role.db: DBName
+  RoleDefinitionType: CosmosDBSqlRoleDefinitionType
+  SeedNode: CassandraDataCenterSeedNode
+  ServiceResource: CosmosDBService
+  ServiceResourceCreateUpdateParameters: CosmosDBServiceCreateUpdateParameters
+  ServiceResourceListResult: CosmosDBServiceListResult
+  ServiceResourceProperties: CosmosDBServiceProperties
+  ServiceSize: CosmosDBServiceSize
+  ServiceStatus: CosmosDBServiceStatus
+  ServiceType: CosmosDBServiceType
+  SqlContainerListResult: CosmosDBSqlContainerListResult
+  SqlContainerResource: CosmosDBSqlContainerResourceInfo
+  SqlContainerResource.id: containerName
+  SqlDatabaseListResult: CosmosDBSqlDatabaseListResult
+  SqlDatabaseResource: CosmosDBSqlDatabaseResourceInfo
+  SqlDatabaseResource.id: DatabaseName
+  SqlDedicatedGatewayRegionalServiceResource: SqlDedicatedGatewayRegionalService
+  SqlDedicatedGatewayServiceResourceProperties: SqlDedicatedGatewayServiceProperties
+  SqlStoredProcedureListResult: CosmosDBSqlStoredProcedureListResult
+  SqlStoredProcedureResource: CosmosDBSqlStoredProcedureResourceInfo
+  SqlStoredProcedureResource.id: StoredProcedureName
+  SqlTriggerListResult: CosmosDBSqlTriggerListResult
+  SqlTriggerResource: CosmosDBSqlTriggerResourceInfo
+  SqlTriggerResource.id: TriggerName
+  SqlUserDefinedFunctionListResult: CosmosDBSqlUserDefinedFunctionListResult
+  SqlUserDefinedFunctionResource: CosmosDBSqlUserDefinedFunctionResourceInfo
+  SqlUserDefinedFunctionResource.id: FunctionName
+  TableListResult: CosmosDBTableListResult
+  TableResource: CosmosDBTableResourceInfo
+  TableResource.id: TableName
   TableRoleAssignmentResource: CosmosDBTableRoleAssignment
   TableRoleAssignmentResource.properties.roleDefinitionId: -|arm-id
   TableRoleAssignmentResource.properties.scope: -|arm-id
   TableRoleDefinitionResource: CosmosDBTableRoleDefinition
   TableRoleDefinitionResource.properties.id: PathId
   TableRoleDefinitionResource.properties.type: RoleDefinitionType
-  DistanceFunction: VectorDistanceFunction
-  VectorEmbedding: CosmosDBVectorEmbedding
+  ThroughputBucketResource: CosmosDBThroughputBucket
+  ThroughputPolicyResource: ThroughputPolicyResourceInfo
+  ThroughputPoolAccountResource: CosmosDBThroughputPoolAccount
+  ThroughputPoolAccountResource.properties.accountLocation: -|azure-location
+  ThroughputPoolAccountResource.properties.accountResourceIdentifier: -|arm-id
+  ThroughputPoolResource: CosmosDBThroughputPool
+  ThroughputSettingsPropertiesResource: ExtendedThroughputSettingsResourceInfo
+  ThroughputSettingsResource: ThroughputSettingsResourceInfo
+  TriggerOperation: CosmosDBSqlTriggerOperation
+  TriggerType: CosmosDBSqlTriggerType
+  UnitType: CosmosDBMetricUnitType
+  Usage: CosmosDBBaseUsage
   VectorDataType: CosmosDBVectorDataType
+  VectorEmbedding: CosmosDBVectorEmbedding
   VectorIndex: CosmosDBVectorIndex
   VectorIndexType: CosmosDBVectorIndexType
   VectorIndexType.diskANN: DiskAnn
-  ThroughputBucketResource: CosmosDBThroughputBucket
 
 prepend-rp-prefix:
-- UniqueKey
-- UniqueKeyPolicy
-- ServerVersion
-- OperationType
-- MetricValue
-- MetricName
-- MetricListResult
-- MetricDefinitionsListResult
-- MetricDefinition
-- MetricAvailability
-- LocationProperties
-- LocationListResult
-- DataType
-- IndexingPolicy
-- ExcludedPath
-- IncludedPath
-- IndexingMode
-- IndexKind
 - ApiType
-- UsagesResult
-- VirtualNetworkRule
+- BackupInformation
+- ChaosFaultResource
+- CompositePath
+- ConnectionString
+- ContainerPartitionKey
+- DataType
+- ExcludedPath
 - FailoverPolicies
 - FailoverPolicy
-- BackupInformation
-- CompositePath
+- FirewallRule
+- IncludedPath
+- IndexingMode
+- IndexingPolicy
+- IndexKind
+- LocationListResult
+- LocationProperties
+- MetricAvailability
+- MetricDefinition
+- MetricDefinitionsListResult
+- MetricListResult
+- MetricName
+- MetricValue
+- OperationType
 - PartitionKind
 - PercentileMetric
-- PublicNetworkAccess
-- SpatialType
-- ContainerPartitionKey
-- FirewallRule
-- Status
 - ProvisioningState
+- PublicNetworkAccess
+- ServerVersion
+- SpatialType
+- Status
 - Type
-- ConnectionString
-- ChaosFaultResource
+- UniqueKey
+- UniqueKeyPolicy
+- UsagesResult
+- VirtualNetworkRule
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
