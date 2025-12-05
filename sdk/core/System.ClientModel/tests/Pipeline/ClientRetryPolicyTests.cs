@@ -397,6 +397,31 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     }
 
     #region Helpers
+    [Test]
+    public async Task DelayCalculationsIncreasePerRetry()
+    {
+        var capturingPolicy = new DelayCapturingRetryPolicy(3);
+
+        ClientPipelineOptions options = new()
+        {
+            Transport = new MockPipelineTransport("Transport", new[] { 500, 500, 200 }),
+            RetryPolicy = capturingPolicy
+        };
+
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        PipelineMessage message = pipeline.CreateMessage();
+        await pipeline.SendSyncOrAsync(message, IsAsync);
+
+        Assert.AreEqual(2, capturingPolicy.Delays.Count);
+
+        // Initial delay should be greater than zero
+        Assert.Greater(capturingPolicy.Delays[0], TimeSpan.Zero);
+
+        // Subsequent delays should increase
+        Assert.Greater(capturingPolicy.Delays[1], capturingPolicy.Delays[0]);
+    }
+
     public static IEnumerable<object[]> RetryAfterTestValues()
     {
         // Retry-After header is larger - wait Retry-After time
@@ -415,6 +440,26 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         yield return new object[] { "Retry-After",
             (DateTimeOffset.Now + TimeSpan.FromSeconds(1)).ToString("R"),
             1600 };
+    }
+
+    private class DelayCapturingRetryPolicy : ClientRetryPolicy
+    {
+        public List<TimeSpan> Delays { get; } = new();
+
+        public DelayCapturingRetryPolicy(int maxRetries)
+            : base(maxRetries) { }
+
+        protected override void Wait(TimeSpan time, CancellationToken cancellationToken)
+        {
+            Delays.Add(time);
+            base.Wait(time, cancellationToken);
+        }
+
+        protected override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+        {
+            Delays.Add(time);
+            return base.WaitAsync(time, cancellationToken);
+        }
     }
     #endregion
 }
