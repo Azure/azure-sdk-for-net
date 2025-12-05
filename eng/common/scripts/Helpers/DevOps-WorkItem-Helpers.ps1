@@ -529,8 +529,6 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   # PackageProp object uses Group, while other places use GroupId, such as in work item fields and package csv files.
   $pkgGroupId = if ($pkg.PSObject.Properties.Name -contains "GroupId") {
     $pkg.GroupId
-  } elseif ($pkg.PSObject.Properties.Name -contains "Group") {
-    $pkg.Group
   } else {
     $null
   }
