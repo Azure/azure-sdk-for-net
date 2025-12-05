@@ -72,12 +72,12 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format.ToString(), confidence, offset, duration, words, participantRawID, resultState.ToString());
 
             Assert.AreEqual(text, transcriptionData.Text);
-            Assert.AreEqual(format, transcriptionData.Format);
+            Assert.AreEqual(format, transcriptionData.Format.ToString());
             Assert.AreEqual(confidence, transcriptionData.Confidence);
             Assert.AreEqual(offset, transcriptionData.Offset);
             Assert.AreEqual(duration, transcriptionData.Duration);
             Assert.AreEqual(CommunicationIdentifier.FromRawId(participantRawID), transcriptionData.Participant);
-            Assert.AreEqual(resultState, transcriptionData.ResultStatus);
+            Assert.AreEqual(resultState, transcriptionData.ResultStatus.ToString());
             Assert.IsNotNull(transcriptionData.Words);
             Assert.AreEqual(1, transcriptionData.Words.Count());
         }

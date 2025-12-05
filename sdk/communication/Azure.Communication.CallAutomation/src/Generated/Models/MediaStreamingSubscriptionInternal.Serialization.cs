@@ -21,6 +21,7 @@ namespace Azure.Communication.CallAutomation
             string id = default;
             MediaStreamingSubscriptionState? state = default;
             IReadOnlyList<MediaStreamingContent> subscribedContentTypes = default;
+            string streamUrl = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -51,8 +52,13 @@ namespace Azure.Communication.CallAutomation
                     subscribedContentTypes = array;
                     continue;
                 }
+                if (property.NameEquals("streamUrl"u8))
+                {
+                    streamUrl = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MediaStreamingSubscriptionInternal(id, state, subscribedContentTypes ?? new ChangeTrackingList<MediaStreamingContent>());
+            return new MediaStreamingSubscriptionInternal(id, state, subscribedContentTypes ?? new ChangeTrackingList<MediaStreamingContent>(), streamUrl);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

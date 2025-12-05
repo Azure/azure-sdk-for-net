@@ -21,6 +21,7 @@ namespace Azure.Communication.CallAutomation
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.CallInvite ParticipantToAdd { get { throw null; } }
+        public string PostDialTones { get { throw null; } set { } }
     }
     public partial class AddParticipantResult
     {
@@ -705,6 +706,7 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableLoopbackAudio { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
+        public string PostDialTones { get { throw null; } set { } }
         public Azure.Communication.MicrosoftTeamsAppIdentifier TeamsAppSource { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
@@ -725,6 +727,7 @@ namespace Azure.Communication.CallAutomation
         public bool? EnableLoopbackAudio { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.MediaStreamingOptions MediaStreamingOptions { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }
+        public string PostDialTones { get { throw null; } set { } }
         public Azure.Communication.PhoneNumberIdentifier SourceCallerIdNumber { get { throw null; } set { } }
         public string SourceDisplayName { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CommunicationIdentifier> Targets { get { throw null; } }
@@ -1163,9 +1166,10 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MediaStreamingSubscription
     {
-        public MediaStreamingSubscription(string id, Azure.Communication.CallAutomation.MediaStreamingSubscriptionState? state, System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.MediaStreamingContent> subscribedContentTypes) { }
+        public MediaStreamingSubscription(string id, Azure.Communication.CallAutomation.MediaStreamingSubscriptionState? state, System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.MediaStreamingContent> subscribedContentTypes, string streamUrl) { }
         public string Id { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingSubscriptionState? State { get { throw null; } }
+        public string StreamUrl { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Communication.CallAutomation.MediaStreamingContent> SubscribedContentTypes { get { throw null; } }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1972,5 +1976,20 @@ namespace Azure.Communication.CallAutomation
         public ulong Offset { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
         public string Text { get { throw null; } set { } }
+    }
+}
+namespace Azure.Communication.CallAutomation.Models.Events
+{
+    public partial class PostDialDtmfTonesCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        public PostDialDtmfTonesCompleted(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation) { }
+        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
+        public static Azure.Communication.CallAutomation.Models.Events.PostDialDtmfTonesCompleted Deserialize(string content) { throw null; }
+    }
+    public partial class PostDialDtmfTonesFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        public PostDialDtmfTonesFailed(string callConnectionId, string serverCallId, string correlationId, string operationContext, Azure.Communication.CallAutomation.ResultInformation resultInformation) { }
+        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
+        public static Azure.Communication.CallAutomation.Models.Events.PostDialDtmfTonesFailed Deserialize(string content) { throw null; }
     }
 }
