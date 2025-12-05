@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
         /// <returns> A new <see cref="Models.ManagedHsmPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? etag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static ManagedHsmPrivateEndpointConnectionItemData ManagedHsmPrivateEndpointConnectionItemData(ResourceIdentifier id = default, ETag? etag = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new ManagedHsmPrivateEndpointConnectionItemData(id, etag, privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new ManagedHsmPrivateEndpointConnectionProperties(new ManagedHsmPrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null), additionalBinaryDataProperties: null);
         }
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <returns> A new <see cref="KeyVault.ManagedHsmPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, ETag? etag = default)
+        public static ManagedHsmPrivateEndpointConnectionData ManagedHsmPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedHsmPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, ManagedHsmPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, IDictionary<string, string> tags = default, AzureLocation? location = default, ManagedHsmSku sku = default, ManagedServiceIdentity identity = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -630,12 +630,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Parameters for creating or updating a secret. </summary>
         /// <param name="tags"> The tags that will be assigned to the secret. </param>
         /// <param name="properties"> Properties of the secret. </param>
-        /// <returns> A new <see cref="Models.SecretCreateOrUpdateParameters"/> instance for mocking. </returns>
-        public static SecretCreateOrUpdateParameters SecretCreateOrUpdateParameters(IDictionary<string, string> tags = default, SecretProperties properties = default)
+        /// <returns> A new <see cref="Models.KeyVaultSecretCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static KeyVaultSecretCreateOrUpdateContent KeyVaultSecretCreateOrUpdateContent(IDictionary<string, string> tags = default, SecretProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new SecretCreateOrUpdateParameters(tags, properties, additionalBinaryDataProperties: null);
+            return new KeyVaultSecretCreateOrUpdateContent(tags, properties, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for patching a secret. </summary>
@@ -670,10 +670,10 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> The parameters used to check the availability of the managed hsm name. </summary>
         /// <param name="name"> The managed hsm name. </param>
-        /// <returns> A new <see cref="Models.ManagedHsmNameAvailabilityParameters"/> instance for mocking. </returns>
-        public static ManagedHsmNameAvailabilityParameters ManagedHsmNameAvailabilityParameters(string name = default)
+        /// <returns> A new <see cref="Models.ManagedHsmNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ManagedHsmNameAvailabilityContent ManagedHsmNameAvailabilityContent(string name = default)
         {
-            return new ManagedHsmNameAvailabilityParameters(name, additionalBinaryDataProperties: null);
+            return new ManagedHsmNameAvailabilityContent(name, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The CheckMhsmNameAvailability operation response. </summary>

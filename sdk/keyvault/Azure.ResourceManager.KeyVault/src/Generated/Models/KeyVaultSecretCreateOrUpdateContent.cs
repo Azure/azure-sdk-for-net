@@ -12,15 +12,15 @@ using Azure.ResourceManager.KeyVault;
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for creating or updating a secret. </summary>
-    public partial class SecretCreateOrUpdateParameters
+    public partial class KeyVaultSecretCreateOrUpdateContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SecretCreateOrUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
         /// <param name="properties"> Properties of the secret. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public SecretCreateOrUpdateParameters(SecretProperties properties)
+        public KeyVaultSecretCreateOrUpdateContent(SecretProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.KeyVault.Models
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecretCreateOrUpdateParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultSecretCreateOrUpdateContent"/>. </summary>
         /// <param name="tags"> The tags that will be assigned to the secret. </param>
         /// <param name="properties"> Properties of the secret. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SecretCreateOrUpdateParameters(IDictionary<string, string> tags, SecretProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultSecretCreateOrUpdateContent(IDictionary<string, string> tags, SecretProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;

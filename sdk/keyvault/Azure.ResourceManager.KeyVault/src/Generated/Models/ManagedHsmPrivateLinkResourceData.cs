@@ -20,12 +20,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceData"/>. </summary>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        internal ManagedHsmPrivateLinkResourceData(AzureLocation location) : base(location)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ManagedHsmPrivateLinkResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -47,14 +41,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal MhsmPrivateLinkResourceProperties Properties { get; }
-
-        /// <summary> SKU details. </summary>
-        [WirePath("sku")]
-        public ManagedHsmSku Sku { get; }
-
-        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; }
 
         /// <summary> The provisioned state of the resource. </summary>
         [WirePath("properties.provisioningState")]
