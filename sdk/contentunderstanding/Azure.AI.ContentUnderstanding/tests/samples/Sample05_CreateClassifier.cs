@@ -29,17 +29,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingCreateClassifier
 #if SNIPPET
             // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategory>
+            var categories = new Dictionary<string, ContentCategoryDefinition>
             {
-                ["Loan_Application"] = new ContentCategory
+                ["Loan_Application"] = new ContentCategoryDefinition
                 {
                     Description = "Documents submitted by individuals or businesses to request funding, typically including personal or business details, financial history, loan amount, purpose, and supporting documentation."
                 },
-                ["Invoice"] = new ContentCategory
+                ["Invoice"] = new ContentCategoryDefinition
                 {
                     Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
                 },
-                ["Bank_Statement"] = new ContentCategory
+                ["Bank_Statement"] = new ContentCategoryDefinition
                 {
                     Description = "Official statements issued by banks that summarize account activity over a period, including deposits, withdrawals, fees, and balances."
                 }
@@ -71,17 +71,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #else
             // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategory>
+            var categories = new Dictionary<string, ContentCategoryDefinition>
             {
-                ["Loan_Application"] = new ContentCategory
+                ["Loan_Application"] = new ContentCategoryDefinition
                 {
                     Description = "Documents submitted by individuals or businesses to request funding, typically including personal or business details, financial history, loan amount, purpose, and supporting documentation."
                 },
-                ["Invoice"] = new ContentCategory
+                ["Invoice"] = new ContentCategoryDefinition
                 {
                     Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
                 },
-                ["Bank_Statement"] = new ContentCategory
+                ["Bank_Statement"] = new ContentCategoryDefinition
                 {
                     Description = "Official statements issued by banks that summarize account activity over a period, including deposits, withdrawals, fees, and balances."
                 }
@@ -242,7 +242,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ReturnDetails = true,
                 EnableSegment = false // No automatic segmentation
             };
-            config.ContentCategories.Add("Invoice", new ContentCategory
+            config.ContentCategories.Add("Invoice", new ContentCategoryDefinition
             {
                 Description = "Billing documents issued by sellers or service providers to request payment for goods or services."
             });
@@ -448,7 +448,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation
             };
-            config.ContentCategories.Add("Invoice", new ContentCategory
+            config.ContentCategories.Add("Invoice", new ContentCategoryDefinition
             {
                 Description = "Billing documents issued by sellers or service providers to request payment for goods or services."
             });

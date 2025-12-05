@@ -781,17 +781,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
             string analyzerId = Recording.GetVariable("analyzerId", defaultId) ?? defaultId;
 
             // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategory>
+            var categories = new Dictionary<string, ContentCategoryDefinition>
             {
-                ["Loan_Application"] = new ContentCategory
+                ["Loan_Application"] = new ContentCategoryDefinition
                 {
                     Description = "Documents submitted by individuals or businesses to request funding"
                 },
-                ["Invoice"] = new ContentCategory
+                ["Invoice"] = new ContentCategoryDefinition
                 {
                     Description = "Billing documents issued by sellers or service providers to request payment"
                 },
-                ["Bank_Statement"] = new ContentCategory
+                ["Bank_Statement"] = new ContentCategoryDefinition
                 {
                     Description = "Official statements issued by banks that summarize account activity"
                 }
