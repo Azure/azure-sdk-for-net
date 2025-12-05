@@ -20,6 +20,8 @@ namespace Authentication.OAuth2
 
         public OAuth2Client(TokenCredential credential) : this(new Uri("http://localhost:3000"), credential, new OAuth2ClientOptions()) => throw null;
 
+        public OAuth2Client(TokenCredential credential, OAuth2ClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+
         public OAuth2Client(Uri endpoint, TokenCredential credential, OAuth2ClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;

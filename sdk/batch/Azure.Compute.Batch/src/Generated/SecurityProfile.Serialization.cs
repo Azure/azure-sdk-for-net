@@ -39,6 +39,11 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("encryptionAtHost"u8);
                 writer.WriteBooleanValue(EncryptionAtHost.Value);
             }
+            if (Optional.IsDefined(ProxyAgentSettings))
+            {
+                writer.WritePropertyName("proxyAgentSettings"u8);
+                writer.WriteObjectValue(ProxyAgentSettings, options);
+            }
             if (Optional.IsDefined(SecurityType))
             {
                 writer.WritePropertyName("securityType"u8);
@@ -87,6 +92,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             bool? encryptionAtHost = default;
+            ProxyAgentSettings proxyAgentSettings = default;
             SecurityTypes? securityType = default;
             BatchUefiSettings uefiSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,6 +106,15 @@ namespace Azure.Compute.Batch
                         continue;
                     }
                     encryptionAtHost = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("proxyAgentSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    proxyAgentSettings = ProxyAgentSettings.DeserializeProxyAgentSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securityType"u8))
@@ -126,7 +141,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityProfile(encryptionAtHost, securityType, uefiSettings, serializedAdditionalRawData);
+            return new SecurityProfile(encryptionAtHost, proxyAgentSettings, securityType, uefiSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityProfile>.Write(ModelReaderWriterOptions options)

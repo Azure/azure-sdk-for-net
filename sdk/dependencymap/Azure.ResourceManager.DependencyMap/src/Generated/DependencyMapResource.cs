@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.DependencyMap
                     DependencyMapData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DependencyMapPatch patch = new DependencyMapPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1130,7 +1130,7 @@ namespace Azure.ResourceManager.DependencyMap
                     DependencyMapData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DependencyMapPatch patch = new DependencyMapPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DependencyMapResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.DependencyMap
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DependencyMapResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

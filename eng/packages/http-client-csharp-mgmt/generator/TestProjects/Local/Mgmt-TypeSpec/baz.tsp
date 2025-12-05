@@ -8,7 +8,7 @@ using Azure.ClientGenerator.Core;
 namespace MgmtTypeSpec;
 
 @resource("bazs")
-model Baz is TrackedResource<BazProperties> {
+model Baz is Azure.ResourceManager.Legacy.TrackedResourceWithOptionalLocation<BazProperties> {
   ...ResourceNameParameter<Baz, SegmentName = "bazs">;
 }
 
@@ -32,5 +32,10 @@ interface Bazs {
 
   list is ArmResourceListByParent<Baz>;
 
-  listBySubscription is ArmListBySubscription<Baz>;
+  listBySubscription is ArmListBySubscription<
+    Baz,
+    Parameters = {
+      @query("$top")
+      $top?: int32;
+    }>;
 }

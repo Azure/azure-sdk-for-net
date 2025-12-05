@@ -1,0 +1,3 @@
+# Baselining these because previously the whole assembly was marked by the ExperimentalAttribute
+MembersMustExist : Member 'public Azure.Provisioning.BicepList<Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> Azure.Provisioning.RedisEnterprise.RedisEnterpriseCluster.PrivateEndpointConnections.get()' does not exist in the implementation but it does exist in the contract.
+TypesMustExist : Type 'Azure.Provisioning.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData' does not exist in the implementation but it does exist in the contract.

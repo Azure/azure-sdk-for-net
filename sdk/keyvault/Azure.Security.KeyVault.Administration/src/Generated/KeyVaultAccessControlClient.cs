@@ -289,17 +289,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetRoleDefinitions(string scope, string filter, RequestContext context)
         {
-            using DiagnosticScope scope0 = ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleDefinitions");
-            scope0.Start();
-            try
-            {
-                return new KeyVaultAccessControlClientGetRoleDefinitionsCollectionResult(this, scope, filter, context);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return new KeyVaultAccessControlClientGetRoleDefinitionsCollectionResult(this, scope, filter, context);
         }
 
         /// <summary>
@@ -317,17 +307,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetRoleDefinitionsAsync(string scope, string filter, RequestContext context)
         {
-            using DiagnosticScope scope0 = ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleDefinitions");
-            scope0.Start();
-            try
-            {
-                return new KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResult(this, scope, filter, context);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return new KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResult(this, scope, filter, context);
         }
 
         /// <summary> Get all role definitions that are applicable at scope and above. </summary>
@@ -609,17 +589,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Pageable<BinaryData> GetRoleAssignments(string scope, string filter, RequestContext context)
         {
-            using DiagnosticScope scope0 = ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleAssignments");
-            scope0.Start();
-            try
-            {
-                return new KeyVaultAccessControlClientGetRoleAssignmentsCollectionResult(this, scope, filter, context);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return new KeyVaultAccessControlClientGetRoleAssignmentsCollectionResult(this, scope, filter, context);
         }
 
         /// <summary>
@@ -637,17 +607,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual AsyncPageable<BinaryData> GetRoleAssignmentsAsync(string scope, string filter, RequestContext context)
         {
-            using DiagnosticScope scope0 = ClientDiagnostics.CreateScope("KeyVaultAccessControlClient.GetRoleAssignments");
-            scope0.Start();
-            try
-            {
-                return new KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResult(this, scope, filter, context);
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
+            return new KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResult(this, scope, filter, context);
         }
 
         /// <summary> Gets role assignments for a scope. </summary>

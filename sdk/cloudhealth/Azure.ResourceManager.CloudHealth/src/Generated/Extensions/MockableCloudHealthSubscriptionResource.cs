@@ -38,7 +38,23 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
 
         private HealthModels HealthModelsRestClient => _healthModelsRestClient ??= new HealthModels(HealthModelsClientDiagnostics, Pipeline, Endpoint, "2025-05-01-preview");
 
-        /// <summary> List HealthModel resources by subscription ID. </summary>
+        /// <summary>
+        /// List HealthModel resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CloudHealth/healthmodels. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HealthModels_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthModelResource> GetHealthModelsAsync(CancellationToken cancellationToken = default)
@@ -50,7 +66,23 @@ namespace Azure.ResourceManager.CloudHealth.Mocking
             return new AsyncPageableWrapper<HealthModelData, HealthModelResource>(new HealthModelsGetBySubscriptionAsyncCollectionResultOfT(HealthModelsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new HealthModelResource(Client, data));
         }
 
-        /// <summary> List HealthModel resources by subscription ID. </summary>
+        /// <summary>
+        /// List HealthModel resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.CloudHealth/healthmodels. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> HealthModels_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="HealthModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthModelResource> GetHealthModels(CancellationToken cancellationToken = default)

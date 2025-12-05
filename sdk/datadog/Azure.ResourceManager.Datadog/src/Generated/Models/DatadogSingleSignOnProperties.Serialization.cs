@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            ProvisioningState? provisioningState = default;
-            SingleSignOnState? singleSignOnState = default;
+            DatadogProvisioningState? provisioningState = default;
+            DatadogSingleSignOnState? singleSignOnState = default;
             string enterpriseAppId = default;
             Uri singleSignOnUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    provisioningState = new ProvisioningState(property.Value.GetString());
+                    provisioningState = new DatadogProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("singleSignOnState"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    singleSignOnState = new SingleSignOnState(property.Value.GetString());
+                    singleSignOnState = new DatadogSingleSignOnState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("enterpriseAppId"u8))

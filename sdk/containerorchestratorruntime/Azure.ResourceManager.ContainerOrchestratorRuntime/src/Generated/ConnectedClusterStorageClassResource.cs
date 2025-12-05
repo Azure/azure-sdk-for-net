@@ -6,45 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerOrchestratorRuntime.Models;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
     /// <summary>
-    /// A Class representing a ConnectedClusterStorageClass along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterStorageClassResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetConnectedClusterStorageClassResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterStorageClass method.
+    /// A class representing a ConnectedClusterStorageClass along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConnectedClusterStorageClassResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetConnectedClusterStorageClasses method.
     /// </summary>
     public partial class ConnectedClusterStorageClassResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ConnectedClusterStorageClassResource"/> instance. </summary>
-        /// <param name="resourceUri"> The resourceUri. </param>
-        /// <param name="storageClassName"> The storageClassName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string storageClassName)
-        {
-            var resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _connectedClusterStorageClassStorageClassClientDiagnostics;
-        private readonly StorageClassRestOperations _connectedClusterStorageClassStorageClassRestClient;
+        private readonly ClientDiagnostics _storageClassClientDiagnostics;
+        private readonly StorageClass _storageClassRestClient;
         private readonly ConnectedClusterStorageClassData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KubernetesRuntime/storageClasses";
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterStorageClassResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ConnectedClusterStorageClassResource for mocking. </summary>
         protected ConnectedClusterStorageClassResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterStorageClassResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterStorageClassResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConnectedClusterStorageClassResource(ArmClient client, ConnectedClusterStorageClassData data) : this(client, data.Id)
@@ -53,71 +44,91 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ConnectedClusterStorageClassResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedClusterStorageClassResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ConnectedClusterStorageClassResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _connectedClusterStorageClassStorageClassClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string connectedClusterStorageClassStorageClassApiVersion);
-            _connectedClusterStorageClassStorageClassRestClient = new StorageClassRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, connectedClusterStorageClassStorageClassApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string connectedClusterStorageClassApiVersion);
+            _storageClassClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerOrchestratorRuntime", ResourceType.Namespace, Diagnostics);
+            _storageClassRestClient = new StorageClass(_storageClassClientDiagnostics, Pipeline, Endpoint, connectedClusterStorageClassApiVersion ?? "2024-03-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ConnectedClusterStorageClassData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="resourceUri"> The resourceUri. </param>
+        /// <param name="storageClassName"> The storageClassName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string resourceUri, string storageClassName)
+        {
+            string resourceId = $"{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a StorageClassResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClass_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterStorageClassResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ConnectedClusterStorageClassResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterStorageClassStorageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Get");
+            using DiagnosticScope scope = _storageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Get");
             scope.Start();
             try
             {
-                var response = await _connectedClusterStorageClassStorageClassRestClient.GetAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ConnectedClusterStorageClassData> response = Response.FromValue(ConnectedClusterStorageClassData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterStorageClassResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,118 +142,42 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Get a StorageClassResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClass_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterStorageClassResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ConnectedClusterStorageClassResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _connectedClusterStorageClassStorageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Get");
+            using DiagnosticScope scope = _storageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Get");
             scope.Start();
             try
             {
-                var response = _connectedClusterStorageClassStorageClassRestClient.Get(Id.Parent, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageClassRestClient.CreateGetRequest(Id.Parent, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ConnectedClusterStorageClassData> response = Response.FromValue(ConnectedClusterStorageClassData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ConnectedClusterStorageClassResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a StorageClassResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _connectedClusterStorageClassStorageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = await _connectedClusterStorageClassStorageClassRestClient.DeleteAsync(Id.Parent, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerOrchestratorRuntimeArmOperation(_connectedClusterStorageClassStorageClassClientDiagnostics, Pipeline, _connectedClusterStorageClassStorageClassRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Delete a StorageClassResource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Delete</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _connectedClusterStorageClassStorageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Delete");
-            scope.Start();
-            try
-            {
-                var response = _connectedClusterStorageClassStorageClassRestClient.Delete(Id.Parent, Id.Name, cancellationToken);
-                var operation = new ContainerOrchestratorRuntimeArmOperation(_connectedClusterStorageClassStorageClassClientDiagnostics, Pipeline, _connectedClusterStorageClassStorageClassRestClient.CreateDeleteRequest(Id.Parent, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
             }
             catch (Exception e)
             {
@@ -255,20 +190,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Update a StorageClassResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClass_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterStorageClassResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -280,14 +215,27 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _connectedClusterStorageClassStorageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Update");
+            using DiagnosticScope scope = _storageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Update");
             scope.Start();
             try
             {
-                var response = await _connectedClusterStorageClassStorageClassRestClient.UpdateAsync(Id.Parent, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(new ConnectedClusterStorageClassOperationSource(Client), _connectedClusterStorageClassStorageClassClientDiagnostics, Pipeline, _connectedClusterStorageClassStorageClassRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageClassRestClient.CreateUpdateRequest(Id.Parent, Id.Name, ConnectedClusterStorageClassPatch.ToRequestContent(patch), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
+                    new ConnectedClusterStorageClassOperationSource(Client),
+                    _storageClassClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -301,20 +249,20 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// Update a StorageClassResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Update</description>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClass_Update. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConnectedClusterStorageClassResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterStorageClassResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,14 +274,125 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _connectedClusterStorageClassStorageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Update");
+            using DiagnosticScope scope = _storageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Update");
             scope.Start();
             try
             {
-                var response = _connectedClusterStorageClassStorageClassRestClient.Update(Id.Parent, Id.Name, patch, cancellationToken);
-                var operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(new ConnectedClusterStorageClassOperationSource(Client), _connectedClusterStorageClassStorageClassClientDiagnostics, Pipeline, _connectedClusterStorageClassStorageClassRestClient.CreateUpdateRequest(Id.Parent, Id.Name, patch).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageClassRestClient.CreateUpdateRequest(Id.Parent, Id.Name, ConnectedClusterStorageClassPatch.ToRequestContent(patch), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource> operation = new ContainerOrchestratorRuntimeArmOperation<ConnectedClusterStorageClassResource>(
+                    new ConnectedClusterStorageClassOperationSource(Client),
+                    _storageClassClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a StorageClassResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClass_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterStorageClassResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _storageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageClassRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(_storageClassClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Delete a StorageClassResource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.KubernetesRuntime/storageClasses/{storageClassName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageClass_Delete. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ConnectedClusterStorageClassResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _storageClassClientDiagnostics.CreateScope("ConnectedClusterStorageClassResource.Delete");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _storageClassRestClient.CreateDeleteRequest(Id.Parent, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerOrchestratorRuntimeArmOperation operation = new ContainerOrchestratorRuntimeArmOperation(_storageClassClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

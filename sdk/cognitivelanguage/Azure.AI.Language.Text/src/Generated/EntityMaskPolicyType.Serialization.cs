@@ -58,6 +58,9 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             RedactionPolicyKind policyKind = default;
+            IList<PiiCategoriesExclude> entityTypes = default;
+            string policyName = default;
+            bool? isDefault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -67,13 +70,41 @@ namespace Azure.AI.Language.Text
                     policyKind = new RedactionPolicyKind(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("entityTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PiiCategoriesExclude> array = new List<PiiCategoriesExclude>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new PiiCategoriesExclude(item.GetString()));
+                    }
+                    entityTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("policyName"u8))
+                {
+                    policyName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isDefault"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isDefault = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EntityMaskPolicyType(policyKind, serializedAdditionalRawData);
+            return new EntityMaskPolicyType(policyKind, entityTypes ?? new ChangeTrackingList<PiiCategoriesExclude>(), policyName, isDefault, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EntityMaskPolicyType>.Write(ModelReaderWriterOptions options)
