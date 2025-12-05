@@ -135,8 +135,8 @@ namespace Azure.ResourceManager.EdgeActions.Samples
             EdgeActionVersionResource edgeActionVersion = client.GetEdgeActionVersionResource(edgeActionVersionResourceId);
 
             // invoke the operation
-            EdgeActionVersionCode body = new EdgeActionVersionCode("UEsDBBQAAAAIAI1NzkQAAAAABQAAAA==", "zippedFile");
-            ArmOperation<EdgeActionVersionProperties> lro = await edgeActionVersion.DeployVersionCodeAsync(WaitUntil.Completed, body);
+            EdgeActionVersionCode content = new EdgeActionVersionCode("UEsDBBQAAAAIAI1NzkQAAAAABQAAAA==", "zippedFile");
+            ArmOperation<EdgeActionVersionProperties> lro = await edgeActionVersion.DeployVersionCodeAsync(WaitUntil.Completed, content);
             EdgeActionVersionProperties result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
