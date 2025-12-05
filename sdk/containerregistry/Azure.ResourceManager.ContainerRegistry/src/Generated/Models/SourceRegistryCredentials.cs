@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> Describes the credential parameters for accessing the source registry. </summary>
-    internal partial class SourceRegistryCredentials
+    public partial class SourceRegistryCredentials
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,18 +51,31 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SourceRegistryCredentials"/>. </summary>
+        /// <param name="identity">
+        /// The Entra identity used for source registry login.
+        /// The value is `[system]` for system-assigned managed identity, `[caller]` for caller identity,
+        /// and client ID for user-assigned managed identity.
+        /// </param>
         /// <param name="loginMode">
         /// The authentication mode which determines the source registry login scope. The credentials for the source registry
         /// will be generated using the given scope. These credentials will be used to login to
         /// the source registry during the run.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SourceRegistryCredentials(SourceRegistryLoginMode? loginMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SourceRegistryCredentials(string identity, SourceRegistryLoginMode? loginMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Identity = identity;
             LoginMode = loginMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary>
+        /// The Entra identity used for source registry login.
+        /// The value is `[system]` for system-assigned managed identity, `[caller]` for caller identity,
+        /// and client ID for user-assigned managed identity.
+        /// </summary>
+        [WirePath("identity")]
+        public string Identity { get; set; }
         /// <summary>
         /// The authentication mode which determines the source registry login scope. The credentials for the source registry
         /// will be generated using the given scope. These credentials will be used to login to
