@@ -225,7 +225,7 @@ function FindLatestPackageWorkItem($lang, $packageName, $groupId = $null, $outpu
   {
     if ($wi.fields["Custom.Language"] -ne $lang) { continue }
     if ($wi.fields["Custom.Package"] -ne $packageName) { continue }
-    if ($groupId -and $wi.fields["Custom.Group"] -ne $groupId) { continue }
+    if ($groupId -and $wi.fields["Custom.GroupId"] -ne $groupId) { continue }
 
     if (!$latestWI) {
       $latestWI = $wi
@@ -258,7 +258,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $groupId = $null, $o
   $fields += "System.Tags"
   $fields += "Custom.Language"
   $fields += "Custom.Package"
-  $fields += "Custom.Group"
+  $fields += "Custom.GroupId"
   $fields += "Custom.PackageDisplayName"
   $fields += "System.Title"
   $fields += "Custom.PackageType"
@@ -289,7 +289,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $groupId = $null, $o
     $query += " AND [Package] = '${packageName}'"
   }
   if ($groupId) {
-    $query += " AND [Group] = '${groupId}'"
+    $query += " AND [GroupId] = '${groupId}'"
   }
   if ($version) {
     $query += " AND [PackageVersionMajorMinor] = '${version}'"
@@ -305,8 +305,8 @@ function FindPackageWorkItem($lang, $packageName, $version, $groupId = $null, $o
   foreach ($wi in $workItems)
   {
     $localKeyArgs = @($wi.fields["Custom.Language"], $wi.fields["Custom.Package"], $wi.fields["Custom.PackageVersionMajorMinor"])
-    if (![string]::IsNullOrWhiteSpace($wi.fields["Custom.Group"])) {
-      $localKeyArgs += $wi.fields["Custom.Group"]
+    if (![string]::IsNullOrWhiteSpace($wi.fields["Custom.GroupId"])) {
+      $localKeyArgs += $wi.fields["Custom.GroupId"]
     }
     $localKey = BuildHashKeyNoNull @localKeyArgs
     if (!$localKey) {
@@ -474,10 +474,10 @@ function UpdatePackageWorkItemReleaseState($id, $state, $releaseType, $outputCom
 
 function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPrompt = $false, $outputCommand = $false, $relatedId = $null, $tag= $null, $ignoreReleasePlannerTests = $true)
 {
-  $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $pkg.Group
+  $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $pkg.GroupId
 
   if (!$workItem) {
-    $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $pkg.Group
+    $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $pkg.GroupId
     $assignedTo = "me"
     $extraFields = @()
     if ($latestVersionItem) {
@@ -525,8 +525,16 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
     Write-Host "Cannot create or update because one of lang, pkg or verMajorMinor aren't set. [$lang|$($pkg.Package)|$verMajorMinor]"
     return
   }
+
+  # PackageProp object uses Group, while other places use GroupId, such as in work item fields and package csv files.
+  $pkgGroupId = if ($pkg.PSObject.Properties.Name -contains "GroupId") {
+    $pkg.GroupId
+  } elseif ($pkg.PSObject.Properties.Name -contains "Group") {
+    $pkg.Group
+  } else {
+    $null
+  }
   $pkgName = $pkg.Package
-  $pkgGroupId = if ($pkg.PSObject.Properties.Name -contains "GroupId") { $pkg.GroupId } else { $pkg.Group }
   $pkgDisplayName = $pkg.DisplayName
   $pkgType = $pkg.Type
   $pkgNewLibrary = $pkg.New
@@ -537,7 +545,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   $fields = @()
   $fields += "`"Language=${lang}`""
   $fields += "`"Package=${pkgName}`""
-  $fields += "`"Group=${pkgGroupId}`""
+  $fields += "`"GroupId=${pkgGroupId}`""
   $fields += "`"PackageDisplayName=${pkgDisplayName}`""
   $fields += "`"PackageType=${pkgType}`""
   $fields += "`"PackageTypeNewLibrary=${pkgNewLibrary}`""
@@ -555,7 +563,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
 
     if ($lang -ne $existingItem.fields["Custom.Language"]) { $changedField = "Custom.Language" }
     if ($pkgName -ne $existingItem.fields["Custom.Package"]) { $changedField = "Custom.Package" }
-    if ($pkgGroupId -ne $existingItem.fields["Custom.Group"]) { $changedField = "Custom.Group" }
+    if ($pkgGroupId -ne $existingItem.fields["Custom.GroupId"]) { $changedField = "Custom.GroupId" }
     if ($verMajorMinor -ne $existingItem.fields["Custom.PackageVersionMajorMinor"]) { $changedField = "Custom.PackageVersionMajorMinor" }
     if ($pkgDisplayName -ne $existingItem.fields["Custom.PackageDisplayName"]) { $changedField = "Custom.PackageDisplayName" }
     if ($pkgType -ne [string]$existingItem.fields["Custom.PackageType"]) { $changedField = "Custom.PackageType" }
@@ -1045,7 +1053,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
 function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $PipelineUrl)
 {
     $pkgName = $pkgValidationDetails.Name
-    $groupId = $pkgValidationDetails.Group
+    $groupId = $pkgValidationDetails.GroupId
     $versionString = $pkgValidationDetails.Version
 
     $parsedNewVersion = [AzureEngSemanticVersion]::new($versionString)
@@ -1295,7 +1303,7 @@ function Update-DevOpsReleaseWorkItem {
 
   $packageInfo = [PSCustomObject][ordered]@{
     Package = $packageName
-    Group = $groupId
+    GroupId = $groupId
     DisplayName = $packageDisplayName
     ServiceName = $serviceName
     RepoPath = $packageRepoPath

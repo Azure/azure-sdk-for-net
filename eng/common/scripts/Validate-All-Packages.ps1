@@ -206,7 +206,7 @@ function ProcessPackage($packageInfo)
     # The following object will be used to update package work item, the name should be package name only without groupId
     $pkgValidationDetails= [PSCustomObject]@{
         Name = $pkgName
-        Group = $packageInfo.Group
+        GroupId = $packageInfo.Group
         Version = $packageInfo.Version
         ChangeLogValidation = $changeLogStatus
         APIReviewValidation = $apireviewDetails.ApiviewApproval
