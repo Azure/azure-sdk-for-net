@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
+using Azure.Generator.Utilities;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -15,9 +18,8 @@ using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Generator.Utilities;
 
 namespace Azure.Generator
 {
@@ -89,8 +91,64 @@ namespace Azure.Generator
                     return new CSharpType(knownType, elementType!);
                 }
             }
+            else if (inputType is InputUnionType inputUnionType)
+            {
+                var dataFactoryElementType = TryCreateDataFactoryElementType(inputUnionType);
+                if (dataFactoryElementType != null)
+                {
+                    return dataFactoryElementType;
+                }
+            }
 
             return base.CreateCSharpTypeCore(inputType);
+        }
+
+        private const string DataFactoryElementIdentity = "Azure.Core.Expressions.DataFactoryElement";
+
+        private CSharpType? TryCreateDataFactoryElementType(InputUnionType inputUnionType)
+        {
+            // Find the DataFactoryElement external type in the union variants
+            InputExternalType? dataFactoryExternalType = null;
+            InputType? otherVariantType = null;
+            int otherVariantCount = 0;
+
+            foreach (var variant in inputUnionType.VariantTypes)
+            {
+                if (variant is InputExternalType externalType && externalType.Identity == DataFactoryElementIdentity)
+                {
+                    dataFactoryExternalType = externalType;
+                }
+                else
+                {
+                    otherVariantType = variant;
+                    otherVariantCount++;
+                }
+            }
+
+            // If no DataFactoryElement external type found, return null
+            if (dataFactoryExternalType == null)
+            {
+                return null;
+            }
+
+            // If there is more than one other variant, log a warning and don't apply specialized logic
+            if (otherVariantCount != 1 || otherVariantType == null)
+            {
+                // TODO: Add proper logging when logging infrastructure is available
+                // Warning: DataFactoryElement union '{inputUnionType.Name}' has {otherVariantCount} variant types instead of exactly 1.
+                // Skipping DataFactoryElement<T> specialized handling.
+                return null;
+            }
+
+            // Create the inner type T from the other variant
+            var innerType = CreateCSharpType(otherVariantType);
+            if (innerType == null)
+            {
+                return null;
+            }
+
+            // Return DataFactoryElement<T>
+            return new CSharpType(typeof(DataFactoryElement<>), innerType);
         }
 
         /// <inheritdoc/>

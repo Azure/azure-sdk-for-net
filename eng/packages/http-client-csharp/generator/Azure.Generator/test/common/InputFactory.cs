@@ -704,6 +704,29 @@ namespace Azure.Generator.Tests.Common
             return new InputArrayType("list", "list", elementType);
         }
 
+        /// <summary>
+        /// Construct input union type
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="variantTypes"></param>
+        /// <returns></returns>
+        public static InputUnionType Union(string name, params InputType[] variantTypes)
+        {
+            return new InputUnionType(name, variantTypes);
+        }
+
+        /// <summary>
+        /// Construct input external type
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <param name="package"></param>
+        /// <param name="minVersion"></param>
+        /// <returns></returns>
+        public static InputExternalType External(string identity, string? package = null, string? minVersion = null)
+        {
+            return new InputExternalType(identity, package, minVersion);
+        }
+
         public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null, IReadOnlyList<string>? pageSizeParameterSegments = null)
         {
             return PagingMetadata(

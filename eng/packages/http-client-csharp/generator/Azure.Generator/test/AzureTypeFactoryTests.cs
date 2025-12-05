@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -11,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using NUnit.Framework;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 
@@ -158,6 +160,103 @@ namespace Azure.Generator.Tests
 
             var actual = factory.InvokeCreateFrameworkType(expectedType.FullName!);
             Assert.AreEqual(expectedType, actual);
+        }
+
+        [Test]
+        public void DataFactoryElementWithString()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (string)
+            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var stringType = InputPrimitiveType.String;
+            var unionType = InputFactory.Union("DfeString", externalType, stringType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.AreEqual(typeof(string), actual.Arguments[0].FrameworkType);
+        }
+
+        [Test]
+        public void DataFactoryElementWithInt()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (int)
+            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var intType = InputPrimitiveType.Int32;
+            var unionType = InputFactory.Union("DfeInt", externalType, intType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.AreEqual(typeof(int), actual.Arguments[0].FrameworkType);
+        }
+
+        [Test]
+        public void DataFactoryElementWithBool()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (bool)
+            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var boolType = InputPrimitiveType.Boolean;
+            var unionType = InputFactory.Union("DfeBool", externalType, boolType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            Assert.AreEqual(typeof(bool), actual.Arguments[0].FrameworkType);
+        }
+
+        [Test]
+        public void DataFactoryElementWithArray()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputArrayType (string[])
+            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var arrayType = InputFactory.Array(InputPrimitiveType.String);
+            var unionType = InputFactory.Union("DfeStringArray", externalType, arrayType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            // The inner type should be IList<string>
+            Assert.IsTrue(actual.Arguments[0].IsGenericType);
+        }
+
+        [Test]
+        public void DataFactoryElementNotAppliedForNonDataFactoryExternalType()
+        {
+            // Create a union type with a different external type (not DataFactoryElement)
+            var externalType = InputFactory.External("Some.Other.ExternalType");
+            var stringType = InputPrimitiveType.String;
+            var unionType = InputFactory.Union("OtherUnion", externalType, stringType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            // Should fall back to default behavior, not create a DataFactoryElement
+            Assert.IsNotNull(actual);
+            Assert.AreNotEqual(typeof(DataFactoryElement<>), actual!.FrameworkType.IsGenericType ? actual.FrameworkType.GetGenericTypeDefinition() : actual.FrameworkType);
+        }
+
+        [Test]
+        public void DataFactoryElementNotAppliedForMultipleVariants()
+        {
+            // Create a union type with DataFactoryElement but multiple other variants
+            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var stringType = InputPrimitiveType.String;
+            var intType = InputPrimitiveType.Int32;
+            var unionType = InputFactory.Union("DfeMultiple", externalType, stringType, intType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            // Should not apply DataFactoryElement specialized handling
+            Assert.IsNotNull(actual);
+            // Result should be BinaryData (default fallback for unions)
+            Assert.AreEqual(typeof(BinaryData), actual!.FrameworkType);
         }
     }
 }
