@@ -61,13 +61,13 @@ namespace Azure.Communication.CallAutomation.Tests.Models
         public void CallAutomationModelFactoryCanInstantiateTranscriptionData()
         {
             var text = "Hello World";
-            var format = TextFormat.Display;
+            var format = "Display";
             var confidence = 0.95;
             ulong offset = 1000;
             ulong duration = 2000;
             var words = new List<WordData> { new WordData { Text = "Hello", Offset = 1000, Duration = 500 } };
             var participantRawID = "participant123";
-            var resultState = ResultStatus.Final;
+            var resultState = "Final";
 
             var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format.ToString(), confidence, offset, duration, words, participantRawID, resultState.ToString());
 

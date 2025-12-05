@@ -86,26 +86,5 @@ namespace Azure.Communication.CallAutomation
             // Serialize the JSON object to a string
             return JsonSerializer.Serialize(jsonObject);
         }
-
-        /// <summary>
-        /// Get the mark data for outbound
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="status"></param>
-        /// <returns>the string of outstreaming data with the mark data.</returns>
-        public static string GetMarkDataForOutbound(string id, MarkStatus status)
-        {
-            // Create a ServerMarkData object for this chunk
-            var mark = new OutStreamingData(MediaKind.MarkData)
-            {
-                MarkData = new MarkData
-                {
-                    Id = id,
-                    Status = status
-                }
-            };
-            // Serialize the JSON object to a string
-            return JsonSerializer.Serialize(mark);
-        }
     }
 }

@@ -1275,7 +1275,6 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.StopAudio StopAudio { get { throw null; } }
         public static string GetAudioDataForOutbound(byte[] audioData) { throw null; }
         public static string GetAudioDataForOutbound(byte[] audioData, string markId) { throw null; }
-        public static string GetMarkDataForOutbound(string id, Azure.Communication.CallAutomation.MarkStatus status) { throw null; }
         public static string GetStopAudioForOutbound() { throw null; }
     }
     public partial class ParticipantsUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
