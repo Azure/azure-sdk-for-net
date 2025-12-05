@@ -479,3 +479,86 @@ op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None
 @convenientAPI(true)
 @post
 op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", @multipartBody body: {name: HttpPart<string>}): void;
+
+// DataFactoryElement alternate type pattern
+// This model represents an expression that can be used in DataFactory pipelines
+@doc("Expression model for DataFactory expressions")
+model DfeExpressionModel {
+  @doc("The type of expression")
+  type: "Expression";
+  @doc("The expression value")
+  value: string;
+}
+
+// Union types that get mapped to DataFactoryElement<T> using alternateType
+@doc("DataFactoryElement<string> equivalent")
+union DfeStringUnion {
+  string,
+  DfeExpressionModel
+}
+
+@doc("DataFactoryElement<int> equivalent")
+union DfeIntUnion {
+  int32,
+  DfeExpressionModel
+}
+
+@doc("DataFactoryElement<bool> equivalent")
+union DfeBoolUnion {
+  boolean,
+  DfeExpressionModel
+}
+
+@doc("DataFactoryElement<string[]> equivalent")
+union DfeStringArrayUnion {
+  string[],
+  DfeExpressionModel
+}
+
+@doc("Model with DataFactoryElement properties")
+model DataFactoryElementModel {
+  @doc("String property with DFE pattern")
+  stringProperty: DfeStringUnion;
+
+  @doc("Int property with DFE pattern")
+  intProperty: DfeIntUnion;
+
+  @doc("Bool property with DFE pattern")
+  boolProperty: DfeBoolUnion;
+
+  @doc("String array property with DFE pattern")
+  stringArrayProperty: DfeStringArrayUnion;
+}
+
+// Apply alternateType decorators to map unions to DataFactoryElement
+@@alternateType(DfeStringUnion, {
+  identity: "Azure.Core.Expressions.DataFactoryElement",
+  package: "Azure.Core.Expressions.DataFactory",
+}, "csharp");
+
+@@alternateType(DfeIntUnion, {
+  identity: "Azure.Core.Expressions.DataFactoryElement",
+  package: "Azure.Core.Expressions.DataFactory",
+}, "csharp");
+
+@@alternateType(DfeBoolUnion, {
+  identity: "Azure.Core.Expressions.DataFactoryElement",
+  package: "Azure.Core.Expressions.DataFactory",
+}, "csharp");
+
+@@alternateType(DfeStringArrayUnion, {
+  identity: "Azure.Core.Expressions.DataFactoryElement",
+  package: "Azure.Core.Expressions.DataFactory",
+}, "csharp");
+
+@route("datafactory")
+@doc("Create a model with DataFactoryElement properties")
+@convenientAPI(true)
+@post
+op CreateDataFactoryModel(@body body: DataFactoryElementModel): DataFactoryElementModel;
+
+@route("datafactory/{id}")
+@doc("Get a model with DataFactoryElement properties")
+@convenientAPI(true)
+@get
+op GetDataFactoryModel(@path id: string): DataFactoryElementModel;

@@ -101,13 +101,6 @@ namespace Azure.Generator
                     return dataFactoryElementType;
                 }
             }
-            else if (inputType is InputExternalType inputExternalType)
-            {
-                // Handle direct InputExternalType - this occurs when @alternateType is used with external type identity
-                // Currently, the emitter produces InputExternalType without the inner type T information,
-                // so we can't create a properly typed DataFactoryElement<T>.
-                // This case is logged as a warning by the emitter: "unsupported-external-type"
-            }
 
             return base.CreateCSharpTypeCore(inputType);
         }
@@ -141,9 +134,9 @@ namespace Azure.Generator
             // If there is more than one other variant, log a warning and don't apply specialized logic
             if (otherVariantCount != 1 || otherVariantType == null)
             {
-                // TODO: Add proper logging when logging infrastructure is available
-                // Warning: DataFactoryElement union '{inputUnionType.Name}' has {otherVariantCount} variant types instead of exactly 1.
-                // Skipping DataFactoryElement<T> specialized handling.
+                AzureClientGenerator.Instance.Emitter.ReportDiagnostic(
+                    "DFE001",
+                    $"DataFactoryElement union '{inputUnionType.Name}' has {otherVariantCount} variant types instead of exactly 1. Skipping DataFactoryElement<T> specialized handling.");
                 return null;
             }
 

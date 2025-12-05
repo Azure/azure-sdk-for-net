@@ -258,5 +258,22 @@ namespace Azure.Generator.Tests
             // Result should be BinaryData (default fallback for unions)
             Assert.AreEqual(typeof(BinaryData), actual!.FrameworkType);
         }
+
+        [Test]
+        public void DataFactoryElementWithModel()
+        {
+            // Create a union type with InputExternalType (DataFactoryElement) and InputModelType
+            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var modelType = InputFactory.Model("TestModel");
+            var unionType = InputFactory.Union("DfeModel", externalType, modelType);
+
+            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
+
+            Assert.IsNotNull(actual);
+            Assert.IsTrue(actual!.IsGenericType);
+            Assert.AreEqual(typeof(DataFactoryElement<>), actual.FrameworkType.GetGenericTypeDefinition());
+            // The inner type should be the model type
+            Assert.AreEqual("TestModel", actual.Arguments[0].Name);
+        }
     }
 }
