@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.NeonPostgres;
 
 namespace Azure.ResourceManager.NeonPostgres.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     public readonly partial struct EndpointType : IEquatable<EndpointType>
     {
         private readonly string _value;
+        /// <summary> ReadOnly compute endpoint type. </summary>
+        private const string ReadOnlyValue = "read_only";
+        /// <summary> ReadWrite compute endpoint type. </summary>
+        private const string ReadWriteValue = "read_write";
 
         /// <summary> Initializes a new instance of <see cref="EndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EndpointType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadOnlyValue = "read_only";
-        private const string ReadWriteValue = "read_write";
+            _value = value;
+        }
 
         /// <summary> ReadOnly compute endpoint type. </summary>
         public static EndpointType ReadOnly { get; } = new EndpointType(ReadOnlyValue);
+
         /// <summary> ReadWrite compute endpoint type. </summary>
         public static EndpointType ReadWrite { get; } = new EndpointType(ReadWriteValue);
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EndpointType left, EndpointType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EndpointType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EndpointType left, EndpointType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EndpointType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EndpointType(string value) => new EndpointType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EndpointType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EndpointType?(string value) => value == null ? null : new EndpointType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EndpointType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EndpointType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

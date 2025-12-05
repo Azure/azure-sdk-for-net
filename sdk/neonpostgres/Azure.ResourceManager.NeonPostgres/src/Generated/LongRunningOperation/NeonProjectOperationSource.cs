@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    internal class NeonProjectOperationSource : IOperationSource<NeonProjectResource>
+    /// <summary></summary>
+    internal partial class NeonProjectOperationSource : IOperationSource<NeonProjectResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NeonProjectOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NeonProjectResource IOperationSource<NeonProjectResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NeonProjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNeonPostgresContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NeonProjectData data = NeonProjectData.DeserializeNeonProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NeonProjectResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NeonProjectResource> IOperationSource<NeonProjectResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NeonProjectData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNeonPostgresContext.Default);
-            return await Task.FromResult(new NeonProjectResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NeonProjectData data = NeonProjectData.DeserializeNeonProjectData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NeonProjectResource(_client, data);
         }
     }
 }

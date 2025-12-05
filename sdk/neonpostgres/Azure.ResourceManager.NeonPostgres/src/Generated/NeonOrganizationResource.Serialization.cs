@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
+    /// <summary></summary>
     public partial class NeonOrganizationResource : IJsonModel<NeonOrganizationData>
     {
-        private static NeonOrganizationData s_dataDeserializationInstance;
-        private static NeonOrganizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NeonOrganizationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NeonOrganizationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NeonOrganizationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NeonOrganizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NeonOrganizationData>)Data).Write(writer, options);
 
-        NeonOrganizationData IJsonModel<NeonOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NeonOrganizationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NeonOrganizationData IJsonModel<NeonOrganizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NeonOrganizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NeonOrganizationData>(Data, options, AzureResourceManagerNeonPostgresContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NeonOrganizationData IPersistableModel<NeonOrganizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NeonOrganizationData>(data, options, AzureResourceManagerNeonPostgresContext.Default);
 
-        string IPersistableModel<NeonOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NeonOrganizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NeonOrganizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

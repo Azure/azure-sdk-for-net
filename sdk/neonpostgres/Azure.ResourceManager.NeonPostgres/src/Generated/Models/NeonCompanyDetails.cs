@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
     /// <summary> Company details for an organization. </summary>
     public partial class NeonCompanyDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NeonCompanyDetails"/>. </summary>
         public NeonCompanyDetails()
@@ -57,8 +28,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="businessPhone"> Business phone number of the company. </param>
         /// <param name="domain"> Domain of the user. </param>
         /// <param name="numberOfEmployees"> Number of employees in the company. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonCompanyDetails(string companyName, string country, string officeAddress, string businessPhone, string domain, long? numberOfEmployees, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NeonCompanyDetails(string companyName, string country, string officeAddress, string businessPhone, string domain, long? numberOfEmployees, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CompanyName = companyName;
             Country = country;
@@ -66,19 +37,24 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             BusinessPhone = businessPhone;
             Domain = domain;
             NumberOfEmployees = numberOfEmployees;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Company name. </summary>
         public string CompanyName { get; set; }
+
         /// <summary> Country name of the company. </summary>
         public string Country { get; set; }
+
         /// <summary> Office address of the company. </summary>
         public string OfficeAddress { get; set; }
+
         /// <summary> Business phone number of the company. </summary>
         public string BusinessPhone { get; set; }
+
         /// <summary> Domain of the user. </summary>
         public string Domain { get; set; }
+
         /// <summary> Number of employees in the company. </summary>
         public long? NumberOfEmployees { get; set; }
     }

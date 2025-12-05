@@ -8,23 +8,42 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
-using Azure.ResourceManager.NeonPostgres.Models;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NeonPostgres
 {
-    internal class NeonEndpointOperationSource : IOperationSource<NeonEndpoint>
+    /// <summary></summary>
+    internal partial class NeonEndpointOperationSource : IOperationSource<NeonEndpointResource>
     {
-        NeonEndpoint IOperationSource<NeonEndpoint>.CreateResult(Response response, CancellationToken cancellationToken)
+        private readonly ArmClient _client;
+
+        /// <summary></summary>
+        /// <param name="client"></param>
+        internal NeonEndpointOperationSource(ArmClient client)
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NeonEndpoint.DeserializeNeonEndpoint(document.RootElement);
+            _client = client;
         }
 
-        async ValueTask<NeonEndpoint> IOperationSource<NeonEndpoint>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NeonEndpointResource IOperationSource<NeonEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NeonEndpoint.DeserializeNeonEndpoint(document.RootElement);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NeonEndpointData data = NeonEndpointData.DeserializeNeonEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NeonEndpointResource(_client, data);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<NeonEndpointResource> IOperationSource<NeonEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NeonEndpointData data = NeonEndpointData.DeserializeNeonEndpointData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NeonEndpointResource(_client, data);
         }
     }
 }
