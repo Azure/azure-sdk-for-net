@@ -3,6 +3,7 @@
 
 using System.Text.Json;
 
+using Azure.AI.AgentServer.Contracts.Generated.Agents;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
 using Azure.AI.AgentServer.Core.Common.Http.Json;
@@ -33,7 +34,7 @@ public static class ResponseConverterExtensions
         AgentInvocationContext context)
     {
         var output = agentRunResponse.Messages
-            .SelectMany(msg => msg.ToItemResource(context.IdGenerator));
+            .SelectMany(msg => msg.ToItemResource(context.IdGenerator, context.ResponseId));
 
         return request.ToResponse(
             context: context,
@@ -48,9 +49,12 @@ public static class ResponseConverterExtensions
     /// </summary>
     /// <param name="message">The chat message to convert.</param>
     /// <param name="idGenerator">The ID generator for creating resource IDs.</param>
+    /// <param name="responseId">The response ID for the CreatedBy field.</param>
     /// <returns>An enumerable collection of item resources.</returns>
-    public static IEnumerable<ItemResource> ToItemResource(this ChatMessage message, IIdGenerator idGenerator)
+    public static IEnumerable<ItemResource> ToItemResource(this ChatMessage message, IIdGenerator idGenerator, string responseId)
     {
+        var createdBy = CreateCreatedBy(message.AuthorName, responseId);
+
         List<ItemContent> contents = [];
         foreach (var content in message.Contents)
         {
@@ -58,12 +62,15 @@ public static class ResponseConverterExtensions
             {
                 case FunctionCallContent functionCallContent:
                     // message.Role == ChatRole.Assistant
-                    yield return functionCallContent.ToFunctionToolCallItemResource(idGenerator.GenerateFunctionCallId());
+                    yield return functionCallContent.ToFunctionToolCallItemResource(
+                        idGenerator.GenerateFunctionCallId(),
+                        createdBy);
                     break;
                 case FunctionResultContent functionResultContent:
                     // message.Role == ChatRole.Tool
                     yield return functionResultContent.ToFunctionToolCallOutputItemResource(
-                        idGenerator.GenerateFunctionOutputId());
+                        idGenerator.GenerateFunctionOutputId(),
+                        createdBy);
                     break;
                 default:
                     // message.Role == ChatRole.Assistant
@@ -82,9 +89,27 @@ public static class ResponseConverterExtensions
             yield return new ResponsesAssistantMessageItemResource(
                 id: idGenerator.GenerateMessageId(),
                 status: ResponsesMessageItemResourceStatus.Completed,
-                content: contents
+                content: contents,
+                createdBy: createdBy
             );
         }
+    }
+
+    /// <summary>
+    /// Creates a CreatedBy object from the author name and response ID.
+    /// </summary>
+    /// <param name="authorName">The name of the author from the chat message.</param>
+    /// <param name="responseId">The response ID.</param>
+    /// <returns>A CreatedBy object with agent information and response ID.</returns>
+    private static CreatedBy CreateCreatedBy(string? authorName, string responseId)
+    {
+        AgentId? agentId = null;
+        if (!string.IsNullOrEmpty(authorName))
+        {
+            agentId = new AgentId(authorName, string.Empty);
+        }
+
+        return new CreatedBy(agentId, responseId, null);
     }
 
     /// <summary>
@@ -92,13 +117,18 @@ public static class ResponseConverterExtensions
     /// </summary>
     /// <param name="functionCallContent">The function call content to convert.</param>
     /// <param name="id">The ID for the resource.</param>
+    /// <param name="createdBy">Optional information about the creator of the item.</param>
     /// <returns>A function tool call item resource.</returns>
     public static FunctionToolCallItemResource ToFunctionToolCallItemResource(
         this FunctionCallContent functionCallContent,
-        string id)
+        string id,
+        CreatedBy? createdBy = null)
     {
         return new FunctionToolCallItemResource(
+            type: ItemType.FunctionCall,
             id: id,
+            createdBy: createdBy,
+            serializedAdditionalRawData: null,
             status: FunctionToolCallItemResourceStatus.Completed,
             callId: functionCallContent.CallId,
             name: functionCallContent.Name,
@@ -111,16 +141,21 @@ public static class ResponseConverterExtensions
     /// </summary>
     /// <param name="functionResultContent">The function result content to convert.</param>
     /// <param name="id">The ID for the resource.</param>
+    /// <param name="createdBy">Optional information about the creator of the item.</param>
     /// <returns>A function tool call output item resource.</returns>
     public static FunctionToolCallOutputItemResource ToFunctionToolCallOutputItemResource(
         this FunctionResultContent functionResultContent,
-        string id)
+        string id,
+        CreatedBy? createdBy = null)
     {
         var output = functionResultContent.Exception is not null
             ? $"{functionResultContent.Exception.GetType().Name}(\"{functionResultContent.Exception.Message}\")"
             : $"{functionResultContent.Result?.ToString() ?? "(null)"}";
         return new FunctionToolCallOutputItemResource(
+            type: ItemType.FunctionCallOutput,
             id: id,
+            createdBy: createdBy,
+            serializedAdditionalRawData: null,
             status: FunctionToolCallOutputItemResourceStatus.Completed,
             callId: functionResultContent.CallId,
             output: output
