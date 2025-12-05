@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
         internal PostgreSqlLtrServerBackupOperationList()
         {
-            Value = new ChangeTrackingList<BackupsLongTermRetentionOperationData>();
+            Value = new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlLtrServerBackupOperationList"/>. </summary>
         /// <param name="value"> The list of long term retention server backup operations. </param>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<BackupsLongTermRetentionOperationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlLtrServerBackupOperationList(IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The list of long term retention server backup operations. </summary>
-        public IReadOnlyList<BackupsLongTermRetentionOperationData> Value { get; }
+        public IReadOnlyList<PostgreSqlLtrServerBackupOperationData> Value { get; }
         /// <summary> The link used to get the next page of operations. </summary>
         public Uri NextLink { get; }
     }

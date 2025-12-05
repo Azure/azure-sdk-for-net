@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointsList"/>. </summary>
         internal VirtualEndpointsList()
         {
-            Value = new ChangeTrackingList<VirtualEndpointData>();
+            Value = new ChangeTrackingList<VirtualEndpointResourceData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointsList"/>. </summary>
         /// <param name="value"> List of virtual endpoints. </param>
         /// <param name="nextLink"> Link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEndpointsList(IReadOnlyList<VirtualEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualEndpointsList(IReadOnlyList<VirtualEndpointResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of virtual endpoints. </summary>
-        public IReadOnlyList<VirtualEndpointData> Value { get; }
+        public IReadOnlyList<VirtualEndpointResourceData> Value { get; }
         /// <summary> Link used to get the next page of results. </summary>
         public Uri NextLink { get; }
     }

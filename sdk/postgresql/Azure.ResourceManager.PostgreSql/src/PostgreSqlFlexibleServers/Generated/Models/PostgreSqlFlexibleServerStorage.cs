@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="throughput"> Maximum throughput supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </param>
         /// <param name="storageType"> Type of storage assigned to a server. Allowed values are Premium_LRS, PremiumV2_LRS, or UltraSSD_LRS. If not specified, it defaults to Premium_LRS. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, AzureManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerStorage(int? storageSizeInGB, StorageAutoGrow? autoGrow, PostgreSqlManagedDiskPerformanceTier? tier, int? iops, int? throughput, PostgreSqlFlexibleServersStorageType? storageType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageSizeInGB = storageSizeInGB;
             AutoGrow = autoGrow;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public StorageAutoGrow? AutoGrow { get; set; }
         /// <summary> Storage tier of a server. </summary>
         [WirePath("tier")]
-        public AzureManagedDiskPerformanceTier? Tier { get; set; }
+        public PostgreSqlManagedDiskPerformanceTier? Tier { get; set; }
         /// <summary> Maximum IOPS supported for storage. Required when type of storage is PremiumV2_LRS or UltraSSD_LRS. </summary>
         [WirePath("iops")]
         public int? Iops { get; set; }

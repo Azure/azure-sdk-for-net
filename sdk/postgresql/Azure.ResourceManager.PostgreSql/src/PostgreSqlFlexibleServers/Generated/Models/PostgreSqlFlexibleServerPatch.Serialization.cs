@@ -134,6 +134,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("cluster"u8);
                 writer.WriteObjectValue(Cluster, options);
             }
+            if (Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -172,24 +177,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            SkuForPatch sku = default;
+            PostgreSqlFlexibleServerSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             string administratorLogin = default;
             string administratorLoginPassword = default;
-            PostgresMajorVersion? version = default;
+            PostgreSqlFlexibleServerVersion? version = default;
             PostgreSqlFlexibleServerStorage storage = default;
-            BackupForPatch backup = default;
+            PostgreSqlFlexibleServerBackupProperties backup = default;
             HighAvailabilityForPatch highAvailability = default;
             MaintenanceWindowForPatch maintenanceWindow = default;
             AuthConfigForPatch authConfig = default;
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
             string availabilityZone = default;
-            CreateModeForPatch? createMode = default;
+            PostgreSqlFlexibleServerCreateModeForUpdate? createMode = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerNetwork network = default;
             Cluster cluster = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +206,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    sku = SkuForPatch.DeserializeSkuForPatch(property.Value, options);
+                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -251,7 +257,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            version = new PostgresMajorVersion(property0.Value.GetString());
+                            version = new PostgreSqlFlexibleServerVersion(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("storage"u8))
@@ -269,7 +275,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            backup = BackupForPatch.DeserializeBackupForPatch(property0.Value, options);
+                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("highAvailability"u8))
@@ -319,7 +325,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             {
                                 continue;
                             }
-                            createMode = new CreateModeForPatch(property0.Value.GetString());
+                            createMode = new PostgreSqlFlexibleServerCreateModeForUpdate(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("replicationRole"u8))
@@ -358,6 +364,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             cluster = Cluster.DeserializeCluster(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("location"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            location = new AzureLocation(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -386,6 +401,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 replica,
                 network,
                 cluster,
+                location,
                 serializedAdditionalRawData);
         }
 

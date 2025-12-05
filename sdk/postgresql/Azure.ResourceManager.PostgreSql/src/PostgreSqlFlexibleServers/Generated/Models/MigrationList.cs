@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="MigrationList"/>. </summary>
         internal MigrationList()
         {
-            Value = new ChangeTrackingList<MigrationData>();
+            Value = new ChangeTrackingList<PostgreSqlMigrationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MigrationList"/>. </summary>
         /// <param name="value"> List of migrations. </param>
         /// <param name="nextLink"> Link used to get the next page of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationList(IReadOnlyList<MigrationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrationList(IReadOnlyList<PostgreSqlMigrationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> List of migrations. </summary>
-        public IReadOnlyList<MigrationData> Value { get; }
+        public IReadOnlyList<PostgreSqlMigrationData> Value { get; }
         /// <summary> Link used to get the next page of results. </summary>
         public Uri NextLink { get; }
     }

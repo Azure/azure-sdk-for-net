@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Standalone,
-                    PromoteOption = ReadReplicaPromoteOption.Forced,
+                    PromoteOption = ReplicationPromoteOption.Forced,
                 },
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Standalone,
-                    PromoteOption = ReadReplicaPromoteOption.Planned,
+                    PromoteOption = ReplicationPromoteOption.Planned,
                 },
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Switchover,
-                    PromoteOption = ReadReplicaPromoteOption.Forced,
+                    PromoteOption = ReplicationPromoteOption.Forced,
                 },
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 Replica = new PostgreSqlFlexibleServersReplica
                 {
                     PromoteMode = ReadReplicaPromoteMode.Switchover,
-                    PromoteOption = ReadReplicaPromoteOption.Planned,
+                    PromoteOption = ReplicationPromoteOption.Planned,
                 },
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
@@ -312,8 +312,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Version = PostgresMajorVersion.Seventeen,
-                CreateMode = CreateModeForPatch.Update,
+                Version = PostgreSqlFlexibleServerVersion.Seventeen,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             PostgreSqlFlexibleServerResource result = lro.Value;
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -358,19 +358,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 {
                     StorageSizeInGB = 1024,
                     AutoGrow = StorageAutoGrow.Disabled,
-                    Tier = AzureManagedDiskPerformanceTier.P30,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
                 },
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },
                 AuthConfig = new AuthConfigForPatch
                 {
-                    ActiveDirectoryAuth = MicrosoftEntraAuth.Enabled,
-                    PasswordAuth = PasswordBasedAuth.Enabled,
+                    ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
+                    PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
                     TenantId = Guid.Parse("tttttt-tttt-tttt-tttt-tttttttttttt"),
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             PostgreSqlFlexibleServerResource result = lro.Value;
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     StartMinute = 0,
                     DayOfWeek = 0,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             PostgreSqlFlexibleServerResource result = lro.Value;
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -461,19 +461,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 },
                 },
                 AdministratorLoginPassword = "examplenewpassword",
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
                     PrimaryKeyUri = new Uri("https://exampleprimarykeyvault.vault.azure.net/keys/examplekey"),
-                    PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity",
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             PostgreSqlFlexibleServerResource result = lro.Value;
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -522,19 +522,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 },
                 },
                 AdministratorLoginPassword = "examplenewpassword",
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },
                 DataEncryption = new PostgreSqlFlexibleServerDataEncryption
                 {
                     PrimaryKeyUri = new Uri("https://exampleprimarykeyvault.vault.azure.net/keys/examplekey/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
-                    PrimaryUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity",
+                    PrimaryUserAssignedIdentityId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"),
                     GeoBackupKeyUri = new Uri("https://examplegeoredundantkeyvault.vault.azure.net/keys/examplekey/yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"),
                     GeoBackupUserAssignedIdentityId = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity",
-                    DataEncryptionType = DataEncryptionType.AzureKeyVault,
+                    KeyType = PostgreSqlFlexibleServerKeyType.AzureKeyVault,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             PostgreSqlFlexibleServerResource result = lro.Value;
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new SkuForPatch
+                Sku = new PostgreSqlFlexibleServerSku
                 {
                     Name = "Standard_D8s_v3",
                     Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
@@ -579,13 +579,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 {
                     StorageSizeInGB = 1024,
                     AutoGrow = StorageAutoGrow.Enabled,
-                    Tier = AzureManagedDiskPerformanceTier.P30,
+                    Tier = PostgreSqlManagedDiskPerformanceTier.P30,
                 },
-                Backup = new BackupForPatch
+                Backup = new PostgreSqlFlexibleServerBackupProperties
                 {
                     BackupRetentionDays = 20,
                 },
-                CreateMode = CreateModeForPatch.Update,
+                CreateMode = PostgreSqlFlexibleServerCreateModeForUpdate.Update,
             };
             ArmOperation<PostgreSqlFlexibleServerResource> lro = await postgreSqlFlexibleServer.UpdateAsync(WaitUntil.Completed, patch);
             PostgreSqlFlexibleServerResource result = lro.Value;
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (Capability item in postgreSqlFlexibleServer.GetCapabilitiesByServersAsync())
+            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in postgreSqlFlexibleServer.GetCapabilitiesByServersAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (CapturedLog item in postgreSqlFlexibleServer.GetCapturedLogsAsync())
+            await foreach (PostgreSqlFlexibleServerLogFile item in postgreSqlFlexibleServer.GetCapturedLogsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -703,9 +703,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
-            BackupsLongTermRetentionContent content = new BackupsLongTermRetentionContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
-            ArmOperation<BackupsLongTermRetentionResponse> lro = await postgreSqlFlexibleServer.StartBackupsLongTermRetentionAsync(WaitUntil.Completed, content);
-            BackupsLongTermRetentionResponse result = lro.Value;
+            PostgreSqlFlexibleServerLtrBackupContent content = new PostgreSqlFlexibleServerLtrBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
+            ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> lro = await postgreSqlFlexibleServer.StartBackupsLongTermRetentionAsync(WaitUntil.Completed, content);
+            PostgreSqlFlexibleServerLtrBackupResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -731,8 +731,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
             // invoke the operation
-            MigrationNameAvailability migrationNameAvailability = new MigrationNameAvailability("examplemigration", new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers/migrations"));
-            MigrationNameAvailability result = await postgreSqlFlexibleServer.CheckNameAvailabilityMigrationAsync(migrationNameAvailability);
+            PostgreSqlCheckMigrationNameAvailabilityContent content = new PostgreSqlCheckMigrationNameAvailabilityContent("examplemigration", new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers/migrations"));
+            PostgreSqlCheckMigrationNameAvailabilityContent result = await postgreSqlFlexibleServer.CheckNameAvailabilityMigrationAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

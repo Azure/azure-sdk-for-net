@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="passwordAuth"> Indicates if the server supports password based authentication. </param>
         /// <param name="tenantId"> Identifier of the tenant of the delegated resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServerAuthConfig(MicrosoftEntraAuth? activeDirectoryAuth, PasswordBasedAuth? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PostgreSqlFlexibleServerAuthConfig(PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActiveDirectoryAuth = activeDirectoryAuth;
             PasswordAuth = passwordAuth;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Indicates if the server supports Microsoft Entra authentication. </summary>
         [WirePath("activeDirectoryAuth")]
-        public MicrosoftEntraAuth? ActiveDirectoryAuth { get; set; }
+        public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
         /// <summary> Indicates if the server supports password based authentication. </summary>
         [WirePath("passwordAuth")]
-        public PasswordBasedAuth? PasswordAuth { get; set; }
+        public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
         /// <summary> Identifier of the tenant of the delegated resource. </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }

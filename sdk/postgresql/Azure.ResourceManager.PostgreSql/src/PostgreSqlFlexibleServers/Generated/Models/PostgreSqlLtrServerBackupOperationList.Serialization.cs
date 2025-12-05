@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<BackupsLongTermRetentionOperationData> value = default;
+            IReadOnlyList<PostgreSqlLtrServerBackupOperationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<BackupsLongTermRetentionOperationData> array = new List<BackupsLongTermRetentionOperationData>();
+                    List<PostgreSqlLtrServerBackupOperationData> array = new List<PostgreSqlLtrServerBackupOperationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupsLongTermRetentionOperationData.DeserializeBackupsLongTermRetentionOperationData(item, options));
+                        array.Add(PostgreSqlLtrServerBackupOperationData.DeserializePostgreSqlLtrServerBackupOperationData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlLtrServerBackupOperationList(value ?? new ChangeTrackingList<BackupsLongTermRetentionOperationData>(), nextLink, serializedAdditionalRawData);
+            return new PostgreSqlLtrServerBackupOperationList(value ?? new ChangeTrackingList<PostgreSqlLtrServerBackupOperationData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

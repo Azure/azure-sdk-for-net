@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<AdministratorMicrosoftEntraData> value = default;
+            IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<AdministratorMicrosoftEntraData> array = new List<AdministratorMicrosoftEntraData>();
+                    List<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> array = new List<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdministratorMicrosoftEntraData.DeserializeAdministratorMicrosoftEntraData(item, options));
+                        array.Add(PostgreSqlFlexibleServerActiveDirectoryAdministratorData.DeserializePostgreSqlFlexibleServerActiveDirectoryAdministratorData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AdministratorMicrosoftEntraList(value ?? new ChangeTrackingList<AdministratorMicrosoftEntraData>(), nextLink, serializedAdditionalRawData);
+            return new AdministratorMicrosoftEntraList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

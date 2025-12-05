@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<AdvancedThreatProtectionSettingsModelData> value = default;
+            IReadOnlyList<ServerThreatProtectionSettingsModelData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<AdvancedThreatProtectionSettingsModelData> array = new List<AdvancedThreatProtectionSettingsModelData>();
+                    List<ServerThreatProtectionSettingsModelData> array = new List<ServerThreatProtectionSettingsModelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AdvancedThreatProtectionSettingsModelData.DeserializeAdvancedThreatProtectionSettingsModelData(item, options));
+                        array.Add(ServerThreatProtectionSettingsModelData.DeserializeServerThreatProtectionSettingsModelData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AdvancedThreatProtectionSettingsList(value ?? new ChangeTrackingList<AdvancedThreatProtectionSettingsModelData>(), nextLink, serializedAdditionalRawData);
+            return new AdvancedThreatProtectionSettingsList(value ?? new ChangeTrackingList<ServerThreatProtectionSettingsModelData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

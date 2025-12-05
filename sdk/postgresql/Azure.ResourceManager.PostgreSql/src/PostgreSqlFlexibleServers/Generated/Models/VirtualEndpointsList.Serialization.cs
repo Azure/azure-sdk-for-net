@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            IReadOnlyList<VirtualEndpointData> value = default;
+            IReadOnlyList<VirtualEndpointResourceData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<VirtualEndpointData> array = new List<VirtualEndpointData>();
+                    List<VirtualEndpointResourceData> array = new List<VirtualEndpointResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualEndpointData.DeserializeVirtualEndpointData(item, options));
+                        array.Add(VirtualEndpointResourceData.DeserializeVirtualEndpointResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualEndpointsList(value ?? new ChangeTrackingList<VirtualEndpointData>(), nextLink, serializedAdditionalRawData);
+            return new VirtualEndpointsList(value ?? new ChangeTrackingList<VirtualEndpointResourceData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
