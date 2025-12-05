@@ -6,7 +6,6 @@ using System.ClientModel.Primitives;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.ClientModel.TestFramework;
@@ -50,12 +49,7 @@ public class ProxyTransport : PipelineTransport
             AllowAutoRedirect = false,
             UseCookies = false
         };
-        var httpClient = new HttpClient(handler)
-        {
-            // Timeouts are handled by the pipeline
-            Timeout = Timeout.InfiniteTimeSpan
-        };
-        _innerTransport = new HttpClientPipelineTransport(httpClient);
+        _innerTransport = new HttpClientPipelineTransport(new HttpClient(handler));
     }
 
     /// <inheritdoc/>
