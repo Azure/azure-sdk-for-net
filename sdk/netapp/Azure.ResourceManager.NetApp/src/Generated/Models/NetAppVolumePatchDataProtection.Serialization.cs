@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("snapshot"u8);
                 writer.WriteObjectValue(Snapshot, options);
             }
+            if (Optional.IsDefined(RansomwareProtection))
+            {
+                writer.WritePropertyName("ransomwareProtection"u8);
+                writer.WriteObjectValue(RansomwareProtection, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             NetAppVolumeBackupConfiguration backup = default;
             VolumeSnapshotProperties snapshot = default;
+            RansomwareProtectionPatchSettings ransomwareProtection = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +111,22 @@ namespace Azure.ResourceManager.NetApp.Models
                     snapshot = VolumeSnapshotProperties.DeserializeVolumeSnapshotProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("ransomwareProtection"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ransomwareProtection = RansomwareProtectionPatchSettings.DeserializeRansomwareProtectionPatchSettings(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppVolumePatchDataProtection(backup, snapshot, serializedAdditionalRawData);
+            return new NetAppVolumePatchDataProtection(backup, snapshot, ransomwareProtection, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppVolumePatchDataProtection>.Write(ModelReaderWriterOptions options)
