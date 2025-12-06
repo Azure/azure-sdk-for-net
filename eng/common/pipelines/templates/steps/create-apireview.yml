@@ -26,6 +26,9 @@ parameters:
   - name: PackageInfoFiles
     type: object
     default: []
+  - name: AzureServiceConnection
+    type: string
+    default: 'APIView prod deployment'
 
 steps:
   # Automatic API review is generated for a package when pipeline runs irrespective of how pipeline gets triggered.
@@ -37,16 +40,18 @@ steps:
       parameters:
         WorkingDirectory: ${{ parameters.SourceRootPath }}
 
-    - task: Powershell@2
+    - task: AzureCLI@2
       inputs:
-        filePath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
+        azureSubscription: ${{ parameters.AzureServiceConnection }}
+        scriptType: pscore
+        scriptLocation: scriptPath
+        scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1
         # PackageInfoFiles example: @('a/file1.json','a/file2.json')
         arguments: >
           -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
           -ArtifactList ('${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json | Select-Object Name)
           -ArtifactPath '${{parameters.ArtifactPath}}'
           -ArtifactName ${{ parameters.ArtifactName }}
-          -APIKey '$(azuresdk-apiview-apikey)'
           -PackageName '${{parameters.PackageName}}'
           -SourceBranch '$(Build.SourceBranchName)'
           -DefaultBranch '$(DefaultBranch)'
@@ -54,7 +59,6 @@ steps:
           -BuildId '$(Build.BuildId)'
           -RepoName '$(Build.Repository.Name)'
           -MarkPackageAsShipped $${{parameters.MarkPackageAsShipped}}
-        pwsh: true
       displayName: Create API Review
       condition: >-
         and(

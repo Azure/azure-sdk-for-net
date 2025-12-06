@@ -4,7 +4,7 @@ Param (
   [array] $ArtifactList,
   [Parameter(Mandatory=$True)]
   [string] $ArtifactPath,
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory=$False)]
   [string] $APIKey,
   [string] $SourceBranch,
   [string] $DefaultBranch,
@@ -12,16 +12,39 @@ Param (
   [string] $BuildId,
   [string] $PackageName = "",
   [string] $ConfigFileDir = "",
-  [string] $APIViewUri = "https://apiview.dev/AutoReview",
+  [string] $APIViewUri = "https://apiview.dev/autoreview",
   [string] $ArtifactName = "packages",
   [bool] $MarkPackageAsShipped = $false,
   [Parameter(Mandatory=$False)]
-  [array] $PackageInfoFiles
+  [array] $PackageInfoFiles,
+  [string] $APIViewAudience = "api://apiview"
 )
 
 Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers ApiView-Helpers.ps1)
+
+# Get Bearer token for APIView authentication
+# Uses Azure CLI to get an access token for the specified audience
+function Get-ApiViewBearerToken($audience)
+{
+    try {
+        Write-Host "Acquiring access token for audience: $audience"
+        $tokenResponse = az account get-access-token --resource $audience --output json | ConvertFrom-Json
+        if ($tokenResponse -and $tokenResponse.accessToken) {
+            Write-Host "Successfully acquired access token"
+            return $tokenResponse.accessToken
+        }
+        else {
+            Write-Host "Failed to acquire access token - no token in response" -ForegroundColor Yellow
+            return $null
+        }
+    }
+    catch {
+        Write-Host "Failed to acquire access token: $($_.Exception.Message)" -ForegroundColor Yellow
+        return $null
+    }
+}
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
 function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVersion, $packageType)
@@ -78,10 +101,19 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
         Write-Host "Request param, compareAllRevisions: true"
     }
 
-    $uri = "${APIViewUri}/UploadAutoReview"
-    $headers = @{
-        "ApiKey" = $apiKey;
-        "content-type" = "multipart/form-data"
+    $uri = "${APIViewUri}/upload"
+    
+    # Get Bearer token for authentication (preferred) or fall back to API key
+    $bearerToken = Get-ApiViewBearerToken $APIViewAudience
+    if ($bearerToken) {
+        $headers = @{
+            "Authorization" = "Bearer $bearerToken";
+            "content-type" = "multipart/form-data"
+        }
+    }
+    else {
+        Write-Host "ERROR: No authentication method available. Either Azure CLI login or APIKey is required." -ForegroundColor Red
+        return 401
     }
 
     try
@@ -115,20 +147,29 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     if($MarkPackageAsShipped) {
         $params += "&setReleaseTag=true"
     }
-    $uri = "${APIViewUri}/CreateApiReview?${params}"
+    $uri = "${APIViewUri}/create?${params}"
     if ($releaseStatus -and ($releaseStatus -ne "Unreleased"))
     {
         $uri += "&compareAllRevisions=true"
     }
 
     Write-Host "Request to APIView: $uri"
-    $headers = @{
-        "ApiKey" = $APIKey;
+    
+    # Get Bearer token for authentication (preferred) or fall back to API key
+    $bearerToken = Get-ApiViewBearerToken $APIViewAudience
+    if ($bearerToken) {
+        $headers = @{
+            "Authorization" = "Bearer $bearerToken"
+        }
+    }
+    else {
+        Write-Host "ERROR: No authentication method available. Either Azure CLI login or APIKey is required." -ForegroundColor Red
+        return 401
     }
 
     try
     {
-        $Response = Invoke-WebRequest -Method 'GET' -Uri $uri -Headers $headers
+        $Response = Invoke-WebRequest -Method 'POST' -Uri $uri -Headers $headers
         Write-Host "API review: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
