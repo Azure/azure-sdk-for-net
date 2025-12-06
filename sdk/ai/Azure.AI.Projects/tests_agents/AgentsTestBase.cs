@@ -21,6 +21,7 @@ using OpenAI;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 using Azure.AI.Projects.Tests.Utils;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -81,7 +82,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                     "At the top of the resulting page you will see a default chart of Microsoft stock price." +
                     "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
         {ToolType.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
-        {ToolType.Sharepoint, "Hello, summarize the key points of the first document in the list."},
+        {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
@@ -130,6 +131,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.AzureAISearch, "product_info_7.md"},
         {ToolType.BingGrounding, "Wikipedia"},
         {ToolType.BingGroundingCustom, "Wikipedia"},
+        {ToolType.Sharepoint, "sharepoint"}
     };
 
     public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
@@ -155,7 +157,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.ImageGeneration, "image_generation_call"},
         {ToolType.CodeInterpreter, "code_interpreter_call"},
         {ToolType.OpenAPI, "openapi_call"},
-        {ToolType.OpenAPIConnection, "openapi_call"}
+        {ToolType.OpenAPIConnection, "openapi_call"},
+        {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
     };
     #endregion
 
@@ -403,6 +406,16 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return new(functionDefinition);
     }
 
+    private async Task<SharepointAgentTool> GetSharepointTool(AIProjectClient projectClient)
+    {
+        AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(TestEnvironment.SHAREPOINT_CONNECTION_NAME);
+        SharePointGroundingToolOptions sharepointToolOption = new()
+        {
+            ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+        };
+        return new SharepointAgentTool(sharepointToolOption);
+    }
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
@@ -474,6 +487,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
             ToolType.OpenAPI => await GetOpenAPITool(projectClient, false),
             ToolType.OpenAPIConnection => await GetOpenAPITool(projectClient, true),
+            ToolType.Sharepoint => await GetSharepointTool(projectClient),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)

@@ -37,6 +37,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [MCP tool with project connection](#mcp-tool-with-project-connection)
   - [OpenAPI tool](#openapi-tool)
   - [OpenAPI tool with project connection](#openapi-tool-project-connection)
+  - [SharePoint tool](#sharepoint-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -1092,6 +1093,68 @@ OpenAIResponse response = await responseClient.CreateResponseAsync(
 Console.WriteLine(response.GetOutputText());
 ```
 
+## SharePoint tool
+`SharepointAgentTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointAgentTool`.
+
+```C# Snippet:Sample_CreateAgent_Sharepoint_Async
+AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(sharepointConnectionName);
+SharePointGroundingToolOptions sharepointToolOption = new()
+{
+    ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+};
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant.",
+    Tools = { new SharepointAgentTool(sharepointToolOption), }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+Create the response and make sure we are always using tool.
+
+```C# Snippet:Sample_CreateResponse_Sharepoint_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ResponseCreationOptions responseOptions = new()
+{
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+};
+OpenAIResponse response = await responseClient.CreateResponseAsync("What is Contoso whistleblower policy", options: responseOptions);
+```
+
+SharePoint tool can create the reference to the page, grounding the data. We will create the `GetFormattedAnnotation` method to get the URI annotation.
+
+```C# Snippet:Sample_FormatReference_Sharepoint
+private static string GetFormattedAnnotation(OpenAIResponse response)
+{
+    foreach (ResponseItem item in response.OutputItems)
+    {
+        if (item is MessageResponseItem messageItem)
+        {
+            foreach (ResponseContentPart content in messageItem.Content)
+            {
+                foreach (ResponseMessageAnnotation annotation in content.OutputTextAnnotations)
+                {
+                    if (annotation is UriCitationMessageAnnotation uriAnnotation)
+                    {
+                        return $" [{uriAnnotation.Title}]({uriAnnotation.Uri})";
+                    }
+                }
+            }
+        }
+    }
+    return "";
+}
+```
+
+Print the Agent output and add the annotation at the end.
+
+```C# Snippet:Sample_WaitForResponse_Sharepoint
+Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
+Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
+```
+
 ## Tracing
 **Note:** The tracing functionality is currently in preview with limited scope. Only agent creation operations generate dedicated gen_ai traces currently. As a preview feature, the trace structure including spans, attributes, and events may change in future releases.
 
@@ -1130,6 +1193,7 @@ var tracerProvider = Sdk.CreateTracerProviderBuilder()
     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService("AgentTracingSample"))
     .AddAzureMonitorTraceExporter().Build();
 ```
+
 
 ### Tracing to Console
 
