@@ -8,7 +8,7 @@ COPY . .
 
 # Copy the local NuGet package cache for Microsoft.Agents.AI.* packages
 # This avoids authentication issues with private Azure DevOps feeds
-# COPY --chown=root:root .nuget-cache/ /root/.nuget/packages/
+COPY --chown=root:root .nuget-cache/ /root/.nuget/packages/
 
 # Restore dependencies for the BasicWorkflow project
 # This will restore all referenced projects (AgentFramework, Core, Contracts) as well
