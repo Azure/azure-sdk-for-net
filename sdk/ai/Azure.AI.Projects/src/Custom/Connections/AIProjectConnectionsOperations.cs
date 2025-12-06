@@ -20,7 +20,7 @@ namespace Azure.AI.Projects
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnection(string connectionName, bool includeCredentials, CancellationToken cancellationToken) instead.")]
-        public AIProjectConnection GetConnection(string connectionName, bool includeCredentials, string clientRequestId, CancellationToken cancellationToken)
+        public virtual AIProjectConnection GetConnection(string connectionName, bool includeCredentials, string clientRequestId, CancellationToken cancellationToken)
         {
             return GetConnection(connectionName, includeCredentials, cancellationToken);
         }
@@ -36,7 +36,7 @@ namespace Azure.AI.Projects
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete as the clientRequestId parameter is not used. Please use GetConnectionAsync(string connectionName, bool includeCredentials, CancellationToken cancellationToken) instead.")]
-        public async Task<ClientResult<AIProjectConnection>> GetConnectionAsync(string connectionName, bool includeCredentials, string clientRequestId, CancellationToken cancellationToken)
+        public async virtual Task<ClientResult<AIProjectConnection>> GetConnectionAsync(string connectionName, bool includeCredentials, string clientRequestId, CancellationToken cancellationToken)
         {
             return await GetConnectionAsync(connectionName, includeCredentials, cancellationToken).ConfigureAwait(false);
         }
@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <returns>A <see cref="AIProjectConnection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public AIProjectConnection GetConnection(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
+        public virtual AIProjectConnection GetConnection(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(connectionName))
             {
@@ -73,7 +73,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <returns>A <see cref="AIProjectConnection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public async Task<ClientResult<AIProjectConnection>> GetConnectionAsync(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
+        public async virtual Task<ClientResult<AIProjectConnection>> GetConnectionAsync(string connectionName, bool includeCredentials = false, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrWhiteSpace(connectionName))
             {
@@ -96,7 +96,7 @@ namespace Azure.AI.Projects
         /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
         /// <returns>A <see cref="AIProjectConnection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public AIProjectConnection GetDefaultConnection(ConnectionType? connectionType = null, bool includeCredentials = false)
+        public virtual AIProjectConnection GetDefaultConnection(ConnectionType? connectionType = null, bool includeCredentials = false)
         {
             foreach (var connection in GetConnections(connectionType))
             {
@@ -115,7 +115,7 @@ namespace Azure.AI.Projects
         /// <param name="includeCredentials">Whether to include credentials in the response. Default is false.</param>
         /// <returns>A <see cref="AIProjectConnection"/> object.</returns>
         /// <exception cref="RequestFailedException">Thrown when the request fails.</exception>
-        public async Task<AIProjectConnection> GetDefaultConnectionAsync(ConnectionType? connectionType = null, bool includeCredentials = false)
+        public async virtual Task<AIProjectConnection> GetDefaultConnectionAsync(ConnectionType? connectionType = null, bool includeCredentials = false)
         {
             await foreach (var connection in GetConnectionsAsync(connectionType).ConfigureAwait(false))
             {
