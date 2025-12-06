@@ -5,7 +5,7 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(UseProjectReference)'=='true'">
-        <ProjectReference Include="..\..\..\..\..\Azure.AI.AgentServer.AgentFramework\src\Azure.AI.AgentServer.AgentFramework.csproj" />
+        <ProjectReference Include="..\..\..\..\Azure.AI.AgentServer.AgentFramework\src\Azure.AI.AgentServer.AgentFramework.csproj" />
     </ItemGroup>
 
     <ItemGroup Condition="'$(UseProjectReference)'!='true'">
