@@ -17,17 +17,6 @@ namespace Azure.AI.AgentServer.Responses.Invocation;
 public abstract class AgentInvocationBase : IAgentInvocation
 {
     /// <summary>
-    /// Executes the agent invocation asynchronously.
-    /// </summary>
-    /// <param name="request">The create response request.</param>
-    /// <param name="context">The agent invocation context.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The response from the agent.</returns>
-    protected abstract Task<Contracts.Generated.Responses.Response> DoInvokeAsync(CreateResponseRequest request,
-        AgentInvocationContext context,
-        CancellationToken cancellationToken);
-
-    /// <summary>
     /// Executes the agent invocation with streaming support.
     /// </summary>
     /// <param name="request">The create response request.</param>
@@ -46,29 +35,9 @@ public abstract class AgentInvocationBase : IAgentInvocation
     /// <param name="context">The agent invocation context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The response from the agent.</returns>
-    public async Task<Contracts.Generated.Responses.Response> InvokeAsync(CreateResponseRequest request,
+    public abstract Task<Contracts.Generated.Responses.Response> InvokeAsync(CreateResponseRequest request,
         AgentInvocationContext context,
-        CancellationToken cancellationToken = default)
-    {
-        try
-        {
-            return await DoInvokeAsync(request, context, cancellationToken).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            Activity.Current?.AddException(e);
-
-            if (e is AgentInvocationException aie)
-            {
-                Activity.Current?.SetResponsesTag("error.code", aie.Error.Code)
-                    .SetResponsesTag("error.message", aie.Error.Message);
-                throw;
-            }
-
-            throw new AgentInvocationException(new Contracts.Generated.OpenAI.ResponseError(
-                code: ResponseErrorCode.ServerError, message: e.Message));
-        }
-    }
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Invokes the agent asynchronously with streaming support.

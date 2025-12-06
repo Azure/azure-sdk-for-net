@@ -206,18 +206,28 @@ public static class ResponseConverterExtensions
             case TextContent textContent:
                 return new ItemContentOutputText(textContent?.Text ?? string.Empty, []);
             case ErrorContent errorContent:
-                var message = $"Error = \"{errorContent.Message}\"" +
-                              (!string.IsNullOrWhiteSpace(errorContent.ErrorCode)
-                                  ? $" ({errorContent.ErrorCode})"
-                                  : string.Empty) +
-                              (!string.IsNullOrWhiteSpace(errorContent.Details)
-                                  ? $" - \"{errorContent.Details}\""
-                                  : string.Empty);
-                var error = new Contracts.Generated.OpenAI.ResponseError(code: ResponseErrorCode.ServerError,
-                    message: message);
-                throw new AgentInvocationException(error);
+                throw new AgentInvocationException(errorContent.ToResponseError());
             default:
                 return null;
         }
+    }
+
+    /// <summary>
+    /// Converts an error content to a response error object.
+    /// </summary>
+    /// <param name="errorContent">The error content to convert.</param>
+    /// <returns>A response error object.</returns>
+    public static Contracts.Generated.OpenAI.ResponseError ToResponseError(this ErrorContent errorContent)
+    {
+        var message = $"Error = \"{errorContent.Message}\"" +
+                      (!string.IsNullOrWhiteSpace(errorContent.ErrorCode)
+                          ? $" ({errorContent.ErrorCode})"
+                          : string.Empty) +
+                      (!string.IsNullOrWhiteSpace(errorContent.Details)
+                          ? $" - \"{errorContent.Details}\""
+                          : string.Empty);
+        var error = new Contracts.Generated.OpenAI.ResponseError(code: ResponseErrorCode.ServerError,
+            message: message);
+        return error;
     }
 }
