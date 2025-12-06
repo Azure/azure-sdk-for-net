@@ -31,9 +31,23 @@ public class Program
         var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
                        throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT is not set.");
         var deploymentName = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME") ?? "gpt-4o-mini";
-        var chatClient = new AzureOpenAIClient(
-                new Uri(endpoint),
-                new DefaultAzureCredential())
+
+        // Check if API Key is provided, otherwise use DefaultAzureCredential
+        var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");
+        AzureOpenAIClient azureClient;
+
+        if (!string.IsNullOrEmpty(apiKey))
+        {
+            // Use API Key authentication
+            azureClient = new AzureOpenAIClient(new Uri(endpoint), new Azure.AzureKeyCredential(apiKey));
+        }
+        else
+        {
+            // Use DefaultAzureCredential (Azure CLI, Managed Identity, etc.)
+            azureClient = new AzureOpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+        }
+
+        var chatClient = azureClient
             .GetChatClient(deploymentName)
             .AsIChatClient()
             .AsBuilder()

@@ -2,18 +2,23 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
 WORKDIR /src
 
-# Copy the entire agentserver directory to ensure all ProjectReference dependencies are available
+# Copy the entire azure-sdk-for-net repository to ensure all dependencies are available
+# This includes eng/Directory.Build.Common.props which defines LtsTargetFramework
 COPY . .
+
+# Copy the local NuGet package cache for Microsoft.Agents.AI.* packages
+# This avoids authentication issues with private Azure DevOps feeds
+COPY --chown=root:root .nuget-cache/ /root/.nuget/packages/
 
 # Restore dependencies for the BasicWorkflow project
 # This will restore all referenced projects (AgentFramework, Core, Contracts) as well
-RUN dotnet restore samples/AgentFramework/Workflow/BasicWorkflow/BasicWorkflow.csproj
+RUN dotnet restore sdk/agentserver/samples/AgentFramework/Workflow/BasicWorkflow/BasicWorkflow.csproj
 
 # Build the BasicWorkflow project and all its dependencies
-RUN dotnet build samples/AgentFramework/Workflow/BasicWorkflow/BasicWorkflow.csproj -c Release --no-restore
+RUN dotnet build sdk/agentserver/samples/AgentFramework/Workflow/BasicWorkflow/BasicWorkflow.csproj -c Release --no-restore
 
 # Publish the application
-RUN dotnet publish samples/AgentFramework/Workflow/BasicWorkflow/BasicWorkflow.csproj -c Release --no-build -o /app
+RUN dotnet publish sdk/agentserver/samples/AgentFramework/Workflow/BasicWorkflow/BasicWorkflow.csproj -c Release --no-build -o /app
 
 # Run the application
 FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine AS final
