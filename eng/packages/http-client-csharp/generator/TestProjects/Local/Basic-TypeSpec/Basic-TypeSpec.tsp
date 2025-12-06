@@ -490,6 +490,12 @@ model DfeExpressionModel {
   value: string;
 }
 
+// Apply alternateType decorator to map DfeExpressionModel to DataFactoryElement
+@@alternateType(DfeExpressionModel, {
+  identity: "Azure.Core.Expressions.DataFactoryElement",
+  package: "Azure.Core.Expressions.DataFactory",
+}, "csharp");
+
 // Union types that get mapped to DataFactoryElement<T> using alternateType
 @doc("DataFactoryElement<string> equivalent")
 union DfeStringUnion {
@@ -529,27 +535,6 @@ model DataFactoryElementModel {
   @doc("String array property with DFE pattern")
   stringArrayProperty: DfeStringArrayUnion;
 }
-
-// Apply alternateType decorators to map unions to DataFactoryElement
-@@alternateType(DfeStringUnion, {
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-  package: "Azure.Core.Expressions.DataFactory",
-}, "csharp");
-
-@@alternateType(DfeIntUnion, {
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-  package: "Azure.Core.Expressions.DataFactory",
-}, "csharp");
-
-@@alternateType(DfeBoolUnion, {
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-  package: "Azure.Core.Expressions.DataFactory",
-}, "csharp");
-
-@@alternateType(DfeStringArrayUnion, {
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-  package: "Azure.Core.Expressions.DataFactory",
-}, "csharp");
 
 @route("datafactory")
 @doc("Create a model with DataFactoryElement properties")
