@@ -28,7 +28,8 @@ function Get-TspCommand {
         [string]$generationDir,
         [bool]$generateStub = $false,
         [string]$apiVersion = $null,
-        [string]$libraryNameOverride = $null
+        [string]$libraryNameOverride = $null,
+        [bool]$newProject = $true
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
@@ -50,8 +51,10 @@ function Get-TspCommand {
     if ($libraryNameOverride) {
         $command += " --option @azure-typespec/http-client-csharp.package-name=$libraryNameOverride"
     }
-
-    $command += " --option @azure-typespec/http-client-csharp.new-project=true"
+    Write-Host "newProject = $newProject" -ForegroundColor Yellow
+    if ($newProject) {
+        $command += " --option @azure-typespec/http-client-csharp.new-project=true"
+    }
 
     return $command
 }

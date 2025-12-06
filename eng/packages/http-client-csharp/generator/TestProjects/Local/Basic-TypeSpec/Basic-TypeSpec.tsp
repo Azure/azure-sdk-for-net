@@ -483,18 +483,13 @@ op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", 
 // DataFactoryElement alternate type pattern
 // This model represents an expression that can be used in DataFactory pipelines
 @doc("Expression model for DataFactory expressions")
+@alternateType({identity: "Azure.Core.Expressions.DataFactoryElement"})
 model DfeExpressionModel {
   @doc("The type of expression")
   type: "Expression";
   @doc("The expression value")
   value: string;
 }
-
-// Apply alternateType decorator to map DfeExpressionModel to DataFactoryElement
-@@alternateType(DfeExpressionModel, {
-  identity: "Azure.Core.Expressions.DataFactoryElement",
-  package: "Azure.Core.Expressions.DataFactory",
-}, "csharp");
 
 // Union types that get mapped to DataFactoryElement<T> using alternateType
 @doc("DataFactoryElement<string> equivalent")

@@ -146,5 +146,16 @@ namespace BasicTypeSpec
         {
             return new ReturnsAnonymousModelResponse(additionalBinaryDataProperties: null);
         }
+
+        /// <summary> Model with DataFactoryElement properties. </summary>
+        /// <param name="stringProperty"> String property with DFE pattern. </param>
+        /// <param name="intProperty"> Int property with DFE pattern. </param>
+        /// <param name="boolProperty"> Bool property with DFE pattern. </param>
+        /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
+        /// <returns> A new <see cref="BasicTypeSpec.DataFactoryElementModel"/> instance for mocking. </returns>
+        public static DataFactoryElementModel DataFactoryElementModel(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> stringProperty = default, Azure.Core.Expressions.DataFactory.DataFactoryElement<int> intProperty = default, Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> boolProperty = default, Azure.Core.Expressions.DataFactory.DataFactoryElement<IList<string>> stringArrayProperty = default)
+        {
+            return new DataFactoryElementModel(stringProperty, intProperty, boolProperty, stringArrayProperty, additionalBinaryDataProperties: null);
+        }
     }
 }
