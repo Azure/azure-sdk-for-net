@@ -1,0 +1,29 @@
+name: BasicWorkflow
+displayName: "Basic Translation Workflow"
+description: >
+  A basic workflow sample that demonstrates how to use AI agents as executors within
+  a workflow pipeline. This agent translates text through a sequential chain: English to
+  French, then to Spanish, and finally back to English, showcasing how AI-powered agents
+  can be seamlessly integrated into workflow-based applications.
+metadata:
+  authors:
+    - Microsoft Agent Framework Team
+  tags:
+    - Azure AI AgentServer
+    - Microsoft Agent Framework
+    - Workflows
+template:
+  kind: hosted
+  name: BasicWorkflow
+  protocols:
+    - protocol: responses
+      version: v1
+  environment_variables:
+    - name: AZURE_OPENAI_ENDPOINT
+      value: ${AZURE_OPENAI_ENDPOINT}
+    - name: AZURE_OPENAI_DEPLOYMENT_NAME
+      value: "{{chat}}"
+resources:
+  - name: chat
+    kind: model
+    id: gpt-4o-mini
