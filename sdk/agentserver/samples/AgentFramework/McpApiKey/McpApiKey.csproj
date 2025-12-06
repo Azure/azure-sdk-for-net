@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Agents.AI.OpenAI" />
+        <PackageReference Include="ModelContextProtocol" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseProjectReference)'=='true'">
+        <ProjectReference Include="..\..\..\..\src\adapter\dotnet\Azure.AI.AgentServer.AgentFramework\src\Azure.AI.AgentServer.AgentFramework.csproj" />
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(UseProjectReference)'!='true'">
+        <PackageReference Include="Azure.AI.AgentServer.AgentFramework" />
+    </ItemGroup>
+</Project>

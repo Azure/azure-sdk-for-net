@@ -1,0 +1,19 @@
+<Project>
+    <PropertyGroup>
+        <!-- Do not pack sample projects -->
+        <IsPackable>false</IsPackable>
+
+        <UseArtifactsOutput>true</UseArtifactsOutput>
+
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <!-- <UseProjectReference Condition="'$(UseProjectReference)'=='' and Exists('$(MSBuildThisFileDirectory)..\..\src\adapter\dotnet\AgentAdapter.sln')">true</UseProjectReference>
+        <UseProjectReference Condition="'$(UseProjectReference)'==''">false</UseProjectReference> -->
+        <UseProjectReference>true</UseProjectReference>
+    </PropertyGroup>
+</Project>

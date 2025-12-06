@@ -1,0 +1,19 @@
+<Project>
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+        <CentralPackageFloatingVersionsEnabled>true</CentralPackageFloatingVersionsEnabled>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageVersion Include="Azure.AI.OpenAI" Version="2.5.0-beta.1"/>
+        <PackageVersion Include="Azure.AI.AgentServer.AgentFramework" Version="*-*" />
+        <PackageVersion Include="Azure.AI.AgentServer.Core" Version="*-*" />
+        <!-- Pinned to 251125.1 due to regression in 251204.1 causing empty workflow output -->
+        <PackageVersion Include="Microsoft.Agents.AI.Workflows" Version="1.0.0-preview.251125.1" />
+        <PackageVersion Include="Microsoft.Agents.AI" Version="1.0.0-preview.251125.1" />
+        <PackageVersion Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-preview.251125.1" />
+        <PackageVersion Include="OpenAI" Version="2.5.0"/>
+        <PackageVersion Include="ModelContextProtocol" Version="*-*" />
+        <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="*-*" />
+    </ItemGroup>
+</Project>
