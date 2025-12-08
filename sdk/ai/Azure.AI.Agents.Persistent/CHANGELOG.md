@@ -8,7 +8,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed the Performance of `PersistentAgentsChatClient.GetStreamingResponseAsync` [issue](https://github.com/Azure/azure-sdk-for-net/issues/54326).
+- Fixed a performance issue in `PersistentAgentsChatClient.GetStreamingResponseAsync` [issue](https://github.com/Azure/azure-sdk-for-net/issues/54326).
 
 ### Other Changes
 
