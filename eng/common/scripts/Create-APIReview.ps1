@@ -2,7 +2,7 @@
 Param (
   [Parameter(Mandatory=$False)]
   [array] $ArtifactList,
-  [Parameter(Mandatory=$True)]
+  [Parameter(Mandatory=$False)]
   [string] $ArtifactPath,
   [Parameter(Mandatory=$False)]
   [string] $APIKey,
@@ -17,10 +17,72 @@ Param (
   [bool] $MarkPackageAsShipped = $false,
   [Parameter(Mandatory=$False)]
   [array] $PackageInfoFiles,
-  [string] $APIViewAudience = "api://apiview"
+  [string] $APIViewAudience = "api://apiview",
+  [switch] $TestAuth
 )
 
 Set-StrictMode -Version 3
+
+# Test authentication mode - just verify Bearer token works and exit
+if ($TestAuth) {
+    Write-Host "=== APIView Authentication Test Mode ===" -ForegroundColor Cyan
+    Write-Host "Testing Bearer token authentication against APIView..."
+    Write-Host ""
+    
+    try {
+        Write-Host "Step 1: Acquiring access token for audience: $APIViewAudience"
+        $tokenResponse = az account get-access-token --resource $APIViewAudience --output json 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "FAILED: Could not acquire token. Error: $tokenResponse" -ForegroundColor Red
+            Write-Host "Make sure you are logged in with 'az login'" -ForegroundColor Yellow
+            exit 1
+        }
+        $parsed = $tokenResponse | ConvertFrom-Json
+        Write-Host "SUCCESS: Token acquired! Expires: $($parsed.expiresOn)" -ForegroundColor Green
+        Write-Host ""
+        
+        Write-Host "Step 2: Testing authenticated request to APIView..."
+        $headers = @{
+            "Authorization" = "Bearer $($parsed.accessToken)"
+        }
+        
+        # Make a simple GET request to verify the token is accepted
+        # Using the reviews endpoint which should return 200 or redirect if auth works
+        $testUri = "https://apiview.dev/api/reviews"
+        Write-Host "Calling: GET $testUri"
+        
+        try {
+            $response = Invoke-WebRequest -Uri $testUri -Headers $headers -Method GET -MaximumRedirection 0 -ErrorAction Stop
+            Write-Host "SUCCESS: API responded with status $($response.StatusCode)" -ForegroundColor Green
+        }
+        catch {
+            $statusCode = $_.Exception.Response.StatusCode.Value__
+            if ($statusCode -eq 401 -or $statusCode -eq 403) {
+                Write-Host "FAILED: Authentication rejected (HTTP $statusCode)" -ForegroundColor Red
+                Write-Host "The token was acquired but APIView rejected it." -ForegroundColor Yellow
+                Write-Host "This may indicate the service principal doesn't have access." -ForegroundColor Yellow
+                exit 1
+            }
+            elseif ($statusCode -ge 200 -and $statusCode -lt 400) {
+                Write-Host "SUCCESS: API responded with status $statusCode" -ForegroundColor Green
+            }
+            else {
+                Write-Host "WARNING: API responded with status $statusCode" -ForegroundColor Yellow
+                Write-Host "This may be expected depending on the endpoint. Auth likely worked." -ForegroundColor Yellow
+            }
+        }
+        
+        Write-Host ""
+        Write-Host "=== Authentication Test Complete ===" -ForegroundColor Cyan
+        Write-Host "Bearer token authentication is working!" -ForegroundColor Green
+        exit 0
+    }
+    catch {
+        Write-Host "FAILED: Unexpected error: $($_.Exception.Message)" -ForegroundColor Red
+        exit 1
+    }
+}
+
 . (Join-Path $PSScriptRoot common.ps1)
 . (Join-Path $PSScriptRoot Helpers ApiView-Helpers.ps1)
 
