@@ -456,6 +456,33 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [RecordedTest]
+    public async Task Test_FineTuning_Resume_Job()
+    {
+        // Note: This test uses a paused fine-tuning job ID to test resume functionality.
+        // Resume is only valid for jobs that are currently paused.
+        // When re-recording this test, ensure the job is in a paused state.
+        string pausedJobId = "ftjob-5053b0f026604ac59b4a0ef2dbece2fc";
+
+        var (_, fineTuningClient) = GetClients();
+
+        // Retrieve the job first
+        FineTuningJob job = await fineTuningClient.GetJobAsync(pausedJobId);
+        Console.WriteLine($"Retrieved job: {job.JobId}, Status: {job.Status}");
+
+        // Resume the job
+        Console.WriteLine($"Resuming fine-tuning job with ID: {pausedJobId}");
+        await fineTuningClient.ResumeFineTuningJobAsync(pausedJobId, options: null);
+
+        // Retrieve the job again to verify status
+        FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(pausedJobId);
+        Console.WriteLine($"Resumed job: {resumedJob.JobId}, Status: {resumedJob.Status}");
+
+        // Verify the job is resumed (status should be "running" or "queued")
+        Assert.That(resumedJob, Is.Not.Null);
+        Assert.That(resumedJob.JobId, Is.EqualTo(pausedJobId));
+    }
+
+    [RecordedTest]
     public async Task Test_FineTuning_List_Events()
     {
         var (fileClient, fineTuningClient) = GetClients();
