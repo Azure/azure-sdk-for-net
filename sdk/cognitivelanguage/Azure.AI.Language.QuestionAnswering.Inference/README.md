@@ -5,7 +5,7 @@ The Question Answering service lets you build a conversational question–answer
 [Source code][questionanswering_client_src] | [Samples][questionanswering_samples] | [Product documentation][questionanswering_docs] | [REST API documentation][questionanswering_rest_docs]
 
 > This package provides **runtime inference (querying)** only.  
-> To create/update/deploy projects (authoring operations), use the Authoring package `Azure.AI.Language.QuestionAnswering` (namespace: `Azure.AI.Language.QuestionAnswering.Authoring`).
+> To create/update/deploy projects (authoring operations), use the Authoring package `Azure.AI.Language.QuestionAnswering.Authoring` (namespace: `Azure.AI.Language.QuestionAnswering.Authoring`).
 
 ## Getting started
 
@@ -162,9 +162,9 @@ using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsole
 See [CONTRIBUTING.md][contributing]. This project follows the Microsoft Open Source Code of Conduct.
 
 <!-- LINKS -->
-[questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/src/
-[questionanswering_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering/
-[questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/samples/README.md
+[questionanswering_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Inference/src/
+[questionanswering_refdocs]: https://learn.microsoft.com/dotnet/api/Azure.AI.Language.QuestionAnswering.Inference
+[questionanswering_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Inference/samples/README.md
 [questionanswering_docs]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/overview
 [questionanswering_docs_chat]: https://learn.microsoft.com/azure/ai-services/language-service/question-answering/how-to/chit-chatview=rest-language-question-answering-2025-05-15-preview
 [azure_subscription]: https://azure.microsoft.com/free/dotnet/

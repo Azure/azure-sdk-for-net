@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="messageCount"> Number of messages. </param>
         /// <param name="createdOn"> Exact time the message was created. </param>
         /// <param name="accessedOn"> Last time there was a receive request to this subscription. </param>
@@ -79,11 +80,12 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="forwardTo"> Queue/Topic name to forward the messages. </param>
         /// <param name="forwardDeadLetteredMessagesTo"> Queue/Topic name to forward the Dead Letter message. </param>
         /// <param name="isClientAffine"> Value that indicates whether the subscription has an affinity to the client id. </param>
+        /// <param name="userMetadata"> Gets and Sets Metadata of User. </param>
         /// <param name="clientAffineProperties"> Properties specific to client affine subscriptions. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? messageCount, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? updatedOn, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, ServiceBusClientAffineProperties clientAffineProperties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ServiceBusSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, long? messageCount, DateTimeOffset? createdOn, DateTimeOffset? accessedOn, DateTimeOffset? updatedOn, MessageCountDetails countDetails, TimeSpan? lockDuration, bool? requiresSession, TimeSpan? defaultMessageTimeToLive, bool? deadLetteringOnFilterEvaluationExceptions, bool? deadLetteringOnMessageExpiration, TimeSpan? duplicateDetectionHistoryTimeWindow, int? maxDeliveryCount, ServiceBusMessagingEntityStatus? status, bool? enableBatchedOperations, TimeSpan? autoDeleteOnIdle, string forwardTo, string forwardDeadLetteredMessagesTo, bool? isClientAffine, string userMetadata, ServiceBusClientAffineProperties clientAffineProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            Location = location;
             MessageCount = messageCount;
             CreatedOn = createdOn;
             AccessedOn = accessedOn;
@@ -102,11 +104,14 @@ namespace Azure.ResourceManager.ServiceBus
             ForwardTo = forwardTo;
             ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
             IsClientAffine = isClientAffine;
+            UserMetadata = userMetadata;
             ClientAffineProperties = clientAffineProperties;
-            Location = location;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
+        public AzureLocation? Location { get; }
         /// <summary> Number of messages. </summary>
         [WirePath("properties.messageCount")]
         public long? MessageCount { get; }
@@ -161,11 +166,11 @@ namespace Azure.ResourceManager.ServiceBus
         /// <summary> Value that indicates whether the subscription has an affinity to the client id. </summary>
         [WirePath("properties.isClientAffine")]
         public bool? IsClientAffine { get; set; }
+        /// <summary> Gets and Sets Metadata of User. </summary>
+        [WirePath("properties.userMetadata")]
+        public string UserMetadata { get; set; }
         /// <summary> Properties specific to client affine subscriptions. </summary>
         [WirePath("properties.clientAffineProperties")]
         public ServiceBusClientAffineProperties ClientAffineProperties { get; set; }
-        /// <summary> The geo-location where the resource lives. </summary>
-        [WirePath("location")]
-        public AzureLocation? Location { get; }
     }
 }

@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 trustedServiceAccessEnabled,
                 defaultAction,
                 virtualNetworkRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetVirtualNetworkRules>(),
                 ipRules ?? new ChangeTrackingList<ServiceBusNetworkRuleSetIPRules>(),
                 publicNetworkAccess,
-                location,
                 serializedAdditionalRawData);
         }
 

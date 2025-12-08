@@ -22,13 +22,10 @@ namespace Azure.ResourceManager.Network.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string NoneValue = "None";
         private const string LowValue = "Low";
         private const string MediumValue = "Medium";
         private const string HighValue = "High";
 
-        /// <summary> None. </summary>
-        public static ApplicationGatewayWafRuleSensitivityType None { get; } = new ApplicationGatewayWafRuleSensitivityType(NoneValue);
         /// <summary> Low. </summary>
         public static ApplicationGatewayWafRuleSensitivityType Low { get; } = new ApplicationGatewayWafRuleSensitivityType(LowValue);
         /// <summary> Medium. </summary>

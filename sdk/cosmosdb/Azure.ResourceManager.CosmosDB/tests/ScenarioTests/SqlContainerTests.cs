@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(container.Id, _containerName, container.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, container.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity), null);
+                AzureLocation.WestUS, container.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
 
             container = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
             backupInfo = (await container.RetrieveContinuousBackupInformationAsync(WaitUntil.Completed, new ContinuousBackupRestoreLocation { Location = AzureLocation.WestUS })).Value;
@@ -236,6 +236,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     }, null),
                         },
                         new List<CosmosDBVectorIndex>(),
+                        new List<FullTextIndexPath>(),
                         serializedAdditionalRawData: new Dictionary<string, BinaryData>())
                 })
             {

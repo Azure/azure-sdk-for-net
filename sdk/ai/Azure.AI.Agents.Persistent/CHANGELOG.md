@@ -3,6 +3,7 @@
 ## 1.2.0-beta.9 (Unreleased)
 
 ### Features Added
+- Added support for `CodeInterpreterToolCallContent` from `Microsoft.Extensions.AI` abstractions when executing `HostedCodeInterpreterTool` tool.
 
 ### Breaking Changes
 
