@@ -19,8 +19,17 @@ namespace Azure.Communication.CallAutomation
             StartMediaStreaming = startMediaStreaming;
         }
 
+        /// <summary> Initializes a new instance of MediaStreamingOptions. </summary>
+        public MediaStreamingOptions(MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType, MediaStreamingTransport transportType = default, bool? startMediaStreaming = null)
+        {
+            MediaStreamingTransport = transportType == default ? MediaStreamingTransport.Websocket : transportType;
+            MediaStreamingContent = contentType;
+            MediaStreamingAudioChannel = audioChannelType;
+            StartMediaStreaming = startMediaStreaming;
+        }
+
         /// <summary> Transport URL for media streaming. </summary>
-        public Uri TransportUri { get; }
+        public Uri TransportUri { get; set; }
         /// <summary> The type of tranport to be used for media streaming, eg. Websocket. </summary>
         public MediaStreamingTransport MediaStreamingTransport { get; }
         /// <summary> Content type to stream, eg. audio, audio/video. </summary>
