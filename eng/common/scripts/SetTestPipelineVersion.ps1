@@ -39,12 +39,15 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
         exit 1
       }
 
-      # Check for ServiceDirectory property
-      $artifactServiceDirectory = $ServiceDirectory
+      # Check for ServiceDirectory property      
       if (Get-Member -InputObject $artifact -Name 'ServiceDirectory' -MemberType Properties) {
         if (![String]::IsNullOrWhiteSpace($artifact.ServiceDirectory)) {
           $artifactServiceDirectory = $artifact.ServiceDirectory
         }
+      }
+
+      if ([String]::IsNullOrWhiteSpace($artifactServiceDirectory)) {
+        $artifactServiceDirectory = $ServiceDirectory
       }
       
       # Validate ServiceDirectory is available
