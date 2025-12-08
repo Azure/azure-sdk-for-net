@@ -68,7 +68,6 @@ internal static class Program
             try
             {
                 Console.WriteLine($"Generating {spec.Name}...");
-                // spec.Build(options.GenerateSchema);
                 spec.Build();
             }
             catch (Exception ex)
@@ -92,7 +91,6 @@ internal static class Program
             try
             {
                 Console.WriteLine($"Generating {spec.Name}...");
-                // spec.Build(options.GenerateSchema);
                 spec.Build();
             }
             catch (Exception ex)
