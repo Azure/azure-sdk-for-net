@@ -1089,6 +1089,7 @@ namespace Azure.Communication.CallAutomation
     }
     public partial class MediaStreamingOptions
     {
+        public MediaStreamingOptions(Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, Azure.Communication.CallAutomation.MediaStreamingTransport transportType = default(Azure.Communication.CallAutomation.MediaStreamingTransport), bool? startMediaStreaming = default(bool?)) { }
         public MediaStreamingOptions(System.Uri transportUri, Azure.Communication.CallAutomation.MediaStreamingContent contentType, Azure.Communication.CallAutomation.MediaStreamingAudioChannel audioChannelType, Azure.Communication.CallAutomation.MediaStreamingTransport transportType = default(Azure.Communication.CallAutomation.MediaStreamingTransport), bool? startMediaStreaming = default(bool?)) { }
         public Azure.Communication.CallAutomation.AudioFormat? AudioFormat { get { throw null; } set { } }
         public bool? EnableBidirectional { get { throw null; } set { } }
@@ -1097,7 +1098,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.MediaStreamingContent MediaStreamingContent { get { throw null; } }
         public Azure.Communication.CallAutomation.MediaStreamingTransport MediaStreamingTransport { get { throw null; } }
         public bool? StartMediaStreaming { get { throw null; } set { } }
-        public System.Uri TransportUri { get { throw null; } }
+        public System.Uri TransportUri { get { throw null; } set { } }
     }
     public partial class MediaStreamingStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
