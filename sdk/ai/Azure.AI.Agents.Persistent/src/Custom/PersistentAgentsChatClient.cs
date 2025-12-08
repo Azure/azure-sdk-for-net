@@ -103,6 +103,7 @@ namespace Azure.AI.Agents.Persistent
                         threadRun = run;
                         break;
                     }
+                    break;
                 }
             }
 
