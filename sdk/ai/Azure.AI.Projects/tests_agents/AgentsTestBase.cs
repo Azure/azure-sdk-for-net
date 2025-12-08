@@ -380,15 +380,14 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return tool;
     }
 
-    private async Task<OpenAPIAgentTool> GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
+    private OpenAPIAgentTool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
         OpenAPIAuthenticationDetails auth;
         string filePath;
         if (withConnection)
         {
-            AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
             auth = new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
-                projectConnectionId: tripadvisorConnection.Id
+                projectConnectionId: TestEnvironment.OPENAPI_PROJECT_CONNECTION_ID
             ));
             filePath = GetTestFile(fileName: "tripadvisor_openapi.json");
         }
@@ -406,12 +405,11 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return new(functionDefinition);
     }
 
-    private async Task<SharepointAgentTool> GetSharepointTool(AIProjectClient projectClient)
+    private SharepointAgentTool GetSharepointTool(AIProjectClient projectClient)
     {
-        AIProjectConnection sharepointConnection = await projectClient.Connections.GetConnectionAsync(TestEnvironment.SHAREPOINT_CONNECTION_NAME);
         SharePointGroundingToolOptions sharepointToolOption = new()
         {
-            ProjectConnections = { new ToolProjectConnection(projectConnectionId: sharepointConnection.Id) }
+            ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
         };
         return new SharepointAgentTool(sharepointToolOption);
     }
@@ -474,10 +472,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             ToolType.Memory => new MemorySearchTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
             ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
             ToolType.BingGrounding => new BingGroundingAgentTool(new BingGroundingSearchToolOptions(
-                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.BING_CONNECTION_NAME).Id)]
+                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
             )),
             ToolType.BingGroundingCustom => new BingCustomSearchAgentTool(new BingCustomSearchToolParameters(
-                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.CUSTOM_BING_CONNECTION_NAME).Id, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
+                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
@@ -485,9 +483,9 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )),
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
-            ToolType.OpenAPI => await GetOpenAPITool(projectClient, false),
-            ToolType.OpenAPIConnection => await GetOpenAPITool(projectClient, true),
-            ToolType.Sharepoint => await GetSharepointTool(projectClient),
+            ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
+            ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
+            ToolType.Sharepoint => GetSharepointTool(projectClient),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
