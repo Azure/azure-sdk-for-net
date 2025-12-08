@@ -49,7 +49,6 @@ import {
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
-import { Console } from "console";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -100,7 +99,7 @@ export async function updateClients(
       );
       const [kind, modelId] =
         parseResourceOperation(serviceMethod, sdkContext) ?? [];
-            
+     
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
         if (entry) {
