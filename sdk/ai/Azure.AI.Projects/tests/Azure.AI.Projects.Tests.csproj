@@ -33,7 +33,7 @@
     <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
     <PackageReference Include="Microsoft.ClientModel.TestFramework" />
     <PackageReference Include="System.Linq.Async" />
-    <PackageReference Include="System.Text.Json" VersionOverride="10.0.0"/>
+    <PackageReference Include="System.Text.Json"/>
   </ItemGroup>
 
   <ItemGroup>
