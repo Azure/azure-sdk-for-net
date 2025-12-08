@@ -139,14 +139,14 @@ function Invoke-Query($fields, $wiql, $output = $true)
   return $workItems
 }
 
-function BuildHashKeyFromNonNullArgs()
+function BuildHashKeyNoNull()
 {
   $filterNulls = $args | Where-Object { $_ }
-  # if we had any non-nulls then return it
-  if (!$filterNulls) {
+  # if we had any nulls then return null
+  if (!$filterNulls -or $args.Count -ne $filterNulls.Count) {
     return $null
   }
-  return BuildHashKey @filterNulls
+  return BuildHashKey $args
 }
 
 function BuildHashKey()
@@ -241,7 +241,7 @@ function FindLatestPackageWorkItem($lang, $packageName, $groupId = $null, $outpu
 
 function FindPackageWorkItem($lang, $packageName, $version, $groupId = $null, $outputCommand = $true, $includeClosed = $false, $ignoreReleasePlannerTests = $true, $tag = $null)
 {
-  $key = BuildHashKeyFromNonNullArgs $lang $packageName $version $groupId
+  $key = BuildHashKey $lang $packageName $version $groupId
   if ($key -and $packageWorkItems.ContainsKey($key)) {
     return $packageWorkItems[$key]
   }
@@ -300,7 +300,7 @@ function FindPackageWorkItem($lang, $packageName, $version, $groupId = $null, $o
 
   foreach ($wi in $workItems)
   {
-    $localKey = BuildHashKeyFromNonNullArgs $wi.fields["Custom.Language"] $wi.fields["Custom.Package"] $wi.fields["Custom.PackageVersionMajorMinor"] $wi.fields["Custom.GroupId"]
+    $localKey = BuildHashKey $wi.fields["Custom.Language"] $wi.fields["Custom.Package"] $wi.fields["Custom.PackageVersionMajorMinor"] $wi.fields["Custom.GroupId"]
     if (!$localKey) {
       $packageWorkItemWithoutKeyFields[$wi.id] = $wi
       Write-Host "Skipping package [$($wi.id)]$($wi.fields['System.Title']) which is missing required fields language, package, or version."
