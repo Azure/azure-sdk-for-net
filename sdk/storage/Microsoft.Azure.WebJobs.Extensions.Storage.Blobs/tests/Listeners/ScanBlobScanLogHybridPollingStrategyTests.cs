@@ -320,6 +320,58 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         }
 
         [Test]
+        public async Task RegisterAsync_HandlesPermissionErrors()
+        {
+            List<BlobErrorCode> permissionErrors = new List<BlobErrorCode>
+            {
+                BlobErrorCode.AuthorizationPermissionMismatch,
+                BlobErrorCode.InsufficientAccountPermissions,
+                BlobErrorCode.AuthorizationFailure
+            };
+
+            LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
+            string accountName = "fakeaccount";
+            foreach (BlobErrorCode errorCode in permissionErrors)
+            {
+                Uri uri = new Uri($"https://{accountName}.blob.core.windows.net/");
+                Mock<BlobServiceClient> mockServiceClient = new Mock<BlobServiceClient>(uri, null);
+
+                TestBlobScanInfoManager scanInfoManager = new TestBlobScanInfoManager();
+                IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(scanInfoManager, _exceptionHandler, _logger);
+
+                // Setup GetPropertiesAsync to succeed
+                mockServiceClient.Setup(x => x.Uri).Returns(uri);
+                mockServiceClient.Setup(x => x.AccountName).Returns(accountName);
+                mockServiceClient.Setup(x => x.GetBlobContainerClient("fakecontainer")).Returns(_blobContainerMock.Object);
+                mockServiceClient.Setup(x => x.GetBlobContainerClient("fakecontainer2")).Returns(_secondBlobContainerMock.Object);
+                mockServiceClient.Setup(x => x.GetBlobContainerClient("$logs")).Returns(_logsContainerMock.Object);
+                mockServiceClient
+                    .Setup(x => x.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(_serviceProperties, default));
+
+                // Setup SetPropertiesAsync to throw a RequestFailedException with your error code
+                mockServiceClient
+                    .Setup(x => x.SetPropertiesAsync(
+                        It.IsAny<BlobServiceProperties>(),
+                        It.IsAny<CancellationToken>()))
+                    .ThrowsAsync(new RequestFailedException(status: 403, message: "This request is not authorized to perform this operation using this permission.", errorCode: errorCode.ToString(), default));
+
+                // Create a few blobs.
+                for (int i = 0; i < 5; i++)
+                {
+                    CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems);
+                }
+
+                await scanInfoManager.UpdateLatestScanAsync(AccountName, ContainerName, DateTime.UtcNow);
+                await product.RegisterAsync(mockServiceClient.Object, _blobContainerMock.Object, executor, CancellationToken.None);
+
+                var logMessages = _loggerProvider.GetAllLogMessages();
+                Assert.IsTrue(logMessages.Any(m => m.EventId.Name == "LoggingNotEnabledOnTargetAccount"
+                    || m.FormattedMessage.Contains("LoggingNotEnabledOnTargetAccount")));
+            }
+        }
+
+        [Test]
         public async Task ExecuteAsync_UpdatesScanInfoManager()
         {
             int testScanBlobLimitPerPoll = 6;

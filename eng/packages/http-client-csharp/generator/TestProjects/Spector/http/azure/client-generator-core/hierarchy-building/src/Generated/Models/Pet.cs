@@ -16,7 +16,7 @@ namespace Specs.Azure.ClientGenerator.Core.HierarchyBuilding
 
         internal Pet(string kind, string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, bool trained) : base(kind, name, additionalBinaryDataProperties) => throw null;
 
-        private protected Pet(string kind, string name, bool trained) : base("pet", name) => throw null;
+        private protected Pet(string kind, string name, bool trained) : base(kind, name) => throw null;
 
         public bool Trained
         {

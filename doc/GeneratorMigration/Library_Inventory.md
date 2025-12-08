@@ -12,11 +12,11 @@
 
 ## Summary
 
-- Total libraries: 396
-- Management Plane (MPG): 225
+- Total libraries: 397
+- Management Plane (MPG): 226
   - Autorest/Swagger: 158
-  - New Emitter (TypeSpec): 27
-  - Old TypeSpec: 40
+  - New Emitter (TypeSpec): 29
+  - Old TypeSpec: 39
 - Data Plane (DPG): 171
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 19
@@ -168,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 27 / 67 (40.3%)
+**Migration Status**: 29 / 68 (42.6%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -195,6 +195,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations |  |
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
+| edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric |  |
@@ -203,7 +204,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
-| impactreporting | Azure.ResourceManager.ImpactReporting |  |
+| impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations |  |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |

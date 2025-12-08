@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Fixed an issue where polling for new blobs could miss recently created or updated blobs when the List Blobs/Get Blobs operation spans multiple requests. If a blob is added or modified after LogScan starts and appears in a later segment of the listing, any blobs changed between the initial listing start time and the last modified timestamp of those later blobs were not flagged as new in the subsequent LogScan.
+- Bug fix ensuring that BlobTrigger log scan targets the correct storage account in multi-account scenarios.
 
 ### Other Changes
 
