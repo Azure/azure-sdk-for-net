@@ -19,14 +19,19 @@ public abstract partial class Specification
 
         string path = Path.Combine(generationPath, "schema.log");
 
-        IndentWriter writer = new();
-        writer.IndentText = "  ";
+        IndentWriter writer = new()
+        {
+            IndentText = "  "
+        };
         foreach (Resource resource in Resources)
         {
             using (writer.Scope($"resource {resource.Name} \"{resource.ResourceType}@{resource.DefaultResourceVersion}\" = {{", "}"))
             {
                 var root = BuildSchemaTree(resource.Properties);
-                Dictionary<ModelBase, string> visitedTypes = new() { { resource, resource.Name } };
+                Dictionary<ModelBase, string> visitedTypes = new()
+                {
+                    [resource] = resource.Name
+                };
                 WriteSchemaObject(writer, root, resource.Name, visitedTypes);
             }
             writer.WriteLine();
@@ -72,31 +77,31 @@ public abstract partial class Specification
         return root;
     }
 
-    private void WriteSchemaObject(IndentWriter writer, SchemaObject obj, string? currentPath, Dictionary<ModelBase, string> visitedTypes)
+    private void WriteSchemaObject(IndentWriter writer, SchemaObject obj, string currentPath, Dictionary<ModelBase, string> visitedTypes)
     {
-        foreach (var kvp in obj.Properties)
+        foreach (var (name, node) in obj.Properties)
         {
-            string name = kvp.Key;
-            SchemaNode node = kvp.Value;
-            string? childPath = currentPath != null ? $"{currentPath}.{name}" : null;
+            string childPath = $"{currentPath}.{name}";
 
             if (node is SchemaObject childObj)
             {
-                writer.WriteLine($"{name}: {{");
-                using (writer.Scope())
+                using (writer.Scope($"{name}: {{", "}"))
                 {
                     WriteSchemaObject(writer, childObj, childPath, visitedTypes);
                 }
-                writer.WriteLine("}");
             }
             else if (node is SchemaProperty prop)
             {
                 WritePropertySchema(writer, prop.Property, name, childPath, visitedTypes);
             }
+            else
+            {
+                throw new InvalidOperationException($"Unknown schema node type: {node.GetType()}");
+            }
         }
     }
 
-    private void WritePropertySchema(IndentWriter writer, Property property, string name, string? currentPath, Dictionary<ModelBase, string> visitedTypes)
+    private void WritePropertySchema(IndentWriter writer, Property property, string name, string currentPath, Dictionary<ModelBase, string> visitedTypes)
     {
         writer.Write($"{name}: ");
         if (property.IsReadOnly)
@@ -107,83 +112,65 @@ public abstract partial class Specification
         switch (property.PropertyType)
         {
             case TypeModel complexType:
-                if (currentPath != null && visitedTypes.TryGetValue(complexType, out string? refPath))
+                if (visitedTypes.TryGetValue(complexType, out string? refPath))
                 {
                     writer.WriteLine($"&{refPath}");
                 }
                 else
                 {
-                    if (currentPath != null)
-                    {
-                        visitedTypes[complexType] = currentPath;
-                    }
-                    writer.WriteLine("{");
-                    using (writer.Scope())
+                    visitedTypes[complexType] = currentPath;
+                    using (writer.Scope("{", "}"))
                     {
                         var root = BuildSchemaTree(complexType.Properties);
                         WriteSchemaObject(writer, root, currentPath, visitedTypes);
                     }
-                    writer.WriteLine("}");
                 }
                 break;
 
             case ListModel list when list.ElementType is TypeModel elementComplex:
-                writer.WriteLine("[");
-                using (writer.Scope())
+                using (writer.Scope("[", "]"))
                 {
-                    if (currentPath != null && visitedTypes.TryGetValue(elementComplex, out string? listRefPath))
+                    if (visitedTypes.TryGetValue(elementComplex, out string? listRefPath))
                     {
                         writer.WriteLine($"&{listRefPath}");
                     }
                     else
                     {
-                        if (currentPath != null)
-                        {
-                            visitedTypes[elementComplex] = $"{currentPath}[]";
-                        }
-                        writer.WriteLine("{");
-                        using (writer.Scope())
+                        visitedTypes[elementComplex] = $"{currentPath}[]";
+                        using (writer.Scope("{", "}"))
                         {
                             var root = BuildSchemaTree(elementComplex.Properties);
-                            string? elementPath = currentPath != null ? $"{currentPath}[]" : null;
+                            string elementPath = $"{currentPath}[]";
                             WriteSchemaObject(writer, root, elementPath, visitedTypes);
                         }
-                        writer.WriteLine("}");
                     }
                 }
-                writer.WriteLine("]");
                 break;
 
             case ListModel listSimple:
-                writer.WriteLine("[");
-                using (writer.Scope())
+                using (writer.Scope("[", "]"))
                 {
                     writer.WriteLine(GetSchemaType(listSimple.ElementType));
                 }
-                writer.WriteLine("]");
                 break;
 
             case DictionaryModel dictionary:
-                writer.WriteLine("{");
-                using (writer.Scope())
+                using (writer.Scope("{", "}"))
                 {
                     if (dictionary.ElementType is TypeModel dictComplexType)
                     {
-                        if (currentPath != null && visitedTypes.TryGetValue(dictComplexType, out string? dictRefPath))
+                        if (visitedTypes.TryGetValue(dictComplexType, out string? dictRefPath))
                         {
                             writer.WriteLine($"{{customized property}}: &{dictRefPath}");
                         }
                         else
                         {
-                            if (currentPath != null)
-                            {
-                                visitedTypes[dictComplexType] = $"{currentPath}.*";
-                            }
+                            visitedTypes[dictComplexType] = $"{currentPath}.*";
                             writer.WriteLine("{customized property}: {");
                             using (writer.Scope())
                             {
                                 var root = BuildSchemaTree(dictComplexType.Properties);
-                                string? elementPath = currentPath != null ? $"{currentPath}.*" : null;
+                                string elementPath = $"{currentPath}.*";
                                 WriteSchemaObject(writer, root, elementPath, visitedTypes);
                             }
                             writer.WriteLine("}");
@@ -194,7 +181,6 @@ public abstract partial class Specification
                         writer.WriteLine($"{{customized property}}: {GetSchemaType(dictionary.ElementType)}");
                     }
                 }
-                writer.WriteLine("}");
                 break;
 
             default:
@@ -207,20 +193,20 @@ public abstract partial class Specification
     {
         if (type is ExternalModel external)
         {
-             string refName = external.GetTypeReference();
-             return refName switch
-             {
-                 "AzureLocation" => "'string'",
-                 "ETag" => "'string'",
-                 "Guid" => "'string'",
-                 "Uri" => "'string'",
-                 "DateTimeOffset" => "'string'",
-                 "ResourceIdentifier" => "'string'",
-                 "ResourceType" => "'string'",
-                 "object" => "any",
-                 "string" => "'string'",
-                 _ => refName
-             };
+            string refName = external.GetTypeReference();
+            return refName switch
+            {
+                "AzureLocation" => "'string'",
+                "ETag" => "'string'",
+                "Guid" => "'string'",
+                "Uri" => "'string'",
+                "DateTimeOffset" => "'string'",
+                "ResourceIdentifier" => "'string'",
+                "ResourceType" => "'string'",
+                "object" => "any",
+                "string" => "'string'",
+                _ => refName
+            };
         }
         if (type is EnumModel) return "'string'";
         if (type is SimpleModel || type is TypeModel) return "object";
