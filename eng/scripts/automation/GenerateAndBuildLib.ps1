@@ -884,7 +884,6 @@ function GeneratePackage()
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
 
-    # Version was already extracted earlier, no need to extract again
     $packageDetails = @{
         version=$version;
         packageName="$packageName";
