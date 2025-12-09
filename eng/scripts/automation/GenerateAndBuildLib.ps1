@@ -681,7 +681,6 @@ function New-ChangeLogIfNotExists()
 {
     param(
         [string]$projectFolder,
-        [string]$packageName,
         [string]$version
     )
 
