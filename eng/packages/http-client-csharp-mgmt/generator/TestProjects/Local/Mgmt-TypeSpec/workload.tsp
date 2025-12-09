@@ -40,10 +40,16 @@ interface SAPVirtualInstances {
    */
   #suppress "@azure-tools/typespec-azure-core/no-openapi" "Added Operation ID as it determines the PowerShell verb used."
   @operationId("SapVirtualInstances_InvokeAvailabilityZoneDetails")
-  getAvailabilityZoneDetails is VirtualResourceActionSync<
-    SAPVirtualInstanceMetadata,
+  getAvailabilityZoneDetails is ArmResourceActionSync<
+    SubscriptionLocationResource,
     SAPAvailabilityZoneDetailsRequest,
-    SAPAvailabilityZoneDetailsResult
+    SAPAvailabilityZoneDetailsResult,
+    Parameters = {
+      @path
+      @segment("sapVirtualInstanceMetadata")
+      @key
+      name: "default";
+    }
   >;
 }
 
