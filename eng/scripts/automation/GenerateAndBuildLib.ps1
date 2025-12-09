@@ -715,7 +715,7 @@ function New-ChangeLogIfNotExists()
         }
     }
     else {
-        Write-Host "CHANGELOG.md already exists at $changeLogPath"
+        Write-Host "CHANGELOG.md exists at $changeLogPath"
     }
 }
 
