@@ -26,9 +26,6 @@ parameters:
   - name: PackageInfoFiles
     type: object
     default: []
-  - name: AzureServiceConnection
-    type: string
-    default: 'APIView prod deployment'
 
 steps:
   # Automatic API review is generated for a package when pipeline runs irrespective of how pipeline gets triggered.
@@ -42,7 +39,7 @@ steps:
 
     - task: AzureCLI@2
       inputs:
-        azureSubscription: ${{ parameters.AzureServiceConnection }}
+        azureSubscription: 'APIView prod deployment'
         scriptType: pscore
         scriptLocation: scriptPath
         scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Create-APIReview.ps1

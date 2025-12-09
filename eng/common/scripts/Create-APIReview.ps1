@@ -23,17 +23,19 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot Helpers ApiView-Helpers.ps1)
 
 # Get Bearer token for APIView authentication
+# In Azure DevOps, this uses the service connection's Managed Identity/Service Principal
 function Get-ApiViewBearerToken()
 {
-    $audience = "api://apiview"
     try {
-        $tokenResponse = az account get-access-token --resource $audience --output json 2>$null | ConvertFrom-Json
-        if ($tokenResponse -and $tokenResponse.accessToken) {
-            return $tokenResponse.accessToken
+        $tokenResponse = az account get-access-token --resource "api://apiview" --output json 2>&1
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to acquire access token: $tokenResponse"
+            return $null
         }
-        return $null
+        return ($tokenResponse | ConvertFrom-Json).accessToken
     }
     catch {
+        Write-Error "Failed to acquire access token: $($_.Exception.Message)"
         return $null
     }
 }
@@ -99,7 +101,7 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     $bearerToken = Get-ApiViewBearerToken
     if (-not $bearerToken) {
         Write-Error "Failed to acquire Bearer token for APIView authentication."
-        return 401
+        return [System.Net.HttpStatusCode]::Unauthorized
     }
     
     $headers = @{
@@ -150,7 +152,7 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     $bearerToken = Get-ApiViewBearerToken
     if (-not $bearerToken) {
         Write-Error "Failed to acquire Bearer token for APIView authentication."
-        return 401
+        return [System.Net.HttpStatusCode]::Unauthorized
     }
     
     $headers = @{
