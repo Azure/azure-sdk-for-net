@@ -30,6 +30,7 @@ namespace Azure.AI.Projects.OpenAI.Tests
         public string BING_CUSTOM_SEARCH_INSTANCE_NAME => GetRecordedVariable("BING_CUSTOM_SEARCH_INSTANCE_NAME");
         public string MCP_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable("MCP_PROJECT_CONNECTION_NAME");
         public string PLAYWRIGHT_CONNECTION_NAME => GetRecordedOptionalVariable("PLAYWRIGHT_CONNECTION_NAME");
+        public string SHAREPOINT_CONNECTION_NAME => GetRecordedOptionalVariable("SHAREPOINT_CONNECTION_NAME");
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try

@@ -146,7 +146,7 @@ public partial class AIProjectMemoryStoresOperations
     /// Wait for memories to update.
     /// </summary>
     /// <returns>The MemoryUpdateResult in final state</returns>
-    public async Task<MemoryUpdateResult> WaitForMemoriesUpdateAsync(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
+    public async virtual Task<MemoryUpdateResult> WaitForMemoriesUpdateAsync(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         MemoryUpdateResult updateResult = await UpdateMemoriesAsync(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken).ConfigureAwait(false);
         while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
@@ -161,7 +161,7 @@ public partial class AIProjectMemoryStoresOperations
     /// Wait for memories to update.
     /// </summary>
     /// <returns>The MemoryUpdateResult in final state</returns>
-    public MemoryUpdateResult WaitForMemoriesUpdate(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
+    public virtual MemoryUpdateResult WaitForMemoriesUpdate(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         MemoryUpdateResult updateResult = UpdateMemories(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken);
         while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)

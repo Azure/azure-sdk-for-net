@@ -21,6 +21,7 @@ using OpenAI;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 using Azure.AI.Projects.Tests.Utils;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -81,7 +82,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
                 "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
         {ToolType.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
-        {ToolType.Sharepoint, "Hello, summarize the key points of the first document in the list."},
+        {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
@@ -130,6 +131,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.AzureAISearch, "product_info_7.md"},
         {ToolType.BingGrounding, "Wikipedia"},
         {ToolType.BingGroundingCustom, "Wikipedia"},
+        {ToolType.Sharepoint, "sharepoint"}
     };
 
     public Dictionary<ToolType, Type> ExpectedUpdateTypes = new()
@@ -157,6 +159,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.OpenAPI, "openapi_call"},
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
+        {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
     };
     #endregion
 
@@ -386,15 +389,14 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return tool;
     }
 
-    private async Task<OpenAPIAgentTool> GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
+    private OpenAPIAgentTool GetOpenAPITool(AIProjectClient projectClient, bool withConnection)
     {
         OpenAPIAuthenticationDetails auth;
         string filePath;
         if (withConnection)
         {
-            AIProjectConnection tripadvisorConnection = await projectClient.Connections.GetConnectionAsync("tripadvisor");
             auth = new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
-                projectConnectionId: tripadvisorConnection.Id
+                projectConnectionId: TestEnvironment.OPENAPI_PROJECT_CONNECTION_ID
             ));
             filePath = GetTestFile(fileName: "tripadvisor_openapi.json");
         }
@@ -410,6 +412,15 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         );
         functionDefinition.Description = withConnection ? "Trip Advisor API to get travel information." : "Retrieve weather information for a location.";
         return new(functionDefinition);
+    }
+
+    private SharepointAgentTool GetSharepointTool(AIProjectClient projectClient)
+    {
+        SharePointGroundingToolOptions sharepointToolOption = new()
+        {
+            ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.SHAREPOINT_CONNECTION_ID) }
+        };
+        return new SharepointAgentTool(sharepointToolOption);
     }
 
     /// <summary>
@@ -470,10 +481,10 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             ToolType.Memory => new MemorySearchTool(memoryStoreName: (await CreateMemoryStore(projectClient)).Name, scope: MEMORY_STORE_SCOPE),
             ToolType.AzureAISearch => new AzureAISearchAgentTool(new AzureAISearchToolOptions(indexes: [GetAISearchIndex()])),
             ToolType.BingGrounding => new BingGroundingAgentTool(new BingGroundingSearchToolOptions(
-                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.BING_CONNECTION_NAME).Id)]
+                searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: TestEnvironment.BING_CONNECTION_ID)]
             )),
             ToolType.BingGroundingCustom => new BingCustomSearchAgentTool(new BingCustomSearchToolParameters(
-                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: projectClient.Connections.GetConnection(connectionName: TestEnvironment.CUSTOM_BING_CONNECTION_NAME).Id, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
+                searchConfigurations: [new BingCustomSearchConfiguration(projectConnectionId: TestEnvironment.CUSTOM_BING_CONNECTION_ID, instanceName: TestEnvironment.BING_CUSTOM_SEARCH_INSTANCE_NAME)]
             )),
             ToolType.MCP => ResponseTool.CreateMcpTool(
                 serverLabel: "api-specs",
@@ -481,11 +492,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 toolCallApprovalPolicy: new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.AlwaysRequireApproval
             )),
             ToolType.MCPConnection => GetProjectConnectedMCPTool(),
-            ToolType.OpenAPI => await GetOpenAPITool(projectClient, false),
-            ToolType.OpenAPIConnection => await GetOpenAPITool(projectClient, true),
+            ToolType.OpenAPI => GetOpenAPITool(projectClient, false),
+            ToolType.OpenAPIConnection => GetOpenAPITool(projectClient, true),
+            ToolType.Sharepoint => GetSharepointTool(projectClient),
             ToolType.BrowserAutomation => new BrowserAutomationAgentTool(
             new BrowserAutomationToolParameters(
-                new BrowserAutomationToolConnectionParameters((await projectClient.Connections.GetConnectionAsync(TestEnvironment.PLAYWRIGHT_CONNECTION_NAME)).Value.Id)
+                new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
