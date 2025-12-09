@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.3.0 (2025-12-10)
 
 ### Other Changes
+
+- Bump dependent package `Azure.Provisioning` to 1.4.0
 
 ## 1.3.0-beta.1 (2025-11-07)
 
