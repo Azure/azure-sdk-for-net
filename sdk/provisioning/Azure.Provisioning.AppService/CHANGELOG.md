@@ -2,9 +2,9 @@
 
 ## 1.3.0 (2025-12-10)
 
-### Features Added
+### Other Changes
 
-- Bump api-version to latest.
+- Bump dependent package `Azure.Provisioning` to 1.4.0
 
 ## 1.3.0-beta.1 (2025-11-07)
 
