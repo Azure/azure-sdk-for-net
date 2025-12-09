@@ -65,6 +65,8 @@ public static class AgentServerApplication
         // Configure
         builder.ConfigureAndValidateServices(applicationOptions.ConfigureServices);
 
+        builder.Services.AddSingleton<AgentInvoker>();
+
         var app = builder.Build();
 
         app.MapHealthChecksEndpoints()

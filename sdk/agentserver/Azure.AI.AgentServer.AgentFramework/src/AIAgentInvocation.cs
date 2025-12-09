@@ -19,15 +19,15 @@ namespace Azure.AI.AgentServer.AgentFramework;
 public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
 {
     /// <summary>
-    /// Executes the agent invocation asynchronously.
+    /// Invokes the agent asynchronously and returns a complete response.
     /// </summary>
     /// <param name="request">The create response request.</param>
     /// <param name="context">The agent invocation context.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The response from the agent.</returns>
-    protected override async Task<Contracts.Generated.Responses.Response> DoInvokeAsync(CreateResponseRequest request,
+    public override async Task<Contracts.Generated.Responses.Response> InvokeAsync(CreateResponseRequest request,
         AgentInvocationContext context,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken = default)
     {
         Activity.Current?.SetServiceNamespace("agentframework");
 
