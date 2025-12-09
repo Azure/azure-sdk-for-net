@@ -148,34 +148,46 @@ public class JoinTests
     [Test]
     public void Join_WithResourceProperty_ReturnsCorrectFormat()
     {
-        // Arrange - Use an actual resource (StorageAccount) to demonstrate resource property usage
-        var storageAccount = new StorageAccount("storage");
+        // Arrange - Use a test resource with a BicepList property
+        var resource = new TestResource("testResource");
+        var result = BicepFunction.Join(resource.List, ",");
 
-        // Create a parameter to demonstrate the pattern (parameters work like resource properties)
-        var param = new ProvisioningParameter("domains", typeof(string[]));
-        BicepList<string> domainsList = param;
-
-        var result = BicepFunction.Join(domainsList, ",");
-
-        // Assert - The expression references the parameter
-        TestHelpers.AssertExpression("join(domains, ',')", result);
+        // Assert - The expression references the resource property
+        TestHelpers.AssertExpression("join(testResource.list, ',')", result);
     }
 
     [Test]
     public void Join_WithToBicepExpression_ReturnsCorrectFormat()
     {
-        // Arrange - Demonstrate using ToBicepExpression pattern with parameters
-        // (This pattern works the same way for resource properties)
-        var param = new ProvisioningParameter("tags", typeof(string[]));
+        // Arrange - Use ToBicepExpression to reference a resource property
+        var resource = new TestResource("testResource");
 
-        // Implicit conversion from parameter to BicepList uses ToBicepExpression internally
-        BicepList<string> tagsList = param;
+        // Use ToBicepExpression to get a BicepExpression reference
+        var listExpression = resource.List.ToBicepExpression();
+        var result = BicepFunction.Join(resource.List, ";");
 
-        // Verify it compiles to the parameter reference
-        var tagsExpression = tagsList.ToBicepExpression();
-        var result = BicepFunction.Join(tagsList, ";");
+        // Assert - The expression references the resource property via ToBicepExpression
+        TestHelpers.AssertExpression("join(testResource.list, ';')", result);
+    }
 
-        // Assert - The expression references the parameter
-        TestHelpers.AssertExpression("join(tags, ';')", result);
+    // Test resource for demonstrating property access
+    private class TestResource : ProvisionableResource
+    {
+        public TestResource(string identifier) : base(identifier, "Microsoft.Tests/tests", "2025-11-09")
+        {
+        }
+
+        private BicepList<string>? _list;
+        public BicepList<string> List
+        {
+            get { Initialize(); return _list!; }
+            set { Initialize(); _list!.Assign(value); }
+        }
+
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _list = DefineListProperty<string>("List", ["list"]);
+        }
     }
 }
