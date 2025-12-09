@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Hci
         public HciClusterData(AzureLocation location) : base(location)
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
-            SecretsLocations = new ChangeTrackingList<SecretsLocationDetails>();
-            LocalAvailabilityZones = new ChangeTrackingList<LocalAvailabilityZones>();
+            SecretsLocations = new ChangeTrackingList<HciSecretsLocationDetails>();
+            LocalAvailabilityZones = new ChangeTrackingList<HciClusterLocalAvailabilityZones>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterData"/>. </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, HciClusterSupportStatus? supportStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<SecretsLocationDetails> secretsLocations, HciClusterPattern? clusterPattern, IList<LocalAvailabilityZones> localAvailabilityZones, HciDeploymentIdentityProvider? identityProvider, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, Guid? principalId, Guid? tenantId, HciManagedServiceIdentityType? typeIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, HciProvisioningState? provisioningState, HciClusterStatus? status, HciClusterConnectivityStatus? connectivityStatus, HciClusterSupportStatus? supportStatus, Guid? cloudId, string ring, string cloudManagementEndpoint, Guid? aadClientId, Guid? aadTenantId, Guid? aadApplicationObjectId, Guid? aadServicePrincipalObjectId, SoftwareAssuranceProperties softwareAssuranceProperties, bool? isManagementCluster, LogCollectionProperties logCollectionProperties, RemoteSupportProperties remoteSupportProperties, HciClusterDesiredProperties desiredProperties, HciClusterReportedProperties reportedProperties, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration, float? trialDaysRemaining, string billingModel, DateTimeOffset? registrationTimestamp, DateTimeOffset? lastSyncTimestamp, DateTimeOffset? lastBillingTimestamp, string serviceEndpoint, string resourceProviderObjectId, IList<HciSecretsLocationDetails> secretsLocations, HciClusterPattern? clusterPattern, IList<HciClusterLocalAvailabilityZones> localAvailabilityZones, HciDeploymentIdentityProvider? identityProvider, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             PrincipalId = principalId;
@@ -238,13 +238,13 @@ namespace Azure.ResourceManager.Hci
         public string ResourceProviderObjectId { get; }
         /// <summary> List of secret locations. </summary>
         [WirePath("properties.secretsLocations")]
-        public IList<SecretsLocationDetails> SecretsLocations { get; }
+        public IList<HciSecretsLocationDetails> SecretsLocations { get; }
         /// <summary> Supported Storage Type for HCI Cluster. </summary>
         [WirePath("properties.clusterPattern")]
         public HciClusterPattern? ClusterPattern { get; }
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
         [WirePath("properties.localAvailabilityZones")]
-        public IList<LocalAvailabilityZones> LocalAvailabilityZones { get; }
+        public IList<HciClusterLocalAvailabilityZones> LocalAvailabilityZones { get; }
         /// <summary> Identity Provider for the cluster. </summary>
         [WirePath("properties.identityProvider")]
         public HciDeploymentIdentityProvider? IdentityProvider { get; }

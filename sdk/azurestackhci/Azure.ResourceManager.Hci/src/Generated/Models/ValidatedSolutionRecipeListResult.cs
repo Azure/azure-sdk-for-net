@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="ValidatedSolutionRecipeListResult"/>. </summary>
         /// <param name="value"> The ValidatedSolutionRecipe items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ValidatedSolutionRecipeListResult(IEnumerable<ValidatedSolutionRecipeData> value)
+        internal ValidatedSolutionRecipeListResult(IEnumerable<HciValidatedSolutionRecipeData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The ValidatedSolutionRecipe items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ValidatedSolutionRecipeListResult(IReadOnlyList<ValidatedSolutionRecipeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ValidatedSolutionRecipeListResult(IReadOnlyList<HciValidatedSolutionRecipeData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The ValidatedSolutionRecipe items on this page. </summary>
-        public IReadOnlyList<ValidatedSolutionRecipeData> Value { get; }
+        public IReadOnlyList<HciValidatedSolutionRecipeData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

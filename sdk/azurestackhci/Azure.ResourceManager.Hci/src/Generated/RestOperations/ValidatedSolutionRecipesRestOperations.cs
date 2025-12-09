@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validatedSolutionRecipeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="validatedSolutionRecipeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ValidatedSolutionRecipeData>> GetAsync(string subscriptionId, AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciValidatedSolutionRecipeData>> GetAsync(string subscriptionId, AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(validatedSolutionRecipeName, nameof(validatedSolutionRecipeName));
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        ValidatedSolutionRecipeData value = default;
+                        HciValidatedSolutionRecipeData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ValidatedSolutionRecipeData.DeserializeValidatedSolutionRecipeData(document.RootElement);
+                        value = HciValidatedSolutionRecipeData.DeserializeHciValidatedSolutionRecipeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ValidatedSolutionRecipeData)null, message.Response);
+                    return Response.FromValue((HciValidatedSolutionRecipeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="validatedSolutionRecipeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="validatedSolutionRecipeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ValidatedSolutionRecipeData> Get(string subscriptionId, AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
+        public Response<HciValidatedSolutionRecipeData> Get(string subscriptionId, AzureLocation location, string validatedSolutionRecipeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(validatedSolutionRecipeName, nameof(validatedSolutionRecipeName));
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        ValidatedSolutionRecipeData value = default;
+                        HciValidatedSolutionRecipeData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ValidatedSolutionRecipeData.DeserializeValidatedSolutionRecipeData(document.RootElement);
+                        value = HciValidatedSolutionRecipeData.DeserializeHciValidatedSolutionRecipeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ValidatedSolutionRecipeData)null, message.Response);
+                    return Response.FromValue((HciValidatedSolutionRecipeData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -289,9 +289,9 @@ namespace Azure.ResourceManager.Hci
             DateTimeOffset? lastBillingTimestamp = default;
             string serviceEndpoint = default;
             string resourceProviderObjectId = default;
-            IList<SecretsLocationDetails> secretsLocations = default;
+            IList<HciSecretsLocationDetails> secretsLocations = default;
             HciClusterPattern? clusterPattern = default;
-            IList<LocalAvailabilityZones> localAvailabilityZones = default;
+            IList<HciClusterLocalAvailabilityZones> localAvailabilityZones = default;
             HciDeploymentIdentityProvider? identityProvider = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -618,10 +618,10 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            List<SecretsLocationDetails> array = new List<SecretsLocationDetails>();
+                            List<HciSecretsLocationDetails> array = new List<HciSecretsLocationDetails>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecretsLocationDetails.DeserializeSecretsLocationDetails(item, options));
+                                array.Add(HciSecretsLocationDetails.DeserializeHciSecretsLocationDetails(item, options));
                             }
                             secretsLocations = array;
                             continue;
@@ -641,10 +641,10 @@ namespace Azure.ResourceManager.Hci
                             {
                                 continue;
                             }
-                            List<LocalAvailabilityZones> array = new List<LocalAvailabilityZones>();
+                            List<HciClusterLocalAvailabilityZones> array = new List<HciClusterLocalAvailabilityZones>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(Models.LocalAvailabilityZones.DeserializeLocalAvailabilityZones(item, options));
+                                array.Add(HciClusterLocalAvailabilityZones.DeserializeHciClusterLocalAvailabilityZones(item, options));
                             }
                             localAvailabilityZones = array;
                             continue;
@@ -704,9 +704,9 @@ namespace Azure.ResourceManager.Hci
                 lastBillingTimestamp,
                 serviceEndpoint,
                 resourceProviderObjectId,
-                secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>(),
+                secretsLocations ?? new ChangeTrackingList<HciSecretsLocationDetails>(),
                 clusterPattern,
-                localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
+                localAvailabilityZones ?? new ChangeTrackingList<HciClusterLocalAvailabilityZones>(),
                 identityProvider,
                 serializedAdditionalRawData);
         }

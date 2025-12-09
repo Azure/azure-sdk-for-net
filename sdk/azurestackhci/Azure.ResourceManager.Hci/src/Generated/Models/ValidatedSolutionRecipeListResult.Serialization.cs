@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IReadOnlyList<ValidatedSolutionRecipeData> value = default;
+            IReadOnlyList<HciValidatedSolutionRecipeData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ValidatedSolutionRecipeData> array = new List<ValidatedSolutionRecipeData>();
+                    List<HciValidatedSolutionRecipeData> array = new List<HciValidatedSolutionRecipeData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ValidatedSolutionRecipeData.DeserializeValidatedSolutionRecipeData(item, options));
+                        array.Add(HciValidatedSolutionRecipeData.DeserializeHciValidatedSolutionRecipeData(item, options));
                     }
                     value = array;
                     continue;

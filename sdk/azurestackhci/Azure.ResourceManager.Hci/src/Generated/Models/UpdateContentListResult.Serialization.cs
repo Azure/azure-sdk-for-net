@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IReadOnlyList<UpdateContentData> value = default;
+            IReadOnlyList<HciUpdateContentData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<UpdateContentData> array = new List<UpdateContentData>();
+                    List<HciUpdateContentData> array = new List<HciUpdateContentData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(UpdateContentData.DeserializeUpdateContentData(item, options));
+                        array.Add(HciUpdateContentData.DeserializeHciUpdateContentData(item, options));
                     }
                     value = array;
                     continue;

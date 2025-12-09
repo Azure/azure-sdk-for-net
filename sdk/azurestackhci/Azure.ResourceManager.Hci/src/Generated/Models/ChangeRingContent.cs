@@ -53,14 +53,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="ChangeRingContent"/>. </summary>
         /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChangeRingContent(ChangeRingRequestProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChangeRingContent(HciChangeRingContentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the properties. </summary>
-        internal ChangeRingRequestProperties Properties { get; set; }
+        internal HciChangeRingContentProperties Properties { get; set; }
         /// <summary> The target ring for the cluster. </summary>
         [WirePath("properties.targetRing")]
         public string TargetRing
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             set
             {
                 if (Properties is null)
-                    Properties = new ChangeRingRequestProperties();
+                    Properties = new HciChangeRingContentProperties();
                 Properties.TargetRing = value;
             }
         }

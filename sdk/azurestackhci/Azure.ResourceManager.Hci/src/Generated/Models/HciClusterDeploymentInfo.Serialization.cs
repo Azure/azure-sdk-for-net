@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Hci.Models
             string secretsLocation = default;
             IList<EceDeploymentSecrets> secrets = default;
             OptionalServices optionalServices = default;
-            IList<LocalAvailabilityZones> localAvailabilityZones = default;
+            IList<HciClusterLocalAvailabilityZones> localAvailabilityZones = default;
             HciDeploymentAssemblyInfo assemblyInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -354,10 +354,10 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    List<LocalAvailabilityZones> array = new List<LocalAvailabilityZones>();
+                    List<HciClusterLocalAvailabilityZones> array = new List<HciClusterLocalAvailabilityZones>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.LocalAvailabilityZones.DeserializeLocalAvailabilityZones(item, options));
+                        array.Add(HciClusterLocalAvailabilityZones.DeserializeHciClusterLocalAvailabilityZones(item, options));
                     }
                     localAvailabilityZones = array;
                     continue;
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Hci.Models
                 secretsLocation,
                 secrets ?? new ChangeTrackingList<EceDeploymentSecrets>(),
                 optionalServices,
-                localAvailabilityZones ?? new ChangeTrackingList<LocalAvailabilityZones>(),
+                localAvailabilityZones ?? new ChangeTrackingList<HciClusterLocalAvailabilityZones>(),
                 assemblyInfo,
                 serializedAdditionalRawData);
         }

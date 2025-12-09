@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            RemoteSupportAccessLevel accessLevel = default;
+            HciRemoteSupportAccessLevel accessLevel = default;
             DateTimeOffset expirationTimestamp = default;
             RemoteSupportType type = default;
-            RemoteSupportJobReportedProperties reportedProperties = default;
+            HciRemoteSupportJobReportedProperties reportedProperties = default;
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("accessLevel"u8))
                 {
-                    accessLevel = new RemoteSupportAccessLevel(property.Value.GetString());
+                    accessLevel = new HciRemoteSupportAccessLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expirationTimestamp"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = RemoteSupportJobReportedProperties.DeserializeRemoteSupportJobReportedProperties(property.Value, options);
+                    reportedProperties = HciRemoteSupportJobReportedProperties.DeserializeHciRemoteSupportJobReportedProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentMode"u8))

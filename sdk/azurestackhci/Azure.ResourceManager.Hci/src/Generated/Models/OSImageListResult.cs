@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="OSImageListResult"/>. </summary>
         /// <param name="value"> The OsImage items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal OSImageListResult(IEnumerable<OSImageData> value)
+        internal OSImageListResult(IEnumerable<HciOSImageData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The OsImage items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSImageListResult(IReadOnlyList<OSImageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OSImageListResult(IReadOnlyList<HciOSImageData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The OsImage items on this page. </summary>
-        public IReadOnlyList<OSImageData> Value { get; }
+        public IReadOnlyList<HciOSImageData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

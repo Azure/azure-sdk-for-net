@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            ChangeRingRequestProperties properties = default;
+            HciChangeRingContentProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    properties = ChangeRingRequestProperties.DeserializeChangeRingRequestProperties(property.Value, options);
+                    properties = HciChangeRingContentProperties.DeserializeHciChangeRingContentProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

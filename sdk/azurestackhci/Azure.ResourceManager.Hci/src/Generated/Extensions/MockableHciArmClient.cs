@@ -122,15 +122,15 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EdgeDeviceJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDeviceJobResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeviceJobResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HciEdgeDeviceJobKindResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciEdgeDeviceJobKindResource.CreateResourceIdentifier" /> to create a <see cref="HciEdgeDeviceJobKindResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EdgeDeviceJobResource"/> object. </returns>
-        public virtual EdgeDeviceJobResource GetEdgeDeviceJobResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciEdgeDeviceJobKindResource"/> object. </returns>
+        public virtual HciEdgeDeviceJobKindResource GetHciEdgeDeviceJobKindResource(ResourceIdentifier id)
         {
-            EdgeDeviceJobResource.ValidateResourceId(id);
-            return new EdgeDeviceJobResource(Client, id);
+            HciEdgeDeviceJobKindResource.ValidateResourceId(id);
+            return new HciEdgeDeviceJobKindResource(Client, id);
         }
 
         /// <summary>
@@ -146,51 +146,51 @@ namespace Azure.ResourceManager.Hci.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OSImageResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OSImageResource.CreateResourceIdentifier" /> to create an <see cref="OSImageResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HciOSImageResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciOSImageResource.CreateResourceIdentifier" /> to create a <see cref="HciOSImageResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OSImageResource"/> object. </returns>
-        public virtual OSImageResource GetOSImageResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciOSImageResource"/> object. </returns>
+        public virtual HciOSImageResource GetHciOSImageResource(ResourceIdentifier id)
         {
-            OSImageResource.ValidateResourceId(id);
-            return new OSImageResource(Client, id);
+            HciOSImageResource.ValidateResourceId(id);
+            return new HciOSImageResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PlatformUpdateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PlatformUpdateResource.CreateResourceIdentifier" /> to create a <see cref="PlatformUpdateResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HciPlatformUpdateResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciPlatformUpdateResource.CreateResourceIdentifier" /> to create a <see cref="HciPlatformUpdateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PlatformUpdateResource"/> object. </returns>
-        public virtual PlatformUpdateResource GetPlatformUpdateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciPlatformUpdateResource"/> object. </returns>
+        public virtual HciPlatformUpdateResource GetHciPlatformUpdateResource(ResourceIdentifier id)
         {
-            PlatformUpdateResource.ValidateResourceId(id);
-            return new PlatformUpdateResource(Client, id);
+            HciPlatformUpdateResource.ValidateResourceId(id);
+            return new HciPlatformUpdateResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UpdateContentResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UpdateContentResource.CreateResourceIdentifier" /> to create an <see cref="UpdateContentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HciUpdateContentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciUpdateContentResource.CreateResourceIdentifier" /> to create a <see cref="HciUpdateContentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpdateContentResource"/> object. </returns>
-        public virtual UpdateContentResource GetUpdateContentResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciUpdateContentResource"/> object. </returns>
+        public virtual HciUpdateContentResource GetHciUpdateContentResource(ResourceIdentifier id)
         {
-            UpdateContentResource.ValidateResourceId(id);
-            return new UpdateContentResource(Client, id);
+            HciUpdateContentResource.ValidateResourceId(id);
+            return new HciUpdateContentResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ValidatedSolutionRecipeResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ValidatedSolutionRecipeResource.CreateResourceIdentifier" /> to create a <see cref="ValidatedSolutionRecipeResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="HciValidatedSolutionRecipeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HciValidatedSolutionRecipeResource.CreateResourceIdentifier" /> to create a <see cref="HciValidatedSolutionRecipeResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ValidatedSolutionRecipeResource"/> object. </returns>
-        public virtual ValidatedSolutionRecipeResource GetValidatedSolutionRecipeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HciValidatedSolutionRecipeResource"/> object. </returns>
+        public virtual HciValidatedSolutionRecipeResource GetHciValidatedSolutionRecipeResource(ResourceIdentifier id)
         {
-            ValidatedSolutionRecipeResource.ValidateResourceId(id);
-            return new ValidatedSolutionRecipeResource(Client, id);
+            HciValidatedSolutionRecipeResource.ValidateResourceId(id);
+            return new HciValidatedSolutionRecipeResource(Client, id);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Unknown version of EdgeDeviceJob. </summary>
-    internal partial class UnknownEdgeDeviceJob : EdgeDeviceJobData
+    internal partial class UnknownEdgeDeviceJob : HciEdgeDeviceJobKindData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownEdgeDeviceJob"/>. </summary>
         /// <param name="id"> The id. </param>

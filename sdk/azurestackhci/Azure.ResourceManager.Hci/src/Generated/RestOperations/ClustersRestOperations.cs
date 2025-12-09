@@ -1044,7 +1044,7 @@ namespace Azure.ResourceManager.Hci
             }
         }
 
-        internal RequestUriBuilder CreateUpdateSecretsLocationsRequestUri(string subscriptionId, string resourceGroupName, string clusterName, SecretsLocationsChangeContent content)
+        internal RequestUriBuilder CreateUpdateSecretsLocationsRequestUri(string subscriptionId, string resourceGroupName, string clusterName, HciSecretsLocationsChangeContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -1059,7 +1059,7 @@ namespace Azure.ResourceManager.Hci
             return uri;
         }
 
-        internal HttpMessage CreateUpdateSecretsLocationsRequest(string subscriptionId, string resourceGroupName, string clusterName, SecretsLocationsChangeContent content)
+        internal HttpMessage CreateUpdateSecretsLocationsRequest(string subscriptionId, string resourceGroupName, string clusterName, HciSecretsLocationsChangeContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1092,7 +1092,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateSecretsLocationsAsync(string subscriptionId, string resourceGroupName, string clusterName, SecretsLocationsChangeContent content, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateSecretsLocationsAsync(string subscriptionId, string resourceGroupName, string clusterName, HciSecretsLocationsChangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1119,7 +1119,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response UpdateSecretsLocations(string subscriptionId, string resourceGroupName, string clusterName, SecretsLocationsChangeContent content, CancellationToken cancellationToken = default)
+        public Response UpdateSecretsLocations(string subscriptionId, string resourceGroupName, string clusterName, HciSecretsLocationsChangeContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

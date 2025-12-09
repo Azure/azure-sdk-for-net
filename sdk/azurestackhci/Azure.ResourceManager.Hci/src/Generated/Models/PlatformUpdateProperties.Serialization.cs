@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IList<PlatformUpdateDetails> platformUpdateDetails = default;
+            IList<HciPlatformUpdateDetails> platformUpdateDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("platformUpdateDetails"u8))
                 {
-                    List<PlatformUpdateDetails> array = new List<PlatformUpdateDetails>();
+                    List<HciPlatformUpdateDetails> array = new List<HciPlatformUpdateDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.PlatformUpdateDetails.DeserializePlatformUpdateDetails(item, options));
+                        array.Add(HciPlatformUpdateDetails.DeserializeHciPlatformUpdateDetails(item, options));
                     }
                     platformUpdateDetails = array;
                     continue;

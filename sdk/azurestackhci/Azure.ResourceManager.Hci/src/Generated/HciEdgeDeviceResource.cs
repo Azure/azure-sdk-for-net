@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.Hci
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of EdgeDeviceJobResources in the HciEdgeDevice. </summary>
-        /// <returns> An object representing collection of EdgeDeviceJobResources and their operations over a EdgeDeviceJobResource. </returns>
-        public virtual EdgeDeviceJobCollection GetEdgeDeviceJobs()
+        /// <summary> Gets a collection of HciEdgeDeviceJobKindResources in the HciEdgeDevice. </summary>
+        /// <returns> An object representing collection of HciEdgeDeviceJobKindResources and their operations over a HciEdgeDeviceJobKindResource. </returns>
+        public virtual HciEdgeDeviceJobKindCollection GetHciEdgeDeviceJobKinds()
         {
-            return GetCachedClient(client => new EdgeDeviceJobCollection(client, Id));
+            return GetCachedClient(client => new HciEdgeDeviceJobKindCollection(client, Id));
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EdgeDeviceJobResource"/></description>
+        /// <description><see cref="HciEdgeDeviceJobKindResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="jobsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeDeviceJobResource>> GetEdgeDeviceJobAsync(string jobsName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HciEdgeDeviceJobKindResource>> GetHciEdgeDeviceJobKindAsync(string jobsName, CancellationToken cancellationToken = default)
         {
-            return await GetEdgeDeviceJobs().GetAsync(jobsName, cancellationToken).ConfigureAwait(false);
+            return await GetHciEdgeDeviceJobKinds().GetAsync(jobsName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Hci
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="EdgeDeviceJobResource"/></description>
+        /// <description><see cref="HciEdgeDeviceJobKindResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,9 +151,9 @@ namespace Azure.ResourceManager.Hci
         /// <exception cref="ArgumentNullException"> <paramref name="jobsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<EdgeDeviceJobResource> GetEdgeDeviceJob(string jobsName, CancellationToken cancellationToken = default)
+        public virtual Response<HciEdgeDeviceJobKindResource> GetHciEdgeDeviceJobKind(string jobsName, CancellationToken cancellationToken = default)
         {
-            return GetEdgeDeviceJobs().Get(jobsName, cancellationToken);
+            return GetHciEdgeDeviceJobKinds().Get(jobsName, cancellationToken);
         }
 
         /// <summary>

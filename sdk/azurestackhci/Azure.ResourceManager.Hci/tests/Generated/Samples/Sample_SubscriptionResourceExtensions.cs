@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetKubernetesVersionsBySubscriptionLocationResource_KubernetesVersionsListBySubscriptionLocationResourceMaximumSet()
+        public async Task GetHciKubernetesVersionsByLocation_KubernetesVersionsListBySubscriptionLocationResourceMaximumSet()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/preview/2025-11-01-preview/examples/KubernetesVersions_ListBySubscriptionLocationResource_MaximumSet_Gen.json
             // this example is just showing the usage of "KubernetesVersions_ListBySubscriptionLocationResource" operation, for the dependent resources, they will have to be created separately.
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("westus2");
-            await foreach (HciLocationKubernetesVersion item in subscriptionResource.GetKubernetesVersionsBySubscriptionLocationResourceAsync(location))
+            await foreach (HciLocationKubernetesVersion item in subscriptionResource.GetHciKubernetesVersionsByLocationAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

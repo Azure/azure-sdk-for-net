@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-require: https://github.com/Azure/azure-rest-api-specs/blob/79b72fff7bd9e1ba39352bfadd411d265cb1bfe5/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/afb290a389f8ee1d3a7612e703f31817d6c8ff15/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md
 #tag: package-preview-2025-11-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -27,6 +27,7 @@ enable-bicep-serialization: true
 
 override-operation-name:
   Offers_ListByCluster: GetHciClusterOffers
+  KubernetesVersions_ListBySubscriptionLocationResource: GetHciKubernetesVersionsByLocation
 
 format-by-name-rules:
   '*TenantId': 'uuid'
@@ -198,7 +199,8 @@ rename-mapping:
   SecretsType: HciSecretsLocationType
   RdmaCapability: HciNicRdmaCapability
   PlatformPayload: HciPlatformPayload
-  OSImageProperties: HciOSImageProperties
+  OsImage: HciOSImage
+  OsImageProperties: HciOSImageProperties
   JobStatus: HciEdgeDeviceJobStatus
   IdentityProvider: HciDeploymentIdentityProvider
   HardwareClass: HciClusterHardwareClass
@@ -208,6 +210,23 @@ rename-mapping:
   ClusterPattern: HciClusterPattern
   AssemblyInfo: HciDeploymentAssemblyInfo
   AssemblyInfoPayload: HciDeploymentAssemblyInfoPayload
+  EdgeDeviceJob: HciEdgeDeviceJobKind
+  PlatformUpdate: HciPlatformUpdate
+  UpdateContent: HciUpdateContent
+  ValidatedSolutionRecipe: HciValidatedSolutionRecipe
+  ChangeRingRequestProperties: HciChangeRingContentProperties
+  DeviceLogCollectionStatus: HciDeviceLogCollectionJobStatus
+  LocalAvailabilityZones: HciClusterLocalAvailabilityZones
+  LogCollectionJobSession: HciLogCollectionJobSessionDetails
+  LogCollectionReportedProperties: HciLogCollectionReportedProperties
+  PlatformUpdateDetails: HciPlatformUpdateDetails
+  RemoteSupportAccessLevel: HciRemoteSupportAccessLevel
+  RemoteSupportJobNodeSettings: HciRemoteSupportJobNodeSettings
+  RemoteSupportJobReportedProperties: HciRemoteSupportJobReportedProperties
+  RemoteSupportSession: HciRemoteSupportSession
+  SecretsLocationDetails: HciSecretsLocationDetails
+  SecretsLocationsChangeRequest: HciSecretsLocationsChangeContent
+  ArcConnectivityProperties: HciArcConnectivityProperties
 
 directive:
   - from: hci.json
@@ -240,23 +259,5 @@ directive:
           "description": "The operation is currently in progress."
         }
       );
-  # modify connectivityProperties to be an object of ArcConnectivityProperties
-  - from: hci.json
-    where: $.definitions.ArcSettingsPatchProperties.properties.connectivityProperties
-    transform: >
-      $.type = 'object';
-      $.items = { '$ref': '#/definitions/ArcConnectivityProperties' };
-      delete $['$ref'];  
-  - from: hci.json
-    where: $.definitions.ArcSettingProperties.properties.connectivityProperties
-    transform: >
-      $.type = 'object';
-      $.items = { '$ref': '#/definitions/ArcConnectivityProperties' };
-      delete $['$ref'];
-  - from: hci.json
-    where: $.definitions
-    transform: >
-      delete $.ProvisioningState.readOnly;
-      delete $.SecurityProperties.properties.provisioningState.readOnly;
 
 ```  

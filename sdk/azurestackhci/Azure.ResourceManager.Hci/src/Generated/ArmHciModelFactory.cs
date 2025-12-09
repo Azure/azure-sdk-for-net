@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.EdgeDeviceJobData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.HciEdgeDeviceJobKindData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
-        /// <returns> A new <see cref="Hci.EdgeDeviceJobData"/> instance for mocking. </returns>
-        public static EdgeDeviceJobData EdgeDeviceJobData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
+        /// <returns> A new <see cref="Hci.HciEdgeDeviceJobKindData"/> instance for mocking. </returns>
+        public static HciEdgeDeviceJobKindData HciEdgeDeviceJobKindData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new UnknownEdgeDeviceJob(
                 id,
@@ -102,12 +102,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="identityProvider"> Identity Provider for the cluster. </param>
         /// <returns> A new <see cref="Hci.HciClusterData"/> instance for mocking. </returns>
-        public static HciClusterData HciClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? typeIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null, HciProvisioningState? provisioningState = null, HciClusterStatus? status = null, HciClusterConnectivityStatus? connectivityStatus = null, HciClusterSupportStatus? supportStatus = null, Guid? cloudId = null, string ring = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadApplicationObjectId = null, Guid? aadServicePrincipalObjectId = null, SoftwareAssuranceProperties softwareAssuranceProperties = null, bool? isManagementCluster = null, LogCollectionProperties logCollectionProperties = null, RemoteSupportProperties remoteSupportProperties = null, HciClusterDesiredProperties desiredProperties = null, HciClusterReportedProperties reportedProperties = null, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = null, float? trialDaysRemaining = null, string billingModel = null, DateTimeOffset? registrationTimestamp = null, DateTimeOffset? lastSyncTimestamp = null, DateTimeOffset? lastBillingTimestamp = null, string serviceEndpoint = null, string resourceProviderObjectId = null, IEnumerable<SecretsLocationDetails> secretsLocations = null, HciClusterPattern? clusterPattern = null, IEnumerable<LocalAvailabilityZones> localAvailabilityZones = null, HciDeploymentIdentityProvider? identityProvider = null)
+        public static HciClusterData HciClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string kind = null, Guid? principalId = null, Guid? tenantId = null, HciManagedServiceIdentityType? typeIdentityType = null, IDictionary<string, UserAssignedIdentity> userAssignedIdentities = null, HciProvisioningState? provisioningState = null, HciClusterStatus? status = null, HciClusterConnectivityStatus? connectivityStatus = null, HciClusterSupportStatus? supportStatus = null, Guid? cloudId = null, string ring = null, string cloudManagementEndpoint = null, Guid? aadClientId = null, Guid? aadTenantId = null, Guid? aadApplicationObjectId = null, Guid? aadServicePrincipalObjectId = null, SoftwareAssuranceProperties softwareAssuranceProperties = null, bool? isManagementCluster = null, LogCollectionProperties logCollectionProperties = null, RemoteSupportProperties remoteSupportProperties = null, HciClusterDesiredProperties desiredProperties = null, HciClusterReportedProperties reportedProperties = null, IsolatedVmAttestationConfiguration isolatedVmAttestationConfiguration = null, float? trialDaysRemaining = null, string billingModel = null, DateTimeOffset? registrationTimestamp = null, DateTimeOffset? lastSyncTimestamp = null, DateTimeOffset? lastBillingTimestamp = null, string serviceEndpoint = null, string resourceProviderObjectId = null, IEnumerable<HciSecretsLocationDetails> secretsLocations = null, HciClusterPattern? clusterPattern = null, IEnumerable<HciClusterLocalAvailabilityZones> localAvailabilityZones = null, HciDeploymentIdentityProvider? identityProvider = null)
         {
             tags ??= new Dictionary<string, string>();
             userAssignedIdentities ??= new Dictionary<string, UserAssignedIdentity>();
-            secretsLocations ??= new List<SecretsLocationDetails>();
-            localAvailabilityZones ??= new List<LocalAvailabilityZones>();
+            secretsLocations ??= new List<HciSecretsLocationDetails>();
+            localAvailabilityZones ??= new List<HciClusterLocalAvailabilityZones>();
 
             return new HciClusterData(
                 id,
@@ -375,16 +375,16 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.OSImageData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.HciOSImageData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Hci.OSImageData"/> instance for mocking. </returns>
-        public static OSImageData OSImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, OSImageProperties properties = null)
+        /// <returns> A new <see cref="Hci.HciOSImageData"/> instance for mocking. </returns>
+        public static HciOSImageData HciOSImageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciOSImageProperties properties = null)
         {
-            return new OSImageData(
+            return new HciOSImageData(
                 id,
                 name,
                 resourceType,
@@ -393,18 +393,18 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.PlatformUpdateData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.HciPlatformUpdateData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="platformUpdateDetails"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Hci.PlatformUpdateData"/> instance for mocking. </returns>
-        public static PlatformUpdateData PlatformUpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<PlatformUpdateDetails> platformUpdateDetails = null)
+        /// <returns> A new <see cref="Hci.HciPlatformUpdateData"/> instance for mocking. </returns>
+        public static HciPlatformUpdateData HciPlatformUpdateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<HciPlatformUpdateDetails> platformUpdateDetails = null)
         {
-            platformUpdateDetails ??= new List<PlatformUpdateDetails>();
+            platformUpdateDetails ??= new List<HciPlatformUpdateDetails>();
 
-            return new PlatformUpdateData(
+            return new HciPlatformUpdateData(
                 id,
                 name,
                 resourceType,
@@ -413,18 +413,18 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.UpdateContentData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.HciUpdateContentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="updatePayloads"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Hci.UpdateContentData"/> instance for mocking. </returns>
-        public static UpdateContentData UpdateContentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<HciUpdateContentPayload> updatePayloads = null)
+        /// <returns> A new <see cref="Hci.HciUpdateContentData"/> instance for mocking. </returns>
+        public static HciUpdateContentData HciUpdateContentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<HciUpdateContentPayload> updatePayloads = null)
         {
             updatePayloads ??= new List<HciUpdateContentPayload>();
 
-            return new UpdateContentData(
+            return new HciUpdateContentData(
                 id,
                 name,
                 resourceType,
@@ -433,16 +433,16 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Hci.ValidatedSolutionRecipeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Hci.HciValidatedSolutionRecipeData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Hci.ValidatedSolutionRecipeData"/> instance for mocking. </returns>
-        public static ValidatedSolutionRecipeData ValidatedSolutionRecipeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ValidatedSolutionRecipeProperties properties = null)
+        /// <returns> A new <see cref="Hci.HciValidatedSolutionRecipeData"/> instance for mocking. </returns>
+        public static HciValidatedSolutionRecipeData HciValidatedSolutionRecipeData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ValidatedSolutionRecipeProperties properties = null)
         {
-            return new ValidatedSolutionRecipeData(
+            return new HciValidatedSolutionRecipeData(
                 id,
                 name,
                 resourceType,
@@ -1073,30 +1073,30 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LogCollectionReportedProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciLogCollectionReportedProperties"/>. </summary>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="validationStatus"> Validation status of job. </param>
         /// <param name="deploymentStatus"> Deployment status of job. </param>
         /// <param name="logCollectionSessionDetails"> Details of the log collection session. </param>
-        /// <returns> A new <see cref="Models.LogCollectionReportedProperties"/> instance for mocking. </returns>
-        public static LogCollectionReportedProperties LogCollectionReportedProperties(int? percentComplete = null, EceActionStatus validationStatus = null, EceActionStatus deploymentStatus = null, IEnumerable<LogCollectionJobSession> logCollectionSessionDetails = null)
+        /// <returns> A new <see cref="Models.HciLogCollectionReportedProperties"/> instance for mocking. </returns>
+        public static HciLogCollectionReportedProperties HciLogCollectionReportedProperties(int? percentComplete = null, EceActionStatus validationStatus = null, EceActionStatus deploymentStatus = null, IEnumerable<HciLogCollectionJobSessionDetails> logCollectionSessionDetails = null)
         {
-            logCollectionSessionDetails ??= new List<LogCollectionJobSession>();
+            logCollectionSessionDetails ??= new List<HciLogCollectionJobSessionDetails>();
 
-            return new LogCollectionReportedProperties(percentComplete, validationStatus, deploymentStatus, logCollectionSessionDetails?.ToList(), serializedAdditionalRawData: null);
+            return new HciLogCollectionReportedProperties(percentComplete, validationStatus, deploymentStatus, logCollectionSessionDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LogCollectionJobSession"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciLogCollectionJobSessionDetails"/>. </summary>
         /// <param name="startTime"> The timestamp when log collection started, in ISO 8601 format. </param>
         /// <param name="endTime"> The timestamp when log collection ended, in ISO 8601 format. </param>
         /// <param name="timeCollected"> The total time logs were collected for, in ISO 8601 duration format. </param>
         /// <param name="logSize"> The size of the collected logs in bytes. </param>
         /// <param name="status"> The status of the log collection session. </param>
         /// <param name="correlationId"> A unique identifier for correlating this log collection session with other operations or sessions. </param>
-        /// <returns> A new <see cref="Models.LogCollectionJobSession"/> instance for mocking. </returns>
-        public static LogCollectionJobSession LogCollectionJobSession(string startTime = null, string endTime = null, string timeCollected = null, int? logSize = null, DeviceLogCollectionStatus? status = null, string correlationId = null)
+        /// <returns> A new <see cref="Models.HciLogCollectionJobSessionDetails"/> instance for mocking. </returns>
+        public static HciLogCollectionJobSessionDetails HciLogCollectionJobSessionDetails(string startTime = null, string endTime = null, string timeCollected = null, int? logSize = null, HciDeviceLogCollectionJobStatus? status = null, string correlationId = null)
         {
-            return new LogCollectionJobSession(
+            return new HciLogCollectionJobSessionDetails(
                 startTime,
                 endTime,
                 timeCollected,
@@ -1157,7 +1157,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="lastLogGenerated"> To date for log collection. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
         /// <returns> A new <see cref="Models.HciCollectLogJobProperties"/> instance for mocking. </returns>
-        public static HciCollectLogJobProperties HciCollectLogJobProperties(EceDeploymentMode? deploymentMode = null, HciProvisioningState? provisioningState = null, string jobId = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, HciEdgeDeviceJobStatus? status = null, DateTimeOffset fromDate = default, DateTimeOffset toDate = default, DateTimeOffset? lastLogGenerated = null, LogCollectionReportedProperties reportedProperties = null)
+        public static HciCollectLogJobProperties HciCollectLogJobProperties(EceDeploymentMode? deploymentMode = null, HciProvisioningState? provisioningState = null, string jobId = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, HciEdgeDeviceJobStatus? status = null, DateTimeOffset fromDate = default, DateTimeOffset toDate = default, DateTimeOffset? lastLogGenerated = null, HciLogCollectionReportedProperties reportedProperties = null)
         {
             return new HciCollectLogJobProperties(
                 deploymentMode,
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="remoteSupportType"> Remote support type. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
         /// <returns> A new <see cref="Models.HciRemoteSupportJobProperties"/> instance for mocking. </returns>
-        public static HciRemoteSupportJobProperties HciRemoteSupportJobProperties(EceDeploymentMode? deploymentMode = null, HciProvisioningState? provisioningState = null, string jobId = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, HciEdgeDeviceJobStatus? status = null, RemoteSupportAccessLevel accessLevel = default, DateTimeOffset expirationTimestamp = default, RemoteSupportType remoteSupportType = default, RemoteSupportJobReportedProperties reportedProperties = null)
+        public static HciRemoteSupportJobProperties HciRemoteSupportJobProperties(EceDeploymentMode? deploymentMode = null, HciProvisioningState? provisioningState = null, string jobId = null, DateTimeOffset? startTimeUtc = null, DateTimeOffset? endTimeUtc = null, HciEdgeDeviceJobStatus? status = null, HciRemoteSupportAccessLevel accessLevel = default, DateTimeOffset expirationTimestamp = default, RemoteSupportType remoteSupportType = default, HciRemoteSupportJobReportedProperties reportedProperties = null)
         {
             return new HciRemoteSupportJobProperties(
                 deploymentMode,
@@ -1508,18 +1508,18 @@ namespace Azure.ResourceManager.Hci.Models
                 reportedProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportJobReportedProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciRemoteSupportJobReportedProperties"/>. </summary>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="validationStatus"> Validation status of job. </param>
         /// <param name="deploymentStatus"> Deployment status of job. </param>
         /// <param name="nodeSettings"> Optional settings for configuring the node for remote support. </param>
         /// <param name="sessionDetails"> Details of the remote support session. </param>
-        /// <returns> A new <see cref="Models.RemoteSupportJobReportedProperties"/> instance for mocking. </returns>
-        public static RemoteSupportJobReportedProperties RemoteSupportJobReportedProperties(int? percentComplete = null, EceActionStatus validationStatus = null, EceActionStatus deploymentStatus = null, RemoteSupportJobNodeSettings nodeSettings = null, IEnumerable<RemoteSupportSession> sessionDetails = null)
+        /// <returns> A new <see cref="Models.HciRemoteSupportJobReportedProperties"/> instance for mocking. </returns>
+        public static HciRemoteSupportJobReportedProperties HciRemoteSupportJobReportedProperties(int? percentComplete = null, EceActionStatus validationStatus = null, EceActionStatus deploymentStatus = null, HciRemoteSupportJobNodeSettings nodeSettings = null, IEnumerable<HciRemoteSupportSession> sessionDetails = null)
         {
-            sessionDetails ??= new List<RemoteSupportSession>();
+            sessionDetails ??= new List<HciRemoteSupportSession>();
 
-            return new RemoteSupportJobReportedProperties(
+            return new HciRemoteSupportJobReportedProperties(
                 percentComplete,
                 validationStatus,
                 deploymentStatus,
@@ -1528,16 +1528,16 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportJobNodeSettings"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciRemoteSupportJobNodeSettings"/>. </summary>
         /// <param name="state"> The state of the remote support node. </param>
         /// <param name="createdOn"> The timestamp when the node settings were created, in UTC. </param>
         /// <param name="updatedOn"> The timestamp when the node settings were last updated, in UTC. </param>
         /// <param name="connectionStatus"> The current connection status of the remote support session. </param>
         /// <param name="connectionErrorMessage"> The error message, if any, from the last connection attempt. </param>
-        /// <returns> A new <see cref="Models.RemoteSupportJobNodeSettings"/> instance for mocking. </returns>
-        public static RemoteSupportJobNodeSettings RemoteSupportJobNodeSettings(string state = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string connectionStatus = null, string connectionErrorMessage = null)
+        /// <returns> A new <see cref="Models.HciRemoteSupportJobNodeSettings"/> instance for mocking. </returns>
+        public static HciRemoteSupportJobNodeSettings HciRemoteSupportJobNodeSettings(string state = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null, string connectionStatus = null, string connectionErrorMessage = null)
         {
-            return new RemoteSupportJobNodeSettings(
+            return new HciRemoteSupportJobNodeSettings(
                 state,
                 createdOn,
                 updatedOn,
@@ -1546,16 +1546,16 @@ namespace Azure.ResourceManager.Hci.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemoteSupportSession"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.HciRemoteSupportSession"/>. </summary>
         /// <param name="sessionId"> Unique session Id. </param>
         /// <param name="sessionStartOn"> The start time of the remote support session, in UTC. </param>
         /// <param name="sessionEndOn"> The end time of the remote support session, in UTC. </param>
         /// <param name="accessLevel"> The level of access granted during the remote support session. </param>
         /// <param name="transcriptLocation"> The location where the session transcript is stored. </param>
-        /// <returns> A new <see cref="Models.RemoteSupportSession"/> instance for mocking. </returns>
-        public static RemoteSupportSession RemoteSupportSession(string sessionId = null, DateTimeOffset? sessionStartOn = null, DateTimeOffset? sessionEndOn = null, RemoteSupportAccessLevel? accessLevel = null, string transcriptLocation = null)
+        /// <returns> A new <see cref="Models.HciRemoteSupportSession"/> instance for mocking. </returns>
+        public static HciRemoteSupportSession HciRemoteSupportSession(string sessionId = null, DateTimeOffset? sessionStartOn = null, DateTimeOffset? sessionEndOn = null, HciRemoteSupportAccessLevel? accessLevel = null, string transcriptLocation = null)
         {
-            return new RemoteSupportSession(
+            return new HciRemoteSupportSession(
                 sessionId,
                 sessionStartOn,
                 sessionEndOn,

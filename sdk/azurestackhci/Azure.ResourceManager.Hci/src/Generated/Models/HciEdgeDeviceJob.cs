@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Hci.Models
 {
     /// <summary> Edge device job for Azure Stack HCI solution. </summary>
-    public partial class HciEdgeDeviceJob : EdgeDeviceJobData
+    public partial class HciEdgeDeviceJob : HciEdgeDeviceJobKindData
     {
         /// <summary> Initializes a new instance of <see cref="HciEdgeDeviceJob"/>. </summary>
         /// <param name="properties">

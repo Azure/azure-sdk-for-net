@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="osImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<OSImageData>> GetAsync(string subscriptionId, AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciOSImageData>> GetAsync(string subscriptionId, AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(osImageName, nameof(osImageName));
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        OSImageData value = default;
+                        HciOSImageData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = OSImageData.DeserializeOSImageData(document.RootElement);
+                        value = HciOSImageData.DeserializeHciOSImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OSImageData)null, message.Response);
+                    return Response.FromValue((HciOSImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="osImageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="osImageName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<OSImageData> Get(string subscriptionId, AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
+        public Response<HciOSImageData> Get(string subscriptionId, AzureLocation location, string osImageName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(osImageName, nameof(osImageName));
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        OSImageData value = default;
+                        HciOSImageData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = OSImageData.DeserializeOSImageData(document.RootElement);
+                        value = HciOSImageData.DeserializeHciOSImageData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((OSImageData)null, message.Response);
+                    return Response.FromValue((HciOSImageData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

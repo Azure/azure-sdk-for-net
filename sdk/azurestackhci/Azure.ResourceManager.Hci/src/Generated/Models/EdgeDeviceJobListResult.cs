@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeDeviceJobListResult"/>. </summary>
         /// <param name="value">
         /// The EdgeDeviceJob items on this page
-        /// Please note <see cref="EdgeDeviceJobData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="HciEdgeDeviceJobKindData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HciEdgeDeviceJob"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EdgeDeviceJobListResult(IEnumerable<EdgeDeviceJobData> value)
+        internal EdgeDeviceJobListResult(IEnumerable<HciEdgeDeviceJobKindData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="EdgeDeviceJobListResult"/>. </summary>
         /// <param name="value">
         /// The EdgeDeviceJob items on this page
-        /// Please note <see cref="EdgeDeviceJobData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="HciEdgeDeviceJobKindData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HciEdgeDeviceJob"/>.
         /// </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeDeviceJobListResult(IReadOnlyList<EdgeDeviceJobData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EdgeDeviceJobListResult(IReadOnlyList<HciEdgeDeviceJobKindData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -82,10 +82,10 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary>
         /// The EdgeDeviceJob items on this page
-        /// Please note <see cref="EdgeDeviceJobData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="HciEdgeDeviceJobKindData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="HciEdgeDeviceJob"/>.
         /// </summary>
-        public IReadOnlyList<EdgeDeviceJobData> Value { get; }
+        public IReadOnlyList<HciEdgeDeviceJobKindData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

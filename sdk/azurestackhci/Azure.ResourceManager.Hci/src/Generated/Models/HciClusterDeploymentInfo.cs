@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Hci.Models
             InfrastructureNetwork = new ChangeTrackingList<DeploymentSettingInfrastructureNetwork>();
             PhysicalNodes = new ChangeTrackingList<DeploymentSettingPhysicalNodes>();
             Secrets = new ChangeTrackingList<EceDeploymentSecrets>();
-            LocalAvailabilityZones = new ChangeTrackingList<LocalAvailabilityZones>();
+            LocalAvailabilityZones = new ChangeTrackingList<HciClusterLocalAvailabilityZones>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HciClusterDeploymentInfo"/>. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="localAvailabilityZones"> Local Availability Zone information for HCI cluster. </param>
         /// <param name="assemblyInfo"> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, DeploymentSettingObservability observability, HciDeploymentCluster cluster, HciDeploymentIdentityProvider? identityProvider, DeploymentSettingStorage storage, string namingPrefix, string domainFqdn, IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork, IList<DeploymentSettingPhysicalNodes> physicalNodes, DeploymentSettingHostNetwork hostNetwork, SdnIntegration sdnIntegration, bool? isManagementCluster, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IList<LocalAvailabilityZones> localAvailabilityZones, HciDeploymentAssemblyInfo assemblyInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HciClusterDeploymentInfo(HciClusterDeploymentSecuritySettings securitySettings, DeploymentSettingObservability observability, HciDeploymentCluster cluster, HciDeploymentIdentityProvider? identityProvider, DeploymentSettingStorage storage, string namingPrefix, string domainFqdn, IList<DeploymentSettingInfrastructureNetwork> infrastructureNetwork, IList<DeploymentSettingPhysicalNodes> physicalNodes, DeploymentSettingHostNetwork hostNetwork, SdnIntegration sdnIntegration, bool? isManagementCluster, string adouPath, string secretsLocation, IList<EceDeploymentSecrets> secrets, OptionalServices optionalServices, IList<HciClusterLocalAvailabilityZones> localAvailabilityZones, HciDeploymentAssemblyInfo assemblyInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SecuritySettings = securitySettings;
             Observability = observability;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Local Availability Zone information for HCI cluster. </summary>
         [WirePath("localAvailabilityZones")]
-        public IList<LocalAvailabilityZones> LocalAvailabilityZones { get; }
+        public IList<HciClusterLocalAvailabilityZones> LocalAvailabilityZones { get; }
         /// <summary> Assembly Package details for Validated Solution Recipe for AzureStackHCI Cluster. </summary>
         [WirePath("assemblyInfo")]
         public HciDeploymentAssemblyInfo AssemblyInfo { get; set; }

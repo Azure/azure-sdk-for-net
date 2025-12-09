@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="PlatformUpdateProperties"/>. </summary>
         /// <param name="platformUpdateDetails"> Represents applicable platform updates. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="platformUpdateDetails"/> is null. </exception>
-        public PlatformUpdateProperties(IEnumerable<PlatformUpdateDetails> platformUpdateDetails)
+        public PlatformUpdateProperties(IEnumerable<HciPlatformUpdateDetails> platformUpdateDetails)
         {
             Argument.AssertNotNull(platformUpdateDetails, nameof(platformUpdateDetails));
 
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="PlatformUpdateProperties"/>. </summary>
         /// <param name="platformUpdateDetails"> Represents applicable platform updates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformUpdateProperties(IList<PlatformUpdateDetails> platformUpdateDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlatformUpdateProperties(IList<HciPlatformUpdateDetails> platformUpdateDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlatformUpdateDetails = platformUpdateDetails;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -72,6 +72,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Represents applicable platform updates. </summary>
         [WirePath("platformUpdateDetails")]
-        public IList<PlatformUpdateDetails> PlatformUpdateDetails { get; }
+        public IList<HciPlatformUpdateDetails> PlatformUpdateDetails { get; }
     }
 }

@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="edgeDeviceName"/> or <paramref name="jobsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> or <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EdgeDeviceJobData>> GetAsync(string resourceUri, string edgeDeviceName, string jobsName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciEdgeDeviceJobKindData>> GetAsync(string resourceUri, string edgeDeviceName, string jobsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(edgeDeviceName, nameof(edgeDeviceName));
@@ -175,13 +175,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        EdgeDeviceJobData value = default;
+                        HciEdgeDeviceJobKindData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = EdgeDeviceJobData.DeserializeEdgeDeviceJobData(document.RootElement);
+                        value = HciEdgeDeviceJobKindData.DeserializeHciEdgeDeviceJobKindData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EdgeDeviceJobData)null, message.Response);
+                    return Response.FromValue((HciEdgeDeviceJobKindData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="edgeDeviceName"/> or <paramref name="jobsName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> or <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EdgeDeviceJobData> Get(string resourceUri, string edgeDeviceName, string jobsName, CancellationToken cancellationToken = default)
+        public Response<HciEdgeDeviceJobKindData> Get(string resourceUri, string edgeDeviceName, string jobsName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(edgeDeviceName, nameof(edgeDeviceName));
@@ -206,19 +206,19 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        EdgeDeviceJobData value = default;
+                        HciEdgeDeviceJobKindData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = EdgeDeviceJobData.DeserializeEdgeDeviceJobData(document.RootElement);
+                        value = HciEdgeDeviceJobKindData.DeserializeHciEdgeDeviceJobKindData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((EdgeDeviceJobData)null, message.Response);
+                    return Response.FromValue((HciEdgeDeviceJobKindData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string edgeDeviceName, string jobsName, EdgeDeviceJobData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, string edgeDeviceName, string jobsName, HciEdgeDeviceJobKindData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Hci
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string edgeDeviceName, string jobsName, EdgeDeviceJobData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string edgeDeviceName, string jobsName, HciEdgeDeviceJobKindData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="edgeDeviceName"/>, <paramref name="jobsName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> or <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string edgeDeviceName, string jobsName, EdgeDeviceJobData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string resourceUri, string edgeDeviceName, string jobsName, HciEdgeDeviceJobKindData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(edgeDeviceName, nameof(edgeDeviceName));
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="edgeDeviceName"/>, <paramref name="jobsName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="edgeDeviceName"/> or <paramref name="jobsName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string resourceUri, string edgeDeviceName, string jobsName, EdgeDeviceJobData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string resourceUri, string edgeDeviceName, string jobsName, HciEdgeDeviceJobKindData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
             Argument.AssertNotNullOrEmpty(edgeDeviceName, nameof(edgeDeviceName));

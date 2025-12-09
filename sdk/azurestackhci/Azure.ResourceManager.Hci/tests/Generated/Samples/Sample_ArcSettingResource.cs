@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.Hci.Samples
             {
                 ConnectivityProperties = BinaryData.FromObjectAsJson(new
                 {
-                    enabled = "true",
+                    enabled = true,
                     serviceConfigurations = new object[]
             {
 new
 {
-port = "6516",
+port = 6516L,
 serviceName = "WAC",
 }
             },

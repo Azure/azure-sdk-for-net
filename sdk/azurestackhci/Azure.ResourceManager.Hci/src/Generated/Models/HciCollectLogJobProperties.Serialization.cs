@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Hci.Models
             DateTimeOffset fromDate = default;
             DateTimeOffset toDate = default;
             DateTimeOffset? lastLogGenerated = default;
-            LogCollectionReportedProperties reportedProperties = default;
+            HciLogCollectionReportedProperties reportedProperties = default;
             EceDeploymentMode? deploymentMode = default;
             HciProvisioningState? provisioningState = default;
             string jobId = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    reportedProperties = LogCollectionReportedProperties.DeserializeLogCollectionReportedProperties(property.Value, options);
+                    reportedProperties = HciLogCollectionReportedProperties.DeserializeHciLogCollectionReportedProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deploymentMode"u8))

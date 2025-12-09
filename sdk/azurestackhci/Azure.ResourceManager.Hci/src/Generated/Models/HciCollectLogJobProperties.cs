@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="toDate"> To date for log collection. </param>
         /// <param name="lastLogGenerated"> To date for log collection. </param>
         /// <param name="reportedProperties"> log collection job reported properties. </param>
-        internal HciCollectLogJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciEdgeDeviceJobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset fromDate, DateTimeOffset toDate, DateTimeOffset? lastLogGenerated, LogCollectionReportedProperties reportedProperties) : base(deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, jobType, serializedAdditionalRawData)
+        internal HciCollectLogJobProperties(EceDeploymentMode? deploymentMode, HciProvisioningState? provisioningState, string jobId, DateTimeOffset? startTimeUtc, DateTimeOffset? endTimeUtc, HciEdgeDeviceJobStatus? status, HciEdgeDeviceJobType jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset fromDate, DateTimeOffset toDate, DateTimeOffset? lastLogGenerated, HciLogCollectionReportedProperties reportedProperties) : base(deploymentMode, provisioningState, jobId, startTimeUtc, endTimeUtc, status, jobType, serializedAdditionalRawData)
         {
             FromDate = fromDate;
             ToDate = toDate;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.Hci.Models
         public DateTimeOffset? LastLogGenerated { get; }
         /// <summary> log collection job reported properties. </summary>
         [WirePath("reportedProperties")]
-        public LogCollectionReportedProperties ReportedProperties { get; }
+        public HciLogCollectionReportedProperties ReportedProperties { get; }
     }
 }

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="PlatformUpdateListResult"/>. </summary>
         /// <param name="value"> The PlatformUpdate items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal PlatformUpdateListResult(IEnumerable<PlatformUpdateData> value)
+        internal PlatformUpdateListResult(IEnumerable<HciPlatformUpdateData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="value"> The PlatformUpdate items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlatformUpdateListResult(IReadOnlyList<PlatformUpdateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PlatformUpdateListResult(IReadOnlyList<HciPlatformUpdateData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> The PlatformUpdate items on this page. </summary>
-        public IReadOnlyList<PlatformUpdateData> Value { get; }
+        public IReadOnlyList<HciPlatformUpdateData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="updateContentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="updateContentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<UpdateContentData>> GetAsync(string subscriptionId, AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
+        public async Task<Response<HciUpdateContentData>> GetAsync(string subscriptionId, AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(updateContentName, nameof(updateContentName));
@@ -172,13 +172,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateContentData value = default;
+                        HciUpdateContentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = UpdateContentData.DeserializeUpdateContentData(document.RootElement);
+                        value = HciUpdateContentData.DeserializeHciUpdateContentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateContentData)null, message.Response);
+                    return Response.FromValue((HciUpdateContentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Hci
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="updateContentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="updateContentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<UpdateContentData> Get(string subscriptionId, AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
+        public Response<HciUpdateContentData> Get(string subscriptionId, AzureLocation location, string updateContentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(updateContentName, nameof(updateContentName));
@@ -202,13 +202,13 @@ namespace Azure.ResourceManager.Hci
             {
                 case 200:
                     {
-                        UpdateContentData value = default;
+                        HciUpdateContentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = UpdateContentData.DeserializeUpdateContentData(document.RootElement);
+                        value = HciUpdateContentData.DeserializeHciUpdateContentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((UpdateContentData)null, message.Response);
+                    return Response.FromValue((HciUpdateContentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

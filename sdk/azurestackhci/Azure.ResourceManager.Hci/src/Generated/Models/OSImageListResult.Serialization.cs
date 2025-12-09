@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            IReadOnlyList<OSImageData> value = default;
+            IReadOnlyList<HciOSImageData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<OSImageData> array = new List<OSImageData>();
+                    List<HciOSImageData> array = new List<HciOSImageData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OSImageData.DeserializeOSImageData(item, options));
+                        array.Add(HciOSImageData.DeserializeHciOSImageData(item, options));
                     }
                     value = array;
                     continue;
