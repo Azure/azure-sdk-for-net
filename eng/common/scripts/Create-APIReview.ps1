@@ -2,8 +2,10 @@
 Param (
   [Parameter(Mandatory=$False)]
   [array] $ArtifactList,
-  [Parameter(Mandatory=$False)]
+  [Parameter(Mandatory=$True)]
   [string] $ArtifactPath,
+  [Parameter(Mandatory=$False)]
+  [string] $APIKey,
   [string] $SourceBranch,
   [string] $DefaultBranch,
   [string] $RepoName,
@@ -27,17 +29,13 @@ function Get-ApiViewBearerToken()
 {
     $audience = "api://apiview"
     try {
-        $tokenResponse = az account get-access-token --resource $audience --output json | ConvertFrom-Json
+        $tokenResponse = az account get-access-token --resource $audience --output json 2>$null | ConvertFrom-Json
         if ($tokenResponse -and $tokenResponse.accessToken) {
             return $tokenResponse.accessToken
         }
-        else {
-            Write-Error "Failed to acquire access token - no token in response"
-            return $null
-        }
+        return $null
     }
     catch {
-        Write-Error "Failed to acquire access token: $($_.Exception.Message)"
         return $null
     }
 }
@@ -99,15 +97,24 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
 
     $uri = "${APIViewUri}/upload"
     
-    # Get Bearer token for authentication
+    # Try Bearer token first, fall back to API key
     $bearerToken = Get-ApiViewBearerToken
-    if (-not $bearerToken) {
-        return 401
+    if ($bearerToken) {
+        $headers = @{
+            "Authorization" = "Bearer $bearerToken";
+            "content-type" = "multipart/form-data"
+        }
     }
-    
-    $headers = @{
-        "Authorization" = "Bearer $bearerToken";
-        "content-type" = "multipart/form-data"
+    elseif ($APIKey) {
+        Write-Warning "##[warning]Bearer token acquisition failed - falling back to API key."
+        $headers = @{
+            "ApiKey" = $APIKey;
+            "content-type" = "multipart/form-data"
+        }
+    }
+    else {
+        Write-Error "No authentication available. Either configure AzureCLI@2 task or provide APIKey."
+        return 401
     }
 
     try
@@ -149,14 +156,22 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
 
     Write-Host "Request to APIView: $uri"
     
-    # Get Bearer token for authentication
+    # Try Bearer token first, fall back to API key
     $bearerToken = Get-ApiViewBearerToken
-    if (-not $bearerToken) {
-        return 401
+    if ($bearerToken) {
+        $headers = @{
+            "Authorization" = "Bearer $bearerToken"
+        }
     }
-    
-    $headers = @{
-        "Authorization" = "Bearer $bearerToken"
+    elseif ($APIKey) {
+        Write-Warning "##[warning]Bearer token acquisition failed - falling back to API key. Please migrate to using AzureCLI@2 task with service connection."
+        $headers = @{
+            "ApiKey" = $APIKey
+        }
+    }
+    else {
+        Write-Error "No authentication available. Either configure AzureCLI@2 task or provide APIKey."
+        return 401
     }
 
     try
