@@ -3,6 +3,7 @@
 
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,23 +20,15 @@ public partial class TestProxyAdminClient
     /// <returns>A <see cref="Task{TResult}"/> representing the result of the asynchronous operation.</returns>
     public virtual async Task<ClientResult> AddContentDispositionFilePathSanitizer(string? recordingId = default, CancellationToken cancellationToken = default)
     {
-        using PipelineMessage message = Pipeline.CreateMessage();
-        message.ResponseClassifier = PipelineMessageClassifier200;
-        PipelineRequest request = message.Request;
-        request.Method = "POST";
-        ClientUriBuilder uri = new();
-        uri.Reset(_endpoint);
-        uri.AppendPath("/Admin/AddSanitizer", false);
-        request.Uri = uri.ToUri();
-        if (recordingId != null)
-        {
-            request.Headers.Set("x-recording-id", recordingId);
-        }
-        request.Headers.Set("Content-Type", "application/json");
-        request.Headers.Set("Accept", "application/json");
-        request.Headers.Set("x-abstraction-identifier", "ContentDispositionFilePathSanitizer");
-        message.Apply(new RequestOptions());
+        using BinaryContent content = BinaryContentHelper.FromEnumerable(new[]
+         {
+            new Dictionary<string, object>
+            {
+                ["Name"] = "ContentDispositionFilePathSanitizer",
+                ["Body"] = new Dictionary<string, object>()
+            }
+        });
 
-        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, null).ConfigureAwait(false));
+        return await AddSanitizersAsync(content, recordingId, new RequestOptions() { CancellationToken = cancellationToken }).ConfigureAwait(false);
     }
 }

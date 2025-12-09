@@ -49,6 +49,7 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
 
     public MapsClientTests(bool isAsync) : base(isAsync)
     {
+        NormalizeMultipartContentDispositionHeaders = true;
     }
 
     [RecordedTest]
