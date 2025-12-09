@@ -594,6 +594,7 @@ namespace Azure.Provisioning.Expressions
         public static Azure.Provisioning.Resources.Tenant GetTenant() { throw null; }
         public static Azure.Provisioning.BicepValue<string> GetUniqueString(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.BicepValue<string> Interpolate(Azure.Provisioning.Expressions.BicepInterpolatedStringHandler handler) { throw null; }
+        public static Azure.Provisioning.BicepValue<string> Join(Azure.Provisioning.BicepList<string> array, Azure.Provisioning.BicepValue<string> delimiter) { throw null; }
         public static Azure.Provisioning.BicepValue<object> ParseJson(Azure.Provisioning.BicepValue<object> value) { throw null; }
         public static Azure.Provisioning.BicepValue<string> Take(Azure.Provisioning.BicepValue<string> text, Azure.Provisioning.BicepValue<int> size) { throw null; }
         public static Azure.Provisioning.BicepValue<string> ToLower(Azure.Provisioning.BicepValue<object> value) { throw null; }
