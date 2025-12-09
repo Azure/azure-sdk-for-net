@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.Provisioning.Resources;
@@ -415,4 +416,28 @@ public static class BicepFunction
     /// </returns>
     public static BicepValue<string> Interpolate(BicepInterpolatedStringHandler handler) =>
         handler.Build();
+
+    /// <summary>
+    /// Combines all elements of an array into a string, separated by the specified
+    /// delimiter.  This represents the <c>join</c> Bicep function.
+    /// </summary>
+    /// <param name="array">The array of string values to join.</param>
+    /// <param name="delimiter">
+    /// The delimiter to use when joining the array elements. This string is placed
+    /// between each element in the resulting string.
+    /// </param>
+    /// <returns>A string with all array elements joined by the delimiter.</returns>
+    /// <remarks>
+    /// <para>
+    /// This function combines all the elements of an array of strings into a single
+    /// string, with the specified delimiter string inserted between each element.
+    /// </para>
+    /// <para>
+    /// See the
+    /// <see href="https://learn.microsoft.com/azure/azure-resource-manager/bicep/bicep-functions-array#join">
+    /// Bicep Functions Reference</see> for more.
+    /// </para>
+    /// </remarks>
+    public static BicepValue<string> Join(BicepList<string> array, BicepValue<string> delimiter) =>
+        BicepSyntax.Call("join", array.Compile(), delimiter.Compile());
 }
