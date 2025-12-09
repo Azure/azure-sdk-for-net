@@ -27,7 +27,8 @@ public abstract partial class Specification
             using (writer.Scope($"resource {resource.Name} \"{resource.ResourceType}@{resource.DefaultResourceVersion}\" = {{", "}"))
             {
                 var root = BuildSchemaTree(resource.Properties);
-                WriteSchemaObject(writer, root);
+                Dictionary<ModelBase, string> visitedTypes = new() { { resource, resource.Name } };
+                WriteSchemaObject(writer, root, resource.Name, visitedTypes);
             }
             writer.WriteLine();
         }
@@ -39,8 +40,6 @@ public abstract partial class Specification
         var root = new SchemaObject();
         foreach (Property property in properties)
         {
-            if (property.IsReadOnly) continue;
-
             // If path is null, use Name (camelCase)
             IList<string> path = property.Path ?? [property.Name.ToCamelCase()!];
 
@@ -77,60 +76,90 @@ public abstract partial class Specification
         return root;
     }
 
-    private void WriteSchemaObject(IndentWriter writer, SchemaObject obj)
+    private void WriteSchemaObject(IndentWriter writer, SchemaObject obj, string? currentPath, Dictionary<ModelBase, string> visitedTypes)
     {
         foreach (var kvp in obj.Properties)
         {
             string name = kvp.Key;
             SchemaNode node = kvp.Value;
+            string? childPath = currentPath != null ? $"{currentPath}.{name}" : null;
 
             if (node is SchemaObject childObj)
             {
                 writer.WriteLine($"{name}: {{");
                 using (writer.Scope())
                 {
-                    WriteSchemaObject(writer, childObj);
+                    WriteSchemaObject(writer, childObj, childPath, visitedTypes);
                 }
                 writer.WriteLine("}");
             }
             else if (node is SchemaProperty prop)
             {
-                WritePropertySchema(writer, prop.Property, name);
+                WritePropertySchema(writer, prop.Property, name, childPath, visitedTypes);
             }
         }
     }
 
-    private void WritePropertySchema(IndentWriter writer, Property property, string name)
+    private void WritePropertySchema(IndentWriter writer, Property property, string name, string? currentPath, Dictionary<ModelBase, string> visitedTypes)
     {
+        writer.Write($"{name}: ");
+        if (property.IsReadOnly)
+        {
+            writer.Write("readonly ");
+        }
+
         switch (property.PropertyType)
         {
             case TypeModel complexType:
-                writer.WriteLine($"{name}: {{");
-                using (writer.Scope())
+                if (currentPath != null && visitedTypes.TryGetValue(complexType, out string? refPath))
                 {
-                    var root = BuildSchemaTree(complexType.Properties);
-                    WriteSchemaObject(writer, root);
+                    writer.WriteLine($"&{refPath}");
                 }
-                writer.WriteLine("}");
-                break;
-
-            case ListModel list when list.ElementType is TypeModel elementComplex:
-                writer.WriteLine($"{name}: [");
-                using (writer.Scope())
+                else
                 {
+                    if (currentPath != null)
+                    {
+                        visitedTypes[complexType] = currentPath;
+                    }
                     writer.WriteLine("{");
                     using (writer.Scope())
                     {
-                        var root = BuildSchemaTree(elementComplex.Properties);
-                        WriteSchemaObject(writer, root);
+                        var root = BuildSchemaTree(complexType.Properties);
+                        WriteSchemaObject(writer, root, currentPath, visitedTypes);
                     }
                     writer.WriteLine("}");
+                }
+                break;
+
+            case ListModel list when list.ElementType is TypeModel elementComplex:
+                writer.WriteLine("[");
+                using (writer.Scope())
+                {
+                    if (currentPath != null && visitedTypes.TryGetValue(elementComplex, out string? listRefPath))
+                    {
+                        writer.WriteLine($"&{listRefPath}");
+                    }
+                    else
+                    {
+                        if (currentPath != null)
+                        {
+                            visitedTypes[elementComplex] = $"{currentPath}[]";
+                        }
+                        writer.WriteLine("{");
+                        using (writer.Scope())
+                        {
+                            var root = BuildSchemaTree(elementComplex.Properties);
+                            string? elementPath = currentPath != null ? $"{currentPath}[]" : null;
+                            WriteSchemaObject(writer, root, elementPath, visitedTypes);
+                        }
+                        writer.WriteLine("}");
+                    }
                 }
                 writer.WriteLine("]");
                 break;
 
             case ListModel listSimple:
-                writer.WriteLine($"{name}: [");
+                writer.WriteLine("[");
                 using (writer.Scope())
                 {
                     writer.WriteLine(GetSchemaType(listSimple.ElementType));
@@ -139,18 +168,30 @@ public abstract partial class Specification
                 break;
 
             case DictionaryModel dictionary:
-                writer.WriteLine($"{name}: {{");
+                writer.WriteLine("{");
                 using (writer.Scope())
                 {
                     if (dictionary.ElementType is TypeModel dictComplexType)
                     {
-                        writer.WriteLine("{customized property}: {");
-                        using (writer.Scope())
+                        if (currentPath != null && visitedTypes.TryGetValue(dictComplexType, out string? dictRefPath))
                         {
-                            var root = BuildSchemaTree(dictComplexType.Properties);
-                            WriteSchemaObject(writer, root);
+                            writer.WriteLine($"{{customized property}}: &{dictRefPath}");
                         }
-                        writer.WriteLine("}");
+                        else
+                        {
+                            if (currentPath != null)
+                            {
+                                visitedTypes[dictComplexType] = $"{currentPath}.*";
+                            }
+                            writer.WriteLine("{customized property}: {");
+                            using (writer.Scope())
+                            {
+                                var root = BuildSchemaTree(dictComplexType.Properties);
+                                string? elementPath = currentPath != null ? $"{currentPath}.*" : null;
+                                WriteSchemaObject(writer, root, elementPath, visitedTypes);
+                            }
+                            writer.WriteLine("}");
+                        }
                     }
                     else
                     {
@@ -161,7 +202,7 @@ public abstract partial class Specification
                 break;
 
             default:
-                writer.WriteLine($"{name}: {GetSchemaType(property.PropertyType)}");
+                writer.WriteLine(GetSchemaType(property.PropertyType));
                 break;
         }
     }
