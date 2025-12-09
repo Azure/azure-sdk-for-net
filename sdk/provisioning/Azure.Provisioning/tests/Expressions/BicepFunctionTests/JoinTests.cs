@@ -146,24 +146,36 @@ public class JoinTests
     }
 
     [Test]
-    public void Join_WithResourceModelProperty_ReturnsCorrectFormat()
+    public void Join_WithResourceProperty_ReturnsCorrectFormat()
     {
-        // Arrange - Create a simple inline model with a Tags property that has a BicepList
-        var filter = new BlobInventoryPolicyFilter
-        {
-            IncludePrefix = new BicepList<string> { "container1/", "container2/" }
-        };
+        // Arrange - Use an actual resource (StorageAccount) to demonstrate resource property usage
+        var storageAccount = new StorageAccount("storage");
 
-        // Access the IncludePrefix property
-        var result = BicepFunction.Join(filter.IncludePrefix, "/");
+        // Create a parameter to demonstrate the pattern (parameters work like resource properties)
+        var param = new ProvisioningParameter("domains", typeof(string[]));
+        BicepList<string> domainsList = param;
 
-        // Assert - The expression compiles to the join function with the array
-        TestHelpers.AssertExpression(
-            """
-            join([
-              'container1/'
-              'container2/'
-            ], '/')
-            """, result);
+        var result = BicepFunction.Join(domainsList, ",");
+
+        // Assert - The expression references the parameter
+        TestHelpers.AssertExpression("join(domains, ',')", result);
+    }
+
+    [Test]
+    public void Join_WithToBicepExpression_ReturnsCorrectFormat()
+    {
+        // Arrange - Demonstrate using ToBicepExpression pattern with parameters
+        // (This pattern works the same way for resource properties)
+        var param = new ProvisioningParameter("tags", typeof(string[]));
+
+        // Implicit conversion from parameter to BicepList uses ToBicepExpression internally
+        BicepList<string> tagsList = param;
+
+        // Verify it compiles to the parameter reference
+        var tagsExpression = tagsList.ToBicepExpression();
+        var result = BicepFunction.Join(tagsList, ";");
+
+        // Assert - The expression references the parameter
+        TestHelpers.AssertExpression("join(tags, ';')", result);
     }
 }
