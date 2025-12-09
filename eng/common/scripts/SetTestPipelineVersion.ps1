@@ -123,7 +123,6 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
     LogError "ServiceDirectory is required when using PackageNames."
     exit 1
   }
-  $packageNamesArray = @()
   $packageNamesArray = $PackageNames.Split(',')
   foreach ($packageName in $packageNamesArray) {
     Write-Host "Processing $packageName"
