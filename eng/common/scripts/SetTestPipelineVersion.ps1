@@ -119,6 +119,10 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
   }
 } elseif (![String]::IsNullOrWhiteSpace($PackageNames)) {
   # Fallback to original logic when using PackageNames string
+  if ([String]::IsNullOrWhiteSpace($ServiceDirectory)) {
+    LogError "ServiceDirectory is required when using PackageNames."
+    exit 1
+  }
   $packageNamesArray = @()
   $packageNamesArray = $PackageNames.Split(',')
   foreach ($packageName in $packageNamesArray) {
