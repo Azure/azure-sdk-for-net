@@ -110,7 +110,7 @@ public partial class ManagedHsm : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the ManagedHsm.</param>
     public ManagedHsm(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.KeyVault/managedHSMs", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -119,6 +119,7 @@ public partial class ManagedHsm : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _location = DefineProperty<AzureLocation>("Location", ["location"], isRequired: true);
         _identity = DefineModelProperty<ManagedServiceIdentity>("Identity", ["identity"]);
@@ -134,6 +135,11 @@ public partial class ManagedHsm : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>

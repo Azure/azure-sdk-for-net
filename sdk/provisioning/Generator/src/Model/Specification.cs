@@ -81,6 +81,8 @@ public abstract partial class Specification : ModelBase
                 {
                     GenerateBuiltInRoles();
                 }
+
+                GenerateSchema();
             });
     }
 

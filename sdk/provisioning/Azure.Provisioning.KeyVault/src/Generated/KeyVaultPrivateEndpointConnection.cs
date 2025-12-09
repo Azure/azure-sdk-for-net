@@ -126,7 +126,7 @@ public partial class KeyVaultPrivateEndpointConnection : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the KeyVaultPrivateEndpointConnection.</param>
     public KeyVaultPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion ?? "2024-11-01")
+        : base(bicepIdentifier, "Microsoft.KeyVault/vaults/privateEndpointConnections", resourceVersion ?? "2025-05-01")
     {
     }
 
@@ -136,6 +136,7 @@ public partial class KeyVaultPrivateEndpointConnection : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _connectionState = DefineModelProperty<KeyVaultPrivateLinkServiceConnectionState>("ConnectionState", ["properties", "privateLinkServiceConnectionState"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"]);
@@ -153,6 +154,11 @@ public partial class KeyVaultPrivateEndpointConnection : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2025-05-01.
+        /// </summary>
+        public static readonly string V2025_05_01 = "2025-05-01";
+
         /// <summary>
         /// 2024-11-01.
         /// </summary>
