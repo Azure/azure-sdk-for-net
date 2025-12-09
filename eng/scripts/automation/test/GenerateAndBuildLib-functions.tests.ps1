@@ -343,3 +343,102 @@ options:
         { GetSDKProjectFolder -typespecConfigurationFile $testTspEmitterMissingNamespace -sdkRepoRoot "/test/sdk/root" } | Should -Throw "*'namespace'*"
     }
 }
+
+Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
+    BeforeAll {
+        $testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        
+        if (!(Test-Path $testProjectDir)) {
+            New-Item -ItemType Directory -Path $testProjectDir | Out-Null
+        }
+    }
+    
+    AfterAll {
+        if (Test-Path $testProjectDir) {
+            Remove-Item -Recurse -Force $testProjectDir
+        }
+    }
+    
+    BeforeEach {
+        # Clean up any existing CHANGELOG.md before each test
+        $changelogPath = Join-Path $testProjectDir "CHANGELOG.md"
+        if (Test-Path $changelogPath) {
+            Remove-Item $changelogPath
+        }
+    }
+    
+    it("should create CHANGELOG.md when it doesn't exist") {
+        $testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        $packageName = "Azure.Test.Package"
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $testProjectDir -packageName $packageName -version $version
+        
+        $changelogPath = Join-Path $testProjectDir "CHANGELOG.md"
+        Test-Path $changelogPath | Should -Be $true
+    }
+    
+    it("should create CHANGELOG.md with correct version") {
+        $testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        $packageName = "Azure.Test.Package"
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $testProjectDir -packageName $packageName -version $version
+        
+        $changelogPath = Join-Path $testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "1\.0\.0-beta\.1"
+    }
+    
+    it("should create CHANGELOG.md with Release History header") {
+        $testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        $packageName = "Azure.Test.Package"
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $testProjectDir -packageName $packageName -version $version
+        
+        $changelogPath = Join-Path $testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "# Release History"
+    }
+    
+    it("should create CHANGELOG.md with Unreleased status") {
+        $testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        $packageName = "Azure.Test.Package"
+        $version = "1.0.0-beta.1"
+        
+        New-ChangeLogIfNotExists -projectFolder $testProjectDir -packageName $packageName -version $version
+        
+        $changelogPath = Join-Path $testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "\(Unreleased\)"
+    }
+    
+    it("should not overwrite existing CHANGELOG.md") {
+        $testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        $packageName = "Azure.Test.Package"
+        $version = "1.0.0-beta.1"
+        
+        $changelogPath = Join-Path $testProjectDir "CHANGELOG.md"
+        $existingContent = "# Existing Content"
+        Set-Content -Path $changelogPath -Value $existingContent
+        
+        New-ChangeLogIfNotExists -projectFolder $testProjectDir -packageName $packageName -version $version
+        
+        $content = Get-Content $changelogPath -Raw
+        # Should contain the existing content (ignoring line ending differences)
+        $content.Trim() | Should -Be $existingContent.Trim()
+    }
+    
+    it("should handle different version formats") {
+        $testProjectDir = Join-Path $PSScriptRoot "test-changelog"
+        $packageName = "Azure.Test.Package"
+        $version = "2.0.0"
+        
+        New-ChangeLogIfNotExists -projectFolder $testProjectDir -packageName $packageName -version $version
+        
+        $changelogPath = Join-Path $testProjectDir "CHANGELOG.md"
+        $content = Get-Content $changelogPath -Raw
+        $content | Should -Match "2\.0\.0"
+    }
+}
