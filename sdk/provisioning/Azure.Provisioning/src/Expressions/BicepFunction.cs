@@ -158,8 +158,6 @@ public static class BicepFunction
         return BicepSyntax.Call("subscriptionResourceId", values.Select(v => v.Compile()).ToArray());
     }
 
-    /*
-     * temporarily commented out for the new stable version release
     /// <summary>
     /// Returns the unique identifier of a resource. This represents the <c>resourceId</c>
     /// Bicep function.
@@ -236,7 +234,6 @@ public static class BicepFunction
         }
         return BicepSyntax.Call("extensionResourceId", [resourceId.Compile(), resourceType.Compile(), .. resourceNames.Select(v => v.Compile())]);
     }
-    */
 
     /// <summary>
     /// Returns information about the current deployment operation.  This

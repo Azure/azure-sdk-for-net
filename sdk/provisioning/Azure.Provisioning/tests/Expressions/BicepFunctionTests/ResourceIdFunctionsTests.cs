@@ -9,8 +9,6 @@ namespace Azure.Provisioning.Tests.Expressions.BicepFunctions;
 
 public class ResourceIdFunctionsTests
 {
-    /*
-     * temporarily commented out since the corresponding API was excluded in the current stable version
     [Test]
     public void TestGetResourceId()
     {
@@ -20,7 +18,6 @@ public class ResourceIdFunctionsTests
         var id2 = BicepFunction.GetResourceId("Microsoft.Network/virtualNetworks/subnets", "myVnet", "mySubnet");
         TestHelpers.AssertExpression("resourceId('Microsoft.Network/virtualNetworks/subnets', 'myVnet', 'mySubnet')", id2);
     }
-    */
 
     [Test]
     public void TestGetSubscriptionResourceId()
@@ -32,8 +29,6 @@ public class ResourceIdFunctionsTests
         TestHelpers.AssertExpression("subscriptionResourceId('00000000-0000-0000-0000-000000000000', 'Microsoft.Resources/resourceGroups', 'myResourceGroup')", id2);
     }
 
-    /*
-     * temporarily commented out since the corresponding API was excluded in the current stable version
     [Test]
     public void TestGetExtensionResourceId()
     {
@@ -45,5 +40,4 @@ public class ResourceIdFunctionsTests
         var id2 = BicepFunction.GetExtensionResourceId(storageAccount.Id, "Microsoft.Authorization/policyDefinitions", "myDef");
         TestHelpers.AssertExpression("extensionResourceId(account.id, 'Microsoft.Authorization/policyDefinitions', 'myDef')", id2);
     }
-    */
 }

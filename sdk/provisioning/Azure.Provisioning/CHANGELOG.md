@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Reintroduced `BicepFunction.GetResourceId` corresponding to bicep built-in function `resourceId`.
+- Reintroduced `BicepFunction.GetExtensionResourceId` corresponding to bicep built-in function `extensionResourceId`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
