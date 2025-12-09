@@ -747,6 +747,12 @@
 # ServiceLabel: %Provisioning
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %Planetary Computer
+/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
+
+# ServiceLabel: %Planetary Computer
+# ServiceOwners:                                                   @chahibi @mandarinamdar
+
 # PRLabel: %Quantum
 /sdk/quantum/Azure.Quantum.Jobs/                                   @xfield
 
@@ -1085,7 +1091,6 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
 /sdk/planetarycomputer/Azure.ResourceManager.*/                    @chahibi @mandarinamdar
 
 # ServiceLabel: %Planetary Computer %Mgmt
