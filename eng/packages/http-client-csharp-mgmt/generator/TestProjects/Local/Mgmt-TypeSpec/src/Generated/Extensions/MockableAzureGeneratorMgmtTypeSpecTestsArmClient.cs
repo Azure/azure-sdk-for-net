@@ -253,5 +253,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             JooResource.ValidateResourceId(id);
             return new JooResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="SAPVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SAPVirtualInstanceResource"/> object. </returns>
+        public virtual SAPVirtualInstanceResource GetSAPVirtualInstanceResource(ResourceIdentifier id)
+        {
+            SAPVirtualInstanceResource.ValidateResourceId(id);
+            return new SAPVirtualInstanceResource(Client, id);
+        }
     }
 }
