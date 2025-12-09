@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated, use Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) instead")]
+        [Obsolete("This method is deprecated, use `Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)` instead")]
         public virtual Task<ArmOperation<ContainerRegistryRunResource>> UpdateAsync(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported. Please use `Task<Response<ContainerRegistryRunResource>> UpdateAsync(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)` instead.");
         }
 
         /// <summary>
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated, use Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default) instead")]
+        [Obsolete("This method is deprecated, use `Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)` instead")]
         public virtual ArmOperation<ContainerRegistryRunResource> Update(WaitUntil waitUntil, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported. Please use `Response<ContainerRegistryRunResource> Update(ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)` instead.");
         }
 
         /// <summary>
@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated, use Task<Response> CancelAsync(CancellationToken cancellationToken = default) instead")]
+        [Obsolete("This method is deprecated, use `Task<Response> CancelAsync(CancellationToken cancellationToken = default)` instead")]
         public virtual Task<ArmOperation> CancelAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported. Please use `Task<Response> CancelAsync(CancellationToken cancellationToken = default)` instead.");
         }
 
         /// <summary>
@@ -138,10 +138,10 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        [Obsolete("This method is deprecated, use Response Cancel(CancellationToken cancellationToken = default) instead")]
+        [Obsolete("This method is deprecated, use `Response Cancel(CancellationToken cancellationToken = default)` instead")]
         public virtual ArmOperation Cancel(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("This method is no longer supported. Please use `Response Cancel(CancellationToken cancellationToken = default)` instead.");
         }
     }
 }
