@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the cache-key query string action.
-    /// Serialized Name: CacheKeyQueryStringActionParameters
-    /// </summary>
+    /// <summary> Defines the parameters for the cache-key query string action. </summary>
     public partial class CacheKeyQueryStringActionProperties : DeliveryRuleActionProperties
     {
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
-        /// <param name="queryStringBehavior">
-        /// Caching behavior for the requests
-        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
-        /// </param>
+        /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
         public CacheKeyQueryStringActionProperties(QueryStringBehavior queryStringBehavior)
         {
             QueryStringBehavior = queryStringBehavior;
@@ -28,16 +22,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CacheKeyQueryStringActionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="typeName"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="queryStringBehavior">
-        /// Caching behavior for the requests
-        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
-        /// </param>
-        /// <param name="queryParameters">
-        /// query parameters to include or exclude (comma separated).
-        /// Serialized Name: CacheKeyQueryStringActionParameters.queryParameters
-        /// </param>
+        /// <param name="queryStringBehavior"> Caching behavior for the requests. </param>
+        /// <param name="queryParameters"> query parameters to include or exclude (comma separated). </param>
         internal CacheKeyQueryStringActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, QueryStringBehavior queryStringBehavior, string queryParameters) : base(typeName, serializedAdditionalRawData)
         {
             QueryStringBehavior = queryStringBehavior;
@@ -50,15 +38,11 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Caching behavior for the requests
-        /// Serialized Name: CacheKeyQueryStringActionParameters.queryStringBehavior
-        /// </summary>
+        /// <summary> Caching behavior for the requests. </summary>
+        [WirePath("queryStringBehavior")]
         public QueryStringBehavior QueryStringBehavior { get; set; }
-        /// <summary>
-        /// query parameters to include or exclude (comma separated).
-        /// Serialized Name: CacheKeyQueryStringActionParameters.queryParameters
-        /// </summary>
+        /// <summary> query parameters to include or exclude (comma separated). </summary>
+        [WirePath("queryParameters")]
         public string QueryParameters { get; set; }
     }
 }

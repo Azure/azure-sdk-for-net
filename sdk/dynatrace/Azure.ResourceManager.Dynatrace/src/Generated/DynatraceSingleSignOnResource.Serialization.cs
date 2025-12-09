@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Dynatrace
 {
+    /// <summary></summary>
     public partial class DynatraceSingleSignOnResource : IJsonModel<DynatraceSingleSignOnData>
     {
-        private static DynatraceSingleSignOnData s_dataDeserializationInstance;
-        private static DynatraceSingleSignOnData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DynatraceSingleSignOnData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DynatraceSingleSignOnData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DynatraceSingleSignOnData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DynatraceSingleSignOnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceSingleSignOnData>)Data).Write(writer, options);
 
-        DynatraceSingleSignOnData IJsonModel<DynatraceSingleSignOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DynatraceSingleSignOnData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynatraceSingleSignOnData IJsonModel<DynatraceSingleSignOnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DynatraceSingleSignOnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DynatraceSingleSignOnData>(Data, options, AzureResourceManagerDynatraceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DynatraceSingleSignOnData IPersistableModel<DynatraceSingleSignOnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DynatraceSingleSignOnData>(data, options, AzureResourceManagerDynatraceContext.Default);
 
-        string IPersistableModel<DynatraceSingleSignOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DynatraceSingleSignOnData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DynatraceSingleSignOnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

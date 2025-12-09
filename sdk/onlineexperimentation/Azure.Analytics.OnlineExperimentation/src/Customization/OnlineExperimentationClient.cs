@@ -31,11 +31,11 @@ namespace Azure.Analytics.OnlineExperimentation
             ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
-            using RequestContent content = metric.ToRequestContent();
+            using RequestContent content = metric;
             var conditions = new RequestConditions { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch };
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await CreateOrUpdateMetricAsync(experimentMetricId, content, conditions, context).ConfigureAwait(false);
-            return Response.FromValue(ExperimentMetric.FromResponse(response), response);
+            return Response.FromValue((ExperimentMetric)response, response);
         }
 
         /// <summary>
@@ -58,11 +58,11 @@ namespace Azure.Analytics.OnlineExperimentation
             ETag? ifNoneMatch = null,
             CancellationToken cancellationToken = default)
         {
-            using RequestContent content = metric.ToRequestContent();
+            using RequestContent content = metric;
             var conditions = new RequestConditions { IfMatch = ifMatch, IfNoneMatch = ifNoneMatch };
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = CreateOrUpdateMetric(experimentMetricId, content, conditions, context);
-            return Response.FromValue(ExperimentMetric.FromResponse(response), response);
+            return Response.FromValue((ExperimentMetric)response, response);
         }
 
         /// <summary>
@@ -81,11 +81,11 @@ namespace Azure.Analytics.OnlineExperimentation
             ExperimentMetric metric,
             CancellationToken cancellationToken = default)
         {
-            using RequestContent content = metric.ToRequestContent();
+            using RequestContent content = metric;
             var conditions = new RequestConditions { IfNoneMatch = ETag.All };
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await CreateOrUpdateMetricAsync(experimentMetricId, content, conditions, context).ConfigureAwait(false);
-            return Response.FromValue(ExperimentMetric.FromResponse(response), response);
+            return Response.FromValue((ExperimentMetric)response, response);
         }
 
         /// <summary>
@@ -104,11 +104,11 @@ namespace Azure.Analytics.OnlineExperimentation
             ExperimentMetric metric,
             CancellationToken cancellationToken = default)
         {
-            using RequestContent content = metric.ToRequestContent();
+            using RequestContent content = metric;
             var conditions = new RequestConditions { IfNoneMatch = ETag.All };
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = CreateOrUpdateMetric(experimentMetricId, content, conditions, context);
-            return Response.FromValue(ExperimentMetric.FromResponse(response), response);
+            return Response.FromValue((ExperimentMetric)response, response);
         }
 
         /// <summary>
@@ -129,11 +129,11 @@ namespace Azure.Analytics.OnlineExperimentation
             ETag? ifMatch = null,
             CancellationToken cancellationToken = default)
         {
-            using RequestContent content = metric.ToRequestContent();
+            using RequestContent content = metric;
             var conditions = new RequestConditions { IfMatch = ifMatch };
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await CreateOrUpdateMetricAsync(experimentMetricId, content, conditions, context).ConfigureAwait(false);
-            return Response.FromValue(ExperimentMetric.FromResponse(response), response);
+            return Response.FromValue((ExperimentMetric)response, response);
         }
 
         /// <summary>
@@ -154,11 +154,11 @@ namespace Azure.Analytics.OnlineExperimentation
             ETag? ifMatch = null,
             CancellationToken cancellationToken = default)
         {
-            using RequestContent content = metric.ToRequestContent();
+            using RequestContent content = metric;
             var conditions = new RequestConditions { IfMatch = ifMatch };
-            RequestContext context = FromCancellationToken(cancellationToken);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = CreateOrUpdateMetric(experimentMetricId, content, conditions, context);
-            return Response.FromValue(ExperimentMetric.FromResponse(response), response);
+            return Response.FromValue((ExperimentMetric)response, response);
         }
 
         /// <summary>

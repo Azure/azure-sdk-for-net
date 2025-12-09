@@ -88,6 +88,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         public static LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType certificateSelfSigned, string auditComment = null, string description = null, ETag? etag = null, FirewallProvisioningState? provisioningState = null)
             => LocalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
 
+        /// <summary> Initializes a new instance of <see cref="Ngfw.LocalRulestackCertificateObjectData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="certificateSignerResourceId"> Resource Id of certificate signer, to be populated only when certificateSelfSigned is false. </param>
+        /// <param name="certificateSelfSigned"> use certificate self signed. </param>
+        /// <param name="auditComment"> comment for this object. </param>
+        /// <param name="description"> user description for this object. </param>
+        /// <param name="etag"> read only string representing last create or update. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Ngfw.LocalRulestackCertificateObjectData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static LocalRulestackCertificateObjectData LocalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType? certificateSelfSigned = null, string auditComment = null, string description = null, ETag? etag = null, FirewallProvisioningState? provisioningState = null)
+            => LocalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
+
         /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -108,6 +124,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GlobalRulestackData GlobalRulestackData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation location, ManagedServiceIdentity identity = null, ETag? panETag = null, AzureLocation? panLocation = null, RulestackScopeType? scope = null, IEnumerable<string> associatedSubscriptions = null, string description = null, RuleCreationDefaultMode? defaultMode = null, string minAppIdVersion = null, FirewallProvisioningState? provisioningState = null, RulestackSecurityServices securityServices = null)
             => GlobalRulestackData(id, name, resourceType, systemData, panETag, panLocation, scope, associatedSubscriptions, description, defaultMode, minAppIdVersion, provisioningState, securityServices, location, identity);
+
+        /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackCertificateObjectData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="certificateSignerResourceId"> Resource Id of certificate signer, to be populated only when certificateSelfSigned is false. </param>
+        /// <param name="certificateSelfSigned"> use certificate self signed. </param>
+        /// <param name="auditComment"> comment for this object. </param>
+        /// <param name="description"> user description for this object. </param>
+        /// <param name="etag"> read only string representing last create or update. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Ngfw.GlobalRulestackCertificateObjectData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GlobalRulestackCertificateObjectData GlobalRulestackCertificateObjectData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string certificateSignerResourceId, FirewallBooleanType? certificateSelfSigned = null, string auditComment = null, string description = null, ETag? etag = null, FirewallProvisioningState? provisioningState = null)
+            => GlobalRulestackCertificateObjectData(id, name, resourceType, systemData, certificateSignerResourceId, certificateSelfSigned, auditComment, description, etag, provisioningState);
 
         /// <summary> Initializes a new instance of <see cref="Ngfw.GlobalRulestackCertificateObjectData"/>. </summary>
         /// <param name="id"> The id. </param>

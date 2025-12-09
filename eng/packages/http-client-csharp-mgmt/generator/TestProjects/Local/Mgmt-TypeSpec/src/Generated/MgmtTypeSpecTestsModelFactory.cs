@@ -234,7 +234,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="optionalFlattenPropertyRandomCollectionProp"> Gets the RandomCollectionProp. </param>
         /// <param name="discriminatorProperty"></param>
         /// <returns> A new <see cref="Tests.BarSettingsResourceData"/> instance for mocking. </returns>
-        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, int? propertyLeft = default, int? anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int? prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
+        public static BarSettingsResourceData BarSettingsResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isEnabled = default, IEnumerable<string> stringArray = default, string propertyLeft = default, string anotherPropertyLeft = default, int? innerProp1 = default, string innerProp2 = default, int? middleProp1 = default, IDictionary<string, string> middleProp2 = default, IEnumerable<string> prop1 = default, int? prop2 = default, IEnumerable<string> optionalFlattenPropertyRandomCollectionProp = default, LimitJsonObject discriminatorProperty = default)
         {
             stringArray ??= new ChangeTrackingList<string>();
 
@@ -246,8 +246,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 isEnabled is null ? default : new BarSettingsProperties(isEnabled, null),
                 stringArray.ToList(),
-                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft.Value, null),
-                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft.Value, null),
+                propertyLeft is null ? default : new BarQuotaProperties(propertyLeft, null),
+                anotherPropertyLeft is null ? default : new BarQuotaProperties(anotherPropertyLeft, null),
                 innerProp1 is null && innerProp2 is null && middleProp1 is null && middleProp2 is null && prop1 is null && prop2 is null ? default : new BarNestedQuotaProperties(
                     innerProp1,
                     innerProp2,
@@ -266,7 +266,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="barQuotaLeft"> enabled. </param>
         /// <returns> A new <see cref="Tests.BarQuotaResourceData"/> instance for mocking. </returns>
-        public static BarQuotaResourceData BarQuotaResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? barQuotaLeft = default)
+        public static BarQuotaResourceData BarQuotaResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string barQuotaLeft = default)
         {
             return new BarQuotaResourceData(
                 id,
@@ -274,7 +274,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties: null,
-                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft.Value, null));
+                barQuotaLeft is null ? default : new BarQuotaProperties(barQuotaLeft, null));
         }
 
         /// <summary> An Employee resource. </summary>
@@ -556,6 +556,52 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new AllocatedToSubscription(subscriptionId, quotaAllocated, additionalBinaryDataProperties: null);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupQuotaLimitListNextLink"> The URL to use for getting the next set of results. </param>
+        /// <returns> A new <see cref="Tests.GroupQuotaLimitListData"/> instance for mocking. </returns>
+        public static GroupQuotaLimitListData GroupQuotaLimitListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupQuotaLimitListNextLink = default)
+        {
+            return new GroupQuotaLimitListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                groupQuotaLimitListNextLink is null ? default : new GroupQuotaLimitListProperties(groupQuotaLimitListNextLink, null));
+        }
+
+        /// <summary> Subscription quota list. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
+        {
+            return new SubscriptionQuotaAllocationsListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The SubscriptionQuotaAllocationsListProperties. </summary>
+        /// <param name="value"> Subscription quota list. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsListProperties"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(IEnumerable<string> value = default, string nextLink = default)
+        {
+            value ??= new ChangeTrackingList<string>();
+
+            return new SubscriptionQuotaAllocationsListProperties(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Request for querying network sibling set. </summary>
         /// <param name="location"> Location to query. </param>
         /// <param name="subscriptionId"> Subscription ID to query. </param>
@@ -621,6 +667,45 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 tags,
                 location,
                 jooName is null ? default : new JooProperties(jooName, null));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sapVirtualInstanceName"> Gets or sets the Name. </param>
+        /// <returns> A new <see cref="Tests.SAPVirtualInstanceData"/> instance for mocking. </returns>
+        public static SAPVirtualInstanceData SAPVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sapVirtualInstanceName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SAPVirtualInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                sapVirtualInstanceName is null ? default : new SAPVirtualInstanceProperties(sapVirtualInstanceName, null));
+        }
+
+        /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
+        /// <param name="preferredAvailabilityZone"> The preferred availability zone. </param>
+        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsRequest"/> instance for mocking. </returns>
+        public static SAPAvailabilityZoneDetailsRequest SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone = default)
+        {
+            return new SAPAvailabilityZoneDetailsRequest(preferredAvailabilityZone, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SAPAvailabilityZoneDetailsResult. </summary>
+        /// <param name="recommendedAvailabilityZonePair"> The recommended availability zone pair. </param>
+        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsResult"/> instance for mocking. </returns>
+        public static SAPAvailabilityZoneDetailsResult SAPAvailabilityZoneDetailsResult(string recommendedAvailabilityZonePair = default)
+        {
+            return new SAPAvailabilityZoneDetailsResult(recommendedAvailabilityZonePair, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ZooRecommendation. </summary>

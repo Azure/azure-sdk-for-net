@@ -55,16 +55,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             Path = path;
             IndexType = indexType;
+            VectorIndexShardKey = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBVectorIndex"/>. </summary>
         /// <param name="path"> The path to the vector field in the document. </param>
         /// <param name="indexType"> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </param>
+        /// <param name="quantizationByteSize"> The number of bytes used in product quantization of the vectors. A larger value may result in better recall for vector searches at the expense of latency. This is only applicable for the quantizedFlat and diskANN vector index types. </param>
+        /// <param name="indexingSearchListSize"> This is the size of the candidate list of approximate neighbors stored while building the DiskANN index as part of the optimization processes. Large values may improve recall at the expense of latency. This is only applicable for the diskANN vector index type. </param>
+        /// <param name="vectorIndexShardKey"> Array of shard keys for the vector index. This is only applicable for the quantizedFlat and diskANN vector index types. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBVectorIndex(string path, CosmosDBVectorIndexType indexType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBVectorIndex(string path, CosmosDBVectorIndexType indexType, long? quantizationByteSize, long? indexingSearchListSize, IList<string> vectorIndexShardKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             IndexType = indexType;
+            QuantizationByteSize = quantizationByteSize;
+            IndexingSearchListSize = indexingSearchListSize;
+            VectorIndexShardKey = vectorIndexShardKey;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -79,5 +86,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The index type of the vector. Currently, flat, diskANN, and quantizedFlat are supported. </summary>
         [WirePath("type")]
         public CosmosDBVectorIndexType IndexType { get; set; }
+        /// <summary> The number of bytes used in product quantization of the vectors. A larger value may result in better recall for vector searches at the expense of latency. This is only applicable for the quantizedFlat and diskANN vector index types. </summary>
+        [WirePath("quantizationByteSize")]
+        public long? QuantizationByteSize { get; set; }
+        /// <summary> This is the size of the candidate list of approximate neighbors stored while building the DiskANN index as part of the optimization processes. Large values may improve recall at the expense of latency. This is only applicable for the diskANN vector index type. </summary>
+        [WirePath("indexingSearchListSize")]
+        public long? IndexingSearchListSize { get; set; }
+        /// <summary> Array of shard keys for the vector index. This is only applicable for the quantizedFlat and diskANN vector index types. </summary>
+        [WirePath("vectorIndexShardKey")]
+        public IList<string> VectorIndexShardKey { get; }
     }
 }

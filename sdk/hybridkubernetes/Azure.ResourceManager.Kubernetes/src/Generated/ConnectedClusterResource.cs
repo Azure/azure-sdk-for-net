@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.Kubernetes
                     ConnectedClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.Kubernetes
                     ConnectedClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
                     ConnectedClusterPatch patch = new ConnectedClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<ConnectedClusterResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.Kubernetes
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken);
+                    Response<ConnectedClusterResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

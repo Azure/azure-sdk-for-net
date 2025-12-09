@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     internal readonly partial struct StorageClassType : IEquatable<StorageClassType>
     {
         private readonly string _value;
+        /// <summary> Native storage class. </summary>
+        private const string NativeValue = "Native";
+        /// <summary> RWX storage class. </summary>
+        private const string RwxValue = "RWX";
+        /// <summary> Blob storage class. </summary>
+        private const string BlobValue = "Blob";
+        /// <summary> NFS storage class. </summary>
+        private const string NfsValue = "NFS";
+        /// <summary> SMB storage class. </summary>
+        private const string SmbValue = "SMB";
 
         /// <summary> Initializes a new instance of <see cref="StorageClassType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public StorageClassType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NativeValue = "Native";
-        private const string RwxValue = "RWX";
-        private const string BlobValue = "Blob";
-        private const string NfsValue = "NFS";
-        private const string SmbValue = "SMB";
+            _value = value;
+        }
 
         /// <summary> Native storage class. </summary>
         public static StorageClassType Native { get; } = new StorageClassType(NativeValue);
+
         /// <summary> RWX storage class. </summary>
         public static StorageClassType Rwx { get; } = new StorageClassType(RwxValue);
+
         /// <summary> Blob storage class. </summary>
         public static StorageClassType Blob { get; } = new StorageClassType(BlobValue);
+
         /// <summary> NFS storage class. </summary>
         public static StorageClassType Nfs { get; } = new StorageClassType(NfsValue);
+
         /// <summary> SMB storage class. </summary>
         public static StorageClassType Smb { get; } = new StorageClassType(SmbValue);
+
         /// <summary> Determines if two <see cref="StorageClassType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(StorageClassType left, StorageClassType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="StorageClassType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(StorageClassType left, StorageClassType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageClassType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="StorageClassType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator StorageClassType(string value) => new StorageClassType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="StorageClassType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StorageClassType?(string value) => value == null ? null : new StorageClassType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is StorageClassType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(StorageClassType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
