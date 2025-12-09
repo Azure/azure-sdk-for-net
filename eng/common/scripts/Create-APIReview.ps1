@@ -1,11 +1,9 @@
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$False)]
-  [array] $ArtifactList,
   [Parameter(Mandatory=$True)]
-  [string] $ArtifactPath,
+  [array] $ArtifactList,
   [Parameter(Mandatory=$False)]
-  [string] $APIKey,
+  [string] $ArtifactPath,
   [string] $SourceBranch,
   [string] $DefaultBranch,
   [string] $RepoName,
@@ -97,24 +95,16 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
 
     $uri = "${APIViewUri}/upload"
     
-    # Try Bearer token first, fall back to API key
+    # Get Bearer token for authentication
     $bearerToken = Get-ApiViewBearerToken
-    if ($bearerToken) {
-        $headers = @{
-            "Authorization" = "Bearer $bearerToken";
-            "content-type" = "multipart/form-data"
-        }
-    }
-    elseif ($APIKey) {
-        Write-Warning "##[warning]Bearer token acquisition failed - falling back to API key."
-        $headers = @{
-            "ApiKey" = $APIKey;
-            "content-type" = "multipart/form-data"
-        }
-    }
-    else {
-        Write-Error "No authentication available. Either configure AzureCLI@2 task or provide APIKey."
+    if (-not $bearerToken) {
+        Write-Error "Failed to acquire Bearer token for APIView authentication."
         return 401
+    }
+    
+    $headers = @{
+        "Authorization" = "Bearer $bearerToken";
+        "content-type" = "multipart/form-data"
     }
 
     try
@@ -156,22 +146,15 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
 
     Write-Host "Request to APIView: $uri"
     
-    # Try Bearer token first, fall back to API key
+    # Get Bearer token for authentication
     $bearerToken = Get-ApiViewBearerToken
-    if ($bearerToken) {
-        $headers = @{
-            "Authorization" = "Bearer $bearerToken"
-        }
-    }
-    elseif ($APIKey) {
-        Write-Warning "##[warning]Bearer token acquisition failed - falling back to API key. Please migrate to using AzureCLI@2 task with service connection."
-        $headers = @{
-            "ApiKey" = $APIKey
-        }
-    }
-    else {
-        Write-Error "No authentication available. Either configure AzureCLI@2 task or provide APIKey."
+    if (-not $bearerToken) {
+        Write-Error "Failed to acquire Bearer token for APIView authentication."
         return 401
+    }
+    
+    $headers = @{
+        "Authorization" = "Bearer $bearerToken"
     }
 
     try
