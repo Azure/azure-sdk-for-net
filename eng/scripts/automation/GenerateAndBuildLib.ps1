@@ -3,6 +3,7 @@ $CI_YAML_FILE = "ci.yml"
 $TSP_LOCATION_FILE = "tsp-location.yaml"
 
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
+. (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "ChangeLog-Operations.ps1")
 
 #mgmt: swagger directory name to sdk directory name map
 $packageNameHash = [ordered]@{
@@ -676,6 +677,43 @@ function Invoke-GenerateAndBuildSDK () {
     }
 }
 
+function New-ChangeLogIfNotExists()
+{
+    param(
+        [string]$projectFolder,
+        [string]$packageName,
+        [string]$version
+    )
+
+    $changeLogPath = Join-Path $projectFolder "CHANGELOG.md"
+    
+    if (!(Test-Path $changeLogPath)) {
+        Write-Host "CHANGELOG.md does not exist at $changeLogPath. Creating a new one with version $version"
+        
+        # Create a new changelog entry using the helper function
+        $newEntry = New-ChangeLogEntry -Version $version -Status "Unreleased" -InitialAtxHeader "#"
+        
+        if ($newEntry) {
+            # Create the changelog content
+            $changeLogContent = @()
+            $changeLogContent += "# Release History"
+            $changeLogContent += ""
+            $changeLogContent += $newEntry.ReleaseTitle
+            $changeLogContent += $newEntry.ReleaseContent
+            
+            # Write the changelog file
+            Set-Content -Path $changeLogPath -Value $changeLogContent
+            Write-Host "Successfully created CHANGELOG.md with initial entry for version $version"
+        }
+        else {
+            Write-Warning "Failed to create changelog entry for version $version"
+        }
+    }
+    else {
+        Write-Host "CHANGELOG.md already exists at $changeLogPath"
+    }
+}
+
 function GeneratePackage()
 {
     param(
@@ -701,6 +739,7 @@ function GeneratePackage()
     $content = ""
     $result = "succeeded"
     $isGenerateSuccess = $true
+    $version = ""
 
     # Generate Code
     $srcPath = Join-Path $projectFolder 'src'
@@ -720,6 +759,22 @@ function GeneratePackage()
     }
 
     if ($isGenerateSuccess) {
+        # Get the version from csproj before building
+        $projectFile = Join-Path $srcPath "$packageName.csproj"
+        $csproj = new-object xml
+        $csproj.PreserveWhitespace = $true
+        $csproj.Load($projectFile)
+        $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
+        $version = ""
+        if ($versionNode) {
+            $version = $versionNode.InnerText
+        }
+        
+        # Create CHANGELOG.md if it doesn't exist
+        if ($version) {
+            New-ChangeLogIfNotExists -projectFolder $projectFolder -packageName $packageName -version $version
+        }
+        
         # Build project when successfully generated the code
         Write-Host "Start to build sdk project: $srcPath"
         dotnet build $srcPath /p:RunApiCompat=$false
@@ -825,16 +880,7 @@ function GeneratePackage()
         $ciFilePath = "sdk/$service/ci.mgmt.yml"
     }
 
-    # get the sdk version
-    $version = ""
-    $projectFile = Join-Path $srcPath "$packageName.csproj"
-    $csproj = new-object xml
-    $csproj.PreserveWhitespace = $true
-    $csproj.Load($projectFile)
-    $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
-    if ($versionNode) {
-        $version = $versionNode.InnerText
-    }
+    # Version was already extracted earlier, no need to extract again
     $packageDetails = @{
         version=$version;
         packageName="$packageName";
