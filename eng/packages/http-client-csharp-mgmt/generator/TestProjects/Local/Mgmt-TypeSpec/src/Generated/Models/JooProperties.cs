@@ -29,10 +29,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <summary> Initializes a new instance of <see cref="JooProperties"/>. </summary>
         /// <param name="name"></param>
+        /// <param name="status"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JooProperties(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JooProperties(string name, JooStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
+            Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

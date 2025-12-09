@@ -18,6 +18,12 @@ model Joo is TrackedResource<JooProperties, false> {
 
 model JooProperties {
   name: string;
+  status?: JooStatus;
+}
+
+enum JooStatus {
+  Active;
+  Inactive;
 }
 
 @armResourceOperations
