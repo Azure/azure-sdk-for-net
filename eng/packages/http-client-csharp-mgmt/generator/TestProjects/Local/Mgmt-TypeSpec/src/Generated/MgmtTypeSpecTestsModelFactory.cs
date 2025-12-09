@@ -669,6 +669,45 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 jooName is null ? default : new JooProperties(jooName, null));
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sapVirtualInstanceName"> Gets or sets the Name. </param>
+        /// <returns> A new <see cref="Tests.SAPVirtualInstanceData"/> instance for mocking. </returns>
+        public static SAPVirtualInstanceData SAPVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sapVirtualInstanceName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SAPVirtualInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                sapVirtualInstanceName is null ? default : new SAPVirtualInstanceProperties(sapVirtualInstanceName, null));
+        }
+
+        /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
+        /// <param name="preferredAvailabilityZone"> The preferred availability zone. </param>
+        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsRequest"/> instance for mocking. </returns>
+        public static SAPAvailabilityZoneDetailsRequest SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone = default)
+        {
+            return new SAPAvailabilityZoneDetailsRequest(preferredAvailabilityZone, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SAPAvailabilityZoneDetailsResult. </summary>
+        /// <param name="recommendedAvailabilityZonePair"> The recommended availability zone pair. </param>
+        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsResult"/> instance for mocking. </returns>
+        public static SAPAvailabilityZoneDetailsResult SAPAvailabilityZoneDetailsResult(string recommendedAvailabilityZonePair = default)
+        {
+            return new SAPAvailabilityZoneDetailsResult(recommendedAvailabilityZonePair, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>
