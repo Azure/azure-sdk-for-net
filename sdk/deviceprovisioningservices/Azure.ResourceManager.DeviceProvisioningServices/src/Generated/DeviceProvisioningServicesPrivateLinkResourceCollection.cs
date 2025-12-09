@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
@@ -22,71 +21,79 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     /// Each <see cref="DeviceProvisioningServicesPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// To get a <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection"/> instance call the GetDeviceProvisioningServicesPrivateLinkResources method from an instance of <see cref="DeviceProvisioningServiceResource"/>.
     /// </summary>
-    public partial class DeviceProvisioningServicesPrivateLinkResourceCollection : ArmCollection, IEnumerable<DeviceProvisioningServicesPrivateLinkResource>, IAsyncEnumerable<DeviceProvisioningServicesPrivateLinkResource>
+    public partial class DeviceProvisioningServicesPrivateLinkResourceCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics;
-        private readonly GroupIdInformationsRestOperations _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient;
+        private readonly ClientDiagnostics _groupIdInformationsClientDiagnostics;
+        private readonly GroupIdInformations _groupIdInformationsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DeviceProvisioningServicesPrivateLinkResourceCollection for mocking. </summary>
         protected DeviceProvisioningServicesPrivateLinkResourceCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPrivateLinkResourceCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DeviceProvisioningServicesPrivateLinkResourceCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DeviceProvisioningServicesPrivateLinkResource.ResourceType, out string deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsApiVersion);
-            _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient = new GroupIdInformationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DeviceProvisioningServicesPrivateLinkResource.ResourceType, out string deviceProvisioningServicesPrivateLinkResourceApiVersion);
+            _groupIdInformationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices", DeviceProvisioningServicesPrivateLinkResource.ResourceType.Namespace, Diagnostics);
+            _groupIdInformationsRestClient = new GroupIdInformations(_groupIdInformationsClientDiagnostics, Pipeline, Endpoint, deviceProvisioningServicesPrivateLinkResourceApiVersion ?? "2025-02-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != DeviceProvisioningServiceResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, DeviceProvisioningServiceResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the specified private link resource for the given provisioning service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_GetPrivateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<DeviceProvisioningServicesPrivateLinkResource>> GetAsync(string groupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DeviceProvisioningServicesPrivateLinkResource>> GetPrivateLinkResourcesAsync(string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetPrivateLinkResources");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, groupId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DeviceProvisioningServicesPrivateLinkResourceData> response = Response.FromValue(DeviceProvisioningServicesPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,44 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// Get the specified private link resource for the given provisioning service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_GetPrivateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<DeviceProvisioningServicesPrivateLinkResource> Get(string groupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DeviceProvisioningServicesPrivateLinkResource> GetPrivateLinkResources(string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Get");
+            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetPrivateLinkResources");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, groupId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DeviceProvisioningServicesPrivateLinkResourceData> response = Response.FromValue(DeviceProvisioningServicesPrivateLinkResourceData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -142,97 +155,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// List private link resources for the given provisioning service
+        /// Get the specified private link resource for the given provisioning service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_ListPrivateLinkResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_GetPrivateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DeviceProvisioningServicesPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// List private link resources for the given provisioning service
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_ListPrivateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DeviceProvisioningServicesPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DeviceProvisioningServicesPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.CreateListPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new DeviceProvisioningServicesPrivateLinkResource(Client, DeviceProvisioningServicesPrivateLinkResourceData.DeserializeDeviceProvisioningServicesPrivateLinkResourceData(e)), _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics, Pipeline, "DeviceProvisioningServicesPrivateLinkResourceCollection.GetAll", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Checks to see if the resource exists in azure.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, groupId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,39 +214,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Get the specified private link resource for the given provisioning service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_GetPrivateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual Response<bool> Exists(string groupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
+            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.Exists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, groupId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -286,41 +273,59 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get the specified private link resource for the given provisioning service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_GetPrivateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual async Task<NullableResponse<DeviceProvisioningServicesPrivateLinkResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DeviceProvisioningServicesPrivateLinkResource>> GetIfExistsAsync(string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, groupId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -331,41 +336,59 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Get the specified private link resource for the given provisioning service
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Devices/provisioningServices/{resourceName}/privateLinkResources/{groupId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>GroupIdInformation_GetPrivateLinkResources</description>
+        /// <term> Operation Id. </term>
+        /// <description> GroupIdInformations_GetPrivateLinkResources. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-02-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeviceProvisioningServicesPrivateLinkResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-02-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="resourceName"> Name of the provisioning service to retrieve. </param>
         /// <param name="groupId"> The name of the private link resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
-        public virtual NullableResponse<DeviceProvisioningServicesPrivateLinkResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> or <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DeviceProvisioningServicesPrivateLinkResource> GetIfExists(string resourceName, string groupId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var scope = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
+            using DiagnosticScope scope = _groupIdInformationsClientDiagnostics.CreateScope("DeviceProvisioningServicesPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _deviceProvisioningServicesPrivateLinkResourceGroupIdInformationsRestClient.GetPrivateLinkResources(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _groupIdInformationsRestClient.CreateGetPrivateLinkResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, groupId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DeviceProvisioningServicesPrivateLinkResourceData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DeviceProvisioningServicesPrivateLinkResourceData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DeviceProvisioningServicesPrivateLinkResourceData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DeviceProvisioningServicesPrivateLinkResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DeviceProvisioningServicesPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -373,21 +396,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<DeviceProvisioningServicesPrivateLinkResource> IEnumerable<DeviceProvisioningServicesPrivateLinkResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IAsyncEnumerator<DeviceProvisioningServicesPrivateLinkResource> IAsyncEnumerable<DeviceProvisioningServicesPrivateLinkResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
-    internal class DeviceProvisioningServicesPrivateEndpointConnectionOperationSource : IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>
+    /// <summary></summary>
+    internal partial class DeviceProvisioningServicesPrivateEndpointConnectionOperationSource : IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal DeviceProvisioningServicesPrivateEndpointConnectionOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         DeviceProvisioningServicesPrivateEndpointConnectionResource IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            DeviceProvisioningServicesPrivateEndpointConnectionData data = DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DeviceProvisioningServicesPrivateEndpointConnectionResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<DeviceProvisioningServicesPrivateEndpointConnectionResource> IOperationSource<DeviceProvisioningServicesPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDeviceProvisioningServicesContext.Default);
-            return await Task.FromResult(new DeviceProvisioningServicesPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            DeviceProvisioningServicesPrivateEndpointConnectionData data = DeviceProvisioningServicesPrivateEndpointConnectionData.DeserializeDeviceProvisioningServicesPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new DeviceProvisioningServicesPrivateEndpointConnectionResource(_client, data);
         }
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
+    /// <summary></summary>
     public partial class DeviceProvisioningServicesPrivateEndpointConnectionResource : IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>
     {
-        private static DeviceProvisioningServicesPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static DeviceProvisioningServicesPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DeviceProvisioningServicesPrivateEndpointConnectionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        DeviceProvisioningServicesPrivateEndpointConnectionData IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DeviceProvisioningServicesPrivateEndpointConnectionData IJsonModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceProvisioningServicesPrivateEndpointConnectionData>(Data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         DeviceProvisioningServicesPrivateEndpointConnectionData IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceProvisioningServicesPrivateEndpointConnectionData>(data, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
 
-        string IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DeviceProvisioningServicesPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

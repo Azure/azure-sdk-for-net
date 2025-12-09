@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceProvisioningServices;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
     public readonly partial struct DeviceProvisioningServicesPublicNetworkAccess : IEquatable<DeviceProvisioningServicesPublicNetworkAccess>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeviceProvisioningServicesPublicNetworkAccess(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DeviceProvisioningServicesPublicNetworkAccess(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static DeviceProvisioningServicesPublicNetworkAccess Enabled { get; } = new DeviceProvisioningServicesPublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static DeviceProvisioningServicesPublicNetworkAccess Disabled { get; } = new DeviceProvisioningServicesPublicNetworkAccess(DisabledValue);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPublicNetworkAccess"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DeviceProvisioningServicesPublicNetworkAccess left, DeviceProvisioningServicesPublicNetworkAccess right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DeviceProvisioningServicesPublicNetworkAccess"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DeviceProvisioningServicesPublicNetworkAccess left, DeviceProvisioningServicesPublicNetworkAccess right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DeviceProvisioningServicesPublicNetworkAccess(string value) => new DeviceProvisioningServicesPublicNetworkAccess(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DeviceProvisioningServicesPublicNetworkAccess"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DeviceProvisioningServicesPublicNetworkAccess?(string value) => value == null ? null : new DeviceProvisioningServicesPublicNetworkAccess(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DeviceProvisioningServicesPublicNetworkAccess other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DeviceProvisioningServicesPublicNetworkAccess other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
