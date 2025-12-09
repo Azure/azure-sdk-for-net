@@ -690,23 +690,28 @@ function New-ChangeLogIfNotExists()
     if (!(Test-Path $changeLogPath)) {
         Write-Host "CHANGELOG.md does not exist at $changeLogPath. Creating a new one with version $version"
         
-        # Create a new changelog entry using the helper function
-        $newEntry = New-ChangeLogEntry -Version $version -Status "Unreleased" -InitialAtxHeader "#"
-        
-        if ($newEntry) {
-            # Create the changelog content
-            $changeLogContent = @()
-            $changeLogContent += "# Release History"
-            $changeLogContent += ""
-            $changeLogContent += $newEntry.ReleaseTitle
-            $changeLogContent += $newEntry.ReleaseContent
+        try {
+            # Create a new changelog entry using the helper function
+            $newEntry = New-ChangeLogEntry -Version $version -Status "Unreleased" -InitialAtxHeader "#"
             
-            # Write the changelog file
-            Set-Content -Path $changeLogPath -Value $changeLogContent
-            Write-Host "Successfully created CHANGELOG.md with initial entry for version $version"
+            if ($newEntry) {
+                # Create the changelog content
+                $changeLogContent = @()
+                $changeLogContent += "# Release History"
+                $changeLogContent += ""
+                $changeLogContent += $newEntry.ReleaseTitle
+                $changeLogContent += $newEntry.ReleaseContent
+                
+                # Write the changelog file
+                Set-Content -Path $changeLogPath -Value $changeLogContent
+                Write-Host "Successfully created CHANGELOG.md with initial entry for version $version"
+            }
+            else {
+                Write-Warning "Failed to create changelog entry for version $version. The New-ChangeLogEntry function returned null, which may indicate an invalid version format."
+            }
         }
-        else {
-            Write-Warning "Failed to create changelog entry for version $version"
+        catch {
+            Write-Warning "Failed to create CHANGELOG.md for version $version. Error: $_"
         }
     }
     else {
