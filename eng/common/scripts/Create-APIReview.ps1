@@ -4,8 +4,6 @@ Param (
   [array] $ArtifactList,
   [Parameter(Mandatory=$False)]
   [string] $ArtifactPath,
-  [Parameter(Mandatory=$False)]
-  [string] $APIKey,
   [string] $SourceBranch,
   [string] $DefaultBranch,
   [string] $RepoName,
@@ -25,23 +23,21 @@ Set-StrictMode -Version 3
 . (Join-Path $PSScriptRoot Helpers ApiView-Helpers.ps1)
 
 # Get Bearer token for APIView authentication
-# Uses Azure CLI to get an access token for the specified audience
-function Get-ApiViewBearerToken($audience)
+function Get-ApiViewBearerToken()
 {
+    $audience = "api://apiview"
     try {
-        Write-Host "Acquiring access token for audience: $audience"
         $tokenResponse = az account get-access-token --resource $audience --output json | ConvertFrom-Json
         if ($tokenResponse -and $tokenResponse.accessToken) {
-            Write-Host "Successfully acquired access token"
             return $tokenResponse.accessToken
         }
         else {
-            Write-Host "Failed to acquire access token - no token in response" -ForegroundColor Yellow
+            Write-Error "Failed to acquire access token - no token in response"
             return $null
         }
     }
     catch {
-        Write-Host "Failed to acquire access token: $($_.Exception.Message)" -ForegroundColor Yellow
+        Write-Error "Failed to acquire access token: $($_.Exception.Message)"
         return $null
     }
 }
@@ -103,17 +99,15 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
 
     $uri = "${APIViewUri}/upload"
     
-    # Get Bearer token for authentication (preferred) or fall back to API key
-    $bearerToken = Get-ApiViewBearerToken $APIViewAudience
-    if ($bearerToken) {
-        $headers = @{
-            "Authorization" = "Bearer $bearerToken";
-            "content-type" = "multipart/form-data"
-        }
-    }
-    else {
-        Write-Host "ERROR: No authentication method available. Either Azure CLI login or APIKey is required." -ForegroundColor Red
+    # Get Bearer token for authentication
+    $bearerToken = Get-ApiViewBearerToken
+    if (-not $bearerToken) {
         return 401
+    }
+    
+    $headers = @{
+        "Authorization" = "Bearer $bearerToken";
+        "content-type" = "multipart/form-data"
     }
 
     try
@@ -155,16 +149,14 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
 
     Write-Host "Request to APIView: $uri"
     
-    # Get Bearer token for authentication (preferred) or fall back to API key
-    $bearerToken = Get-ApiViewBearerToken $APIViewAudience
-    if ($bearerToken) {
-        $headers = @{
-            "Authorization" = "Bearer $bearerToken"
-        }
-    }
-    else {
-        Write-Host "ERROR: No authentication method available. Either Azure CLI login or APIKey is required." -ForegroundColor Red
+    # Get Bearer token for authentication
+    $bearerToken = Get-ApiViewBearerToken
+    if (-not $bearerToken) {
         return 401
+    }
+    
+    $headers = @{
+        "Authorization" = "Bearer $bearerToken"
     }
 
     try
