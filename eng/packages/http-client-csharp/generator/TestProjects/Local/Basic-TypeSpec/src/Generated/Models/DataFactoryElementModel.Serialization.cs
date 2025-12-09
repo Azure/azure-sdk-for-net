@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
 {
@@ -41,13 +42,13 @@ namespace BasicTypeSpec
                 throw new FormatException($"The model {nameof(DataFactoryElementModel)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("stringProperty"u8);
-            writer.WriteObjectValue<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>(StringProperty, options);
+            writer.WriteObjectValue<DataFactoryElement<T>>(StringProperty, options);
             writer.WritePropertyName("intProperty"u8);
-            writer.WriteObjectValue<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>(IntProperty, options);
+            writer.WriteObjectValue<DataFactoryElement<T>>(IntProperty, options);
             writer.WritePropertyName("boolProperty"u8);
-            writer.WriteObjectValue<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>(BoolProperty, options);
+            writer.WriteObjectValue<DataFactoryElement<T>>(BoolProperty, options);
             writer.WritePropertyName("stringArrayProperty"u8);
-            writer.WriteObjectValue<Azure.Core.Expressions.DataFactory.DataFactoryElement<T>>(StringArrayProperty, options);
+            writer.WriteObjectValue<DataFactoryElement<T>>(StringArrayProperty, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -90,31 +91,31 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringProperty = default;
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> intProperty = default;
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> boolProperty = default;
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringArrayProperty = default;
+            DataFactoryElement<string> stringProperty = default;
+            DataFactoryElement<int> intProperty = default;
+            DataFactoryElement<bool> boolProperty = default;
+            DataFactoryElement<IList<string>> stringArrayProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("stringProperty"u8))
                 {
-                    stringProperty = Azure.Core.Expressions.DataFactory.DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    stringProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("intProperty"u8))
                 {
-                    intProperty = Azure.Core.Expressions.DataFactory.DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    intProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("boolProperty"u8))
                 {
-                    boolProperty = Azure.Core.Expressions.DataFactory.DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    boolProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("stringArrayProperty"u8))
                 {
-                    stringArrayProperty = Azure.Core.Expressions.DataFactory.DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    stringArrayProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -68,7 +68,8 @@ namespace Azure.Generator.Visitors
                 {
                     type.Update(
                         @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(
-                            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
+                            $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"),
+                        reset: true);
                 }
             }
         }

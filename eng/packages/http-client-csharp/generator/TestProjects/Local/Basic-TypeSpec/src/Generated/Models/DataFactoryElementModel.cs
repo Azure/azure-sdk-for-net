@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace BasicTypeSpec
 {
@@ -21,14 +22,8 @@ namespace BasicTypeSpec
         /// <param name="intProperty"> Int property with DFE pattern. </param>
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="stringProperty"/>, <paramref name="intProperty"/>, <paramref name="boolProperty"/> or <paramref name="stringArrayProperty"/> is null. </exception>
-        public DataFactoryElementModel(Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringProperty, Azure.Core.Expressions.DataFactory.DataFactoryElement<T> intProperty, Azure.Core.Expressions.DataFactory.DataFactoryElement<T> boolProperty, Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringArrayProperty)
+        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty)
         {
-            Argument.AssertNotNull(stringProperty, nameof(stringProperty));
-            Argument.AssertNotNull(intProperty, nameof(intProperty));
-            Argument.AssertNotNull(boolProperty, nameof(boolProperty));
-            Argument.AssertNotNull(stringArrayProperty, nameof(stringArrayProperty));
-
             StringProperty = stringProperty;
             IntProperty = intProperty;
             BoolProperty = boolProperty;
@@ -41,7 +36,7 @@ namespace BasicTypeSpec
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryElementModel(Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringProperty, Azure.Core.Expressions.DataFactory.DataFactoryElement<T> intProperty, Azure.Core.Expressions.DataFactory.DataFactoryElement<T> boolProperty, Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringArrayProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StringProperty = stringProperty;
             IntProperty = intProperty;
@@ -51,15 +46,15 @@ namespace BasicTypeSpec
         }
 
         /// <summary> String property with DFE pattern. </summary>
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<T> StringProperty { get; set; }
+        public DataFactoryElement<string> StringProperty { get; }
 
         /// <summary> Int property with DFE pattern. </summary>
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<T> IntProperty { get; set; }
+        public DataFactoryElement<int> IntProperty { get; }
 
         /// <summary> Bool property with DFE pattern. </summary>
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<T> BoolProperty { get; set; }
+        public DataFactoryElement<bool> BoolProperty { get; }
 
         /// <summary> String array property with DFE pattern. </summary>
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<T> StringArrayProperty { get; set; }
+        public DataFactoryElement<IList<string>> StringArrayProperty { get; }
     }
 }

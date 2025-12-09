@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.ClientModel;
 using System;
 using System.ComponentModel.Composition;
 using System.IO;
+using Azure.Core.Expressions.DataFactory;
 using Azure.Generator.Providers;
 
 namespace Azure.Generator;
@@ -53,6 +54,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
 
         // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
+        AddMetadataReference(MetadataReference.CreateFromFile(typeof(DataFactoryElement<>).Assembly.Location));
 
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientGenerator).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);

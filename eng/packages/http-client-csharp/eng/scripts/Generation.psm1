@@ -51,7 +51,6 @@ function Get-TspCommand {
     if ($libraryNameOverride) {
         $command += " --option @azure-typespec/http-client-csharp.package-name=$libraryNameOverride"
     }
-    Write-Host "newProject = $newProject" -ForegroundColor Yellow
     if ($newProject) {
         $command += " --option @azure-typespec/http-client-csharp.new-project=true"
     }
