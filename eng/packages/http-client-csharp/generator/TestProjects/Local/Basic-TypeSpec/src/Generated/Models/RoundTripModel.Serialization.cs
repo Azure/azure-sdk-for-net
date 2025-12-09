@@ -12,8 +12,9 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure;
 using Azure.Core;
+using BasicTypeSpec;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary> this is a roundtrip model. </summary>
     [JsonConverter(typeof(RoundTripModelConverter))]
@@ -50,7 +51,7 @@ namespace BasicTypeSpec
             writer.WriteStartArray();
             foreach (StringFixedEnum item in RequiredCollection)
             {
-                writer.WriteStringValue(item.ToSerialString());
+                writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
             writer.WritePropertyName("requiredDictionary"u8);
@@ -136,7 +137,7 @@ namespace BasicTypeSpec
             if (Optional.IsDefined(StringFixedEnum))
             {
                 writer.WritePropertyName("stringFixedEnum"u8);
-                writer.WriteStringValue(StringFixedEnum.Value.ToSerialString());
+                writer.WriteStringValue(StringFixedEnum.Value.ToString());
             }
             writer.WritePropertyName("requiredUnknown"u8);
 #if NET6_0_OR_GREATER
@@ -336,7 +337,7 @@ namespace BasicTypeSpec
                     List<StringFixedEnum> array = new List<StringFixedEnum>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString().ToStringFixedEnum());
+                        array.Add(new StringFixedEnum(item.GetString()));
                     }
                     requiredCollection = array;
                     continue;
@@ -472,7 +473,7 @@ namespace BasicTypeSpec
                     {
                         continue;
                     }
-                    stringFixedEnum = prop.Value.GetString().ToStringFixedEnum();
+                    stringFixedEnum = new StringFixedEnum(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("requiredUnknown"u8))

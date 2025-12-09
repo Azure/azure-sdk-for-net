@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using BasicTypeSpec;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary> Extensible enum. </summary>
     public readonly partial struct StringExtensibleEnum : IEquatable<StringExtensibleEnum>

@@ -5,16 +5,69 @@
 
 #nullable disable
 
-namespace BasicTypeSpec
+using System;
+using System.ComponentModel;
+using BasicTypeSpec;
+
+namespace BasicTypeSpec.Models
 {
     /// <summary> Simple enum. </summary>
-    public enum StringFixedEnum
+    public readonly partial struct StringFixedEnum : IEquatable<StringFixedEnum>
     {
-        /// <summary> One. </summary>
-        One,
-        /// <summary> Two. </summary>
-        Two,
-        /// <summary> Four. </summary>
-        Four
+        private readonly string _value;
+        private const string OneValue = "1";
+        private const string TwoValue = "2";
+        private const string FourValue = "4";
+
+        /// <summary> Initializes a new instance of <see cref="StringFixedEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public StringFixedEnum(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the One. </summary>
+        public static StringFixedEnum One { get; } = new StringFixedEnum(OneValue);
+
+        /// <summary> Gets the Two. </summary>
+        public static StringFixedEnum Two { get; } = new StringFixedEnum(TwoValue);
+
+        /// <summary> Gets the Four. </summary>
+        public static StringFixedEnum Four { get; } = new StringFixedEnum(FourValue);
+
+        /// <summary> Determines if two <see cref="StringFixedEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(StringFixedEnum left, StringFixedEnum right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="StringFixedEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(StringFixedEnum left, StringFixedEnum right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="StringFixedEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StringFixedEnum(string value) => new StringFixedEnum(value);
+
+        /// <summary> Converts a string to a <see cref="StringFixedEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator StringFixedEnum?(string value) => value == null ? null : new StringFixedEnum(value);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is StringFixedEnum other && Equals(other);
+
+        /// <inheritdoc/>
+        public bool Equals(StringFixedEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+
+        /// <inheritdoc/>
+        public override string ToString() => _value;
     }
 }

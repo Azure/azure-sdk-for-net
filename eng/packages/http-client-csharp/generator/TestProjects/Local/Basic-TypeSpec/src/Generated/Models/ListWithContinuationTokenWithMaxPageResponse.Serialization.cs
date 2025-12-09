@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using BasicTypeSpec;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary> The ListWithContinuationTokenWithMaxPageResponse. </summary>
     internal partial class ListWithContinuationTokenWithMaxPageResponse : IJsonModel<ListWithContinuationTokenWithMaxPageResponse>

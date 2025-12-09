@@ -7,7 +7,7 @@
 
 using System;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     internal static partial class IntFixedEnumExtensions
     {

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary> The ListWithHeaderNextLinkWithMaxPageResponse. </summary>
     internal partial class ListWithHeaderNextLinkWithMaxPageResponse

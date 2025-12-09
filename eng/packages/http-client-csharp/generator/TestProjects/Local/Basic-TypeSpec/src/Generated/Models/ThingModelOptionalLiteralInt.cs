@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
     public readonly partial struct ThingModelOptionalLiteralInt : IEquatable<ThingModelOptionalLiteralInt>

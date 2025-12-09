@@ -10,8 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using BasicTypeSpec;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary> The ListWithHeaderNextLinkWithMaxPageResponse. </summary>
     internal partial class ListWithHeaderNextLinkWithMaxPageResponse : IJsonModel<ListWithHeaderNextLinkWithMaxPageResponse>

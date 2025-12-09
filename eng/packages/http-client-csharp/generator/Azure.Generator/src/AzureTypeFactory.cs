@@ -13,12 +13,12 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 
 namespace Azure.Generator
@@ -140,6 +140,12 @@ namespace Azure.Generator
 
             // Return DataFactoryElement<T>
             return new CSharpType(typeof(DataFactoryElement<>), innerType);
+        }
+
+        /// <inheritdoc/>
+        protected override EnumProvider? CreateEnumCore(InputEnumType enumType, TypeProvider? declaringType)
+        {
+            return AzureEnumProvider.Create(enumType, declaringType);
         }
 
         /// <inheritdoc/>

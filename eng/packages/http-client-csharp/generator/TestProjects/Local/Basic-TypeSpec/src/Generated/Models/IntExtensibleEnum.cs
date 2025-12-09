@@ -9,7 +9,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary> Int based extensible enum. </summary>
     public readonly partial struct IntExtensibleEnum : IEquatable<IntExtensibleEnum>

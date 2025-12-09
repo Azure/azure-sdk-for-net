@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
     public readonly partial struct ThingModelOptionalLiteralInt

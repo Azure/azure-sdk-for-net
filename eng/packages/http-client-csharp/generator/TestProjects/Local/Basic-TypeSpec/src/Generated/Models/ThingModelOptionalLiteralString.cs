@@ -7,8 +7,9 @@
 
 using System;
 using System.ComponentModel;
+using BasicTypeSpec;
 
-namespace BasicTypeSpec
+namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
     public readonly partial struct ThingModelOptionalLiteralString : IEquatable<ThingModelOptionalLiteralString>
