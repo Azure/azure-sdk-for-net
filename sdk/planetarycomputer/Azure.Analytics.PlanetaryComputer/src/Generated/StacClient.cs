@@ -272,7 +272,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            Response result = DeleteCollectionAsset(collectionId, assetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = DeleteCollectionAsset(collectionId, assetId, cancellationToken.ToRequestContext());
             return Response.FromValue((StacCollectionResource)result, result);
         }
 
@@ -288,7 +288,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(assetId, nameof(assetId));
 
-            Response result = await DeleteCollectionAssetAsync(collectionId, assetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await DeleteCollectionAssetAsync(collectionId, assetId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacCollectionResource)result, result);
         }
 
@@ -366,7 +366,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetCollectionConfiguration(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetCollectionConfiguration(collectionId, cancellationToken.ToRequestContext());
             return Response.FromValue((UserCollectionSettings)result, result);
         }
 
@@ -380,7 +380,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetCollectionConfigurationAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetCollectionConfigurationAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((UserCollectionSettings)result, result);
         }
 
@@ -464,7 +464,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = AddMosaic(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = AddMosaic(collectionId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((StacMosaic)result, result);
         }
 
@@ -480,7 +480,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await AddMosaicAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await AddMosaicAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacMosaic)result, result);
         }
 
@@ -570,7 +570,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceMosaic(collectionId, mosaicId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = ReplaceMosaic(collectionId, mosaicId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((StacMosaic)result, result);
         }
 
@@ -588,7 +588,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceMosaicAsync(collectionId, mosaicId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReplaceMosaicAsync(collectionId, mosaicId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacMosaic)result, result);
         }
 
@@ -672,7 +672,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
 
-            return DeleteMosaic(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteMosaic(collectionId, mosaicId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a mosaic definition from a given collection. </summary>
@@ -687,7 +687,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
 
-            return await DeleteMosaicAsync(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteMosaicAsync(collectionId, mosaicId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -770,7 +770,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
 
-            Response result = GetMosaic(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaic(collectionId, mosaicId, cancellationToken.ToRequestContext());
             return Response.FromValue((StacMosaic)result, result);
         }
 
@@ -786,7 +786,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(mosaicId, nameof(mosaicId));
 
-            Response result = await GetMosaicAsync(collectionId, mosaicId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicAsync(collectionId, mosaicId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacMosaic)result, result);
         }
 
@@ -864,7 +864,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetMosaics(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaics(collectionId, cancellationToken.ToRequestContext());
             IList<StacMosaic> value = new List<StacMosaic>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -885,7 +885,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetMosaicsAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IList<StacMosaic> value = new List<StacMosaic>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -953,7 +953,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return CreateCollection(waitUntil, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return CreateCollection(waitUntil, body, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create a new collection in the GeoCatalog instance. </summary>
@@ -965,7 +965,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            return await CreateCollectionAsync(waitUntil, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await CreateCollectionAsync(waitUntil, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1048,7 +1048,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateOrReplaceCollection(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateOrReplaceCollection(collectionId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((StacCollectionResource)result, result);
         }
 
@@ -1064,7 +1064,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateOrReplaceCollectionAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateOrReplaceCollectionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacCollectionResource)result, result);
         }
 
@@ -1128,7 +1128,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return DeleteCollection(waitUntil, collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteCollection(waitUntil, collectionId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a collection in the GeoCatalog instance. </summary>
@@ -1141,7 +1141,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return await DeleteCollectionAsync(waitUntil, collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteCollectionAsync(waitUntil, collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1224,7 +1224,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetCollection(collectionId, sign?.ToString(), durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetCollection(collectionId, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext());
             return Response.FromValue((StacCollectionResource)result, result);
         }
 
@@ -1240,7 +1240,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetCollectionAsync(collectionId, sign?.ToString(), durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetCollectionAsync(collectionId, sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacCollectionResource)result, result);
         }
 
@@ -1309,7 +1309,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacCatalogCollections> GetCollections(StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
-            Response result = GetCollections(sign?.ToString(), durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetCollections(sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext());
             return Response.FromValue((StacCatalogCollections)result, result);
         }
 
@@ -1320,7 +1320,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<StacCatalogCollections>> GetCollectionsAsync(StacAssetUrlSigningMode? sign = default, int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
-            Response result = await GetCollectionsAsync(sign?.ToString(), durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetCollectionsAsync(sign?.ToString(), durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacCatalogCollections)result, result);
         }
 
@@ -1398,7 +1398,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetPartitionType(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetPartitionType(collectionId, cancellationToken.ToRequestContext());
             return Response.FromValue((PartitionType)result, result);
         }
 
@@ -1412,7 +1412,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetPartitionTypeAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetPartitionTypeAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((PartitionType)result, result);
         }
 
@@ -1516,7 +1516,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return ReplacePartitionType(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ReplacePartitionType(collectionId, body, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1539,7 +1539,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return await ReplacePartitionTypeAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await ReplacePartitionTypeAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1622,7 +1622,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateRenderOption(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateRenderOption(collectionId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((RenderConfiguration)result, result);
         }
 
@@ -1638,7 +1638,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateRenderOptionAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateRenderOptionAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RenderConfiguration)result, result);
         }
 
@@ -1728,7 +1728,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceRenderOption(collectionId, renderOptionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = ReplaceRenderOption(collectionId, renderOptionId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((RenderConfiguration)result, result);
         }
 
@@ -1746,7 +1746,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceRenderOptionAsync(collectionId, renderOptionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReplaceRenderOptionAsync(collectionId, renderOptionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RenderConfiguration)result, result);
         }
 
@@ -1830,7 +1830,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
 
-            return DeleteRenderOption(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteRenderOption(collectionId, renderOptionId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a render option for a given collection. </summary>
@@ -1845,7 +1845,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
 
-            return await DeleteRenderOptionAsync(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteRenderOptionAsync(collectionId, renderOptionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1928,7 +1928,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
 
-            Response result = GetRenderOption(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetRenderOption(collectionId, renderOptionId, cancellationToken.ToRequestContext());
             return Response.FromValue((RenderConfiguration)result, result);
         }
 
@@ -1944,7 +1944,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(renderOptionId, nameof(renderOptionId));
 
-            Response result = await GetRenderOptionAsync(collectionId, renderOptionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetRenderOptionAsync(collectionId, renderOptionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((RenderConfiguration)result, result);
         }
 
@@ -2022,7 +2022,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetRenderOptions(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetRenderOptions(collectionId, cancellationToken.ToRequestContext());
             IList<RenderConfiguration> value = new List<RenderConfiguration>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -2043,7 +2043,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetRenderOptionsAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetRenderOptionsAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IList<RenderConfiguration> value = new List<RenderConfiguration>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -2128,7 +2128,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetCollectionThumbnail(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetCollectionThumbnail(collectionId, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -2142,7 +2142,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetCollectionThumbnailAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetCollectionThumbnailAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2220,7 +2220,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetTileSettings(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetTileSettings(collectionId, cancellationToken.ToRequestContext());
             return Response.FromValue((TileSettings)result, result);
         }
 
@@ -2234,7 +2234,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetTileSettingsAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetTileSettingsAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSettings)result, result);
         }
 
@@ -2318,7 +2318,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceTileSettings(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = ReplaceTileSettings(collectionId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((TileSettings)result, result);
         }
 
@@ -2334,7 +2334,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceTileSettingsAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReplaceTileSettingsAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileSettings)result, result);
         }
 
@@ -2397,7 +2397,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacConformanceClasses> GetConformanceClass(CancellationToken cancellationToken = default)
         {
-            Response result = GetConformanceClass(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetConformanceClass(cancellationToken.ToRequestContext());
             return Response.FromValue((StacConformanceClasses)result, result);
         }
 
@@ -2406,7 +2406,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<StacConformanceClasses>> GetConformanceClassAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetConformanceClassAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetConformanceClassAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacConformanceClasses)result, result);
         }
 
@@ -2469,7 +2469,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<StacLandingPage> GetLandingPage(CancellationToken cancellationToken = default)
         {
-            Response result = GetLandingPage(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetLandingPage(cancellationToken.ToRequestContext());
             return Response.FromValue((StacLandingPage)result, result);
         }
 
@@ -2478,7 +2478,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<StacLandingPage>> GetLandingPageAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetLandingPageAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetLandingPageAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacLandingPage)result, result);
         }
 
@@ -2561,7 +2561,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return CreateItem(waitUntil, collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return CreateItem(waitUntil, collectionId, body, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create a new STAC item or a set of items in a collection. </summary>
@@ -2589,7 +2589,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return await CreateItemAsync(waitUntil, collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await CreateItemAsync(waitUntil, collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Create or replace a STAC item in a collection. </summary>
@@ -2664,7 +2664,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return CreateOrReplaceItem(waitUntil, collectionId, itemId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return CreateOrReplaceItem(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Create or replace a STAC item in a collection. </summary>
@@ -2681,7 +2681,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            return await CreateOrReplaceItemAsync(waitUntil, collectionId, itemId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await CreateOrReplaceItemAsync(waitUntil, collectionId, itemId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary> Delete a STAC item from a collection. </summary>
@@ -2750,7 +2750,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            return DeleteItem(waitUntil, collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteItem(waitUntil, collectionId, itemId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete a STAC item from a collection. </summary>
@@ -2765,7 +2765,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            return await DeleteItemAsync(waitUntil, collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteItemAsync(waitUntil, collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -2848,7 +2848,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetItem(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetItem(collectionId, itemId, cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemResource)result, result);
         }
 
@@ -2864,7 +2864,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetItemAsync(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetItemAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemResource)result, result);
         }
 
@@ -3121,7 +3121,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetItemCollection(collectionId, limit, boundingBox, datetime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetItemCollection(collectionId, limit, boundingBox, datetime, cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemCollectionResource)result, result);
         }
 
@@ -3196,7 +3196,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetItemCollectionAsync(collectionId, limit, boundingBox, datetime, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetItemCollectionAsync(collectionId, limit, boundingBox, datetime, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemCollectionResource)result, result);
         }
 
@@ -3339,7 +3339,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = CreateQueryables(collectionId, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateQueryables(collectionId, content, cancellationToken.ToRequestContext());
             IList<StacQueryable> value = new List<StacQueryable>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3363,7 +3363,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = BinaryContentHelper.FromEnumerable(body);
-            Response result = await CreateQueryablesAsync(collectionId, content, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateQueryablesAsync(collectionId, content, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IList<StacQueryable> value = new List<StacQueryable>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3465,7 +3465,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceQueryable(collectionId, queryableName, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = ReplaceQueryable(collectionId, queryableName, body, cancellationToken.ToRequestContext());
             return Response.FromValue((StacQueryable)result, result);
         }
 
@@ -3486,7 +3486,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceQueryableAsync(collectionId, queryableName, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReplaceQueryableAsync(collectionId, queryableName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacQueryable)result, result);
         }
 
@@ -3570,7 +3570,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
 
-            return DeleteQueryable(collectionId, queryableName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteQueryable(collectionId, queryableName, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete queryables by name for specified collection. </summary>
@@ -3585,7 +3585,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(queryableName, nameof(queryableName));
 
-            return await DeleteQueryableAsync(collectionId, queryableName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteQueryableAsync(collectionId, queryableName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -3647,7 +3647,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetQueryables(CancellationToken cancellationToken = default)
         {
-            Response result = GetQueryables(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetQueryables(cancellationToken.ToRequestContext());
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3670,7 +3670,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetQueryablesAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetQueryablesAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetQueryablesAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3762,7 +3762,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetCollectionQueryables(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetCollectionQueryables(collectionId, cancellationToken.ToRequestContext());
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3790,7 +3790,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetCollectionQueryablesAsync(collectionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetCollectionQueryablesAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3879,7 +3879,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Search(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Search(body, cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemCollectionResource)result, result);
         }
 
@@ -3892,7 +3892,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await SearchAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await SearchAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemCollectionResource)result, result);
         }
     }

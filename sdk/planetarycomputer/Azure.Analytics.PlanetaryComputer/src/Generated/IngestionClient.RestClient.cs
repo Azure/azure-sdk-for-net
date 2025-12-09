@@ -77,11 +77,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top, null), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip, null), true);
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
             }
             if (collectionId != null)
             {
@@ -160,11 +160,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top, null), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip, null), true);
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -248,11 +248,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top, null), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip, null), true);
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -363,11 +363,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (top != null)
             {
-                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top, null), true);
+                uri.AppendQuery("$top", TypeFormatters.ConvertToString(top), true);
             }
             if (skip != null)
             {
-                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip, null), true);
+                uri.AppendQuery("$skip", TypeFormatters.ConvertToString(skip), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

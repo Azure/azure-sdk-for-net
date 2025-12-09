@@ -26,11 +26,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (href != null)
             {
-                uri.AppendQuery("href", TypeFormatters.ConvertToString(href, null), true);
+                uri.AppendQuery("href", TypeFormatters.ConvertToString(href), true);
             }
             if (durationInMinutes != null)
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes, null), true);
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -49,7 +49,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (durationInMinutes != null)
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes, null), true);
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -67,7 +67,7 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (durationInMinutes != null)
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes, null), true);
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;

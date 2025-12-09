@@ -106,7 +106,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response CancelOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            return CancelOperation(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return CancelOperation(operationId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Cancel a running operation of a geo-catalog collection. </summary>
@@ -115,7 +115,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> CancelOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            return await CancelOperationAsync(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await CancelOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response CancelAllOperations(CancellationToken cancellationToken = default)
         {
-            return CancelAllOperations(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return CancelAllOperations(cancellationToken.ToRequestContext());
         }
 
         /// <summary> Cancel all running operations of a geo-catalog collection. </summary>
@@ -185,7 +185,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> CancelAllOperationsAsync(CancellationToken cancellationToken = default)
         {
-            return await CancelAllOperationsAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await CancelAllOperationsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<LongRunningOperation> GetOperation(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Response result = GetOperation(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetOperation(operationId, cancellationToken.ToRequestContext());
             return Response.FromValue((LongRunningOperation)result, result);
         }
 
@@ -260,7 +260,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<LongRunningOperation>> GetOperationAsync(Guid operationId, CancellationToken cancellationToken = default)
         {
-            Response result = await GetOperationAsync(operationId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetOperationAsync(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((LongRunningOperation)result, result);
         }
 
@@ -281,23 +281,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetOperations(int? top, int? skip, string collectionId, string status, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetOperations");
-            scope.Start();
-            try
-            {
-                return new IngestionClientGetOperationsCollectionResult(
-                    this,
-                    top,
-                    skip,
-                    collectionId,
-                    status,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetOperationsCollectionResult(
+                this,
+                top,
+                skip,
+                collectionId,
+                status,
+                context);
         }
 
         /// <summary>
@@ -317,23 +307,13 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetOperationsAsync(int? top, int? skip, string collectionId, string status, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetOperations");
-            scope.Start();
-            try
-            {
-                return new IngestionClientGetOperationsAsyncCollectionResult(
-                    this,
-                    top,
-                    skip,
-                    collectionId,
-                    status,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetOperationsAsyncCollectionResult(
+                this,
+                top,
+                skip,
+                collectionId,
+                status,
+                context);
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
@@ -351,7 +331,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 skip,
                 collectionId,
                 status?.ToString(),
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get operations of a geo-catalog collection. </summary>
@@ -369,7 +349,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 skip,
                 collectionId,
                 status?.ToString(),
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -449,7 +429,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = CreateRun(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateRun(collectionId, ingestionId, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionRun)result, result);
         }
 
@@ -464,7 +444,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await CreateRunAsync(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateRunAsync(collectionId, ingestionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionRun)result, result);
         }
 
@@ -548,7 +528,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetRun(collectionId, ingestionId, runId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetRun(collectionId, ingestionId, runId, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionRun)result, result);
         }
 
@@ -564,7 +544,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetRunAsync(collectionId, ingestionId, runId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetRunAsync(collectionId, ingestionId, runId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionRun)result, result);
         }
 
@@ -587,25 +567,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetRuns(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetRuns");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                return new IngestionClientGetRunsCollectionResult(
-                    this,
-                    collectionId,
-                    ingestionId,
-                    top,
-                    skip,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetRunsCollectionResult(
+                this,
+                collectionId,
+                ingestionId,
+                top,
+                skip,
+                context);
         }
 
         /// <summary>
@@ -627,25 +597,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetRunsAsync(string collectionId, Guid ingestionId, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetRuns");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                return new IngestionClientGetRunsAsyncCollectionResult(
-                    this,
-                    collectionId,
-                    ingestionId,
-                    top,
-                    skip,
-                    context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetRunsAsyncCollectionResult(
+                this,
+                collectionId,
+                ingestionId,
+                top,
+                skip,
+                context);
         }
 
         /// <summary> Get the runs of an ingestion. </summary>
@@ -667,7 +627,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 ingestionId,
                 top,
                 skip,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get the runs of an ingestion. </summary>
@@ -689,7 +649,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 ingestionId,
                 top,
                 skip,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+                cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -772,7 +732,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = Create(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Create(collectionId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionInformation)result, result);
         }
 
@@ -788,7 +748,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionInformation)result, result);
         }
 
@@ -855,7 +815,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return Delete(waitUntil, collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return Delete(waitUntil, collectionId, ingestionId, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete an ingestion from a catalog. All runs of the ingestion will be deleted. Ingestion must not have any runs in progress or queued. </summary>
@@ -869,7 +829,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return await DeleteAsync(waitUntil, collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteAsync(waitUntil, collectionId, ingestionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -949,7 +909,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = Get(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = Get(collectionId, ingestionId, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionInformation)result, result);
         }
 
@@ -964,7 +924,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetAsync(collectionId, ingestionId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetAsync(collectionId, ingestionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionInformation)result, result);
         }
 
@@ -986,19 +946,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetAll(string collectionId, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetAll");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                return new IngestionClientGetAllCollectionResult(this, collectionId, top, skip, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetAllCollectionResult(this, collectionId, top, skip, context);
         }
 
         /// <summary>
@@ -1019,19 +969,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetAllAsync(string collectionId, int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetAll");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-                return new IngestionClientGetAllAsyncCollectionResult(this, collectionId, top, skip, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetAllAsyncCollectionResult(this, collectionId, top, skip, context);
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
@@ -1046,7 +986,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllCollectionResultOfT(this, collectionId, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new IngestionClientGetAllCollectionResultOfT(this, collectionId, top, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get ingestions of a catalog. </summary>
@@ -1061,7 +1001,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            return new IngestionClientGetAllAsyncCollectionResultOfT(this, collectionId, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new IngestionClientGetAllAsyncCollectionResultOfT(this, collectionId, top, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1205,7 +1145,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateSource(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateSource(body, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1218,7 +1158,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateSourceAsync(body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateSourceAsync(body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1296,7 +1236,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = ReplaceSource(id, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = ReplaceSource(id, body, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1310,7 +1250,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await ReplaceSourceAsync(id, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await ReplaceSourceAsync(id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1376,7 +1316,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response DeleteSource(Guid id, CancellationToken cancellationToken = default)
         {
-            return DeleteSource(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return DeleteSource(id, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Delete an ingestion source from a geo-catalog. </summary>
@@ -1385,7 +1325,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> DeleteSourceAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await DeleteSourceAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await DeleteSourceAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1450,7 +1390,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IngestionSource> GetSource(Guid id, CancellationToken cancellationToken = default)
         {
-            Response result = GetSource(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetSource(id, cancellationToken.ToRequestContext());
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1460,7 +1400,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<IngestionSource>> GetSourceAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            Response result = await GetSourceAsync(id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetSourceAsync(id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((IngestionSource)result, result);
         }
 
@@ -1479,17 +1419,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetSources(int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetSources");
-            scope.Start();
-            try
-            {
-                return new IngestionClientGetSourcesCollectionResult(this, top, skip, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetSourcesCollectionResult(this, top, skip, context);
         }
 
         /// <summary>
@@ -1507,17 +1437,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetSourcesAsync(int? top, int? skip, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetSources");
-            scope.Start();
-            try
-            {
-                return new IngestionClientGetSourcesAsyncCollectionResult(this, top, skip, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetSourcesAsyncCollectionResult(this, top, skip, context);
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
@@ -1527,7 +1447,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<IngestionSourceSummary> GetSources(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesCollectionResultOfT(this, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new IngestionClientGetSourcesCollectionResultOfT(this, top, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get ingestion sources in a geo-catalog. </summary>
@@ -1537,7 +1457,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<IngestionSourceSummary> GetSourcesAsync(int? top = default, int? skip = default, CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, top, skip, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new IngestionClientGetSourcesAsyncCollectionResultOfT(this, top, skip, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -1553,17 +1473,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual Pageable<BinaryData> GetManagedIdentities(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetManagedIdentities");
-            scope.Start();
-            try
-            {
-                return new IngestionClientGetManagedIdentitiesCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetManagedIdentitiesCollectionResult(this, context);
         }
 
         /// <summary>
@@ -1579,17 +1489,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <returns> The response returned from the service. </returns>
         public virtual AsyncPageable<BinaryData> GetManagedIdentitiesAsync(RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("IngestionClient.GetManagedIdentities");
-            scope.Start();
-            try
-            {
-                return new IngestionClientGetManagedIdentitiesAsyncCollectionResult(this, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return new IngestionClientGetManagedIdentitiesAsyncCollectionResult(this, context);
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1597,7 +1497,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ManagedIdentityMetadata> GetManagedIdentities(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new IngestionClientGetManagedIdentitiesCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
 
         /// <summary> Get all managed identities with access to storage accounts configured for a geo-catalog. </summary>
@@ -1605,7 +1505,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ManagedIdentityMetadata> GetManagedIdentitiesAsync(CancellationToken cancellationToken = default)
         {
-            return new IngestionClientGetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new IngestionClientGetManagedIdentitiesAsyncCollectionResultOfT(this, cancellationToken.ToRequestContext());
         }
     }
 }

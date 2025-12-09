@@ -145,7 +145,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Ingestion Source
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SharedAccessSignatureTokenIngestionSource"/> and <see cref="ManagedIdentityIngestionSource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.SharedAccessSignatureTokenIngestionSource"/> and <see cref="PlanetaryComputer.ManagedIdentityIngestionSource"/>.
         /// </summary>
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="created"> Created time in UTC format. </param>
@@ -727,7 +727,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Base type for STAC items and collections with discriminator.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollectionResource"/> and <see cref="StacItemResource"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.StacItemCollectionResource"/> and <see cref="PlanetaryComputer.StacItemResource"/>.
         /// </summary>
         /// <param name="type"> Discriminator property for StacItemOrStacItemCollection. </param>
         /// <param name="stacVersion"> Stac Version. </param>
@@ -843,7 +843,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// - **MultiPolygon**: A collection of Polygons.
         /// 
         /// Used for spatial filtering in STAC.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PointGeometry"/>, <see cref="PolygonGeometry"/>, <see cref="MultiPolygon"/>, <see cref="MultiLineString"/>, <see cref="LineString"/>, and <see cref="MultiPoint"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="PlanetaryComputer.PointGeometry"/>, <see cref="PlanetaryComputer.PolygonGeometry"/>, <see cref="PlanetaryComputer.MultiPolygon"/>, <see cref="PlanetaryComputer.MultiLineString"/>, <see cref="PlanetaryComputer.LineString"/>, and <see cref="PlanetaryComputer.MultiPoint"/>.
         /// </summary>
         /// <param name="type"> Discriminator property for GeoJsonGeometry. </param>
         /// <param name="boundingBox"> Optional bounding box of the geometry. </param>

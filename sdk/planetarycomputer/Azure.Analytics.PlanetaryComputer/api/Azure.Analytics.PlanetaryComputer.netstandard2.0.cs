@@ -523,7 +523,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Uri Url { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.ImageResponse JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.ImageResponse (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.ImageResponse (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.ImageResponse PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.ImageResponse System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.ImageResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -620,7 +620,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Azure.Analytics.PlanetaryComputer.IngestionStatus Status { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.IngestionInformation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.IngestionInformation (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.IngestionInformation (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.IngestionInformation ingestionInformation) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.IngestionInformation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -642,7 +642,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Uri SourceCatalogUrl { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.IngestionRun JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.IngestionRun (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.IngestionRun (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.IngestionRun PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.IngestionRun System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.IngestionRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -681,7 +681,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Guid Id { get { throw null; } set { } }
         protected virtual Azure.Analytics.PlanetaryComputer.IngestionSource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.IngestionSource (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.IngestionSource (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.IngestionSource ingestionSource) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.IngestionSource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -813,7 +813,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Type { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.LongRunningOperation JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.LongRunningOperation (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.LongRunningOperation (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.LongRunningOperation PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.LongRunningOperation System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.LongRunningOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1032,7 +1032,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Azure.Analytics.PlanetaryComputer.PartitionTypeScheme? Scheme { get { throw null; } set { } }
         protected virtual Azure.Analytics.PlanetaryComputer.PartitionType JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.PartitionType (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.PartitionType (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.PartitionType partitionType) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.PartitionType PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1224,7 +1224,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Azure.Analytics.PlanetaryComputer.RenderOptionVectorOptions VectorOptions { get { throw null; } set { } }
         protected virtual Azure.Analytics.PlanetaryComputer.RenderConfiguration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.RenderConfiguration (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.RenderConfiguration (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.RenderConfiguration renderConfiguration) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.RenderConfiguration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1354,7 +1354,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Uri Href { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureSignedLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1370,7 +1370,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Token { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.SharedAccessSignatureToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1462,7 +1462,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Collections.Generic.IList<Azure.Analytics.PlanetaryComputer.StacLink> Links { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacCatalogCollections JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacCatalogCollections (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacCatalogCollections (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacCatalogCollections PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.StacCatalogCollections System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacCatalogCollections>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1645,7 +1645,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string UpdatedOn { get { throw null; } set { } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacCollectionResource JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacCollectionResource (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacCollectionResource (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.StacCollectionResource stacCollectionResource) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacCollectionResource PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1675,7 +1675,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Collections.Generic.IList<System.Uri> ConformsTo { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacConformanceClasses JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacConformanceClasses (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacConformanceClasses (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacConformanceClasses PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.StacConformanceClasses System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacConformanceClasses>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1762,7 +1762,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Collections.Generic.IList<float> Bounds { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacItemBounds JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemBounds (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemBounds (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacItemBounds PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.StacItemBounds System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacItemBounds>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1779,7 +1779,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Collections.Generic.IList<Azure.Analytics.PlanetaryComputer.StacItemResource> Features { get { throw null; } }
         protected override Azure.Analytics.PlanetaryComputer.StacItemOrStacItemCollection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemCollectionResource (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemCollectionResource (Azure.Response response) { throw null; }
         protected override Azure.Analytics.PlanetaryComputer.StacItemOrStacItemCollection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.StacItemCollectionResource System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacItemCollectionResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1865,7 +1865,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Timestamp { get { throw null; } set { } }
         protected override Azure.Analytics.PlanetaryComputer.StacItemOrStacItemCollection JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemResource (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemResource (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.StacItemResource stacItemResource) { throw null; }
         protected override Azure.Analytics.PlanetaryComputer.StacItemOrStacItemCollection PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1883,7 +1883,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Azure.Analytics.PlanetaryComputer.FeatureType Type { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacItemStatisticsGeoJson>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1923,7 +1923,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string UpdatedOn { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacLandingPage JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacLandingPage (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacLandingPage (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacLandingPage PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.StacLandingPage System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.StacLandingPage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2013,7 +2013,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Name { get { throw null; } set { } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacMosaic JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacMosaic (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacMosaic (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.StacMosaic stacMosaic) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacMosaic PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2066,7 +2066,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Name { get { throw null; } set { } }
         protected virtual Azure.Analytics.PlanetaryComputer.StacQueryable JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.StacQueryable (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.StacQueryable (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.StacQueryable stacQueryable) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.StacQueryable PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2223,7 +2223,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Version { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.TileJsonMetadata JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TileJsonMetadata (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TileJsonMetadata (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TileJsonMetadata PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.TileJsonMetadata System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.TileJsonMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2292,7 +2292,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Uri WellKnownScaleSet { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.TileMatrixSet JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TileMatrixSet (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TileMatrixSet (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TileMatrixSet PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.TileMatrixSet System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.TileMatrixSet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2326,7 +2326,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Collections.Generic.IList<float> Values { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.TilerCoreModelsResponsesPoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2400,7 +2400,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Azure.Analytics.PlanetaryComputer.FeatureType Type { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.TilerInfoGeoJsonFeature>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2416,7 +2416,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string SearchId { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.TilerMosaicSearchRegistrationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2431,7 +2431,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.TilerStacItemStatistics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2467,7 +2467,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Azure.Analytics.PlanetaryComputer.TilerStacSearchDefinition Search { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.TilerStacSearchRegistration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2484,7 +2484,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public int MinZoom { get { throw null; } set { } }
         protected virtual Azure.Analytics.PlanetaryComputer.TileSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.TileSettings (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.TileSettings (Azure.Response response) { throw null; }
         public static implicit operator Azure.Core.RequestContent (Azure.Analytics.PlanetaryComputer.TileSettings tileSettings) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.TileSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2501,7 +2501,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public Azure.Analytics.PlanetaryComputer.TileSettings TileSettings { get { throw null; } }
         protected virtual Azure.Analytics.PlanetaryComputer.UserCollectionSettings JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        public static explicit operator Azure.Analytics.PlanetaryComputer.UserCollectionSettings (Azure.Response result) { throw null; }
+        public static explicit operator Azure.Analytics.PlanetaryComputer.UserCollectionSettings (Azure.Response response) { throw null; }
         protected virtual Azure.Analytics.PlanetaryComputer.UserCollectionSettings PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Analytics.PlanetaryComputer.UserCollectionSettings System.ClientModel.Primitives.IJsonModel<Azure.Analytics.PlanetaryComputer.UserCollectionSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

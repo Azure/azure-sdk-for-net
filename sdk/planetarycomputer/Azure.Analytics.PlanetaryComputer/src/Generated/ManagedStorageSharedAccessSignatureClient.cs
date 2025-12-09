@@ -123,7 +123,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(href, nameof(href));
 
-            Response result = GetSign(href, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetSign(href, durationInMinutes, cancellationToken.ToRequestContext());
             return Response.FromValue((SharedAccessSignatureSignedLink)result, result);
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNull(href, nameof(href));
 
-            Response result = await GetSignAsync(href, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetSignAsync(href, durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SharedAccessSignatureSignedLink)result, result);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetToken(collectionId, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetToken(collectionId, durationInMinutes, cancellationToken.ToRequestContext());
             return Response.FromValue((SharedAccessSignatureToken)result, result);
         }
 
@@ -248,7 +248,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetTokenAsync(collectionId, durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetTokenAsync(collectionId, durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SharedAccessSignatureToken)result, result);
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response RevokeToken(int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
-            return RevokeToken(durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return RevokeToken(durationInMinutes, cancellationToken.ToRequestContext());
         }
 
         /// <summary>
@@ -331,7 +331,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> RevokeTokenAsync(int? durationInMinutes = default, CancellationToken cancellationToken = default)
         {
-            return await RevokeTokenAsync(durationInMinutes, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return await RevokeTokenAsync(durationInMinutes, cancellationToken.ToRequestContext()).ConfigureAwait(false);
         }
     }
 }

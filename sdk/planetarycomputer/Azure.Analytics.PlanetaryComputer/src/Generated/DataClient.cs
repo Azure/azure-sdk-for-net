@@ -121,7 +121,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetTileMatrixDefinitions(tileMatrixSetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetTileMatrixDefinitions(tileMatrixSetId, cancellationToken.ToRequestContext());
             return Response.FromValue((TileMatrixSet)result, result);
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetTileMatrixDefinitionsAsync(tileMatrixSetId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetTileMatrixDefinitionsAsync(tileMatrixSetId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileMatrixSet)result, result);
         }
 
@@ -198,7 +198,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response<IReadOnlyList<string>> GetTileMatrices(CancellationToken cancellationToken = default)
         {
-            Response result = GetTileMatrices(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetTileMatrices(cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
         }
 
@@ -207,7 +207,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<IReadOnlyList<string>>> GetTileMatricesAsync(CancellationToken cancellationToken = default)
         {
-            Response result = await GetTileMatricesAsync(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetTileMatricesAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
         }
 
@@ -387,7 +387,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -449,7 +449,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -547,7 +547,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetAvailableAssets(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetAvailableAssets(collectionId, itemId, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
         }
 
@@ -563,7 +563,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetAvailableAssetsAsync(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetAvailableAssetsAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<string>>(), result);
         }
 
@@ -647,7 +647,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetBounds(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetBounds(collectionId, itemId, cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemBounds)result, result);
         }
 
@@ -663,7 +663,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetBoundsAsync(collectionId, itemId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetBoundsAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemBounds)result, result);
         }
 
@@ -813,7 +813,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CropGeoJson(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CropGeoJson(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -851,7 +851,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CropGeoJsonAsync(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CropGeoJsonAsync(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -1001,7 +1001,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CropGeoJsonWithDimensions(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CropGeoJsonWithDimensions(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -1039,7 +1039,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(format, nameof(format));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CropGeoJsonWithDimensionsAsync(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CropGeoJsonWithDimensionsAsync(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -1228,7 +1228,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = GetGeoJsonStatistics(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetGeoJsonStatistics(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
             return Response.FromValue((StacItemStatisticsGeoJson)result, result);
         }
 
@@ -1279,7 +1279,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await GetGeoJsonStatisticsAsync(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetGeoJsonStatisticsAsync(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((StacItemStatisticsGeoJson)result, result);
         }
 
@@ -1366,7 +1366,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetInfoGeoJson(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetInfoGeoJson(collectionId, itemId, assets, cancellationToken.ToRequestContext());
             return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
         }
 
@@ -1383,7 +1383,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetInfoGeoJsonAsync(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetInfoGeoJsonAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
         }
 
@@ -1470,7 +1470,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetItemAssetDetails(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetItemAssetDetails(collectionId, itemId, assets, cancellationToken.ToRequestContext());
             IDictionary<string, TilerInfo> value = new Dictionary<string, TilerInfo>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -1494,7 +1494,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetItemAssetDetailsAsync(collectionId, itemId, assets, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetItemAssetDetailsAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IDictionary<string, TilerInfo> value = new Dictionary<string, TilerInfo>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -1660,7 +1660,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetPart(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetPart(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -1701,7 +1701,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetPartAsync(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetPartAsync(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -1860,7 +1860,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetPartWithDimensions(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetPartWithDimensions(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -1901,7 +1901,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetPartWithDimensionsAsync(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetPartWithDimensionsAsync(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2015,7 +2015,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetPoint(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetPoint(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext());
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 
@@ -2041,7 +2041,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetPointAsync(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetPointAsync(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
         }
 
@@ -2182,7 +2182,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetPreview(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetPreview(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -2217,7 +2217,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetPreviewAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetPreviewAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2361,7 +2361,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetPreviewWithFormat(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetPreviewWithFormat(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -2397,7 +2397,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetPreviewWithFormatAsync(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetPreviewWithFormatAsync(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2481,7 +2481,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = CreateStaticImage(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = CreateStaticImage(collectionId, body, cancellationToken.ToRequestContext());
             return Response.FromValue((ImageResponse)result, result);
         }
 
@@ -2497,7 +2497,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNull(body, nameof(body));
 
-            Response result = await CreateStaticImageAsync(collectionId, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await CreateStaticImageAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((ImageResponse)result, result);
         }
 
@@ -2581,7 +2581,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            Response result = GetStaticImage(collectionId, id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetStaticImage(collectionId, id, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -2597,7 +2597,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
-            Response result = await GetStaticImageAsync(collectionId, id, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetStaticImageAsync(collectionId, id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -2777,7 +2777,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = GetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
             return Response.FromValue((TilerStacItemStatistics)result, result);
         }
 
@@ -2825,7 +2825,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
 
-            Response result = await GetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerStacItemStatistics)result, result);
         }
 
@@ -2993,7 +2993,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetTileJson(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetTileJson(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -3037,7 +3037,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -3235,7 +3235,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetTile(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetTile(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -3289,7 +3289,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetTileAsync(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetTileAsync(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -3448,7 +3448,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetWmtsCapabilities(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetWmtsCapabilities(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -3489,7 +3489,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetWmtsCapabilitiesAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetWmtsCapabilitiesAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -3573,7 +3573,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = GetClassMapLegend(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetClassMapLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3603,7 +3603,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = await GetClassMapLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetClassMapLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3701,7 +3701,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = GetIntervalLegend(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetIntervalLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<IList<BinaryData>>>(), result);
         }
 
@@ -3717,7 +3717,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
-            Response result = await GetIntervalLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetIntervalLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<IList<BinaryData>>>(), result);
         }
 
@@ -3821,7 +3821,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
-            Response result = GetLegend(colorMapName, height, width, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetLegend(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -3845,7 +3845,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
 
-            Response result = await GetLegendAsync(colorMapName, height, width, trimStart, trimEnd, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetLegendAsync(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -3956,7 +3956,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = GetMosaicsAssetsForPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaicsAssetsForPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext());
             IList<StacItemPointAsset> value = new List<StacItemPointAsset>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -3988,7 +3988,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = await GetMosaicsAssetsForPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsAssetsForPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IList<StacItemPointAsset> value = new List<StacItemPointAsset>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -4145,7 +4145,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext());
             IList<BinaryData> value = new List<BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -4197,7 +4197,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
 
-            Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             IList<BinaryData> value = new List<BinaryData>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
@@ -4289,7 +4289,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = GetMosaicsSearchInfo(searchId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaicsSearchInfo(searchId, cancellationToken.ToRequestContext());
             return Response.FromValue((TilerStacSearchRegistration)result, result);
         }
 
@@ -4303,7 +4303,7 @@ namespace Azure.Analytics.PlanetaryComputer
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
 
-            Response result = await GetMosaicsSearchInfoAsync(searchId, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsSearchInfoAsync(searchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerStacSearchRegistration)result, result);
         }
 
@@ -4396,7 +4396,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 filterLanguage,
                 metadata,
                 default);
-            Response result = RegisterMosaicsSearch(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = RegisterMosaicsSearch(spreadModel, cancellationToken.ToRequestContext());
             return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
         }
 
@@ -4427,7 +4427,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 filterLanguage,
                 metadata,
                 default);
-            Response result = await RegisterMosaicsSearchAsync(spreadModel, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await RegisterMosaicsSearchAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
         }
 
@@ -4619,7 +4619,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetMosaicsTileJson(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaicsTileJson(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -4671,7 +4671,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((TileJsonMetadata)result, result);
         }
 
@@ -4887,7 +4887,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = GetMosaicsTile(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaicsTile(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -4947,7 +4947,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
             Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetMosaicsTileAsync(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsTileAsync(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
 
@@ -5100,7 +5100,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = GetMosaicsWmtsCapabilities(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            Response result = GetMosaicsWmtsCapabilities(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
             return Response.FromValue(result.Content, result);
         }
 
@@ -5139,7 +5139,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
             Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
 
-            Response result = await GetMosaicsWmtsCapabilitiesAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            Response result = await GetMosaicsWmtsCapabilitiesAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(result.Content, result);
         }
     }

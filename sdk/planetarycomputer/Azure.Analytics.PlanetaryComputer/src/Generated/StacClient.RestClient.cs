@@ -241,7 +241,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (durationInMinutes != null)
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes, null), true);
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -263,7 +263,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (durationInMinutes != null)
             {
-                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes, null), true);
+                uri.AppendQuery("duration", TypeFormatters.ConvertToString(durationInMinutes), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -551,11 +551,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (limit != null)
             {
-                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit, null), true);
+                uri.AppendQuery("limit", TypeFormatters.ConvertToString(limit), true);
             }
             if (boundingBox != null && !(boundingBox is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("bbox", boundingBox, ",", null, true);
+                uri.AppendQueryDelimited("bbox", boundingBox, ",", escape: true);
             }
             if (datetime != null)
             {

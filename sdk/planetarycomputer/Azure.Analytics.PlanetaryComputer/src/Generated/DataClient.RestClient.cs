@@ -74,15 +74,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (resampling != null)
             {
@@ -90,19 +90,19 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (categorical != null)
             {
-                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical, null), true);
+                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
             }
             if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("c", categoriesPixels, ",", null, true);
+                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
             }
             if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("p", percentiles, ",", null, true);
+                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
             }
             if (histogramBins != null)
             {
@@ -184,15 +184,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -216,15 +216,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (height != null)
             {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height, null), true);
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
             }
             if (width != null)
             {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
             }
             if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -243,7 +243,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -287,15 +287,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -319,7 +319,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -338,7 +338,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -377,15 +377,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (coordinateReferenceSystem != null)
             {
@@ -397,19 +397,19 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (categorical != null)
             {
-                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical, null), true);
+                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
             }
             if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("c", categoriesPixels, ",", null, true);
+                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
             }
             if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("p", percentiles, ",", null, true);
+                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
             }
             if (histogramBins != null)
             {
@@ -515,15 +515,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -551,15 +551,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (height != null)
             {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height, null), true);
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
             }
             if (width != null)
             {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
             }
             if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -578,7 +578,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -628,15 +628,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -664,7 +664,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -683,7 +683,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -723,15 +723,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (coordinateReferenceSystem != null)
             {
@@ -776,15 +776,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -812,15 +812,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (height != null)
             {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height, null), true);
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
             }
             if (width != null)
             {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
             }
             if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -839,7 +839,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -877,15 +877,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -909,15 +909,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (height != null)
             {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height, null), true);
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
             }
             if (width != null)
             {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
             }
             if (rescale != null && !(rescale is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -936,7 +936,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1008,15 +1008,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (resampling != null)
             {
@@ -1024,19 +1024,19 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (maxSize != null)
             {
-                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize, null), true);
+                uri.AppendQuery("max_size", TypeFormatters.ConvertToString(maxSize), true);
             }
             if (categorical != null)
             {
-                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical, null), true);
+                uri.AppendQuery("categorical", TypeFormatters.ConvertToString(categorical), true);
             }
             if (categoriesPixels != null && !(categoriesPixels is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("c", categoriesPixels, ",", null, true);
+                uri.AppendQueryDelimited("c", categoriesPixels, ",", escape: true);
             }
             if (percentiles != null && !(percentiles is ChangeTrackingList<int> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("p", percentiles, ",", null, true);
+                uri.AppendQueryDelimited("p", percentiles, ",", escape: true);
             }
             if (histogramBins != null)
             {
@@ -1083,15 +1083,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -1107,15 +1107,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (tileScale != null)
             {
-                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale, null), true);
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
             }
             if (minZoom != null)
             {
-                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom, null), true);
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
             }
             if (maxZoom != null)
             {
-                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom, null), true);
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
             }
             if (buffer != null)
             {
@@ -1146,7 +1146,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1194,15 +1194,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -1241,7 +1241,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             if (subdatasetName != null)
             {
@@ -1249,7 +1249,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (subdatasetBands != null && !(subdatasetBands is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
-                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", null, true);
+                uri.AppendQueryDelimited("subdataset_bands", subdatasetBands, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1288,15 +1288,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -1312,15 +1312,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (tileScale != null)
             {
-                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale, null), true);
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
             }
             if (minZoom != null)
             {
-                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom, null), true);
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
             }
             if (maxZoom != null)
             {
-                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom, null), true);
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
             }
             if (buffer != null)
             {
@@ -1351,7 +1351,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1370,11 +1370,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (trimStart != null)
             {
-                uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart, null), true);
+                uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart), true);
             }
             if (trimEnd != null)
             {
-                uri.AppendQuery("trim_end", TypeFormatters.ConvertToString(trimEnd, null), true);
+                uri.AppendQuery("trim_end", TypeFormatters.ConvertToString(trimEnd), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1393,11 +1393,11 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (trimStart != null)
             {
-                uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart, null), true);
+                uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart), true);
             }
             if (trimEnd != null)
             {
-                uri.AppendQuery("trim_end", TypeFormatters.ConvertToString(trimEnd, null), true);
+                uri.AppendQuery("trim_end", TypeFormatters.ConvertToString(trimEnd), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1416,19 +1416,19 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (height != null)
             {
-                uri.AppendQuery("height", TypeFormatters.ConvertToString(height, null), true);
+                uri.AppendQuery("height", TypeFormatters.ConvertToString(height), true);
             }
             if (width != null)
             {
-                uri.AppendQuery("width", TypeFormatters.ConvertToString(width, null), true);
+                uri.AppendQuery("width", TypeFormatters.ConvertToString(width), true);
             }
             if (trimStart != null)
             {
-                uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart, null), true);
+                uri.AppendQuery("trim_start", TypeFormatters.ConvertToString(trimStart), true);
             }
             if (trimEnd != null)
             {
-                uri.AppendQuery("trim_end", TypeFormatters.ConvertToString(trimEnd, null), true);
+                uri.AppendQuery("trim_end", TypeFormatters.ConvertToString(trimEnd), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1452,23 +1452,23 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (scanLimit != null)
             {
-                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit, null), true);
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
             }
             if (itemsLimit != null)
             {
-                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit, null), true);
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
             }
             if (timeLimit != null)
             {
-                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit, null), true);
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
             }
             if (exitWhenFull != null)
             {
-                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull, null), true);
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
             }
             if (skipCovered != null)
             {
-                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered, null), true);
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
             }
             if (coordinateReferenceSystem != null)
             {
@@ -1500,23 +1500,23 @@ namespace Azure.Analytics.PlanetaryComputer
             uri.AppendQuery("api-version", _apiVersion, true);
             if (scanLimit != null)
             {
-                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit, null), true);
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
             }
             if (itemsLimit != null)
             {
-                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit, null), true);
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
             }
             if (timeLimit != null)
             {
-                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit, null), true);
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
             }
             if (exitWhenFull != null)
             {
-                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull, null), true);
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
             }
             if (skipCovered != null)
             {
-                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered, null), true);
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
             }
             uri.AppendQuery("collection", collectionId, true);
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
@@ -1586,35 +1586,35 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (scanLimit != null)
             {
-                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit, null), true);
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
             }
             if (itemsLimit != null)
             {
-                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit, null), true);
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
             }
             if (timeLimit != null)
             {
-                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit, null), true);
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
             }
             if (exitWhenFull != null)
             {
-                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull, null), true);
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
             }
             if (skipCovered != null)
             {
-                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered, null), true);
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
             }
             if (algorithm != null)
             {
@@ -1626,11 +1626,11 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (minZoom != null)
             {
-                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom, null), true);
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
             }
             if (maxZoom != null)
             {
-                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom, null), true);
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
             }
             if (tileFormat != null)
             {
@@ -1638,7 +1638,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (tileScale != null)
             {
-                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale, null), true);
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
             }
             if (buffer != null)
             {
@@ -1677,7 +1677,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1723,35 +1723,35 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (scanLimit != null)
             {
-                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit, null), true);
+                uri.AppendQuery("scan_limit", TypeFormatters.ConvertToString(scanLimit), true);
             }
             if (itemsLimit != null)
             {
-                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit, null), true);
+                uri.AppendQuery("items_limit", TypeFormatters.ConvertToString(itemsLimit), true);
             }
             if (timeLimit != null)
             {
-                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit, null), true);
+                uri.AppendQuery("time_limit", TypeFormatters.ConvertToString(timeLimit), true);
             }
             if (exitWhenFull != null)
             {
-                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull, null), true);
+                uri.AppendQuery("exitwhenfull", TypeFormatters.ConvertToString(exitWhenFull), true);
             }
             if (skipCovered != null)
             {
-                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered, null), true);
+                uri.AppendQuery("skipcovered", TypeFormatters.ConvertToString(skipCovered), true);
             }
             if (algorithm != null)
             {
@@ -1798,7 +1798,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -1835,15 +1835,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (assetAsBand != null)
             {
-                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand, null), true);
+                uri.AppendQuery("asset_as_band", TypeFormatters.ConvertToString(assetAsBand), true);
             }
             if (noData != null)
             {
-                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData, null), true);
+                uri.AppendQuery("nodata", TypeFormatters.ConvertToString(noData), true);
             }
             if (unscale != null)
             {
-                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale, null), true);
+                uri.AppendQuery("unscale", TypeFormatters.ConvertToString(unscale), true);
             }
             if (algorithm != null)
             {
@@ -1859,15 +1859,15 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (tileScale != null)
             {
-                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale, null), true);
+                uri.AppendQuery("tile_scale", TypeFormatters.ConvertToString(tileScale), true);
             }
             if (minZoom != null)
             {
-                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom, null), true);
+                uri.AppendQuery("minzoom", TypeFormatters.ConvertToString(minZoom), true);
             }
             if (maxZoom != null)
             {
-                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom, null), true);
+                uri.AppendQuery("maxzoom", TypeFormatters.ConvertToString(maxZoom), true);
             }
             if (buffer != null)
             {
@@ -1898,7 +1898,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             if (returnMask != null)
             {
-                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask, null), true);
+                uri.AppendQuery("return_mask", TypeFormatters.ConvertToString(returnMask), true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
