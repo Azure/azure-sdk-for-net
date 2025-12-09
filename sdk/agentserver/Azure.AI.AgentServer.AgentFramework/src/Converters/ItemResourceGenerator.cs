@@ -98,15 +98,6 @@ public class ItemResourceGenerator
         }
     }
 
-    private static async IAsyncEnumerable<AIContent> ReadContents(
-        IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> contents)
-    {
-        await foreach ((_, AIContent content) in contents.ConfigureAwait(false))
-        {
-            yield return content;
-        }
-    }
-
     private async IAsyncEnumerable<(AgentRunResponseUpdate Update, AIContent Content)> FlattenContents(
         IAsyncEnumerable<AgentRunResponseUpdate> updates)
     {
@@ -114,6 +105,7 @@ public class ItemResourceGenerator
         {
             foreach (var content in update.Contents)
             {
+                throwOnErrorContent(content);
                 switch (content)
                 {
                     case UsageContent usageContent:
@@ -278,5 +270,13 @@ public class ItemResourceGenerator
             sequenceNumber: Seq.Next(),
             outputIndex: groupSeq,
             item: itemResource);
+    }
+
+    private static void throwOnErrorContent(AIContent content)
+    {
+        if (content is ErrorContent errorContent)
+        {
+            throw new AgentInvocationException(errorContent.ToResponseError());
+        }
     }
 }

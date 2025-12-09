@@ -3,17 +3,14 @@
 
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
-using Azure.AI.AgentServer.Core.Common.Http.ServerSentEvent;
 using Azure.AI.AgentServer.Core.Common.Id;
 using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation;
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
-
 using OpenTelemetry;
 
 namespace Azure.AI.AgentServer.Responses.Endpoint;
@@ -35,7 +32,6 @@ public static class AgentRunEndpoints
     public static IEndpointRouteBuilder MapAgentRunEndpoints(this IEndpointRouteBuilder endpoints)
     {
         var agentRunGroup = endpoints.MapGroup("/{p:regex(^runs|responses$)}")
-            .AddEndpointFilter<AgentRunExceptionFilter>()
             .WithTags("Agent Runs");
 
         agentRunGroup.MapPost("", CreateResponseAsync)
@@ -47,7 +43,7 @@ public static class AgentRunEndpoints
     }
 
     private static async Task<IResult> CreateResponseAsync([FromBody] CreateResponseRequest request,
-        IAgentInvocation agentInvocation,
+        AgentInvoker invoker,
         ILogger<AgentRunEndpointsLogger> logger,
         HttpContext httpContext,
         CancellationToken ct)
@@ -60,34 +56,8 @@ public static class AgentRunEndpoints
         UpdateContextBaggage(scopeAttrs);
         await using var _ = AgentInvocationContext.Setup(context).ConfigureAwait(false);
         using var activity = context.StartActivity(logger, request);
-        try
-        {
-            logger.LogInformation($"Processing CreateResponse request: response_id={context.ResponseId}, "
-                                  + $"conversation_id={context.ConversationId}, streaming={request.Stream ?? false}, "
-                                  + $"request_Id={requestId}.");
-            if (request.Stream ?? false)
-            {
-                logger.LogInformation("Invoking agent to create streaming response.");
-                var updates = agentInvocation.InvokeStreamAsync(request, context, ct);
-                return updates.ToSseResult(
-                    e => SseFrame.Of(name: e.Type.ToString(), data: e),
-                    logger,
-                    ct);
-            }
 
-            logger.LogInformation("Invoking agent to create response.");
-            var response = await agentInvocation.InvokeAsync(request, context, ct).ConfigureAwait(false);
-            logger.LogInformation($"End of processing CreateResponse request: response_id={context.ResponseId}, "
-                                  + $"conversation_id={context.ConversationId}, streaming={request.Stream ?? false}, "
-                                  + $"request_Id={requestId}.");
-            return Results.Json(response);
-        }
-        catch (Exception ex)
-        {
-            // Exceptions will be export to exceptions table in Application Insights.
-            logger.LogError(ex, "Error when processing CreateResponse request.");
-            throw;
-        }
+        return await invoker.InvokeAsync(requestId, request, context, ct).ConfigureAwait(false);
     }
 
     private static Dictionary<string, string> CreateContextAttributions(

@@ -6,6 +6,10 @@
 
 -   Add support for populating created_by on all ItemResource types in both streaming and non-streaming flows
 
+### Bugs Fixed
+
+- Fixed error response handling in stream and non-stream modes
+
 ## 1.0.0-beta.4 (2025-11-11)
 
 ### Bugs Fixed
