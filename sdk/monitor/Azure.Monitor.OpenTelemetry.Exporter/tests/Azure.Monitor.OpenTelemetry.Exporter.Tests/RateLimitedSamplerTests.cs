@@ -167,7 +167,6 @@ public class RateLimitedSamplerTests
             {
                 sampledin++;
             }
-            System.Threading.Thread.Sleep(2);
         }
         // We would expect 50 to be sampled in, but there may be some variance based on sleep scheduling/elapsed time.
         DateTime end = DateTime.UtcNow;
