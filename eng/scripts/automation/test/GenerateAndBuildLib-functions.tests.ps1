@@ -368,20 +368,18 @@ Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
     }
     
     it("should create CHANGELOG.md when it doesn't exist") {
-        $packageName = "Azure.Test.Package"
         $version = "1.0.0-beta.1"
         
-        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -packageName $packageName -version $version
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
         
         $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
         Test-Path $changelogPath | Should -Be $true
     }
     
     it("should create CHANGELOG.md with correct version") {
-        $packageName = "Azure.Test.Package"
         $version = "1.0.0-beta.1"
         
-        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -packageName $packageName -version $version
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
         
         $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
         $content = Get-Content $changelogPath -Raw
@@ -389,10 +387,9 @@ Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
     }
     
     it("should create CHANGELOG.md with Release History header") {
-        $packageName = "Azure.Test.Package"
         $version = "1.0.0-beta.1"
         
-        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -packageName $packageName -version $version
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
         
         $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
         $content = Get-Content $changelogPath -Raw
@@ -400,10 +397,9 @@ Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
     }
     
     it("should create CHANGELOG.md with Unreleased status") {
-        $packageName = "Azure.Test.Package"
         $version = "1.0.0-beta.1"
         
-        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -packageName $packageName -version $version
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
         
         $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
         $content = Get-Content $changelogPath -Raw
@@ -411,14 +407,13 @@ Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
     }
     
     it("should not overwrite existing CHANGELOG.md") {
-        $packageName = "Azure.Test.Package"
         $version = "1.0.0-beta.1"
         
         $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
         $existingContent = "# Existing Content"
         Set-Content -Path $changelogPath -Value $existingContent
         
-        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -packageName $packageName -version $version
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
         
         $content = Get-Content $changelogPath -Raw
         # Should contain the existing content (ignoring line ending differences)
@@ -426,10 +421,9 @@ Describe "New-ChangeLogIfNotExists function" -Tag "UnitTest" {
     }
     
     it("should handle different version formats") {
-        $packageName = "Azure.Test.Package"
         $version = "2.0.0"
         
-        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -packageName $packageName -version $version
+        New-ChangeLogIfNotExists -projectFolder $script:testProjectDir -version $version
         
         $changelogPath = Join-Path $script:testProjectDir "CHANGELOG.md"
         $content = Get-Content $changelogPath -Raw

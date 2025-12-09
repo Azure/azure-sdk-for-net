@@ -775,7 +775,7 @@ function GeneratePackage()
         
         # Create CHANGELOG.md if it doesn't exist
         if (![string]::IsNullOrWhiteSpace($version)) {
-            New-ChangeLogIfNotExists -projectFolder $projectFolder -packageName $packageName -version $version
+            New-ChangeLogIfNotExists -projectFolder $projectFolder -version $version
         }
         
         # Build project when successfully generated the code
