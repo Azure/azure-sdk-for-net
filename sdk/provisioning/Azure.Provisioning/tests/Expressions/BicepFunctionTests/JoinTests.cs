@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
+using Azure.Provisioning.Storage;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests.Expressions.BicepFunctions;
@@ -20,7 +22,14 @@ public class JoinTests
         var result = BicepFunction.Join(array, delimiter);
 
         // Assert
-        TestHelpers.AssertExpression("join([\n  'one'\n  'two'\n  'three'\n], ',')", result);
+        TestHelpers.AssertExpression(
+            """
+            join([
+              'one'
+              'two'
+              'three'
+            ], ',')
+            """, result);
     }
 
     [Test]
@@ -50,7 +59,14 @@ public class JoinTests
         var result = BicepFunction.Join(array, delimiter);
 
         // Assert
-        TestHelpers.AssertExpression("join([\n  'a'\n  'b'\n  'c'\n], delimiter)", result);
+        TestHelpers.AssertExpression(
+            """
+            join([
+              'a'
+              'b'
+              'c'
+            ], delimiter)
+            """, result);
     }
 
     [Test]
@@ -80,7 +96,13 @@ public class JoinTests
         var result = BicepFunction.Join(array, delimiter);
 
         // Assert
-        TestHelpers.AssertExpression("join([\n  'Hello'\n  'World'\n], '')", result);
+        TestHelpers.AssertExpression(
+            """
+            join([
+              'Hello'
+              'World'
+            ], '')
+            """, result);
     }
 
     [Test]
@@ -94,7 +116,14 @@ public class JoinTests
         var result = BicepFunction.Join(array, delimiter);
 
         // Assert
-        TestHelpers.AssertExpression("join([\n  'part1'\n  'part2'\n  'part3'\n], '::')", result);
+        TestHelpers.AssertExpression(
+            """
+            join([
+              'part1'
+              'part2'
+              'part3'
+            ], '::')
+            """, result);
     }
 
     [Test]
@@ -108,6 +137,33 @@ public class JoinTests
         var result = BicepFunction.Join(array, delimiter);
 
         // Assert
-        TestHelpers.AssertExpression("join([\n  'onlyOne'\n], ',')", result);
+        TestHelpers.AssertExpression(
+            """
+            join([
+              'onlyOne'
+            ], ',')
+            """, result);
+    }
+
+    [Test]
+    public void Join_WithResourceModelProperty_ReturnsCorrectFormat()
+    {
+        // Arrange - Create a simple inline model with a Tags property that has a BicepList
+        var filter = new BlobInventoryPolicyFilter
+        {
+            IncludePrefix = new BicepList<string> { "container1/", "container2/" }
+        };
+
+        // Access the IncludePrefix property
+        var result = BicepFunction.Join(filter.IncludePrefix, "/");
+
+        // Assert - The expression compiles to the join function with the array
+        TestHelpers.AssertExpression(
+            """
+            join([
+              'container1/'
+              'container2/'
+            ], '/')
+            """, result);
     }
 }
