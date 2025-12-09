@@ -90,6 +90,13 @@ public abstract class RecordedTestBase : ClientTestBase
     public RecordedTestMode Mode { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether to normalize multipart content disposition headers in recordings.
+    /// This is only applicable if your library sets Content-Disposition headers as full filepaths rather than
+    /// just the filename and extension.
+    /// </summary>
+    public bool NormalizeMultipartContentDispositionHeaders { get; set; } = false;
+
+    /// <summary>
     /// Gets or sets a value indicating whether client instrumentation validation should be performed.
     /// When enabled, the test framework verifies that all clients used during testing are properly instrumented.
     /// </summary>

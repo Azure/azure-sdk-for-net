@@ -505,6 +505,11 @@ public class TestRecording : IAsyncDisposable
         sanitizers.AddRange(_recordedTestBase.BodyKeySanitizers);
         sanitizers.AddRange(_recordedTestBase.BodyRegexSanitizers);
 
+        if (_recordedTestBase.NormalizeMultipartContentDispositionHeaders)
+        {
+            await _proxy.AdminClient.AddContentDispositionFilePathSanitizer(RecordingId, cancellationToken).ConfigureAwait(false);
+        }
+
         if (sanitizers.Count > 0)
         {
             await _proxy.AdminClient.AddSanitizersAsync(sanitizers, RecordingId, cancellationToken).ConfigureAwait(false);
