@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using Azure.Provisioning.Generator;
 
 namespace Azure.Provisioning.Generator.Model;
 
@@ -65,10 +64,7 @@ public abstract partial class Specification
                     }
                     else
                     {
-                        // Conflict: path segment is already a leaf property.
-                        // This implies invalid path structure in the model.
-                        // We'll ignore this property to avoid crash.
-                        break;
+                        throw new InvalidOperationException($"Conflict detected in schema generation. Path segment '{segment}' in property '{property.Name}' (Path: {string.Join(".", path)}) is already defined as a leaf property.");
                     }
                 }
             }

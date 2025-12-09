@@ -26,6 +26,8 @@ public abstract partial class Specification : ModelBase
     // because it's merged with another spec that'll handle that for us
     public bool SkipCleaning { get; protected set; } = false;
 
+    public bool ShouldGenerateSchema { get; set; } = true;
+
     public IList<Resource> Resources { get; private set; } = [];
 
     public IList<Role> Roles { get; private set; } = [];
@@ -82,7 +84,10 @@ public abstract partial class Specification : ModelBase
                     GenerateBuiltInRoles();
                 }
 
-                GenerateSchema();
+                if (ShouldGenerateSchema)
+                {
+                    GenerateSchema();
+                }
             });
     }
 
