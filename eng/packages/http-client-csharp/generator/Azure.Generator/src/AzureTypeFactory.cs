@@ -107,41 +107,22 @@ namespace Azure.Generator
 
         private CSharpType? TryCreateDataFactoryElementTypeFromUnion(InputUnionType inputUnionType)
         {
-            // Find the DataFactoryElement external type in the union variants
-            InputExternalType? dataFactoryExternalType = null;
-            InputType? otherVariantType = null;
-            int otherVariantCount = 0;
-
-            foreach (var variant in inputUnionType.VariantTypes)
-            {
-                if (variant is InputExternalType externalType && externalType.Identity == DataFactoryElementIdentity)
-                {
-                    dataFactoryExternalType = externalType;
-                }
-                else
-                {
-                    otherVariantType = variant;
-                    otherVariantCount++;
-                }
-            }
-
-            // If no DataFactoryElement external type found, return null
-            if (dataFactoryExternalType == null)
+            if (inputUnionType.External?.Identity != DataFactoryElementIdentity)
             {
                 return null;
             }
 
-            // If there is more than one other variant, log a warning and don't apply specialized logic
-            if (otherVariantCount != 1 || otherVariantType == null)
+            // The first variant is used as the type argument T in DataFactoryElement<T>
+            if (inputUnionType.VariantTypes.Count != 2)
             {
                 AzureClientGenerator.Instance.Emitter.ReportDiagnostic(
                     "DFE001",
-                    $"DataFactoryElement union '{inputUnionType.Name}' has {otherVariantCount} variant types instead of exactly 1. Skipping DataFactoryElement<T> specialized handling.");
+                    $"DataFactoryElement union '{inputUnionType.Name}' must have 2 variant types. Skipping DataFactoryElement<T> specialized handling.");
                 return null;
             }
 
             // Create the inner type T from the other variant
-            var innerType = CreateCSharpType(otherVariantType);
+            var innerType = CreateCSharpType(inputUnionType.VariantTypes[0]);
             if (innerType == null)
             {
                 return null;

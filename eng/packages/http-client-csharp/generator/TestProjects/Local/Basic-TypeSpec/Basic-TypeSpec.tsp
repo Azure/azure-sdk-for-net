@@ -481,54 +481,25 @@ op ConditionalRequestDate(@header("If-Match") ifMatch?: string, @header("If-None
 op MultipartRequest(@header("Content-Type") contentType: "multipart/form-data", @multipartBody body: {name: HttpPart<string>}): void;
 
 // DataFactoryElement alternate type pattern
-// This model represents an expression that can be used in DataFactory pipelines
-@doc("Expression model for DataFactory expressions")
-@alternateType({identity: "Azure.Core.Expressions.DataFactoryElement"})
-model DfeExpressionModel {
-  @doc("The type of expression")
-  type: "Expression";
-  @doc("The expression value")
-  value: string;
-}
-
-// Union types that get mapped to DataFactoryElement<T> using alternateType
-@doc("DataFactoryElement<string> equivalent")
-union DfeStringUnion {
-  string,
-  DfeExpressionModel
-}
-
-@doc("DataFactoryElement<int> equivalent")
-union DfeIntUnion {
-  int32,
-  DfeExpressionModel
-}
-
-@doc("DataFactoryElement<bool> equivalent")
-union DfeBoolUnion {
-  boolean,
-  DfeExpressionModel
-}
-
-@doc("DataFactoryElement<string[]> equivalent")
-union DfeStringArrayUnion {
-  string[],
-  DfeExpressionModel
+@alternateType({identity: "Azure.Core.Expressions.DataFactoryElement"}, "csharp")
+union Dfe<T> {
+    T,
+    DataFactoryElementModel
 }
 
 @doc("Model with DataFactoryElement properties")
 model DataFactoryElementModel {
   @doc("String property with DFE pattern")
-  stringProperty: DfeStringUnion;
+  stringProperty: Dfe<string>;
 
   @doc("Int property with DFE pattern")
-  intProperty: DfeIntUnion;
+  intProperty: Dfe<int32>;
 
   @doc("Bool property with DFE pattern")
-  boolProperty: DfeBoolUnion;
+  boolProperty: Dfe<boolean>;
 
   @doc("String array property with DFE pattern")
-  stringArrayProperty: DfeStringArrayUnion;
+  stringArrayProperty: Dfe<string[]>;
 }
 
 @route("datafactory")

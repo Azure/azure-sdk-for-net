@@ -90,10 +90,10 @@ namespace BasicTypeSpec
             {
                 return null;
             }
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<string> stringProperty = default;
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<int> intProperty = default;
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> boolProperty = default;
-            Azure.Core.Expressions.DataFactory.DataFactoryElement<IList<string>> stringArrayProperty = default;
+            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringProperty = default;
+            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> intProperty = default;
+            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> boolProperty = default;
+            Azure.Core.Expressions.DataFactory.DataFactoryElement<T> stringArrayProperty = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
