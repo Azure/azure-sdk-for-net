@@ -38,8 +38,6 @@ interface SAPVirtualInstances {
   /**
    * Get the recommended SAP Availability Zone Pair Details for your region.
    */
-  #suppress "@azure-tools/typespec-azure-core/no-openapi" "Added Operation ID as it determines the PowerShell verb used."
-  @operationId("SapVirtualInstances_InvokeAvailabilityZoneDetails")
   getAvailabilityZoneDetails is ArmResourceActionSync<
     SubscriptionLocationResource,
     SAPAvailabilityZoneDetailsRequest,
