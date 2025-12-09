@@ -64,6 +64,7 @@ namespace Azure.Provisioning.AppContainers
             public static readonly string V2023_05_01;
             public static readonly string V2024_03_01;
             public static readonly string V2025_01_01;
+            public static readonly string V2025_07_01;
         }
     }
     public enum ContainerAppAccessMode
@@ -391,6 +392,7 @@ namespace Azure.Provisioning.AppContainers
     {
         Disabled = 0,
         SniEnabled = 1,
+        Auto = 2,
     }
     public partial class ContainerAppCustomDomainConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
