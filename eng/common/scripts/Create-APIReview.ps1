@@ -1,8 +1,8 @@
 [CmdletBinding()]
 Param (
-  [Parameter(Mandatory=$True)]
-  [array] $ArtifactList,
   [Parameter(Mandatory=$False)]
+  [array] $ArtifactList,
+  [Parameter(Mandatory=$True)]
   [string] $ArtifactPath,
   [string] $SourceBranch,
   [string] $DefaultBranch,
