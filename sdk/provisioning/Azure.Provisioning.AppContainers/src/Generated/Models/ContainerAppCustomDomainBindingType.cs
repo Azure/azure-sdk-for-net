@@ -19,9 +19,4 @@ public enum ContainerAppCustomDomainBindingType
     /// SniEnabled.
     /// </summary>
     SniEnabled,
-
-    /// <summary>
-    /// Auto.
-    /// </summary>
-    Auto,
 }

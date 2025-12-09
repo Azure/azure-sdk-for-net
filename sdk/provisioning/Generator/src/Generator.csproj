@@ -27,7 +27,7 @@
 
     <!-- Existing -->
     <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
-    <ProjectReference Include="..\..\..\containerapps\Azure.ResourceManager.AppContainers\src\Azure.ResourceManager.AppContainers.csproj" />
+    <PackageReference Include="Azure.ResourceManager.AppContainers" />
     <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
     <PackageReference Include="Azure.ResourceManager.AppService" />
     <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
