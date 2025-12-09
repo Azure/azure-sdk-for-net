@@ -588,7 +588,9 @@ namespace Azure.Provisioning.Expressions
         public static Azure.Provisioning.BicepValue<string> Concat(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.BicepValue<string> CreateGuid(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.ArmDeployment GetDeployment() { throw null; }
+        public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetExtensionResourceId(Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> resourceId, Azure.Provisioning.BicepValue<string> resourceType, params Azure.Provisioning.BicepValue<string>[] resourceNames) { throw null; }
         public static Azure.Provisioning.Resources.ResourceGroup GetResourceGroup() { throw null; }
+        public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.Subscription GetSubscription() { throw null; }
         public static Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> GetSubscriptionResourceId(params Azure.Provisioning.BicepValue<string>[] values) { throw null; }
         public static Azure.Provisioning.Resources.Tenant GetTenant() { throw null; }
