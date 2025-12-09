@@ -242,5 +242,13 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<AnalyzeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <summary> Converts a response to a AnalyzeResult using the LRO result path. </summary>
+        /// <param name="response"> The response from the service. </param>
+        internal static AnalyzeResult FromLroResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeAnalyzeResult(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+        }
     }
 }

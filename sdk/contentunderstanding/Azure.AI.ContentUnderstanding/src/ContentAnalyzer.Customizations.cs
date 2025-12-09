@@ -15,7 +15,6 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary>
     /// Partial class for ContentAnalyzer to customize LRO response handling.
     /// </summary>
-    // SDK-FIX: Suppress FromLroResponse to fix service response format inconsistency (service sometimes wraps ContentAnalyzer in "result" property, sometimes returns it directly)
     [CodeGenSuppress("FromLroResponse", typeof(Response))]
     public partial class ContentAnalyzer
     {
@@ -23,8 +22,12 @@ namespace Azure.AI.ContentUnderstanding
         /// Converts a response to a ContentAnalyzer using the LRO result path.
         /// </summary>
         /// <remarks>
-        /// SDK-FIX: Customized to handle service response format inconsistency. The service sometimes wraps ContentAnalyzer
-        /// in a "result" property, and sometimes returns it directly. This workaround uses TryGetProperty to handle both formats.
+        /// EMITTER-FIX: Emitter does not correctly handle LongRunningResourceCreateOrReplace operations per TypeSpec spec.
+        /// Per https://github.com/Azure/typespec-azure/blob/2a6f2b44ea0fec68c65957c3accc77f74e92545d/packages/typespec-azure-core/lib/operations.tsp#L131,
+        /// LongRunningResourceCreateOrReplace PUT operations return Resource directly via ResourceCreatedOrOkResponse&lt;Resource&gt;.
+        /// The emitter incorrectly assumes all LRO responses are wrapped in "result" property. This customization fixes the deserialization
+        /// for CreateAnalyzer/Async and CopyAnalyzer/Async operations which have ContentAnalyzer in the root element.
+        /// Tracked in TypeSpec Client Generator Core: https://github.com/Azure/typespec-azure/issues/3630
         /// </remarks>
         /// <param name="response"> The response from the service. </param>
         internal static ContentAnalyzer FromLroResponse(Response response)
@@ -32,16 +35,9 @@ namespace Azure.AI.ContentUnderstanding
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             JsonElement rootElement = document.RootElement;
 
-            // SDK-FIX: Check if the response has a "result" property, otherwise use the root element directly (handles both response formats)
-            if (rootElement.TryGetProperty("result", out JsonElement resultElement))
-            {
-                return DeserializeContentAnalyzer(resultElement, ModelSerializationExtensions.WireOptions);
-            }
-            else
-            {
-                // The response might be the ContentAnalyzer directly
-                return DeserializeContentAnalyzer(rootElement, ModelSerializationExtensions.WireOptions);
-            }
+            // EMITTER-FIX: CreateAnalyzer/Async and CopyAnalyzer/Async operations return ContentAnalyzer directly in root element
+            // per LongRunningResourceCreateOrReplace spec, not wrapped in "result" property
+            return DeserializeContentAnalyzer(rootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
