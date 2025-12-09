@@ -765,7 +765,6 @@ function GeneratePackage()
         $csproj.PreserveWhitespace = $true
         $csproj.Load($projectFile)
         $versionNode = ($csproj | Select-Xml "Project/PropertyGroup/Version").Node
-        $version = ""
         if ($versionNode) {
             $version = $versionNode.InnerText
         }
