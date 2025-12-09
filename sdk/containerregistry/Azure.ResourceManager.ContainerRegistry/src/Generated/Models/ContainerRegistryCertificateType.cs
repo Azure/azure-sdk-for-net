@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryCertificateType : IEquatable<ContainerRegistryCertificateType>
     {
         private readonly string _value;
+        private const string LocalDirectoryValue = "LocalDirectory";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryCertificateType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string LocalDirectoryValue = "LocalDirectory";
-
-        /// <summary> LocalDirectory. </summary>
+        /// <summary> Gets the LocalDirectory. </summary>
         public static ContainerRegistryCertificateType LocalDirectory { get; } = new ContainerRegistryCertificateType(LocalDirectoryValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryCertificateType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryCertificateType left, ContainerRegistryCertificateType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryCertificateType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryCertificateType left, ContainerRegistryCertificateType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryCertificateType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryCertificateType(string value) => new ContainerRegistryCertificateType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryCertificateType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryCertificateType?(string value) => value == null ? null : new ContainerRegistryCertificateType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryCertificateType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryCertificateType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

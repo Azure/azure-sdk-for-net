@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -24,51 +25,49 @@ namespace Azure.ResourceManager.ContainerRegistry
     /// </summary>
     public partial class ContainerRegistryCredentialSetCollection : ArmCollection, IEnumerable<ContainerRegistryCredentialSetResource>, IAsyncEnumerable<ContainerRegistryCredentialSetResource>
     {
-        private readonly ClientDiagnostics _containerRegistryCredentialSetCredentialSetsClientDiagnostics;
-        private readonly CredentialSetsRestOperations _containerRegistryCredentialSetCredentialSetsRestClient;
+        private readonly ClientDiagnostics _credentialSetsClientDiagnostics;
+        private readonly CredentialSets _credentialSetsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryCredentialSetCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ContainerRegistryCredentialSetCollection for mocking. </summary>
         protected ContainerRegistryCredentialSetCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ContainerRegistryCredentialSetCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentialSetCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerRegistryCredentialSetCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _containerRegistryCredentialSetCredentialSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryCredentialSetResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ContainerRegistryCredentialSetResource.ResourceType, out string containerRegistryCredentialSetCredentialSetsApiVersion);
-            _containerRegistryCredentialSetCredentialSetsRestClient = new CredentialSetsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, containerRegistryCredentialSetCredentialSetsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ContainerRegistryCredentialSetResource.ResourceType, out string containerRegistryCredentialSetApiVersion);
+            _credentialSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerRegistry", ContainerRegistryCredentialSetResource.ResourceType.Namespace, Diagnostics);
+            _credentialSetsRestClient = new CredentialSets(_credentialSetsClientDiagnostics, Pipeline, Endpoint, containerRegistryCredentialSetApiVersion ?? "2025-06-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ContainerRegistryResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ContainerRegistryResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Creates a credential set for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -76,21 +75,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="data"> The parameters for creating a credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ContainerRegistryCredentialSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string credentialSetName, ContainerRegistryCredentialSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _containerRegistryCredentialSetCredentialSetsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(new ContainerRegistryCredentialSetOperationSource(Client), _containerRegistryCredentialSetCredentialSetsClientDiagnostics, Pipeline, _containerRegistryCredentialSetCredentialSetsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, ContainerRegistryCredentialSetData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(
+                    new ContainerRegistryCredentialSetOperationSource(Client),
+                    _credentialSetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -104,20 +116,16 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Creates a credential set for a container registry with the specified parameters.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,21 +133,34 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="data"> The parameters for creating a credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ContainerRegistryCredentialSetResource> CreateOrUpdate(WaitUntil waitUntil, string credentialSetName, ContainerRegistryCredentialSetData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _containerRegistryCredentialSetCredentialSetsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, data, cancellationToken);
-                var operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(new ContainerRegistryCredentialSetOperationSource(Client), _containerRegistryCredentialSetCredentialSetsClientDiagnostics, Pipeline, _containerRegistryCredentialSetCredentialSetsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, ContainerRegistryCredentialSetData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource> operation = new ContainerRegistryArmOperation<ContainerRegistryCredentialSetResource>(
+                    new ContainerRegistryCredentialSetOperationSource(Client),
+                    _credentialSetsClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -153,38 +174,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the specified credential set resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ContainerRegistryCredentialSetResource>> GetAsync(string credentialSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Get");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Get");
             scope.Start();
             try
             {
-                var response = await _containerRegistryCredentialSetCredentialSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ContainerRegistryCredentialSetData> response = Response.FromValue(ContainerRegistryCredentialSetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryCredentialSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -198,38 +223,42 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Gets the properties of the specified credential set resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ContainerRegistryCredentialSetResource> Get(string credentialSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Get");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Get");
             scope.Start();
             try
             {
-                var response = _containerRegistryCredentialSetCredentialSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ContainerRegistryCredentialSetData> response = Response.FromValue(ContainerRegistryCredentialSetData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryCredentialSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -243,50 +272,44 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// Lists all credential set resources for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryCredentialSetResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryCredentialSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryCredentialSetResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryCredentialSetCredentialSetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryCredentialSetCredentialSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryCredentialSetResource(Client, ContainerRegistryCredentialSetData.DeserializeContainerRegistryCredentialSetData(e)), _containerRegistryCredentialSetCredentialSetsClientDiagnostics, Pipeline, "ContainerRegistryCredentialSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ContainerRegistryCredentialSetData, ContainerRegistryCredentialSetResource>(new CredentialSetsGetAllAsyncCollectionResultOfT(_credentialSetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryCredentialSetResource(Client, data));
         }
 
         /// <summary>
         /// Lists all credential set resources for the specified container registry.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_List</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_List. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -294,45 +317,61 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <returns> A collection of <see cref="ContainerRegistryCredentialSetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryCredentialSetResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryCredentialSetCredentialSetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _containerRegistryCredentialSetCredentialSetsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerRegistryCredentialSetResource(Client, ContainerRegistryCredentialSetData.DeserializeContainerRegistryCredentialSetData(e)), _containerRegistryCredentialSetCredentialSetsClientDiagnostics, Pipeline, "ContainerRegistryCredentialSetCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ContainerRegistryCredentialSetData, ContainerRegistryCredentialSetResource>(new CredentialSetsGetAllCollectionResultOfT(_credentialSetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new ContainerRegistryCredentialSetResource(Client, data));
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the properties of the specified credential set resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string credentialSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Exists");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryCredentialSetCredentialSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryCredentialSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryCredentialSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryCredentialSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -343,39 +382,53 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Checks to see if the resource exists in azure.
+        /// Gets the properties of the specified credential set resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string credentialSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Exists");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.Exists");
             scope.Start();
             try
             {
-                var response = _containerRegistryCredentialSetCredentialSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryCredentialSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryCredentialSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryCredentialSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -386,41 +439,57 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the properties of the specified credential set resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ContainerRegistryCredentialSetResource>> GetIfExistsAsync(string credentialSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.GetIfExists");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _containerRegistryCredentialSetCredentialSetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ContainerRegistryCredentialSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryCredentialSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryCredentialSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryCredentialSetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryCredentialSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -431,41 +500,57 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
-        /// Tries to get details for this resource from the service.
+        /// Gets the properties of the specified credential set resource.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/credentialSets/{credentialSetName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CredentialSets_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> CredentialSets_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-11-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ContainerRegistryCredentialSetResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-06-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialSetName"> The name of the credential set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialSetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialSetName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ContainerRegistryCredentialSetResource> GetIfExists(string credentialSetName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(credentialSetName, nameof(credentialSetName));
 
-            using var scope = _containerRegistryCredentialSetCredentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.GetIfExists");
+            using DiagnosticScope scope = _credentialSetsClientDiagnostics.CreateScope("ContainerRegistryCredentialSetCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _containerRegistryCredentialSetCredentialSetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, credentialSetName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _credentialSetsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, credentialSetName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ContainerRegistryCredentialSetData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ContainerRegistryCredentialSetData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ContainerRegistryCredentialSetData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ContainerRegistryCredentialSetResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ContainerRegistryCredentialSetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -485,6 +570,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ContainerRegistryCredentialSetResource> IAsyncEnumerable<ContainerRegistryCredentialSetResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

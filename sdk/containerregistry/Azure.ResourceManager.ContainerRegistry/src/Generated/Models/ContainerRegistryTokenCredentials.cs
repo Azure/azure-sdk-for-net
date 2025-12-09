@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of the credentials that can be used for authenticating the token. </summary>
     public partial class ContainerRegistryTokenCredentials
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCredentials"/>. </summary>
         public ContainerRegistryTokenCredentials()
@@ -55,19 +27,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenCredentials"/>. </summary>
         /// <param name="certificates"></param>
         /// <param name="passwords"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTokenCredentials(IList<ContainerRegistryTokenCertificate> certificates, IList<ContainerRegistryTokenPassword> passwords, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTokenCredentials(IList<ContainerRegistryTokenCertificate> certificates, IList<ContainerRegistryTokenPassword> passwords, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Certificates = certificates;
             Passwords = passwords;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the certificates. </summary>
-        [WirePath("certificates")]
+        /// <summary> Gets the Certificates. </summary>
         public IList<ContainerRegistryTokenCertificate> Certificates { get; }
-        /// <summary> Gets the passwords. </summary>
-        [WirePath("passwords")]
+
+        /// <summary> Gets the Passwords. </summary>
         public IList<ContainerRegistryTokenPassword> Passwords { get; }
     }
 }

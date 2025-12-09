@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary>
-    /// A class representing the ContainerRegistryToken data model.
-    /// An object that represents a token for a container registry.
-    /// </summary>
+    /// <summary> An object that represents a token for a container registry. </summary>
     public partial class ContainerRegistryTokenData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenData"/>. </summary>
         public ContainerRegistryTokenData()
@@ -57,40 +25,19 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTokenData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="createdOn"> The creation date of scope map. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="scopeMapId"> The resource ID of the scope map to which the token will be associated with. </param>
-        /// <param name="credentials"> The credentials that can be used for authenticating the token. </param>
-        /// <param name="status"> The status of the token example enabled or disabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTokenData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, ResourceIdentifier scopeMapId, ContainerRegistryTokenCredentials credentials, ContainerRegistryTokenStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the token. </param>
+        internal ContainerRegistryTokenData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, TokenProperties properties) : base(id, name, resourceType, systemData)
         {
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            ScopeMapId = scopeMapId;
-            Credentials = credentials;
-            Status = status;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
-        /// <summary> The creation date of scope map. </summary>
-        [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get; }
-        /// <summary> The resource ID of the scope map to which the token will be associated with. </summary>
-        [WirePath("properties.scopeMapId")]
-        public ResourceIdentifier ScopeMapId { get; set; }
-        /// <summary> The credentials that can be used for authenticating the token. </summary>
-        [WirePath("properties.credentials")]
-        public ContainerRegistryTokenCredentials Credentials { get; set; }
-        /// <summary> The status of the token example enabled or disabled. </summary>
-        [WirePath("properties.status")]
-        public ContainerRegistryTokenStatus? Status { get; set; }
+        /// <summary> The properties of the token. </summary>
+        public TokenProperties Properties { get; set; }
     }
 }

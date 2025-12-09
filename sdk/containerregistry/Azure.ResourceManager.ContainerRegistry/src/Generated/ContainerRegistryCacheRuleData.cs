@@ -13,43 +13,11 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    /// <summary>
-    /// A class representing the ContainerRegistryCacheRule data model.
-    /// An object that represents a cache rule for a container registry.
-    /// </summary>
+    /// <summary> An object that represents a cache rule for a container registry. </summary>
     public partial class ContainerRegistryCacheRuleData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheRuleData"/>. </summary>
         public ContainerRegistryCacheRuleData()
@@ -57,46 +25,91 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryCacheRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the cache rule. </param>
-        /// <param name="sourceRepository"> Source repository pulled from upstream. </param>
-        /// <param name="targetRepository">
-        /// Target repository specified in docker pull command.
-        /// Eg: docker pull myregistry.azurecr.io/{targetRepository}:{tag}
-        /// </param>
-        /// <param name="createdOn"> The creation date of the cache rule. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryCacheRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceIdentifier credentialSetResourceId, string sourceRepository, string targetRepository, DateTimeOffset? createdOn, ContainerRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The properties of the cache rule. </param>
+        internal ContainerRegistryCacheRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CacheRuleProperties properties) : base(id, name, resourceType, systemData)
         {
-            CredentialSetResourceId = credentialSetResourceId;
-            SourceRepository = sourceRepository;
-            TargetRepository = targetRepository;
-            CreatedOn = createdOn;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The properties of the cache rule. </summary>
+        internal CacheRuleProperties Properties { get; set; }
+
         /// <summary> The ARM resource ID of the credential store which is associated with the cache rule. </summary>
-        [WirePath("properties.credentialSetResourceId")]
-        public ResourceIdentifier CredentialSetResourceId { get; set; }
+        public string CredentialSetResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CredentialSetResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheRuleProperties();
+                }
+                Properties.CredentialSetResourceId = value;
+            }
+        }
+
         /// <summary> Source repository pulled from upstream. </summary>
-        [WirePath("properties.sourceRepository")]
-        public string SourceRepository { get; set; }
+        public string SourceRepository
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceRepository;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheRuleProperties();
+                }
+                Properties.SourceRepository = value;
+            }
+        }
+
         /// <summary>
         /// Target repository specified in docker pull command.
         /// Eg: docker pull myregistry.azurecr.io/{targetRepository}:{tag}
         /// </summary>
-        [WirePath("properties.targetRepository")]
-        public string TargetRepository { get; set; }
+        public string TargetRepository
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetRepository;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CacheRuleProperties();
+                }
+                Properties.TargetRepository = value;
+            }
+        }
+
         /// <summary> The creation date of the cache rule. </summary>
-        [WirePath("properties.creationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        [WirePath("properties.provisioningState")]
-        public ContainerRegistryProvisioningState? ProvisioningState { get; }
+        public ContainerRegistryProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

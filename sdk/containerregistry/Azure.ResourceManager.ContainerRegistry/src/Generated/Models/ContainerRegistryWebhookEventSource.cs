@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
     public partial class ContainerRegistryWebhookEventSource
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventSource"/>. </summary>
         internal ContainerRegistryWebhookEventSource()
@@ -52,20 +23,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEventSource"/>. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
-        /// <param name="instanceId"> The running instance of an application. Changes after each restart. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryWebhookEventSource(string addr, string instanceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="instanceID"> The running instance of an application. Changes after each restart. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryWebhookEventSource(string addr, string instanceID, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Addr = addr;
-            InstanceId = instanceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            InstanceID = instanceID;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </summary>
-        [WirePath("addr")]
         public string Addr { get; }
+
         /// <summary> The running instance of an application. Changes after each restart. </summary>
-        [WirePath("instanceID")]
-        public string InstanceId { get; }
+        public string InstanceID { get; }
     }
 }

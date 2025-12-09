@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The policies for a container registry. </summary>
     public partial class ContainerRegistryPolicies
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryPolicies"/>. </summary>
         public ContainerRegistryPolicies()
@@ -56,64 +27,84 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="retentionPolicy"> The retention policy for a container registry. </param>
         /// <param name="exportPolicy"> The export policy for a container registry. </param>
         /// <param name="azureADAuthenticationAsArmPolicy"> The policy for using Azure Resource Manager audience token for a container registry. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="softDeletePolicy"> The soft delete policy for a container registry. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, SoftDeletePolicy softDeletePolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
             RetentionPolicy = retentionPolicy;
             ExportPolicy = exportPolicy;
             AzureADAuthenticationAsArmPolicy = azureADAuthenticationAsArmPolicy;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SoftDeletePolicy = softDeletePolicy;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The quarantine policy for a container registry. </summary>
         internal ContainerRegistryQuarantinePolicy QuarantinePolicy { get; set; }
+
+        /// <summary> The content trust policy for a container registry. </summary>
+        public ContainerRegistryTrustPolicy TrustPolicy { get; set; }
+
+        /// <summary> The retention policy for a container registry. </summary>
+        public ContainerRegistryRetentionPolicy RetentionPolicy { get; set; }
+
+        /// <summary> The export policy for a container registry. </summary>
+        internal ContainerRegistryExportPolicy ExportPolicy { get; set; }
+
+        /// <summary> The policy for using Azure Resource Manager audience token for a container registry. </summary>
+        internal AzureADAuthenticationAsArmPolicy AzureADAuthenticationAsArmPolicy { get; set; }
+
+        /// <summary> The soft delete policy for a container registry. </summary>
+        public SoftDeletePolicy SoftDeletePolicy { get; set; }
+
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
-        [WirePath("quarantinePolicy.status")]
         public ContainerRegistryPolicyStatus? QuarantineStatus
         {
-            get => QuarantinePolicy is null ? default : QuarantinePolicy.Status;
+            get
+            {
+                return QuarantinePolicy is null ? default : QuarantinePolicy.Status;
+            }
             set
             {
                 if (QuarantinePolicy is null)
+                {
                     QuarantinePolicy = new ContainerRegistryQuarantinePolicy();
+                }
                 QuarantinePolicy.Status = value;
             }
         }
 
-        /// <summary> The content trust policy for a container registry. </summary>
-        [WirePath("trustPolicy")]
-        public ContainerRegistryTrustPolicy TrustPolicy { get; set; }
-        /// <summary> The retention policy for a container registry. </summary>
-        [WirePath("retentionPolicy")]
-        public ContainerRegistryRetentionPolicy RetentionPolicy { get; set; }
-        /// <summary> The export policy for a container registry. </summary>
-        internal ContainerRegistryExportPolicy ExportPolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
-        [WirePath("exportPolicy.status")]
         public ContainerRegistryExportPolicyStatus? ExportStatus
         {
-            get => ExportPolicy is null ? default : ExportPolicy.Status;
+            get
+            {
+                return ExportPolicy is null ? default : ExportPolicy.Status;
+            }
             set
             {
                 if (ExportPolicy is null)
+                {
                     ExportPolicy = new ContainerRegistryExportPolicy();
+                }
                 ExportPolicy.Status = value;
             }
         }
 
-        /// <summary> The policy for using Azure Resource Manager audience token for a container registry. </summary>
-        internal AzureADAuthenticationAsArmPolicy AzureADAuthenticationAsArmPolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
-        [WirePath("azureADAuthenticationAsArmPolicy.status")]
         public AadAuthenticationAsArmPolicyStatus? AzureADAuthenticationAsArmStatus
         {
-            get => AzureADAuthenticationAsArmPolicy is null ? default : AzureADAuthenticationAsArmPolicy.Status;
+            get
+            {
+                return AzureADAuthenticationAsArmPolicy is null ? default : AzureADAuthenticationAsArmPolicy.Status;
+            }
             set
             {
                 if (AzureADAuthenticationAsArmPolicy is null)
+                {
                     AzureADAuthenticationAsArmPolicy = new AzureADAuthenticationAsArmPolicy();
+                }
                 AzureADAuthenticationAsArmPolicy.Status = value;
             }
         }

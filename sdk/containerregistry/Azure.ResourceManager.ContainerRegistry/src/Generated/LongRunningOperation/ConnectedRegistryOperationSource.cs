@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    internal class ConnectedRegistryOperationSource : IOperationSource<ConnectedRegistryResource>
+    /// <summary></summary>
+    internal partial class ConnectedRegistryOperationSource : IOperationSource<ConnectedRegistryResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal ConnectedRegistryOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         ConnectedRegistryResource IOperationSource<ConnectedRegistryResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedRegistryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            ConnectedRegistryData data = ConnectedRegistryData.DeserializeConnectedRegistryData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new ConnectedRegistryResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ConnectedRegistryResource> IOperationSource<ConnectedRegistryResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedRegistryData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
-            return await Task.FromResult(new ConnectedRegistryResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            ConnectedRegistryData data = ConnectedRegistryData.DeserializeConnectedRegistryData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new ConnectedRegistryResource(_client, data);
         }
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryExportPolicyStatus : IEquatable<ContainerRegistryExportPolicyStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ContainerRegistryExportPolicyStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string EnabledValue = "enabled";
         private const string DisabledValue = "disabled";
 
-        /// <summary> enabled. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ContainerRegistryExportPolicyStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Enabled. </summary>
         public static ContainerRegistryExportPolicyStatus Enabled { get; } = new ContainerRegistryExportPolicyStatus(EnabledValue);
-        /// <summary> disabled. </summary>
+
+        /// <summary> Gets the Disabled. </summary>
         public static ContainerRegistryExportPolicyStatus Disabled { get; } = new ContainerRegistryExportPolicyStatus(DisabledValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryExportPolicyStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryExportPolicyStatus left, ContainerRegistryExportPolicyStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryExportPolicyStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryExportPolicyStatus left, ContainerRegistryExportPolicyStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryExportPolicyStatus(string value) => new ContainerRegistryExportPolicyStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryExportPolicyStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryExportPolicyStatus?(string value) => value == null ? null : new ContainerRegistryExportPolicyStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryExportPolicyStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryExportPolicyStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

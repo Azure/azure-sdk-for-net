@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -14,35 +15,51 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     public readonly partial struct ContainerRegistryIPRuleAction : IEquatable<ContainerRegistryIPRuleAction>
     {
         private readonly string _value;
+        private const string AllowValue = "Allow";
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryIPRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ContainerRegistryIPRuleAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string AllowValue = "Allow";
-
-        /// <summary> Allow. </summary>
+        /// <summary> Gets the Allow. </summary>
         public static ContainerRegistryIPRuleAction Allow { get; } = new ContainerRegistryIPRuleAction(AllowValue);
+
         /// <summary> Determines if two <see cref="ContainerRegistryIPRuleAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ContainerRegistryIPRuleAction left, ContainerRegistryIPRuleAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ContainerRegistryIPRuleAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ContainerRegistryIPRuleAction left, ContainerRegistryIPRuleAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ContainerRegistryIPRuleAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ContainerRegistryIPRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ContainerRegistryIPRuleAction(string value) => new ContainerRegistryIPRuleAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ContainerRegistryIPRuleAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ContainerRegistryIPRuleAction?(string value) => value == null ? null : new ContainerRegistryIPRuleAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ContainerRegistryIPRuleAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ContainerRegistryIPRuleAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
