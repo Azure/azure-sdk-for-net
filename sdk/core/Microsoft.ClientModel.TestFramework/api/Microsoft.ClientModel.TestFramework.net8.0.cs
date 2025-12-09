@@ -162,6 +162,7 @@ namespace Microsoft.ClientModel.TestFramework
         public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.HeaderRegexSanitizer> HeaderRegexSanitizers { get { throw null; } }
         public virtual System.Collections.Generic.List<string> JsonPathSanitizers { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode Mode { get { throw null; } set { } }
+        public bool NormalizeMultipartContentDispositionHeaders { get { throw null; } set { } }
         public virtual Microsoft.ClientModel.TestFramework.TestRecording? Recording { get { throw null; } }
         public virtual System.Collections.Generic.List<string> SanitizedHeaders { get { throw null; } }
         public virtual System.Collections.Generic.List<string> SanitizedQueryParameters { get { throw null; } }
@@ -961,6 +962,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
     {
         protected TestProxyAdminClient() { }
         public System.ClientModel.Primitives.ClientPipeline Pipeline { get { throw null; } }
+        public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddContentDispositionFilePathSanitizer(string? recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.ClientModel.ClientResult AddSanitizers(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
         public virtual System.ClientModel.ClientResult AddSanitizers(System.Collections.Generic.IEnumerable<Microsoft.ClientModel.TestFramework.TestProxy.Admin.SanitizerAddition> sanitizers, string recordingId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.ClientModel.ClientResult> AddSanitizersAsync(System.ClientModel.BinaryContent content, string recordingId = null, System.ClientModel.Primitives.RequestOptions options = null) { throw null; }
