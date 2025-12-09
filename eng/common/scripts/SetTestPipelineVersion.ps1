@@ -6,6 +6,8 @@ param (
   [Parameter(mandatory = $false)]
   [string]$PackageNames = "",
   [Parameter(mandatory = $false)]
+  # ServiceDirectory is required when using PackageNames,
+  # or when Artifacts do not include their own ServiceDirectory property.
   [string]$ServiceDirectory,
   [Parameter(mandatory = $false)]
   [string]$TagSeparator = "_",
@@ -32,14 +34,15 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
         LogError "Artifact is missing required 'name' property."
         exit 1
       }
-      
+
       $packageName = $artifact.name
       if ([String]::IsNullOrWhiteSpace($packageName)) {
         LogError "Artifact 'name' property is null or empty."
         exit 1
       }
 
-      # Check for ServiceDirectory property      
+      $artifactServiceDirectory = $null
+      # Check for ServiceDirectory property
       if (Get-Member -InputObject $artifact -Name 'ServiceDirectory' -MemberType Properties) {
         if (![String]::IsNullOrWhiteSpace($artifact.ServiceDirectory)) {
           $artifactServiceDirectory = $artifact.ServiceDirectory
@@ -65,13 +68,13 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
           LogError "Artifact '$packageName' is missing required 'groupId' property for Java language."
           exit 1
         }
-        
+
         $groupId = $artifact.groupId
         if ([String]::IsNullOrWhiteSpace($groupId)) {
           LogError "GroupId is missing for package $packageName."
           exit 1
         }
-        
+
         Write-Host "Processing $packageName with groupId $groupId"
         # Use groupId+artifactName format for tag prefix (e.g., "com.azure.v2+azure-sdk-template_")
         $prefix = "$groupId+$packageName$TagSeparator"
@@ -123,6 +126,7 @@ if ($Artifacts -and $Artifacts.Count -gt 0) {
     LogError "ServiceDirectory is required when using PackageNames."
     exit 1
   }
+
   $packageNamesArray = $PackageNames.Split(',')
   foreach ($packageName in $packageNamesArray) {
     Write-Host "Processing $packageName"
