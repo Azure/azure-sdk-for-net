@@ -5,6 +5,12 @@ description: "Guide the user to generate and build SDKs locally for a TypeSpec b
 # Goal
 
 Help the user generate and build SDKs locally from TypeSpec API specifications using the `azure-sdk-mcp` tools.
+High level steps involved:
+1. Generate SDK locally
+2. Build / Compile SDK locally
+3. Run package checks
+4. Run package tests
+5. Update change log, metadata and version
 
 ---
 
@@ -117,3 +123,29 @@ Help the user generate and build SDKs locally from TypeSpec API specifications u
 **Actions**:
 
 - Run `azsdk_package_build_code` MCP tool to compile the SDK in the identified project directory.
+
+---
+
+### Step 3: Run package validation
+
+**Actions**:
+
+- Run `azsdk_package_run_check` MCP tool to validate the generated SDK package in the identified project directory.
+
+---
+
+### Step 3: Run package tests
+
+**Actions**:
+
+- Run `azsdk_package_run_tests` MCP tool to run tests on the generated SDK package in the identified project directory.
+
+---
+
+### Step 3: Update change log, metadata and version
+
+**Actions**:
+
+- Run `azsdk_package_update_metadata` MCP tool to update metadata in the identified project directory.
+- Run `azsdk_package_update_changelog_content` MCP tool to update change log in the identified project directory.
+- Run `azsdk_package_update_version` MCP tool to update version in the identified project directory.
