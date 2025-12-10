@@ -17,7 +17,7 @@ The path to the JSON file containing tool definitions to be evaluated.
 .PARAMETER PromptsFilePath
 The path to the JSON file containing prompt definitions to be evaluated.
 
-.PARAMETER outputFilePath
+.PARAMETER OutputFilePath
 The target folder where the generated `results.md` will be moved after the evaluator runs.
 
 .PARAMETER AoaiEndpoint
@@ -28,7 +28,7 @@ The API key used to authenticate with the embedding endpoint. Prefer providing t
 secret store or environment variable rather than hard-coding.
 
 .NOTES
-- The evaluator emits `results.md` in the evaluator folder; this script moves it to `outputFilePath`.
+- The evaluator emits `results.md` in the evaluator folder; this script moves it to `OutputFilePath`.
 - Requires .NET SDK available on PATH.
 - Set-StrictMode is enabled.
 
@@ -37,7 +37,7 @@ secret store or environment variable rather than hard-coding.
   -EvaluatorPath "C:\work\mcp\eng\tools\ToolDescriptionEvaluator\src" `
   -ToolsFilePath "C:\work\azure-sdk-tools\tools\azsdk-cli\azure-sdk-tools.json" `
   -PromptsFilePath "C:\work\azure-sdk-tools\tools\azsdk-cli\azure-sdk-prompts.json" `
-  -outputFilePath "C:\work\azure-sdk-tools\tools\azsdk-cli" `
+  -OutputFilePath "C:\work\azure-sdk-tools\tools\azsdk-cli" `
   -AoaiEndpoint "https://<your-endpoint>/openai/deployments/text-embedding-3-large/embeddings?api-version=2023-05-15" `
   -TextEmbeddingApiKey (Get-Secret -Name 'TextEmbeddingApiKey')
 
@@ -54,7 +54,7 @@ param (
     [string] $PromptsFilePath,
 
     [Parameter(Mandatory = $true)]
-    [string] $outputFilePath,
+    [string] $OutputFilePath,
 
     # Environment Variables
     [Parameter(Mandatory = $true)]
@@ -94,6 +94,6 @@ if (-not (Test-Path -Path $generatedPath -PathType Leaf)) {
     throw "Expected output file not found: $generatedPath"
 }
 
-Write-Host "Moving Results File: $generatedPath -> $outputFilePath"
-Move-Item -Path $generatedPath -Destination $outputFilePath -Force
-Write-Host "Successfully moved results file to $outputFilePath"
+Write-Host "Moving Results File: $generatedPath -> $OutputFilePath"
+Move-Item -Path $generatedPath -Destination $OutputFilePath -Force
+Write-Host "Successfully moved results file to $OutputFilePath"
