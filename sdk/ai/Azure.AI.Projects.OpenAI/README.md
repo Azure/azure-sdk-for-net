@@ -37,6 +37,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [MCP tool with project connection](#mcp-tool-with-project-connection)
   - [OpenAPI tool](#openapi-tool)
   - [OpenAPI tool with project connection](#openapi-tool-project-connection)
+  - [Browser automation](#browser-automation)
   - [SharePoint tool](#sharepoint-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -1091,6 +1092,79 @@ OpenAIResponse response = await responseClient.CreateResponseAsync(
         options: responseOptions
     );
 Console.WriteLine(response.GetOutputText());
+```
+
+## Browser automation
+
+Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
+
+### Create Azure Playwright workspace
+
+1. Deploy an Azure Playwright workspace.
+2. In the **Get started** section, open **2. Set up authentication**.
+3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+
+### Configure Microsoft Foundry
+
+1. Open the left navigation and select **Management center**.
+2. Choose **Connected resources**.
+3. Create a new connection of type **Serverless Model**.
+4. Provide a name, then paste your Access Token into the **Key** field.
+5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
+
+Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
+
+```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
+var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var playwrightConnectionName = System.Environment.GetEnvironmentVariable("PLAYWRIGHT_CONNECTION_NAME");
+AIProjectClientOptions options = new()
+{
+    NetworkTimeout = TimeSpan.FromMinutes(5)
+};
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+```
+
+To use Azure Playwright workspace we need to create agent with `BrowserAutomationAgentTool`.
+
+```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
+AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
+BrowserAutomationAgentTool playwrightTool = new(
+    new BrowserAutomationToolParameters(
+        new BrowserAutomationToolConnectionParameters(playwrightConnection.Id)
+    ));
+
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are an Agent helping with browser automation tasks.\n" +
+    "You can answer questions, provide information, and assist with various tasks\n" +
+    "related to web browsing using the Browser Automation tool available to you.",
+    Tools = {playwrightTool}
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+Streaming response outputs with browser automation provides incremental updates as the automation is processed. This is advised for interactive scenarios, as browser automation can require several minutes to fully complete.
+
+```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
+ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+ResponseCreationOptions responseOptions = new()
+{
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+};
+await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(
+        userInputText: "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+        "To do that, go to the website finance.yahoo.com.\n" +
+        "At the top of the page, you will find a search bar.\n" +
+        "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+        "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+        "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.",
+        options: responseOptions))
+{
+    ParseResponse(update);
+}
 ```
 
 ## SharePoint tool
