@@ -21,12 +21,12 @@ Pre-requisites:
 As a first step, you must prompt the user to understand the intention of SDK generation. Based on the user input, you can either run SDK generation locally or use SDK generation pipeline.
 
 Generate SDK locally in cases below:
-- If user wants to walk through each SDK generation step locally. This approach requires user to have the setup for each language to generate SDK locally. User can create a pull request for each language after completing all the steps in SDK generation successfully to get the generated SDK reviewed and merged.
-- If user wants troubleshoot a failed SDK generation by the pipeline.
+- If the user wants to walk through each SDK generation step locally. This approach requires user to have the setup for each language to generate SDK locally. User can create a pull request for each language after completing all the steps in SDK generation successfully to get the generated SDK reviewed and merged.
+- If the user wants to troubleshoot a failed SDK generation by the pipeline.
 - If SDK or client.tsp customization are needed before creating a pull request.
 
 Generate SDK using pipeline:
-- If user wants to generate SDK and get a PR automatically created in Azure SDK language repositories. This approach can be followed if user does not want to setup local environment for each language.
+- If the user wants to generate SDK and get a PR automatically created in Azure SDK language repositories. This approach can be followed if the user does not want to setup local environment for each language.
 
 ### Generate SDK locally:
 
