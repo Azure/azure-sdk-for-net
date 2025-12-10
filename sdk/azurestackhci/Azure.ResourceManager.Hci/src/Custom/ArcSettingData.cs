@@ -4,7 +4,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
+using Azure.ResourceManager.Hci.Models;
 
 namespace Azure.ResourceManager.Hci
 {
@@ -14,6 +16,22 @@ namespace Azure.ResourceManager.Hci
         /// <summary> contains connectivity related configuration for ARC resources. </summary>
         [WirePath("properties.connectivityProperties")]
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public BinaryData ConnectivityProperties { get; set; }
+        public BinaryData ConnectivityProperties
+        {
+            get
+            {
+                return ModelReaderWriter.Write(
+                    ConnectivityConfigurations,
+                    options: ModelReaderWriterOptions.Json,
+                    context: default);
+            }
+            set
+            {
+                ConnectivityConfigurations = ModelReaderWriter.Read<HciArcConnectivityProperties>(
+                    value,
+                    options: ModelReaderWriterOptions.Json,
+                    context: default);
+            }
+        }
     }
 }

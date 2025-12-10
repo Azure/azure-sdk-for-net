@@ -493,10 +493,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="connectivityConfigurations"> contains connectivity related configuration for ARC resources. </param>
         /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
         /// <returns> A new <see cref="Hci.ArcSettingData"/> instance for mocking. </returns>
-        public static ArcSettingData ArcSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, string arcInstanceResourceGroup = null, Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null, ArcSettingAggregateState? aggregateState = null, IEnumerable<PerNodeArcState> perNodeDetails = null, BinaryData connectivityProperties = null, IEnumerable<ArcDefaultExtensionDetails> defaultExtensions = null)
+        public static ArcSettingData ArcSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, HciProvisioningState? provisioningState = null, string arcInstanceResourceGroup = null, Guid? arcApplicationClientId = null, Guid? arcApplicationTenantId = null, Guid? arcServicePrincipalObjectId = null, Guid? arcApplicationObjectId = null, ArcSettingAggregateState? aggregateState = null, IEnumerable<PerNodeArcState> perNodeDetails = null, HciArcConnectivityProperties connectivityConfigurations = null, IEnumerable<ArcDefaultExtensionDetails> defaultExtensions = null)
         {
             perNodeDetails ??= new List<PerNodeArcState>();
             defaultExtensions ??= new List<ArcDefaultExtensionDetails>();
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Hci.Models
                 arcApplicationObjectId,
                 aggregateState,
                 perNodeDetails?.ToList(),
-                connectivityProperties,
+                connectivityConfigurations,
                 defaultExtensions?.ToList(),
                 serializedAdditionalRawData: null);
         }

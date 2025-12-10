@@ -227,6 +227,9 @@ rename-mapping:
   SecretsLocationDetails: HciSecretsLocationDetails
   SecretsLocationsChangeRequest: HciSecretsLocationsChangeContent
   ArcConnectivityProperties: HciArcConnectivityProperties
+  ArcSetting.properties.connectivityProperties: ConnectivityConfigurations
+  ServiceConfiguration: HciServiceConfiguration
+  ServiceName: HciServiceConfigurationName
 
 directive:
   - from: hci.json

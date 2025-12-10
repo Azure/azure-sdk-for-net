@@ -17,7 +17,6 @@ namespace Azure.ResourceManager.Hci
     {
         /// <summary> The status of the last operation. </summary>
         [WirePath("properties.provisioningState")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public HciProvisioningState? ProvisioningState { get; set; }
     }
 }

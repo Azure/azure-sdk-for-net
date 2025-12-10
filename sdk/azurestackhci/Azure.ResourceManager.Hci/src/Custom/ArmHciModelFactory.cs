@@ -406,6 +406,28 @@ namespace Azure.ResourceManager.Hci.Models
             return ArcSettingData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, arcInstanceResourceGroup: arcInstanceResourceGroup, arcApplicationClientId: arcApplicationClientId, arcApplicationTenantId: arcApplicationTenantId, arcServicePrincipalObjectId: arcServicePrincipalObjectId, arcApplicationObjectId: arcApplicationObjectId, aggregateState: aggregateState, perNodeDetails: perNodeDetails, connectivityProperties: connectivityProperties, defaultExtensions: default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Hci.ArcSettingData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> Provisioning state of the ArcSetting proxy resource. </param>
+        /// <param name="arcInstanceResourceGroup"> The resource group that hosts the Arc agents, ie. Hybrid Compute Machine resources. </param>
+        /// <param name="arcApplicationClientId"> App id of arc AAD identity. </param>
+        /// <param name="arcApplicationTenantId"> Tenant id of arc AAD identity. </param>
+        /// <param name="arcServicePrincipalObjectId"> Object id of arc AAD service principal. </param>
+        /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
+        /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
+        /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
+        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
+        /// <returns> A new <see cref="Hci.ArcSettingData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArcSettingData ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IEnumerable<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IEnumerable<ArcDefaultExtensionDetails> defaultExtensions)
+        {
+            return ArcSettingData(id, name, resourceType, systemData, provisioningState, arcInstanceResourceGroup, arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, aggregateState, perNodeDetails, connectivityConfigurations: default, defaultExtensions);
+        }
+
         /// <summary> Initializes a new instance of HciClusterNode. </summary>
         /// <param name="name"> Name of the cluster node. </param>
         /// <param name="id"> Id of the node in the cluster. </param>

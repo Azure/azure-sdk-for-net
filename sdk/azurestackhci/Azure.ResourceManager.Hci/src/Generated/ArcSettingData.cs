@@ -71,10 +71,10 @@ namespace Azure.ResourceManager.Hci
         /// <param name="arcApplicationObjectId"> Object id of arc AAD identity. </param>
         /// <param name="aggregateState"> Aggregate state of Arc agent across the nodes in this HCI cluster. </param>
         /// <param name="perNodeDetails"> State of Arc agent in each of the nodes. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="connectivityConfigurations"> contains connectivity related configuration for ARC resources. </param>
         /// <param name="defaultExtensions"> Properties for each of the default extensions category. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, BinaryData connectivityProperties, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ArcSettingData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, HciProvisioningState? provisioningState, string arcInstanceResourceGroup, Guid? arcApplicationClientId, Guid? arcApplicationTenantId, Guid? arcServicePrincipalObjectId, Guid? arcApplicationObjectId, ArcSettingAggregateState? aggregateState, IReadOnlyList<PerNodeArcState> perNodeDetails, HciArcConnectivityProperties connectivityConfigurations, IReadOnlyList<ArcDefaultExtensionDetails> defaultExtensions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             ArcInstanceResourceGroup = arcInstanceResourceGroup;
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Hci
             ArcApplicationObjectId = arcApplicationObjectId;
             AggregateState = aggregateState;
             PerNodeDetails = perNodeDetails;
-            ConnectivityProperties = connectivityProperties;
+            ConnectivityConfigurations = connectivityConfigurations;
             DefaultExtensions = defaultExtensions;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -113,6 +113,9 @@ namespace Azure.ResourceManager.Hci
         /// <summary> State of Arc agent in each of the nodes. </summary>
         [WirePath("properties.perNodeDetails")]
         public IReadOnlyList<PerNodeArcState> PerNodeDetails { get; }
+        /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        [WirePath("properties.connectivityProperties")]
+        public HciArcConnectivityProperties ConnectivityConfigurations { get; set; }
         /// <summary> Properties for each of the default extensions category. </summary>
         [WirePath("properties.defaultExtensions")]
         public IReadOnlyList<ArcDefaultExtensionDetails> DefaultExtensions { get; }

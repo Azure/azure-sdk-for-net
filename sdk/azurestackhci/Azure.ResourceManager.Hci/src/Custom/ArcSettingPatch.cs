@@ -13,7 +13,6 @@ namespace Azure.ResourceManager.Hci.Models
     {
         /// <summary> contains connectivity related configuration for ARC resources. </summary>
         [WirePath("properties.connectivityProperties")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ConnectivityProperties { get; set; }
     }
 }
