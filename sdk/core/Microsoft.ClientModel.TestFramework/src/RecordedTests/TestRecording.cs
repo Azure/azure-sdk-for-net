@@ -34,6 +34,8 @@ public class TestRecording : IAsyncDisposable
     private readonly TestProxyProcess? _proxy;
     private readonly RecordedTestBase _recordedTestBase;
 
+    // This is a list of all default sanitizers applied in the test-proxy EXCEPT AZSDK0000 which is the Authorization
+    // header sanitizer, which should not be removed
     private static List<string> _defaultSanitizersApplied = [ "AZSDK1000", "AZSDK1001", "AZSDK1002", "AZSDK1003",
         "AZSDK1004", "AZSDK1005", "AZSDK1006", "AZSDK1007", "AZSDK1008", "AZSDK2001", "AZSDK2002", "AZSDK2003",
         "AZSDK2004", "AZSDK2005", "AZSDK2006", "AZSDK2007", "AZSDK2008", "AZSDK2009", "AZSDK2010", "AZSDK2011",
