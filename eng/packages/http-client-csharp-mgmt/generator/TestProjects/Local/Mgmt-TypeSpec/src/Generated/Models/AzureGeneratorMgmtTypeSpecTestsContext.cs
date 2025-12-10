@@ -59,6 +59,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(FooSettingsUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaDetails))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaLimitListData))]
+    [ModelReaderWriterBuildable(typeof(GroupQuotaLimitListPatch))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaLimitListProperties))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaLimitListResource))]
     [ModelReaderWriterBuildable(typeof(GroupQuotaLimitProperties))]
