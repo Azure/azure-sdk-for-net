@@ -97,6 +97,18 @@ public abstract class RecordedTestBase : ClientTestBase
     public bool NormalizeMultipartContentDispositionHeaders { get; set; } = false;
 
     /// <summary>
+    /// Gets or sets a value indicating whether to remove all default sanitizers that are automatically turned on
+    /// in the test proxy. This can be helpful to improve performance in scenarios where libraries have very large
+    /// request bodies that are expensive to sanitize.
+    /// </summary>
+    /// <remarks>
+    /// This setting should be used with caution as it may lead to sensitive data being recorded. All sanitization,
+    /// will have to be manually added as a custom sanitizer if this is enabled. The only sanitizer left by default
+    /// is the Authorization header sanitizer.
+    /// </remarks>
+    public bool RemoveDefaultSanitizers { get; set; } = false;
+
+    /// <summary>
     /// Gets or sets a value indicating whether client instrumentation validation should be performed.
     /// When enabled, the test framework verifies that all clients used during testing are properly instrumented.
     /// </summary>
