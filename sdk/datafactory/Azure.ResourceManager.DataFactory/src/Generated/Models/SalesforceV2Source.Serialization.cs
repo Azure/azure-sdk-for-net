@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("pageSize"u8);
                 JsonSerializer.Serialize(writer, PageSize);
             }
+            if (Optional.IsDefined(PartitionOption))
+            {
+                writer.WritePropertyName("partitionOption"u8);
+                JsonSerializer.Serialize(writer, PartitionOption);
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -94,6 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> query = default;
             DataFactoryElement<bool> includeDeletedObjects = default;
             DataFactoryElement<int> pageSize = default;
+            DataFactoryElement<string> partitionOption = default;
             DataFactoryElement<string> queryTimeout = default;
             BinaryData additionalColumns = default;
             string type = default;
@@ -139,6 +145,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     pageSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("partitionOption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    partitionOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -215,7 +230,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 soqlQuery,
                 query,
                 includeDeletedObjects,
-                pageSize);
+                pageSize,
+                partitionOption);
         }
 
         BinaryData IPersistableModel<SalesforceV2Source>.Write(ModelReaderWriterOptions options)

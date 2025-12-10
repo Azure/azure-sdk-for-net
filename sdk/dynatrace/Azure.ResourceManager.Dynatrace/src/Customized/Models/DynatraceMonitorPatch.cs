@@ -3,26 +3,27 @@
 
 #nullable disable
 
-using Azure.Core;
-using System;
-using System.Collections.Generic;
-using Azure.ResourceManager.Models;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    [CodeGenSerialization(nameof(UserInfo), "userInfo")]
-    [CodeGenSerialization(nameof(MonitoringStatus), "monitoringStatus")]
-    [CodeGenSerialization(nameof(MarketplaceSubscriptionStatus), "marketplaceSubscriptionStatus")]
-    [CodeGenSerialization(nameof(DynatraceEnvironmentProperties), "dynatraceEnvironmentProperties")]
     public partial class DynatraceMonitorPatch
     {
         /// <summary> User info. </summary>
-        public DynatraceMonitorUserInfo UserInfo { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo UserInfo { get; set; }
         /// <summary> Billing plan information. </summary>
-        public DynatraceMonitoringStatus? MonitoringStatus { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus? MonitoringStatus { get; set; }
         /// <summary> Marketplace subscription status. </summary>
-        public DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus? MarketplaceSubscriptionStatus { get; set; }
         /// <summary> Properties of the Dynatrace environment. </summary>
-        public DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get; set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get; set; }
+
+        /// <summary> The new Billing plan information. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get => MonitorUpdatePlanData; set => MonitorUpdatePlanData = value; }
     }
 }

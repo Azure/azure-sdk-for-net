@@ -65,8 +65,8 @@ function Get-GeneratorType {
                         return $EmitterMap[$emitterPath]
                     }
 
-                    # If we couldn't extract a specific name, use a default fully qualified name
-                    return "Unknown TypeSpec Generator: $emitterPath"
+                    # If we didn't match the known emitters, return TSP-Old
+                    return "TSP-Old"
                 }
             }
             else {
@@ -101,7 +101,7 @@ function Get-GeneratorType {
 
 function Test-HasTspLocation {
     param([string]$Path)
-    
+
     # Check if the library has a tsp-location.yaml file
     $tspLocationFiles = Get-ChildItem -Path $Path -Recurse -Filter "tsp-location.yaml" -ErrorAction SilentlyContinue
     return ($tspLocationFiles.Count -gt 0)
@@ -173,7 +173,7 @@ function New-MarkdownReport {
     $mgmtSwagger = $mgmtLibraries | Where-Object { $_.generator -eq "Swagger" }
     $mgmtNewEmitter = $mgmtLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
     $mgmtTspOld = $mgmtLibraries | Where-Object { $_.generator -eq "TSP-Old" }
-    
+
     $dataSwagger = $dataLibraries | Where-Object { $_.generator -eq "Swagger" }
     $dataNewEmitter = $dataLibraries | Where-Object { $_.generator -notin @("Swagger", "TSP-Old", "No Generator") }
     $dataTspOld = $dataLibraries | Where-Object { $_.generator -eq "TSP-Old" }
@@ -186,7 +186,7 @@ function New-MarkdownReport {
     $mgmtMigrated = $mgmtNewEmitter.Count
     $mgmtTypeSpecTotal = $mgmtTypeSpecLibs.Count
     $mgmtPercentage = if ($mgmtTypeSpecTotal -gt 0) { [math]::Round(($mgmtMigrated / $mgmtTypeSpecTotal) * 100, 1) } else { 0 }
-    
+
     $dataMigrated = $dataNewEmitter.Count
     $dataTypeSpecTotal = $dataTypeSpecLibs.Count
     $dataPercentage = if ($dataTypeSpecTotal -gt 0) { [math]::Round(($dataMigrated / $dataTypeSpecTotal) * 100, 1) } else { 0 }

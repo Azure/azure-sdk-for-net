@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
-    /// <summary> The response to the List Topics operation. </summary>
+    /// <summary> The response of a SBTopic list operation. </summary>
     internal partial class SBTopicListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.ServiceBus.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SBTopicListResult"/>. </summary>
-        internal SBTopicListResult()
+        /// <param name="value"> The SBTopic items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SBTopicListResult(IEnumerable<ServiceBusTopicData> value)
         {
-            Value = new ChangeTrackingList<ServiceBusTopicData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SBTopicListResult"/>. </summary>
-        /// <param name="value"> Result of the List Topics operation. </param>
-        /// <param name="nextLink"> Link to the next set of results. Not empty if Value contains incomplete list of topics. </param>
+        /// <param name="value"> The SBTopic items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SBTopicListResult(IReadOnlyList<ServiceBusTopicData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SBTopicListResult(IReadOnlyList<ServiceBusTopicData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Result of the List Topics operation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SBTopicListResult"/> for deserialization. </summary>
+        internal SBTopicListResult()
+        {
+        }
+
+        /// <summary> The SBTopic items on this page. </summary>
         public IReadOnlyList<ServiceBusTopicData> Value { get; }
-        /// <summary> Link to the next set of results. Not empty if Value contains incomplete list of topics. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

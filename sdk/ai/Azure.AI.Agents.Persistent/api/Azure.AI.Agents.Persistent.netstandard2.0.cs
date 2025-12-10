@@ -1597,7 +1597,7 @@ namespace Azure.AI.Agents.Persistent
     public static partial class PersistentAgentsClientExtensions
     {
         public static Microsoft.Extensions.AI.AITool AsAITool(this Azure.AI.Agents.Persistent.ToolDefinition tool) { throw null; }
-        public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null) { throw null; }
+        public static Microsoft.Extensions.AI.IChatClient AsIChatClient(this Azure.AI.Agents.Persistent.PersistentAgentsClient client, string agentId, string? defaultThreadId = null, bool throwOnContentErrors = true) { throw null; }
     }
     public static partial class PersistentAgentsExtensions
     {
@@ -2150,6 +2150,7 @@ namespace Azure.AI.Agents.Persistent
         public static Azure.AI.Agents.Persistent.RunStatus Completed { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus Expired { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus Failed { get { throw null; } }
+        public static Azure.AI.Agents.Persistent.RunStatus Incomplete { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus InProgress { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus Queued { get { throw null; } }
         public static Azure.AI.Agents.Persistent.RunStatus RequiresAction { get { throw null; } }
