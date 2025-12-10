@@ -604,6 +604,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
+    [TestCase(ToolType.BrowserAutomation)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -662,6 +663,7 @@ public class AgentsTests : AgentsTestBase
         if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint)
         {
             bool isUriCitationFound = false;
+
             // Check Annotation for Azure AI Search tool.
             foreach (ResponseItem item in response.OutputItems)
             {
@@ -681,6 +683,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
+    [TestCase(ToolType.BrowserAutomation)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
