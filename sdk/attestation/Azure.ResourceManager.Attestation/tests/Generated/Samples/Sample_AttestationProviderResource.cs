@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 },
                 Properties = new AttestationServicePatchSpecificParams
                 {
-                    PublicNetworkAccess = PublicNetworkAccessType.Disabled,
+                    PublicNetworkAccess = AttestationProviderPublicNetworkAccessType.Disabled,
                     TpmAttestationAuthentication = TpmAttestationAuthenticationType.Disabled,
                 },
             };

@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            PublicNetworkAccessType? publicNetworkAccess = default;
+            AttestationProviderPublicNetworkAccessType? publicNetworkAccess = default;
             TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
+                    publicNetworkAccess = new AttestationProviderPublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tpmAttestationAuthentication"u8))

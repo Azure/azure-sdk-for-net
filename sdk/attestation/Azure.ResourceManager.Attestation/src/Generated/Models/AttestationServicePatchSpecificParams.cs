@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationServicePatchSpecificParams(PublicNetworkAccessType? publicNetworkAccess, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AttestationServicePatchSpecificParams(AttestationProviderPublicNetworkAccessType? publicNetworkAccess, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicNetworkAccess = publicNetworkAccess;
             TpmAttestationAuthentication = tpmAttestationAuthentication;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Attestation.Models
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+        public AttestationProviderPublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </summary>
         public TpmAttestationAuthenticationType? TpmAttestationAuthentication { get; set; }
     }

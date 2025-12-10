@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Attestation
             string trustModel = default;
             AttestationServiceStatus? status = default;
             Uri attestUri = default;
-            PublicNetworkAccessType? publicNetworkAccess = default;
+            AttestationProviderPublicNetworkAccessType? publicNetworkAccess = default;
             IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections = default;
             TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Attestation
                             {
                                 continue;
                             }
-                            publicNetworkAccess = new PublicNetworkAccessType(property0.Value.GetString());
+                            publicNetworkAccess = new AttestationProviderPublicNetworkAccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))

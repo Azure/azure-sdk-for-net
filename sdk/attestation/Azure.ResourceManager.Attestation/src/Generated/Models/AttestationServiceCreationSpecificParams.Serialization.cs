@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            PublicNetworkAccessType? publicNetworkAccess = default;
+            AttestationProviderPublicNetworkAccessType? publicNetworkAccess = default;
             JsonWebKeySet policySigningCertificates = default;
             TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
+                    publicNetworkAccess = new AttestationProviderPublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("policySigningCertificates"u8))

@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AttestationProviderResource> GetDefaultAttestationProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetDefaultAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="AttestationProviderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AttestationProviderResource> GetAttestationProvidersByDefaultProvider(CancellationToken cancellationToken = default)
+        public virtual Pageable<AttestationProviderResource> GetDefaultAttestationProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AttestationProviderRestClient.CreateListDefaultRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetAttestationProvidersByDefaultProvider", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new AttestationProviderResource(Client, AttestationProviderData.DeserializeAttestationProviderData(e)), AttestationProviderClientDiagnostics, Pipeline, "MockableAttestationSubscriptionResource.GetDefaultAttestationProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = AttestationProviderClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider");
+            using var scope = AttestationProviderClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
             scope.Start();
             try
             {
@@ -219,9 +219,9 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AttestationProviderResource> GetDefaultByLocationAttestationProvider(AzureLocation location, CancellationToken cancellationToken = default)
+        public virtual Response<AttestationProviderResource> GetDefaultAttestationProviderByLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
-            using var scope = AttestationProviderClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultByLocationAttestationProvider");
+            using var scope = AttestationProviderClientDiagnostics.CreateScope("MockableAttestationSubscriptionResource.GetDefaultAttestationProviderByLocation");
             scope.Start();
             try
             {
