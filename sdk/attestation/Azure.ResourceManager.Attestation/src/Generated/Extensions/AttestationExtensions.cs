@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static async Task<Response<AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Attestation
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         public static Response<AttestationProviderResource> GetDefaultByLocationAttestationProvider(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)

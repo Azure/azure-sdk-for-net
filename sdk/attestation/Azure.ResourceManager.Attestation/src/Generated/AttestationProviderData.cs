@@ -70,14 +70,16 @@ namespace Azure.ResourceManager.Attestation
         /// <param name="attestUri"> Gets the uri of attestation service. </param>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string trustModel, AttestationServiceStatus? status, Uri attestUri, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AttestationProviderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string trustModel, AttestationServiceStatus? status, Uri attestUri, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<AttestationPrivateEndpointConnectionData> privateEndpointConnections, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             TrustModel = trustModel;
             Status = status;
             AttestUri = attestUri;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
+            TpmAttestationAuthentication = tpmAttestationAuthentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -96,5 +98,7 @@ namespace Azure.ResourceManager.Attestation
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connections associated with the attestation provider. </summary>
         public IReadOnlyList<AttestationPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
+        /// <summary> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </summary>
+        public TpmAttestationAuthenticationType? TpmAttestationAuthentication { get; set; }
     }
 }

@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WritePropertyName("policySigningCertificates"u8);
                 writer.WriteObjectValue(PolicySigningCertificates, options);
             }
+            if (Optional.IsDefined(TpmAttestationAuthentication))
+            {
+                writer.WritePropertyName("tpmAttestationAuthentication"u8);
+                writer.WriteStringValue(TpmAttestationAuthentication.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
             }
             PublicNetworkAccessType? publicNetworkAccess = default;
             JsonWebKeySet policySigningCertificates = default;
+            TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,13 +111,22 @@ namespace Azure.ResourceManager.Attestation.Models
                     policySigningCertificates = JsonWebKeySet.DeserializeJsonWebKeySet(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("tpmAttestationAuthentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tpmAttestationAuthentication = new TpmAttestationAuthenticationType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AttestationServiceCreationSpecificParams(publicNetworkAccess, policySigningCertificates, serializedAdditionalRawData);
+            return new AttestationServiceCreationSpecificParams(publicNetworkAccess, policySigningCertificates, tpmAttestationAuthentication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationServiceCreationSpecificParams>.Write(ModelReaderWriterOptions options)

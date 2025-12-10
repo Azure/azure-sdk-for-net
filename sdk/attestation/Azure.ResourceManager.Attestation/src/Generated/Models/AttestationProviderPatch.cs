@@ -65,17 +65,6 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <summary> The tags that will be assigned to the attestation provider. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Properties of the attestation provider. </summary>
-        internal AttestationServicePatchSpecificParams Properties { get; set; }
-        /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
-        public PublicNetworkAccessType? AttestationServicePatchSpecificParamsPublicNetworkAccess
-        {
-            get => Properties is null ? default : Properties.PublicNetworkAccess;
-            set
-            {
-                if (Properties is null)
-                    Properties = new AttestationServicePatchSpecificParams();
-                Properties.PublicNetworkAccess = value;
-            }
-        }
+        public AttestationServicePatchSpecificParams Properties { get; set; }
     }
 }

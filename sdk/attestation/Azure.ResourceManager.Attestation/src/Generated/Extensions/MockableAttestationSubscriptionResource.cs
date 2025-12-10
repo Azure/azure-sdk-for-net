@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-06-01-preview</description>
+        /// <description>2021-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Attestation.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location of the default provider. </param>
+        /// <param name="location"> The name of Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<AttestationProviderResource> GetDefaultByLocationAttestationProvider(AzureLocation location, CancellationToken cancellationToken = default)
         {

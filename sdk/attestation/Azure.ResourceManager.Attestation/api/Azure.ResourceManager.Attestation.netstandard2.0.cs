@@ -87,6 +87,7 @@ namespace Azure.ResourceManager.Attestation
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? Status { get { throw null; } set { } }
+        public Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? TpmAttestationAuthentication { get { throw null; } set { } }
         public string TrustModel { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.AttestationProviderData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.AttestationProviderData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -165,7 +166,7 @@ namespace Azure.ResourceManager.Attestation.Models
         public static Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string privateEndpointStringId = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource AttestationPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent AttestationProviderCreateOrUpdateContent(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams properties = null) { throw null; }
-        public static Azure.ResourceManager.Attestation.AttestationProviderData AttestationProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string trustModel = null, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? status = default(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus?), System.Uri attestUri = null, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> privateEndpointConnections = null) { throw null; }
+        public static Azure.ResourceManager.Attestation.AttestationProviderData AttestationProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string trustModel = null, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? status = default(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus?), System.Uri attestUri = null, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? tpmAttestationAuthentication = default(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType?)) { throw null; }
         public static Azure.ResourceManager.Attestation.Models.JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5C = null, string y = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -249,7 +250,7 @@ namespace Azure.ResourceManager.Attestation.Models
     public partial class AttestationProviderPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>
     {
         public AttestationProviderPatch() { }
-        public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? AttestationServicePatchSpecificParamsPublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationProviderPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -263,12 +264,25 @@ namespace Azure.ResourceManager.Attestation.Models
         public AttestationServiceCreationSpecificParams() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Attestation.Models.JsonWebKey> PolicySigningCertificatesKeys { get { throw null; } }
         public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? TpmAttestationAuthentication { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AttestationServicePatchSpecificParams : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>
+    {
+        public AttestationServicePatchSpecificParams() { }
+        public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? TpmAttestationAuthentication { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AttestationServiceStatus : System.IEquatable<Azure.ResourceManager.Attestation.Models.AttestationServiceStatus>
@@ -332,6 +346,24 @@ namespace Azure.ResourceManager.Attestation.Models
         public static bool operator ==(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType left, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType right) { throw null; }
         public static implicit operator Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType left, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct TpmAttestationAuthenticationType : System.IEquatable<Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public TpmAttestationAuthenticationType(string value) { throw null; }
+        public static Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType left, Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType left, Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
 }

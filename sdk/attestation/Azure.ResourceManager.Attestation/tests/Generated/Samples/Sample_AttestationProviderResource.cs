@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AttestationProvidersGet()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvider.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_AttestationProvider.json
             // this example is just showing the usage of "AttestationProviders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_AttestationProvidersDelete()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Delete_AttestationProvider.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Delete_AttestationProvider.json
             // this example is just showing the usage of "AttestationProviders_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AttestationProvidersUpdate()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Update_AttestationProvider.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Update_AttestationProvider.json
             // this example is just showing the usage of "AttestationProviders_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -101,7 +101,11 @@ namespace Azure.ResourceManager.Attestation.Samples
 ["Property2"] = "Value2",
 ["Property3"] = "Value3"
 },
-                AttestationServicePatchSpecificParamsPublicNetworkAccess = PublicNetworkAccessType.Disabled,
+                Properties = new AttestationServicePatchSpecificParams
+                {
+                    PublicNetworkAccess = PublicNetworkAccessType.Disabled,
+                    TpmAttestationAuthentication = TpmAttestationAuthenticationType.Disabled,
+                },
             };
             AttestationProviderResource result = await attestationProvider.UpdateAsync(patch);
 
@@ -116,7 +120,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResourcesByProvider_AttestationProviderListPrivateLinkResources()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/AttestationProviderListPrivateLinkResources.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/AttestationProviderListPrivateLinkResources.json
             // this example is just showing the usage of "PrivateLinkResources_ListByProvider" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

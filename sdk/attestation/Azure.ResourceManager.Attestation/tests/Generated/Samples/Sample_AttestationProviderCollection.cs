@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_AttestationProvidersCreate()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Create_AttestationProvider.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Create_AttestationProvider.json
             // this example is just showing the usage of "AttestationProviders_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Attestation.Samples
             AttestationProviderCreateOrUpdateContent content = new AttestationProviderCreateOrUpdateContent(new AzureLocation("East US"), new AttestationServiceCreationSpecificParams
             {
                 PublicNetworkAccess = PublicNetworkAccessType.Enabled,
+                TpmAttestationAuthentication = TpmAttestationAuthenticationType.Enabled,
             })
             {
                 Tags =
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AttestationProvidersGet()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvider.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_AttestationProvider.json
             // this example is just showing the usage of "AttestationProviders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +101,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_AttestationProvidersListByResourceGroup()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvidersListByResourceGroup.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_AttestationProvidersListByResourceGroup.json
             // this example is just showing the usage of "AttestationProviders_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_AttestationProvidersGet()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvider.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_AttestationProvider.json
             // this example is just showing the usage of "AttestationProviders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_AttestationProvidersGet()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvider.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_AttestationProvider.json
             // this example is just showing the usage of "AttestationProviders_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> The public network access type for API calls to the Attestation Provider. </summary>
+    /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
     public readonly partial struct PublicNetworkAccessType : IEquatable<PublicNetworkAccessType>
     {
         private readonly string _value;

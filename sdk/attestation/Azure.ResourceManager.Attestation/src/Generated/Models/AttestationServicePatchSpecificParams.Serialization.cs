@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    internal partial class AttestationServicePatchSpecificParams : IUtf8JsonSerializable, IJsonModel<AttestationServicePatchSpecificParams>
+    public partial class AttestationServicePatchSpecificParams : IUtf8JsonSerializable, IJsonModel<AttestationServicePatchSpecificParams>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AttestationServicePatchSpecificParams>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(TpmAttestationAuthentication))
+            {
+                writer.WritePropertyName("tpmAttestationAuthentication"u8);
+                writer.WriteStringValue(TpmAttestationAuthentication.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 return null;
             }
             PublicNetworkAccessType? publicNetworkAccess = default;
+            TpmAttestationAuthenticationType? tpmAttestationAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -90,13 +96,22 @@ namespace Azure.ResourceManager.Attestation.Models
                     publicNetworkAccess = new PublicNetworkAccessType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("tpmAttestationAuthentication"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    tpmAttestationAuthentication = new TpmAttestationAuthenticationType(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AttestationServicePatchSpecificParams(publicNetworkAccess, serializedAdditionalRawData);
+            return new AttestationServicePatchSpecificParams(publicNetworkAccess, tpmAttestationAuthentication, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationServicePatchSpecificParams>.Write(ModelReaderWriterOptions options)

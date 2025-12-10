@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAttestationProviders_AttestationProvidersList()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_AttestationProvidersList.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_AttestationProvidersList.json
             // this example is just showing the usage of "AttestationProviders_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAttestationProvidersByDefaultProvider_AttestationProvidersGetDefault()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_DefaultProviders.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_DefaultProviders.json
             // this example is just showing the usage of "AttestationProviders_ListDefault" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Attestation.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDefaultByLocationAttestationProvider_AttestationProvidersGetDefaultWithLocation()
         {
-            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/preview/2021-06-01-preview/examples/Get_DefaultProviderByLocation.json
+            // Generated from example definition: specification/attestation/resource-manager/Microsoft.Attestation/Attestation/stable/2021-06-01/examples/Get_DefaultProviderByLocation.json
             // this example is just showing the usage of "AttestationProviders_GetDefaultByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

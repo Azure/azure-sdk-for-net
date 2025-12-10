@@ -28,8 +28,9 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="attestUri"> Gets the uri of attestation service. </param>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <returns> A new <see cref="Attestation.AttestationProviderData"/> instance for mocking. </returns>
-        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string trustModel = null, AttestationServiceStatus? status = null, Uri attestUri = null, PublicNetworkAccessType? publicNetworkAccess = null, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string trustModel = null, AttestationServiceStatus? status = null, Uri attestUri = null, PublicNetworkAccessType? publicNetworkAccess = null, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = null, TpmAttestationAuthenticationType? tpmAttestationAuthentication = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<AttestationPrivateEndpointConnectionData>();
@@ -46,6 +47,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 attestUri,
                 publicNetworkAccess,
                 privateEndpointConnections?.ToList(),
+                tpmAttestationAuthentication,
                 serializedAdditionalRawData: null);
         }
 
