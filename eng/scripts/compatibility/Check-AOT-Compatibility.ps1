@@ -8,7 +8,6 @@ $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
 $ProjectPath = Join-Path $RepoRoot $PackagePath
 $PackageName = [System.IO.Path]::GetFileNameWithoutExtension($PackagePath)
 
-# Get the property directly from the project file - replicating what the target does
 $output = dotnet msbuild -getProperty:AotCompatOptOut "$ProjectPath"
 
 $aotOptOut = $output.Trim() -eq "true"
