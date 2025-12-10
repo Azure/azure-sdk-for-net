@@ -289,7 +289,18 @@ namespace Azure.Generator.Management
 
         internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
 
-        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type);
+        internal bool IsModelType(CSharpType type, bool skipNullable )
+        {
+            foreach (var modelType in AllModelTypes)
+            {
+                if (type.Equals(modelType) || (skipNullable && type.WithNullable(true).Equals(modelType.WithNullable(true))))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
