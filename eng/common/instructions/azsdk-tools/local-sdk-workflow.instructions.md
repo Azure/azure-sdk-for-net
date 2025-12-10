@@ -134,7 +134,7 @@ High level steps involved:
 
 ---
 
-### Step 3: Run package tests
+### Step 4: Run package tests
 
 **Actions**:
 
@@ -142,7 +142,7 @@ High level steps involved:
 
 ---
 
-### Step 3: Update change log, metadata and version
+### Step 5: Update change log, metadata and version
 
 **Actions**:
 

@@ -31,7 +31,7 @@ Generate SDK using pipeline:
 ### Generate SDK locally:
 
 **Condition**: If user chooses to generate SDK locally
-**Message to user**: "Generating SDKs locally requires you to have the development environment setup for each language. Prompt the user to create a pull request for each language after completing the following steps successfully: generation, validation, build, test and update of metadata, change log, and version."
+**Message to user**: "Generating SDKs locally requires you to have the development environment set up for each language. Prompt the user to create a pull request for each language after completing the following steps successfully: generation, validation, build, test and update of metadata, change log, and version."
 **Actions**:
 Follow the steps in #file:local-sdk-workflow.instructions.md to generate and build SDKs locally from TypeSpec project.
 
