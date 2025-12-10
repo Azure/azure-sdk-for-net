@@ -1,6 +1,6 @@
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
 directory: specification/orbital/Microsoft.PlanetaryComputer
 repo: Azure/azure-rest-api-specs
-commit: 7953e9136b52203479863812d9d856a841a43b54
+commit: f05e5084b7e9c9f24dccf2d07be9ad84acc557ec
 additionalDirectories: []
 

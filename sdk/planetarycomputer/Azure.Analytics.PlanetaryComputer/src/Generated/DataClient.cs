@@ -3647,6 +3647,29 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
+        ///
+        /// Returns a color map for intervals, where each interval is defined by:
+        /// - A numeric range `[min, max]` representing the interval boundaries.
+        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
+        ///
+        /// The response is a 2D array of interval definitions, where each element is a pair:
+        /// - The first element is an array of two numbers `[min, max]` defining the interval.
+        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
+        ///
+        /// Example:
+        /// ```json
+        /// [
+        ///   [
+        ///     [-2, 0], [0, 0, 0, 0]
+        ///   ],
+        ///   [
+        ///     [1, 32], [255, 255, 178, 255]
+        ///   ]
+        /// ]
+        /// ```
+        /// This example defines two intervals:
+        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
+        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3681,6 +3704,29 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
+        ///
+        /// Returns a color map for intervals, where each interval is defined by:
+        /// - A numeric range `[min, max]` representing the interval boundaries.
+        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
+        ///
+        /// The response is a 2D array of interval definitions, where each element is a pair:
+        /// - The first element is an array of two numbers `[min, max]` defining the interval.
+        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
+        ///
+        /// Example:
+        /// ```json
+        /// [
+        ///   [
+        ///     [-2, 0], [0, 0, 0, 0]
+        ///   ],
+        ///   [
+        ///     [1, 32], [255, 255, 178, 255]
+        ///   ]
+        /// ]
+        /// ```
+        /// This example defines two intervals:
+        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
+        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3713,7 +3759,32 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Generate values and color swatches mapping for a given interval classmap. </summary>
+        /// <summary>
+        /// Generate values and color swatches mapping for a given interval classmap.
+        ///
+        /// Returns a color map for intervals, where each interval is defined by:
+        /// - A numeric range `[min, max]` representing the interval boundaries.
+        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
+        ///
+        /// The response is a 2D array of interval definitions, where each element is a pair:
+        /// - The first element is an array of two numbers `[min, max]` defining the interval.
+        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
+        ///
+        /// Example:
+        /// ```json
+        /// [
+        ///   [
+        ///     [-2, 0], [0, 0, 0, 0]
+        ///   ],
+        ///   [
+        ///     [1, 32], [255, 255, 178, 255]
+        ///   ]
+        /// ]
+        /// ```
+        /// This example defines two intervals:
+        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
+        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
+        /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
@@ -3721,15 +3792,54 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<IList<BinaryData>>> GetIntervalLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, BinaryData>> GetIntervalLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = GetIntervalLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<IList<BinaryData>>>(), result);
+            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateObject())
+            {
+                if (item.Value.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(item.Name, null);
+                }
+                else
+                {
+                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
         }
 
-        /// <summary> Generate values and color swatches mapping for a given interval classmap. </summary>
+        /// <summary>
+        /// Generate values and color swatches mapping for a given interval classmap.
+        ///
+        /// Returns a color map for intervals, where each interval is defined by:
+        /// - A numeric range `[min, max]` representing the interval boundaries.
+        /// - An RGBA color `[red, green, blue, alpha]` associated with the interval.
+        ///
+        /// The response is a 2D array of interval definitions, where each element is a pair:
+        /// - The first element is an array of two numbers `[min, max]` defining the interval.
+        /// - The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.
+        ///
+        /// Example:
+        /// ```json
+        /// [
+        ///   [
+        ///     [-2, 0], [0, 0, 0, 0]
+        ///   ],
+        ///   [
+        ///     [1, 32], [255, 255, 178, 255]
+        ///   ]
+        /// ]
+        /// ```
+        /// This example defines two intervals:
+        /// - The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).
+        /// - The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).
+        /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
         /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
@@ -3737,12 +3847,26 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<IList<BinaryData>>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, BinaryData>>> GetIntervalLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = await GetIntervalLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content.ToObjectFromJson<IReadOnlyList<IList<BinaryData>>>(), result);
+            IDictionary<string, BinaryData> value = new Dictionary<string, BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateObject())
+            {
+                if (item.Value.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(item.Name, null);
+                }
+                else
+                {
+                    value.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyDictionary<string, BinaryData>)value, result);
         }
 
         /// <summary>
