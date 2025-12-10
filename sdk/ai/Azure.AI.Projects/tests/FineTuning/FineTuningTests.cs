@@ -98,15 +98,89 @@ public class FineTuningTests : FineTuningTestsBase
         }
     }
 
+    /// <summary>
+    /// Creates a SFT or DPO fine-tuning job using raw JSON (for trainingType support).
+    /// </summary>
+    private async Task<FineTuningJob> CreateFineTuningJobWithRawJsonAsync(
+        FineTuningClient fineTuningClient,
+        string modelName,
+        string trainFileId,
+        string validationFileId,
+        string jobType,
+        string trainingType = null,
+        int epochCount = 1,
+        int batchSize = 4,
+        double learningRate = 0.0001)
+    {
+        object methodObject = jobType.ToLowerInvariant() switch
+        {
+            "supervised" or "sft" => new
+            {
+                type = "supervised",
+                supervised = new
+                {
+                    hyperparameters = new
+                    {
+                        n_epochs = epochCount,
+                        batch_size = batchSize,
+                        learning_rate_multiplier = learningRate
+                    }
+                }
+            },
+            "dpo" => new
+            {
+                type = "dpo",
+                dpo = new
+                {
+                    hyperparameters = new
+                    {
+                        n_epochs = epochCount,
+                        batch_size = batchSize,
+                        learning_rate_multiplier = learningRate
+                    }
+                }
+            },
+            _ => throw new ArgumentException($"Unknown job type: {jobType}. Use CreateRftFineTuningJobAsync for RFT jobs.", nameof(jobType))
+        };
+
+        var requestJson = new Dictionary<string, object>
+        {
+            ["model"] = modelName,
+            ["training_file"] = trainFileId,
+            ["validation_file"] = validationFileId,
+            ["method"] = methodObject
+        };
+
+        if (!string.IsNullOrEmpty(trainingType))
+        {
+            requestJson["trainingType"] = trainingType;
+        }
+
+        string jsonString = JsonSerializer.Serialize(requestJson);
+        BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
+        return await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
+    }
+
     private async Task<FineTuningJob> CreateSupervisedFineTuningJobAsync(
         FineTuningClient fineTuningClient,
         string modelName,
         string trainFileId,
         string validationFileId,
+        string trainingType = null,
         int epochCount = 1,
         int batchSize = 4,
         double learningRate = 0.0001)
     {
+        // Use raw JSON if trainingType is specified (required for Azure-specific field and OSS models)
+        if (!string.IsNullOrEmpty(trainingType))
+        {
+            return await CreateFineTuningJobWithRawJsonAsync(
+                fineTuningClient, modelName, trainFileId, validationFileId,
+                jobType: "sft", trainingType: trainingType,
+                epochCount: epochCount, batchSize: batchSize, learningRate: learningRate);
+        }
+
+        // Default: use the SDK's typed API
         return await fineTuningClient.FineTuneAsync(
             modelName,
             trainFileId,
@@ -121,51 +195,26 @@ public class FineTuningTests : FineTuningTestsBase
             });
     }
 
-    private async Task<FineTuningJob> CreateSupervisedFineTuningJobForOssModelAsync(
-        FineTuningClient fineTuningClient,
-        string modelName,
-        string trainFileId,
-        string validationFileId,
-        string trainingType,
-        int epochCount = 1,
-        int batchSize = 4,
-        double learningRate = 0.0001)
-    {
-        var requestJson = new
-        {
-            model = modelName,
-            training_file = trainFileId,
-            validation_file = validationFileId,
-            trainingType = trainingType,
-            method = new
-            {
-                type = "supervised",
-                supervised = new
-                {
-                    hyperparameters = new
-                    {
-                        n_epochs = epochCount,
-                        batch_size = batchSize,
-                        learning_rate_multiplier = learningRate
-                    }
-                }
-            }
-        };
-
-        string jsonString = JsonSerializer.Serialize(requestJson);
-        BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
-        return await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
-    }
-
     private async Task<FineTuningJob> CreateDpoFineTuningJobAsync(
         FineTuningClient fineTuningClient,
         string modelName,
         string trainFileId,
         string validationFileId,
+        string trainingType = null,
         int epochCount = 1,
         int batchSize = 4,
         double learningRate = 0.0001)
     {
+        // Use raw JSON if trainingType is specified (required for Azure-specific field)
+        if (!string.IsNullOrEmpty(trainingType))
+        {
+            return await CreateFineTuningJobWithRawJsonAsync(
+                fineTuningClient, modelName, trainFileId, validationFileId,
+                jobType: "dpo", trainingType: trainingType,
+                epochCount: epochCount, batchSize: batchSize, learningRate: learningRate);
+        }
+
+        // Default: use the SDK's typed API
         return await fineTuningClient.FineTuneAsync(
             modelName,
             trainFileId,
@@ -178,6 +227,159 @@ public class FineTuningTests : FineTuningTestsBase
                     learningRate: learningRate),
                 ValidationFile = validationFileId
             });
+    }
+
+    private async Task<FineTuningJob> CreateRftFineTuningJobAsync(
+        FineTuningClient fineTuningClient,
+        string modelName,
+        string trainFileId,
+        string validationFileId,
+        string trainingType = null,
+        int epochCount = 1,
+        int batchSize = 4,
+        double learningRate = 2,
+        int evalInterval = 5,
+        int evalSamples = 2,
+        string reasoningEffort = "medium")
+    {
+        // RFT uses raw JSON with its own structure (grader + RFT-specific hyperparameters)
+        var methodObject = new
+        {
+            type = "reinforcement",
+            reinforcement = new
+            {
+                grader = new
+                {
+                    type = "score_model",
+                    name = "o3-mini",
+                    model = "o3-mini",
+                    input = new[]
+                    {
+                        new
+                        {
+                            role = "user",
+                            content = "Evaluate the model's response based on correctness and quality. Rate from 0 to 10."
+                        }
+                    },
+                    range = new[] { 0.0, 10.0 }
+                },
+                hyperparameters = new
+                {
+                    n_epochs = epochCount,
+                    batch_size = batchSize,
+                    learning_rate_multiplier = learningRate,
+                    eval_interval = evalInterval,
+                    eval_samples = evalSamples,
+                    reasoning_effort = reasoningEffort
+                }
+            }
+        };
+
+        var requestJson = new Dictionary<string, object>
+        {
+            ["model"] = modelName,
+            ["training_file"] = trainFileId,
+            ["validation_file"] = validationFileId,
+            ["method"] = methodObject
+        };
+
+        if (!string.IsNullOrEmpty(trainingType))
+        {
+            requestJson["trainingType"] = trainingType;
+        }
+
+        string jsonString = JsonSerializer.Serialize(requestJson);
+        BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
+        return await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
+    }
+
+    private async Task RunSftCreateJobTestAsync(string trainingType)
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
+
+        try
+        {
+            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
+                fineTuningClient,
+                "gpt-4.1",
+                trainFile.Id,
+                validationFile.Id,
+                trainingType: trainingType,
+                epochCount: 1,
+                batchSize: 4,
+                learningRate: 0.0001);
+
+            Console.WriteLine($"Created SFT job with {trainingType} training type: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
+    }
+
+    private async Task RunDpoCreateJobTestAsync(string trainingType)
+    {
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "dpo");
+
+        try
+        {
+            FineTuningJob fineTuningJob = await CreateDpoFineTuningJobAsync(
+                fineTuningClient,
+                "gpt-4o-mini",
+                trainFile.Id,
+                validationFile.Id,
+                trainingType: trainingType,
+                epochCount: 1,
+                batchSize: 4,
+                learningRate: 0.0001);
+
+            Console.WriteLine($"Created DPO job with {trainingType} training type: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
+    }
+
+    private async Task RunRftCreateJobTestAsync(string trainingType)
+    {
+        TestTimeoutInSeconds = 120; // Increase timeout to 2 minutes for RFT job operations
+
+        var (fileClient, fineTuningClient) = GetClients();
+        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "rft");
+
+        try
+        {
+            FineTuningJob fineTuningJob = await CreateRftFineTuningJobAsync(
+                fineTuningClient,
+                "o4-mini",
+                trainFile.Id,
+                validationFile.Id,
+                trainingType: trainingType);
+
+            Console.WriteLine($"Created RFT job with {trainingType} training type: {fineTuningJob.JobId}");
+            ValidateFineTuningJob(fineTuningJob);
+
+            // Cancel the job
+            await fineTuningJob.CancelAndUpdateAsync();
+            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
+        }
+        finally
+        {
+            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
+        }
     }
 
     [RecordedTest]
@@ -211,6 +413,24 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [RecordedTest]
+    public async Task Test_Sft_FineTuning_Create_Job_OpenAI_Standard()
+    {
+        await RunSftCreateJobTestAsync("Standard");
+    }
+
+    [RecordedTest]
+    public async Task Test_Sft_FineTuning_Create_Job_OpenAI_Developer()
+    {
+        await RunSftCreateJobTestAsync("developerTier");
+    }
+
+    [RecordedTest]
+    public async Task Test_Sft_FineTuning_Create_Job_OpenAI_GlobalStandard()
+    {
+        await RunSftCreateJobTestAsync("GlobalStandard");
+    }
+
+    [RecordedTest]
     public async Task Test_Sft_FineTuning_Create_Job_Oss_Model()
     {
         var (fileClient, fineTuningClient) = GetClients();
@@ -218,7 +438,7 @@ public class FineTuningTests : FineTuningTestsBase
 
         try
         {
-            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobForOssModelAsync(
+            FineTuningJob fineTuningJob = await CreateSupervisedFineTuningJobAsync(
                 fineTuningClient,
                 "Ministral-3B",
                 trainFile.Id,
@@ -272,69 +492,45 @@ public class FineTuningTests : FineTuningTestsBase
     }
 
     [RecordedTest]
+    public async Task Test_Dpo_FineTuning_Create_Job_OpenAI_Standard()
+    {
+        await RunDpoCreateJobTestAsync("Standard");
+    }
+
+    [RecordedTest]
+    public async Task Test_Dpo_FineTuning_Create_Job_OpenAI_Developer()
+    {
+        await RunDpoCreateJobTestAsync("developerTier");
+    }
+
+    [RecordedTest]
+    public async Task Test_Dpo_FineTuning_Create_Job_OpenAI_GlobalStandard()
+    {
+        await RunDpoCreateJobTestAsync("GlobalStandard");
+    }
+
+    [RecordedTest]
     public async Task Test_Rft_FineTuning_Create_Job()
     {
-        TestTimeoutInSeconds = 120; // Increase timeout to 2 minutes for RFT job operations
+        await RunRftCreateJobTestAsync(null);
+    }
 
-        var (fileClient, fineTuningClient) = GetClients();
-        var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "rft");
+    [RecordedTest]
+    public async Task Test_Rft_FineTuning_Create_Job_OpenAI_Standard()
+    {
+        await RunRftCreateJobTestAsync("Standard");
+    }
 
-        // Build the JSON request manually since RL APIs are internal
-        var requestJson = new
-        {
-            model = "o4-mini",
-            training_file = trainFile.Id,
-            validation_file = validationFile.Id,
-            method = new
-            {
-                type = "reinforcement",
-                reinforcement = new
-                {
-                    grader = new
-                    {
-                        type = "score_model",
-                        name = "o3-mini",
-                        model = "o3-mini",
-                        input = new[]
-                        {
-                            new
-                            {
-                                role = "user",
-                                content = "Evaluate the model's response based on correctness and quality. Rate from 0 to 10."
-                            }
-                        },
-                        range = new[] { 0.0, 10.0 }
-                    },
-                    hyperparameters = new
-                    {
-                        n_epochs = 1,
-                        batch_size = 4,
-                        learning_rate_multiplier = 2,
-                        eval_interval = 5,
-                        eval_samples = 2,
-                        reasoning_effort = "medium"
-                    }
-                }
-            }
-        };
+    [RecordedTest]
+    public async Task Test_Rft_FineTuning_Create_Job_OpenAI_Developer()
+    {
+        await RunRftCreateJobTestAsync("developerTier");
+    }
 
-        try
-        {
-            string jsonString = JsonSerializer.Serialize(requestJson);
-            BinaryContent content = BinaryContent.Create(BinaryData.FromString(jsonString));
-            FineTuningJob fineTuningJob = await fineTuningClient.FineTuneAsync(content, waitUntilCompleted: false, options: null);
-
-            Console.WriteLine($"Created RFT job: {fineTuningJob.JobId}");
-            ValidateFineTuningJob(fineTuningJob);
-
-            // Cancel the job
-            await fineTuningJob.CancelAndUpdateAsync();
-            Console.WriteLine($"Cancelled job: {fineTuningJob.JobId}");
-        }
-        finally
-        {
-            await CleanupTestFilesAsync(fileClient, trainFile, validationFile);
-        }
+    [RecordedTest]
+    public async Task Test_Rft_FineTuning_Create_Job_OpenAI_GlobalStandard()
+    {
+        await RunRftCreateJobTestAsync("GlobalStandard");
     }
 
     [RecordedTest]
