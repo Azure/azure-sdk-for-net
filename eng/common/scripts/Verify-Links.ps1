@@ -163,7 +163,7 @@ function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
 function ProcessNpmLink([System.Uri]$linkUri) {
   # npmjs.com started using Cloudflare which returns 403 and we need to instead check the registry api for existence checks
   # https://github.com/orgs/community/discussions/174098#discussioncomment-14461226
-  $apiUrl = $linkUri.ToString() -replace '^https?://(www\.)?npmjs\.com/package/', 'https://registry.npmjs.org/'
+  $apiUrl = $linkUri.ToString() -replace '^https?://(?:www\.)?npmjs\.com/package/(.*)/v', 'https://registry.npmjs.org/$1'
 
   return ProcessStandardLink ([System.Uri]$apiUrl)
 }
