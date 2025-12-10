@@ -32,9 +32,9 @@ namespace Azure.Generator.Management.Utilities
             }
         }
 
-        public static bool IsModelType(this CSharpType type, bool skipNullable = true)
+        public static bool IsModelType(this CSharpType type)
         {
-            return ManagementClientGenerator.Instance.OutputLibrary.IsModelType(type, skipNullable);
+            return ManagementClientGenerator.Instance.OutputLibrary.IsModelType(type);
         }
 
         public static string GetXmlDocTypeName(this CSharpType type)
