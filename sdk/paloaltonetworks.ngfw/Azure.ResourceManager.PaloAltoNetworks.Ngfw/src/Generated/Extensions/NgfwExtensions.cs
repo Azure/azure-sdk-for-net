@@ -18,7 +18,7 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary> A class to add extension methods to Azure.ResourceManager.PaloAltoNetworks.Ngfw. </summary>
-    public static partial class PaloAltoNetworksNgfwExtensions
+    public static partial class NgfwExtensions
     {
         /// <param name="client"></param>
         private static MockablePaloAltoNetworksNgfwArmClient GetMockablePaloAltoNetworksNgfwArmClient(ArmClient client)

@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherTargetData))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherTargetProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseWatcherTargetResource))]
+    [ModelReaderWriterBuildable(typeof(DatabaseWatcherUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(HealthValidationListResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
@@ -48,7 +49,6 @@ namespace Azure.ResourceManager.DatabaseWatcher
     [ModelReaderWriterBuildable(typeof(UnknownDatabaseWatcherTargetProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(WatcherListResult))]
-    [ModelReaderWriterBuildable(typeof(WatcherUpdateProperties))]
     public partial class AzureResourceManagerDatabaseWatcherContext : ModelReaderWriterContext
     {
     }

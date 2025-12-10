@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DatabaseWatcherPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, WatcherUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseWatcherPatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, DatabaseWatcherUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Tags = tags;
@@ -44,6 +44,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public WatcherUpdateProperties Properties { get; set; }
+        public DatabaseWatcherUpdateProperties Properties { get; set; }
     }
 }

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             }
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
-            WatcherUpdateProperties properties = default;
+            DatabaseWatcherUpdateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     {
                         continue;
                     }
-                    properties = WatcherUpdateProperties.DeserializeWatcherUpdateProperties(prop.Value, options);
+                    properties = DatabaseWatcherUpdateProperties.DeserializeDatabaseWatcherUpdateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

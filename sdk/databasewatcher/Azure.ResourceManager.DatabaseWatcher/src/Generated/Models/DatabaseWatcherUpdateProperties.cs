@@ -12,21 +12,21 @@ using Azure.Core;
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
     /// <summary> The updatable properties of the Watcher. </summary>
-    public partial class WatcherUpdateProperties
+    public partial class DatabaseWatcherUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="WatcherUpdateProperties"/>. </summary>
-        public WatcherUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherUpdateProperties"/>. </summary>
+        public DatabaseWatcherUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="WatcherUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseWatcherUpdateProperties"/>. </summary>
         /// <param name="datastore"> The data store for collected monitoring data. </param>
         /// <param name="defaultAlertRuleIdentityResourceId"> The resource ID of a user-assigned managed identity that will be assigned to a new alert rule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WatcherUpdateProperties(DatabaseWatcherDatastore datastore, ResourceIdentifier defaultAlertRuleIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DatabaseWatcherUpdateProperties(DatabaseWatcherDatastore datastore, ResourceIdentifier defaultAlertRuleIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Datastore = datastore;
             DefaultAlertRuleIdentityResourceId = defaultAlertRuleIdentityResourceId;
