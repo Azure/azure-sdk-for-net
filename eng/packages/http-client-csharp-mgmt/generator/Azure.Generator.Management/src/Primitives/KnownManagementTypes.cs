@@ -41,11 +41,13 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ExtendedLocation"] = typeof(ExtendedLocation),
             ["Azure.ResourceManager.CommonTypes.ExtendedLocationType"] = typeof(ExtendedLocationType),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentity"] = typeof(ManagedServiceIdentity),
+            ["Azure.ResourceManager.Legacy.ManagedServiceIdentityV4"] = typeof(ManagedServiceIdentity),
             ["Azure.ResourceManager.CommonTypes.ManagedServiceIdentityType"] = typeof(ManagedServiceIdentityType),
             ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
             ["Azure.ResourceManager.CommonTypes.SystemData"] = typeof(SystemData),
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
+            ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
         };
 
         private static readonly Dictionary<string, CSharpType> _idToPrimitiveTypeMap = new Dictionary<string, CSharpType>()

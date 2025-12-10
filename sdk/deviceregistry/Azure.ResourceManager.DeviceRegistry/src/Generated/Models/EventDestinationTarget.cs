@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     internal readonly partial struct EventDestinationTarget : IEquatable<EventDestinationTarget>
     {
         private readonly string _value;
+        /// <summary> MQTT target. </summary>
+        private const string MqttValue = "Mqtt";
+        /// <summary> Storage target. </summary>
+        private const string StorageValue = "Storage";
 
         /// <summary> Initializes a new instance of <see cref="EventDestinationTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventDestinationTarget(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string MqttValue = "Mqtt";
-        private const string StorageValue = "Storage";
+            _value = value;
+        }
 
         /// <summary> MQTT target. </summary>
         public static EventDestinationTarget Mqtt { get; } = new EventDestinationTarget(MqttValue);
+
         /// <summary> Storage target. </summary>
         public static EventDestinationTarget Storage { get; } = new EventDestinationTarget(StorageValue);
+
         /// <summary> Determines if two <see cref="EventDestinationTarget"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventDestinationTarget left, EventDestinationTarget right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventDestinationTarget"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventDestinationTarget left, EventDestinationTarget right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventDestinationTarget"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventDestinationTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventDestinationTarget(string value) => new EventDestinationTarget(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventDestinationTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventDestinationTarget?(string value) => value == null ? null : new EventDestinationTarget(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventDestinationTarget other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventDestinationTarget other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -46,10 +46,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/>. </summary>
-        /// <param name="isCheckedIn"></param>
-        /// <param name="statusMessage"></param>
+        /// <param name="isCheckedIn"> Whether the manifest is checked in. </param>
+        /// <param name="statusMessage"> The status message. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="statusMessage"/> is null. </exception>
-        internal CheckinManifestInfo(bool isCheckedIn, string statusMessage)
+        public CheckinManifestInfo(bool isCheckedIn, string statusMessage)
         {
             Argument.AssertNotNull(statusMessage, nameof(statusMessage));
 
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CheckinManifestInfo"/>. </summary>
-        /// <param name="isCheckedIn"></param>
-        /// <param name="statusMessage"></param>
-        /// <param name="pullRequest"></param>
-        /// <param name="commitId"></param>
+        /// <param name="isCheckedIn"> Whether the manifest is checked in. </param>
+        /// <param name="statusMessage"> The status message. </param>
+        /// <param name="pullRequest"> The pull request. </param>
+        /// <param name="commitId"> The commit id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CheckinManifestInfo(bool isCheckedIn, string statusMessage, string pullRequest, string commitId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets the is checked in. </summary>
-        public bool IsCheckedIn { get; }
-        /// <summary> Gets the status message. </summary>
-        public string StatusMessage { get; }
-        /// <summary> Gets the pull request. </summary>
-        public string PullRequest { get; }
-        /// <summary> Gets the commit id. </summary>
-        public string CommitId { get; }
+        /// <summary> Whether the manifest is checked in. </summary>
+        public bool IsCheckedIn { get; set; }
+        /// <summary> The status message. </summary>
+        public string StatusMessage { get; set; }
+        /// <summary> The pull request. </summary>
+        public string PullRequest { get; set; }
+        /// <summary> The commit id. </summary>
+        public string CommitId { get; set; }
     }
 }

@@ -1,10 +1,19 @@
 # Release History
 
-## 12.3.0-beta.2 (Unreleased)
+## 12.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.3.0 (2025-10-21)
+
+### Features Added
+- This release includes all features from 12.3.0-beta.1
 
 ### Bugs Fixed
 - Resolved memory leak issue with `CancellationTokenSource` usage not being properly disposed, namely in the following areas:
@@ -13,8 +22,6 @@
     - Removed usage of `CancellationTokenSource` from handling the chunking of large transfers. This only affects transfers that cannot be completed in one request.
 - Fixed bug where cached referenced `TransferOperation`s from the `TransferManager` were not being cleared on dispose.
 - Fixed bug where referenced `TransferOperation` from the transfers stored in the `TransferManager` after they reach a `Completed` or `Paused` state where not being removed.
-
-### Other Changes
 
 ## 12.3.0-beta.1 (2025-09-16)
 

@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> The new quota limit request status. </summary>
     public partial class GroupQuotaSubscriptionRequestStatusData : ResourceData, IJsonModel<GroupQuotaSubscriptionRequestStatusData>
@@ -108,7 +108,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -144,7 +144,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(GroupQuotaSubscriptionRequestStatusData)} does not support writing '{options.Format}' format.");
             }
@@ -162,7 +162,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeGroupQuotaSubscriptionRequestStatusData(document.RootElement, options);
                     }
@@ -174,11 +174,10 @@ namespace MgmtTypeSpec
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaSubscriptionRequestStatusData"/> from. </param>
-        internal static GroupQuotaSubscriptionRequestStatusData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="GroupQuotaSubscriptionRequestStatusData"/> from. </param>
+        internal static GroupQuotaSubscriptionRequestStatusData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGroupQuotaSubscriptionRequestStatusData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

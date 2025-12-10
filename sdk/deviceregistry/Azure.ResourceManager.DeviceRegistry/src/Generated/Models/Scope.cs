@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public readonly partial struct Scope : IEquatable<Scope>
     {
         private readonly string _value;
+        /// <summary> Scoping the migration to resourceIds provided. </summary>
+        private const string ResourcesValue = "Resources";
 
         /// <summary> Initializes a new instance of <see cref="Scope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Scope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ResourcesValue = "Resources";
+            _value = value;
+        }
 
         /// <summary> Scoping the migration to resourceIds provided. </summary>
         public static Scope Resources { get; } = new Scope(ResourcesValue);
+
         /// <summary> Determines if two <see cref="Scope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(Scope left, Scope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="Scope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(Scope left, Scope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="Scope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="Scope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator Scope(string value) => new Scope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="Scope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator Scope?(string value) => value == null ? null : new Scope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is Scope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(Scope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

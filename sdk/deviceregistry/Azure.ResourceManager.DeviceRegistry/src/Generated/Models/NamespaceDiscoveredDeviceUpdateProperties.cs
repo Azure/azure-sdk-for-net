@@ -7,43 +7,16 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The updatable properties of the NamespaceDiscoveredDevice. </summary>
     public partial class NamespaceDiscoveredDeviceUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NamespaceDiscoveredDeviceUpdateProperties"/>. </summary>
         public NamespaceDiscoveredDeviceUpdateProperties()
@@ -58,8 +31,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="attributes"> A set of key-value pairs that contain custom attributes. </param>
         /// <param name="discoveryId"> Identifier used to detect changes in the discovered device. </param>
         /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceDiscoveredDeviceUpdateProperties(string externalDeviceId, DiscoveredMessagingEndpoints endpoints, string operatingSystemVersion, IDictionary<string, BinaryData> attributes, string discoveryId, long? version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NamespaceDiscoveredDeviceUpdateProperties(string externalDeviceId, DiscoveredMessagingEndpoints endpoints, string operatingSystemVersion, IDictionary<string, BinaryData> attributes, string discoveryId, long? version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExternalDeviceId = externalDeviceId;
             Endpoints = endpoints;
@@ -67,48 +40,49 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             Attributes = attributes;
             DiscoveryId = discoveryId;
             Version = version;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> A device ID that represents the device in a system external to Azure. Unique within scope of an Azure tenant. </summary>
         public string ExternalDeviceId { get; set; }
+
         /// <summary> Endpoints for discovered devices. </summary>
         public DiscoveredMessagingEndpoints Endpoints { get; set; }
+
         /// <summary> Device operating system version. </summary>
         public string OperatingSystemVersion { get; set; }
+
         /// <summary>
         /// A set of key-value pairs that contain custom attributes.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
+        /// <para> To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
+        /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromObjectAsJson("foo"). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
+        /// <term> BinaryData.FromString("\"foo\""). </term>
+        /// <description> Creates a payload of "foo". </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromObjectAsJson(new { key = "value" }). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// <term> BinaryData.FromString("{\"key\": \"value\"}"). </term>
+        /// <description> Creates a payload of { "key": "value" }. </description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
         public IDictionary<string, BinaryData> Attributes { get; }
+
         /// <summary> Identifier used to detect changes in the discovered device. </summary>
         public string DiscoveryId { get; set; }
+
         /// <summary> An integer that is incremented each time the resource is modified. </summary>
         public long? Version { get; set; }
     }

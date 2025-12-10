@@ -4,5 +4,6 @@
     <PackageId>Azure.ResourceManager.WorkloadMonitor</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.WorkloadMonitor.</Description>
     <PackageTags>azure;management;arm;resource manager;workloadmonitor</PackageTags>
+    <IncludeAutorestDependency>true</IncludeAutorestDependency>
   </PropertyGroup>
 </Project>

@@ -1,0 +1,4 @@
+directory: specification/impact/Impact.Management
+commit: 7117319f66597dd56d8e39d3d8ec14f55b285bc8
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

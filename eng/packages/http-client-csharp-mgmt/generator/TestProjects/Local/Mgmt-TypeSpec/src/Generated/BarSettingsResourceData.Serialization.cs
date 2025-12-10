@@ -12,10 +12,10 @@ using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BarSettingsResourceData : ResourceData, IJsonModel<BarSettingsResourceData>
@@ -147,7 +147,7 @@ namespace MgmtTypeSpec
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, MgmtTypeSpecContext.Default);
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -239,7 +239,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BarSettingsResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -257,7 +257,7 @@ namespace MgmtTypeSpec
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBarSettingsResourceData(document.RootElement, options);
                     }
@@ -281,11 +281,10 @@ namespace MgmtTypeSpec
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BarSettingsResourceData"/> from. </param>
-        internal static BarSettingsResourceData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BarSettingsResourceData"/> from. </param>
+        internal static BarSettingsResourceData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBarSettingsResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

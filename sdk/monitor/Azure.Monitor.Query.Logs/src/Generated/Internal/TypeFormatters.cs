@@ -133,20 +133,48 @@ namespace Azure.Monitor.Query.Logs
             _ => TimeSpan.ParseExact(value, format, CultureInfo.InvariantCulture)
         };
 
-        public static string ConvertToString(object value, string format = null) => value switch
+        public static string ToFormatSpecifier(SerializationFormat format) => format switch
         {
-            null => "null",
-            string s => s,
-            bool b => ToString(b),
-            int  or  float  or  double  or  long  or  decimal => ((IFormattable)value).ToString(DefaultNumberFormat, CultureInfo.InvariantCulture),
-            byte[] b0 when format != null => ToString(b0, format),
-            IEnumerable<string> s0 => string.Join(",", s0),
-            DateTimeOffset dateTime when format != null => ToString(dateTime, format),
-            TimeSpan timeSpan when format != null => ToString(timeSpan, format),
-            TimeSpan timeSpan0 => System.Xml.XmlConvert.ToString(timeSpan0),
-            Guid guid => guid.ToString(),
-            BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
-            _ => value.ToString()
+            SerializationFormat.DateTime_RFC1123 => "R",
+            SerializationFormat.DateTime_RFC3339 => "O",
+            SerializationFormat.DateTime_RFC7231 => "R",
+            SerializationFormat.DateTime_ISO8601 => "O",
+            SerializationFormat.Date_ISO8601 => "D",
+            SerializationFormat.DateTime_Unix => "U",
+            SerializationFormat.Bytes_Base64Url => "U",
+            SerializationFormat.Bytes_Base64 => "D",
+            SerializationFormat.Duration_ISO8601 => "P",
+            SerializationFormat.Duration_Constant => "c",
+            SerializationFormat.Duration_Seconds => "%s",
+            SerializationFormat.Duration_Seconds_Float => "s\\.FFF",
+            SerializationFormat.Duration_Seconds_Double => "s\\.FFFFFF",
+            SerializationFormat.Time_ISO8601 => "T",
+            _ => null
         };
+
+        public static string ConvertToString(object value, SerializationFormat format = SerializationFormat.Default)
+        {
+            string formatSpecifier = ToFormatSpecifier(format);
+
+            return value switch
+            {
+                null => "null",
+                string s => s,
+                bool b => ToString(b),
+                int  or  float  or  double  or  long  or  decimal => ((IFormattable)value).ToString(DefaultNumberFormat, CultureInfo.InvariantCulture),
+                byte[] b0 when formatSpecifier != null => ToString(b0, formatSpecifier),
+                IEnumerable<string> s0 => string.Join(",", s0),
+                DateTimeOffset dateTime when formatSpecifier != null => ToString(dateTime, formatSpecifier),
+                TimeSpan timeSpan when format == SerializationFormat.Duration_Seconds => Convert.ToInt32(timeSpan.TotalSeconds).ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan0 when format == SerializationFormat.Duration_Seconds_Float || format == SerializationFormat.Duration_Seconds_Double => timeSpan0.TotalSeconds.ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan1 when format == SerializationFormat.Duration_Milliseconds => Convert.ToInt32(timeSpan1.TotalMilliseconds).ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan2 when format == SerializationFormat.Duration_Milliseconds_Float || format == SerializationFormat.Duration_Milliseconds_Double => timeSpan2.TotalMilliseconds.ToString(CultureInfo.InvariantCulture),
+                TimeSpan timeSpan3 when formatSpecifier != null => ToString(timeSpan3, formatSpecifier),
+                TimeSpan timeSpan4 => System.Xml.XmlConvert.ToString(timeSpan4),
+                Guid guid => guid.ToString(),
+                BinaryData binaryData => ConvertToString(binaryData.ToArray(), format),
+                _ => value.ToString()
+            };
+        }
     }
 }

@@ -22,8 +22,16 @@ Param (
 $configFileDir = Join-Path -Path $ArtifactPath "PackageInfo"
 
 # Submit API review request and return status whether current revision is approved or pending or failed to create review
-function Submit-Request($filePath, $packageName)
+function Submit-Request($filePath, $packageInfo)
 {
+    $packageName = $packageInfo.ArtifactName ?? $packageInfo.Name
+    $packageType = $packageInfo.SdkType
+    
+    # Construct full package name with groupId if available
+    $fullPackageName = $packageName
+    if ($packageInfo.PSObject.Members.Name -contains "Group" -and $packageInfo.Group) {
+        $fullPackageName = "$($packageInfo.Group):$packageName"
+    }
     $repoName = $RepoFullName
     if (!$repoName) {
         $repoName = "azure/azure-sdk-for-$LanguageShort"
@@ -36,9 +44,10 @@ function Submit-Request($filePath, $packageName)
     $query.Add('commitSha', $CommitSha)
     $query.Add('repoName', $repoName)
     $query.Add('pullRequestNumber', $PullRequestNumber)
-    $query.Add('packageName', $packageName)
+    $query.Add('packageName', $fullPackageName)
     $query.Add('language', $LanguageShort)
     $query.Add('project', $DevopsProject)
+    $query.Add('packageType', $packageType)
     $reviewFileFullName = Join-Path -Path $ArtifactPath $packageName $reviewFileName
     # If CI generates token file then it passes both token file name and original file (filePath) to APIView
     # If both files are passed then APIView downloads the parent directory as a zip
@@ -73,7 +82,13 @@ function Submit-Request($filePath, $packageName)
     }
     catch
     {
-        LogError "Error $StatusCode - Exception details: $($_.Exception.Response)"
+        Write-Host "ERROR: API request failed" -ForegroundColor Red
+        Write-Host "Status Code: $($_.Exception.Response.StatusCode.Value__)" -ForegroundColor Yellow
+        Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Yellow
+        if ($_.ErrorDetails.Message) {
+            Write-Host "Details: $($_.ErrorDetails.Message)" -ForegroundColor Yellow
+        }
+        LogError "Failed to detect API changes. See details above."
         $StatusCode = $_.Exception.Response.StatusCode
     }
 
@@ -126,6 +141,7 @@ foreach ($packageInfoFile in $packageInfoFiles)
 {
     $packageInfo = Get-Content $packageInfoFile | ConvertFrom-Json
     $pkgArtifactName = $packageInfo.ArtifactName ?? $packageInfo.Name
+    $packageType = $packageInfo.SdkType
 
     LogInfo "Processing $($pkgArtifactName)"
 
@@ -157,7 +173,7 @@ foreach ($packageInfoFile in $packageInfoFiles)
         if ($isRequired -eq $True)
         {
             $filePath = $pkgPath.Replace($ArtifactPath , "").Replace("\", "/")
-            $respCode = Submit-Request -filePath $filePath -packageName $pkgArtifactName
+            $respCode = Submit-Request -filePath $filePath -packageInfo $packageInfo
             if ($respCode -ne '200')
             {
                 $responses[$pkgArtifactName] = $respCode

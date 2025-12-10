@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager.Models;
-using MgmtTypeSpec.Models;
 
-namespace MgmtTypeSpec
+namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
     public partial class BarSettingsResourceData : ResourceData
@@ -20,19 +20,26 @@ namespace MgmtTypeSpec
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BarSettingsResourceData"/>. </summary>
+        /// <param name="propertyLeft"> enabled. </param>
+        /// <param name="anotherPropertyLeft"> enabled. </param>
         /// <param name="innerProp2"> Gets or sets the InnerProp2. </param>
         /// <param name="middleProp1"> Gets or sets the MiddleProp1. </param>
+        /// <param name="middleProp2"> Gets the MiddleProp2. </param>
+        /// <param name="prop1"> Gets the Prop1. </param>
         /// <param name="prop2"> Gets or sets the Prop2. </param>
         /// <param name="discriminatorProperty"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innerProp2"/> or <paramref name="discriminatorProperty"/> is null. </exception>
-        public BarSettingsResourceData(string innerProp2, int middleProp1, int prop2, LimitJsonObject discriminatorProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="propertyLeft"/>, <paramref name="anotherPropertyLeft"/>, <paramref name="innerProp2"/>, <paramref name="middleProp2"/>, <paramref name="prop1"/> or <paramref name="discriminatorProperty"/> is null. </exception>
+        public BarSettingsResourceData(string propertyLeft, string anotherPropertyLeft, string innerProp2, int middleProp1, IDictionary<string, string> middleProp2, IEnumerable<string> prop1, int prop2, LimitJsonObject discriminatorProperty)
         {
+            Argument.AssertNotNull(anotherPropertyLeft, nameof(anotherPropertyLeft));
             Argument.AssertNotNull(innerProp2, nameof(innerProp2));
+            Argument.AssertNotNull(middleProp2, nameof(middleProp2));
+            Argument.AssertNotNull(prop1, nameof(prop1));
 
             StringArray = new ChangeTrackingList<string>();
-            InnerProp2 = innerProp2;
-            MiddleProp1 = middleProp1;
-            Prop2 = prop2;
+            Property = new BarQuotaProperties(propertyLeft);
+            AnotherProperty = new BarQuotaProperties(anotherPropertyLeft);
+            FlattenedNestedProperty = new BarNestedQuotaProperties(innerProp2, middleProp1, middleProp2, prop1, prop2);
             DiscriminatorProperty = discriminatorProperty;
         }
 
@@ -62,27 +69,35 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
+        [WirePath("properties")]
         internal BarSettingsProperties Properties { get; set; }
 
         /// <summary> Gets the StringArray. </summary>
+        [WirePath("stringArray")]
         public IList<string> StringArray { get; }
 
         /// <summary> Gets or sets the Property. </summary>
+        [WirePath("property")]
         internal BarQuotaProperties Property { get; set; }
 
         /// <summary> Gets or sets the AnotherProperty. </summary>
+        [WirePath("anotherProperty")]
         internal BarQuotaProperties AnotherProperty { get; set; }
 
         /// <summary> Gets or sets the FlattenedNestedProperty. </summary>
+        [WirePath("flattenedNestedProperty")]
         internal BarNestedQuotaProperties FlattenedNestedProperty { get; set; }
 
         /// <summary> Gets or sets the OptionalFlattenProperty. </summary>
+        [WirePath("optionalFlattenProperty")]
         internal OptionalFlattenPropertyType OptionalFlattenProperty { get; set; }
 
         /// <summary> Gets or sets the DiscriminatorProperty. </summary>
+        [WirePath("discriminatorProperty")]
         public LimitJsonObject DiscriminatorProperty { get; set; }
 
         /// <summary> enabled. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled
         {
             get
@@ -92,7 +107,8 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> enabled. </summary>
-        public int? PropertyLeft
+        [WirePath("property.left")]
+        public string PropertyLeft
         {
             get
             {
@@ -100,12 +116,13 @@ namespace MgmtTypeSpec
             }
             set
             {
-                Property = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                Property = new BarQuotaProperties(value);
             }
         }
 
         /// <summary> enabled. </summary>
-        public int? AnotherPropertyLeft
+        [WirePath("anotherProperty.left")]
+        public string AnotherPropertyLeft
         {
             get
             {
@@ -113,11 +130,12 @@ namespace MgmtTypeSpec
             }
             set
             {
-                AnotherProperty = value.HasValue ? new BarQuotaProperties(value.Value) : default;
+                AnotherProperty = new BarQuotaProperties(value);
             }
         }
 
         /// <summary> Gets or sets the InnerProp1. </summary>
+        [WirePath("flattenedNestedProperty.innerProp1")]
         public int? InnerProp1
         {
             get
@@ -135,6 +153,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the InnerProp2. </summary>
+        [WirePath("flattenedNestedProperty.innerProp2")]
         public string InnerProp2
         {
             get
@@ -152,6 +171,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the MiddleProp1. </summary>
+        [WirePath("flattenedNestedProperty.middleProp1")]
         public int MiddleProp1
         {
             get
@@ -169,6 +189,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the MiddleProp2. </summary>
+        [WirePath("flattenedNestedProperty.middleProp2")]
         public IDictionary<string, string> MiddleProp2
         {
             get
@@ -182,6 +203,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the Prop1. </summary>
+        [WirePath("flattenedNestedProperty.prop1")]
         public IList<string> Prop1
         {
             get
@@ -195,6 +217,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets or sets the Prop2. </summary>
+        [WirePath("flattenedNestedProperty.prop2")]
         public int Prop2
         {
             get
@@ -212,6 +235,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Gets the RandomCollectionProp. </summary>
+        [WirePath("optionalFlattenProperty.randomCollectionProp")]
         public IList<string> OptionalFlattenPropertyRandomCollectionProp
         {
             get

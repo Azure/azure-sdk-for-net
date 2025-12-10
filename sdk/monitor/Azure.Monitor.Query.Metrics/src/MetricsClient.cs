@@ -72,7 +72,7 @@ namespace Azure.Monitor.Query.Metrics
                 }
 
                 aggregations = MetricsClientExtensions.CommaJoin(options.Aggregations);
-                granularity = options.Granularity == null ? null : TypeFormatters.ConvertToString(options.Granularity, "P");
+                granularity = options.Granularity == null ? null : TypeFormatters.ConvertToString(options.Granularity, SerializationFormat.Duration_ISO8601);
                 top = options.Size;
                 orderBy = options.OrderBy;
                 filter = options.Filter;
@@ -136,7 +136,7 @@ namespace Azure.Monitor.Query.Metrics
                 }
 
                 aggregations = MetricsClientExtensions.CommaJoin(options.Aggregations);
-                granularity = options.Granularity == null ? null : TypeFormatters.ConvertToString(options.Granularity, "P");
+                granularity = options.Granularity == null ? null : TypeFormatters.ConvertToString(options.Granularity, SerializationFormat.Duration_ISO8601);
                 top = options.Size;
                 orderBy = options.OrderBy;
                 filter = options.Filter;

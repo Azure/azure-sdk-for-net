@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RedisEnterpriseAccessPolicyAssignmentGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseAccessPolicyAssignmentGet.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseAccessPolicyAssignmentGet.json
             // this example is just showing the usage of "AccessPolicyAssignment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisEnterpriseAccessPolicyAssignmentDelete()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseAccessPolicyAssignmentDelete.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseAccessPolicyAssignmentDelete.json
             // this example is just showing the usage of "AccessPolicyAssignment_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RedisEnterpriseAccessPolicyAssignmentCreateUpdate()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/stable/2025-04-01/examples/RedisEnterpriseAccessPolicyAssignmentCreateUpdate.json
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/stable/2025-07-01/examples/RedisEnterpriseAccessPolicyAssignmentCreateUpdate.json
             // this example is just showing the usage of "AccessPolicyAssignment_CreateUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

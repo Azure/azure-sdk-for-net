@@ -13,136 +13,177 @@ using Azure.ResourceManager.TrustedSigning.Models;
 
 namespace Azure.ResourceManager.TrustedSigning
 {
-    /// <summary>
-    /// A class representing the TrustedSigningCertificateProfile data model.
-    /// Certificate profile resource.
-    /// </summary>
+    /// <summary> Certificate profile resource. </summary>
     public partial class TrustedSigningCertificateProfileData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificateProfileData"/>. </summary>
         public TrustedSigningCertificateProfileData()
         {
-            Certificates = new ChangeTrackingList<TrustedSigningCertificate>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificateProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="profileType"> Profile type of the certificate. </param>
-        /// <param name="commonName"> Used as CN in the certificate subject name. </param>
-        /// <param name="organization"> Used as O in the certificate subject name. </param>
-        /// <param name="organizationUnit"> Used as OU in the private trust certificate subject name. </param>
-        /// <param name="streetAddress"> Used as STREET in the certificate subject name. </param>
-        /// <param name="includeStreetAddress"> Whether to include STREET in the certificate subject name. </param>
-        /// <param name="city"> Used as L in the certificate subject name. </param>
-        /// <param name="includeCity"> Whether to include L in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
-        /// <param name="state"> Used as S in the certificate subject name. </param>
-        /// <param name="includeState"> Whether to include S in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
-        /// <param name="country"> Used as C in the certificate subject name. </param>
-        /// <param name="includeCountry"> Whether to include C in the certificate subject name. Applicable only for private trust, private trust ci profile types. </param>
-        /// <param name="postalCode"> Used as PC in the certificate subject name. </param>
-        /// <param name="includePostalCode"> Whether to include PC in the certificate subject name. </param>
-        /// <param name="enhancedKeyUsage"> Enhanced key usage of the certificate. </param>
-        /// <param name="identityValidationId"> Identity validation id used for the certificate subject name. </param>
-        /// <param name="provisioningState"> Status of the current operation on certificate profile. </param>
-        /// <param name="status"> Status of the certificate profile. </param>
-        /// <param name="certificates"> List of renewed certificates. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrustedSigningCertificateProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CertificateProfileType? profileType, string commonName, string organization, string organizationUnit, string streetAddress, bool? includeStreetAddress, string city, bool? includeCity, string state, bool? includeState, string country, bool? includeCountry, string postalCode, bool? includePostalCode, string enhancedKeyUsage, string identityValidationId, TrustedSigningProvisioningState? provisioningState, CertificateProfileStatus? status, IReadOnlyList<TrustedSigningCertificate> certificates, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        internal TrustedSigningCertificateProfileData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CertificateProfileProperties properties) : base(id, name, resourceType, systemData)
         {
-            ProfileType = profileType;
-            CommonName = commonName;
-            Organization = organization;
-            OrganizationUnit = organizationUnit;
-            StreetAddress = streetAddress;
-            IncludeStreetAddress = includeStreetAddress;
-            City = city;
-            IncludeCity = includeCity;
-            State = state;
-            IncludeState = includeState;
-            Country = country;
-            IncludeCountry = includeCountry;
-            PostalCode = postalCode;
-            IncludePostalCode = includePostalCode;
-            EnhancedKeyUsage = enhancedKeyUsage;
-            IdentityValidationId = identityValidationId;
-            ProvisioningState = provisioningState;
-            Status = status;
-            Certificates = certificates;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal CertificateProfileProperties Properties { get; set; }
+
         /// <summary> Profile type of the certificate. </summary>
-        public CertificateProfileType? ProfileType { get; set; }
-        /// <summary> Used as CN in the certificate subject name. </summary>
-        public string CommonName { get; }
-        /// <summary> Used as O in the certificate subject name. </summary>
-        public string Organization { get; }
-        /// <summary> Used as OU in the private trust certificate subject name. </summary>
-        public string OrganizationUnit { get; }
-        /// <summary> Used as STREET in the certificate subject name. </summary>
-        public string StreetAddress { get; }
+        public CertificateProfileType ProfileType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProfileType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.ProfileType = value;
+            }
+        }
+
         /// <summary> Whether to include STREET in the certificate subject name. </summary>
-        public bool? IncludeStreetAddress { get; set; }
-        /// <summary> Used as L in the certificate subject name. </summary>
-        public string City { get; }
+        public bool? IncludeStreetAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncludeStreetAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.IncludeStreetAddress = value.Value;
+            }
+        }
+
         /// <summary> Whether to include L in the certificate subject name. Applicable only for private trust, private trust ci profile types. </summary>
-        public bool? IncludeCity { get; set; }
-        /// <summary> Used as S in the certificate subject name. </summary>
-        public string State { get; }
+        public bool? IncludeCity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncludeCity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.IncludeCity = value.Value;
+            }
+        }
+
         /// <summary> Whether to include S in the certificate subject name. Applicable only for private trust, private trust ci profile types. </summary>
-        public bool? IncludeState { get; set; }
-        /// <summary> Used as C in the certificate subject name. </summary>
-        public string Country { get; }
+        public bool? IncludeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncludeState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.IncludeState = value.Value;
+            }
+        }
+
         /// <summary> Whether to include C in the certificate subject name. Applicable only for private trust, private trust ci profile types. </summary>
-        public bool? IncludeCountry { get; set; }
-        /// <summary> Used as PC in the certificate subject name. </summary>
-        public string PostalCode { get; }
+        public bool? IncludeCountry
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncludeCountry;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.IncludeCountry = value.Value;
+            }
+        }
+
         /// <summary> Whether to include PC in the certificate subject name. </summary>
-        public bool? IncludePostalCode { get; set; }
-        /// <summary> Enhanced key usage of the certificate. </summary>
-        public string EnhancedKeyUsage { get; }
+        public bool? IncludePostalCode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IncludePostalCode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.IncludePostalCode = value.Value;
+            }
+        }
+
         /// <summary> Identity validation id used for the certificate subject name. </summary>
-        public string IdentityValidationId { get; set; }
+        public string IdentityValidationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdentityValidationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CertificateProfileProperties();
+                }
+                Properties.IdentityValidationId = value;
+            }
+        }
+
         /// <summary> Status of the current operation on certificate profile. </summary>
-        public TrustedSigningProvisioningState? ProvisioningState { get; }
+        public TrustedSigningProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Status of the certificate profile. </summary>
-        public CertificateProfileStatus? Status { get; }
+        public CertificateProfileStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
         /// <summary> List of renewed certificates. </summary>
-        public IReadOnlyList<TrustedSigningCertificate> Certificates { get; }
+        public IReadOnlyList<TrustedSigningCertificate> Certificates
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Certificates;
+            }
+        }
     }
 }

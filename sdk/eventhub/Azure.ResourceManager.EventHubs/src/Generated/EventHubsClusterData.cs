@@ -71,8 +71,9 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="metricId"> The metric ID of the cluster resource. Provided by the service and not modifiable by the user. </param>
         /// <param name="status"> Status of the Cluster resource. </param>
         /// <param name="supportsScaling"> A value that indicates whether Scaling is Supported. </param>
+        /// <param name="platformCapabilities"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal EventHubsClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, EventHubsClusterSku sku, DateTimeOffset? createdOn, EventHubsClusterProvisioningState? provisioningState, DateTimeOffset? updatedOn, string metricId, string status, bool? supportsScaling, PlatformCapabilities platformCapabilities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             CreatedOn = createdOn;
@@ -81,6 +82,7 @@ namespace Azure.ResourceManager.EventHubs
             MetricId = metricId;
             Status = status;
             SupportsScaling = supportsScaling;
+            PlatformCapabilities = platformCapabilities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -110,5 +112,19 @@ namespace Azure.ResourceManager.EventHubs
         /// <summary> A value that indicates whether Scaling is Supported. </summary>
         [WirePath("properties.supportsScaling")]
         public bool? SupportsScaling { get; set; }
+        /// <summary> Gets or sets the platform capabilities. </summary>
+        internal PlatformCapabilities PlatformCapabilities { get; set; }
+        /// <summary> Setting to Enable or Disable Confidential Compute. </summary>
+        [WirePath("properties.platformCapabilities.confidentialCompute.mode")]
+        public EventHubsConfidentialComputeMode? ConfidentialComputeMode
+        {
+            get => PlatformCapabilities is null ? default : PlatformCapabilities.ConfidentialComputeMode;
+            set
+            {
+                if (PlatformCapabilities is null)
+                    PlatformCapabilities = new PlatformCapabilities();
+                PlatformCapabilities.ConfidentialComputeMode = value;
+            }
+        }
     }
 }

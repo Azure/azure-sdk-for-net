@@ -1370,10 +1370,13 @@ Language = "en",
                 parameters = new
                 {
                     modelVersion = "latest",
-                    redactionPolicy = new
-                    {
-                        policyKind = "entityMask",
-                    },
+                    redactionPolicies = new object[]
+            {
+new
+{
+policyKind = "entityMask",
+}
+            },
                 },
                 analysisInput = new
                 {
@@ -1408,10 +1411,13 @@ text = "My name is John Doe My phone number is 424 878 9192",
                 parameters = new
                 {
                     modelVersion = "latest",
-                    redactionPolicy = new
-                    {
-                        policyKind = "entityMask",
-                    },
+                    redactionPolicies = new object[]
+            {
+new
+{
+policyKind = "entityMask",
+}
+            },
                 },
                 analysisInput = new
                 {
@@ -1452,7 +1458,7 @@ Language = "en",
                 ActionContent = new PiiActionContent
                 {
                     ModelVersion = "latest",
-                    RedactionPolicy = new EntityMaskPolicyType(),
+                    RedactionPolicies = { new EntityMaskPolicyType() },
                 },
             };
             Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
@@ -1478,7 +1484,7 @@ Language = "en",
                 ActionContent = new PiiActionContent
                 {
                     ModelVersion = "latest",
-                    RedactionPolicy = new EntityMaskPolicyType(),
+                    RedactionPolicies = { new EntityMaskPolicyType() },
                 },
             };
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
@@ -1498,11 +1504,14 @@ Language = "en",
                 parameters = new
                 {
                     modelVersion = "latest",
-                    redactionPolicy = new
-                    {
-                        policyKind = "characterMask",
-                        redactionCharacter = "-",
-                    },
+                    redactionPolicies = new object[]
+            {
+new
+{
+policyKind = "characterMask",
+redactionCharacter = "-",
+}
+            },
                 },
                 analysisInput = new
                 {
@@ -1549,11 +1558,14 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
                 parameters = new
                 {
                     modelVersion = "latest",
-                    redactionPolicy = new
-                    {
-                        policyKind = "characterMask",
-                        redactionCharacter = "-",
-                    },
+                    redactionPolicies = new object[]
+            {
+new
+{
+policyKind = "characterMask",
+redactionCharacter = "-",
+}
+            },
                 },
                 analysisInput = new
                 {
@@ -1612,10 +1624,10 @@ Language = "en",
                 ActionContent = new PiiActionContent
                 {
                     ModelVersion = "latest",
-                    RedactionPolicy = new CharacterMaskPolicyType
-                    {
-                        RedactionCharacter = RedactionCharacter.Minus,
-                    },
+                    RedactionPolicies = {new CharacterMaskPolicyType
+{
+RedactionCharacter = RedactionCharacter.Minus,
+}},
                 },
             };
             Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
@@ -1647,10 +1659,10 @@ Language = "en",
                 ActionContent = new PiiActionContent
                 {
                     ModelVersion = "latest",
-                    RedactionPolicy = new CharacterMaskPolicyType
-                    {
-                        RedactionCharacter = RedactionCharacter.Minus,
-                    },
+                    RedactionPolicies = {new CharacterMaskPolicyType
+{
+RedactionCharacter = RedactionCharacter.Minus,
+}},
                 },
             };
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);

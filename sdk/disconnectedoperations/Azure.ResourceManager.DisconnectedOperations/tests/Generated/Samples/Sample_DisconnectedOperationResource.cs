@@ -74,6 +74,49 @@ namespace Azure.ResourceManager.DisconnectedOperations.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_DisconnectedOperationsUpdate()
+        {
+            // Generated from example definition: 2025-06-01-preview/DisconnectedOperations_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "DisconnectedOperation_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DisconnectedOperationResource created on azure
+            // for more information of creating DisconnectedOperationResource, please refer to the document of DisconnectedOperationResource
+            string subscriptionId = "1F6CACA0-5FFA-47AD-94FD-42368F71E49E";
+            string resourceGroupName = "rgdisconnectedoperations";
+            string name = "demo-resource";
+            ResourceIdentifier disconnectedOperationResourceId = DisconnectedOperationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            DisconnectedOperationResource disconnectedOperation = client.GetDisconnectedOperationResource(disconnectedOperationResourceId);
+
+            // invoke the operation
+            DisconnectedOperationPatch patch = new DisconnectedOperationPatch
+            {
+                Tags =
+{
+["key2"] = "value2"
+},
+                Properties = new DisconnectedOperationUpdateProperties
+                {
+                    ConnectionIntent = DisconnectedOperationsConnectionIntent.Connected,
+                    RegistrationStatus = DisconnectedOperationsRegistrationStatus.Registered,
+                    DeviceVersion = "2.0.0",
+                },
+            };
+            DisconnectedOperationResource result = await disconnectedOperation.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DisconnectedOperationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDeploymentManifest_DisconnectedOperationsListDeploymentManifest()
         {
             // Generated from example definition: 2025-06-01-preview/DisconnectedOperations_ListDeploymentManifest_MaximumSet_Gen.json

@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: ResourceConnector
 namespace: Azure.ResourceManager.ResourceConnector
-require: https://github.com/Azure/azure-rest-api-specs/blob/08c22016a0ffdc486d8992bbe4d6bf029bb3bedb/specification/resourceconnector/resource-manager/readme.md
-#tag: package-2022-10-27 nochange
+require: https://github.com/Azure/azure-rest-api-specs/blob/1d3ac611f503e05650fb85520582b06140d2599e/specification/resourceconnector/resource-manager/Microsoft.ResourceConnector/ResourceConnector/readme.md
+#tag: package-2022-10-27
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:

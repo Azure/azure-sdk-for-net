@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_RulesGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Rules/RuleGet.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Rules/RuleGet.json
             // this example is just showing the usage of "Rules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_RulesDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Rules/RuleDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Rules/RuleDelete.json
             // this example is just showing the usage of "Rules_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RulesCreateCorrelationFilter()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Rules/RuleCreate_CorrelationFilter.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Rules/RuleCreate_CorrelationFilter.json
             // this example is just showing the usage of "Rules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusRuleResource created on azure
             // for more information of creating ServiceBusRuleResource, please refer to the document of ServiceBusRuleResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "resourceGroupName";
             string namespaceName = "sdk-Namespace-1319";
             string topicName = "sdk-Topics-2081";
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RulesCreateOrUpdate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Rules/RuleCreate.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Rules/RuleCreate.json
             // this example is just showing the usage of "Rules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusRuleResource created on azure
             // for more information of creating ServiceBusRuleResource, please refer to the document of ServiceBusRuleResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "resourceGroupName";
             string namespaceName = "sdk-Namespace-1319";
             string topicName = "sdk-Topics-2081";
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_RulesCreateSqlFilter()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Rules/RuleCreate_SqlFilter.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/ServiceBus/preview/2025-05-01-preview/examples/Rules/RuleCreate_SqlFilter.json
             // this example is just showing the usage of "Rules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
 
             // this example assumes you already have this ServiceBusRuleResource created on azure
             // for more information of creating ServiceBusRuleResource, please refer to the document of ServiceBusRuleResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "5f750a97-50d9-4e36-8081-c9ee4c0210d4";
             string resourceGroupName = "resourceGroupName";
             string namespaceName = "sdk-Namespace-1319";
             string topicName = "sdk-Topics-2081";

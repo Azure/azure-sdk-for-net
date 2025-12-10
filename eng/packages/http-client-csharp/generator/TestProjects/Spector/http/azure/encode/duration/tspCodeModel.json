@@ -222,6 +222,7 @@
           "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "_Specs_.Azure.Encode.Duration",
       "apiVersions": []

@@ -1,105 +1,356 @@
 {
-  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "TestApplicationId": {
-      "type": "string",
-      "metadata": {
-        "description": "The application client ID used to run tests."
-      }
-    }
-  },
-  "variables": {
-    "batch_account_name": "dotnotsdkbatchaccount1",
-    "batch_storage_name": "dotnotsdkbatchstorage1",
-    "location": "eastus",
-    "api_version": "2023-11-01",
-    "mgmtApiVersion": "2022-05-01",
-    "encryption": {
-      "services": {
-          "file": {
-              "enabled": true
-          },
-          "blob": {
-              "enabled": true
-          }
-      },
-      "keySource": "Microsoft.Storage"
-    },
-    "networkAcls": {
-      "bypass": "AzureServices",
-      "virtualNetworkRules": [],
-      "ipRules": [],
-      "defaultAction": "Allow"
-  }
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Storage/storageAccounts",
-      "apiVersion": "[variables('mgmtApiVersion')]",
-      "name": "[variables('batch_storage_name')]",
-      "location": "[variables('location')]",
-      "sku": {
-          "name": "Standard_RAGRS",
-          "tier": "Standard"
-      },
-      "kind": "StorageV2",
-      "properties": {
-          "networkAcls": "[variables('networkAcls')]",
-          "supportsHttpsTrafficOnly": true,
-          "encryption": "[variables('encryption')]",
-          "accessTier": "Hot",
-          "minimumTlsVersion": "TLS1_2",
-          "allowBlobPublicAccess": true
-      }
-    },
-    {
-      "type": "Microsoft.Batch/batchAccounts",
-      "apiVersion": "[variables('api_version')]",
-      "name": "[variables('batch_account_name')]",
-      "location": "[variables('location')]",
-      "tags": {},
-      "identity": {
-        "type": "None"
-      },
-      "properties": {
-        "autoStorage": {
-          "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('batch_storage_name'))]"
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+		"location": {
+            "defaultValue": "eastus2",
+            "type": "string"
         },
-        "publicNetworkAccess": "Enabled",
-        "poolAllocationMode": "BatchService",
-        "allowedAuthenticationModes": [
-          "AAD",
-          "SharedKey",
-          "TaskAuthenticationToken"
-        ],
-        "networkProfile": {
-          "accountAccess": {
-            "defaultAction": "Allow"
-          }
+		"vaults_keyvalut_name": {
+            "defaultValue": "[concat('netsdkkeyv', uniquestring(resourceGroup().id, deployment().name))]",
+            "type": "string"
+        },
+        "batchAccounts_usersubscription_name": {
+            "defaultValue": "[concat('netsdkbaus', uniquestring(resourceGroup().id, deployment().name))]",
+            "type": "String"
+        },
+        "batchAccounts_poolallocation_name": {
+            "defaultValue": "[concat('netsdkba', uniquestring(resourceGroup().id, deployment().name))]",
+            "type": "String"
+        },
+        "storageAccounts_name": {
+            "defaultValue": "[concat('netsdksa', uniquestring(resourceGroup().id, deployment().name))]",
+            "type": "String"
+        },
+        "diskEncryptionSets_name": {
+            "defaultValue": "[concat('netsdkde', uniquestring(resourceGroup().id, deployment().name))]",
+            "type": "String"
+        },
+    },
+    "variables": {
+        "batchServiceObjectId": "f520d84c-3fd3-4cc8-88d4-2ed25b00d27a"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2023-07-01",
+            "name": "[parameters('vaults_keyvalut_name')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "standard"
+                },
+                "tenantId": "[subscription().tenantId]",
+                "accessPolicies": [
+                    {
+                        "tenantId": "[subscription().tenantId]",
+                        "objectId": "[variables('batchServiceObjectId')]",
+                        "permissions": {
+                            "certificates": [],
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "GetRotationPolicy",
+                                "SetRotationPolicy",
+                                "Rotate"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ]
+                        }
+                    }
+                ],
+                "enabledForDeployment": true,
+                "enabledForDiskEncryption": true,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": false,
+                "softDeleteRetentionInDays": 90,
+                "enablePurgeProtection": true,
+                "enableRbacAuthorization": false
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults/keys",
+            "apiVersion": "2023-07-01",
+            "name": "[concat(parameters('vaults_keyvalut_name'), '/cmk')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
+            ],
+            "properties": {
+                "kty": "RSA",
+                "keySize": 2048,
+                "keyOps": [
+                    "encrypt",
+                    "decrypt",
+                    "sign",
+                    "verify",
+                    "wrapKey",
+                    "unwrapKey"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Compute/diskEncryptionSets",
+            "apiVersion": "2025-01-02",
+            "name": "[parameters('diskEncryptionSets_name')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "activeKey": {
+                    "sourceVault": {
+                        "id": "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
+                    },
+                    "keyUrl": "[reference(resourceId('Microsoft.KeyVault/vaults/keys', parameters('vaults_keyvalut_name'), 'cmk'), '2019-09-01', 'Full').properties.keyUriWithVersion]"
+                },
+                "encryptionType": "EncryptionAtRestWithCustomerKey"
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2025-01-01",
+            "name": "[parameters('storageAccounts_name')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "kind": "StorageV2",
+            "properties": {
+                "dnsEndpointType": "Standard",
+                "defaultToOAuthAuthentication": false,
+                "publicNetworkAccess": "Enabled",
+                "allowCrossTenantReplication": false,
+                "minimumTlsVersion": "TLS1_2",
+                "allowBlobPublicAccess": false,
+                "allowSharedKeyAccess": true,
+                "largeFileSharesState": "Enabled",
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "requireInfrastructureEncryption": false,
+                    "services": {
+                        "file": {
+                            "keyType": "Account",
+                            "enabled": true
+                        },
+                        "blob": {
+                            "keyType": "Account",
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                },
+                "accessTier": "Hot"
+            }
+        },
+        {
+            "type": "Microsoft.Batch/batchAccounts",
+            "apiVersion": "2024-07-01",
+            "name": "[parameters('batchAccounts_poolallocation_name')]",
+            "location": "eastus2",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]"
+            ],
+            "identity": {
+                "type": "None"
+            },
+            "properties": {
+                "autoStorage": {
+                    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]",
+                    "authenticationMode": "StorageKeys"
+                },
+                "poolAllocationMode": "BatchService",
+                "publicNetworkAccess": "Enabled",
+                "networkProfile": {
+                    "accountAccess": {
+                        "defaultAction": "Allow",
+                        "ipRules": []
+                    },
+                    "nodeManagementAccess": {
+                        "defaultAction": "Allow",
+                        "ipRules": []
+                    }
+                },
+                "encryption": {
+                    "keySource": "Microsoft.Batch"
+                },
+                "allowedAuthenticationModes": [
+                    "SharedKey",
+                    "AAD"
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/blobServices",
+            "apiVersion": "2025-01-01",
+            "name": "[concat(parameters('storageAccounts_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]"
+            ],
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "containerDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 7
+                },
+                "cors": {
+                    "corsRules": []
+                },
+                "deleteRetentionPolicy": {
+                    "allowPermanentDelete": false,
+                    "enabled": true,
+                    "days": 7
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/fileServices",
+            "apiVersion": "2025-01-01",
+            "name": "[concat(parameters('storageAccounts_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]"
+            ],
+            "sku": {
+                "name": "Standard_RAGRS",
+                "tier": "Standard"
+            },
+            "properties": {
+                "protocolSettings": {
+                    "smb": {}
+                },
+                "cors": {
+                    "corsRules": []
+                },
+                "shareDeleteRetentionPolicy": {
+                    "enabled": true,
+                    "days": 7
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/queueServices",
+            "apiVersion": "2025-01-01",
+            "name": "[concat(parameters('storageAccounts_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]"
+            ],
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts/tableServices",
+            "apiVersion": "2025-01-01",
+            "name": "[concat(parameters('storageAccounts_name'), '/default')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]"
+            ],
+            "properties": {
+                "cors": {
+                    "corsRules": []
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Batch/batchAccounts",
+            "apiVersion": "2024-07-01",
+            "name": "[parameters('batchAccounts_usersubscription_name')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]",
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "autoStorage": {
+                    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]",
+                    "authenticationMode": "BatchAccountManagedIdentity"
+                },
+                "poolAllocationMode": "UserSubscription",
+                "keyVaultReference": {
+                    "id": "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]",
+                    "url": "[reference(resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))).vaultUri]"
+                },
+                "publicNetworkAccess": "Enabled",
+                "networkProfile": {
+                    "accountAccess": {
+                        "defaultAction": "Allow",
+                        "ipRules": []
+                    },
+                    "nodeManagementAccess": {
+                        "defaultAction": "Allow",
+                        "ipRules": []
+                    }
+                },
+                "encryption": {
+                    "keySource": "Microsoft.Batch"
+                },
+                "allowedAuthenticationModes": [
+                    "AAD"
+                ]
+            }
         }
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Storage/storageAccounts', variables('batch_storage_name'))]"
-      ]
-    }
-  ],
+    ],
   "outputs": {
     "batch_storage_name": {
       "type": "string",
-      "value": "[variables('batch_storage_name')]"
+      "value": "[parameters('storageAccounts_name')]"
     },
     "batch_account_name": {
       "type": "string",
-      "value": "[variables('batch_account_name')]"
+      "value": "[parameters('batchAccounts_poolallocation_name')]"
     },
     "batch_account_uri": {
       "type": "string",
-      "value": "[reference(variables('batch_account_name')).accountEndpoint]"
+      "value": "[reference(parameters('batchAccounts_poolallocation_name')).accountEndpoint]"
     },
-    "batch_account_key": {
+	"batch_usersub_account_name": {
       "type": "string",
-      "value": "[listKeys(resourceId('Microsoft.Batch/batchAccounts', variables('batch_account_name')), variables('api_version')).primary]"
+      "value": "[parameters('batchAccounts_usersubscription_name')]"
+    },
+    "batch_usersub_account_uri": {
+      "type": "string",
+      "value": "[reference(parameters('batchAccounts_usersubscription_name')).accountEndpoint]"
+    },
+    "diskencryptionset_id": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Compute/diskEncryptionSets', parameters('diskEncryptionSets_name'))]"
+    },
+    "cmk_keyvalut_keyUriWithVersion": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.KeyVault/vaults/keys', parameters('vaults_keyvalut_name'), 'cmk'), '2019-09-01', 'Full').properties.keyUriWithVersion]"
     }
   }
 }

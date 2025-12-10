@@ -11,6 +11,7 @@
 ### Other Changes
 
 - The default service version is now `2025-07-01`.
+- Updated `System.IdentityModel.Tokens.Jwt` dependency to 8.14.0
 
 ## 4.8.0 (2025-06-27)
 

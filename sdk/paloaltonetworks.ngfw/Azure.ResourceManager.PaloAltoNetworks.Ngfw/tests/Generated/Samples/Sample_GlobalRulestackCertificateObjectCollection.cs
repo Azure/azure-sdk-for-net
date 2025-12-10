@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CertificateObjectGlobalRulestackCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CertificateObjectGlobalRulestackCreateOrUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CertificateObjectGlobalRulestackListMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_List_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_List_MaximumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CertificateObjectGlobalRulestackListMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_List_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_List_MinimumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CertificateObjectGlobalRulestackGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CertificateObjectGlobalRulestackGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2025-10-08/examples/CertificateObjectGlobalRulestack_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "CertificateObjectGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

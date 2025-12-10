@@ -129,6 +129,7 @@ public partial class SiteAuthSettingsV2 : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
+        base.DefineProvisionableProperties();
         _name = DefineProperty<string>("Name", ["name"], defaultValue: GetNameDefaultValue());
         _globalValidation = DefineModelProperty<GlobalValidation>("GlobalValidation", ["properties", "globalValidation"]);
         _httpSettings = DefineModelProperty<AppServiceHttpSettings>("HttpSettings", ["properties", "httpSettings"]);

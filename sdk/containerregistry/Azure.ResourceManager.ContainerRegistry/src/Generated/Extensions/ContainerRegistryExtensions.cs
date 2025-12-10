@@ -34,6 +34,44 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerRegistryResource"/> object. </returns>
+        public static ContainerRegistryResource GetContainerRegistryResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ContainerRegistryPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ContainerRegistryPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
+        public static ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPrivateLinkResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ContainerRegistryCacheRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ContainerRegistryCacheRuleResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryCacheRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -88,44 +126,6 @@ namespace Azure.ResourceManager.ContainerRegistry
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableContainerRegistryArmClient(client).GetContainerRegistryCredentialSetResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryResource"/> object. </returns>
-        public static ContainerRegistryResource GetContainerRegistryResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ContainerRegistryPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ContainerRegistryPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="ContainerRegistryPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableContainerRegistryArmClient.GetContainerRegistryPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerRegistryPrivateLinkResource"/> object. </returns>
-        public static ContainerRegistryPrivateLinkResource GetContainerRegistryPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableContainerRegistryArmClient(client).GetContainerRegistryPrivateLinkResource(id);
         }
 
         /// <summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The object containing information for the availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ContainerRegistryNameAvailableResult>> CheckContainerRegistryNameAvailabilityAsync(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="content"> The object containing information for the availability request. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ContainerRegistryNameAvailableResult> CheckContainerRegistryNameAvailability(this SubscriptionResource subscriptionResource, ContainerRegistryNameAvailabilityContent content, CancellationToken cancellationToken = default)
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
+        /// <description>2025-11-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

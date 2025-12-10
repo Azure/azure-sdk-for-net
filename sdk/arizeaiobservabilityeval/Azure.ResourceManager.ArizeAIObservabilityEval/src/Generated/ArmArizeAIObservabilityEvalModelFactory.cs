@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ArizeAIObservabilityEval;
 using Azure.ResourceManager.Models;
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.ArizeAIObservabilityEval.Models
                 marketplace,
                 user,
                 provisioningState,
-                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, new Dictionary<string, BinaryData>()),
+                partnerDescription is null ? default : new ArizeAIObservabilityEvalOfferPartnerProperties(partnerDescription, null),
                 singleSignOnProperties,
                 additionalBinaryDataProperties: null);
         }

@@ -1,12 +1,22 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Added support for the latest Azure AI Translator API, including translations using LLM models, adaptive custom translation, tone variant translations, and gender-specific language translations.
+- Added `TranslationTarget` class for configuring translation options.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
+
+- Added `Models` property to `GetSupportedLanguagesResult` to include the list of LLM models available for translations.
+- Changed the name of the model factory `AITranslationTextModelFactory` to `TranslationTextModelFactory` matching the new project structure.
+- Changed the name of `TargetLanguage` property to `Language` in `TranslationText`.
+- Changed the name of `Confidence` property to `Score` in `DetectedLanguage`.
+- Removed `TextTranslationTranslateOptions` and `TextTranslationTransliterateOptions`.
+- `SourceText` property in `TranslatedTextItem` deprecated and marked as obsolete.
+- Dictionary, sentence boundaries and text alignments features have been removed and relevant classes and properties have been marked as deprecated.
 
 ### Bugs Fixed
 
@@ -16,7 +26,7 @@
 
 ### Features Added
 
-- Introduced model factory `Azure.AI.Translation.Text.TextTranslationModelFactory` for mocking.
+- Introduced model factory `Azure.AI.Translation.Text.AITranslationTextModelFactory` for mocking.
 - Added options overloads to Translate and Transliterate. TextTranslationTranslateOptions and TextTranslationTransliterateOptions roll up method parameters into a single object.
 - Add support for using AAD authentication.
 

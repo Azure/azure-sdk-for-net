@@ -10,9 +10,9 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using MgmtTypeSpec;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The response of a Baz list operation. </summary>
     internal partial class BazListResult : IJsonModel<BazListResult>
@@ -136,7 +136,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, MgmtTypeSpecContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BazListResult)} does not support writing '{options.Format}' format.");
             }
@@ -154,7 +154,7 @@ namespace MgmtTypeSpec.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeBazListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BazListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BazListResult"/> from. </param>
-        internal static BazListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BazListResult"/> from. </param>
+        internal static BazListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBazListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

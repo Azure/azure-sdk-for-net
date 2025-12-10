@@ -9,11 +9,13 @@ trigger:
   paths:
     include:
     - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppConfiguration
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.FrontDoor
     - sdk/provisioning/Azure.Provisioning.KeyVault
     - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
@@ -38,11 +40,13 @@ pr:
   paths:
     include:
     - sdk/provisioning/ci.data.yml
+    - sdk/provisioning/cspell.yaml
     - sdk/provisioning/Azure.Provisioning
     - sdk/provisioning/Azure.Provisioning.AppConfiguration
     - sdk/provisioning/Azure.Provisioning.CognitiveServices
     - sdk/provisioning/Azure.Provisioning.CosmosDB
     - sdk/provisioning/Azure.Provisioning.EventHubs
+    - sdk/provisioning/Azure.Provisioning.FrontDoor
     - sdk/provisioning/Azure.Provisioning.KeyVault
     - sdk/provisioning/Azure.Provisioning.Kusto
     - sdk/provisioning/Azure.Provisioning.PostgreSql
@@ -78,6 +82,10 @@ parameters:
     displayName: 'Azure.Provisioning.EventHubs'
     type: boolean
     default: false
+  - name: release_Azure_Provisioning_FrontDoor
+    displayName: 'Azure.Provisioning.FrontDoor'
+    type: boolean
+    default: false
   - name: release_Azure_Provisioning_KeyVault
     displayName: 'Azure.Provisioning.KeyVault'
     type: boolean
@@ -93,6 +101,7 @@ parameters:
   - name: release_Azure_Provisioning_Redis
     displayName: 'Azure.Provisioning.Redis'
     type: boolean
+    default: false
   - name: release_Azure_Provisioning_RedisEnterprise
     displayName: 'Azure.Provisioning.RedisEnterprise'
     type: boolean
@@ -144,6 +153,9 @@ extends:
     - name: Azure.Provisioning.EventHubs
       safeName: AzureProvisioningEventHubs
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_EventHubs }}
+    - name: Azure.Provisioning.FrontDoor
+      safeName: AzureProvisioningFrontDoor
+      createReleaseStage: ${{ parameters.release_Azure_Provisioning_FrontDoor }}
     - name: Azure.Provisioning.KeyVault
       safeName: AzureProvisioningKeyVault
       createReleaseStage: ${{ parameters.release_Azure_Provisioning_KeyVault }}

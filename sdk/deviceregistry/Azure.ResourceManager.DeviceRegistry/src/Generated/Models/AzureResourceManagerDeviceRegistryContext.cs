@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.DeviceRegistry.Models;
 using Azure.ResourceManager.Models;
 
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileListResult))]
     [ModelReaderWriterBuildable(typeof(AssetEndpointProfileStatus))]
@@ -25,10 +26,18 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(BillingContainerListResult))]
     [ModelReaderWriterBuildable(typeof(BillingContainerProperties))]
     [ModelReaderWriterBuildable(typeof(BrokerStateStoreDestinationConfiguration))]
+    [ModelReaderWriterBuildable(typeof(CertificateAuthorityConfiguration))]
+    [ModelReaderWriterBuildable(typeof(CertificateConfiguration))]
+    [ModelReaderWriterBuildable(typeof(CredentialData))]
+    [ModelReaderWriterBuildable(typeof(CredentialListResult))]
+    [ModelReaderWriterBuildable(typeof(CredentialPatch))]
+    [ModelReaderWriterBuildable(typeof(CredentialProperties))]
+    [ModelReaderWriterBuildable(typeof(CredentialResource))]
     [ModelReaderWriterBuildable(typeof(DatasetBrokerStateStoreDestination))]
     [ModelReaderWriterBuildable(typeof(DatasetDestination))]
     [ModelReaderWriterBuildable(typeof(DatasetMqttDestination))]
     [ModelReaderWriterBuildable(typeof(DatasetStorageDestination))]
+    [ModelReaderWriterBuildable(typeof(DeviceCredentialPolicy))]
     [ModelReaderWriterBuildable(typeof(DeviceMessagingEndpoint))]
     [ModelReaderWriterBuildable(typeof(DeviceRef))]
     [ModelReaderWriterBuildable(typeof(DeviceRegistryAssetData))]
@@ -106,7 +115,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(EventStorageDestination))]
     [ModelReaderWriterBuildable(typeof(HostAuthentication))]
     [ModelReaderWriterBuildable(typeof(InboundEndpoints))]
-    [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(LeafCertificateConfiguration))]
     [ModelReaderWriterBuildable(typeof(ManagementAction))]
     [ModelReaderWriterBuildable(typeof(ManagementGroup))]
     [ModelReaderWriterBuildable(typeof(MessageSchemaReference))]
@@ -138,6 +147,12 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(NamespaceStream))]
     [ModelReaderWriterBuildable(typeof(NamespaceUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(OutboundEndpoints))]
+    [ModelReaderWriterBuildable(typeof(PolicyData))]
+    [ModelReaderWriterBuildable(typeof(PolicyListResult))]
+    [ModelReaderWriterBuildable(typeof(PolicyPatch))]
+    [ModelReaderWriterBuildable(typeof(PolicyProperties))]
+    [ModelReaderWriterBuildable(typeof(PolicyResource))]
+    [ModelReaderWriterBuildable(typeof(PolicyUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SchemaListResult))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryListResult))]
@@ -147,6 +162,7 @@ namespace Azure.ResourceManager.DeviceRegistry
     [ModelReaderWriterBuildable(typeof(StreamDestination))]
     [ModelReaderWriterBuildable(typeof(StreamMqttDestination))]
     [ModelReaderWriterBuildable(typeof(StreamStorageDestination))]
+    [ModelReaderWriterBuildable(typeof(Models.SystemAssignedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TrustSettings))]
     [ModelReaderWriterBuildable(typeof(UnknownDatasetDestination))]

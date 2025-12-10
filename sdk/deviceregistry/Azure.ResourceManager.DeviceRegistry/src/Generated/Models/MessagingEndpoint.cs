@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Namespace messaging endpoint model used by a device to connect to a service. </summary>
     public partial class MessagingEndpoint
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MessagingEndpoint"/>. </summary>
         /// <param name="address"> The endpoint address to connect to. </param>
@@ -59,24 +31,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="endpointType"> Type of connection used for messaging endpoint. </param>
         /// <param name="address"> The endpoint address to connect to. </param>
         /// <param name="resourceId"> The messaging endpoint Azure resource Id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MessagingEndpoint(string endpointType, string address, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MessagingEndpoint(string endpointType, string address, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointType = endpointType;
             Address = address;
             ResourceId = resourceId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MessagingEndpoint"/> for deserialization. </summary>
-        internal MessagingEndpoint()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Type of connection used for messaging endpoint. </summary>
         public string EndpointType { get; set; }
+
         /// <summary> The endpoint address to connect to. </summary>
         public string Address { get; set; }
+
         /// <summary> The messaging endpoint Azure resource Id. </summary>
         public string ResourceId { get; set; }
     }

@@ -16,6 +16,8 @@ namespace Azure.ResourceManager.HealthBot.Models
             HealthBotSkuName.F0 => "F0",
             HealthBotSkuName.S1 => "S1",
             HealthBotSkuName.C0 => "C0",
+            HealthBotSkuName.PES => "PES",
+            HealthBotSkuName.C1 => "C1",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthBotSkuName value.")
         };
 
@@ -24,6 +26,8 @@ namespace Azure.ResourceManager.HealthBot.Models
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "F0")) return HealthBotSkuName.F0;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "S1")) return HealthBotSkuName.S1;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "C0")) return HealthBotSkuName.C0;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "PES")) return HealthBotSkuName.PES;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "C1")) return HealthBotSkuName.C1;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown HealthBotSkuName value.");
         }
     }

@@ -7,8 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Generator.MgmtTypeSpec.Tests;
 
-namespace MgmtTypeSpec.Models
+namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The BazProperties. </summary>
     public partial class BazProperties
@@ -33,9 +34,11 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> something. </summary>
+        [WirePath("something")]
         public string Something { get; set; }
 
         /// <summary> boolean value. </summary>
+        [WirePath("boolValue")]
         public bool? BoolValue { get; set; }
     }
 }

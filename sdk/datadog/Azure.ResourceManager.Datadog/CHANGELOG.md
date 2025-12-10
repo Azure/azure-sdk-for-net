@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,24 +10,30 @@
 
 ### Other Changes
 
+## 1.0.0 (2025-11-20)
+
+### Features Added
+
+Updated to api version 2025-06-11.
+
 ## 1.0.0-beta.6 (2025-08-04)
 
 ### Features Added
 
-- Make `Azure.ResourceManager.Datadog` AOT-compatible
+- Make `Azure.ResourceManager.Datadog` AOT-compatible.
 
 ## 1.0.0-beta.5 (2025-03-11)
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0-beta.4 (2023-11-27)
 
 ### Features Added
 
-- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -37,7 +43,7 @@
 
 ### Features Added
 
-- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

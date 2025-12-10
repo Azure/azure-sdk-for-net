@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <summary> Initializes a new instance of GetPrivateDnsZoneSuffixRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
+        /// <param name="endpoint"> Service host. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
         public GetPrivateDnsZoneSuffixRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-12-01-preview";
+            _apiVersion = apiVersion ?? "2024-12-30";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 

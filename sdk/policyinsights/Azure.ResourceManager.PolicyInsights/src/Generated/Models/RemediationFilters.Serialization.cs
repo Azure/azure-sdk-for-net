@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    internal partial class RemediationFilters : IUtf8JsonSerializable, IJsonModel<RemediationFilters>
+    public partial class RemediationFilters : IUtf8JsonSerializable, IJsonModel<RemediationFilters>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RemediationFilters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -39,6 +39,16 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Locations)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ResourceIds))
+            {
+                writer.WritePropertyName("resourceIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in ResourceIds)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -82,6 +92,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 return null;
             }
             IList<AzureLocation> locations = default;
+            IList<string> resourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,13 +111,27 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     locations = array;
                     continue;
                 }
+                if (property.NameEquals("resourceIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceIds = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RemediationFilters(locations ?? new ChangeTrackingList<AzureLocation>(), serializedAdditionalRawData);
+            return new RemediationFilters(locations ?? new ChangeTrackingList<AzureLocation>(), resourceIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RemediationFilters>.Write(ModelReaderWriterOptions options)

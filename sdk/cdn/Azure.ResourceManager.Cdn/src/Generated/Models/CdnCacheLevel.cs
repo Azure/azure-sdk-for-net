@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The level at which the content needs to be cached.
-    /// Serialized Name: CacheType
-    /// </summary>
+    /// <summary> The level at which the content needs to be cached. </summary>
     public readonly partial struct CdnCacheLevel : IEquatable<CdnCacheLevel>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string AllValue = "All";
 
-        /// <summary>
-        /// All
-        /// Serialized Name: CacheType.All
-        /// </summary>
+        /// <summary> All. </summary>
         public static CdnCacheLevel All { get; } = new CdnCacheLevel(AllValue);
         /// <summary> Determines if two <see cref="CdnCacheLevel"/> values are the same. </summary>
         public static bool operator ==(CdnCacheLevel left, CdnCacheLevel right) => left.Equals(right);
