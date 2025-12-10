@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToBatchAccountPoolProvisioningState();
+                            provisioningState = new BatchAccountPoolProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningStateTransitionTime"u8))
