@@ -6,7 +6,6 @@
     <PackageTags>Azure.Analytics.PlanetaryComputer</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeAutorestDependency>false</IncludeAutorestDependency>
-    <AotCompatOptOut>true</AotCompatOptOut>
   </PropertyGroup>
 
   <ItemGroup>
