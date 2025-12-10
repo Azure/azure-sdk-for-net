@@ -7,57 +7,29 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> Ip Access Policy. </summary>
-    internal partial class IPAccessRulesPolicy
+    internal partial class IpAccessRulesPolicy
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IPAccessRulesPolicy"/>. </summary>
-        public IPAccessRulesPolicy()
+        /// <summary> Initializes a new instance of <see cref="IpAccessRulesPolicy"/>. </summary>
+        public IpAccessRulesPolicy()
         {
             Rules = new ChangeTrackingList<ServiceNetworkingIPAccessRule>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IPAccessRulesPolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IpAccessRulesPolicy"/>. </summary>
         /// <param name="rules"> Ip Access Policy Rules List. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IPAccessRulesPolicy(IList<ServiceNetworkingIPAccessRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IpAccessRulesPolicy(IList<ServiceNetworkingIPAccessRule> rules, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Rules = rules;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Ip Access Policy Rules List. </summary>

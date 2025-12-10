@@ -9,15 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    internal partial class IPAccessRulesPolicy : IUtf8JsonSerializable, IJsonModel<IPAccessRulesPolicy>
+    /// <summary> Ip Access Policy. </summary>
+    internal partial class IpAccessRulesPolicy : IJsonModel<IpAccessRulesPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPAccessRulesPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<IPAccessRulesPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<IpAccessRulesPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,31 +29,30 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IpAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAccessRulesPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IpAccessRulesPolicy)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
-                foreach (var item in Rules)
+                foreach (ServiceNetworkingIPAccessRule item in Rules)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,39 +61,43 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
         }
 
-        IPAccessRulesPolicy IJsonModel<IPAccessRulesPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpAccessRulesPolicy IJsonModel<IpAccessRulesPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IpAccessRulesPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IpAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPAccessRulesPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IpAccessRulesPolicy)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIPAccessRulesPolicy(document.RootElement, options);
+            return DeserializeIpAccessRulesPolicy(document.RootElement, options);
         }
 
-        internal static IPAccessRulesPolicy DeserializeIPAccessRulesPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static IpAccessRulesPolicy DeserializeIpAccessRulesPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<ServiceNetworkingIPAccessRule> rules = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("rules"u8))
+                if (prop.NameEquals("rules"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ServiceNetworkingIPAccessRule> array = new List<ServiceNetworkingIPAccessRule>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ServiceNetworkingIPAccessRule.DeserializeServiceNetworkingIPAccessRule(item, options));
                     }
@@ -102,42 +106,50 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new IPAccessRulesPolicy(rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>(), serializedAdditionalRawData);
+            return new IpAccessRulesPolicy(rules ?? new ChangeTrackingList<ServiceNetworkingIPAccessRule>(), additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<IPAccessRulesPolicy>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<IpAccessRulesPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IpAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IPAccessRulesPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpAccessRulesPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IPAccessRulesPolicy IPersistableModel<IPAccessRulesPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IPAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IpAccessRulesPolicy IPersistableModel<IpAccessRulesPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual IpAccessRulesPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<IpAccessRulesPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIPAccessRulesPolicy(document.RootElement, options);
+                        return DeserializeIpAccessRulesPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPAccessRulesPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IpAccessRulesPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IPAccessRulesPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IpAccessRulesPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
