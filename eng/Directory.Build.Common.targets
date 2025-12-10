@@ -26,7 +26,7 @@
         but will always have a baseline.  Since the guidelines require that the API surface be the same accross
         all supported targets, we can use the baseline for API compat checks to avoid breaking builds.
     -->
-    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(TargetFramework)' == '$(LtsTargetFramework)' AND '$(SupportsNetStandard20)' == 'true'">$(ApiCompatStandardTargetFramework)</ApiCompatBaselineTargetFramework>
+    <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND $(RequiredRunnableTargetFrameworks.Contains('$(TargetFramework)')) AND '$(SupportsNetStandard20)' == 'true'">$(ApiCompatStandardTargetFramework)</ApiCompatBaselineTargetFramework>
     <ApiCompatBaselineTargetFramework Condition="'$(ApiCompatBaselineTargetFramework)' == '' AND '$(TargetFramework)' == '$(LtsTargetFramework)' AND '$(SupportsNetStandard20)' != 'true'">$(ApiCompatRunnableTargetFramework)</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
