@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class TroubleshooterStepInput : IUtf8JsonSerializable, IJsonModel<TroubleshooterStepInput>
+    /// <summary> Details of step input. </summary>
+    public partial class TroubleshooterStepInput : IJsonModel<TroubleshooterStepInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TroubleshooterStepInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TroubleshooterStepInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TroubleshooterStepInput)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(QuestionId))
             {
                 writer.WritePropertyName("questionId"u8);
@@ -83,21 +83,21 @@ namespace Azure.ResourceManager.SelfHelp.Models
             {
                 writer.WritePropertyName("responseOptions"u8);
                 writer.WriteStartArray();
-                foreach (var item in ResponseOptions)
+                foreach (ResponseConfig item in ResponseOptions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +106,27 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        TroubleshooterStepInput IJsonModel<TroubleshooterStepInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TroubleshooterStepInput IJsonModel<TroubleshooterStepInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TroubleshooterStepInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TroubleshooterStepInput)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTroubleshooterStepInput(document.RootElement, options);
         }
 
-        internal static TroubleshooterStepInput DeserializeTroubleshooterStepInput(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TroubleshooterStepInput DeserializeTroubleshooterStepInput(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -135,76 +140,75 @@ namespace Azure.ResourceManager.SelfHelp.Models
             string recommendedOption = default;
             string selectedOptionValue = default;
             ResponseValidationProperties responseValidationProperties = default;
-            IReadOnlyList<ResponseConfig> responseOptions = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IList<ResponseConfig> responseOptions = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("questionId"u8))
+                if (prop.NameEquals("questionId"u8))
                 {
-                    questionId = property.Value.GetString();
+                    questionId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("questionType"u8))
+                if (prop.NameEquals("questionType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    questionType = new TroubleshooterQuestionType(property.Value.GetString());
+                    questionType = new TroubleshooterQuestionType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("questionTitle"u8))
+                if (prop.NameEquals("questionTitle"u8))
                 {
-                    questionTitle = property.Value.GetString();
+                    questionTitle = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("questionContent"u8))
+                if (prop.NameEquals("questionContent"u8))
                 {
-                    questionContent = property.Value.GetString();
+                    questionContent = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("questionContentType"u8))
+                if (prop.NameEquals("questionContentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    questionContentType = new TroubleshooterQuestionContentType(property.Value.GetString());
+                    questionContentType = new TroubleshooterQuestionContentType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("responseHint"u8))
+                if (prop.NameEquals("responseHint"u8))
                 {
-                    responseHint = property.Value.GetString();
+                    responseHint = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recommendedOption"u8))
+                if (prop.NameEquals("recommendedOption"u8))
                 {
-                    recommendedOption = property.Value.GetString();
+                    recommendedOption = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("selectedOptionValue"u8))
+                if (prop.NameEquals("selectedOptionValue"u8))
                 {
-                    selectedOptionValue = property.Value.GetString();
+                    selectedOptionValue = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("responseValidationProperties"u8))
+                if (prop.NameEquals("responseValidationProperties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    responseValidationProperties = ResponseValidationProperties.DeserializeResponseValidationProperties(property.Value, options);
+                    responseValidationProperties = ResponseValidationProperties.DeserializeResponseValidationProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("responseOptions"u8))
+                if (prop.NameEquals("responseOptions"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<ResponseConfig> array = new List<ResponseConfig>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ResponseConfig.DeserializeResponseConfig(item, options));
                     }
@@ -213,10 +217,9 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new TroubleshooterStepInput(
                 questionId,
                 questionType,
@@ -228,13 +231,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 selectedOptionValue,
                 responseValidationProperties,
                 responseOptions ?? new ChangeTrackingList<ResponseConfig>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<TroubleshooterStepInput>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TroubleshooterStepInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -244,15 +250,20 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
-        TroubleshooterStepInput IPersistableModel<TroubleshooterStepInput>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TroubleshooterStepInput IPersistableModel<TroubleshooterStepInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TroubleshooterStepInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TroubleshooterStepInput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTroubleshooterStepInput(document.RootElement, options);
                     }
                 default:
@@ -260,6 +271,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<TroubleshooterStepInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

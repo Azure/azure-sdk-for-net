@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct SelfHelpSolutionType : IEquatable<SelfHelpSolutionType>
     {
         private readonly string _value;
+        /// <summary> Diagnostics resource type. </summary>
+        private const string DiagnosticsValue = "Diagnostics";
+        /// <summary> Solutions resource type. </summary>
+        private const string SolutionsValue = "Solutions";
+        /// <summary> Troubleshooters resource type. </summary>
+        private const string TroubleshootersValue = "Troubleshooters";
+        /// <summary> SelfHelp resource type. </summary>
+        private const string SelfHelpValue = "SelfHelp";
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SelfHelpSolutionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DiagnosticsValue = "Diagnostics";
-        private const string SolutionsValue = "Solutions";
-        private const string TroubleshootersValue = "Troubleshooters";
-        private const string SelfHelpValue = "SelfHelp";
+            _value = value;
+        }
 
         /// <summary> Diagnostics resource type. </summary>
         public static SelfHelpSolutionType Diagnostics { get; } = new SelfHelpSolutionType(DiagnosticsValue);
+
         /// <summary> Solutions resource type. </summary>
         public static SelfHelpSolutionType Solutions { get; } = new SelfHelpSolutionType(SolutionsValue);
+
         /// <summary> Troubleshooters resource type. </summary>
         public static SelfHelpSolutionType Troubleshooters { get; } = new SelfHelpSolutionType(TroubleshootersValue);
+
         /// <summary> SelfHelp resource type. </summary>
         public static SelfHelpSolutionType SelfHelp { get; } = new SelfHelpSolutionType(SelfHelpValue);
+
         /// <summary> Determines if two <see cref="SelfHelpSolutionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SelfHelpSolutionType left, SelfHelpSolutionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SelfHelpSolutionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SelfHelpSolutionType left, SelfHelpSolutionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SelfHelpSolutionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SelfHelpSolutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SelfHelpSolutionType(string value) => new SelfHelpSolutionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SelfHelpSolutionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SelfHelpSolutionType?(string value) => value == null ? null : new SelfHelpSolutionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SelfHelpSolutionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SelfHelpSolutionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.SelfHelp;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.SelfHelp.Models
     public readonly partial struct TroubleshooterExecutionStatus : IEquatable<TroubleshooterExecutionStatus>
     {
         private readonly string _value;
+        /// <summary> Step execution succeeded. </summary>
+        private const string SuccessValue = "Success";
+        /// <summary> Step execution running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Step execution failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Step execution warning. </summary>
+        private const string WarningValue = "Warning";
 
         /// <summary> Initializes a new instance of <see cref="TroubleshooterExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TroubleshooterExecutionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SuccessValue = "Success";
-        private const string RunningValue = "Running";
-        private const string FailedValue = "Failed";
-        private const string WarningValue = "Warning";
+            _value = value;
+        }
 
         /// <summary> Step execution succeeded. </summary>
         public static TroubleshooterExecutionStatus Success { get; } = new TroubleshooterExecutionStatus(SuccessValue);
+
         /// <summary> Step execution running. </summary>
         public static TroubleshooterExecutionStatus Running { get; } = new TroubleshooterExecutionStatus(RunningValue);
+
         /// <summary> Step execution failed. </summary>
         public static TroubleshooterExecutionStatus Failed { get; } = new TroubleshooterExecutionStatus(FailedValue);
+
         /// <summary> Step execution warning. </summary>
         public static TroubleshooterExecutionStatus Warning { get; } = new TroubleshooterExecutionStatus(WarningValue);
+
         /// <summary> Determines if two <see cref="TroubleshooterExecutionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TroubleshooterExecutionStatus left, TroubleshooterExecutionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TroubleshooterExecutionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TroubleshooterExecutionStatus left, TroubleshooterExecutionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TroubleshooterExecutionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TroubleshooterExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TroubleshooterExecutionStatus(string value) => new TroubleshooterExecutionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TroubleshooterExecutionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TroubleshooterExecutionStatus?(string value) => value == null ? null : new TroubleshooterExecutionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TroubleshooterExecutionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TroubleshooterExecutionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

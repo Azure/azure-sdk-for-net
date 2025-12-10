@@ -24,7 +24,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, IEnumerable<IList<string>> requiredParameterSets)
         {
-            return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, default, serializedAdditionalRawData: null);
+            throw new NotImplementedException();
+            //return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, default, serializedAdditionalRawData: null);
         }
     }
 }
