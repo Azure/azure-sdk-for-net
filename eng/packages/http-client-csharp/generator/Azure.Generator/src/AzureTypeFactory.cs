@@ -156,7 +156,7 @@ namespace Azure.Generator
         private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, CSharpType valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
             return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
-                serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
+                serializationExpression(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
                 null;
         }
 
