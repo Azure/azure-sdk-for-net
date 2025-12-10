@@ -573,6 +573,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 groupQuotaLimitListNextLink is null ? default : new GroupQuotaLimitListProperties(groupQuotaLimitListNextLink, null));
         }
 
+        /// <summary> The GroupQuotaLimitListPatch. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.GroupQuotaLimitListPatch"/> instance for mocking. </returns>
+        public static GroupQuotaLimitListPatch GroupQuotaLimitListPatch(string name = default)
+        {
+            return new GroupQuotaLimitListPatch(name, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Subscription quota list. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
