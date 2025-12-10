@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/f15d4f492a385d9a8687e4417468e2ad34e7d130/specification/storage/data-plane/Microsoft.BlobStorage/stable/2026-04-06/blob.json
+    - C:\azure-rest-api-specs\specification\storage\data-plane\Microsoft.BlobStorage\stable\2026-04-06\blob.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
@@ -133,6 +133,17 @@ directive:
     delete $.EncryptionKeySha256["x-ms-parameter-grouping"];
     delete $.EncryptionAlgorithm["x-ms-parameter-grouping"];
     delete $.EncryptionScope["x-ms-parameter-grouping"];
+```
+
+### Remove source CPK parameter grouping
+``` yaml
+directive:
+- from: swagger-document
+  where: $.parameters
+  transform: >
+    delete $.SourceEncryptionKey["x-ms-parameter-grouping"];
+    delete $.SourceEncryptionKeySha256["x-ms-parameter-grouping"];
+    delete $.SourceEncryptionAlgorithm["x-ms-parameter-grouping"];
 ```
 
 ### Fix 304s
