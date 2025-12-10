@@ -1,19 +1,41 @@
+[CmdletBinding(DefaultParameterSetName = 'ByNameAndDirectory')]
 param(
-  # Path to the csproj file for the package relative to the repository root
-  [string]$PackagePath)
+  [Parameter(ParameterSetName = 'ByPath', Mandatory = $true)]
+  [string]$PackagePath,
+
+  [Parameter(ParameterSetName = 'ByNameAndDirectory', Mandatory = $true, Position = 0)]
+  [string]$ServiceDirectory,
+
+  [Parameter(ParameterSetName = 'ByNameAndDirectory', Mandatory = $true, Position = 1)]
+  [string]$PackageName,
+
+  [Parameter(ParameterSetName = 'ByNameAndDirectory', Mandatory = $false)]
+  [string]$DirectoryName
+)
+
+# Convert ServiceDirectory + PackageName to PackagePath if needed
+if ($PSCmdlet.ParameterSetName -eq 'ByNameAndDirectory') {
+    # Use DirectoryName if provided, otherwise default to PackageName
+    $directory = if ($DirectoryName) { $DirectoryName } else { $PackageName }
+    $PackagePath = "sdk/$ServiceDirectory/$directory/src/$PackageName.csproj"
+}
 
 ### Check if AOT compatibility is opted out ###
 
+Write-Host "Path: $PackagePath"
+
 $RepoRoot = Resolve-Path (Join-Path $PSScriptRoot .. .. ..)
 $ProjectPath = Join-Path $RepoRoot $PackagePath
-$PackageName = [System.IO.Path]::GetFileNameWithoutExtension($PackagePath)
+$PackageNameFromPath = [System.IO.Path]::GetFileNameWithoutExtension($PackagePath)
+
+Write-Host "Name: $PackageNameFromPath"
 
 $output = dotnet msbuild -getProperty:AotCompatOptOut "$ProjectPath"
 
 $aotOptOut = $output.Trim() -eq "true"
 
 if ($aotOptOut) {
-    Write-Host "AOT compatibility is opted out for $PackageName. Skipping AOT compatibility check."
+    Write-Host "AOT compatibility is opted out for $PackageNameFromPath. Skipping AOT compatibility check."
         exit 0
 }
 
@@ -21,12 +43,7 @@ if ($aotOptOut) {
 
 Write-Host "Creating a test app to publish."
 
-# Set the project reference path based on whether DirectoryName was provided
-if ([string]::IsNullOrEmpty($DirectoryName)) {
-    $projectRefFullPath = "..\..\..\..\$PackagePath"
-} else {
-    $projectRefFullPath = "..\..\..\..\$PackagePath"
-}
+$projectRefFullPath = "..\..\..\..\$PackagePath"
 
 $folderPath = "\TempAotCompatFiles"
 New-Item -ItemType Directory -Path "./$folderPath" | Out-Null
@@ -46,7 +63,7 @@ $csprojContent = @"
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="$projectRefFullPath" />
-      <TrimmerRootAssembly Include="$PackageName" />
+      <TrimmerRootAssembly Include="$PackageNameFromPath" />
   </ItemGroup>
   <ItemGroup>
     <!-- Update this dependency to its latest, which has all the annotations -->
@@ -113,7 +130,7 @@ foreach ($line in $($publishOutput -split "`r`n"))
 # Baselining warnings is only allowed for two of the Azure.Core.* packages, hard code the file path to the expected
 # warnings as a backdoor for those packages.
 
-$expectedWarningsPath = "..\..\..\..\sdk\core\$PackageName\tests\compatibility\ExpectedAotWarnings.txt"
+$expectedWarningsPath = "..\..\..\..\sdk\core\$PackageNameFromPath\tests\compatibility\ExpectedAotWarnings.txt"
 
 if (Test-Path $expectedWarningsPath -PathType Leaf) {
     # Read the contents of the file and store each line in an array
