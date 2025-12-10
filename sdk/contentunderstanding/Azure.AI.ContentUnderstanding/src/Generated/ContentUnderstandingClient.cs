@@ -296,7 +296,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(sourceAnalyzerId, nameof(sourceAnalyzerId));
 
-            CopyRequest1 spreadModel = new CopyRequest1(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
+            CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = CopyAnalyzer(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzer");
         }
@@ -316,7 +316,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(sourceAnalyzerId, nameof(sourceAnalyzerId));
 
-            CopyRequest1 spreadModel = new CopyRequest1(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
+            CopyAnalyzerRequest spreadModel = new CopyAnalyzerRequest(sourceAzureResourceId, sourceRegion, sourceAnalyzerId, default);
             Operation<BinaryData> result = await CopyAnalyzerAsync(waitUntil, analyzerId, spreadModel, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CopyAnalyzerAsync");
         }
@@ -391,7 +391,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(resource, nameof(resource));
 
             Operation<BinaryData> result = CreateAnalyzer(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext());
-            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
+            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzer");
         }
 
         /// <summary> Create a new analyzer asynchronously. </summary>
@@ -408,7 +408,7 @@ namespace Azure.AI.ContentUnderstanding
             Argument.AssertNotNull(resource, nameof(resource));
 
             Operation<BinaryData> result = await CreateAnalyzerAsync(waitUntil, analyzerId, resource, allowReplace, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => ContentAnalyzer.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync");
+            return ProtocolOperationHelpers.Convert(result, response => (ContentAnalyzer)response, ClientDiagnostics, "ContentUnderstandingClient.CreateAnalyzerAsync");
         }
 
         /// <summary>

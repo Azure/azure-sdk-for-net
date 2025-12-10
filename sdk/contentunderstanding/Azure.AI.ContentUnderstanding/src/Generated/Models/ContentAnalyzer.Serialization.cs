@@ -442,5 +442,13 @@ namespace Azure.AI.ContentUnderstanding
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeContentAnalyzer(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
+
+        /// <summary> Converts a response to a ContentAnalyzer using the LRO result path. </summary>
+        /// <param name="response"> The response from the service. </param>
+        internal static ContentAnalyzer FromLroResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeContentAnalyzer(document.RootElement.GetProperty("result"), ModelSerializationExtensions.WireOptions);
+        }
     }
 }

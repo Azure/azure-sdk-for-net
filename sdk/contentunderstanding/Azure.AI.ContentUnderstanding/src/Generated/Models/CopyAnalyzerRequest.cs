@@ -10,25 +10,25 @@ using System.Collections.Generic;
 
 namespace Azure.AI.ContentUnderstanding
 {
-    /// <summary> The CopyRequest1. </summary>
-    internal partial class CopyRequest1
+    /// <summary> The CopyAnalyzerRequest. </summary>
+    internal partial class CopyAnalyzerRequest
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CopyRequest1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyAnalyzerRequest"/>. </summary>
         /// <param name="sourceAnalyzerId"> Source analyzer ID. </param>
-        internal CopyRequest1(string sourceAnalyzerId)
+        internal CopyAnalyzerRequest(string sourceAnalyzerId)
         {
             SourceAnalyzerId = sourceAnalyzerId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CopyRequest1"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyAnalyzerRequest"/>. </summary>
         /// <param name="sourceAzureResourceId"> Azure resource ID of the source analyzer location.  Defaults to the current resource. </param>
         /// <param name="sourceRegion"> Azure region of the source analyzer location.  Defaults to current region. </param>
         /// <param name="sourceAnalyzerId"> Source analyzer ID. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CopyRequest1(string sourceAzureResourceId, string sourceRegion, string sourceAnalyzerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CopyAnalyzerRequest(string sourceAzureResourceId, string sourceRegion, string sourceAnalyzerId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceAzureResourceId = sourceAzureResourceId;
             SourceRegion = sourceRegion;
