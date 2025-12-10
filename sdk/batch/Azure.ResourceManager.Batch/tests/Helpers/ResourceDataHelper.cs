@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.Batch.Tests.Helpers
                         new BatchImageReference()
                         {
                             Publisher = "Canonical",
-                            Offer = "UbuntuServer",
-                            Sku = "18.04-LTS",
+                            Offer = "0001-com-ubuntu-server-jammy",
+                            Sku = "22_04-lts",
                             Version = "latest",
                         },
-                        "batch.node.ubuntu 18.04"
+                        "batch.node.ubuntu 22.04"
                     ),
                 },
                 StartTask = new BatchAccountPoolStartTask()

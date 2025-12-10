@@ -1,14 +1,69 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0 (2025-12-05)
 
 ### Features Added
 
+Added Models:
+- Added `DiskCustomerManagedKey`
+- Added `HostEndpointSettings`
+- Added `HostEndpointSettingsModeType`
+- Added `IPFamily`
+- Added `JobDefaultOrder`
+- Added `PoolIdentityReference`
+- Added `ProxyAgentSettings`
+
+Added Properties:
+- Added `ipv6Address` to `BatchNode`
+- Added `Ipv6RemoteLoginIpAddress` and `Ipv6RemoteLoginPort` to `BatchNodeRemoteLoginSettings`
+- Added `IpFamilies` and `IpTags` to `BatchPublicAddressConfiguration`
+- Added `JobDefaultOder` to `BatchTaskSchedulingPolicy`
+- Added `ManagedDisk` to `DataDisk`
+- Added `CustomerManagedKey` to `DiskEncryptionConfiguration`
+- Added `DiskEncryptionSet` to `ManagedDisk`
+- Added `DiskWithVMGuestStateValue` to `SecurityEncryptionTypes`
+- Added `ProxyAgentSetting` to `SecurityProfile`
+
 ### Breaking Changes
 
-### Bugs Fixed
+Removed Certificate API's:
+- Removed `batchAccount.GetBatchAccountCertificate`
+- Removed `batchAccount.GetBatchAccountCertificateAsync`
+- Removed `batchAccount.GetBatchAccountCertificates`
+- Removed `batchAccount.GetBatchAccountCertificatesAsync`
+- Removed `batchAccount.GetBatchAccountCertificateResource`
+- Removed `batchAccount.GetBatchAccountCertificateResourceAsync`
+- Removed `batchAccount.GetBatchAccountCertificates().CreateOrUpdate`
+- Removed `batchAccount.GetBatchAccountCertificatesAsync().CreateOrUpdateAsync`
+- Removed `batchAccountCertificate.Delete`
+- Removed `batchAccountCertificate.DeleteAsync`
+- Removed `batchAccountCertificate.CancelDeletion`
+- Removed `batchAccountCertificate.CancelDeletionAsync`
+- Removed `batchAccountCertificate.Update`
+- Removed `batchAccountCertificate.UpdateAsync`
 
-### Other Changes
+Removed Models:
+- Removed `BatchAccountCertificateData`
+- Removed `BatchAccountCertificateCreateOrUpdateContent`
+- Removed `BatchAccountCertificateCollection`
+- Removed `BatchAccountCertificateData`
+- Removed `BatchAccountCertificateResource`
+- Removed `BatchAccountCertificateCreateOrUpdateContent`
+- Removed `BatchAccountCertificateFormat`
+- Removed `BatchAccountCertificateProvisioningState`
+- Removed `BatchCertificateReference`
+- Removed `BatchCertificateStoreLocation`
+- Removed `BatchCertificateVisibility`
+- Removed `NodeCommunicationMode`
+
+Removed Properties:
+- Removed `CertificateReferences` from `BatchNode`
+- Removed `ResourceTags` and `CertificateReferences` from `BatchPool`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolCreateOptions`
+- Removed `CertificateReferences` and `TargetNodeCommunicationMode` from `BatchPoolReplaceOptions`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolSpecifications`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolUpdateOptions`
+- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `ComputeBatchModelFactory`
 
 ## 1.5.0 (2024-09-15)
 
