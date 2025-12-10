@@ -4,6 +4,7 @@
 
 ### Features Added
 - This release contains bug fixes to improve quality.
+- Updated default concurrency transfer count to be the number of processors on the machine.
 
 ## 12.26.0-beta.1 (2025-11-17)
 

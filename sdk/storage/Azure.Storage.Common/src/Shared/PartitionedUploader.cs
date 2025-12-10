@@ -235,7 +235,9 @@ namespace Azure.Storage
             }
             else
             {
-                _maxWorkerCount = Constants.Blob.Block.DefaultConcurrentTransfersCount;
+                _maxWorkerCount = CompatSwitches.UseLegacyDefaultConcurrency
+                    ? Constants.Blob.Block.LegacyDefaultConcurrentTransfersCount
+                    : Environment.ProcessorCount;
             }
 
             // Set _singleUploadThreshold

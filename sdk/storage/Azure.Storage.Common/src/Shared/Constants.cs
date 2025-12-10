@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Storage
 {
@@ -129,6 +130,9 @@ namespace Azure.Storage
         public const string DisableExpectContinueHeaderSwitchName = "Azure.Storage.DisableExpectContinueHeader";
         public const string DisableExpectContinueHeaderEnvVar = "AZURE_STORAGE_DISABLE_EXPECT_CONTINUE_HEADER";
 
+        public const string UseLegacyDefaultConcurrencySwitchName = "Azure.Storage.UseLegacyDefaultConcurrency";
+        public const string UseLegacyDefaultConcurrencyEnvVar = "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY";
+
         public const string DefaultScope = "/.default";
 
         /// <summary>
@@ -241,7 +245,9 @@ namespace Azure.Storage
 
             internal static class Block
             {
-                public const int DefaultConcurrentTransfersCount = 5;
+                [EditorBrowsable(EditorBrowsableState.Never)]
+                public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
+                public const int LegacyDefaultConcurrentTransfersCount = 5;
                 public const int DefaultInitalDownloadRangeSize = 256 * Constants.MB; // 256 MB
                 public const int Pre_2019_12_12_MaxUploadBytes = 256 * Constants.MB; // 256 MB
                 public const long MaxUploadBytes = 5000L * Constants.MB; // 5000MB
@@ -378,7 +384,13 @@ namespace Azure.Storage
             /// <summary>
             /// Default concurrent transfers count.
             /// </summary>
-            public const int DefaultConcurrentTransfersCount = 5;
+            [EditorBrowsable(EditorBrowsableState.Never)]
+            public const int DefaultConcurrentTransfersCount = LegacyDefaultConcurrentTransfersCount;
+
+            /// <summary>
+            /// Legacy default concurrent transfers count.
+            /// </summary>
+            public const int LegacyDefaultConcurrentTransfersCount = 5;
 
             /// <summary>
             /// Max upload bytes for less than Service Version 2019-12-12.
