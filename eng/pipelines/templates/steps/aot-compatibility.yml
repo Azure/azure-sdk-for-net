@@ -15,7 +15,6 @@ steps:
           | ForEach-Object { Get-Content -Raw $_.FullName | ConvertFrom-Json }
 
         Write-Host "Found $($packageInfos.Count) package(s) to check for AOT compatibility."
-        Write-Host "Packages: $($packageInfos | ForEach-Object { $_.ArtifactName } | Join-String ', ')"
         
         $failedAotChecks = $false
         foreach ($package in $packageInfos) {
