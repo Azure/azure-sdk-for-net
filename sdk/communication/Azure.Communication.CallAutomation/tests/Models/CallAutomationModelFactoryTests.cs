@@ -56,7 +56,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
         public void CallAutomationModelFactoryCanInstantiateTranscriptionData()
         {
             var text = "Hello World";
-            var format = "display";
+            var format = "Display";
             var confidence = 0.95;
             var offset = 1000L;
             var duration = 2000L;
@@ -67,7 +67,7 @@ namespace Azure.Communication.CallAutomation.Tests.Models
             var transcriptionData = CallAutomationModelFactory.TranscriptionData(text, format, confidence, offset, duration, words, participantRawID, resultState);
 
             Assert.AreEqual(text, transcriptionData.Text);
-            Assert.AreEqual(format, transcriptionData.Format);
+            Assert.AreEqual(format, transcriptionData.Format.ToString());
             Assert.AreEqual(confidence, transcriptionData.Confidence);
             Assert.AreEqual(TimeSpan.FromTicks(offset), transcriptionData.Offset);
             Assert.AreEqual(TimeSpan.FromTicks(duration), transcriptionData.Duration);
