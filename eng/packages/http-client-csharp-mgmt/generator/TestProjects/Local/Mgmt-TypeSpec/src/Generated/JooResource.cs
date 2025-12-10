@@ -287,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Joo
+        /// Update a Joo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -343,7 +343,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Joo
+        /// Update a Joo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -430,7 +430,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     JooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<JooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -473,7 +473,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     JooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<JooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<JooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -515,7 +515,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     JooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<JooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -557,7 +557,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     JooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<JooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<JooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -598,7 +598,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     JooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<JooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<JooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -639,7 +639,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     JooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<JooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<JooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

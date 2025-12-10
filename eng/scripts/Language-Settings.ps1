@@ -552,7 +552,7 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
     # Install autorest locally
     Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
 
-    Write-Host "Running npm ci over emitter-package.json in a temp folder to prime the npm cache"
+    Write-Host "Running npm ci over legacy-emitter-package.json in a temp folder to prime the npm cache"
 
     $tempFolder = New-TemporaryFile
     $tempFolder | Remove-Item -Force
@@ -560,9 +560,9 @@ function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
 
     Push-Location $tempFolder
     try {
-        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
-        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
-            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+        Copy-Item "$RepoRoot/eng/legacy-emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/legacy-emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/legacy-emitter-package-lock.json" "package-lock.json"
             Invoke-LoggedCommand "npm ci"
         } else {
           Invoke-LoggedCommand "npm install"

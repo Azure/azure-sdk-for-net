@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeLocalRulestackResourceListResult(document.RootElement, options);
                     }
@@ -166,11 +166,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<LocalRulestackResourceListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="LocalRulestackResourceListResult"/> from. </param>
-        internal static LocalRulestackResourceListResult FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LocalRulestackResourceListResult"/> from. </param>
+        internal static LocalRulestackResourceListResult FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLocalRulestackResourceListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

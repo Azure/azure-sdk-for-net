@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
     public readonly partial struct KustoOfferingType : IEquatable<KustoOfferingType>
     {
         private readonly string _value;
+        /// <summary> The Azure Data Explorer cluster Kusto offering. </summary>
+        private const string AdxValue = "adx";
+        /// <summary> The free Azure Data Explorer cluster Kusto offering. </summary>
+        private const string FreeValue = "free";
+        /// <summary> The Fabric Real-Time Analytics Kusto offering. </summary>
+        private const string FabricValue = "fabric";
 
         /// <summary> Initializes a new instance of <see cref="KustoOfferingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoOfferingType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdxValue = "adx";
-        private const string FreeValue = "free";
-        private const string FabricValue = "fabric";
+            _value = value;
+        }
 
         /// <summary> The Azure Data Explorer cluster Kusto offering. </summary>
         public static KustoOfferingType Adx { get; } = new KustoOfferingType(AdxValue);
+
         /// <summary> The free Azure Data Explorer cluster Kusto offering. </summary>
         public static KustoOfferingType Free { get; } = new KustoOfferingType(FreeValue);
+
         /// <summary> The Fabric Real-Time Analytics Kusto offering. </summary>
         public static KustoOfferingType Fabric { get; } = new KustoOfferingType(FabricValue);
+
         /// <summary> Determines if two <see cref="KustoOfferingType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoOfferingType left, KustoOfferingType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoOfferingType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoOfferingType left, KustoOfferingType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoOfferingType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoOfferingType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoOfferingType(string value) => new KustoOfferingType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoOfferingType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoOfferingType?(string value) => value == null ? null : new KustoOfferingType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoOfferingType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoOfferingType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

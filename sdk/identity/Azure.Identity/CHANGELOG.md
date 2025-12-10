@@ -1,14 +1,28 @@
 # Release History
 
-## 1.18.0-beta.2 (Unreleased)
+## 1.18.0-beta.3 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
+- Renamed `WorkloadIdentityCredentialOptions.IsAzureKubernetesTokenProxyEnabled` to `IsAzureProxyEnabled` to follow .NET naming conventions for boolean properties.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.18.0-beta.2 (2025-11-19)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.78.0.
+
+## 1.17.1 (2025-11-18)
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.78.0.
 
 ## 1.18.0-beta.1 (2025-11-14)
 

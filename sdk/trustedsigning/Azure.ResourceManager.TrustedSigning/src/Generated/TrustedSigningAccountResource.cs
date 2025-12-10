@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.TrustedSigning
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<TrustedSigningAccountResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<TrustedSigningAccountResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.TrustedSigning
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<TrustedSigningAccountResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<TrustedSigningAccountResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.TrustedSigning
                     TrustedSigningAccountData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     TrustedSigningAccountPatch patch = new TrustedSigningAccountPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<TrustedSigningAccountResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<TrustedSigningAccountResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.TrustedSigning
                     TrustedSigningAccountData current = Get(cancellationToken: cancellationToken).Value.Data;
                     TrustedSigningAccountPatch patch = new TrustedSigningAccountPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<TrustedSigningAccountResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<TrustedSigningAccountResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.TrustedSigning
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<TrustedSigningAccountResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<TrustedSigningAccountResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.TrustedSigning
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<TrustedSigningAccountResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<TrustedSigningAccountResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

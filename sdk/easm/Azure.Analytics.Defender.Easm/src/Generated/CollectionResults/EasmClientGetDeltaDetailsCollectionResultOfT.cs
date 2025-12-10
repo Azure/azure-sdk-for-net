@@ -27,11 +27,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public EasmClientGetDeltaDetailsCollectionResultOfT(EasmClient client, RequestContent content, int? skip, int? maxpagesize, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
             _client = client;
             _content = content;
             _skip = skip;

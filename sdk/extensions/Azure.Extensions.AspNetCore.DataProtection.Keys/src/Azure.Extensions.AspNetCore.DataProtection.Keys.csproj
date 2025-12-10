@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Description>Microsoft Azure Key Vault key encryption support.</Description>
     <PackageTags>aspnetcore;dataprotection;azure;keyvault</PackageTags>
     <Version>1.7.0-beta.1</Version>

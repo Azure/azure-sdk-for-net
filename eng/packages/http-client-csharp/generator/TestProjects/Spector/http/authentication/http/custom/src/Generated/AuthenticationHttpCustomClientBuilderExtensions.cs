@@ -15,6 +15,9 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AuthenticationHttpCustomClientBuilderExtensions
     {
+        public static IAzureClientBuilder<CustomClient, CustomClientOptions> AddCustomClient<TBuilder>(this TBuilder builder, AzureKeyCredential credential)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
         public static IAzureClientBuilder<CustomClient, CustomClientOptions> AddCustomClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 

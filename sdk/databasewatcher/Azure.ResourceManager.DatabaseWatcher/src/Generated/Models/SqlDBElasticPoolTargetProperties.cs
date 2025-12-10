@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DatabaseWatcher;
 
 namespace Azure.ResourceManager.DatabaseWatcher.Models
 {
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="sqlEpResourceId"> The Azure resource ID of an Azure SQL DB elastic pool target. </param>
         /// <param name="anchorDatabaseResourceId"> The Azure resource ID of the anchor database used to connect to an elastic pool. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionServerName"/>, <paramref name="sqlEpResourceId"/> or <paramref name="anchorDatabaseResourceId"/> is null. </exception>
-        public SqlDBElasticPoolTargetProperties(TargetAuthenticationType targetAuthenticationType, string connectionServerName, ResourceIdentifier sqlEpResourceId, ResourceIdentifier anchorDatabaseResourceId) : base(targetAuthenticationType, connectionServerName)
+        public SqlDBElasticPoolTargetProperties(TargetAuthenticationType targetAuthenticationType, string connectionServerName, ResourceIdentifier sqlEpResourceId, ResourceIdentifier anchorDatabaseResourceId) : base("SqlEp", targetAuthenticationType, connectionServerName)
         {
             Argument.AssertNotNull(connectionServerName, nameof(connectionServerName));
             Argument.AssertNotNull(sqlEpResourceId, nameof(sqlEpResourceId));
@@ -28,7 +29,6 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
 
             SqlEpResourceId = sqlEpResourceId;
             AnchorDatabaseResourceId = anchorDatabaseResourceId;
-            TargetType = "SqlEp";
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlDBElasticPoolTargetProperties"/>. </summary>
@@ -37,27 +37,23 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="targetVault"> To use SQL authentication when connecting to targets, specify the vault where the login name and password secrets are stored. </param>
         /// <param name="connectionServerName"> The FQDN host name of the server to use in the connection string when connecting to a target. For example, for an Azure SQL logical server in the Azure commercial cloud, the value might be 'sql-logical-server-22092780.database.windows.net'; for an Azure SQL managed instance in the Azure commercial cloud, the value might be 'sql-mi-39441134.767d5869f605.database.windows.net'. Port number and instance name must be specified separately. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sqlEpResourceId"> The Azure resource ID of an Azure SQL DB elastic pool target. </param>
         /// <param name="anchorDatabaseResourceId"> The Azure resource ID of the anchor database used to connect to an elastic pool. </param>
         /// <param name="readIntent"> Set to true to monitor a high availability replica of specified target, if any. </param>
-        internal SqlDBElasticPoolTargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, TargetAuthenticationVaultSecret targetVault, string connectionServerName, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sqlEpResourceId, ResourceIdentifier anchorDatabaseResourceId, bool? readIntent) : base(targetType, targetAuthenticationType, targetVault, connectionServerName, provisioningState, serializedAdditionalRawData)
+        internal SqlDBElasticPoolTargetProperties(string targetType, TargetAuthenticationType targetAuthenticationType, TargetAuthenticationVaultSecret targetVault, string connectionServerName, DatabaseWatcherResourceProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sqlEpResourceId, ResourceIdentifier anchorDatabaseResourceId, bool? readIntent) : base(targetType, targetAuthenticationType, targetVault, connectionServerName, provisioningState, additionalBinaryDataProperties)
         {
             SqlEpResourceId = sqlEpResourceId;
             AnchorDatabaseResourceId = anchorDatabaseResourceId;
             ReadIntent = readIntent;
-            TargetType = targetType ?? "SqlEp";
-        }
-
-        /// <summary> Initializes a new instance of <see cref="SqlDBElasticPoolTargetProperties"/> for deserialization. </summary>
-        internal SqlDBElasticPoolTargetProperties()
-        {
         }
 
         /// <summary> The Azure resource ID of an Azure SQL DB elastic pool target. </summary>
         public ResourceIdentifier SqlEpResourceId { get; set; }
+
         /// <summary> The Azure resource ID of the anchor database used to connect to an elastic pool. </summary>
         public ResourceIdentifier AnchorDatabaseResourceId { get; set; }
+
         /// <summary> Set to true to monitor a high availability replica of specified target, if any. </summary>
         public bool? ReadIntent { get; set; }
     }

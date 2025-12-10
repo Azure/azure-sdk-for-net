@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.IO;
 using Azure.Generator.Extensions;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.ClientModel;
@@ -70,20 +69,6 @@ namespace Azure.Generator.Visitors
                     type.Update(
                         @namespace: CodeModelGenerator.Instance.TypeFactory.GetCleanNameSpace(
                             $"{CodeModelGenerator.Instance.TypeFactory.PrimaryNamespace}.Models"));
-                }
-            }
-            else
-            {
-                // TODO - remove this once all libraries have been migrated to the new generator. Leaving this
-                // here to make diffs easier to review while migrating. Calculate the fileName as it won't always match the Name
-                // property, e.g. for serialization providers.
-                // https://github.com/Azure/azure-sdk-for-net/issues/50286
-                var separator = Path.DirectorySeparatorChar;
-                if (type.RelativeFilePath.Contains($"Generated{separator}Models{separator}"))
-                {
-                    var fileName = Path.GetRelativePath(Path.Combine("src", "Generated", "Models"),
-                        type.RelativeFilePath);
-                    type.Update(relativeFilePath: Path.Combine("src", "Generated", fileName));
                 }
             }
         }
