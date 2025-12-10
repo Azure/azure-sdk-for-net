@@ -1096,21 +1096,24 @@ Console.WriteLine(response.GetOutputText());
 
 ## Browser automation
 
-Playwright is a Node.js library for browser automation. Microsoft offers the
-[Azue Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme),
-allowing to run Playwright-based tasks, which can be triggered by the Agent, equipped with
-`BrowserAutomationAgentTool`. To run this sample, please deploy an Azure Playwright
-workspace and in the "Get started" section select "2. Set up authentication."
-Choose "Service Access Token" and click "Generate Token".
-**Please save the token as when the page is closed, it will not be shown again!**.
-In the Microsoft Foundry you use, at the left panel select "Management center" and then
-select "Connected resources", and, finally, create new connection of "Serverless Model"
-type; name it and add an Access Token to the "Key" field and set Playwright Workspace
-Browser endpoint as a "Target URI". The latter can be found on the "Overview" page
-of Workspace. It should start with `wss://`.
+Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
 
-Please note that the Browser automation operations may take longer than usual and
-requiring request timeout to be at least 5 minutes.
+### Create Azure Playwright workspace
+
+1. Deploy an Azure Playwright workspace.
+2. In the **Get started** section, open **2. Set up authentication**.
+3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+
+### Configure Microsoft Foundry
+
+1. Open the left navigation and select **Management center**.
+2. Choose **Connected resources**.
+3. Create a new connection of type **Serverless Model**.
+4. Provide a name, then paste your Access Token into the **Key** field.
+5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
+
+Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
+
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
@@ -1143,7 +1146,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-We have to stream the output from the agent to show visual progress and to avoid timeouts as the task may take long time.
+Streaming response outputs with browser automation provides incremental updates as the automation is processed. This is advised for interactive scenarios, as browser automation can require several minutes to fully complete.
 
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);

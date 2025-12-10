@@ -1,7 +1,22 @@
 # Sample for use of `BrowserAutomationAgentTool` and Agents in Azure.AI.Projects.OpenAI.
 
-Playwright is a Node.js library for browser automation. Microsoft offers the [Azue Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), allowing to run Playwright-based tasks, which can be triggered by the Agent, equipped with `BrowserAutomationAgentTool`.
-To run this sample, please deploy an Azure Playwright workspace and in the "Get started" section select "2. Set up authentication." Choose "Service Access Token" and click "Generate Token". **Please save the token as when the page is closed, it will not be shown again!**. In the Microsoft Foundry you use, at the left panel select "Management center" and then select "Connected resources", and, finally, create new connection of "Serverless Model" type; name it and add an Access Token to the "Key" field and set Playwright Workspace Browser endpoint as a "Target URI". The latter can be found on the "Overview" page of a Workspace. It should start with `wss://`.
+Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
+
+## Create Azure Playwright workspace
+
+1. Deploy an Azure Playwright workspace.
+2. In the **Get started** section, open **2. Set up authentication**.
+3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+
+## Configure Microsoft Foundry
+
+1. Open the left navigation and select **Management center**.
+2. Choose **Connected resources**.
+3. Create a new connection of type **Serverless Model**.
+4. Provide a name, then paste your Access Token into the **Key** field.
+5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
+
+## Run this sample.
 
 1. Begin by creating the Agent client and reading the required environment variables. Please note that the Browser automation operations may take longer than usual and requiring request timeout to be at least 5 minutes.
 
