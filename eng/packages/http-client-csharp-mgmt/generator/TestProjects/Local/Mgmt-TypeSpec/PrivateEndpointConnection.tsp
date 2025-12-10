@@ -1,6 +1,7 @@
 import "@azure-tools/typespec-client-generator-core";
 
 using TypeSpec.Http;
+using TypeSpec.Rest;
 using Azure.ResourceManager;
 using Azure.ClientGenerator.Core;
 
@@ -46,7 +47,7 @@ model StartRequest {
    */
   startVm?: boolean;
 }
-
+@parentResource(StorageSyncService)
 model PrivateEndpointConnection is PrivateEndpointConnectionResource;
 alias PrivateEndpointOperations = Azure.ResourceManager.PrivateEndpoints<PrivateEndpointConnection>;
 
@@ -93,4 +94,10 @@ model StorageSyncService
 model StorageSyncServiceProperties {
   /** The storage sync service location. */
   storageSyncServiceLocation: string;
+}
+
+@armResourceOperations
+interface StorageSyncServices {
+  /** Gets the specified storage sync service. */
+  get is ArmResourceRead<StorageSyncService>;
 }
