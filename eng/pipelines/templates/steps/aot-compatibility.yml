@@ -21,7 +21,7 @@ steps:
           Write-Host "Running Check-AOT-Compatibility.ps1 for Package: $($package.ArtifactName)"
           Write-Host "Package Path: $packagePath"
           
-          & "$(Build.SourcesDirectory)/eng/scripts/compatibility/Check-AOT-Compatibility.ps1" -PackagePath $packagePath
+          & "$(Build.SourcesDirectory)\eng\scripts\compatibility\Check-AOT-Compatibility.ps1" -PackagePath $packagePath
           
           if ($LASTEXITCODE -ne 0) {
             $failedAotChecks = $true
