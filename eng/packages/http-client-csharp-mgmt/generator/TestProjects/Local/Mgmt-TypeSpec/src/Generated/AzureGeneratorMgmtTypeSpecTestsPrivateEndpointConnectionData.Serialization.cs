@@ -60,12 +60,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnection(document.RootElement, options);
+            return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options)
+        internal static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -164,7 +164,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnection(document.RootElement, options);
+                        return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
@@ -190,7 +190,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         internal static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData.DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
