@@ -603,6 +603,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.BingGroundingCustom)]
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
+    [TestCase(ToolType.Sharepoint)]
+    [TestCase(ToolType.BrowserAutomation)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -658,9 +660,10 @@ public class AgentsTests : AgentsTestBase
                 Assert.That(Regex.Match(response.GetOutputText().ToLower(), expectedResponse.ToLower()).Success, Is.True, $"The output: \"{response.GetOutputText()}\" does not contain {expectedResponse}");
             }
         }
-        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom)
+        if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint)
         {
             bool isUriCitationFound = false;
+
             // Check Annotation for Azure AI Search tool.
             foreach (ResponseItem item in response.OutputItems)
             {
@@ -679,6 +682,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.BingGroundingCustom)]
     [TestCase(ToolType.OpenAPI)]
     [TestCase(ToolType.OpenAPIConnection)]
+    [TestCase(ToolType.Sharepoint)]
+    [TestCase(ToolType.BrowserAutomation)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();
@@ -725,7 +730,7 @@ public class AgentsTests : AgentsTestBase
                             }
                         }
                     }
-                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom)
+                    if (toolType == ToolType.AzureAISearch | toolType == ToolType.BingGrounding | toolType == ToolType.BingGroundingCustom | toolType == ToolType.Sharepoint)
                     {
                         annotationMet = ContainsAnnotation(itemDoneUpdate.Item, toolType);
                     }
