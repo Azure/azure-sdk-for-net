@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DatabaseWatcherPatch"/> instance for mocking. </returns>
-        public static DatabaseWatcherPatch DatabaseWatcherPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, DatabaseWatcherUpdateProperties properties = default)
+        public static DatabaseWatcherPatch DatabaseWatcherPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, WatcherUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
