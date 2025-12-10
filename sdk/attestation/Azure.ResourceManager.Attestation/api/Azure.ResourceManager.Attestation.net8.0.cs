@@ -9,10 +9,10 @@ namespace Azure.ResourceManager.Attestation
         public static Azure.ResourceManager.Attestation.AttestationProviderCollection GetAttestationProviders(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProviders(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersByDefaultProvider(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultByLocationAttestationProvider(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultAttestationProviderByLocation(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultAttestationProviders(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultAttestationProvidersAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AttestationPrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Attestation
         public AttestationProviderData(Azure.Core.AzureLocation location) { }
         public System.Uri AttestUri { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? Status { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? TpmAttestationAuthentication { get { throw null; } set { } }
         public string TrustModel { get { throw null; } set { } }
@@ -153,21 +153,48 @@ namespace Azure.ResourceManager.Attestation.Mocking
         protected MockableAttestationSubscriptionResource() { }
         public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersByDefaultProvider(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetAttestationProvidersByDefaultProviderAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultByLocationAttestationProvider(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetDefaultByLocationAttestationProviderAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultAttestationProviderByLocation(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Attestation.AttestationProviderResource>> GetDefaultAttestationProviderByLocationAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultAttestationProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Attestation.AttestationProviderResource> GetDefaultAttestationProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Attestation.Models
 {
     public static partial class ArmAttestationModelFactory
     {
+        public static Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey AttestationPolicyJsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5C = null, string y = null) { throw null; }
         public static Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string privateEndpointStringId = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.Attestation.Models.AttestationPrivateLinkResource AttestationPrivateLinkResource(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.Attestation.Models.AttestationProviderCreateOrUpdateContent AttestationProviderCreateOrUpdateContent(Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams properties = null) { throw null; }
-        public static Azure.ResourceManager.Attestation.AttestationProviderData AttestationProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string trustModel = null, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? status = default(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus?), System.Uri attestUri = null, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? tpmAttestationAuthentication = default(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType?)) { throw null; }
-        public static Azure.ResourceManager.Attestation.Models.JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5C = null, string y = null) { throw null; }
+        public static Azure.ResourceManager.Attestation.AttestationProviderData AttestationProviderData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string trustModel = null, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus? status = default(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus?), System.Uri attestUri = null, Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType? publicNetworkAccess = default(Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Attestation.AttestationPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? tpmAttestationAuthentication = default(Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType?)) { throw null; }
+    }
+    public partial class AttestationPolicyJsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey>
+    {
+        public AttestationPolicyJsonWebKey(string kty) { }
+        public string Alg { get { throw null; } set { } }
+        public string Crv { get { throw null; } set { } }
+        public string D { get { throw null; } set { } }
+        public string Dp { get { throw null; } set { } }
+        public string Dq { get { throw null; } set { } }
+        public string E { get { throw null; } set { } }
+        public string K { get { throw null; } set { } }
+        public string Kid { get { throw null; } set { } }
+        public string Kty { get { throw null; } }
+        public string N { get { throw null; } set { } }
+        public string P { get { throw null; } set { } }
+        public string Q { get { throw null; } set { } }
+        public string Qi { get { throw null; } set { } }
+        public string Use { get { throw null; } set { } }
+        public string X { get { throw null; } set { } }
+        public System.Collections.Generic.IList<string> X5C { get { throw null; } }
+        public string Y { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AttestationPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.Attestation.Models.AttestationPrivateEndpointConnectionProvisioningState>
@@ -259,11 +286,29 @@ namespace Azure.ResourceManager.Attestation.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AttestationProviderPublicNetworkAccessType : System.IEquatable<Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AttestationProviderPublicNetworkAccessType(string value) { throw null; }
+        public static Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType left, Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType left, Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class AttestationServiceCreationSpecificParams : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>
     {
         public AttestationServiceCreationSpecificParams() { }
-        public System.Collections.Generic.IList<Azure.ResourceManager.Attestation.Models.JsonWebKey> PolicySigningCertificatesKeys { get { throw null; } }
-        public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Attestation.Models.AttestationPolicyJsonWebKey> PolicySigningCertificatesKeys { get { throw null; } }
+        public Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? TpmAttestationAuthentication { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -275,7 +320,7 @@ namespace Azure.ResourceManager.Attestation.Models
     public partial class AttestationServicePatchSpecificParams : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>
     {
         public AttestationServicePatchSpecificParams() { }
-        public Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
+        public Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? TpmAttestationAuthentication { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -301,51 +346,6 @@ namespace Azure.ResourceManager.Attestation.Models
         public static bool operator ==(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus left, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus right) { throw null; }
         public static implicit operator Azure.ResourceManager.Attestation.Models.AttestationServiceStatus (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Attestation.Models.AttestationServiceStatus left, Azure.ResourceManager.Attestation.Models.AttestationServiceStatus right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>
-    {
-        public JsonWebKey(string kty) { }
-        public string Alg { get { throw null; } set { } }
-        public string Crv { get { throw null; } set { } }
-        public string D { get { throw null; } set { } }
-        public string Dp { get { throw null; } set { } }
-        public string Dq { get { throw null; } set { } }
-        public string E { get { throw null; } set { } }
-        public string K { get { throw null; } set { } }
-        public string Kid { get { throw null; } set { } }
-        public string Kty { get { throw null; } }
-        public string N { get { throw null; } set { } }
-        public string P { get { throw null; } set { } }
-        public string Q { get { throw null; } set { } }
-        public string Qi { get { throw null; } set { } }
-        public string Use { get { throw null; } set { } }
-        public string X { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> X5C { get { throw null; } }
-        public string Y { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Attestation.Models.JsonWebKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Attestation.Models.JsonWebKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.JsonWebKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct PublicNetworkAccessType : System.IEquatable<Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public PublicNetworkAccessType(string value) { throw null; }
-        public static Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType Disabled { get { throw null; } }
-        public static Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType Enabled { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType left, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType left, Azure.ResourceManager.Attestation.Models.PublicNetworkAccessType right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]

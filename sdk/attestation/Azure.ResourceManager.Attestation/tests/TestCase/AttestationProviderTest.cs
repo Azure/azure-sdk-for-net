@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Attestation.Tests
                 },
                 Properties = new AttestationServicePatchSpecificParams()
                 {
-                    PublicNetworkAccess = PublicNetworkAccessType.Disabled
+                    PublicNetworkAccess = AttestationProviderPublicNetworkAccessType.Disabled
                 }
             };
             var providerResource4 =(await providerResource3.UpdateAsync(patch)).Value;
