@@ -15,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using static Microsoft.TypeSpec.Generator.Primitives.CSharpType;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Primitives
@@ -86,7 +87,7 @@ namespace Azure.Generator.Primitives
             [EmbeddingVector] = typeof(ReadOnlyMemory<>)
         };
 
-        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>(new CSharpTypeIgnoreNullableComparer())
         {
             [typeof(Guid)] = SerializeTypeWithImplicitOperatorToString,
             [typeof(IPAddress)] = SerializeTypeWithToString,
@@ -96,7 +97,7 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = SerializeResponseError,
         };
 
-        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>(new CSharpTypeIgnoreNullableComparer())
         {
             [typeof(Guid)] = DeserializeNewInstanceStringLikeType,
             [typeof(IPAddress)] = DeserializeParsableStringLikeType,
@@ -108,52 +109,8 @@ namespace Azure.Generator.Primitives
 
         public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);
 
-        public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression)
-        {
-            if (_typeToSerializationExpression.TryGetValue(type, out expression))
-            {
-                return true;
-            }
+        public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 
-            if (_typeToSerializationExpression.TryGetValue(type.WithNullable(true), out expression))
-            {
-                return true;
-            }
-
-            foreach (var kvp in _typeToSerializationExpression)
-            {
-                if (kvp.Key.AreNamesEqual(type))
-                {
-                    expression = kvp.Value;
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression)
-        {
-            if (_typeToDeserializationExpression.TryGetValue(type, out expression))
-            {
-                return true;
-            }
-
-            if (_typeToDeserializationExpression.TryGetValue(type.WithNullable(true), out expression))
-            {
-                return true;
-            }
-
-            foreach (var kvp in _typeToDeserializationExpression)
-            {
-                if (kvp.Key.AreNamesEqual(type))
-                {
-                    expression = kvp.Value;
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression) => _typeToDeserializationExpression.TryGetValue(type, out expression);
     }
 }
