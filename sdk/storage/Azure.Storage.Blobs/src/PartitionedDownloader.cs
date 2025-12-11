@@ -71,6 +71,8 @@ namespace Azure.Storage.Blobs
 
         private readonly ArrayPool<byte> _arrayPool;
 
+        private readonly int DefaultConcurrentTransfersCount = Math.Min(Math.Max(Environment.ProcessorCount * 2, 8), 32);
+
         public PartitionedDownloader(
             BlobBaseClient client,
             StorageTransferOptions transferOptions = default,
@@ -91,7 +93,7 @@ namespace Azure.Storage.Blobs
             {
                 _maxWorkerCount = CompatSwitches.UseLegacyDefaultConcurrency
                     ? Constants.Blob.Block.LegacyDefaultConcurrentTransfersCount
-                    : Environment.ProcessorCount;
+                    : DefaultConcurrentTransfersCount;
             }
 
             // Set _rangeSize
