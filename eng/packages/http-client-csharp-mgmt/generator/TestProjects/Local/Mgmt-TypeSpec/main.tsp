@@ -15,6 +15,7 @@ import "./quota.tsp";
 import "./networkaction.tsp";
 import "./joo.tsp";
 import "./workload.tsp";
+import "./multiplepaths.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

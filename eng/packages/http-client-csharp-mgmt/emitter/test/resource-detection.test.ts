@@ -1220,4 +1220,14 @@ interface Employees {
       "ManagementGroup"
     );
   });
+
+  // TODO: Add test for multiple resources sharing same model once the feature is implemented
+  // This scenario is tracked in the issue about supporting multiple-path resources with same resource model
+  /*
+  it("multiple resources sharing same model", async () => {
+    // This test will validate that when the same model is used by two different
+    // resource interfaces operating at different paths (similar to the legacy-operations example),
+    // the emitter generates two separate resource metadata decorators
+  });
+  */
 });
