@@ -34,7 +34,7 @@ The analyzer works out of the box with various invoice formats and requires no c
 - `prebuilt-check.us` - US bank checks
 - `prebuilt-creditMemo` - Credit memos and refund documents
 
-For a complete list of available prebuilt analyzers, see the [Prebuilt Analyzers documentation][prebuilt-analyzers-docs].
+For a complete list of available prebuilt analyzers, see the [Prebuilt analyzers documentation][prebuilt-analyzers-docs].
 
 ## Prerequisites
 
@@ -191,7 +191,7 @@ These metadata properties are available on all field types (`StringField`, `Numb
 
 The `DocumentContent.Unit` property indicates the measurement system used for coordinates in the `Source` field. For US documents, this is typically "inch", meaning all bounding box coordinates in the source field are measured in inches. This allows you to precisely locate extracted values in the original document.
 
-For more details about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.), see the [Document Elements documentation][document-elements-docs].
+For more details about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.), see the [Document elements documentation][document-elements-docs].
 
 ## Next steps
 
@@ -200,12 +200,12 @@ For more details about `DocumentContent` and all available document elements (pa
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
-- [Document Elements Documentation][document-elements-docs] - Detailed information about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.)
-- [Prebuilt Analyzers Documentation][prebuilt-analyzers-docs] - Complete list of 70+ prebuilt analyzers
-- [Financial Documents][financial-docs] - Overview of financial document analyzers
+- [Content Understanding documentation][cu-docs]
+- [Document elements documentation][document-elements-docs] - Detailed information about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.)
+- [Prebuilt analyzers documentation][prebuilt-analyzers-docs] - Complete list of 70+ prebuilt analyzers
+- [Financial documents][financial-docs] - Overview of financial document analyzers
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample02]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
 [sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md

@@ -1,6 +1,6 @@
 # Configure model deployment defaults
 
-This sample demonstrates how to configure and retrieve default model deployment settings for your Microsoft Foundry resource. This is a **required one-time setup** before using prebuilt analyzers.
+This sample demonstrates how to configure and retrieve default model deployment settings for your Microsoft Foundry resource. This is a **required one-time setup** before using prebuilt or custom analyzers.
 
 ## About model deployment configuration
 
@@ -44,8 +44,7 @@ string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
-
-> **⚠️ Security Warning**: API key authentication is not secure and is only recommended for testing purposes with test resources. For production, use `DefaultAzureCredential` or other secure authentication methods.
+> **⚠️ Security Warning**: API key authentication is less secure and is only recommended for testing purposes with test resources. For production, use `DefaultAzureCredential` or other secure authentication methods.
 
 ## Configure model deployments
 
@@ -99,9 +98,8 @@ After configuring model deployments, you can use prebuilt analyzers. See:
 - [Sample 02: Analyze a document from URL][sample02] to analyze documents from URLs
 
 ## Learn more
-
-- [Content Understanding Documentation][cu-docs]
-- [Model Deployment Configuration][model-deployment-docs]
+- [Content Understanding documentation][cu-docs]
+- [Model deployment configuration][model-deployment-docs]
 
 [README]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/README.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md

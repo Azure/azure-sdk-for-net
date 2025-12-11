@@ -163,10 +163,10 @@ if (resultElement.TryGetProperty("contents", out var contentsElement) &&
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
-- [Protocol Methods][protocol-methods-docs] - Learn about protocol methods in Azure SDKs
+- [Content Understanding documentation][cu-docs]
+- [Protocol methods][protocol-methods-docs] - Learn about protocol methods in Azure SDKs
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample10]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/

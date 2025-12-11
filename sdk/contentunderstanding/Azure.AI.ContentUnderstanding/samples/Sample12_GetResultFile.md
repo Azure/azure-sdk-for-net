@@ -113,10 +113,10 @@ else
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
-- [Video Analysis][video-docs] - Learn about video analysis capabilities
+- [Content Understanding documentation][cu-docs]
+- [Video analysis][video-docs] - Learn about video analysis capabilities
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample13]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample13_DeleteResult.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/

@@ -17,7 +17,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
     public partial class ContentUnderstandingSamples
     {
         [RecordedTest]
-        public async Task ConfigureDefaultsAsync()
+        public async Task UpdateDefaultsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
@@ -97,3 +97,4 @@ namespace Azure.AI.ContentUnderstanding.Samples
         }
     }
 }
+

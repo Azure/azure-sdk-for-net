@@ -52,7 +52,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 
 ### Using API key
 
-> **⚠️ Security Warning:** API key authentication is **not secure** for production use. API keys are sensitive credentials that should not be hardcoded or committed to source control. This method is **only recommended for testing purposes with test resources**. For production applications, use `DefaultAzureCredential` or other Microsoft Entra ID-based authentication methods.
+> **⚠️ Security Warning:** API key authentication is **less secure** for production use. API keys are sensitive credentials that should not be hardcoded or committed to source control. This method is **only recommended for testing purposes with test resources**. For production applications, use `DefaultAzureCredential` or other Microsoft Entra ID-based authentication methods.
 
 You can authenticate using an API key from your Microsoft Foundry resource:
 
@@ -118,11 +118,11 @@ else
 
 The markdown output includes structured text with preserved formatting and hierarchy, table representations in markdown format, figure descriptions for images/charts/diagrams, and layout preservation maintaining document structure.
 
-For more information about the markdown format, see [Document Markdown][cu-document-markdown].
+For more information about the markdown format, see [Document markdown][cu-document-markdown].
 
 ## Access document properties with type-safe APIs
 
-The SDK provides type-safe access to extraction results. Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides strongly-typed access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For detailed information about all available document elements and properties, see [Document Elements][cu-document-elements].
+The SDK provides type-safe access to extraction results. Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides strongly-typed access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For detailed information about all available document elements and properties, see [Document elements][cu-document-elements].
 
 ```C# Snippet:ContentUnderstandingAccessDocumentProperties
 // Check if this is document content to access document-specific properties
@@ -165,14 +165,14 @@ if (content is DocumentContent documentContent)
 
 ## Learn more
 
-- **[Content Understanding Overview][cu-overview]** - Comprehensive introduction to the service
-- **[What's New][cu-whats-new]** - Latest features and updates
-- **[Document Overview][cu-document-overview]** - Document analysis capabilities and use cases
-- **[Document Markdown][cu-document-markdown]** - Markdown format and structure for document content
-- **[Document Elements][cu-document-elements]** - Detailed documentation on document extraction
-- **[Audio Overview][cu-audio-overview]** - Audio capabilities and markdown format
-- **[Video Overview][cu-video-overview]** - Video capabilities and elements
-- **[Image Overview][cu-image-overview]** - Image analysis capabilities
+- **[Content Understanding overview][cu-overview]** - Comprehensive introduction to the service
+- **[What's new][cu-whats-new]** - Latest features and updates
+- **[Document overview][cu-document-overview]** - Document analysis capabilities and use cases
+- **[Document markdown][cu-document-markdown]** - Markdown format and structure for document content
+- **[Document elements][cu-document-elements]** - Detailed documentation on document extraction
+- **[Audio overview][cu-audio-overview]** - Audio capabilities and markdown format
+- **[Video overview][cu-video-overview]** - Video capabilities and elements
+- **[Image overview][cu-image-overview]** - Image analysis capabilities
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding#getting-started
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples

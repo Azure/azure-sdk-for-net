@@ -41,10 +41,10 @@ The generated sample includes code for extracting markdown and accessing documen
 ## Learn more
 
 - **[Sample01_AnalyzeBinary][sample01-analyze-binary]** - Learn the basics of document analysis, authentication, and result processing
-- **[Content Understanding Overview][cu-overview]** - Comprehensive introduction to the service
-- **[Document Overview][cu-document-overview]** - Document analysis capabilities and use cases
-- **[Document Markdown][cu-document-markdown]** - Markdown format and structure for document content
-- **[Document Elements][cu-document-elements]** - Detailed documentation on document extraction
+- **[Content Understanding overview][cu-overview]** - Comprehensive introduction to the service
+- **[Document overview][cu-document-overview]** - Document analysis capabilities and use cases
+- **[Document markdown][cu-document-markdown]** - Markdown format and structure for document content
+- **[Document elements][cu-document-elements]** - Detailed documentation on document extraction
 
 [sample01-analyze-binary]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples

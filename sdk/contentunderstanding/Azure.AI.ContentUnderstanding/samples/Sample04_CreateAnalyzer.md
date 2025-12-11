@@ -17,14 +17,14 @@ Custom analyzers allow you to define a field schema that specifies what structur
   - **`generate`** - Values are generated freely based on the content using AI models (best for complex or variable fields requiring interpretation)
   - **`classify`** - Values are classified against a predefined set of categories (best when using `enum` with a fixed set of possible values)
 
-  When not specified, the system automatically determines the best method based on the field type and description. For more details, see the [Analyzer Reference documentation][analyzer-reference-docs].
+  When not specified, the system automatically determines the best method based on the field type and description. For more details, see the [Analyzer reference documentation][analyzer-reference-docs].
 - Use prebuilt analyzers as a base (see [baseAnalyzerId][baseanalyzerid-docs] for details). Supported base analyzers include:
   - `prebuilt-document` - for document-based custom analyzers
   - `prebuilt-audio` - for audio-based custom analyzers
   - `prebuilt-video` - for video-based custom analyzers
   - `prebuilt-image` - for image-based custom analyzers
 
-  For the complete and up-to-date list of supported base analyzers, see the [Analyzer Reference documentation][analyzer-reference-docs].
+  For the complete and up-to-date list of supported base analyzers, see the [Analyzer reference documentation][analyzer-reference-docs].
 - Configure analysis options (OCR, layout, formulas)
 - Enable source and confidence tracking: Set `estimateFieldSourceAndConfidence` to `true` at the analyzer level (in `ContentAnalyzerConfig`) or `estimateSourceAndConfidence` to `true` at the field level to get source location (page number, bounding box) and confidence scores for extracted field values. This is required for fields with `method` = `extract` and is useful for validation, quality assurance, debugging, and highlighting source text in user interfaces. Field-level settings override analyzer-level settings. For more information, see [estimateSourceAndConfidence][estimate-source-confidence-docs].
 
@@ -234,13 +234,13 @@ Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
-- [Analyzer Reference Documentation][analyzer-reference-docs] - Complete reference for analyzer configuration, extraction methods, and field schemas
+- [Content Understanding documentation][cu-docs]
+- [Analyzer reference documentation][analyzer-reference-docs] - Complete reference for analyzer configuration, extraction methods, and field schemas
 - [baseAnalyzerId][baseanalyzerid-docs] - Learn about supported base analyzers for custom analyzers
 - [method][method-docs] - Learn about extraction methods (extract, generate, classify)
 - [estimateSourceAndConfidence][estimate-source-confidence-docs] - Learn about source location and confidence score tracking for extracted fields
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
 [sample07]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample07_ListAnalyzers.md

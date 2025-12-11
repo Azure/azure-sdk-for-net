@@ -107,6 +107,8 @@ string apiKey = "<apiKey>";
 var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 ```
 
+> **⚠️ Security Warning**: API key authentication is less secure and is only recommended for testing purposes with test resources. For production, use `DefaultAzureCredential` or other secure authentication methods.
+
 To get your API key:
 1. Go to [Azure Portal][azure_portal]
 2. Navigate to your Microsoft Foundry resource
@@ -258,7 +260,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [mocking]: https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking
 [client_lifetime]: https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/
 [samples_directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
-[sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
