@@ -18,12 +18,30 @@ namespace Azure.Generator.Management.Visitors
             { "ETag", "etag" }
         };
 
+        private ModelFactoryProvider? _modelFactory;
+        private bool _modelTypesEnsured = false;
+
         protected override TypeProvider? VisitType(TypeProvider type)
         {
             if (type is ModelFactoryProvider modelFactory)
             {
+                // Store the model factory for post-processing
+                _modelFactory = modelFactory;
+            }
+            return base.VisitType(type);
+        }
+
+        protected override TypeProvider? PostVisitType(TypeProvider type)
+        {
+            // Process model factory after all models have been visited
+            if (type is ModelFactoryProvider && _modelFactory != null && !_modelTypesEnsured)
+            {
+                // Ensure model types are built now that all flattening is complete
+                ManagementClientGenerator.Instance.OutputLibrary.EnsureModelTypesBuilt();
+                _modelTypesEnsured = true;
+
                 var updatedMethods = new List<MethodProvider>();
-                foreach (var method in modelFactory.Methods)
+                foreach (var method in _modelFactory.Methods)
                 {
                     var returnType = method.Signature.ReturnType;
                     if (returnType is not null && ManagementClientGenerator.Instance.OutputLibrary.IsModelFactoryModelType(returnType))
@@ -38,10 +56,10 @@ namespace Azure.Generator.Management.Visitors
                         updatedMethods.Add(method);
                     }
                 }
-                modelFactory.Update(methods: updatedMethods);
-                return modelFactory;
+                _modelFactory.Update(methods: updatedMethods);
             }
-            return base.VisitType(type);
+
+            return base.PostVisitType(type);
         }
 
         private void FixArgumentNullExceptionXmlDoc(MethodProvider method)
