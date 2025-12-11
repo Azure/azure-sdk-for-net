@@ -26,8 +26,6 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
-        private const string DataFactoryElementIdentity = "Azure.Core.Expressions.DataFactoryElement";
-
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
@@ -55,10 +53,22 @@ namespace Azure.Generator
         /// <summary>
         /// Get dependency packages for Azure.
         /// </summary>
-        protected internal virtual IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages =>
-            [
-                new("Azure.Core")
-            ];
+        protected internal virtual IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> AzureDependencyPackages
+        {
+            get
+            {
+                var packages = new List<CSharpProjectWriter.CSProjDependencyPackage>(2)
+                {
+                    new("Azure.Core")
+                };
+                if (AzureClientGenerator.Instance.HasDataFactoryElement)
+                {
+                    packages.Add(new("Azure.Core.Expressions.DataFactory"));
+                }
+
+                return packages;
+            }
+        }
 
         /// <inheritdoc/>
         protected override string BuildServiceName()
@@ -107,7 +117,7 @@ namespace Azure.Generator
 
         private CSharpType? TryCreateDataFactoryElementTypeFromUnion(InputUnionType inputUnionType)
         {
-            if (inputUnionType.External?.Identity != DataFactoryElementIdentity)
+            if (inputUnionType.External?.Identity != AzureClientGenerator.DataFactoryElementIdentity)
             {
                 return null;
             }
