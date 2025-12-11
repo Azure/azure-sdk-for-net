@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Adds a subscription as a guest to consume the compute limits shared by the host subscription.
+        /// Update a ComputeLimitGuestSubscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.ComputeLimit
         }
 
         /// <summary>
-        /// Adds a subscription as a guest to consume the compute limits shared by the host subscription.
+        /// Update a ComputeLimitGuestSubscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
