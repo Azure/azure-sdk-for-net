@@ -19,19 +19,19 @@ namespace Samples
     {
         private readonly global::Samples.CatClient _client;
         private readonly string _myToken;
-        private readonly int _maxpagesize;
+        private readonly int _maxPageSize;
         private readonly global::Azure.RequestContext _context;
 
         /// <summary> Initializes a new instance of CatClientGetCatsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The CatClient client used to send requests. </param>
         /// <param name="myToken"> myToken description. </param>
-        /// <param name="maxpagesize"> maxpagesize description. </param>
+        /// <param name="maxPageSize"> maxpagesize description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, int maxpagesize, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
+        public CatClientGetCatsCollectionResult(global::Samples.CatClient client, string myToken, int maxPageSize, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
             _client = client;
             _myToken = myToken;
-            _maxpagesize = maxpagesize;
+            _maxPageSize = maxPageSize;
             _context = context;
         }
 
@@ -69,7 +69,7 @@ namespace Samples
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private global::Azure.Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            int pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxPageSize;
             global::Azure.Core.HttpMessage message = _client.CreateGetCatsRequest(continuationToken, pageSize, _context);
             using global::Azure.Core.Pipeline.DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("CatClient.GetCats");
             scope.Start();
