@@ -71,6 +71,7 @@ High level steps involved:
 
 - Check if the provided repository path exists and matches the selected SDK language repository.
 - If invalid → prompt user to re-enter a valid path.
+- Verify setup to ensure all required tools are installed for the selected language.
 
 ---
 
