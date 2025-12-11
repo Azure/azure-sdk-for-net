@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Quota.Models
     /// LimitJson abstract class.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="QuotaLimitObject"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownQuotaLimitJsonObject))]
+    [PersistableModelProxy(typeof(UnknownLimitJsonObject))]
     public abstract partial class QuotaLimitJsonObject : IJsonModel<QuotaLimitJsonObject>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return QuotaLimitObject.DeserializeQuotaLimitObject(element, options);
                 }
             }
-            return UnknownQuotaLimitJsonObject.DeserializeUnknownQuotaLimitJsonObject(element, options);
+            return UnknownLimitJsonObject.DeserializeUnknownLimitJsonObject(element, options);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
