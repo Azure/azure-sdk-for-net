@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_StandbyContainerGroupPoolsGet()
         {
-            // Generated from example definition: 2025-03-01/StandbyContainerGroupPools_Get.json
+            // Generated from example definition: 2025-10-01/StandbyContainerGroupPools_Get.json
             // this example is just showing the usage of "StandbyContainerGroupPoolResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_StandbyContainerGroupPoolsDelete()
         {
-            // Generated from example definition: 2025-03-01/StandbyContainerGroupPools_Delete.json
+            // Generated from example definition: 2025-10-01/StandbyContainerGroupPools_Delete.json
             // this example is just showing the usage of "StandbyContainerGroupPoolResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.StandbyPool.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_StandbyContainerGroupPoolsUpdate()
         {
-            // Generated from example definition: 2025-03-01/StandbyContainerGroupPools_Update.json
+            // Generated from example definition: 2025-10-01/StandbyContainerGroupPools_Update.json
             // this example is just showing the usage of "StandbyContainerGroupPoolResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,11 +97,12 @@ namespace Azure.ResourceManager.StandbyPool.Samples
             StandbyContainerGroupPoolPatch patch = new StandbyContainerGroupPoolPatch
             {
                 Tags = { },
-                Properties = new StandbyContainerGroupPoolUpdateProperties
+                Properties = new StandbyContainerGroupPoolResourceUpdateProperties
                 {
                     ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile(1743L)
                     {
                         RefillPolicy = StandbyRefillPolicy.Always,
+                        DynamicSizingEnabled = true,
                     },
                     ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000009/resourceGroups/rgstandbypool/providers/Microsoft.ContainerInstance/containerGroupProfiles/cgProfile"))
                     {

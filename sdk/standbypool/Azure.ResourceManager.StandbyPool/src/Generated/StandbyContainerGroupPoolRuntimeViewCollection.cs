@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StandbyPool
 {
@@ -24,69 +25,75 @@ namespace Azure.ResourceManager.StandbyPool
     /// </summary>
     public partial class StandbyContainerGroupPoolRuntimeViewCollection : ArmCollection, IEnumerable<StandbyContainerGroupPoolRuntimeViewResource>, IAsyncEnumerable<StandbyContainerGroupPoolRuntimeViewResource>
     {
-        private readonly ClientDiagnostics _standbyContainerGroupPoolRuntimeViewClientDiagnostics;
-        private readonly StandbyContainerGroupPoolRuntimeViewsRestOperations _standbyContainerGroupPoolRuntimeViewRestClient;
+        private readonly ClientDiagnostics _standbyContainerGroupPoolRuntimeViewsClientDiagnostics;
+        private readonly StandbyContainerGroupPoolRuntimeViews _standbyContainerGroupPoolRuntimeViewsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of StandbyContainerGroupPoolRuntimeViewCollection for mocking. </summary>
         protected StandbyContainerGroupPoolRuntimeViewCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="StandbyContainerGroupPoolRuntimeViewCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolRuntimeViewCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal StandbyContainerGroupPoolRuntimeViewCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _standbyContainerGroupPoolRuntimeViewClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolRuntimeViewResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(StandbyContainerGroupPoolRuntimeViewResource.ResourceType, out string standbyContainerGroupPoolRuntimeViewApiVersion);
-            _standbyContainerGroupPoolRuntimeViewRestClient = new StandbyContainerGroupPoolRuntimeViewsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, standbyContainerGroupPoolRuntimeViewApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _standbyContainerGroupPoolRuntimeViewsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolRuntimeViewResource.ResourceType.Namespace, Diagnostics);
+            _standbyContainerGroupPoolRuntimeViewsRestClient = new StandbyContainerGroupPoolRuntimeViews(_standbyContainerGroupPoolRuntimeViewsClientDiagnostics, Pipeline, Endpoint, standbyContainerGroupPoolRuntimeViewApiVersion ?? "2025-10-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != StandbyContainerGroupPoolResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, StandbyContainerGroupPoolResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, StandbyContainerGroupPoolResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a StandbyContainerGroupPoolRuntimeViewResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<StandbyContainerGroupPoolRuntimeViewResource>> GetAsync(string runtimeView, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Get");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Get");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeView, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.StandbyPool
         /// Get a StandbyContainerGroupPoolRuntimeViewResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<StandbyContainerGroupPoolRuntimeViewResource> Get(string runtimeView, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Get");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Get");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeView, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,44 @@ namespace Azure.ResourceManager.StandbyPool
         /// List StandbyContainerGroupPoolRuntimeViewResource resources by StandbyContainerGroupPoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_ListByStandbyPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_ListByStandbyPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StandbyContainerGroupPoolRuntimeViewResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolRuntimeViewResource(Client, StandbyContainerGroupPoolRuntimeViewData.DeserializeStandbyContainerGroupPoolRuntimeViewData(e)), _standbyContainerGroupPoolRuntimeViewClientDiagnostics, Pipeline, "StandbyContainerGroupPoolRuntimeViewCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolAsyncCollectionResultOfT(_standbyContainerGroupPoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyContainerGroupPoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>
         /// List StandbyContainerGroupPoolRuntimeViewResource resources by StandbyContainerGroupPoolResource
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_ListByStandbyPool</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_ListByStandbyPool. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +201,61 @@ namespace Azure.ResourceManager.StandbyPool
         /// <returns> A collection of <see cref="StandbyContainerGroupPoolRuntimeViewResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StandbyContainerGroupPoolRuntimeViewResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _standbyContainerGroupPoolRuntimeViewRestClient.CreateListByStandbyPoolNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolRuntimeViewResource(Client, StandbyContainerGroupPoolRuntimeViewData.DeserializeStandbyContainerGroupPoolRuntimeViewData(e)), _standbyContainerGroupPoolRuntimeViewClientDiagnostics, Pipeline, "StandbyContainerGroupPoolRuntimeViewCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<StandbyContainerGroupPoolRuntimeViewData, StandbyContainerGroupPoolRuntimeViewResource>(new StandbyContainerGroupPoolRuntimeViewsGetByStandbyPoolCollectionResultOfT(_standbyContainerGroupPoolRuntimeViewsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new StandbyContainerGroupPoolRuntimeViewResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string runtimeView, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Exists");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeView, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StandbyContainerGroupPoolRuntimeViewData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +269,50 @@ namespace Azure.ResourceManager.StandbyPool
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string runtimeView, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Exists");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.Exists");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeView, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StandbyContainerGroupPoolRuntimeViewData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +326,54 @@ namespace Azure.ResourceManager.StandbyPool
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<StandbyContainerGroupPoolRuntimeViewResource>> GetIfExistsAsync(string runtimeView, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.GetIfExists");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _standbyContainerGroupPoolRuntimeViewRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeView, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StandbyContainerGroupPoolRuntimeViewData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StandbyContainerGroupPoolRuntimeViewResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +387,54 @@ namespace Azure.ResourceManager.StandbyPool
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyContainerGroupPoolName}/runtimeViews/{runtimeView}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolRuntimeViewResource_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> StandbyContainerGroupPoolRuntimeViews_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolRuntimeViewResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="runtimeView"> The unique identifier for the runtime view. The input string should be the word 'latest', which will get the latest runtime view of the pool, otherwise the request will fail with NotFound exception. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runtimeView"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="runtimeView"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<StandbyContainerGroupPoolRuntimeViewResource> GetIfExists(string runtimeView, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runtimeView, nameof(runtimeView));
 
-            using var scope = _standbyContainerGroupPoolRuntimeViewClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.GetIfExists");
+            using DiagnosticScope scope = _standbyContainerGroupPoolRuntimeViewsClientDiagnostics.CreateScope("StandbyContainerGroupPoolRuntimeViewCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _standbyContainerGroupPoolRuntimeViewRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runtimeView, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _standbyContainerGroupPoolRuntimeViewsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, runtimeView, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<StandbyContainerGroupPoolRuntimeViewData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(StandbyContainerGroupPoolRuntimeViewData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((StandbyContainerGroupPoolRuntimeViewData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<StandbyContainerGroupPoolRuntimeViewResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new StandbyContainerGroupPoolRuntimeViewResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +454,7 @@ namespace Azure.ResourceManager.StandbyPool
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<StandbyContainerGroupPoolRuntimeViewResource> IAsyncEnumerable<StandbyContainerGroupPoolRuntimeViewResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
