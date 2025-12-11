@@ -221,7 +221,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock |  |
 | qumulo | Azure.ResourceManager.Qumulo |  |
-| quota | Azure.ResourceManager.Quota |  |
+| quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
