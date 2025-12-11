@@ -37,7 +37,7 @@ steps:
       parameters:
         WorkingDirectory: ${{ parameters.SourceRootPath }}
 
-    - ${{ if and(eq(variables['System.TeamProject'], 'internal', ne(variables['Build.Reason'], 'PullRequest'), not(endsWith(variables['Build.Repository.Name'], '-pr')))) }}:
+    - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest'), not(endsWith(variables['Build.Repository.Name'], '-pr'))) }}:
       - task: AzureCLI@2
         inputs:
           azureSubscription: 'APIView prod deployment'
