@@ -565,6 +565,8 @@ public class FineTuningTests : FineTuningTestsBase
     [RecordedTest]
     public async Task Test_FineTuning_List_Jobs()
     {
+        TestTimeoutInSeconds = 120; // Increase timeout for listing jobs
+
         var (fileClient, fineTuningClient) = GetClients();
         var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "sft");
 
