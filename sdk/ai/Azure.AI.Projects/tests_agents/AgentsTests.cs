@@ -7,17 +7,13 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Azure.Core.Pipeline;
 using Microsoft.ClientModel.TestFramework;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -605,6 +601,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
+    [TestCase(ToolType.MicrosoftFabric)]
+    [TestCase(ToolType.A2A)]
     public async Task TestTool(ToolType toolType)
     {
         Dictionary<string, string> headers = [];
@@ -684,6 +682,8 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.OpenAPIConnection)]
     [TestCase(ToolType.Sharepoint)]
     [TestCase(ToolType.BrowserAutomation)]
+    [TestCase(ToolType.MicrosoftFabric)]
+    [TestCase(ToolType.A2A)]
     public async Task TestToolStreaming(ToolType toolType)
     {
         AIProjectClient projectClient = GetTestProjectClient();

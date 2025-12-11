@@ -38,7 +38,19 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [OpenAPI tool](#openapi-tool)
   - [OpenAPI tool with project connection](#openapi-tool-project-connection)
   - [Browser automation](#browser-automation)
+    - [Create Azure Playwright workspace](#create-azure-playwright-workspace)
+    - [Configure Microsoft Foundry](#configure-microsoft-foundry)
+    - [Using Browser automation tool](#using-browser-automation-tool)
   - [SharePoint tool](#sharepoint-tool)
+  - [Fabric Data Agent tool](#fabric-data-agent-tool)
+    - [Create a Fabric Capacity](#create-a-fabric-capacity)
+    - [Create a Lakehouse data repository](#create-a-lakehouse-data-repository)
+    - [Add a data agent to the Fabric](#add-a-data-agent-to-the-fabric)
+    - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
+    - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
+  - [A2ATool](#a2atool)
+    - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
+    - [Using A2A Tool](#using-a2a-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
   - [Tracing to Console](#tracing-to-console)
@@ -1112,6 +1124,8 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 4. Provide a name, then paste your Access Token into the **Key** field.
 5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
 
+### Using Browser automation tool
+
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
 
 ```C# Snippet:Sample_CreateProjectClient_BrowserAutomotion
@@ -1227,6 +1241,99 @@ Print the Agent output and add the annotation at the end.
 ```C# Snippet:Sample_WaitForResponse_Sharepoint
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
+```
+
+## Fabric Data Agent tool
+
+As a prerequisite to this example, we will need to create Microsoft Fabric with Lakehouse data repository. Please see the end-to end tutorials on using Microsoft Fabric [here](https://learn.microsoft.com/fabric/fundamentals/end-to-end-tutorials) for more information.
+
+### Create a Fabric Capacity
+
+1. Create a **Fabric Capacity** resource in the Azure Portal **(attention, the rate is being applied!)**.
+2. Create the workspace in [Power BI portal](https://msit.powerbi.com/home) by clicking **Workspaces** icon on the left panel.
+3. At the bottom click **+ New workspace**.
+4. At the right panel populate the name of a workspace, select **Fabric capacity** as a **License mode**; in the **Capacity** dropdown select Fabric Capacity resource we have just created.
+5. Click **Apply**.
+
+### Create a Lakehouse data repository
+
+1. Click a **Lakehouse** icon in **Other items you can create with Microsoft Fabric** section and name the new data repository.
+2. Download the [public holidays data set](https://github.com/microsoft/fabric-samples/raw/refs/heads/main/docs-samples/data-engineering/Lakehouse/PublicholidaysSample/publicHolidays.parquet).
+3. At the Lakehouse menu select **Get data > Upload files** and upload the `publicHolidays.parquet`.
+4. In the **Files** section, click on three dots next to uploaded file and click **Load to Tables > new table** and then **Load** in the opened window.
+5. Delete the uploaded file, by clicking three dots and selecting **Delete**.
+
+### Add a data agent to the Fabric
+
+1. At the top panel select **Add to data agent > New data agent** and name the newly created Agent.
+2. In the open view on the left panel select the Lakehouse "publicholidays" table and set a checkbox next to it.
+4. Ask the question we will further use in the Requests API. "What was the number of public holidays in Norway in 2024?"
+5. The Agent should show a table containing one column called "NumberOfPublicHolidays" with the single row, containing number 62.
+6. Click **Publish** and in the description add "Agent has data about public holidays." If this stage was omitted the error, saying "Stage configuration not found." will be returned during sample run.
+
+### Create a Fabric connection in Microsoft Foundry.
+
+After we have created the Fabric data Agent, we can connect fabric to our Microsoft Foundry.
+1. Open the [Power BI](https://msit.powerbi.com/home) and select the workspace we have created.
+2. In the open view select the Agent we have created.
+3. The URL of the opened page will look like `https://msit.powerbi.com/groups/%workspace_id%/aiskills/%artifact_id%?experience=power-bi`, where `workspace_id` and `artifact_id` are GUIDs in a form like `811acded-d5f7-11f0-90a4-04d3b0c6010a`.
+4. In the **Microsoft Foundry** you are using for the experimentation, on the left panel select **Management center**.
+5. Choose **Connected resources**.
+6. Create a new connection of type **Microsoft Fabric**.
+7. Populate **workspace-id** and **artifact-id** fields with GUIDs found in the Microsoft Data Agent URL and name the new connection.
+
+### Using Microsoft Fabric tool
+
+To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricAgentTool` into `PromptAgentDefinition`.
+
+```C# Snippet:Sample_CreateAgent_Fabric_Async
+AIProjectConnection fabricConnection = await projectClient.Connections.GetConnectionAsync(fabricConnectionName);
+FabricDataAgentToolOptions fabricToolOption = new()
+{
+    ProjectConnections = { new ToolProjectConnection(projectConnectionId: fabricConnection.Id) }
+};
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant.",
+    Tools = { new MicrosoftFabricAgentTool(fabricToolOption), }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
+```
+
+## A2ATool
+
+The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed to enable seamless communication between agents. In the scenario below we assume that we have the application endpoint, which complies  with A2A; the authentication is happening through header `x-api-key` value.
+
+### Create a connection to A2A agent
+
+1. In the **Microsoft Foundry** you are using for the experimentation, on the left panel select **Management center**.
+2. Choose **Connected resources**.
+3. Create a new connection of type **Custom keys**.
+4. Add two key-value pairs:
+   * x-api-key: \<your key\>
+   * type: custom_A2A
+5. Name and save the connection.
+
+### Using A2A Tool
+
+To use the Agent with A2A tool, we need to include `A2ATool` into `PromptAgentDefinition`.
+
+```C# Snippet:Sample_CreateAgent_AgentToAgent_Async
+AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
+A2ATool a2aTool = new(baseUri: new Uri(a2aBaseUri))
+{
+    ProjectConnectionId = a2aConnection.Id
+};
+PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
+{
+    Instructions = "You are a helpful assistant.",
+    Tools = { a2aTool }
+};
+AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
+    agentName: "myAgent",
+    options: new(agentDefinition));
 ```
 
 ## Tracing
