@@ -103,7 +103,7 @@ export async function updateClients(
         } else {
           // For non-CRUD operations like List, try to match with existing resource paths for the same model
           const operationPath = method.operation.path;
-          for (const [existingKey, _] of resourcePathToMetadataMap) {
+          for (const [existingKey] of resourcePathToMetadataMap) {
             const [existingModelId, existingPath] = existingKey.split('|');
             // Check if this is for the same model
             if (existingModelId === modelId && existingPath) {
