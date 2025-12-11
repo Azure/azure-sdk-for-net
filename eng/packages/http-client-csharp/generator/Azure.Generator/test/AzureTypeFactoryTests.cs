@@ -166,9 +166,9 @@ namespace Azure.Generator.Tests
         public void DataFactoryElementWithString()
         {
             // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (string)
-            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
             var stringType = InputPrimitiveType.String;
-            var unionType = InputFactory.Union("DfeString", externalType, stringType);
+            var unionType = InputFactory.Union("DfeString", [stringType], externalType);
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
@@ -182,9 +182,9 @@ namespace Azure.Generator.Tests
         public void DataFactoryElementWithInt()
         {
             // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (int)
-            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
             var intType = InputPrimitiveType.Int32;
-            var unionType = InputFactory.Union("DfeInt", externalType, intType);
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
+            var unionType = InputFactory.Union("DfeInt", [intType], externalType);
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
@@ -198,9 +198,9 @@ namespace Azure.Generator.Tests
         public void DataFactoryElementWithBool()
         {
             // Create a union type with InputExternalType (DataFactoryElement) and InputPrimitiveType (bool)
-            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
             var boolType = InputPrimitiveType.Boolean;
-            var unionType = InputFactory.Union("DfeBool", externalType, boolType);
+            var unionType = InputFactory.Union("DfeBool", [boolType], externalType);
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
@@ -214,9 +214,9 @@ namespace Azure.Generator.Tests
         public void DataFactoryElementWithArray()
         {
             // Create a union type with InputExternalType (DataFactoryElement) and InputArrayType (string[])
-            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
             var arrayType = InputFactory.Array(InputPrimitiveType.String);
-            var unionType = InputFactory.Union("DfeStringArray", externalType, arrayType);
+            var unionType = InputFactory.Union("DfeStringArray", [arrayType], externalType);
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
@@ -231,9 +231,9 @@ namespace Azure.Generator.Tests
         public void DataFactoryElementNotAppliedForNonDataFactoryExternalType()
         {
             // Create a union type with a different external type (not DataFactoryElement)
-            var externalType = InputFactory.External("Some.Other.ExternalType");
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
             var stringType = InputPrimitiveType.String;
-            var unionType = InputFactory.Union("OtherUnion", externalType, stringType);
+            var unionType = InputFactory.Union("OtherUnion", [stringType], externalType);
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
@@ -246,10 +246,10 @@ namespace Azure.Generator.Tests
         public void DataFactoryElementNotAppliedForMultipleVariants()
         {
             // Create a union type with DataFactoryElement but multiple other variants
-            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
             var stringType = InputPrimitiveType.String;
             var intType = InputPrimitiveType.Int32;
-            var unionType = InputFactory.Union("DfeMultiple", externalType, stringType, intType);
+            var unionType = InputFactory.Union("DfeMultiple", [stringType, intType], externalType);
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 
@@ -263,9 +263,9 @@ namespace Azure.Generator.Tests
         public void DataFactoryElementWithModel()
         {
             // Create a union type with InputExternalType (DataFactoryElement) and InputModelType
-            var externalType = InputFactory.External("Azure.Core.Expressions.DataFactoryElement");
+            var externalType = new InputExternalTypeMetadata("Azure.Core.Expressions.DataFactoryElement", null, null);
             var modelType = InputFactory.Model("TestModel");
-            var unionType = InputFactory.Union("DfeModel", externalType, modelType);
+            var unionType = InputFactory.Union("DfeModel", [modelType], externalType);
 
             var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(unionType);
 

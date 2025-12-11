@@ -100,22 +100,22 @@ namespace BasicTypeSpec
             {
                 if (prop.NameEquals("stringProperty"u8))
                 {
-                    stringProperty = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    stringProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("intProperty"u8))
                 {
-                    intProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    intProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolProperty"u8))
                 {
-                    boolProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    boolProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("stringArrayProperty"u8))
                 {
-                    stringArrayProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
+                    stringArrayProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
