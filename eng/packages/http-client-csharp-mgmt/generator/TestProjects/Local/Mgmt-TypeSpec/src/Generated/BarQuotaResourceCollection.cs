@@ -19,8 +19,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BarQuotaResource"/> and their operations.
-    /// Each <see cref="BarQuotaResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="BarQuotaResourceCollection"/> instance call the GetBarQuotaResources method from an instance of the parent resource.
+    /// Each <see cref="BarQuotaResource"/> in the collection will belong to the same instance of <see cref="BarResource"/>.
+    /// To get a <see cref="BarQuotaResourceCollection"/> instance call the GetBarQuotaResources method from an instance of <see cref="BarResource"/>.
     /// </summary>
     public partial class BarQuotaResourceCollection : ArmCollection
     {
@@ -144,7 +144,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BarQuotaResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -197,7 +197,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BarQuotaResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -250,7 +250,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BarQuotaResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -307,7 +307,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BarQuotaResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

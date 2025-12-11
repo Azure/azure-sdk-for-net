@@ -1113,7 +1113,8 @@
                     "next"
                   ],
                   "responseLocation": "Body"
-                }
+                },
+                "pageSizeParameterSegments": []
               }
             },
             {
@@ -1209,7 +1210,8 @@
                     "next"
                   ],
                   "responseLocation": "Body"
-                }
+                },
+                "pageSizeParameterSegments": []
               }
             },
             {
@@ -1308,7 +1310,8 @@
                     "next"
                   ],
                   "responseLocation": "Body"
-                }
+                },
+                "pageSizeParameterSegments": []
               }
             }
           ],
@@ -1577,7 +1580,8 @@
                         "nextToken"
                       ],
                       "responseLocation": "Body"
-                    }
+                    },
+                    "pageSizeParameterSegments": []
                   }
                 },
                 {
@@ -1799,7 +1803,8 @@
                         "nextToken"
                       ],
                       "responseLocation": "Body"
-                    }
+                    },
+                    "pageSizeParameterSegments": []
                   }
                 },
                 {
@@ -2033,7 +2038,8 @@
                         "next-token"
                       ],
                       "responseLocation": "Header"
-                    }
+                    },
+                    "pageSizeParameterSegments": []
                   }
                 },
                 {
@@ -2267,7 +2273,8 @@
                         "next-token"
                       ],
                       "responseLocation": "Header"
-                    }
+                    },
+                    "pageSizeParameterSegments": []
                   }
                 },
                 {
@@ -2492,7 +2499,8 @@
                         "nextToken"
                       ],
                       "responseLocation": "Body"
-                    }
+                    },
+                    "pageSizeParameterSegments": []
                   }
                 },
                 {
@@ -2717,7 +2725,8 @@
                         "nextToken"
                       ],
                       "responseLocation": "Body"
-                    }
+                    },
+                    "pageSizeParameterSegments": []
                   }
                 }
               ],
@@ -2856,7 +2865,8 @@
               "pagingMetadata": {
                 "itemPropertySegments": [
                   "pets"
-                ]
+                ],
+                "pageSizeParameterSegments": []
               }
             },
             {
@@ -2987,6 +2997,9 @@
               "pagingMetadata": {
                 "itemPropertySegments": [
                   "pets"
+                ],
+                "pageSizeParameterSegments": [
+                  "pageSize"
                 ]
               }
             }

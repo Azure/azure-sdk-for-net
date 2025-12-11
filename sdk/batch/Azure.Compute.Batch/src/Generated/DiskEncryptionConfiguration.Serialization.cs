@@ -34,6 +34,11 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(DiskEncryptionConfiguration)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(CustomerManagedKey))
+            {
+                writer.WritePropertyName("customerManagedKey"u8);
+                writer.WriteObjectValue(CustomerManagedKey, options);
+            }
             if (Optional.IsCollectionDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
@@ -81,11 +86,21 @@ namespace Azure.Compute.Batch
             {
                 return null;
             }
+            DiskCustomerManagedKey customerManagedKey = default;
             IList<DiskEncryptionTarget> targets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("customerManagedKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerManagedKey = DiskCustomerManagedKey.DeserializeDiskCustomerManagedKey(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("targets"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -106,7 +121,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiskEncryptionConfiguration(targets ?? new ChangeTrackingList<DiskEncryptionTarget>(), serializedAdditionalRawData);
+            return new DiskEncryptionConfiguration(customerManagedKey, targets ?? new ChangeTrackingList<DiskEncryptionTarget>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskEncryptionConfiguration>.Write(ModelReaderWriterOptions options)

@@ -31,6 +31,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
         }
 
+        /// <summary> Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of StorageSyncServices and their operations over a StorageSyncServiceResource. </returns>
+        public virtual StorageSyncServiceCollection GetStorageSyncServices()
+        {
+            return GetCachedClient(client => new StorageSyncServiceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specified storage sync service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/storageSyncServices/{storageSyncServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageSyncServiceName"> The name of the StorageSyncService. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<StorageSyncServiceResource>> GetStorageSyncServiceAsync(string storageSyncServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+
+            return await GetStorageSyncServices().GetAsync(storageSyncServiceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified storage sync service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/storageSyncServices/{storageSyncServiceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> StorageSyncServices_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="storageSyncServiceName"> The name of the StorageSyncService. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="storageSyncServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="storageSyncServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<StorageSyncServiceResource> GetStorageSyncService(string storageSyncServiceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+
+            return GetStorageSyncServices().Get(storageSyncServiceName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of Foos in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of Foos and their operations over a FooResource. </returns>
         public virtual FooCollection GetFoos()
@@ -318,6 +383,136 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             return GetJobResources().Get(jobName, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of Joos in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of Joos and their operations over a JooResource. </returns>
+        public virtual JooCollection GetJoos()
+        {
+            return GetCachedClient(client => new JooCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a Joo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Joos_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jooName"> The name of the Joo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<JooResource>> GetJooAsync(string jooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jooName, nameof(jooName));
+
+            return await GetJoos().GetAsync(jooName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a Joo
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/joos/{jooName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Joos_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jooName"> The name of the Joo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jooName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jooName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<JooResource> GetJoo(string jooName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jooName, nameof(jooName));
+
+            return GetJoos().Get(jooName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of SAPVirtualInstances in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SAPVirtualInstances and their operations over a SAPVirtualInstanceResource. </returns>
+        public virtual SAPVirtualInstanceCollection GetSAPVirtualInstances()
+        {
+            return GetCachedClient(client => new SAPVirtualInstanceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets a Virtual Instance for SAP solutions resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sapVirtualInstances/{sapVirtualInstanceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sapVirtualInstanceName"> The name of the SAPVirtualInstance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SAPVirtualInstanceResource>> GetSAPVirtualInstanceAsync(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+
+            return await GetSAPVirtualInstances().GetAsync(sapVirtualInstanceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets a Virtual Instance for SAP solutions resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sapVirtualInstances/{sapVirtualInstanceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SAPVirtualInstances_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sapVirtualInstanceName"> The name of the SAPVirtualInstance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sapVirtualInstanceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SAPVirtualInstanceResource> GetSAPVirtualInstance(string sapVirtualInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+
+            return GetSAPVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
         }
     }
 }

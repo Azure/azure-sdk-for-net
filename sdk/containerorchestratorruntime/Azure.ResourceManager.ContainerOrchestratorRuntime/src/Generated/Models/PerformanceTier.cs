@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ContainerOrchestratorRuntime;
 
 namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
     public readonly partial struct PerformanceTier : IEquatable<PerformanceTier>
     {
         private readonly string _value;
+        /// <summary> Undefined Performance Tier. </summary>
+        private const string UndefinedValue = "Undefined";
+        /// <summary> Basic Performance Tier. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> Standard Performance Tier. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> Premium Performance Tier. </summary>
+        private const string PremiumValue = "Premium";
+        /// <summary> Ultra Performance Tier. </summary>
+        private const string UltraValue = "Ultra";
 
         /// <summary> Initializes a new instance of <see cref="PerformanceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PerformanceTier(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UndefinedValue = "Undefined";
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string PremiumValue = "Premium";
-        private const string UltraValue = "Ultra";
+            _value = value;
+        }
 
         /// <summary> Undefined Performance Tier. </summary>
         public static PerformanceTier Undefined { get; } = new PerformanceTier(UndefinedValue);
+
         /// <summary> Basic Performance Tier. </summary>
         public static PerformanceTier Basic { get; } = new PerformanceTier(BasicValue);
+
         /// <summary> Standard Performance Tier. </summary>
         public static PerformanceTier Standard { get; } = new PerformanceTier(StandardValue);
+
         /// <summary> Premium Performance Tier. </summary>
         public static PerformanceTier Premium { get; } = new PerformanceTier(PremiumValue);
+
         /// <summary> Ultra Performance Tier. </summary>
         public static PerformanceTier Ultra { get; } = new PerformanceTier(UltraValue);
+
         /// <summary> Determines if two <see cref="PerformanceTier"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(PerformanceTier left, PerformanceTier right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="PerformanceTier"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(PerformanceTier left, PerformanceTier right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="PerformanceTier"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="PerformanceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator PerformanceTier(string value) => new PerformanceTier(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="PerformanceTier"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator PerformanceTier?(string value) => value == null ? null : new PerformanceTier(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is PerformanceTier other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(PerformanceTier other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

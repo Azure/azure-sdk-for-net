@@ -9,14 +9,20 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
-    public partial class ImpactInsightProperties : IUtf8JsonSerializable, IJsonModel<ImpactInsightProperties>
+    /// <summary> Impact category properties. </summary>
+    public partial class ImpactInsightProperties : IJsonModel<ImpactInsightProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImpactInsightProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ImpactInsightProperties"/> for deserialization. </summary>
+        internal ImpactInsightProperties()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImpactInsightProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +34,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImpactInsightProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -80,9 +85,9 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                         continue;
                     }
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -90,15 +95,15 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -107,22 +112,27 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
         }
 
-        ImpactInsightProperties IJsonModel<ImpactInsightProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImpactInsightProperties IJsonModel<ImpactInsightProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ImpactInsightProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ImpactInsightProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeImpactInsightProperties(document.RootElement, options);
         }
 
-        internal static ImpactInsightProperties DeserializeImpactInsightProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ImpactInsightProperties DeserializeImpactInsightProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -133,83 +143,82 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             string eventId = default;
             string groupId = default;
             ImpactInsightContent content = default;
-            DateTimeOffset? eventTime = default;
+            DateTimeOffset? eventOn = default;
             string insightUniqueId = default;
             ImpactDetails impact = default;
             IDictionary<string, BinaryData> additionalDetails = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new ImpactReportingProvisioningState(property.Value.GetString());
+                    provisioningState = new ImpactReportingProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("category"u8))
+                if (prop.NameEquals("category"u8))
                 {
-                    category = property.Value.GetString();
+                    category = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    status = property.Value.GetString();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("eventId"u8))
+                if (prop.NameEquals("eventId"u8))
                 {
-                    eventId = property.Value.GetString();
+                    eventId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("groupId"u8))
+                if (prop.NameEquals("groupId"u8))
                 {
-                    groupId = property.Value.GetString();
+                    groupId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("content"u8))
+                if (prop.NameEquals("content"u8))
                 {
-                    content = ImpactInsightContent.DeserializeImpactInsightContent(property.Value, options);
+                    content = ImpactInsightContent.DeserializeImpactInsightContent(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("eventTime"u8))
+                if (prop.NameEquals("eventTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventTime = property.Value.GetDateTimeOffset("O");
+                    eventOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("insightUniqueId"u8))
+                if (prop.NameEquals("insightUniqueId"u8))
                 {
-                    insightUniqueId = property.Value.GetString();
+                    insightUniqueId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("impact"u8))
+                if (prop.NameEquals("impact"u8))
                 {
-                    impact = ImpactDetails.DeserializeImpactDetails(property.Value, options);
+                    impact = ImpactDetails.DeserializeImpactDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("additionalDetails"u8))
+                if (prop.NameEquals("additionalDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
                         {
-                            dictionary.Add(property0.Name, null);
+                            dictionary.Add(prop0.Name, null);
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
                         }
                     }
                     additionalDetails = dictionary;
@@ -217,10 +226,9 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ImpactInsightProperties(
                 provisioningState,
                 category,
@@ -228,17 +236,20 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 eventId,
                 groupId,
                 content,
-                eventTime,
+                eventOn,
                 insightUniqueId,
                 impact,
                 additionalDetails ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<ImpactInsightProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ImpactInsightProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -248,15 +259,20 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
         }
 
-        ImpactInsightProperties IPersistableModel<ImpactInsightProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImpactInsightProperties IPersistableModel<ImpactInsightProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ImpactInsightProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ImpactInsightProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeImpactInsightProperties(document.RootElement, options);
                     }
                 default:
@@ -264,6 +280,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ImpactInsightProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

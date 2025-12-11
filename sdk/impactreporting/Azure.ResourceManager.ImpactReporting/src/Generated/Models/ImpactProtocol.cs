@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public readonly partial struct ImpactProtocol : IEquatable<ImpactProtocol>
     {
         private readonly string _value;
+        /// <summary> When communication protocol is TCP. </summary>
+        private const string TcpValue = "TCP";
+        /// <summary> When communication protocol is UDP. </summary>
+        private const string UdpValue = "UDP";
+        /// <summary> When communication protocol is HTTP. </summary>
+        private const string HttpValue = "HTTP";
+        /// <summary> When communication protocol is HTTPS. </summary>
+        private const string HttpsValue = "HTTPS";
+        /// <summary> When communication protocol is RDP. </summary>
+        private const string RdpValue = "RDP";
+        /// <summary> When communication protocol is FTP. </summary>
+        private const string FtpValue = "FTP";
+        /// <summary> When communication protocol is SSH. </summary>
+        private const string SshValue = "SSH";
+        /// <summary> When communication protocol is Other. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="ImpactProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImpactProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TcpValue = "TCP";
-        private const string UdpValue = "UDP";
-        private const string HttpValue = "HTTP";
-        private const string HttpsValue = "HTTPS";
-        private const string RdpValue = "RDP";
-        private const string FtpValue = "FTP";
-        private const string SshValue = "SSH";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> When communication protocol is TCP. </summary>
         public static ImpactProtocol Tcp { get; } = new ImpactProtocol(TcpValue);
+
         /// <summary> When communication protocol is UDP. </summary>
         public static ImpactProtocol Udp { get; } = new ImpactProtocol(UdpValue);
+
         /// <summary> When communication protocol is HTTP. </summary>
         public static ImpactProtocol Http { get; } = new ImpactProtocol(HttpValue);
+
         /// <summary> When communication protocol is HTTPS. </summary>
         public static ImpactProtocol Https { get; } = new ImpactProtocol(HttpsValue);
+
         /// <summary> When communication protocol is RDP. </summary>
         public static ImpactProtocol Rdp { get; } = new ImpactProtocol(RdpValue);
+
         /// <summary> When communication protocol is FTP. </summary>
         public static ImpactProtocol Ftp { get; } = new ImpactProtocol(FtpValue);
+
         /// <summary> When communication protocol is SSH. </summary>
         public static ImpactProtocol Ssh { get; } = new ImpactProtocol(SshValue);
+
         /// <summary> When communication protocol is Other. </summary>
         public static ImpactProtocol Other { get; } = new ImpactProtocol(OtherValue);
+
         /// <summary> Determines if two <see cref="ImpactProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImpactProtocol left, ImpactProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImpactProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImpactProtocol left, ImpactProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImpactProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImpactProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImpactProtocol(string value) => new ImpactProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImpactProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImpactProtocol?(string value) => value == null ? null : new ImpactProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImpactProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImpactProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

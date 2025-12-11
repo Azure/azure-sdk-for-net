@@ -61,7 +61,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _getRestClient = getRestClientInfo.RestClientProvider;
             _isPatch = isPatch;
             _isAsync = isAsync;
-            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation;
+            _isLongRunningUpdateOperation = updateMethodProvider.IsLongRunningOperation || updateMethodProvider.IsFakeLongRunningOperation;
             _updateClientDiagnosticsField = updateRestClientInfo.DiagnosticsField;
             _getRestClientField = getRestClientInfo.RestClientField;
 
@@ -119,7 +119,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             var arguments = _contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType);
 
-            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, "CreateGetRequest", arguments, out var messageVariable));
+            statements.Add(ResourceMethodSnippets.CreateHttpMessage(_getRestClientField, requestMethod.Signature.Name, arguments, out var messageVariable));
 
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
@@ -203,7 +203,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             }
 
             parameters.Add(dataVar);
-            parameters.Add(cancellationTokenParam);
+            parameters.Add(KnownAzureParameters.CancellationTokenWithoutDefault.PositionalReference(cancellationTokenParam));
 
             return Declare(
                 "result",

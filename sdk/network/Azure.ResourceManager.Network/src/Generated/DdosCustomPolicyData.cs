@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -21,6 +22,8 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
         public DdosCustomPolicyData()
         {
+            DetectionRules = new ChangeTrackingList<DdosDetectionRule>();
+            FrontEndIPConfiguration = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DdosCustomPolicyData"/>. </summary>
@@ -33,11 +36,15 @@ namespace Azure.ResourceManager.Network
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="resourceGuid"> The resource GUID property of the DDoS custom policy resource. It uniquely identifies the resource, even if the user changes its name or migrate the resource across subscriptions or resource groups. </param>
         /// <param name="provisioningState"> The provisioning state of the DDoS custom policy resource. </param>
-        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
+        /// <param name="detectionRules"> The list of DDoS detection rules associated with the custom policy. </param>
+        /// <param name="frontEndIPConfiguration"> The list of frontend IP configurations associated with the custom policy. </param>
+        internal DdosCustomPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, Guid? resourceGuid, NetworkProvisioningState? provisioningState, IList<DdosDetectionRule> detectionRules, IList<WritableSubResource> frontEndIPConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
+            DetectionRules = detectionRules;
+            FrontEndIPConfiguration = frontEndIPConfiguration;
         }
 
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
@@ -49,5 +56,11 @@ namespace Azure.ResourceManager.Network
         /// <summary> The provisioning state of the DDoS custom policy resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The list of DDoS detection rules associated with the custom policy. </summary>
+        [WirePath("properties.detectionRules")]
+        public IList<DdosDetectionRule> DetectionRules { get; }
+        /// <summary> The list of frontend IP configurations associated with the custom policy. </summary>
+        [WirePath("properties.frontEndIpConfiguration")]
+        public IList<WritableSubResource> FrontEndIPConfiguration { get; }
     }
 }

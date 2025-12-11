@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryAssetApiVersion);
             _assetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _assetsRestClient = new Assets(_assetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetApiVersion ?? "2025-10-01");
+            _assetsRestClient = new Assets(_assetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryAssetApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DeviceRegistryAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryAssetData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     DeviceRegistryAssetPatch patch = new DeviceRegistryAssetPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                     DeviceRegistryAssetData current = Get(cancellationToken: cancellationToken).Value.Data;
                     DeviceRegistryAssetPatch patch = new DeviceRegistryAssetPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DeviceRegistryAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<DeviceRegistryAssetResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DeviceRegistryAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken);
+                    ArmOperation<DeviceRegistryAssetResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CosmosDBSqlContainerCreateUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlContainerCreateUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBSqlContainerCreateUpdate.json
             // this example is just showing the usage of "SqlResources_CreateUpdateSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,6 +65,7 @@ Kind = CosmosDBIndexKind.Range,
 }},
                     ExcludedPaths = { },
                     VectorIndexes = { new CosmosDBVectorIndex("/vectorPath1", CosmosDBVectorIndexType.Flat), new CosmosDBVectorIndex("/vectorPath2", CosmosDBVectorIndexType.QuantizedFlat), new CosmosDBVectorIndex("/vectorPath3", CosmosDBVectorIndexType.DiskAnn) },
+                    FullTextIndexes = { new FullTextIndexPath("/ftPath1"), new FullTextIndexPath("/ftPath2"), new FullTextIndexPath("/ftPath3") },
                 },
                 PartitionKey = new CosmosDBContainerPartitionKey
                 {
@@ -91,126 +92,20 @@ Name = "cp_lowerName",
 Query = "SELECT VALUE LOWER(c.name) FROM c",
 }},
                 VectorEmbeddings = { new CosmosDBVectorEmbedding("/vectorPath1", CosmosDBVectorDataType.Float32, VectorDistanceFunction.Euclidean, 400), new CosmosDBVectorEmbedding("/vectorPath2", CosmosDBVectorDataType.Uint8, VectorDistanceFunction.Cosine, 512), new CosmosDBVectorEmbedding("/vectorPath3", CosmosDBVectorDataType.Int8, VectorDistanceFunction.Dotproduct, 512) },
-            })
-            {
-                Options = new CosmosDBCreateUpdateConfig(),
-                Tags = { },
-            };
-            ArmOperation<CosmosDBSqlContainerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, content);
-            CosmosDBSqlContainerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CosmosDBSqlContainerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CosmosDBSqlContainerRestore()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlContainerRestore.json
-            // this example is just showing the usage of "SqlResources_CreateUpdateSqlContainer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBSqlDatabaseResource created on azure
-            // for more information of creating CosmosDBSqlDatabaseResource, please refer to the document of CosmosDBSqlDatabaseResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            ResourceIdentifier cosmosDBSqlDatabaseResourceId = CosmosDBSqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName);
-            CosmosDBSqlDatabaseResource cosmosDBSqlDatabase = client.GetCosmosDBSqlDatabaseResource(cosmosDBSqlDatabaseResourceId);
-
-            // get the collection of this CosmosDBSqlContainerResource
-            CosmosDBSqlContainerCollection collection = cosmosDBSqlDatabase.GetCosmosDBSqlContainers();
-
-            // invoke the operation
-            string containerName = "containerName";
-            CosmosDBSqlContainerCreateOrUpdateContent content = new CosmosDBSqlContainerCreateOrUpdateContent(new AzureLocation("West US"), new CosmosDBSqlContainerResourceInfo("containerName")
-            {
-                RestoreParameters = new ResourceRestoreParameters
+                FullTextPolicy = new FullTextPolicy
                 {
-                    RestoreSource = "/subscriptions/subid/providers/Microsoft.DocumentDB/locations/WestUS/restorableDatabaseAccounts/restorableDatabaseAccountId",
-                    RestoreTimestampInUtc = DateTimeOffset.Parse("2022-07-20T18:28:00Z"),
-                    IsRestoreWithTtlDisabled = true,
-                },
-                CreateMode = CosmosDBAccountCreateMode.Restore,
-            })
-            {
-                Options = new CosmosDBCreateUpdateConfig(),
-                Tags = { },
-            };
-            ArmOperation<CosmosDBSqlContainerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, containerName, content);
-            CosmosDBSqlContainerResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CosmosDBSqlContainerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CosmosDBSqlMaterializedViewCreateUpdate()
-        {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlMaterializedViewCreateUpdate.json
-            // this example is just showing the usage of "SqlResources_CreateUpdateSqlContainer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CosmosDBSqlDatabaseResource created on azure
-            // for more information of creating CosmosDBSqlDatabaseResource, please refer to the document of CosmosDBSqlDatabaseResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string accountName = "ddb1";
-            string databaseName = "databaseName";
-            ResourceIdentifier cosmosDBSqlDatabaseResourceId = CosmosDBSqlDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, databaseName);
-            CosmosDBSqlDatabaseResource cosmosDBSqlDatabase = client.GetCosmosDBSqlDatabaseResource(cosmosDBSqlDatabaseResourceId);
-
-            // get the collection of this CosmosDBSqlContainerResource
-            CosmosDBSqlContainerCollection collection = cosmosDBSqlDatabase.GetCosmosDBSqlContainers();
-
-            // invoke the operation
-            string containerName = "mvContainerName";
-            CosmosDBSqlContainerCreateOrUpdateContent content = new CosmosDBSqlContainerCreateOrUpdateContent(new AzureLocation("West US"), new CosmosDBSqlContainerResourceInfo("mvContainerName")
-            {
-                IndexingPolicy = new CosmosDBIndexingPolicy
-                {
-                    IsAutomatic = true,
-                    IndexingMode = CosmosDBIndexingMode.Consistent,
-                    IncludedPaths = {new CosmosDBIncludedPath
+                    DefaultLanguage = "1033",
+                    FullTextPaths = {new FullTextPath("/ftPath1")
 {
-Path = "/*",
-Indexes = {new CosmosDBPathIndexes
+Language = "en-US",
+}, new FullTextPath("/ftPath2")
 {
-DataType = CosmosDBDataType.String,
-Precision = -1,
-Kind = CosmosDBIndexKind.Range,
-}, new CosmosDBPathIndexes
+Language = "fr-FR",
+}, new FullTextPath("/ftPath3")
 {
-DataType = CosmosDBDataType.Number,
-Precision = -1,
-Kind = CosmosDBIndexKind.Range,
+Language = "de-DE",
 }},
-}},
-                    ExcludedPaths = { },
                 },
-                PartitionKey = new CosmosDBContainerPartitionKey
-                {
-                    Paths = { "/mvpk" },
-                    Kind = CosmosDBPartitionKind.Hash,
-                },
-                MaterializedViewDefinition = new MaterializedViewDefinition("sourceContainerName", "select * from ROOT"),
             })
             {
                 Options = new CosmosDBCreateUpdateConfig(),
@@ -230,7 +125,7 @@ Kind = CosmosDBIndexKind.Range,
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBSqlContainerGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlContainerGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBSqlContainerGet.json
             // this example is just showing the usage of "SqlResources_GetSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -265,7 +160,7 @@ Kind = CosmosDBIndexKind.Range,
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_CosmosDBSqlContainerList()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlContainerList.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBSqlContainerList.json
             // this example is just showing the usage of "SqlResources_ListSqlContainers" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -302,7 +197,7 @@ Kind = CosmosDBIndexKind.Range,
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_CosmosDBSqlContainerGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlContainerGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBSqlContainerGet.json
             // this example is just showing the usage of "SqlResources_GetSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -333,7 +228,7 @@ Kind = CosmosDBIndexKind.Range,
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CosmosDBSqlContainerGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBSqlContainerGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/DocumentDB/stable/2025-10-15/examples/CosmosDBSqlContainerGet.json
             // this example is just showing the usage of "SqlResources_GetSqlContainer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

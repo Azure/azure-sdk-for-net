@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net9.0;net8.0;net462</TargetFrameworks>
+    <RequiredTargetFrameworks>$(AllActiveCurrentTargetFrameworks);$(NetFxTargetFramework)</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0' AND '$(OS)' == 'Windows_NT'">
+  <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0')) AND '$(OS)' == 'Windows_NT'">
     <PublishAot>true</PublishAot>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
   </PropertyGroup>
@@ -14,7 +15,7 @@
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net8.0' AND '$(OS)' == 'Windows_NT'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0')) AND '$(OS)' == 'Windows_NT'">
     <TrimmerRootAssembly Include="Azure.Monitor.OpenTelemetry.Exporter" />
   </ItemGroup>
 

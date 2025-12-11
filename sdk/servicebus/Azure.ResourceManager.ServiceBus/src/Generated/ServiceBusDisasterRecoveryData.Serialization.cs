@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 provisioningState,
                 pendingReplicationOperationsCount,
                 partnerNamespace,
                 alternateName,
                 role,
-                location,
                 serializedAdditionalRawData);
         }
 
