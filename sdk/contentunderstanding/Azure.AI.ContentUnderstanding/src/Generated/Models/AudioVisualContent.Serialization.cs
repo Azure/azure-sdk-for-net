@@ -28,6 +28,72 @@ namespace Azure.AI.ContentUnderstanding
             writer.WriteEndObject();
         }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AudioVisualContent)} does not support writing '{format}' format.");
+            }
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("startTimeMs"u8);
+            writer.WriteNumberValue(StartTimeMs);
+            writer.WritePropertyName("endTimeMs"u8);
+            writer.WriteNumberValue(EndTimeMs);
+            if (Optional.IsDefined(Width))
+            {
+                writer.WritePropertyName("width"u8);
+                writer.WriteNumberValue(Width.Value);
+            }
+            if (Optional.IsDefined(Height))
+            {
+                writer.WritePropertyName("height"u8);
+                writer.WriteNumberValue(Height.Value);
+            }
+            if (Optional.IsCollectionDefined(CameraShotTimesMs))
+            {
+                writer.WritePropertyName("cameraShotTimesMs"u8);
+                writer.WriteStartArray();
+                foreach (long item in CameraShotTimesMs)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(KeyFrameTimesMs))
+            {
+                writer.WritePropertyName("keyFrameTimesMs"u8);
+                writer.WriteStartArray();
+                foreach (long item in KeyFrameTimesMs)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TranscriptPhrases))
+            {
+                writer.WritePropertyName("transcriptPhrases"u8);
+                writer.WriteStartArray();
+                foreach (TranscriptPhrase item in TranscriptPhrases)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Segments))
+            {
+                writer.WritePropertyName("segments"u8);
+                writer.WriteStartArray();
+                foreach (AudioVisualContentSegment item in Segments)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+        }
+
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         AudioVisualContent IJsonModel<AudioVisualContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AudioVisualContent)JsonModelCreateCore(ref reader, options);

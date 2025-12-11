@@ -14,7 +14,7 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary>
     /// Partial class for AudioVisualContent to customize serialization/deserialization.
     /// </summary>
-    // SDK-FIX: Suppress DeserializeAudioVisualContent to fix KeyFrameTimesMs property name casing inconsistency (service returns "KeyFrameTimesMs" instead of "keyFrameTimesMs")
+    // SERVICE-FIX: Suppress DeserializeAudioVisualContent to fix KeyFrameTimesMs property name casing inconsistency (service returns "KeyFrameTimesMs" instead of "keyFrameTimesMs")
     [CodeGenSuppress("DeserializeAudioVisualContent", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class AudioVisualContent
     {
@@ -129,7 +129,7 @@ namespace Azure.AI.ContentUnderstanding
                     cameraShotTimesMs = array;
                     continue;
                 }
-                // SDK-FIX: Handle both "keyFrameTimesMs" (TypeSpec definition) and "KeyFrameTimesMs" (service response format - capital K)
+                // SERVICE-FIX: Handle both "keyFrameTimesMs" (TypeSpec definition) and "KeyFrameTimesMs" (service response format - capital K)
                 if (prop.NameEquals("keyFrameTimesMs"u8) || prop.NameEquals("KeyFrameTimesMs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
