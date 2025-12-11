@@ -18,7 +18,7 @@ internal abstract class WebPubSubServiceCredential
 internal class KeyCredential(string? accessKey) : WebPubSubServiceCredential
 {
     public override bool CanValidateSignature => !string.IsNullOrEmpty(AccessKey);
-    // The AccessKey is null when a connection string without access key is provided. The users has disabled the access key authentication. This connection string is only used for upstream origin validation.
+    // The AccessKey is null when a connection string without access key is provided, that is, users have disabled the access key authentication. This connection string is only used for upstream origin validation.
     public string? AccessKey { get; } = accessKey;
 }
 

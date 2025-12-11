@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub.Tests;
 
 internal static class TestAzureComponentFactory
 {
-    public static AzureComponentFactory Instance;
+    public static readonly AzureComponentFactory Instance;
 
     static TestAzureComponentFactory()
     {
