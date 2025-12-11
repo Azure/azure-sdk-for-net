@@ -1,6 +1,4 @@
-trigger: none
-
-pr:
+trigger:
   branches:
     include:
       - main
@@ -8,6 +6,8 @@ pr:
     include:
       - .github/copilot-instructions.md
       - eng/common/instructions/azsdk-tools/**
+
+pr: none
 
 parameters:
   - name: EvalProject
