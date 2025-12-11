@@ -15,8 +15,8 @@
 - Total libraries: 397
 - Management Plane (MPG): 226
   - Autorest/Swagger: 158
-  - New Emitter (TypeSpec): 29
-  - Old TypeSpec: 39
+  - New Emitter (TypeSpec): 30
+  - Old TypeSpec: 38
 - Data Plane (DPG): 171
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 19
@@ -168,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 29 / 68 (42.6%)
+**Migration Status**: 30 / 68 (44.1%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -221,7 +221,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock |  |
 | qumulo | Azure.ResourceManager.Qumulo |  |
-| quota | Azure.ResourceManager.Quota |  |
+| quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
