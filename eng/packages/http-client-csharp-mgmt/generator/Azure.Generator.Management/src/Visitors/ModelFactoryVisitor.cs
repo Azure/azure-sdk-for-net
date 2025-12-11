@@ -23,11 +23,14 @@ namespace Azure.Generator.Management.Visitors
         protected override TypeProvider? PostVisitType(TypeProvider type)
         {
             // Process model factory after all models have been visited
-            if (type is ModelFactoryProvider modelFactory && !_modelTypesEnsured)
+            if (type is ModelFactoryProvider modelFactory)
             {
-                // Ensure model types are built now that all flattening is complete
-                ManagementClientGenerator.Instance.OutputLibrary.EnsureModelTypesBuilt();
-                _modelTypesEnsured = true;
+                // Ensure model types are built once, now that all flattening is complete
+                if (!_modelTypesEnsured)
+                {
+                    ManagementClientGenerator.Instance.OutputLibrary.EnsureModelTypesBuilt();
+                    _modelTypesEnsured = true;
+                }
 
                 var updatedMethods = new List<MethodProvider>();
                 foreach (var method in modelFactory.Methods)
