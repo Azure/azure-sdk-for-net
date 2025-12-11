@@ -93,7 +93,7 @@ With `EnableSegment = false`, the entire 4-page document will be classified as o
 // Analyze a document (EnableSegment=false means entire document is one category)
 string filePath = "<file_path>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
-AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
     "application/pdf",
@@ -134,7 +134,7 @@ With `EnableSegment = true`, the analyzer will segment the document and return c
 // Analyze a document (EnableSegment=true automatically segments by category)
 string filePath = "<file_path>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
-AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
     "application/pdf",

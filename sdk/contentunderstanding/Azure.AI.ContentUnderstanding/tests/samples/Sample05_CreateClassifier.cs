@@ -267,7 +267,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
@@ -276,7 +276,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
                 var fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
@@ -473,7 +473,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
@@ -482,7 +482,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
                 var fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",

@@ -162,7 +162,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(binaryData, "Binary data should not be null");
 
             // Analyze the document
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 "application/pdf",
@@ -199,7 +199,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 "application/pdf",
@@ -243,7 +243,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 "application/pdf",
@@ -860,7 +860,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
                 // Analyze the document using the classifier
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
                     "application/pdf",
@@ -1224,7 +1224,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 "application/pdf",

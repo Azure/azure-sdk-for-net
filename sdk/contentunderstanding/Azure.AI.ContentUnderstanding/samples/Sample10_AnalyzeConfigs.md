@@ -41,7 +41,7 @@ BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
 // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
 // These configs enable extraction of charts, annotations, hyperlinks, and formulas
-AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
     "application/pdf",
