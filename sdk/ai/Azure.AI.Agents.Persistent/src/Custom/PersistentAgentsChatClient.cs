@@ -101,8 +101,8 @@ namespace Azure.AI.Agents.Persistent
                         run.Status != RunStatus.Expired)
                     {
                         threadRun = run;
-                        break;
                     }
+                    break;
                 }
             }
 
