@@ -4,9 +4,11 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -88,20 +90,18 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="contentType"> Request content type. </param>
         /// <param name="binaryInput"> The binary content of the document to analyze. </param>
-        /// <param name="stringEncoding"> This parameter is ignored. The SDK always uses "utf16" encoding for .NET. </param>
         /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
         /// <param name="inputRange"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="contentType"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual async Task<Operation<AnalyzeResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string contentType, BinaryData binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<AnalyzeResult>> AnalyzeBinaryAsync(WaitUntil waitUntil, string analyzerId, string contentType, BinaryData binaryInput, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
 
-            // Ignore stringEncoding parameter - always use utf16 for .NET
             Operation<BinaryData> result = await AnalyzeBinaryAsync(waitUntil, analyzerId, contentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, inputRange!, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinaryAsync");
         }
@@ -111,22 +111,108 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
         /// <param name="contentType"> Request content type. </param>
         /// <param name="binaryInput"> The binary content of the document to analyze. </param>
-        /// <param name="stringEncoding"> This parameter is ignored. The SDK always uses "utf16" encoding for .NET. </param>
         /// <param name="processingLocation"> The location where the data may be processed.  Defaults to global. </param>
         /// <param name="inputRange"> Range of the input to analyze (ex. `1-3,5,9-`).  Document content uses 1-based page numbers, while audio visual content uses integer milliseconds. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/>, <paramref name="contentType"/> or <paramref name="binaryInput"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> or <paramref name="contentType"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The <see cref="Operation{AnalyzeResult}"/> with operation ID accessible via the <c>Id</c> property. </returns>
-        public virtual Operation<AnalyzeResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string contentType, BinaryData binaryInput, string? stringEncoding = default, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
+        public virtual Operation<AnalyzeResult> AnalyzeBinary(WaitUntil waitUntil, string analyzerId, string contentType, BinaryData binaryInput, ProcessingLocation? processingLocation = default, string? inputRange = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
             Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
             Argument.AssertNotNull(binaryInput, nameof(binaryInput));
 
-            // Ignore stringEncoding parameter - always use utf16 for .NET
             Operation<BinaryData> result = AnalyzeBinary(waitUntil, analyzerId, contentType, RequestContent.Create(binaryInput), DefaultStringEncoding, processingLocation?.ToString()!, inputRange!, cancellationToken.ToRequestContext());
             return ProtocolOperationHelpers.Convert(result, response => AnalyzeResult.FromLroResponse(response), ClientDiagnostics, "ContentUnderstandingClient.AnalyzeBinary");
+        }
+
+        #endregion
+
+        #region Update Operations
+
+        // EMITTER-FIX: These methods are manually implemented because the TypeSpec emitter does not generate
+        // convenience methods for PATCH operations using Operations.ResourceUpdate and Foundations.Operation
+        // with MergePatchUpdate input. See BUG_REPORT_CONVENIENCE_METHODS.md for details.
+
+        /// <summary> Update analyzer properties. </summary>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="resource"> The resource instance with properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UpdateAnalyzer(string analyzerId, ContentAnalyzer resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            return UpdateAnalyzer(analyzerId, RequestContent.Create(resource), cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Update analyzer properties asynchronously. </summary>
+        /// <param name="analyzerId"> The unique identifier of the analyzer. </param>
+        /// <param name="resource"> The resource instance with properties to update. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analyzerId"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="analyzerId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UpdateAnalyzerAsync(string analyzerId, ContentAnalyzer resource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(analyzerId, nameof(analyzerId));
+            Argument.AssertNotNull(resource, nameof(resource));
+
+            return await UpdateAnalyzerAsync(analyzerId, RequestContent.Create(resource), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary> Update default model deployment settings. </summary>
+        /// <remarks>
+        /// This is the recommended public API for updating default model deployment settings.
+        /// The generated protocol methods (UpdateDefaults/UpdateDefaultsAsync with RequestContent) should not be used directly.
+        /// This method provides a simpler API that accepts a dictionary mapping model names to deployment names.
+        /// </remarks>
+        /// <param name="modelDeployments"> Mapping of model names to deployment names. For example: { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelDeployments"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response<ContentUnderstandingDefaults> UpdateDefaults(IDictionary<string, string> modelDeployments, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(modelDeployments, nameof(modelDeployments));
+
+            var defaults = ContentUnderstandingModelFactory.ContentUnderstandingDefaults(modelDeployments);
+            var writerOptions = new ModelReaderWriterOptions("W");
+            var requestContent = RequestContent.Create(
+                ModelReaderWriter.Write(defaults, writerOptions, AzureAIContentUnderstandingContext.Default));
+
+            Response response = UpdateDefaults(requestContent, cancellationToken.ToRequestContext());
+            return Response.FromValue((ContentUnderstandingDefaults)response, response);
+        }
+
+        /// <summary> Update default model deployment settings asynchronously. </summary>
+        /// <remarks>
+        /// This is the recommended public API for updating default model deployment settings.
+        /// The generated protocol methods (UpdateDefaults/UpdateDefaultsAsync with RequestContent) should not be used directly.
+        /// This method provides a simpler API that accepts a dictionary mapping model names to deployment names.
+        /// </remarks>
+        /// <param name="modelDeployments"> Mapping of model names to deployment names. For example: { "gpt-4.1": "myGpt41Deployment", "text-embedding-3-large": "myTextEmbedding3LargeDeployment" }. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelDeployments"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response<ContentUnderstandingDefaults>> UpdateDefaultsAsync(IDictionary<string, string> modelDeployments, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(modelDeployments, nameof(modelDeployments));
+
+            var defaults = ContentUnderstandingModelFactory.ContentUnderstandingDefaults(modelDeployments);
+            var writerOptions = new ModelReaderWriterOptions("W");
+            var requestContent = RequestContent.Create(
+                ModelReaderWriter.Write(defaults, writerOptions, AzureAIContentUnderstandingContext.Default));
+
+            Response response = await UpdateDefaultsAsync(requestContent, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((ContentUnderstandingDefaults)response, response);
         }
 
         #endregion

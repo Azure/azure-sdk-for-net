@@ -120,9 +120,9 @@ The markdown output includes structured text with preserved formatting and hiera
 
 For more information about the markdown format, see [Document markdown][cu-document-markdown].
 
-## Access document properties with type-safe APIs
+## Access document properties
 
-The SDK provides type-safe access to extraction results. Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides strongly-typed access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For detailed information about all available document elements and properties, see [Document elements][cu-document-elements].
+Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For detailed information about all available document elements and properties, see [Document elements][cu-document-elements].
 
 ```C# Snippet:ContentUnderstandingAccessDocumentProperties
 // Check if this is document content to access document-specific properties
