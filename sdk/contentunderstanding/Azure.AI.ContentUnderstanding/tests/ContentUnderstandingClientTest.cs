@@ -259,108 +259,97 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(content, "Content should not be null for document properties validation");
 
             // Verify document content type and properties
-            if (content is DocumentContent docContent)
+            Assert.IsInstanceOf<DocumentContent>(content, "Content should be DocumentContent");
+            DocumentContent docContent = (DocumentContent)content;
+
+            // Validate MIME type
+            Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(docContent.MimeType), "MIME type should not be empty");
+            Assert.AreEqual("application/pdf", docContent.MimeType, "MIME type should be application/pdf");
+
+            // Validate page numbers
+            Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
+            Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
+                "End page should be >= start page");
+            int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
+            Assert.IsTrue(totalPages > 0, "Total pages should be positive");
+
+            // Validate pages collection
+            Assert.IsNotNull(docContent.Pages, "Pages collection should not be null");
+            Assert.IsTrue(docContent.Pages.Count > 0, "Pages collection should not be empty");
+            Assert.AreEqual(totalPages, docContent.Pages.Count,
+                "Pages collection count should match calculated total pages");
+
+            var pageNumbers = new HashSet<int>();
+
+            foreach (var page in docContent.Pages)
             {
-                // Validate MIME type
-                Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(docContent.MimeType), "MIME type should not be empty");
-                Assert.AreEqual("application/pdf", docContent.MimeType, "MIME type should be application/pdf");
+                Assert.IsNotNull(page, "Page object should not be null");
+                Assert.IsTrue(page.PageNumber >= 1, "Page number should be >= 1");
+                Assert.IsTrue(page.PageNumber >= docContent.StartPageNumber &&
+                            page.PageNumber <= docContent.EndPageNumber,
+                    $"Page number {page.PageNumber} should be within document range [{docContent.StartPageNumber}, {docContent.EndPageNumber}]");
+                Assert.IsTrue(page.Width > 0, $"Page {page.PageNumber} width should be > 0, but was {page.Width}");
+                Assert.IsTrue(page.Height > 0, $"Page {page.PageNumber} height should be > 0, but was {page.Height}");
 
-                // Validate page numbers
-                Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
-                Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
-                    "End page should be >= start page");
-                int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
-                Assert.IsTrue(totalPages > 0, "Total pages should be positive");
-
-                // Validate pages collection if available
-                if (docContent.Pages != null && docContent.Pages.Count > 0)
-                {
-                    Assert.IsTrue(docContent.Pages.Count > 0, "Pages collection should not be empty when not null");
-                    Assert.AreEqual(totalPages, docContent.Pages.Count,
-                        "Pages collection count should match calculated total pages");
-
-                    var pageNumbers = new HashSet<int>();
-
-                    foreach (var page in docContent.Pages)
-                    {
-                        Assert.IsNotNull(page, "Page object should not be null");
-                        Assert.IsTrue(page.PageNumber >= 1, "Page number should be >= 1");
-                        Assert.IsTrue(page.PageNumber >= docContent.StartPageNumber &&
-                                    page.PageNumber <= docContent.EndPageNumber,
-                            $"Page number {page.PageNumber} should be within document range [{docContent.StartPageNumber}, {docContent.EndPageNumber}]");
-                        Assert.IsTrue(page.Width > 0, $"Page {page.PageNumber} width should be > 0, but was {page.Width}");
-                        Assert.IsTrue(page.Height > 0, $"Page {page.PageNumber} height should be > 0, but was {page.Height}");
-
-                        // Ensure page numbers are unique
-                        Assert.IsTrue(pageNumbers.Add(page.PageNumber),
-                            $"Page number {page.PageNumber} appears multiple times");
-                    }
-                }
-
-                // Validate tables collection if available
-                // Expected table counts from recording: Table 1 (2 rows, 6 columns), Table 2 (4 rows, 8 columns), Table 3 (5 rows, 2 columns)
-                int[] expectedRowCounts = { 2, 4, 5 };
-                int[] expectedColumnCounts = { 6, 8, 2 };
-
-                if (docContent.Tables != null && docContent.Tables.Count > 0)
-                {
-                    Assert.IsTrue(docContent.Tables.Count > 0, "Tables collection should not be empty when not null");
-                    Assert.AreEqual(expectedRowCounts.Length, docContent.Tables.Count,
-                        $"Expected {expectedRowCounts.Length} tables based on recording, but found {docContent.Tables.Count}");
-
-                    int tableCounter = 0;
-                    foreach (var table in docContent.Tables)
-                    {
-                        Assert.IsNotNull(table, $"Table {tableCounter + 1} should not be null");
-
-                        // Verify row and column counts match expected values from recording
-                        if (tableCounter < expectedRowCounts.Length)
-                        {
-                            Assert.AreEqual(expectedRowCounts[tableCounter], table.RowCount,
-                                $"Table {tableCounter + 1} row count should be {expectedRowCounts[tableCounter]}, but was {table.RowCount}");
-                            Assert.AreEqual(expectedColumnCounts[tableCounter], table.ColumnCount,
-                                $"Table {tableCounter + 1} column count should be {expectedColumnCounts[tableCounter]}, but was {table.ColumnCount}");
-                        }
-
-                        // Validate table cells if available
-                        if (table.Cells != null && table.Cells.Count > 0)
-                        {
-                            Assert.IsTrue(table.Cells.Count > 0, $"Table {tableCounter + 1} cells collection should not be empty when not null");
-
-                            foreach (var cell in table.Cells)
-                            {
-                                Assert.IsNotNull(cell, "Table cell should not be null");
-                                Assert.IsTrue(cell.RowIndex >= 0, $"Cell row index should be >= 0, but was {cell.RowIndex}");
-                                Assert.IsTrue(cell.ColumnIndex >= 0, $"Cell column index should be >= 0, but was {cell.ColumnIndex}");
-
-                                // RowSpan and ColumnSpan are nullable, default to 1 if null
-                                int rowSpan = cell.RowSpan ?? 1;
-                                int columnSpan = cell.ColumnSpan ?? 1;
-                                Assert.IsTrue(rowSpan >= 1, $"Cell row span should be >= 1, but was {rowSpan}");
-                                Assert.IsTrue(columnSpan >= 1, $"Cell column span should be >= 1, but was {columnSpan}");
-
-                                // Verify cell indices are within declared table bounds
-                                int cellEndRow = cell.RowIndex + rowSpan - 1;
-                                int cellEndColumn = cell.ColumnIndex + columnSpan - 1;
-                                Assert.IsTrue(cell.RowIndex < table.RowCount,
-                                    $"Cell row index {cell.RowIndex} should be < table row count {table.RowCount}");
-                                Assert.IsTrue(cellEndRow < table.RowCount,
-                                    $"Cell end row {cellEndRow} (row {cell.RowIndex} + span {rowSpan}) should be < table row count {table.RowCount}");
-                                Assert.IsTrue(cell.ColumnIndex < table.ColumnCount,
-                                    $"Cell column index {cell.ColumnIndex} should be < table column count {table.ColumnCount}");
-                                Assert.IsTrue(cellEndColumn < table.ColumnCount,
-                                    $"Cell end column {cellEndColumn} (column {cell.ColumnIndex} + span {columnSpan}) should be < table column count {table.ColumnCount}");
-                            }
-                        }
-
-                        tableCounter++;
-                    }
-                }
+                // Ensure page numbers are unique
+                Assert.IsTrue(pageNumbers.Add(page.PageNumber),
+                    $"Page number {page.PageNumber} appears multiple times");
             }
-            else
+
+            // Validate tables collection
+            // Expected table counts from recording: Table 1 (2 rows, 6 columns), Table 2 (4 rows, 8 columns), Table 3 (5 rows, 2 columns)
+            int[] expectedRowCounts = { 2, 4, 5 };
+            int[] expectedColumnCounts = { 6, 8, 2 };
+
+            Assert.IsNotNull(docContent.Tables, "Tables collection should not be null");
+            Assert.IsTrue(docContent.Tables.Count > 0, "Tables collection should not be empty");
+            Assert.AreEqual(expectedRowCounts.Length, docContent.Tables.Count,
+                $"Expected {expectedRowCounts.Length} tables based on recording, but found {docContent.Tables.Count}");
+
+            int tableCounter = 0;
+            foreach (var table in docContent.Tables)
             {
-                Assert.Warn("Expected DocumentContent but got " + content?.GetType().Name);
+                Assert.IsNotNull(table, $"Table {tableCounter + 1} should not be null");
+
+                // Verify row and column counts match expected values from recording
+                Assert.IsTrue(tableCounter < expectedRowCounts.Length,
+                    $"Table counter {tableCounter} should be < expected row counts length {expectedRowCounts.Length}");
+                Assert.AreEqual(expectedRowCounts[tableCounter], table.RowCount,
+                    $"Table {tableCounter + 1} row count should be {expectedRowCounts[tableCounter]}, but was {table.RowCount}");
+                Assert.AreEqual(expectedColumnCounts[tableCounter], table.ColumnCount,
+                    $"Table {tableCounter + 1} column count should be {expectedColumnCounts[tableCounter]}, but was {table.ColumnCount}");
+
+                // Validate table cells
+                Assert.IsNotNull(table.Cells, $"Table {tableCounter + 1} cells collection should not be null");
+                Assert.IsTrue(table.Cells.Count > 0, $"Table {tableCounter + 1} cells collection should not be empty");
+
+                foreach (var cell in table.Cells)
+                {
+                    Assert.IsNotNull(cell, "Table cell should not be null");
+                    Assert.IsTrue(cell.RowIndex >= 0, $"Cell row index should be >= 0, but was {cell.RowIndex}");
+                    Assert.IsTrue(cell.ColumnIndex >= 0, $"Cell column index should be >= 0, but was {cell.ColumnIndex}");
+
+                    // RowSpan and ColumnSpan are nullable, default to 1 if null
+                    int rowSpan = cell.RowSpan ?? 1;
+                    int columnSpan = cell.ColumnSpan ?? 1;
+                    Assert.IsTrue(rowSpan >= 1, $"Cell row span should be >= 1, but was {rowSpan}");
+                    Assert.IsTrue(columnSpan >= 1, $"Cell column span should be >= 1, but was {columnSpan}");
+
+                    // Verify cell indices are within declared table bounds
+                    int cellEndRow = cell.RowIndex + rowSpan - 1;
+                    int cellEndColumn = cell.ColumnIndex + columnSpan - 1;
+                    Assert.IsTrue(cell.RowIndex < table.RowCount,
+                        $"Cell row index {cell.RowIndex} should be < table row count {table.RowCount}");
+                    Assert.IsTrue(cellEndRow < table.RowCount,
+                        $"Cell end row {cellEndRow} (row {cell.RowIndex} + span {rowSpan}) should be < table row count {table.RowCount}");
+                    Assert.IsTrue(cell.ColumnIndex < table.ColumnCount,
+                        $"Cell column index {cell.ColumnIndex} should be < table column count {table.ColumnCount}");
+                    Assert.IsTrue(cellEndColumn < table.ColumnCount,
+                        $"Cell end column {cellEndColumn} (column {cell.ColumnIndex} + span {columnSpan}) should be < table column count {table.ColumnCount}");
+                }
+
+                tableCounter++;
             }
         }
 
