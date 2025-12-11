@@ -38,12 +38,6 @@ namespace Azure.ResourceManager.Attestation
             return subscriptionResource.GetCachedClient(client => new MockableAttestationSubscriptionResource(client, subscriptionResource.Id));
         }
 
-        /// <param name="tenantResource"></param>
-        private static MockableAttestationTenantResource GetMockableAttestationTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableAttestationTenantResource(client, tenantResource.Id));
-        }
-
         /// <summary>
         /// Gets an object representing a <see cref="AttestationProviderResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
@@ -375,42 +369,6 @@ namespace Azure.ResourceManager.Attestation
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAttestationSubscriptionResource(subscriptionResource).GetDefaultByLocation(location, cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationsDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<OperationsDefinition> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAttestationTenantResource(tenantResource).GetAllAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the operations for the provider
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAttestationTenantResource.GetAll(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="OperationsDefinition"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<OperationsDefinition> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
-
-            return GetMockableAttestationTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }
 }

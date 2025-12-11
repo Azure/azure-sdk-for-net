@@ -17,44 +17,6 @@ namespace Azure.ResourceManager.Attestation.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAttestationModelFactory
     {
-
-        /// <summary> Definition object with the name and properties of an operation. </summary>
-        /// <param name="name"> Name of the operation. </param>
-        /// <param name="display"> Display object with properties of the operation. </param>
-        /// <param name="properties"> Properties of the operation. </param>
-        /// <returns> A new <see cref="Models.OperationsDefinition"/> instance for mocking. </returns>
-        public static OperationsDefinition OperationsDefinition(string name = default, OperationsDisplayDefinition display = default, OperationProperties properties = default)
-        {
-            return new OperationsDefinition(name, display, properties, additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Display object with properties of the operation. </summary>
-        /// <param name="provider"> Resource provider of the operation. </param>
-        /// <param name="resource"> Resource for the operation. </param>
-        /// <param name="operation"> Short description of the operation. </param>
-        /// <param name="description"> Description of the operation. </param>
-        /// <returns> A new <see cref="Models.OperationsDisplayDefinition"/> instance for mocking. </returns>
-        public static OperationsDisplayDefinition OperationsDisplayDefinition(string provider = default, string resource = default, string operation = default, string description = default)
-        {
-            return new OperationsDisplayDefinition(provider, resource, operation, description, additionalBinaryDataProperties: null);
-        }
-
-        /// <param name="serviceSpecificationLogSpecifications"> Specifications of the Log for Microsoft Azure Attestation. </param>
-        /// <returns> A new <see cref="Models.OperationProperties"/> instance for mocking. </returns>
-        public static OperationProperties OperationProperties(IEnumerable<LogSpecification> serviceSpecificationLogSpecifications = default)
-        {
-            return new OperationProperties(serviceSpecificationLogSpecifications is null ? default : new ServiceSpecification((serviceSpecificationLogSpecifications ?? new ChangeTrackingList<LogSpecification>()).ToList(), null), additionalBinaryDataProperties: null);
-        }
-
-        /// <summary> Specifications of the Log for Microsoft Azure Attestation. </summary>
-        /// <param name="name"> Name of the log. </param>
-        /// <param name="displayName"> Localized friendly display name of the log. </param>
-        /// <returns> A new <see cref="Models.LogSpecification"/> instance for mocking. </returns>
-        public static LogSpecification LogSpecification(string name = default, string displayName = default)
-        {
-            return new LogSpecification(name, displayName, additionalBinaryDataProperties: null);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -68,7 +30,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <returns> A new <see cref="Attestation.AttestationProviderData"/> instance for mocking. </returns>
-        public static AttestationProviderData AttestationProviderData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string trustModel = default, AttestationServiceStatus? status = default, string attestUri = default, PublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationPrivateEndpointConnection> privateEndpointConnections = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
+        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string trustModel = default, AttestationServiceStatus? status = default, string attestUri = default, PublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationPrivateEndpointConnection> privateEndpointConnections = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -98,7 +60,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Models.AttestationPrivateEndpointConnection"/> instance for mocking. </returns>
-        public static AttestationPrivateEndpointConnection AttestationPrivateEndpointConnection(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static AttestationPrivateEndpointConnection AttestationPrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
         {
             return new AttestationPrivateEndpointConnection(
                 id,
@@ -240,7 +202,7 @@ namespace Azure.ResourceManager.Attestation.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Resource properties. </param>
         /// <returns> A new <see cref="Models.AttestationPrivateLinkResource"/> instance for mocking. </returns>
-        public static AttestationPrivateLinkResource AttestationPrivateLinkResource(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkResourceProperties properties = default)
+        public static AttestationPrivateLinkResource AttestationPrivateLinkResource(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkResourceProperties properties = default)
         {
             return new AttestationPrivateLinkResource(
                 id,
