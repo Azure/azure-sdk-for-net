@@ -6,8 +6,7 @@
     <PackageTags>Azure.AI.Language.QuestionAnswering.Authoring</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <NoWarn>$(NoWarn);AZC0034;AZC0012</NoWarn>
-    <IncludeAutorestDependency>true</IncludeAutorestDependency>
+    <NoWarn>$(NoWarn);AZC0034</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
@@ -15,7 +14,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.AI.Language.QuestionAnswering.Inference\src\Azure.AI.Language.QuestionAnswering.Inference.csproj" />
