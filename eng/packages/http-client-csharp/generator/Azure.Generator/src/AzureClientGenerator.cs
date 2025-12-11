@@ -59,6 +59,7 @@ public class AzureClientGenerator : ScmCodeModelGenerator
 
         // Visitors that do any renaming must be added first so that any visitors relying on custom code view will have the CustomCodeView set.
         AddVisitor(new ModelFactoryRenamerVisitor());
+        AddVisitor(new MaxPageSizeParameterVisitor());
 
         // Rest of the visitors can be added in any order.
         AddVisitor(new NamespaceVisitor());
@@ -67,7 +68,6 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new LroVisitor());
         AddVisitor(new MatchConditionsHeadersVisitor());
         AddVisitor(new ClientRequestIdHeaderVisitor());
-        AddVisitor(new MaxPageSizeParameterVisitor());
         AddVisitor(new SystemTextJsonConverterVisitor());
         AddVisitor(new MultiPartFormDataVisitor());
         AddVisitor(new InvokeDelimitedMethodVisitor());

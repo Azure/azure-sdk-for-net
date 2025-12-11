@@ -6,7 +6,6 @@ using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.Linq;
-using System.Reflection;
 
 namespace Azure.Generator.Visitors
 {
@@ -15,7 +14,7 @@ namespace Azure.Generator.Visitors
     /// </summary>
     internal class MaxPageSizeParameterVisitor : ScmLibraryVisitor
     {
-        private const string MaxPageSizeSerializedName = "maxpagesize";
+        private const string MaxPageSizeWireName = "maxpagesize";
         private const string MaxPageSizeCamelCaseName = "maxPageSize";
 
         protected override ScmMethodProviderCollection? Visit(
@@ -25,21 +24,70 @@ namespace Azure.Generator.Visitors
         {
             // Find if the service method has a maxpagesize parameter
             var hasMaxPageSizeParameter = serviceMethod.Parameters.Any(p =>
-                p.SerializedName.Equals(MaxPageSizeSerializedName, System.StringComparison.OrdinalIgnoreCase)) ||
-                serviceMethod.Operation.Parameters.Any(p =>
-                p.SerializedName.Equals(MaxPageSizeSerializedName, System.StringComparison.OrdinalIgnoreCase));
+                p.SerializedName.Equals(MaxPageSizeWireName, System.StringComparison.OrdinalIgnoreCase));
 
-            if (hasMaxPageSizeParameter)
+            var hasMaxPageSizeOperationParameter = serviceMethod.Operation.Parameters.Any(p =>
+                p.SerializedName.Equals(MaxPageSizeWireName, System.StringComparison.OrdinalIgnoreCase));
+
+            if (hasMaxPageSizeParameter || hasMaxPageSizeOperationParameter)
             {
-                // Update the parameter names using reflection since they are read-only
-                UpdateParameterNames(serviceMethod.Parameters);
-                UpdateParameterNames(serviceMethod.Operation.Parameters);
+                // Update the service method parameters
+                if (hasMaxPageSizeParameter)
+                {
+                    var updatedParameters = serviceMethod.Parameters.Select(p =>
+                    {
+                        if (p.SerializedName.Equals(MaxPageSizeWireName, System.StringComparison.OrdinalIgnoreCase))
+                        {
+                            // Create a new parameter with the updated name
+                            return new InputMethodParameter(
+                                name: MaxPageSizeCamelCaseName,
+                                summary: p.Summary,
+                                doc: p.Doc,
+                                type: p.Type,
+                                location: p.Location,
+                                isRequired: p.IsRequired,
+                                isReadOnly: p.IsReadOnly,
+                                isApiVersion: p.IsApiVersion,
+                                defaultValue: p.DefaultValue,
+                                serializedName: p.SerializedName,
+                                scope: p.Scope,
+                                access: null);
+                        }
+                        return p;
+                    }).ToArray();
 
-                // Create a new method collection with the updated service method
-                methods = new ScmMethodProviderCollection(serviceMethod, client);
+                    serviceMethod.Update(parameters: updatedParameters);
+                }
 
-                // Reset the rest client so that its methods are rebuilt
-                client.RestClient.Reset();
+                // Update the operation parameters
+                if (hasMaxPageSizeOperationParameter)
+                {
+                    var updatedOperationParameters = serviceMethod.Operation.Parameters.Select(p =>
+                    {
+                        if (p.SerializedName.Equals(MaxPageSizeWireName, System.StringComparison.OrdinalIgnoreCase) && p is InputQueryParameter queryParam)
+                        {
+                            // Create a new parameter with the updated name
+                            return new InputQueryParameter(
+                                name: MaxPageSizeCamelCaseName,
+                                summary: queryParam.Summary,
+                                doc: queryParam.Doc,
+                                type: queryParam.Type,
+                                isRequired: queryParam.IsRequired,
+                                isReadOnly: queryParam.IsReadOnly,
+                                isApiVersion: queryParam.IsApiVersion,
+                                defaultValue: queryParam.DefaultValue,
+                                serializedName: queryParam.SerializedName,
+                                arraySerializationDelimiter: null,
+                                scope: queryParam.Scope,
+                                access: null,
+                                collectionFormat: null,
+                                explode: queryParam.Explode);
+                        }
+                        return p;
+                    }).ToArray();
+
+                    serviceMethod.Operation.Update(parameters: updatedOperationParameters);
+                }
             }
 
             return methods;
@@ -54,45 +102,6 @@ namespace Azure.Generator.Visitors
             }
 
             return base.VisitType(type);
-        }
-
-        private static void UpdateParameterNames(System.Collections.Generic.IReadOnlyList<InputMethodParameter> parameters)
-        {
-            foreach (var parameter in parameters)
-            {
-                if (parameter.SerializedName.Equals(MaxPageSizeSerializedName, System.StringComparison.OrdinalIgnoreCase))
-                {
-                    SetNameField(parameter, MaxPageSizeCamelCaseName);
-                }
-            }
-        }
-
-        private static void UpdateParameterNames(System.Collections.Generic.IReadOnlyList<InputParameter> parameters)
-        {
-            foreach (var parameter in parameters)
-            {
-                if (parameter.SerializedName.Equals(MaxPageSizeSerializedName, System.StringComparison.OrdinalIgnoreCase))
-                {
-                    SetNameField(parameter, MaxPageSizeCamelCaseName);
-                }
-            }
-        }
-
-        private static void SetNameField(object parameter, string newName)
-        {
-            // Use reflection to set the backing field for the Name property
-            // Get all fields to find the right backing field
-            var fields = parameter.GetType().GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
-            
-            // Try to find the Name backing field by common patterns
-            var nameField = fields.FirstOrDefault(f => f.Name == "<Name>k__BackingField") ??
-                           fields.FirstOrDefault(f => f.Name == "_name") ??
-                           fields.FirstOrDefault(f => f.Name.ToLower().Contains("name"));
-            
-            if (nameField != null)
-            {
-                nameField.SetValue(parameter, newName);
-            }
         }
     }
 }
