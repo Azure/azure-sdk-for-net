@@ -42,13 +42,13 @@ namespace BasicTypeSpec
                 throw new FormatException($"The model {nameof(DataFactoryElementModel)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("stringProperty"u8);
-            writer.WriteObjectValue<DataFactoryElement<T>>(StringProperty, options);
+            writer.WriteObjectValue(StringProperty, options);
             writer.WritePropertyName("intProperty"u8);
-            writer.WriteObjectValue<DataFactoryElement<T>>(IntProperty, options);
+            writer.WriteObjectValue(IntProperty, options);
             writer.WritePropertyName("boolProperty"u8);
-            writer.WriteObjectValue<DataFactoryElement<T>>(BoolProperty, options);
+            writer.WriteObjectValue(BoolProperty, options);
             writer.WritePropertyName("stringArrayProperty"u8);
-            writer.WriteObjectValue<DataFactoryElement<T>>(StringArrayProperty, options);
+            writer.WriteObjectValue(StringArrayProperty, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -100,22 +100,22 @@ namespace BasicTypeSpec
             {
                 if (prop.NameEquals("stringProperty"u8))
                 {
-                    stringProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    stringProperty = ModelReaderWriter.Read<DataFactoryElement<string>>(prop.Value.GetUtf8Bytes, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("intProperty"u8))
                 {
-                    intProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    intProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("boolProperty"u8))
                 {
-                    boolProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    boolProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("stringArrayProperty"u8))
                 {
-                    stringArrayProperty = DataFactoryElement<T>.DeserializeDataFactoryElement(prop.Value, options);
+                    stringArrayProperty = ModelReaderWriter.Read<DataFactoryElement<T>>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default);
                     continue;
                 }
                 if (options.Format != "W")

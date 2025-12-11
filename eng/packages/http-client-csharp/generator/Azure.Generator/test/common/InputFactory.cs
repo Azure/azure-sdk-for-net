@@ -709,22 +709,19 @@ namespace Azure.Generator.Tests.Common
         /// </summary>
         /// <param name="name"></param>
         /// <param name="variantTypes"></param>
+        /// <param name="externalTypeMetadata"></param>
         /// <returns></returns>
-        public static InputUnionType Union(string name, params InputType[] variantTypes)
+        public static InputUnionType Union(string name, InputType[] variantTypes, InputExternalTypeMetadata? externalTypeMetadata = null)
         {
-            return new InputUnionType(name, variantTypes);
-        }
+            var union = new InputUnionType(name, variantTypes);
+            if (externalTypeMetadata != null)
+            {
+                var externalTypeMetadataProperty = typeof(InputUnionType).GetProperty(nameof(InputUnionType.External));
+                var setExternalTypeMetadataMethod = externalTypeMetadataProperty?.GetSetMethod(true);
+                setExternalTypeMetadataMethod!.Invoke(union, [externalTypeMetadata]);
+            }
 
-        /// <summary>
-        /// Construct input external type
-        /// </summary>
-        /// <param name="identity"></param>
-        /// <param name="package"></param>
-        /// <param name="minVersion"></param>
-        /// <returns></returns>
-        public static InputExternalType External(string identity, string? package = null, string? minVersion = null)
-        {
-            return new InputExternalType(identity, package, minVersion);
+            return union;
         }
 
         public static InputPagingServiceMetadata NextLinkPagingMetadata(string itemPropertyName, string nextLinkName, InputResponseLocation nextLinkLocation, IReadOnlyList<InputParameter>? reinjectedParameters = null, IReadOnlyList<string>? pageSizeParameterSegments = null)
