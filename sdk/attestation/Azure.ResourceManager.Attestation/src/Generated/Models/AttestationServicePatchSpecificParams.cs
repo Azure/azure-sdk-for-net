@@ -11,39 +11,10 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
-    internal partial class AttestationServicePatchSpecificParams
+    public partial class AttestationServicePatchSpecificParams
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
         public AttestationServicePatchSpecificParams()
@@ -52,14 +23,19 @@ namespace Azure.ResourceManager.Attestation.Models
 
         /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationServicePatchSpecificParams(PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AttestationServicePatchSpecificParams(PublicNetworkAccessType? publicNetworkAccess, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicNetworkAccess = publicNetworkAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            TpmAttestationAuthentication = tpmAttestationAuthentication;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </summary>
         public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+
+        /// <summary> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </summary>
+        public TpmAttestationAuthenticationType? TpmAttestationAuthentication { get; set; }
     }
 }

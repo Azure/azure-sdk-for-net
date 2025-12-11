@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Attestation;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.Attestation.Models
     public readonly partial struct AttestationServiceStatus : IEquatable<AttestationServiceStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="AttestationServiceStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AttestationServiceStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string ReadyValue = "Ready";
         private const string NotReadyValue = "NotReady";
         private const string ErrorValue = "Error";
 
-        /// <summary> Ready. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationServiceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public AttestationServiceStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Ready. </summary>
         public static AttestationServiceStatus Ready { get; } = new AttestationServiceStatus(ReadyValue);
-        /// <summary> NotReady. </summary>
+
+        /// <summary> Gets the NotReady. </summary>
         public static AttestationServiceStatus NotReady { get; } = new AttestationServiceStatus(NotReadyValue);
-        /// <summary> Error. </summary>
+
+        /// <summary> Gets the Error. </summary>
         public static AttestationServiceStatus Error { get; } = new AttestationServiceStatus(ErrorValue);
+
         /// <summary> Determines if two <see cref="AttestationServiceStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AttestationServiceStatus left, AttestationServiceStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AttestationServiceStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AttestationServiceStatus left, AttestationServiceStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AttestationServiceStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AttestationServiceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AttestationServiceStatus(string value) => new AttestationServiceStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AttestationServiceStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AttestationServiceStatus?(string value) => value == null ? null : new AttestationServiceStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AttestationServiceStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AttestationServiceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

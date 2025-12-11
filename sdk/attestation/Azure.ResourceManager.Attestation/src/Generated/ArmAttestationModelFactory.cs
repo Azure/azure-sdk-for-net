@@ -9,81 +9,119 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Attestation;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    /// <summary> Model factory for models. </summary>
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAttestationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Attestation.AttestationProviderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+
+        /// <summary> Definition object with the name and properties of an operation. </summary>
+        /// <param name="name"> Name of the operation. </param>
+        /// <param name="display"> Display object with properties of the operation. </param>
+        /// <param name="properties"> Properties of the operation. </param>
+        /// <returns> A new <see cref="Models.OperationsDefinition"/> instance for mocking. </returns>
+        public static OperationsDefinition OperationsDefinition(string name = default, OperationsDisplayDefinition display = default, OperationProperties properties = default)
+        {
+            return new OperationsDefinition(name, display, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Display object with properties of the operation. </summary>
+        /// <param name="provider"> Resource provider of the operation. </param>
+        /// <param name="resource"> Resource for the operation. </param>
+        /// <param name="operation"> Short description of the operation. </param>
+        /// <param name="description"> Description of the operation. </param>
+        /// <returns> A new <see cref="Models.OperationsDisplayDefinition"/> instance for mocking. </returns>
+        public static OperationsDisplayDefinition OperationsDisplayDefinition(string provider = default, string resource = default, string operation = default, string description = default)
+        {
+            return new OperationsDisplayDefinition(provider, resource, operation, description, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="serviceSpecificationLogSpecifications"> Specifications of the Log for Microsoft Azure Attestation. </param>
+        /// <returns> A new <see cref="Models.OperationProperties"/> instance for mocking. </returns>
+        public static OperationProperties OperationProperties(IEnumerable<LogSpecification> serviceSpecificationLogSpecifications = default)
+        {
+            return new OperationProperties(serviceSpecificationLogSpecifications is null ? default : new ServiceSpecification((serviceSpecificationLogSpecifications ?? new ChangeTrackingList<LogSpecification>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Specifications of the Log for Microsoft Azure Attestation. </summary>
+        /// <param name="name"> Name of the log. </param>
+        /// <param name="displayName"> Localized friendly display name of the log. </param>
+        /// <returns> A new <see cref="Models.LogSpecification"/> instance for mocking. </returns>
+        public static LogSpecification LogSpecification(string name = default, string displayName = default)
+        {
+            return new LogSpecification(name, displayName, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="trustModel"> Trust model for the attestation provider. </param>
         /// <param name="status"> Status of attestation service. </param>
         /// <param name="attestUri"> Gets the uri of attestation service. </param>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the attestation provider. </param>
+        /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <returns> A new <see cref="Attestation.AttestationProviderData"/> instance for mocking. </returns>
-        public static AttestationProviderData AttestationProviderData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string trustModel = null, AttestationServiceStatus? status = null, Uri attestUri = null, PublicNetworkAccessType? publicNetworkAccess = null, IEnumerable<AttestationPrivateEndpointConnectionData> privateEndpointConnections = null)
+        public static AttestationProviderData AttestationProviderData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string trustModel = default, AttestationServiceStatus? status = default, string attestUri = default, PublicNetworkAccessType? publicNetworkAccess = default, IEnumerable<AttestationPrivateEndpointConnection> privateEndpointConnections = default, TpmAttestationAuthenticationType? tpmAttestationAuthentication = default)
         {
-            tags ??= new Dictionary<string, string>();
-            privateEndpointConnections ??= new List<AttestationPrivateEndpointConnectionData>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new AttestationProviderData(
                 id,
                 name,
                 resourceType,
                 systemData,
+                additionalBinaryDataProperties: null,
                 tags,
                 location,
-                trustModel,
-                status,
-                attestUri,
-                publicNetworkAccess,
-                privateEndpointConnections?.ToList(),
-                serializedAdditionalRawData: null);
+                trustModel is null && status is null && attestUri is null && publicNetworkAccess is null && privateEndpointConnections is null && tpmAttestationAuthentication is null ? default : new StatusResult(
+                    trustModel,
+                    status,
+                    attestUri,
+                    publicNetworkAccess,
+                    (privateEndpointConnections ?? new ChangeTrackingList<AttestationPrivateEndpointConnection>()).ToList(),
+                    tpmAttestationAuthentication,
+                    null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Attestation.AttestationPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointStringId"> The resource of private end point. </param>
-        /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
-        /// <returns> A new <see cref="Attestation.AttestationPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static AttestationPrivateEndpointConnectionData AttestationPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string privateEndpointStringId = null, AttestationPrivateLinkServiceConnectionState connectionState = null, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = null)
+        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <returns> A new <see cref="Models.AttestationPrivateEndpointConnection"/> instance for mocking. </returns>
+        public static AttestationPrivateEndpointConnection AttestationPrivateEndpointConnection(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AttestationPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
         {
-            return new AttestationPrivateEndpointConnectionData(
+            return new AttestationPrivateEndpointConnection(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointStringId != null ? new PrivateEndpoint(privateEndpointStringId, serializedAdditionalRawData: null) : null,
-                connectionState,
-                provisioningState,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                privateLinkServiceConnectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, null));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AttestationProviderCreateOrUpdateContent"/>. </summary>
+        /// <summary> Parameters for creating an attestation provider. </summary>
         /// <param name="location"> The supported Azure location where the attestation provider should be created. </param>
         /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
         /// <param name="properties"> Properties of the attestation provider. </param>
-        /// <returns> A new <see cref="Models.AttestationProviderCreateOrUpdateContent"/> instance for mocking. </returns>
-        public static AttestationProviderCreateOrUpdateContent AttestationProviderCreateOrUpdateContent(AzureLocation location = default, IDictionary<string, string> tags = null, AttestationServiceCreationSpecificParams properties = null)
+        /// <returns> A new <see cref="Models.AttestationServiceCreationParams"/> instance for mocking. </returns>
+        public static AttestationServiceCreationParams AttestationServiceCreationParams(string location = default, IDictionary<string, string> tags = default, AttestationServiceCreationSpecificParams properties = default)
         {
-            tags ??= new Dictionary<string, string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new AttestationProviderCreateOrUpdateContent(location, tags, properties, serializedAdditionalRawData: null);
+            return new AttestationServiceCreationParams(location, tags, properties, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.JsonWebKey"/>. </summary>
+        /// <summary> The JsonWebKey. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -137,9 +175,9 @@ namespace Azure.ResourceManager.Attestation.Models
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
         /// <returns> A new <see cref="Models.JsonWebKey"/> instance for mocking. </returns>
-        public static JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, IEnumerable<string> x5C = null, string y = null)
+        public static JsonWebKey JsonWebKey(string alg = default, string crv = default, string d = default, string dp = default, string dq = default, string e = default, string k = default, string kid = default, string kty = default, string n = default, string p = default, string q = default, string qi = default, string use = default, string x = default, IEnumerable<string> x5C = default, string y = default)
         {
-            x5C ??= new List<string>();
+            x5C ??= new ChangeTrackingList<string>();
 
             return new JsonWebKey(
                 alg,
@@ -157,34 +195,73 @@ namespace Azure.ResourceManager.Attestation.Models
                 qi,
                 use,
                 x,
-                x5C?.ToList(),
+                x5C.ToList(),
                 y,
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AttestationPrivateLinkResource"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.AttestationPrivateLinkResource"/> instance for mocking. </returns>
-        public static AttestationPrivateLinkResource AttestationPrivateLinkResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        /// <summary> Parameters for patching an attestation provider. </summary>
+        /// <param name="tags"> The tags that will be assigned to the attestation provider. </param>
+        /// <param name="properties"> Properties of the attestation provider. </param>
+        /// <returns> A new <see cref="Models.AttestationProviderPatch"/> instance for mocking. </returns>
+        public static AttestationProviderPatch AttestationProviderPatch(IDictionary<string, string> tags = default, AttestationServicePatchSpecificParams properties = default)
         {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
+            return new AttestationProviderPatch(tags, properties, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Attestation Providers List. </summary>
+        /// <param name="systemData"> The system metadata relating to this resource. </param>
+        /// <param name="value"> Attestation Provider array. </param>
+        /// <returns> A new <see cref="Models.AttestationProviderListResult"/> instance for mocking. </returns>
+        public static AttestationProviderListResult AttestationProviderListResult(SystemData systemData = default, IEnumerable<AttestationProviderData> value = default)
+        {
+            value ??= new ChangeTrackingList<AttestationProviderData>();
+
+            return new AttestationProviderListResult(systemData, value.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The response of a PrivateLinkResource list operation. </summary>
+        /// <param name="value"> The PrivateLinkResource items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <returns> A new <see cref="Models.AttestationPrivateLinkResourceListResult"/> instance for mocking. </returns>
+        public static AttestationPrivateLinkResourceListResult AttestationPrivateLinkResourceListResult(IEnumerable<AttestationPrivateLinkResource> value = default, Uri nextLink = default)
+        {
+            value ??= new ChangeTrackingList<AttestationPrivateLinkResource>();
+
+            return new AttestationPrivateLinkResourceListResult(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Resource properties. </param>
+        /// <returns> A new <see cref="Models.AttestationPrivateLinkResource"/> instance for mocking. </returns>
+        public static AttestationPrivateLinkResource AttestationPrivateLinkResource(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AttestationPrivateLinkResourceProperties properties = default)
+        {
             return new AttestationPrivateLinkResource(
                 id,
                 name,
                 resourceType,
                 systemData,
-                groupId,
-                requiredMembers?.ToList(),
-                requiredZoneNames?.ToList(),
-                serializedAdditionalRawData: null);
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.AttestationPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static AttestationPrivateLinkResourceProperties AttestationPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new AttestationPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
         }
     }
 }
