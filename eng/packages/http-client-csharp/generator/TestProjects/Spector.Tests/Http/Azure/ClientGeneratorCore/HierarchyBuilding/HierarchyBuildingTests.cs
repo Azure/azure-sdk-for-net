@@ -10,7 +10,6 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
     public class HierarchyBuilding : SpectorTestBase
     {
         [SpectorTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/51958")]
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdateDogAsAnimal() => Test(async (host) =>
         {
             var dog = new Dog("Rex", true, "German Shepherd");
@@ -24,7 +23,6 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         });
 
         [SpectorTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/51958")]
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdatePetAsAnimal() => Test(async (host) =>
         {
             var pet = new Pet("Buddy", true);
@@ -37,7 +35,6 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         });
 
         [SpectorTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/51958")]
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdateDogAsDog() => Test(async (host) =>
         {
             var dog = new Dog("Rex", true, "German Shepherd");
@@ -51,7 +48,6 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
         });
 
         [SpectorTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/51958")]
         public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdateDogAsPet() => Test(async (host) =>
         {
             var dog = new Dog("Rex", true, "German Shepherd");
