@@ -63,7 +63,6 @@ export const builtInResourceOperationName = "@builtInResourceOperation";
 
 export const armResourceWithParameter =
   "Azure.ResourceManager.Private.@armResourceWithParameter";
-export const armResourceWithParameterName = "@armResourceWithParameter";
 const armResourceWithParameterRegex =
   "Azure\\.ResourceManager\\.Private\\.@armResourceWithParameter";
 
