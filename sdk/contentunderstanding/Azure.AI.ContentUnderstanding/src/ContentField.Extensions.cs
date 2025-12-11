@@ -34,6 +34,8 @@ namespace Azure.AI.ContentUnderstanding
         /// var customerName = documentContent.Fields["CustomerName"].Value?.ToString();
         ///
         /// // Nested object access
+        /// // Note: Use ValueObject (not Value) to access nested fields because Value returns object,
+        /// // which cannot be indexed with []. ValueObject is the IDictionary&lt;string, ContentField&gt;.
         /// var totalAmountObj = (ObjectField)documentContent.Fields["TotalAmount"];
         /// var amount = totalAmountObj.ValueObject["Amount"].Value;
         /// </code>
