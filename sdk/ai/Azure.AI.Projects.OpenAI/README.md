@@ -49,7 +49,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Create a Fabric connection in Microsoft Foundry](#create-a-fabric-connection-in-microsoft-foundry)
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
   - [A2ATool](#a2atool)
-    - [Create a connection to A2A agent](#create-a-connection-to-A2A-agent)
+    - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
     - [Using A2A Tool](#using-a2a-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
