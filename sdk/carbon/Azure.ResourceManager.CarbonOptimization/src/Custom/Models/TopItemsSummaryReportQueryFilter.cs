@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
     /// <summary> Query filter parameter to configure TopItemsSummaryReport queries. </summary>
-    [CodeGenSerialization(nameof(ResourceTypeList), DeserializationValueHook = nameof(DeserializeResourceTypeList))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ResourceTypeList), DeserializationValueHook = nameof(DeserializeResourceTypeList))]
     public partial class TopItemsSummaryReportQueryFilter : CarbonEmissionQueryFilter
     {
         /// <summary> Initializes a new instance of <see cref="TopItemsSummaryReportQueryFilter"/>. </summary>

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    [CodeGenSerialization(nameof(ResourceTypeList), DeserializationValueHook = nameof(DeserializeResourceTypeList))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(ResourceTypeList), DeserializationValueHook = nameof(DeserializeResourceTypeList))]
     internal partial class UnknownCarbonEmissionQueryFilter : CarbonEmissionQueryFilter
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
