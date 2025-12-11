@@ -6,6 +6,7 @@ namespace Azure.ResourceManager
         public ArmClient(Azure.Core.TokenCredential credential) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId) { }
         public ArmClient(Azure.Core.TokenCredential credential, string defaultSubscriptionId, Azure.ResourceManager.ArmClientOptions options) { }
+        public ArmClient(Azure.ResourceManager.ArmSettings settings) { }
         public ArmClient(System.ClientModel.Primitives.ClientConnection clientConnection, System.Action<Azure.ResourceManager.ArmClientOptions> configureOptions = null) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public virtual T GetCachedClient<T>(System.Func<Azure.ResourceManager.ArmClient, T> clientFactory) where T : class { throw null; }
@@ -123,6 +124,13 @@ namespace Azure.ResourceManager
         public virtual Azure.ResourceManager.Resources.TagResource GetTagResource() { throw null; }
         protected virtual bool TryGetApiVersion(Azure.Core.ResourceType resourceType, out string apiVersion) { throw null; }
     }
+    public partial class ArmSettings : Azure.Core.AzureClientSettings
+    {
+        public ArmSettings() { }
+        public new Azure.ResourceManager.ArmClientOptions ClientOptions { get { throw null; } set { } }
+        public string DefaultSubscriptionId { get { throw null; } set { } }
+        protected override void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+    }
     public partial class AzureResourceManagerContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerContext() { }
@@ -137,6 +145,13 @@ namespace Azure.ResourceManager
     {
         public BicepModelReaderWriterOptions() : base (default(string)) { }
         public System.Collections.Generic.IDictionary<object, System.Collections.Generic.IDictionary<string, string>> PropertyOverrides { get { throw null; } }
+    }
+    public static partial class HostBuilderExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddArmClient(this Microsoft.Extensions.Hosting.IHostBuilder host, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddArmClient(this Microsoft.Extensions.Hosting.IHostBuilder host, string sectionName, System.Action<Azure.ResourceManager.ArmClientOptions> configureOptions) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddKeyedArmClient(this Microsoft.Extensions.Hosting.IHostBuilder host, string key, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostBuilder AddKeyedArmClient(this Microsoft.Extensions.Hosting.IHostBuilder host, string key, string sectionName, System.Action<Azure.ResourceManager.ArmClientOptions> configureOptions) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ManagementGroups

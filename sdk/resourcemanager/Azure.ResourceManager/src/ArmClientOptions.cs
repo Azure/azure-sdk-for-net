@@ -20,6 +20,11 @@ namespace Azure.ResourceManager
     public sealed class ArmClientOptions : ClientOptions
 #pragma warning restore AZC0008 // ClientOptions should have a nested enum called ServiceVersion
     {
+        /// <summary>
+        /// .
+        /// </summary>
+        public ArmClientOptions() { }
+
         internal IDictionary<ResourceType, string> ResourceApiVersionOverrides { get; } = new Dictionary<ResourceType, string>();
 
         /// <summary>
@@ -91,6 +96,17 @@ namespace Azure.ResourceManager
             }
             configureOptions?.Invoke(options);
             return options;
+        }
+
+        internal ArmClientOptions(IConfigurationSection section)
+        {
+            if (section is null)
+                return; // default options
+
+            if (section.GetSection("Environment").Exists())
+            {
+                Environment = new ArmEnvironment(new Uri(section["Environment:Endpoint"]), section["Environment:Audience"]);
+            }
         }
     }
 }

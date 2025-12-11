@@ -36,6 +36,9 @@ namespace Azure.Identity
         public ConfigurableCredential(IConfigurationSection configurationSection)
             : this(new DefaultAzureCredentialOptions(configurationSection.GetSection("Credential")))
         {
+            if (configurationSection is null)
+                throw new ArgumentNullException(nameof(configurationSection));
+
             _config = configurationSection;
             _changeToken = configurationSection.GetReloadToken();
 

@@ -56,6 +56,12 @@ namespace System.ClientModel
         public virtual T Value { get { throw null; } }
         public static implicit operator T (System.ClientModel.ClientResult<T> result) { throw null; }
     }
+    public abstract partial class ClientSettings : System.ClientModel.Primitives.ClientSettingsBase
+    {
+        protected ClientSettings() { }
+        public System.ClientModel.Primitives.ClientPipelineOptions ClientOptions { get { throw null; } set { } }
+        protected override System.ClientModel.Primitives.ClientConnection GetClientConnectionCore() { throw null; }
+    }
     public abstract partial class CollectionResult<T> : System.ClientModel.Primitives.CollectionResult, System.Collections.Generic.IEnumerable<T>, System.Collections.IEnumerable
     {
         protected internal CollectionResult() { }
@@ -65,6 +71,8 @@ namespace System.ClientModel
     }
     public static partial class ConfigurationManagerExtensions
     {
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.ClientSettings, new() { throw null; }
+        public static T GetClientSettings<T>(this Microsoft.Extensions.Configuration.IConfigurationSection section) where T : System.ClientModel.ClientSettings, new() { throw null; }
         public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
         public static System.ClientModel.Primitives.ClientConnection GetConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName, System.ClientModel.AuthenticationTokenProvider tokenProvider) { throw null; }
     }
@@ -74,6 +82,13 @@ namespace System.ClientModel
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
+    }
+    public partial class CredentialSettings
+    {
+        public CredentialSettings(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        public string? CredentialSource { get { throw null; } set { } }
+        public string? Key { get { throw null; } set { } }
+        public Microsoft.Extensions.Configuration.IConfigurationSection? Properties { get { throw null; } set { } }
     }
 }
 namespace System.ClientModel.Primitives
@@ -215,6 +230,18 @@ namespace System.ClientModel.Primitives
         protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
         protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    public abstract partial class ClientSettingsBase
+    {
+        protected ClientSettingsBase() { }
+        public System.ClientModel.CredentialSettings? Credential { get { throw null; } set { } }
+        public object? CredentialObject { get { throw null; } set { } }
+        protected bool Initialized { get { throw null; } }
+        public Microsoft.Extensions.Configuration.IConfigurationSection? Properties { get { throw null; } set { } }
+        public System.ClientModel.Primitives.ClientConnection GetClientConnection() { throw null; }
+        protected abstract System.ClientModel.Primitives.ClientConnection GetClientConnectionCore();
+        public void Read(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
+        protected abstract void ReadCore(Microsoft.Extensions.Configuration.IConfigurationSection section);
+    }
     public abstract partial class CollectionResult
     {
         protected CollectionResult() { }
@@ -249,6 +276,11 @@ namespace System.ClientModel.Primitives
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message, System.Net.Http.HttpRequestMessage httpRequest) { }
         protected sealed override void ProcessCore(System.ClientModel.Primitives.PipelineMessage message) { }
         protected sealed override System.Threading.Tasks.ValueTask ProcessCoreAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+    }
+    public partial interface IClientBuilder : Microsoft.Extensions.Hosting.IHostApplicationBuilder
+    {
+        Microsoft.Extensions.Configuration.IConfigurationSection ConfigurationSection { get; }
+        void SetCredentialObject(object credential);
     }
     public partial interface IJsonModel<out T> : System.ClientModel.Primitives.IPersistableModel<T>
     {

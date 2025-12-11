@@ -313,6 +313,12 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    public abstract partial class AzureClientSettings : System.ClientModel.Primitives.ClientSettingsBase
+    {
+        protected AzureClientSettings() { }
+        public Azure.Core.ClientOptions ClientOptions { get { throw null; } set { } }
+        protected override System.ClientModel.Primitives.ClientConnection GetClientConnectionCore() { throw null; }
+    }
     public partial class AzureCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureCoreContext() { }

@@ -139,6 +139,10 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    public static partial class ClientBuilderExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder WithAzureCredential(this System.ClientModel.Primitives.IClientBuilder clientBuilder) { throw null; }
+    }
     public partial class ClientCertificateCredential : Azure.Core.TokenCredential
     {
         protected ClientCertificateCredential() { }
@@ -177,6 +181,10 @@ namespace Azure.Identity
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
         public Azure.Identity.TokenCachePersistenceOptions TokenCachePersistenceOptions { get { throw null; } set { } }
     }
+    public static partial class ClientSettingsBaseExtensions
+    {
+        public static T WithAzureCredential<T>(this T settings) where T : System.ClientModel.Primitives.ClientSettingsBase { throw null; }
+    }
     public partial class ConfigurableCredential : Azure.Core.TokenCredential
     {
         public ConfigurableCredential() { }
@@ -186,6 +194,7 @@ namespace Azure.Identity
     }
     public static partial class ConfigurationManagerExtensions
     {
+        public static T GetAzureClientSettings<T>(this Microsoft.Extensions.Configuration.IConfiguration configuration, string sectionName) where T : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
         public static System.ClientModel.Primitives.ClientConnection GetAzureConnection(this Microsoft.Extensions.Configuration.IConfigurationManager configuration, string sectionName) { throw null; }
     }
     public partial class CredentialUnavailableException : Azure.Identity.AuthenticationFailedException
@@ -297,7 +306,9 @@ namespace Azure.Identity
     }
     public static partial class HostBuilderExtensions
     {
-        public static Microsoft.Extensions.Hosting.IHostBuilder AddAzureCredential(this Microsoft.Extensions.Hosting.IHostBuilder host, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<TSettings> configureSettings = null) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAzureCredential(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddKeyedAzureClient<TClient, TSettings>(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string key, string sectionName, System.Action<TSettings> configureSettings = null) where TClient : class where TSettings : System.ClientModel.Primitives.ClientSettingsBase, new() { throw null; }
     }
     public static partial class IdentityModelFactory
     {
