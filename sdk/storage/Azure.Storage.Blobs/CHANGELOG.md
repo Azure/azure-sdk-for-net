@@ -9,7 +9,7 @@
 - Added support for Server-side Encryption Rekeying.
 - Added cross-tenant support for Principal-Bound User Delegation SAS.
 - Added support for Dynamic User Delegation SAS.
-- Updated default concurrency transfer count.
+- Updated the default concurrency transfer count.
 
 ### Bugs Fixed
 - Added BlobErrorCode.IncrementalCopyOfEarlierSnapshotNotAllowed, deprecated BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed.
