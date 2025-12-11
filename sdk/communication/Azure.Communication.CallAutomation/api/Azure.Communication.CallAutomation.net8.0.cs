@@ -142,6 +142,10 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateCallAsync(Azure.Communication.CallAutomation.CreateCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CreateCallResult> CreateGroupCall(Azure.Communication.CallAutomation.CreateGroupCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CreateCallResult>> CreateGroupCallAsync(Azure.Communication.CallAutomation.CreateGroupCallOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.Dictionary<string, string> GetAllAuthorizationTokens(Azure.Response response) { throw null; }
+        public virtual string GetAuthorizationToken(Azure.Core.ResponseHeaders headers) { throw null; }
+        public virtual string GetAuthorizationToken(Azure.Response response) { throw null; }
+        public virtual string GetAuthorizationToken(Azure.Response response, string headerName) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallConnection GetCallConnection(string callConnectionId) { throw null; }
         public virtual Azure.Communication.CallAutomation.CallRecording GetCallRecording() { throw null; }
         public virtual Azure.Communication.CallAutomation.CallAutomationEventProcessor GetEventProcessor() { throw null; }

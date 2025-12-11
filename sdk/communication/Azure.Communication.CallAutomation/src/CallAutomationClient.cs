@@ -141,6 +141,136 @@ namespace Azure.Communication.CallAutomation
             CallMediaRestClient = null;
         }
 
+        #region Authorization Header Methods
+
+        /// <summary>
+        /// Reads the authorization header from an HTTP response and returns the authorization token.
+        /// </summary>
+        /// <param name="response">The HTTP response containing the authorization header.</param>
+        /// <returns>The authorization token if found, null otherwise.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="response"/> is null.</exception>
+        public virtual string GetAuthorizationToken(Response response)
+        {
+            Argument.CheckNotNull(response, nameof(response));
+
+            if (response.Headers.TryGetValue("Authorization", out string authorizationHeader))
+            {
+                return ExtractTokenFromAuthorizationHeader(authorizationHeader);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Reads the authorization header from HTTP response headers and returns the authorization token.
+        /// </summary>
+        /// <param name="headers">The HTTP response headers collection.</param>
+        /// <returns>The authorization token if found, null otherwise.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="headers"/> is null.</exception>
+        public virtual string GetAuthorizationToken(ResponseHeaders headers)
+        {
+            // ResponseHeaders is a struct, so cannot use Argument.CheckNotNull<T>(T, string)
+            // Instead, check for default value
+            if (headers.Equals(default(ResponseHeaders)))
+            {
+                throw new ArgumentNullException(nameof(headers));
+            }
+
+            if (headers.TryGetValue("Authorization", out string authorizationHeader))
+            {
+                return ExtractTokenFromAuthorizationHeader(authorizationHeader);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Reads a specific authorization header by name and returns the authorization token.
+        /// </summary>
+        /// <param name="response">The HTTP response containing the headers.</param>
+        /// <param name="headerName">The name of the authorization header to read.</param>
+        /// <returns>The authorization token if found, null otherwise.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="response"/> is null.</exception>
+        /// <exception cref="ArgumentException"><paramref name="headerName"/> is null or empty.</exception>
+        public virtual string GetAuthorizationToken(Response response, string headerName)
+        {
+            Argument.CheckNotNull(response, nameof(response));
+            Argument.CheckNotNullOrEmpty(headerName, nameof(headerName));
+
+            if (response.Headers.TryGetValue(headerName, out string authorizationHeader))
+            {
+                return ExtractTokenFromAuthorizationHeader(authorizationHeader);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Reads all authorization-related headers from an HTTP response.
+        /// </summary>
+        /// <param name="response">The HTTP response containing the headers.</param>
+        /// <returns>A dictionary containing all authorization headers and their tokens.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="response"/> is null.</exception>
+        public virtual Dictionary<string, string> GetAllAuthorizationTokens(Response response)
+        {
+            Argument.CheckNotNull(response, nameof(response));
+
+            var authorizationTokens = new Dictionary<string, string>();
+            var authorizationHeaderNames = new[] { "Authorization", "X-MS-Token", "X-Authorization", "Bearer-Token" };
+
+            foreach (var headerName in authorizationHeaderNames)
+            {
+                if (response.Headers.TryGetValue(headerName, out string headerValue))
+                {
+                    var token = ExtractTokenFromAuthorizationHeader(headerValue);
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        authorizationTokens[headerName] = token;
+                    }
+                }
+            }
+
+            return authorizationTokens;
+        }
+
+        /// <summary>
+        /// Extracts the token from an authorization header value.
+        /// Supports Bearer tokens, Basic authentication, and custom token formats.
+        /// </summary>
+        /// <param name="authorizationHeader">The authorization header value.</param>
+        /// <returns>The extracted token, or the full header value if no specific format is detected.</returns>
+        private static string ExtractTokenFromAuthorizationHeader(string authorizationHeader)
+        {
+            if (string.IsNullOrWhiteSpace(authorizationHeader))
+            {
+                return null;
+            }
+
+            // Handle Bearer tokens
+            if (authorizationHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+            {
+                return authorizationHeader.Substring(7).Trim();
+            }
+
+            // Handle Basic authentication
+            if (authorizationHeader.StartsWith("Basic ", StringComparison.OrdinalIgnoreCase))
+            {
+                return authorizationHeader.Substring(6).Trim();
+            }
+
+            // Handle custom token formats (e.g., "Token abc123", "ApiKey xyz789")
+            var spaceIndex = authorizationHeader.IndexOf(' ');
+            if (spaceIndex > 0 && spaceIndex < authorizationHeader.Length - 1)
+            {
+                return authorizationHeader.Substring(spaceIndex + 1).Trim();
+            }
+
+            // Return the full header value if no specific format is detected
+            return authorizationHeader.Trim();
+        }
+
+        #endregion
+
         /// Answer an incoming call.
         /// <param name="incomingCallContext"> The incoming call context </param>
         /// <param name="callbackUri"> The callback Uri to receive status notifications. </param>
