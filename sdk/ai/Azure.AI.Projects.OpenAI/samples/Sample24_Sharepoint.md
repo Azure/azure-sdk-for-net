@@ -102,7 +102,7 @@ Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}
 ```
 
 
-6. Clean up resources by deleting thread and agent.
+6. After the sample is completed, delete the Agent we have created.
 
 Synchronous sample:
 ```C# Snippet:Sample_Cleanup_Sharepoint_Sync

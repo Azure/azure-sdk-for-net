@@ -21,7 +21,6 @@ using OpenAI;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
 using Azure.AI.Projects.Tests.Utils;
-using System.Reflection.Metadata.Ecma335;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
@@ -81,11 +80,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
                 "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
                 "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it."},
-        {ToolType.MicrosoftFabric, "What are top 3 weather events with largest revenue loss?"},
+        {ToolType.MicrosoftFabric, "What was the number of public holidays in Norway in 2024?"},
         {ToolType.Sharepoint, "What is Contoso whistleblower policy?"},
         {ToolType.CodeInterpreter,  "Can you give me the documented codes for 'banana' and 'orange'?"},
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
+        {ToolType.A2A, "What can the secondary agent do?"},
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -113,6 +113,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.CodeInterpreter, "You are helpful agent."},
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
+        {ToolType.A2A, "You are a helpful assistant."},
     };
 
     public Dictionary<ToolType, string> ExpectedOutput = new()
@@ -124,6 +125,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.Memory, "plagiarus"},
         {ToolType.AzureAISearch, "60"},
         {ToolType.BingGroundingCustom, "40.+gold.+44 silver.+42.+bronze"},
+        {ToolType.MicrosoftFabric, "62"},
     };
 
     public Dictionary<ToolType, string> ExpectedAnnotationTitle = new()
@@ -160,6 +162,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.OpenAPIConnection, "openapi_call"},
         {ToolType.BrowserAutomation, "browser_automation_preview_call"},
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
+        {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
+        {ToolType.A2A, "a2a_preview_call_output"},
     };
     #endregion
 
@@ -423,6 +427,24 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return new SharepointAgentTool(sharepointToolOption);
     }
 
+    private MicrosoftFabricAgentTool GetMicrosoftFabricAgentTool()
+    {
+        FabricDataAgentToolOptions fabricToolOption = new()
+        {
+            ProjectConnections = { new ToolProjectConnection(projectConnectionId: TestEnvironment.FABRIC_CONNECTION_ID) }
+        };
+        return new(fabricToolOption);
+    }
+
+    private A2ATool GetA2ATool()
+    {
+        A2ATool a2aTool = new(new Uri(TestEnvironment.A2A_BASE_URI))
+        {
+            ProjectConnectionId = TestEnvironment.A2A_CONNECTION_ID
+        };
+        return a2aTool;
+    }
+
     /// <summary>
     /// Get the AgentDefinition, containing tool of a certain type.
     /// </summary>
@@ -499,6 +521,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             new BrowserAutomationToolParameters(
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
+            ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
+            ToolType.A2A => GetA2ATool(),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
