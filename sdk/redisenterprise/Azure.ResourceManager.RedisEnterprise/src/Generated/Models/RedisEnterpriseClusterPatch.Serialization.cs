@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,6 +73,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
+            }
+            if (Optional.IsDefined(MaintenanceConfiguration))
+            {
+                writer.WritePropertyName("maintenanceConfiguration"u8);
+                writer.WriteObjectValue(MaintenanceConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -165,6 +170,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisEnterpriseHighAvailability? highAvailability = default;
             RedisEnterpriseTlsVersion? minimumTlsVersion = default;
             ClusterPropertiesEncryption encryption = default;
+            MaintenanceConfiguration maintenanceConfiguration = default;
             string hostName = default;
             RedisEnterpriseProvisioningStatus? provisioningState = default;
             RedisEnterpriseRedundancyMode? redundancyMode = default;
@@ -191,7 +197,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerRedisEnterpriseContext.Default);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerRedisEnterpriseContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -242,6 +248,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                                 continue;
                             }
                             encryption = ClusterPropertiesEncryption.DeserializeClusterPropertiesEncryption(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("maintenanceConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maintenanceConfiguration = MaintenanceConfiguration.DeserializeMaintenanceConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hostName"u8))
@@ -321,6 +336,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 highAvailability,
                 minimumTlsVersion,
                 encryption,
+                maintenanceConfiguration,
                 hostName,
                 provisioningState,
                 redundancyMode,

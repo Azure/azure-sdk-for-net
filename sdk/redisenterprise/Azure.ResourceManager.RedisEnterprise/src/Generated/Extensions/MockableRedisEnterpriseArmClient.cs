@@ -71,6 +71,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MigrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MigrationResource.CreateResourceIdentifier" /> to create a <see cref="MigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MigrationResource"/> object. </returns>
+        public virtual MigrationResource GetMigrationResource(ResourceIdentifier id)
+        {
+            MigrationResource.ValidateResourceId(id);
+            return new MigrationResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

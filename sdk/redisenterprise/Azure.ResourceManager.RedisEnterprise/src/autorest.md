@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: RedisEnterprise
 namespace: Azure.ResourceManager.RedisEnterprise
-require: https://github.com/Azure/azure-rest-api-specs/blob/4c5ec9b4e0b961799cc11f6051f240d18f093c38/specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/readme.md
-tag: package-2025-07-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/00eac7581f2842355d71f1d80049bb74d9ba2221/specification/redisenterprise/resource-manager/Microsoft.Cache/RedisEnterprise/readme.md
+# tag: package-2025-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -81,6 +81,8 @@ rename-mapping:
   SkuDetails: RedisEnterpriseSkuDetails
   SkuDetailsList: RedisEnterpriseSkuDetailsList
   TlsVersion: RedisEnterpriseTlsVersion
+  Migration: RedisEnterpriseMigration
+  MaintenanceWindows: ClusterCustomMaintenanceWindows
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -126,5 +128,7 @@ directive:
       $.OperationStatus.properties.error['x-ms-client-name'] = 'ErrorResponse';
       $.OperationStatus.properties.startTime['format'] = 'date-time';
       $.OperationStatus.properties.endTime['format'] = 'date-time';
+      $.ImportClusterParameters.properties.sasUris['format'] = undefined;
+      $.MaintenanceWindow.properties.duration['format'] = 'duration';
 
 ```
