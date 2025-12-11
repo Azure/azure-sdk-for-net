@@ -515,8 +515,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     Assert.IsTrue(totalAmountField is ObjectField, "TotalAmount should be an ObjectField");
                     if (totalAmountField is ObjectField totalAmountObj)
                     {
-                        // Verify Amount sub-field
-                        var amountField = totalAmountObj["Amount"];
+                        // Verify Amount sub-field - field is known to exist based on recording
+                        var amountField = totalAmountObj["Amount"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(amountField, "TotalAmount.Amount should not be null");
                         Assert.IsTrue(amountField is NumberField, "TotalAmount.Amount should be a NumberField");
                         if (amountField is NumberField amountNum)
@@ -528,8 +528,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                 "TotalAmount.Amount should match expected value");
                         }
 
-                        // Verify CurrencyCode sub-field
-                        var currencyField = totalAmountObj["CurrencyCode"];
+                        // Verify CurrencyCode sub-field - field is known to exist based on recording
+                        var currencyField = totalAmountObj["CurrencyCode"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(currencyField, "TotalAmount.CurrencyCode should not be null");
                         Assert.IsTrue(currencyField is StringField, "TotalAmount.CurrencyCode should be a StringField");
                         if (currencyField is StringField currencyStr)
@@ -554,6 +554,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Verify first line item (Consulting Services)
                         if (lineItems[0] is ObjectField item1)
                         {
+                            // Fields known to exist based on recording - using indexer which throws if not found
                             var desc1 = item1["Description"];
                             Assert.IsNotNull(desc1, "Item 1 Description should not be null");
                             if (desc1 is StringField desc1Str)
@@ -572,10 +573,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                     "Item 1 Quantity should match expected value");
                             }
 
-                            var unitPrice1 = item1["UnitPrice"];
-                            if (unitPrice1 is ObjectField unitPrice1Obj)
+                            // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item1.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice1Obj)
                             {
-                                var unitPrice1Amount = unitPrice1Obj["Amount"];
+                                var unitPrice1Amount = unitPrice1Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (unitPrice1Amount is NumberField unitPrice1Num && unitPrice1Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 30
@@ -588,6 +589,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Verify second line item (Document Fee)
                         if (lineItems[1] is ObjectField item2)
                         {
+                            // Fields known to exist based on recording - using indexer which throws if not found
                             var desc2 = item2["Description"];
                             Assert.IsNotNull(desc2, "Item 2 Description should not be null");
                             if (desc2 is StringField desc2Str)
@@ -606,10 +608,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                     "Item 2 Quantity should match expected value");
                             }
 
-                            var totalAmount2 = item2["TotalAmount"];
-                            if (totalAmount2 is ObjectField totalAmount2Obj)
+                            // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item2.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount2Obj)
                             {
-                                var totalAmount2Amount = totalAmount2Obj["Amount"];
+                                var totalAmount2Amount = totalAmount2Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (totalAmount2Amount is NumberField totalAmount2Num && totalAmount2Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 30
@@ -622,6 +624,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Verify third line item (Printing Fee)
                         if (lineItems[2] is ObjectField item3)
                         {
+                            // Fields known to exist based on recording - using indexer which throws if not found
                             var desc3 = item3["Description"];
                             Assert.IsNotNull(desc3, "Item 3 Description should not be null");
                             if (desc3 is StringField desc3Str)
@@ -640,10 +643,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                     "Item 3 Quantity should match expected value");
                             }
 
-                            var unitPrice3 = item3["UnitPrice"];
-                            if (unitPrice3 is ObjectField unitPrice3Obj)
+                            // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item3.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice3Obj)
                             {
-                                var unitPrice3Amount = unitPrice3Obj["Amount"];
+                                var unitPrice3Amount = unitPrice3Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (unitPrice3Amount is NumberField unitPrice3Num && unitPrice3Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 1
@@ -652,10 +655,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                 }
                             }
 
-                            var totalAmount3 = item3["TotalAmount"];
-                            if (totalAmount3 is ObjectField totalAmount3Obj)
+                            // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item3.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount3Obj)
                             {
-                                var totalAmount3Amount = totalAmount3Obj["Amount"];
+                                var totalAmount3Amount = totalAmount3Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (totalAmount3Amount is NumberField totalAmount3Num && totalAmount3Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 10

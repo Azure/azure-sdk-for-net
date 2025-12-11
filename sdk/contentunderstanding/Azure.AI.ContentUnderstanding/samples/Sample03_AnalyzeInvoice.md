@@ -49,7 +49,8 @@ See [Sample 01][sample01] for authentication examples using `DefaultAzureCredent
 Analyze an invoice from a URL using the `prebuilt-invoice` analyzer:
 
 ```C# Snippet:ContentUnderstandingAnalyzeInvoice
-Uri invoiceUrl = new Uri("<invoiceUrl>");
+// You can replace this URL with your own invoice file URL
+Uri invoiceUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/invoice.pdf");
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-invoice",
@@ -73,10 +74,26 @@ if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
     Console.WriteLine();
 
     // Extract simple string fields
-    var customerNameField = documentContent["CustomerName"];
-    var invoiceDateField = documentContent["InvoiceDate"];
-
+    // The indexer can be used when a field is known to exist, providing direct access.
+    // Use try/catch to handle the KeyNotFoundException if the field doesn't exist.
+    ContentField? customerNameField = null;
+    if (documentContent.Fields != null)
+    {
+        try
+        {
+            // CustomerName is known to exist in invoice documents
+            customerNameField = documentContent.Fields["CustomerName"];
+        }
+        catch (KeyNotFoundException)
+        {
+            // This is an exceptional case - handle the situation where the field doesn't exist
+            Console.WriteLine("CustomerName field not found");
+        }
+    }
     var customerName = customerNameField?.Value?.ToString();
+
+    // For fields that may or may not exist, use GetFieldOrDefault() for null-safe access
+    var invoiceDateField = documentContent.Fields?.GetFieldOrDefault("InvoiceDate");
     var invoiceDate = invoiceDateField?.Value?.ToString();
 
     Console.WriteLine($"Customer Name: {customerName ?? "(None)"}");
@@ -107,10 +124,13 @@ if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
     }
 
     // Extract object fields (nested structures)
-    if (documentContent["TotalAmount"] is ObjectField totalAmountObj)
+    if (documentContent.Fields?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
     {
-        var amount = totalAmountObj["Amount"]?.Value as double?;
-        var currency = totalAmountObj["CurrencyCode"]?.Value?.ToString();
+        // totalAmountObj is an ObjectField, which contains nested fields. To access fields inside
+        // an ObjectField, use ValueObject to get the dictionary of nested fields, then use
+        // GetFieldOrDefault() to safely retrieve individual fields.
+        var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
+        var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value?.ToString();
         Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
         if (totalAmountObj.Confidence.HasValue)
         {
@@ -123,15 +143,17 @@ if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
     }
 
     // Extract array fields (collections like line items)
-    if (documentContent["LineItems"] is ArrayField lineItems)
+    if (documentContent.Fields?.GetFieldOrDefault("LineItems") is ArrayField lineItems)
     {
         Console.WriteLine($"Line Items ({lineItems.Count}):");
         for (int i = 0; i < lineItems.Count; i++)
         {
             if (lineItems[i] is ObjectField item)
             {
-                var description = item["Description"]?.Value?.ToString();
-                var quantity = item["Quantity"]?.Value as double?;
+                // item is an ObjectField containing nested fields. Use ValueObject to access the
+                // nested fields dictionary, then GetFieldOrDefault() to retrieve individual fields.
+                var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value?.ToString();
+                var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
                 Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
                 if (item.Confidence.HasValue)
                 {
