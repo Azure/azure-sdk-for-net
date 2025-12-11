@@ -671,9 +671,10 @@ public class FineTuningTests : FineTuningTestsBase
 
         // Retrieve the job again to verify status
         FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(pausedJobId);
-        Assert.That(resumedJob.Status == FineTuningStatus.Running || resumedJob.Status == FineTuningStatus.Queued, $"The job has wrong status {resumedJob.Status}");
+        var validStatuses = new[] { "running", "queued", "resuming" }; // Using string comparison directly since resuming status is not available in FineTuningStatus enum
+        Assert.That(validStatuses.Contains(resumedJob.Status.ToString().ToLowerInvariant()), $"The job has wrong status {resumedJob.Status}");
 
-        // Verify the job is resumed (status should be "running" or "queued")
+        // Verify the job is resumed (status should be "running", "queued", or "resuming")
         Assert.That(resumedJob, Is.Not.Null);
         Assert.That(resumedJob.JobId, Is.EqualTo(pausedJobId));
     }
