@@ -1,13 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+    
     <ItemGroup>
-        <PackageReference Include="Microsoft.Agents.AI.OpenAI" />
+        <PackageReference Include="Microsoft.Agents.AI.OpenAI" Version="1.0.0-preview.251125.1" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(UseProjectReference)'=='true'">
-        <ProjectReference Include="..\..\..\..\Azure.AI.AgentServer.AgentFramework\src\Azure.AI.AgentServer.AgentFramework.csproj" />
-    </ItemGroup>
-
-    <ItemGroup Condition="'$(UseProjectReference)'!='true'">
-        <PackageReference Include="Azure.AI.AgentServer.AgentFramework" />
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Azure.AI.AgentServer.AgentFramework\src\Azure.AI.AgentServer.AgentFramework.csproj" />
     </ItemGroup>
 </Project>
