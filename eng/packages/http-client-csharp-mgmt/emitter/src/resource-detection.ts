@@ -105,11 +105,30 @@ export async function updateClients(
           const operationPath = method.operation.path;
           for (const [existingKey, _] of resourcePathToMetadataMap) {
             const [existingModelId, existingPath] = existingKey.split('|');
-            // Check if this is for the same model and if the operation path is related to the existing resource
-            if (existingModelId === modelId && existingPath && 
-                operationPath.startsWith(existingPath.substring(0, existingPath.lastIndexOf('/')))) {
-              resourcePath = existingPath;
-              break;
+            // Check if this is for the same model
+            if (existingModelId === modelId && existingPath) {
+              // Try to match based on resource type segments
+              // Extract the resource type part (after "/providers/")
+              const existingResourceType = calculateResourceTypeFromPath(existingPath);
+              let operationResourceType = "";
+              try {
+                operationResourceType = calculateResourceTypeFromPath(operationPath);
+              } catch {
+                // If we can't calculate resource type, try string matching
+              }
+              
+              // If resource types match, this list operation belongs to this resource
+              if (existingResourceType && operationResourceType === existingResourceType) {
+                resourcePath = existingPath;
+                break;
+              }
+              
+              // Fallback: check if the operation path ends with a segment that matches the existing path
+              const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
+              if (operationPath.startsWith(existingParentPath)) {
+                resourcePath = existingPath;
+                break;
+              }
             }
           }
           // If no match found, use the operation path
