@@ -46,16 +46,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 properties);
         }
 
+        /// <summary> Properties of the private endpoint connection. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
-        /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
+        /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
-        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, ResourceIdentifier privateEndpointId = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, SubResource privateEndpoint = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default)
         {
             groupIds ??= new ChangeTrackingList<string>();
 
-            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, null), privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

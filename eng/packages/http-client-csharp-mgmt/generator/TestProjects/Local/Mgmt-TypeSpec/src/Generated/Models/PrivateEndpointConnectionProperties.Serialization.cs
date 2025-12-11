@@ -8,8 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -57,7 +59,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
             writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
@@ -109,7 +111,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 return null;
             }
             IReadOnlyList<string> groupIds = default;
-            PrivateEndpoint privateEndpoint = default;
+            SubResource privateEndpoint = default;
             AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -142,7 +144,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(prop.Value, options);
+                    privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))

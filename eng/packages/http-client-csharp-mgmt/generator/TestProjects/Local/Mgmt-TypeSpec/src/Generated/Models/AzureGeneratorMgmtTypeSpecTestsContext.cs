@@ -90,7 +90,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaListResult))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaProperties))]
     [ModelReaderWriterBuildable(typeof(PlaywrightQuotaResource))]
-    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(QueryNetworkSiblingSetRequest))]
