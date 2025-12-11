@@ -1,19 +1,15 @@
 import "@azure-tools/typespec-azure-resource-manager";
+import "@typespec/rest";
 using Azure.ResourceManager;
+using TypeSpec.Rest;
 
 namespace MgmtTypeSpec;
 
-// TODO: This file demonstrates the scenario where the same model is used by two different
-// resource interfaces operating at different paths (similar to the legacy-operations example).
-// This scenario is currently not fully supported - both interfaces' methods would be merged
-// into a single resource metadata entry.
-//
-// To properly support this, the emitter needs to:
-// 1. Track resource metadata by unique resource path, not just by model ID
-// 2. Derive resource names from interface names (e.g., "Practices" -> "Practice", "PracticeVersions" -> "PracticeVersion")
-// 3. Generate separate metadata decorators for each unique resource path
+// This file demonstrates the scenario where different models can be used for parent/child resources.
+// The emitter now supports generating separate resource metadata for each unique resource path,
+// even if they share common properties or base models.
 
-/** A practice resource model - used by multiple resource interfaces */
+/** A practice resource model */
 @tenantResource
 model Practice is ProxyResource<PracticeProperties> {
   ...ResourceNameParameter<Practice>;
@@ -33,7 +29,17 @@ interface Practices {
   delete is ArmResourceDeleteWithoutOkAsync<Practice>;
 }
 
-// NOTE: To test the multiple-path scenario, we would need a second interface
-// that uses the same Practice model but with a different path pattern.
-// This would typically be done using operation templates or custom operations
-// similar to the legacy-operations example in typespec-azure.
+/** A practice version child resource - shares same properties but different model */
+@tenantResource
+@parentResource(Practice)
+model PracticeVersion is ProxyResource<PracticeProperties> {
+  ...ResourceNameParameter<PracticeVersion>;
+}
+
+/** Practice version operations on /practices/{practiceName}/practiceVersions/{versionName} */
+@armResourceOperations
+interface PracticeVersions {
+  get is ArmResourceRead<PracticeVersion>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<PracticeVersion>;
+  delete is ArmResourceDeleteWithoutOkAsync<PracticeVersion>;
+}

@@ -1221,13 +1221,94 @@ interface Employees {
     );
   });
 
-  // TODO: Add test for multiple resources sharing same model once the feature is implemented
-  // This scenario is tracked in the issue about supporting multiple-path resources with same resource model
-  /*
   it("multiple resources sharing same model", async () => {
-    // This test will validate that when the same model is used by two different
-    // resource interfaces operating at different paths (similar to the legacy-operations example),
-    // the emitter generates two separate resource metadata decorators
+    // This test validates the scenario where the same model is used by two different
+    // resource interfaces operating at different paths (similar to the legacy-operations example)
+    const program = await typeSpecCompile(
+      `
+/** A practice resource model */
+@tenantResource
+model Practice is ProxyResource<PracticeProperties> {
+  ...ResourceNameParameter<Practice>;
+}
+
+/** Practice properties */
+model PracticeProperties {
+  /** The description */
+  description?: string;
+}
+
+/** Practice parent operations on /practices/{practiceName} */
+@armResourceOperations
+interface Practices {
+  get is ArmResourceRead<Practice>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Practice>;
+  delete is ArmResourceDeleteWithoutOkAsync<Practice>;
+}
+
+/** A PracticeVersion child resource using the same Practice model */
+@tenantResource
+@parentResource(Practice)
+model PracticeVersion is ProxyResource<PracticeProperties> {
+  ...ResourceNameParameter<PracticeVersion>;
+}
+
+/** Practice child operations on /practices/{practiceName}/versions/{versionName} */
+/** Note: This uses PracticeVersion model, not the same Practice model */
+@armResourceOperations
+interface PracticeVersions {
+  get is ArmResourceRead<PracticeVersion>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<PracticeVersion>;
+  delete is ArmResourceDeleteWithoutOkAsync<PracticeVersion>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+
+    const practicesClient = getAllClients(root).find(
+      (c) => c.name === "Practices"
+    );
+    ok(practicesClient);
+
+    const practiceVersionsClient = getAllClients(root).find(
+      (c) => c.name === "PracticeVersions"
+    );
+    ok(practiceVersionsClient);
+
+    // Verify Practice model has one metadata
+    const practiceModel = root.models.find((m) => m.name === "Practice");
+    ok(practiceModel);
+    const practiceMetadata = practiceModel.decorators?.filter(
+      (d) => d.name === resourceMetadata
+    );
+    ok(practiceMetadata);
+    strictEqual(practiceMetadata.length, 1, "Practice should have one metadata");
+    strictEqual(practiceMetadata[0].arguments.resourceName, "Practice");
+    strictEqual(
+      practiceMetadata[0].arguments.resourceIdPattern,
+      "/providers/Microsoft.ContosoProviderHub/practices/{practiceName}"
+    );
+
+    // Verify PracticeVersion model has one metadata  
+    const versionModel = root.models.find((m) => m.name === "PracticeVersion");
+    ok(versionModel);
+    const versionMetadata = versionModel.decorators?.filter(
+      (d) => d.name === resourceMetadata
+    );
+    ok(versionMetadata);
+    strictEqual(versionMetadata.length, 1, "PracticeVersion should have one metadata");
+    strictEqual(versionMetadata[0].arguments.resourceName, "PracticeVersion");
+    strictEqual(
+      versionMetadata[0].arguments.resourceIdPattern,
+      "/providers/Microsoft.ContosoProviderHub/practices/{practiceName}/practiceVersions/{practiceVersionName}"
+    );
+    strictEqual(
+      versionMetadata[0].arguments.parentResourceId,
+      "/providers/Microsoft.ContosoProviderHub/practices/{practiceName}"
+    );
   });
-  */
 });
