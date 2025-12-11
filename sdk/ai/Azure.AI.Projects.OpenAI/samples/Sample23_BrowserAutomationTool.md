@@ -10,7 +10,7 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 
 ## Configure Microsoft Foundry
 
-1. Open the left navigation and select **Management center**.
+1. On the left panel select **Management center**.
 2. Choose **Connected resources**.
 3. Create a new connection of type **Serverless Model**.
 4. Provide a name, then paste your Access Token into the **Key** field.

@@ -31,6 +31,9 @@ namespace Azure.AI.Projects.OpenAI.Tests
         public string MCP_PROJECT_CONNECTION_NAME => GetRecordedOptionalVariable("MCP_PROJECT_CONNECTION_NAME");
         public string PLAYWRIGHT_CONNECTION_NAME => GetRecordedOptionalVariable("PLAYWRIGHT_CONNECTION_NAME");
         public string SHAREPOINT_CONNECTION_NAME => GetRecordedOptionalVariable("SHAREPOINT_CONNECTION_NAME");
+        public string FABRIC_CONNECTION_NAME => GetRecordedOptionalVariable("FABRIC_CONNECTION_NAME");
+        public string A2A_CONNECTION_NAME => GetRecordedOptionalVariable("A2A_CONNECTION_NAME");
+        public string A2A_BASE_URI => GetRecordedOptionalVariable("A2A_BASE_URI");
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try
