@@ -270,7 +270,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #else
                 // Analyze a document (EnableSegment=false means entire document is one category)
@@ -279,7 +278,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #endif
 
@@ -476,7 +474,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #else
                 // Analyze a document (EnableSegment=true automatically segments by category)
@@ -485,7 +482,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #endif
 

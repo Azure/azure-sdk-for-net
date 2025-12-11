@@ -44,7 +44,6 @@ BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    "application/pdf",
     binaryData);
 
 AnalyzeResult result = operation.Value;

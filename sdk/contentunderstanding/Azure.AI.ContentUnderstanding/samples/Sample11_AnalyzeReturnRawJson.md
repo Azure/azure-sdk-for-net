@@ -48,7 +48,6 @@ byte[] fileBytes = File.ReadAllBytes(filePath);
 var operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    "application/pdf",
     RequestContent.Create(BinaryData.FromBytes(fileBytes)));
 
 BinaryData responseData = operation.Value;
@@ -91,7 +90,6 @@ The following comparison highlights the difference between the protocol method (
 var operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    "application/pdf",
     RequestContent.Create(BinaryData.FromBytes(fileBytes)));
 
 BinaryData responseData = operation.Value;
@@ -109,7 +107,6 @@ var analyzerId = resultElement.GetProperty("analyzerId").GetString();
 var operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
-    "application/pdf",
     BinaryData.FromBytes(fileBytes));
 
 AnalyzeResult result = operation.Value;

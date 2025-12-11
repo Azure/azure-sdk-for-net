@@ -165,7 +165,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             // Verify operation completed successfully
@@ -202,7 +201,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             AnalyzeResult result = operation.Value;
@@ -246,7 +244,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             AnalyzeResult result = operation.Value;
@@ -863,7 +860,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     binaryData);
 
                 // Verify analysis operation completed successfully
@@ -1227,7 +1223,6 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             // Verify operation completed successfully
@@ -1273,8 +1268,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
-                RequestContent.Create(BinaryData.FromBytes(fileBytes)));
+                RequestContent.Create(BinaryData.FromBytes(fileBytes)),
+                "application/pdf");
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");

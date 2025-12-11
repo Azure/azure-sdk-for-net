@@ -40,7 +40,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 RequestContent.Create(BinaryData.FromBytes(fileBytes)));
 
             BinaryData responseData = operation.Value;

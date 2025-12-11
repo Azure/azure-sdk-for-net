@@ -96,7 +96,6 @@ byte[] fileBytes = File.ReadAllBytes(filePath);
 Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
-    "application/pdf",
     BinaryData.FromBytes(fileBytes));
 
 var analyzeResult = analyzeOperation.Value;
@@ -137,7 +136,6 @@ byte[] fileBytes = File.ReadAllBytes(filePath);
 Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     analyzerId,
-    "application/pdf",
     BinaryData.FromBytes(fileBytes));
 
 var analyzeResult = analyzeOperation.Value;
