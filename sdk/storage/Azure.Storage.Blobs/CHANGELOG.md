@@ -9,7 +9,9 @@
 - Added support for Server-side Encryption Rekeying.
 - Added cross-tenant support for Principal-Bound User Delegation SAS.
 - Added support for Dynamic User Delegation SAS.
-- Updated the default concurrency transfer count.
+
+### Other Changes
+- Changed the default concurrency download count from 5 to Math.Clamp(Environment.ProcessorCount * 2, 8, 32). This controls the maximum number of concurrent tasks that will be used during large downloads, and this change should result in higher throughput for these operations by default in most environments. This can be reverted by enabling "Azure.Storage.UseLegacyDefaultConcurrency" in the AppContext switch or "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY" in the environment variable.
 
 ### Bugs Fixed
 - Added BlobErrorCode.IncrementalCopyOfEarlierSnapshotNotAllowed, deprecated BlobErrorCode.IncrementalCopyOfEarlierVersionSnapshotNotAllowed.
