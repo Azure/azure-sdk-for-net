@@ -210,9 +210,9 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="groupQuotasPatchRequestBody"> The  GroupQuotas Patch Request. </param>
+        /// <param name="patch"> The  GroupQuotas Patch Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotaEntityPatch groupQuotasPatchRequestBody = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<GroupQuotaEntityResource>> UpdateAsync(WaitUntil waitUntil, GroupQuotaEntityPatch patch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityResource.Update");
             scope.Start();
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(groupQuotasPatchRequestBody), context);
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityOperationSource(Client),
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.Quota
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="groupQuotasPatchRequestBody"> The  GroupQuotas Patch Request. </param>
+        /// <param name="patch"> The  GroupQuotas Patch Request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GroupQuotaEntityResource> Update(WaitUntil waitUntil, GroupQuotaEntityPatch groupQuotasPatchRequestBody = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<GroupQuotaEntityResource> Update(WaitUntil waitUntil, GroupQuotaEntityPatch patch = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _groupQuotasEntitiesClientDiagnostics.CreateScope("GroupQuotaEntityResource.Update");
             scope.Start();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(groupQuotasPatchRequestBody), context);
+                HttpMessage message = _groupQuotasEntitiesRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, GroupQuotaEntityPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<GroupQuotaEntityResource> operation = new QuotaArmOperation<GroupQuotaEntityResource>(
                     new GroupQuotaEntityOperationSource(Client),

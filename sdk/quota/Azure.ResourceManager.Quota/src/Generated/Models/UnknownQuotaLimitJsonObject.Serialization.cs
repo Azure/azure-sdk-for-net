@@ -13,10 +13,10 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    internal partial class UnknownLimitJsonObject : QuotaLimitJsonObject, IJsonModel<QuotaLimitJsonObject>
+    internal partial class UnknownQuotaLimitJsonObject : QuotaLimitJsonObject, IJsonModel<QuotaLimitJsonObject>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownLimitJsonObject"/> for deserialization. </summary>
-        internal UnknownLimitJsonObject()
+        /// <summary> Initializes a new instance of <see cref="UnknownQuotaLimitJsonObject"/> for deserialization. </summary>
+        internal UnknownQuotaLimitJsonObject()
         {
         }
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownLimitJsonObject DeserializeUnknownLimitJsonObject(JsonElement element, ModelReaderWriterOptions options)
+        internal static UnknownQuotaLimitJsonObject DeserializeUnknownQuotaLimitJsonObject(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownLimitJsonObject(limitObjectType, additionalBinaryDataProperties);
+            return new UnknownQuotaLimitJsonObject(limitObjectType, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

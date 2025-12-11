@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Quota
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetails))]
     [ModelReaderWriterBuildable(typeof(SubscriptionQuotaDetailsName))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
+    [ModelReaderWriterBuildable(typeof(UnknownQuotaLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UsagesLimits))]
     public partial class AzureResourceManagerQuotaContext : ModelReaderWriterContext
     {
