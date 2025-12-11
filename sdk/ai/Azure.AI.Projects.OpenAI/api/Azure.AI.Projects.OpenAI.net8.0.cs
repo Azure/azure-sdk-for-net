@@ -14,6 +14,7 @@ namespace Azure.AI.Projects.OpenAI
 {
     public partial class A2ATool : Azure.AI.Projects.OpenAI.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.A2ATool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.A2ATool>
     {
+        public A2ATool() { }
         public A2ATool(System.Uri baseUri) { }
         public string AgentCardPath { get { throw null; } set { } }
         public System.Uri BaseUri { get { throw null; } set { } }
