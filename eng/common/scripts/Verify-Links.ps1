@@ -168,7 +168,7 @@ function ProcessNpmLink([System.Uri]$linkUri) {
   # Handle non-versioned URLs: https://www.npmjs.com/package/@azure/ai-agents -> https://registry.npmjs.org/@azure/ai-agents
   # The regex captures the package name (which may contain a slash for scoped packages) and optionally the version
   $urlString = $linkUri.ToString()
-  if ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/([^/]+(?:/[^/]+)?)/v/(.+)$') {
+  if ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/(.+)/v/(.+)$') {
     # Versioned URL: remove the /v/ segment but keep the version
     $apiUrl = "https://registry.npmjs.org/$($matches[1])/$($matches[2])"
   }
