@@ -14,6 +14,9 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class _Specs_AzureClientGeneratorCoreClientLocationClientBuilderExtensions
     {
+        public static IAzureClientBuilder<ClientLocationClient, ClientLocationClientOptions> AddClientLocationClient<TBuilder>(this TBuilder builder, string storageAccount)
+            where TBuilder : IAzureClientFactoryBuilder => throw null;
+
         public static IAzureClientBuilder<ClientLocationClient, ClientLocationClientOptions> AddClientLocationClient<TBuilder>(this TBuilder builder, Uri endpoint, string storageAccount)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 

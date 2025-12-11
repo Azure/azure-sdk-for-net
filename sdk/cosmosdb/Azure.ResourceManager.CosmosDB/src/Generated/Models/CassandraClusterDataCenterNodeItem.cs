@@ -69,9 +69,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        /// <param name="isLatestModel"> If node has been updated to latest model. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, bool? isLatestModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             State = state;
@@ -90,7 +89,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             MemoryFreeKB = memoryFreeKB;
             MemoryTotalKB = memoryTotalKB;
             CpuUsage = cpuUsage;
-            IsLatestModel = isLatestModel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -145,8 +143,5 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> A float representing the current system-wide CPU utilization as a percentage. </summary>
         [WirePath("cpuUsage")]
         public double? CpuUsage { get; }
-        /// <summary> If node has been updated to latest model. </summary>
-        [WirePath("isLatestModel")]
-        public bool? IsLatestModel { get; }
     }
 }
