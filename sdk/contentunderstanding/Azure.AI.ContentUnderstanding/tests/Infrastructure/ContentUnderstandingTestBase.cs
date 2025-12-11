@@ -113,6 +113,15 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Sanitize sensitive headers
             testBase.SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
             testBase.SanitizedHeaders.Add("Authorization");
+
+            // Sanitize containerUrl in response bodies (e.g., in knowledgeSources)
+            // This ensures containerUrl is always replaced with a valid URI, not just "Sanitized"
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""containerUrl""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""containerUrl"":""https://sanitized.blob.core.windows.net/container"""
+            });
         }
 
         /// <summary>
