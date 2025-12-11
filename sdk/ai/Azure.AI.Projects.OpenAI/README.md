@@ -50,6 +50,8 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Using Microsoft Fabric tool](#using-microsoft-fabric-tool)
   - [A2ATool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
+      - [Classic Microsoft Foundry](#classic-microsoft-foundry)
+      - [Nextgen Microsoft Foundry](#nextgen-microsoft-foundry)
     - [Using A2A Tool](#using-a2a-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -1308,6 +1310,10 @@ The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed 
 
 ### Create a connection to A2A agent
 
+The connection to A2A service can be created in two ways. In classic Microsoft Foundry, we need to create Custom keys connection, however in the new (Nextgen) version of Microsoft Foundry we can create the specialized A2A connection.
+
+#### Classic Microsoft Foundry
+
 1. In the **Microsoft Foundry** you are using for the experimentation, on the left panel select **Management center**.
 2. Choose **Connected resources**.
 3. Create a new connection of type **Custom keys**.
@@ -1316,16 +1322,36 @@ The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed 
    * type: custom_A2A
 5. Name and save the connection.
 
+#### Nextgen Microsoft Foundry
+
+If we are using the Agent2agent connection, we do not need to provide the endpoint as it already contains it.
+
+1. Click **New foundry** switch at the top of Microsoft Foundry UI.
+2. Click **Tools** on the left panel.
+3. Click **Connect tool** at the upper right corner.
+4. In the open window select **Custom** tab.
+5. Select **Agent2agent(A2A)** and click **Create**.
+6. Populate **Name** and **A2A Agent Endpoint**, leave **Authentication** being "Key-based".
+7. In the **Credential** Section set key "x-api-key" with the value being your secret key.
+
 ### Using A2A Tool
 
 To use the Agent with A2A tool, we need to include `A2ATool` into `PromptAgentDefinition`.
 
 ```C# Snippet:Sample_CreateAgent_AgentToAgent_Async
 AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-A2ATool a2aTool = new(baseUri: new Uri(a2aBaseUri))
+A2ATool a2aTool = new()
 {
     ProjectConnectionId = a2aConnection.Id
 };
+if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
+{
+    if (a2aBaseUri is null)
+    {
+        throw new InvalidOperationException($"The connection {a2aConnection.Name} is of {a2aConnection.Type.ToString()} type and does not carry the A2A service base URI. Please provide this value through A2A_BASE_URI environment variable.");
+    }
+    a2aTool.BaseUri = new Uri(a2aBaseUri);
+}
 PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",

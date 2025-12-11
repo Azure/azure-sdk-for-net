@@ -35,10 +35,18 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateAgent_AgentToAgent_Async
         AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-        A2ATool a2aTool = new(baseUri: new Uri(a2aBaseUri))
+        A2ATool a2aTool = new()
         {
             ProjectConnectionId = a2aConnection.Id
         };
+        if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
+        {
+            if (a2aBaseUri is null)
+            {
+                throw new InvalidOperationException($"The connection {a2aConnection.Name} is of {a2aConnection.Type.ToString()} type and does not carry the A2A service base URI. Please provide this value through A2A_BASE_URI environment variable.");
+            }
+            a2aTool.BaseUri = new Uri(a2aBaseUri);
+        }
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
@@ -88,10 +96,18 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateAgent_AgentToAgent_Sync
         AIProjectConnection a2aConnection = projectClient.Connections.GetConnection(a2aConnectionName);
-        A2ATool a2aTool = new(baseUri: new Uri(a2aBaseUri))
+        A2ATool a2aTool = new()
         {
             ProjectConnectionId = a2aConnection.Id
         };
+        if (!string.Equals(a2aConnection.Type.ToString(), "RemoteA2A"))
+        {
+            if (a2aBaseUri is null)
+            {
+                throw new InvalidOperationException($"The connection {a2aConnection.Name} is of {a2aConnection.Type.ToString()} type and does not carry the A2A service base URI. Please provide this value through A2A_BASE_URI environment variable.");
+            }
+            a2aTool.BaseUri = new Uri(a2aBaseUri);
+        }
         PromptAgentDefinition agentDefinition = new(model: modelDeploymentName)
         {
             Instructions = "You are a helpful assistant.",
