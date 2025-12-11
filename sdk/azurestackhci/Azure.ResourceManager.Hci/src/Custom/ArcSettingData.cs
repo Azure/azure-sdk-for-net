@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Hci
     // Because of breaking changes in autogen, we need to add this property manually.
     public partial class ArcSettingData
     {
-        /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        /// <summary> contains connectivity related configuration for ARC resources. This property is deprecated. Please use ConnectivityConfigurations instead. </summary>
         [WirePath("properties.connectivityProperties")]
         [EditorBrowsable(EditorBrowsableState.Never)]
         public BinaryData ConnectivityProperties
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Hci
                 return ModelReaderWriter.Write(
                     ConnectivityConfigurations,
                     options: ModelReaderWriterOptions.Json,
-                    context: default);
+                    context: AzureResourceManagerHciContext.Default);
             }
             set
             {
                 ConnectivityConfigurations = ModelReaderWriter.Read<HciArcConnectivityProperties>(
                     value,
                     options: ModelReaderWriterOptions.Json,
-                    context: default);
+                    context: AzureResourceManagerHciContext.Default);
             }
         }
     }

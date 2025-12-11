@@ -228,6 +228,7 @@ rename-mapping:
   SecretsLocationsChangeRequest: HciSecretsLocationsChangeContent
   ArcConnectivityProperties: HciArcConnectivityProperties
   ArcSetting.properties.connectivityProperties: ConnectivityConfigurations
+  ArcSettingsPatch.properties.connectivityProperties: ConnectivityConfigurations
   ServiceConfiguration: HciServiceConfiguration
   ServiceName: HciServiceConfigurationName
 

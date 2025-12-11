@@ -53,17 +53,20 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="ArcSettingPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="connectivityProperties"> contains connectivity related configuration for ARC resources. </param>
+        /// <param name="connectivityConfigurations"> contains connectivity related configuration for ARC resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArcSettingPatch(IDictionary<string, string> tags, BinaryData connectivityProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArcSettingPatch(IDictionary<string, string> tags, HciArcConnectivityProperties connectivityConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            ConnectivityProperties = connectivityProperties;
+            ConnectivityConfigurations = connectivityConfigurations;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+        /// <summary> contains connectivity related configuration for ARC resources. </summary>
+        [WirePath("properties.connectivityProperties")]
+        public HciArcConnectivityProperties ConnectivityConfigurations { get; set; }
     }
 }
