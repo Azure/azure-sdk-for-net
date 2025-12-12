@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Attestation.Samples
 ["Property2"] = "Value2",
 ["Property3"] = "Value3"
 },
-                Properties = new AttestationServicePatchSpecificParams
+                Properties = new AttestationServicePatchProperties
                 {
                     PublicNetworkAccess = AttestationProviderPublicNetworkAccessType.Disabled,
                     TpmAttestationAuthentication = TpmAttestationAuthenticationType.Disabled,

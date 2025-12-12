@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            AttestationServicePatchSpecificParams properties = default;
+            AttestationServicePatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Attestation.Models
                     {
                         continue;
                     }
-                    properties = AttestationServicePatchSpecificParams.DeserializeAttestationServicePatchSpecificParams(property.Value, options);
+                    properties = AttestationServicePatchProperties.DeserializeAttestationServicePatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

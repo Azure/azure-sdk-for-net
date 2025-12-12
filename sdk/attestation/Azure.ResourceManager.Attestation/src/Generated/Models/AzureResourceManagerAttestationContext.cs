@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Attestation
     [ModelReaderWriterBuildable(typeof(AttestationProviderPatch))]
     [ModelReaderWriterBuildable(typeof(AttestationProviderResource))]
     [ModelReaderWriterBuildable(typeof(AttestationServiceCreationSpecificParams))]
-    [ModelReaderWriterBuildable(typeof(AttestationServicePatchSpecificParams))]
+    [ModelReaderWriterBuildable(typeof(AttestationServicePatchProperties))]
     [ModelReaderWriterBuildable(typeof(JsonWebKeySet))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

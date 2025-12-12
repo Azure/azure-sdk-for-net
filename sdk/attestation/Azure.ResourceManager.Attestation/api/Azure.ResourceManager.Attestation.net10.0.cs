@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Attestation.Models
     public partial class AttestationProviderPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>
     {
         public AttestationProviderPatch() { }
-        public Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties Properties { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Attestation.Models.AttestationProviderPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationProviderPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -317,17 +317,17 @@ namespace Azure.ResourceManager.Attestation.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServiceCreationSpecificParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AttestationServicePatchSpecificParams : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>
+    public partial class AttestationServicePatchProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties>
     {
-        public AttestationServicePatchSpecificParams() { }
+        public AttestationServicePatchProperties() { }
         public Azure.ResourceManager.Attestation.Models.AttestationProviderPublicNetworkAccessType? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Attestation.Models.TpmAttestationAuthenticationType? TpmAttestationAuthentication { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchSpecificParams>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Attestation.Models.AttestationServicePatchProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AttestationServiceStatus : System.IEquatable<Azure.ResourceManager.Attestation.Models.AttestationServiceStatus>

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Attestation.Models
 {
     /// <summary> Client supplied parameters used to patch an existing attestation provider. </summary>
-    public partial class AttestationServicePatchSpecificParams
+    public partial class AttestationServicePatchProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.Attestation.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
-        public AttestationServicePatchSpecificParams()
+        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchProperties"/>. </summary>
+        public AttestationServicePatchProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchSpecificParams"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AttestationServicePatchProperties"/>. </summary>
         /// <param name="publicNetworkAccess"> Controls whether traffic from the public network is allowed to access the Attestation Provider APIs. </param>
         /// <param name="tpmAttestationAuthentication"> The setting that controls whether authentication is enabled or disabled for TPM Attestation REST APIs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AttestationServicePatchSpecificParams(AttestationProviderPublicNetworkAccessType? publicNetworkAccess, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AttestationServicePatchProperties(AttestationProviderPublicNetworkAccessType? publicNetworkAccess, TpmAttestationAuthenticationType? tpmAttestationAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicNetworkAccess = publicNetworkAccess;
             TpmAttestationAuthentication = tpmAttestationAuthentication;
