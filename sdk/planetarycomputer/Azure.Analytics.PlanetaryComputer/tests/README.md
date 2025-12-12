@@ -58,6 +58,22 @@ Tests support three modes:
 dotnet test
 ```
 
+### Setting up test resources
+
+Before running live or record mode tests, you need to create Azure test resources:
+
+```powershell
+# From repository root
+eng\common\TestResources\New-TestResources.ps1 planetarycomputer -Location uksouth
+```
+
+This script will:
+- Deploy the infrastructure defined in `test-resources.bicep`
+- Create an encrypted `.bicep.env` file with all required environment variables
+- The environment variables are automatically loaded when running tests
+
+For more details, see [Live Test Resource Management](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/common/TestResources/README.md).
+
 ### Running tests in live mode
 
 ```bash
@@ -71,21 +87,6 @@ dotnet test
 $env:AZURE_TEST_MODE="Record"
 dotnet test
 ```
-
-### Configuration using .env file
-
-Create a `.env` file based on `.env.example`:
-
-```bash
-cp .env.example .env
-```
-
-Required variables:
-
-- `PLANETARYCOMPUTER_ENDPOINT` - Service endpoint URL
-- `PLANETARYCOMPUTER_COLLECTION_ID` - Test STAC collection ID
-- `PLANETARYCOMPUTER_ITEM_ID` - Test STAC item ID
-- `GEOCATALOG_SCOPE` - OAuth authentication scope
 
 ## Troubleshooting
 
