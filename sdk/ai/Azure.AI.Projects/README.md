@@ -34,6 +34,7 @@ The client library uses version `v1` of the AI Foundry [data plane REST APIs](ht
   - [Indexes operations](#indexes-operations)
   - [Files operations](#files-operations)
   - [Fine-Tuning operations](#fine-tuning-operations)
+  - [Memory store operations](#memory-store-operations)
 - [Troubleshooting](#troubleshooting)
 - [Next steps](#next-steps)
 - [Contributing](#contributing)
@@ -541,6 +542,101 @@ FineTuningJob fineTuningJob = fineTuningClient.FineTune(
 Console.WriteLine($"Created fine-tuning job: {fineTuningJob.JobId}");
 Console.WriteLine($"Status: {fineTuningJob.Status}");
 ```
+
+### Memory store operations
+
+Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
+Project client can be used to manage memory stores. In the examples below we show only synchronous version of API for brevity.
+
+Use the client to create the `MemoryStore`. Memory store requires two models, one for embedding and another for search.
+
+```C# Snippet:Sample_Create_MemoryStore_Sync
+MemoryStoreDefaultDefinition memoryStoreDefinition = new(
+    chatModel: modelDeploymentName,
+    embeddingModel: embeddingDeploymentName
+);
+memoryStoreDefinition.Options = new(userProfileEnabled: true, chatSummaryEnabled: true);
+MemoryStore memoryStore = projectClient.MemoryStores.CreateMemoryStore(
+    name: "testMemoryStore",
+    definition: memoryStoreDefinition,
+    description: "Memory store demo."
+);
+Console.WriteLine($"Memory store with id {memoryStore.Id}, name {memoryStore.Name} and description {memoryStore.Description} was created.");
+```
+
+Update the description of memory store we have just created.
+
+```C# Snippet:Sample_Update_MemoryStore_Sync
+memoryStore = projectClient.MemoryStores.UpdateMemoryStore(name: memoryStore.Name, description: "New description for memory store demo.");
+Console.WriteLine($"Memory store with id {memoryStore.Id}, name {memoryStore.Name} now has description: {memoryStore.Description}.");
+```
+
+Get the memory store.
+
+```C# Snippet:Sample_Get_MemoryStore_Sync
+memoryStore = projectClient.MemoryStores.GetMemoryStore(name: memoryStore.Name);
+Console.WriteLine($"Returned Memory store with id {memoryStore.Id}, name {memoryStore.Name} and description {memoryStore.Description}.");
+```
+
+List all memory stores in our Microsoft Foundry.
+
+```C# Snippet:Sample_List_MemoryStore_Sync
+foreach (MemoryStore store in projectClient.MemoryStores.GetMemoryStores())
+{
+    Console.WriteLine($"Memory store id: {store.Id}, name: {store.Name}, description: {store.Description}.");
+}
+```
+
+Create a scope in the `MemoryStore` and add one item.
+
+```C# Snippet:Sample_AddMemories_MemoryStore_Sync
+string scope = "Flower";
+MemoryUpdateOptions memoryOptions = new(scope);
+memoryOptions.Items.Add(ResponseItem.CreateUserMessageItem("My favourite flower is Cephalocereus euphorbioides."));
+MemoryUpdateResult updateResult = projectClient.MemoryStores.WaitForMemoriesUpdate(memoryStoreName: memoryStore.Name, options: memoryOptions, pollingInterval: 500);
+if (updateResult.Status == MemoryStoreUpdateStatus.Failed)
+{
+    throw new InvalidOperationException(updateResult.ErrorDetails);
+}
+Console.WriteLine($"The update operation {updateResult.UpdateId} has finished with {updateResult.Status} status.");
+```
+
+Ask the question about the memorized item.
+
+```C# Snippet:Sample_MemorySearch_Sync
+MemorySearchOptions opts = new(scope)
+{
+    Items = { ResponseItem.CreateUserMessageItem("What was is your favourite flower?") },
+};
+MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
+    memoryStoreName: memoryStore.Name,
+    options: new(scope)
+);
+Console.WriteLine("==The output from memory tool.==");
+foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
+{
+    Console.WriteLine(item.MemoryItem.Content);
+}
+Console.WriteLine("==End of memory tool output.==");
+```
+
+Remove the scope we have created from `MemoryStore`.
+
+```C# Snippet:Sample_DeleteScope_MemoryStore_Sync
+MemoryStoreDeleteScopeResponse deleteScopeResponse = projectClient.MemoryStores.DeleteScope(name: memoryStore.Name, scope: "Flower");
+string status = deleteScopeResponse.Deleted ? "" : " not";
+Console.WriteLine($"The scope {deleteScopeResponse.Name} was{status} deleted.");
+```
+
+Finally, delete `MemoryStore`.
+
+```C# Snippet:Sample_Cleanup_MemoryStore_Sync
+DeleteMemoryStoreResponse deleteResponse = projectClient.MemoryStores.DeleteMemoryStore(name: memoryStore.Name);
+status = deleteResponse.Deleted ? "" : " not";
+Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
+```
+
+For more information abouit memory stores please refer [this article](https://learn.microsoft.com/azure/ai-foundry/agents/concepts/agent-memory)
 
 ## Troubleshooting
 
