@@ -164,11 +164,11 @@ namespace Azure.ResourceManager.RedisEnterprise
             return GetRedisEnterpriseDatabases().Get(databaseName, cancellationToken);
         }
 
-        /// <summary> Gets an object representing a MigrationResource along with the instance operations that can be performed on it in the RedisEnterpriseCluster. </summary>
-        /// <returns> Returns a <see cref="MigrationResource"/> object. </returns>
-        public virtual MigrationResource GetMigration()
+        /// <summary> Gets an object representing a RedisEnterpriseMigrationResource along with the instance operations that can be performed on it in the RedisEnterpriseCluster. </summary>
+        /// <returns> Returns a <see cref="RedisEnterpriseMigrationResource"/> object. </returns>
+        public virtual RedisEnterpriseMigrationResource GetRedisEnterpriseMigration()
         {
-            return new MigrationResource(Client, Id.AppendChildResource("migrations", "default"));
+            return new RedisEnterpriseMigrationResource(Client, Id.AppendChildResource("migrations", "default"));
         }
 
         /// <summary> Gets a collection of RedisEnterprisePrivateEndpointConnectionResources in the RedisEnterpriseCluster. </summary>

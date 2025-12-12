@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="MigrationList"/>. </summary>
         /// <param name="value"> The Migration items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal MigrationList(IEnumerable<MigrationData> value)
+        internal MigrationList(IEnumerable<RedisEnterpriseMigrationData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="value"> The Migration items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationList(IReadOnlyList<MigrationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MigrationList(IReadOnlyList<RedisEnterpriseMigrationData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         }
 
         /// <summary> The Migration items on this page. </summary>
-        public IReadOnlyList<MigrationData> Value { get; }
+        public IReadOnlyList<RedisEnterpriseMigrationData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return new RedisEnterpriseSkuDetails(name, sizeInGB, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="RedisEnterprise.MigrationData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterprise.RedisEnterpriseMigrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// Please note <see cref="Models.MigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AzureCacheForRedisMigrationProperties"/>.
         /// </param>
-        /// <returns> A new <see cref="RedisEnterprise.MigrationData"/> instance for mocking. </returns>
-        public static MigrationData MigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationProperties properties = null)
+        /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseMigrationData"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationData RedisEnterpriseMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationProperties properties = null)
         {
-            return new MigrationData(
+            return new RedisEnterpriseMigrationData(
                 id,
                 name,
                 resourceType,
