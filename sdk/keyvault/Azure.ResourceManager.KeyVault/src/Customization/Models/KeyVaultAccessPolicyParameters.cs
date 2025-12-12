@@ -12,10 +12,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultPrivateLinkResourceData
-    {
-        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateLinkResourceData"/>. </summary>
-        public KeyVaultPrivateLinkResourceData()
-        {}
-    }
+    /// <summary> Parameters for updating the access policy in a vault. </summary>
+    public partial class KeyVaultAccessPolicyParameters : ResourceData
+    {}
 }

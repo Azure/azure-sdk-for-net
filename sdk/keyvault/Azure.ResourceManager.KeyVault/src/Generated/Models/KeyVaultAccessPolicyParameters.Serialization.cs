@@ -8,15 +8,17 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
     /// <summary> Parameters for updating the access policy in a vault. </summary>
-    public partial class KeyVaultAccessPolicyParameters : IJsonModel<KeyVaultAccessPolicyParameters>
+    public partial class KeyVaultAccessPolicyParameters : ResourceData, IJsonModel<KeyVaultAccessPolicyParameters>
     {
         /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyParameters"/> for deserialization. </summary>
         internal KeyVaultAccessPolicyParameters()
@@ -34,27 +36,18 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicyParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(KeyVaultAccessPolicyParameters)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
             }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
@@ -63,30 +56,15 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteObjectValue(Properties, options);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyVaultAccessPolicyParameters IJsonModel<KeyVaultAccessPolicyParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        KeyVaultAccessPolicyParameters IJsonModel<KeyVaultAccessPolicyParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (KeyVaultAccessPolicyParameters)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyVaultAccessPolicyParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicyParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -105,27 +83,45 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            string @type = default;
             AzureLocation? location = default;
             KeyVaultAccessPolicyProperties properties = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerKeyVaultContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -149,11 +145,12 @@ namespace Azure.ResourceManager.KeyVault.Models
             }
             return new KeyVaultAccessPolicyParameters(
                 id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
                 name,
-                @type,
                 location,
-                properties,
-                additionalBinaryDataProperties);
+                properties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -174,11 +171,11 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        KeyVaultAccessPolicyParameters IPersistableModel<KeyVaultAccessPolicyParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        KeyVaultAccessPolicyParameters IPersistableModel<KeyVaultAccessPolicyParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => (KeyVaultAccessPolicyParameters)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual KeyVaultAccessPolicyParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicyParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

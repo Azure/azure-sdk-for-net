@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="provisioningState"> Provisioning state of the private endpoint connection. </param>
         /// <param name="privateEndpointId"> Full identifier of the private endpoint resource. </param>
         /// <returns> A new <see cref="Models.KeyVaultPrivateEndpointConnectionItemData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? etag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static KeyVaultPrivateEndpointConnectionItemData KeyVaultPrivateEndpointConnectionItemData(string id = default, ETag? etag = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new KeyVaultPrivateEndpointConnectionItemData(id, etag, connectionState is null && provisioningState is null && privateEndpointId is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, null), connectionState, provisioningState, null), additionalBinaryDataProperties: null);
         }
@@ -187,21 +187,23 @@ namespace Azure.ResourceManager.KeyVault.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> The resource id of the access policy. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="name"> The resource name of the access policy. </param>
-        /// <param name="type"> The resource name of the access policy. </param>
         /// <param name="location"> The resource type of the access policy. </param>
         /// <param name="accessPolicies"> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </param>
         /// <returns> A new <see cref="Models.KeyVaultAccessPolicyParameters"/> instance for mocking. </returns>
-        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(string id = default, string name = default, string @type = default, AzureLocation? location = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default)
+        public static KeyVaultAccessPolicyParameters KeyVaultAccessPolicyParameters(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, AzureLocation? location = default, IEnumerable<KeyVaultAccessPolicy> accessPolicies = default)
         {
             return new KeyVaultAccessPolicyParameters(
                 id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 name,
-                @type,
                 location,
-                accessPolicies is null ? default : new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), null),
-                additionalBinaryDataProperties: null);
+                accessPolicies is null ? default : new KeyVaultAccessPolicyProperties((accessPolicies ?? new ChangeTrackingList<KeyVaultAccessPolicy>()).ToList(), null));
         }
 
         /// <summary> Properties of the vault access policy. </summary>
@@ -300,7 +302,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <param name="tags"> Tags assigned to the key vault resource. </param>
         /// <param name="etag"> Modified whenever there is a change in the state of private endpoint connection. </param>
         /// <returns> A new <see cref="KeyVault.KeyVaultPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ETag? etag = default)
+        public static KeyVaultPrivateEndpointConnectionData KeyVaultPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, KeyVaultPrivateLinkServiceConnectionState connectionState = default, KeyVaultPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ETag? etag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 

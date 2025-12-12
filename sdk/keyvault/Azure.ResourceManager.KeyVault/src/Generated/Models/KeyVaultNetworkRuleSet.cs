@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultNetworkRuleSet"/>. </summary>
         public KeyVaultNetworkRuleSet()
         {
-            IpRules = new ChangeTrackingList<KeyVaultIPRule>();
+            IPRules = new ChangeTrackingList<KeyVaultIPRule>();
             VirtualNetworkRules = new ChangeTrackingList<KeyVaultVirtualNetworkRule>();
         }
 
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.KeyVault.Models
         {
             Bypass = bypass;
             DefaultAction = defaultAction;
-            IpRules = ipRules;
+            IPRules = ipRules;
             VirtualNetworkRules = virtualNetworkRules;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.KeyVault.Models
 
         /// <summary> The list of IP address rules. </summary>
         [WirePath("ipRules")]
-        public IList<KeyVaultIPRule> IpRules { get; }
+        public IList<KeyVaultIPRule> IPRules { get; }
 
         /// <summary> The list of virtual network rules. </summary>
         [WirePath("virtualNetworkRules")]

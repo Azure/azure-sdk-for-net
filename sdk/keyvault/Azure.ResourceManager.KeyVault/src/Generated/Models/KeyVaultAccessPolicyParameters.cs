@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.KeyVault;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -29,33 +30,19 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultAccessPolicyParameters"/>. </summary>
-        /// <param name="id"> The resource id of the access policy. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The resource name of the access policy. </param>
-        /// <param name="type"> The resource name of the access policy. </param>
         /// <param name="location"> The resource type of the access policy. </param>
         /// <param name="properties"> Properties of the access policy. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultAccessPolicyParameters(string id, string name, string @type, AzureLocation? location, KeyVaultAccessPolicyProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyVaultAccessPolicyParameters(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, AzureLocation? location, KeyVaultAccessPolicyProperties properties) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Location = location;
             Properties = properties;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The resource id of the access policy. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-
-        /// <summary> The resource name of the access policy. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> The resource name of the access policy. </summary>
-        [WirePath("type")]
-        public string Type { get; }
 
         /// <summary> The resource type of the access policy. </summary>
         [WirePath("location")]
