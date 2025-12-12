@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Nginx Certificate Properties. </summary>
     public partial class NginxCertificateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxCertificateProperties"/>. </summary>
         public NginxCertificateProperties()
@@ -59,8 +30,8 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="keyVaultSecretVersion"></param>
         /// <param name="keyVaultSecretCreated"></param>
         /// <param name="certificateError"> Nginx Certificate Error Response Body. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, string sha1Thumbprint, string keyVaultSecretVersion, DateTimeOffset? keyVaultSecretCreated, NginxCertificateError certificateError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxCertificateProperties(NginxProvisioningState? provisioningState, string keyVirtualPath, string certificateVirtualPath, string keyVaultSecretId, string sha1Thumbprint, string keyVaultSecretVersion, DateTimeOffset? keyVaultSecretCreated, NginxCertificateError certificateError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             KeyVirtualPath = keyVirtualPath;
@@ -70,23 +41,30 @@ namespace Azure.ResourceManager.Nginx.Models
             KeyVaultSecretVersion = keyVaultSecretVersion;
             KeyVaultSecretCreated = keyVaultSecretCreated;
             CertificateError = certificateError;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning State. </summary>
         public NginxProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets or sets the key virtual path. </summary>
+
+        /// <summary> Gets or sets the KeyVirtualPath. </summary>
         public string KeyVirtualPath { get; set; }
-        /// <summary> Gets or sets the certificate virtual path. </summary>
+
+        /// <summary> Gets or sets the CertificateVirtualPath. </summary>
         public string CertificateVirtualPath { get; set; }
-        /// <summary> Gets or sets the key vault secret id. </summary>
+
+        /// <summary> Gets or sets the KeyVaultSecretId. </summary>
         public string KeyVaultSecretId { get; set; }
-        /// <summary> Gets the sha 1 thumbprint. </summary>
+
+        /// <summary> Gets the Sha1Thumbprint. </summary>
         public string Sha1Thumbprint { get; }
-        /// <summary> Gets the key vault secret version. </summary>
+
+        /// <summary> Gets the KeyVaultSecretVersion. </summary>
         public string KeyVaultSecretVersion { get; }
-        /// <summary> Gets the key vault secret created. </summary>
+
+        /// <summary> Gets the KeyVaultSecretCreated. </summary>
         public DateTimeOffset? KeyVaultSecretCreated { get; }
+
         /// <summary> Nginx Certificate Error Response Body. </summary>
         public NginxCertificateError CertificateError { get; set; }
     }

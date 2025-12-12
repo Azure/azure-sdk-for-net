@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.Nginx.Models
     public readonly partial struct NginxDeploymentWafPolicyApplyingStatusCode : IEquatable<NginxDeploymentWafPolicyApplyingStatusCode>
     {
         private readonly string _value;
+        /// <summary> The policy is not referenced in the nginx config and not applied. </summary>
+        private const string NotAppliedValue = "NotApplied";
+        /// <summary> The policy is referenced in the nginx config and is applying. </summary>
+        private const string ApplyingValue = "Applying";
+        /// <summary> The policy is referenced in the nginx config and that config has been successfully applied. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The policy is referenced in the nginx config and that config failed to apply. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The policy is now not referenced in the nginx config and its being removed from the applied nginx config. </summary>
+        private const string RemovingValue = "Removing";
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyApplyingStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NginxDeploymentWafPolicyApplyingStatusCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotAppliedValue = "NotApplied";
-        private const string ApplyingValue = "Applying";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string RemovingValue = "Removing";
+            _value = value;
+        }
 
         /// <summary> The policy is not referenced in the nginx config and not applied. </summary>
         public static NginxDeploymentWafPolicyApplyingStatusCode NotApplied { get; } = new NginxDeploymentWafPolicyApplyingStatusCode(NotAppliedValue);
+
         /// <summary> The policy is referenced in the nginx config and is applying. </summary>
         public static NginxDeploymentWafPolicyApplyingStatusCode Applying { get; } = new NginxDeploymentWafPolicyApplyingStatusCode(ApplyingValue);
+
         /// <summary> The policy is referenced in the nginx config and that config has been successfully applied. </summary>
         public static NginxDeploymentWafPolicyApplyingStatusCode Succeeded { get; } = new NginxDeploymentWafPolicyApplyingStatusCode(SucceededValue);
+
         /// <summary> The policy is referenced in the nginx config and that config failed to apply. </summary>
         public static NginxDeploymentWafPolicyApplyingStatusCode Failed { get; } = new NginxDeploymentWafPolicyApplyingStatusCode(FailedValue);
+
         /// <summary> The policy is now not referenced in the nginx config and its being removed from the applied nginx config. </summary>
         public static NginxDeploymentWafPolicyApplyingStatusCode Removing { get; } = new NginxDeploymentWafPolicyApplyingStatusCode(RemovingValue);
+
         /// <summary> Determines if two <see cref="NginxDeploymentWafPolicyApplyingStatusCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NginxDeploymentWafPolicyApplyingStatusCode left, NginxDeploymentWafPolicyApplyingStatusCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NginxDeploymentWafPolicyApplyingStatusCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NginxDeploymentWafPolicyApplyingStatusCode left, NginxDeploymentWafPolicyApplyingStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NginxDeploymentWafPolicyApplyingStatusCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NginxDeploymentWafPolicyApplyingStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NginxDeploymentWafPolicyApplyingStatusCode(string value) => new NginxDeploymentWafPolicyApplyingStatusCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NginxDeploymentWafPolicyApplyingStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NginxDeploymentWafPolicyApplyingStatusCode?(string value) => value == null ? null : new NginxDeploymentWafPolicyApplyingStatusCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NginxDeploymentWafPolicyApplyingStatusCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NginxDeploymentWafPolicyApplyingStatusCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

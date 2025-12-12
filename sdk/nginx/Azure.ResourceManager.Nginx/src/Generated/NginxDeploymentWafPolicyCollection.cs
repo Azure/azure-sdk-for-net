@@ -6,11 +6,13 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
@@ -21,51 +23,49 @@ namespace Azure.ResourceManager.Nginx
     /// </summary>
     public partial class NginxDeploymentWafPolicyCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _nginxDeploymentWafPolicyClientDiagnostics;
-        private readonly NginxDeploymentWafPoliciesRestOperations _nginxDeploymentWafPolicyRestClient;
+        private readonly ClientDiagnostics _nginxDeploymentWafPoliciesClientDiagnostics;
+        private readonly NginxDeploymentWafPolicies _nginxDeploymentWafPoliciesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="NginxDeploymentWafPolicyCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NginxDeploymentWafPolicyCollection for mocking. </summary>
         protected NginxDeploymentWafPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NginxDeploymentWafPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NginxDeploymentWafPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _nginxDeploymentWafPolicyClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxDeploymentWafPolicyResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(NginxDeploymentWafPolicyResource.ResourceType, out string nginxDeploymentWafPolicyApiVersion);
-            _nginxDeploymentWafPolicyRestClient = new NginxDeploymentWafPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentWafPolicyApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            _nginxDeploymentWafPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", NginxDeploymentWafPolicyResource.ResourceType.Namespace, Diagnostics);
+            _nginxDeploymentWafPoliciesRestClient = new NginxDeploymentWafPolicies(_nginxDeploymentWafPoliciesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentWafPolicyApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != NginxDeploymentResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, NginxDeploymentResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or update the Nginx Waf Policy for given Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -73,21 +73,33 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="data"> The Nginx Deployment Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<NginxDeploymentWafPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentWafPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentWafPolicyRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(new NginxDeploymentWafPolicyOperationSource(Client), _nginxDeploymentWafPolicyClientDiagnostics, Pipeline, _nginxDeploymentWafPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
+                    new NginxDeploymentWafPolicyOperationSource(Client),
+                    _nginxDeploymentWafPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -101,20 +113,16 @@ namespace Azure.ResourceManager.Nginx
         /// Create or update the Nginx Waf Policy for given Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,21 +130,33 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="data"> The Nginx Deployment Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<NginxDeploymentWafPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentWafPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string wafPolicyName, NginxDeploymentWafPolicyData data = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
-            Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentWafPolicyRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, data, cancellationToken);
-                var operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(new NginxDeploymentWafPolicyOperationSource(Client), _nginxDeploymentWafPolicyClientDiagnostics, Pipeline, _nginxDeploymentWafPolicyRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, NginxDeploymentWafPolicyData.ToRequestContent(data), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                NginxArmOperation<NginxDeploymentWafPolicyResource> operation = new NginxArmOperation<NginxDeploymentWafPolicyResource>(
+                    new NginxDeploymentWafPolicyOperationSource(Client),
+                    _nginxDeploymentWafPoliciesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -150,38 +170,42 @@ namespace Azure.ResourceManager.Nginx
         /// Get the Nginx Waf Policy of given Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<NginxDeploymentWafPolicyResource>> GetAsync(string wafPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Get");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentWafPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NginxDeploymentWafPolicyData> response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxDeploymentWafPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -195,38 +219,42 @@ namespace Azure.ResourceManager.Nginx
         /// Get the Nginx Waf Policy of given Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<NginxDeploymentWafPolicyResource> Get(string wafPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Get");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentWafPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NginxDeploymentWafPolicyData> response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxDeploymentWafPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -240,36 +268,50 @@ namespace Azure.ResourceManager.Nginx
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string wafPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Exists");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentWafPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NginxDeploymentWafPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxDeploymentWafPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -283,36 +325,50 @@ namespace Azure.ResourceManager.Nginx
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string wafPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Exists");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentWafPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NginxDeploymentWafPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxDeploymentWafPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -326,38 +382,54 @@ namespace Azure.ResourceManager.Nginx
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<NginxDeploymentWafPolicyResource>> GetIfExistsAsync(string wafPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentWafPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<NginxDeploymentWafPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxDeploymentWafPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NginxDeploymentWafPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxDeploymentWafPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -371,38 +443,54 @@ namespace Azure.ResourceManager.Nginx
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/wafPolicies/{wafPolicyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NginxDeploymentWafPolicy_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentWafPolicies_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentWafPolicyResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="wafPolicyName"> The name of Waf Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="wafPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="wafPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<NginxDeploymentWafPolicyResource> GetIfExists(string wafPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(wafPolicyName, nameof(wafPolicyName));
 
-            using var scope = _nginxDeploymentWafPolicyClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.GetIfExists");
+            using DiagnosticScope scope = _nginxDeploymentWafPoliciesClientDiagnostics.CreateScope("NginxDeploymentWafPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentWafPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, wafPolicyName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentWafPoliciesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, wafPolicyName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<NginxDeploymentWafPolicyData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(NginxDeploymentWafPolicyData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((NginxDeploymentWafPolicyData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<NginxDeploymentWafPolicyResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxDeploymentWafPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

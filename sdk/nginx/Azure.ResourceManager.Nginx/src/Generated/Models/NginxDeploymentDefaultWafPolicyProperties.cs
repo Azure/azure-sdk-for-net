@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Nginx Deployment Default Waf Policy Properties. </summary>
     public partial class NginxDeploymentDefaultWafPolicyProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentDefaultWafPolicyProperties"/>. </summary>
         internal NginxDeploymentDefaultWafPolicyProperties()
@@ -53,17 +24,33 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentDefaultWafPolicyProperties"/>. </summary>
         /// <param name="content"></param>
         /// <param name="filepath"></param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentDefaultWafPolicyProperties(byte[] content, string filepath, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentDefaultWafPolicyProperties(BinaryData content, string filepath, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Filepath = filepath;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the content. </summary>
-        public byte[] Content { get; }
-        /// <summary> Gets the filepath. </summary>
+        /// <summary>
+        /// Gets the Content.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Content { get; }
+
+        /// <summary> Gets the Filepath. </summary>
         public string Filepath { get; }
     }
 }

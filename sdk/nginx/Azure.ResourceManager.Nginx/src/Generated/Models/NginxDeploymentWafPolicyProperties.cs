@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Nginx Deployment Waf Policy Properties. </summary>
     public partial class NginxDeploymentWafPolicyProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyProperties"/>. </summary>
         public NginxDeploymentWafPolicyProperties()
@@ -56,25 +27,44 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="filepath"> The file path where the Policy is to be saved. </param>
         /// <param name="compilingState"> Nginx Deployment Waf Policy Compiling Status. </param>
         /// <param name="applyingState"> Nginx Deployment Waf Policy Applying Status. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentWafPolicyProperties(NginxProvisioningState? provisioningState, byte[] content, string filepath, NginxDeploymentWafPolicyCompilingStatus compilingState, NginxDeploymentWafPolicyApplyingStatus applyingState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentWafPolicyProperties(NginxProvisioningState? provisioningState, BinaryData content, string filepath, NginxDeploymentWafPolicyCompilingStatus compilingState, NginxDeploymentWafPolicyApplyingStatus applyingState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Content = content;
             Filepath = filepath;
             CompilingState = compilingState;
             ApplyingState = applyingState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning State. </summary>
         public NginxProvisioningState? ProvisioningState { get; }
-        /// <summary> The byte content of the Policy. </summary>
-        public byte[] Content { get; set; }
+
+        /// <summary>
+        /// The byte content of the Policy
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData Content { get; set; }
+
         /// <summary> The file path where the Policy is to be saved. </summary>
         public string Filepath { get; set; }
+
         /// <summary> Nginx Deployment Waf Policy Compiling Status. </summary>
         public NginxDeploymentWafPolicyCompilingStatus CompilingState { get; }
+
         /// <summary> Nginx Deployment Waf Policy Applying Status. </summary>
         public NginxDeploymentWafPolicyApplyingStatus ApplyingState { get; }
     }

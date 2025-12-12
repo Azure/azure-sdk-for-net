@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Nginx
 {
+    /// <summary></summary>
     public partial class NginxDeploymentWafPolicyResource : IJsonModel<NginxDeploymentWafPolicyData>
     {
-        private static NginxDeploymentWafPolicyData s_dataDeserializationInstance;
-        private static NginxDeploymentWafPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<NginxDeploymentWafPolicyData> s_dataDeserializationInstance;
 
+        private static IJsonModel<NginxDeploymentWafPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NginxDeploymentWafPolicyData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NginxDeploymentWafPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentWafPolicyData>)Data).Write(writer, options);
 
-        NginxDeploymentWafPolicyData IJsonModel<NginxDeploymentWafPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NginxDeploymentWafPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NginxDeploymentWafPolicyData IJsonModel<NginxDeploymentWafPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<NginxDeploymentWafPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NginxDeploymentWafPolicyData>(Data, options, AzureResourceManagerNginxContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         NginxDeploymentWafPolicyData IPersistableModel<NginxDeploymentWafPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NginxDeploymentWafPolicyData>(data, options, AzureResourceManagerNginxContext.Default);
 
-        string IPersistableModel<NginxDeploymentWafPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NginxDeploymentWafPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NginxDeploymentWafPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
@@ -14,44 +15,67 @@ namespace Azure.ResourceManager.Nginx.Models
     public readonly partial struct NginxDeploymentWafPolicyCompilingStatusCode : IEquatable<NginxDeploymentWafPolicyCompilingStatusCode>
     {
         private readonly string _value;
+        /// <summary> The compilation of the custom waf policy has not started. </summary>
+        private const string NotStartedValue = "NotStarted";
+        /// <summary> The compilation of the custom waf policy is in progress. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The compilation of the custom waf policy is completed successfully and can now be referenced in the nginx config. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The compilation of the custom waf policy failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentWafPolicyCompilingStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NginxDeploymentWafPolicyCompilingStatusCode(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotStartedValue = "NotStarted";
-        private const string InProgressValue = "InProgress";
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> The compilation of the custom waf policy has not started. </summary>
         public static NginxDeploymentWafPolicyCompilingStatusCode NotStarted { get; } = new NginxDeploymentWafPolicyCompilingStatusCode(NotStartedValue);
+
         /// <summary> The compilation of the custom waf policy is in progress. </summary>
         public static NginxDeploymentWafPolicyCompilingStatusCode InProgress { get; } = new NginxDeploymentWafPolicyCompilingStatusCode(InProgressValue);
+
         /// <summary> The compilation of the custom waf policy is completed successfully and can now be referenced in the nginx config. </summary>
         public static NginxDeploymentWafPolicyCompilingStatusCode Succeeded { get; } = new NginxDeploymentWafPolicyCompilingStatusCode(SucceededValue);
+
         /// <summary> The compilation of the custom waf policy failed. </summary>
         public static NginxDeploymentWafPolicyCompilingStatusCode Failed { get; } = new NginxDeploymentWafPolicyCompilingStatusCode(FailedValue);
+
         /// <summary> Determines if two <see cref="NginxDeploymentWafPolicyCompilingStatusCode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NginxDeploymentWafPolicyCompilingStatusCode left, NginxDeploymentWafPolicyCompilingStatusCode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NginxDeploymentWafPolicyCompilingStatusCode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NginxDeploymentWafPolicyCompilingStatusCode left, NginxDeploymentWafPolicyCompilingStatusCode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NginxDeploymentWafPolicyCompilingStatusCode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NginxDeploymentWafPolicyCompilingStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NginxDeploymentWafPolicyCompilingStatusCode(string value) => new NginxDeploymentWafPolicyCompilingStatusCode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NginxDeploymentWafPolicyCompilingStatusCode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NginxDeploymentWafPolicyCompilingStatusCode?(string value) => value == null ? null : new NginxDeploymentWafPolicyCompilingStatusCode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NginxDeploymentWafPolicyCompilingStatusCode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NginxDeploymentWafPolicyCompilingStatusCode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

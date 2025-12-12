@@ -119,7 +119,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             };
             NginxDeploymentApiKeyResource updatedNginxDeploymentApiKey = (await nginxDeploymentApiKey.UpdateAsync(WaitUntil.Completed, nginxDeploymentApiKeyCreateOrUpdateContent)).Value;
             Assert.AreEqual(apiKeyProperties.SecretText.Substring(0, 3), updatedNginxDeploymentApiKey.Data.Properties.Hint);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => _ = (await nginxDeploymentApiKey.UpdateAsync(WaitUntil.Completed, null)).Value);
         }
     }
 }

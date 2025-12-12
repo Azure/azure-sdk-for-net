@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
-    internal class NginxDeploymentWafPolicyOperationSource : IOperationSource<NginxDeploymentWafPolicyResource>
+    /// <summary></summary>
+    internal partial class NginxDeploymentWafPolicyOperationSource : IOperationSource<NginxDeploymentWafPolicyResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NginxDeploymentWafPolicyOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NginxDeploymentWafPolicyResource IOperationSource<NginxDeploymentWafPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxDeploymentWafPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NginxDeploymentWafPolicyData data = NginxDeploymentWafPolicyData.DeserializeNginxDeploymentWafPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NginxDeploymentWafPolicyResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NginxDeploymentWafPolicyResource> IOperationSource<NginxDeploymentWafPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxDeploymentWafPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
-            return await Task.FromResult(new NginxDeploymentWafPolicyResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NginxDeploymentWafPolicyData data = NginxDeploymentWafPolicyData.DeserializeNginxDeploymentWafPolicyData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NginxDeploymentWafPolicyResource(_client, data);
         }
     }
 }

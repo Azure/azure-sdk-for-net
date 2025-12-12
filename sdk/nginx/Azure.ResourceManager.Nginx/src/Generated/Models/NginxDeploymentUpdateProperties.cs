@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Nginx.Models
     /// <summary> Nginx Deployment Update Properties. </summary>
     public partial class NginxDeploymentUpdateProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
         public NginxDeploymentUpdateProperties()
@@ -57,9 +28,9 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="userProfile"> Nginx Deployment User Profile. </param>
         /// <param name="networkProfile"> Nginx Network Profile. </param>
         /// <param name="autoUpgradeProfile"> Autoupgrade settings of a deployment. </param>
-        /// <param name="webApplicationFirewallSettings"> Settings for the NGINX App Protect Web Application Firewall (WAF). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, NginxNetworkProfile networkProfile, AutoUpgradeProfile autoUpgradeProfile, WebApplicationFirewallSettings webApplicationFirewallSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="nginxAppProtect"> Update settings for NGINX App Protect (NAP). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile, NginxNetworkProfile networkProfile, AutoUpgradeProfile autoUpgradeProfile, NginxDeploymentUpdatePropertiesNginxAppProtect nginxAppProtect, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EnableDiagnosticsSupport = enableDiagnosticsSupport;
             Logging = logging;
@@ -67,64 +38,92 @@ namespace Azure.ResourceManager.Nginx.Models
             UserProfile = userProfile;
             NetworkProfile = networkProfile;
             AutoUpgradeProfile = autoUpgradeProfile;
-            WebApplicationFirewallSettings = webApplicationFirewallSettings;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            NginxAppProtect = nginxAppProtect;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets or sets the enable diagnostics support. </summary>
+        /// <summary> Gets or sets the EnableDiagnosticsSupport. </summary>
         public bool? EnableDiagnosticsSupport { get; set; }
+
         /// <summary> Nginx Logging. </summary>
         internal NginxLogging Logging { get; set; }
+
+        /// <summary> Information on how the deployment will be scaled. </summary>
+        public NginxDeploymentScalingProperties ScalingProperties { get; set; }
+
+        /// <summary> Nginx Deployment User Profile. </summary>
+        internal NginxDeploymentUserProfile UserProfile { get; set; }
+
+        /// <summary> Nginx Network Profile. </summary>
+        public NginxNetworkProfile NetworkProfile { get; set; }
+
+        /// <summary> Autoupgrade settings of a deployment. </summary>
+        internal AutoUpgradeProfile AutoUpgradeProfile { get; set; }
+
+        /// <summary> Update settings for NGINX App Protect (NAP). </summary>
+        internal NginxDeploymentUpdatePropertiesNginxAppProtect NginxAppProtect { get; set; }
+
         /// <summary> Nginx Storage Account. </summary>
         public NginxStorageAccount LoggingStorageAccount
         {
-            get => Logging is null ? default : Logging.StorageAccount;
+            get
+            {
+                return Logging is null ? default : Logging.StorageAccount;
+            }
             set
             {
                 if (Logging is null)
+                {
                     Logging = new NginxLogging();
+                }
                 Logging.StorageAccount = value;
             }
         }
 
-        /// <summary> Information on how the deployment will be scaled. </summary>
-        public NginxDeploymentScalingProperties ScalingProperties { get; set; }
-        /// <summary> Nginx Deployment User Profile. </summary>
-        internal NginxDeploymentUserProfile UserProfile { get; set; }
         /// <summary> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </summary>
         public string UserPreferredEmail
         {
-            get => UserProfile is null ? default : UserProfile.PreferredEmail;
+            get
+            {
+                return UserProfile is null ? default : UserProfile.PreferredEmail;
+            }
             set
             {
                 if (UserProfile is null)
+                {
                     UserProfile = new NginxDeploymentUserProfile();
+                }
                 UserProfile.PreferredEmail = value;
             }
         }
 
-        /// <summary> Nginx Network Profile. </summary>
-        public NginxNetworkProfile NetworkProfile { get; set; }
-        /// <summary> Autoupgrade settings of a deployment. </summary>
-        internal AutoUpgradeProfile AutoUpgradeProfile { get; set; }
         /// <summary> Channel used for autoupgrade. </summary>
         public string UpgradeChannel
         {
-            get => AutoUpgradeProfile is null ? default : AutoUpgradeProfile.UpgradeChannel;
-            set => AutoUpgradeProfile = new AutoUpgradeProfile(value);
+            get
+            {
+                return AutoUpgradeProfile is null ? default : AutoUpgradeProfile.UpgradeChannel;
+            }
+            set
+            {
+                AutoUpgradeProfile = new AutoUpgradeProfile(value);
+            }
         }
 
-        /// <summary> Settings for the NGINX App Protect Web Application Firewall (WAF). </summary>
-        internal WebApplicationFirewallSettings WebApplicationFirewallSettings { get; set; }
         /// <summary> The activation state of the WAF. Use 'Enabled' to enable the WAF and 'Disabled' to disable it. </summary>
         public WebApplicationFirewallActivationState? WebApplicationFirewallActivationState
         {
-            get => WebApplicationFirewallSettings is null ? default : WebApplicationFirewallSettings.ActivationState;
+            get
+            {
+                return NginxAppProtect is null ? default : NginxAppProtect.WebApplicationFirewallActivationState;
+            }
             set
             {
-                if (WebApplicationFirewallSettings is null)
-                    WebApplicationFirewallSettings = new WebApplicationFirewallSettings();
-                WebApplicationFirewallSettings.ActivationState = value;
+                if (NginxAppProtect is null)
+                {
+                    NginxAppProtect = new NginxDeploymentUpdatePropertiesNginxAppProtect();
+                }
+                NginxAppProtect.WebApplicationFirewallActivationState = value.Value;
             }
         }
     }
