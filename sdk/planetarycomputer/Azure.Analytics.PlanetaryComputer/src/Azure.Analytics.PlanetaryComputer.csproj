@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.Analytics.PlanetaryComputer client library for developing .NET applications with rich experience.</Description>
+    <Description>The Azure Planetary Computer client library provides programmatic access to Microsoft Planetary Computer Pro, a geospatial data management service built on Azure's hyperscale infrastructure. Microsoft Planetary Computer Pro empowers organizations to unlock the full potential of geospatial data by providing foundational capabilities to ingest, manage, search, and distribute geospatial datasets using the SpatioTemporal Asset Catalog (STAC) open specification.</Description>
     <AssemblyTitle>SDK Code Generation Azure.Analytics.PlanetaryComputer</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.Analytics.PlanetaryComputer</PackageTags>
