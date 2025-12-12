@@ -18,7 +18,6 @@ namespace Azure.AI.ContentUnderstanding
     [CodeGenSuppress("DeserializeAudioVisualContent", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class AudioVisualContent
     {
-        // SERVICE-FIX: Reimplement deserialization to handle both "keyFrameTimesMs" (TypeSpec definition) and "KeyFrameTimesMs" (service response format)
         internal static AudioVisualContent DeserializeAudioVisualContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
