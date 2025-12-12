@@ -252,56 +252,6 @@ public static class CollectionExtensions
 
         return value!;
     }
-
-    /// <summary>
-    /// Asynchronously returns the first element of a sequence.
-    /// is found.
-    /// </summary>
-    /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
-    /// <param name="enumerable">The sequence to search.</param>
-    /// <param name="token">A cancellation token to cancel the operation.</param>
-    /// <returns>Asynchronous task.</returns>
-    public static ValueTask<T> FirstOrDefaultAsync<T>(this IAsyncEnumerable<T> enumerable, CancellationToken token = default)
-            => FirstOrDefaultAsync<T>(enumerable, _ => true);
-
-    /// <summary>
-    /// Asynchronously returns the first element of a sequence that satisfies a specified condition or a default value if no such element
-    /// is found.
-    /// </summary>
-    /// <typeparam name="T">The type of the elements in the sequence.</typeparam>
-    /// <param name="enumerable">The sequence to search.</param>
-    /// <param name="predicate">A function to test each element for a condition.</param>
-    /// <param name="token">A cancellation token to cancel the operation.</param>
-    /// <returns>Asynchronous task.</returns>
-    public static async ValueTask<T> FirstOrDefaultAsync<T>(this IAsyncEnumerable<T> enumerable, Predicate<T> predicate, CancellationToken token = default)
-    {
-        await foreach (T item in enumerable.WithCancellation(token))
-        {
-            if (predicate(item))
-            {
-                return item;
-            }
-        }
-
-        return default!;
-    }
-
-    /// <summary>
-    /// Converts an <see cref="IAsyncEnumerable{T}"/> to a <see cref="List{T}"/> asynchronously.
-    /// </summary>
-    /// <typeparam name="T">The type of the elements in the enumerable.</typeparam>
-    /// <param name="asyncEnumerable">The <see cref="IAsyncEnumerable{T}"/> to convert.</param>
-    /// <param name="token">The cancellation token.</param>
-    /// <returns>Asynchronous task to do the conversion.</returns>
-    public static async Task<List<T>> ToListAsync<T>(this IAsyncEnumerable<T> asyncEnumerable, CancellationToken token = default)
-    {
-        List<T> list = new List<T>();
-        await foreach (T item in asyncEnumerable.WithCancellation(token))
-        {
-            list.Add(item);
-        }
-        return list;
-    }
 }
 
 /// <summary>

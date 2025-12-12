@@ -117,12 +117,12 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     {
         AzureFineTuningClient client = (AzureFineTuningClient)UnWrap(GetTestClient(GetTestClientOptions(version)));
 
-        FineTuningJob job = await client.GetJobsAsync(options: new FineTuningJobCollectionOptions() { PageSize = 10 })
+        FineTuningJob? job = await client.GetJobsAsync(options: new FineTuningJobCollectionOptions() { PageSize = 10 })
             .FirstOrDefaultAsync(j => j.Status == "succeeded");
 
         //FineTuningJob job = client.GetJob("ftjob-5ad97dff8fd246eeb0934f4fb37e8a76");
         Assert.That(job, Is.Not.Null);
-        Assert.That(job.Status, Is.EqualTo("succeeded"));
+        Assert.That(job!.Status, Is.EqualTo("succeeded"));
 
         Console.WriteLine("Job id: " + job.JobId);
         if (job is AzureFineTuningJob azureJob)
@@ -175,15 +175,15 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
         FineTuningClient client = GetTestClient(GetTestClientOptions(version));
 
-        FineTuningJob job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
+        FineTuningJob? job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
 
         Assert.NotNull(job);
-        Assert.AreEqual(job.Status, "succeeded");
+        Assert.AreEqual(job!.Status, "succeeded");
 
         var evt = await job.GetEventsAsync(new() { PageSize = 1 }).FirstOrDefaultAsync();
 
         Assert.That(evt, Is.Not.Null);
-        Assert.That(evt.Id, !(Is.Null.Or.Empty));
+        Assert.That(evt!.Id, !(Is.Null.Or.Empty));
         Assert.That(evt.CreatedAt, Is.GreaterThan(START_2024));
         Assert.That(evt.Level, !(Is.Null.Or.Empty));
         Assert.That(evt.Message, !(Is.Null.Or.Empty));
@@ -252,16 +252,16 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             }
         });
 
-        FineTuningJob job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
+        FineTuningJob? job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
 
-        if (job.Value == null)
+        if (job?.Value == null)
         {
             Assert.Inconclusive("No fine-tuning job found with status 'succeeded'.");
         }
 
         // Deploy the model and wait for the deployment to finish
         deploymentName = "azure-ai-openai-test-" + Recording?.Random.NewGuid().ToString();
-        AzureDeployedModel deployment = await deploymentClient.CreateDeploymentAsync(deploymentName, job.Value!);
+        AzureDeployedModel deployment = await deploymentClient.CreateDeploymentAsync(deploymentName, job!.Value!);
         Assert.That(deployment, Is.Not.Null);
         Assert.That(deployment.ID, !(Is.Null.Or.Empty));
         Assert.That(deployment.Properties, Is.Not.Null);
