@@ -580,12 +580,6 @@ public class ResponsesTests : AoaiTestBase<ResponsesClient>
         ResponsesClient client = GetResponseTestClientForDeployment(Gpt4oMiniDeployment);
         ResponsesClient client2 = GetResponseTestClientForDeployment(ComputerUseDeployment);
 
-        CreateResponseOptions options = new()
-        {
-            TruncationMode = ResponseTruncationMode.Auto,
-            InputItems = { ResponseItem.CreateUserMessageItem("Hello, Assistant! My name is Travis.") },
-        };
-
         ResponseResult response = await client.CreateResponseAsync(
             new CreateResponseOptions()
             {
