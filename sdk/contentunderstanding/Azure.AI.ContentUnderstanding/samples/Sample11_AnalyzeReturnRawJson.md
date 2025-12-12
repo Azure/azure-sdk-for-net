@@ -2,12 +2,10 @@
 
 This sample demonstrates how to access the raw JSON response from analysis operations using protocol methods. This is useful for advanced scenarios where you need direct access to the JSON structure.
 
-## Before you begin
+## About returning raw JSON
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-
-## About raw JSON responses
 
 The Content Understanding SDK provides two approaches for accessing analysis results:
 
@@ -28,7 +26,7 @@ Use raw JSON only when you need:
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

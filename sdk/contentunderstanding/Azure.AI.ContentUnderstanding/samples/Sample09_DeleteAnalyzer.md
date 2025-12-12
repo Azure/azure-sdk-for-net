@@ -2,13 +2,11 @@
 
 This sample demonstrates how to delete a custom analyzer.
 
-## Before you begin
+## About deleting analyzers
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
 - [Sample 08: Update analyzer][sample08] - Understanding analyzer management
-
-## About deleting analyzers
 
 The `DeleteAnalyzerAsync` method permanently removes a custom analyzer from your resource. This operation cannot be undone.
 
@@ -19,7 +17,7 @@ The `DeleteAnalyzerAsync` method permanently removes a custom analyzer from your
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

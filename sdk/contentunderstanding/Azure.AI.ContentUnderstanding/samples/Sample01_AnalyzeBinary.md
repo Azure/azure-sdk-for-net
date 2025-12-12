@@ -2,20 +2,15 @@
 
 This sample demonstrates how to analyze a PDF file from disk using the `prebuilt-documentSearch` analyzer.
 
-## About Content Understanding
+## About analyzing documents from binary data
 
-Content Understanding supports multiple content types:
+Content Understanding returns rich content types from a single `AnalyzeResult`. Documents, HTML, and images with text are represented as `DocumentContent` (which derives from `MediaContent`) so you can access markdown plus detailed structure such as pages, tables, figures, and paragraphs.
 
-- **Documents** - Extract text, tables, figures, layout information, and structured markdown from PDFs, images, and Office documents
-- **Images** - Analyze standalone images to generate descriptions, extract visual features, and identify objects and scenes within images
-- **Audio** - Transcribe audio content with speaker diarization, timing information, and conversation summaries
-- **Video** - Analyze video content with visual frame extraction, audio transcription, and structured summaries
-
-This sample focuses on **document analysis**. For image, audio, and video analysis examples, see other samples in the [samples directory][samples-directory].
+This sample focuses on **document analysis**. For prebuilt RAG analyzers covering images, audio, and video, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource**. See [README][README] for prerequisites and instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ### ⚠️ IMPORTANT: Configure model deployments first
 
@@ -25,12 +20,12 @@ The `prebuilt-documentSearch` analyzer requires **gpt-4.1-mini** and **text-embe
 
 ## Prebuilt analyzers
 
-Content Understanding provides prebuilt analyzers that are ready to use without any configuration. These analyzers use the `*Search` naming pattern:
+Content Understanding provides prebuilt RAG analyzers (the `prebuilt-*Search` analyzers) that return markdown and a one-paragraph `Summary` for each content item, making them useful for retrieval-augmented generation (RAG) and other downstream applications:
 
 - **`prebuilt-documentSearch`** - Extracts content from documents (PDF, images, Office documents) with layout preservation, table detection, figure analysis, and structured markdown output. Optimized for RAG scenarios.
 - **`prebuilt-audioSearch`** - Transcribes audio content with speaker diarization, timing information, and conversation summaries. Supports multilingual transcription.
 - **`prebuilt-videoSearch`** - Analyzes video content with visual frame extraction, audio transcription, and structured summaries. Provides temporal alignment of visual and audio content.
-- **`prebuilt-imageSearch`** - Analyzes standalone images to generate descriptions. Note: Image analysis is not optimized for text extraction; use `prebuilt-documentSearch` for documents containing text.
+- **`prebuilt-imageSearch`** - Analyzes standalone images and returns markdown plus a one-paragraph description of the image content. Note: Image analysis is not optimized for text extraction; use `prebuilt-documentSearch` for documents containing text.
 
 This sample uses **`prebuilt-documentSearch`** to extract structured content from PDF documents.
 
@@ -45,6 +40,7 @@ You can set `endpoint` based on an environment variable, a configuration setting
 The simplest way to authenticate is using `DefaultAzureCredential`, which supports multiple authentication methods and works well in both local development and production environments:
 
 ```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
 string endpoint = "<endpoint>";
 var credential = new DefaultAzureCredential();
 var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
@@ -57,6 +53,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 You can authenticate using an API key from your Microsoft Foundry resource:
 
 ```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

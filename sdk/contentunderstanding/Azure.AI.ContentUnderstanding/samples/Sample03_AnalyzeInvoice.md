@@ -2,7 +2,7 @@
 
 This sample demonstrates how to analyze an invoice from a URL using the `prebuilt-invoice` analyzer and extract structured fields from the result.
 
-## Before you begin
+## About analyzing invoices
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 00: Configure model deployment defaults][sample00] - Required setup before using prebuilt analyzers
@@ -38,7 +38,7 @@ For a complete list of available prebuilt analyzers, see the [Prebuilt analyzers
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

@@ -1,6 +1,14 @@
 # Analyze content from URLs across modalities
 
-This sample demonstrates analyzing accessible URLs with the prebuilt analyzers (`prebuilt-documentSearch`, `prebuilt-videoSearch`, `prebuilt-audioSearch`, and `prebuilt-imageSearch`). Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBinary][sample01-analyze-binary]) and URL inputs across all modalities; these prebuilt analyzers return markdown, a one-paragraph `Summary`, and many other properties per content item.
+Content Understanding ships a broad set of prebuilt RAG analyzers. This sample demonstrates a few (`prebuilt-documentSearch`, `prebuilt-videoSearch`, `prebuilt-audioSearch`, and `prebuilt-imageSearch`). Many more are available (for example, `prebuilt-invoice`); see the invoice sample or the prebuilt analyzer documentation to explore the full list.
+
+## About analyzing URLs across modalities
+
+Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBinary][sample01-analyze-binary]) and URL inputs across all modalities. This sample focuses on the `prebuilt-*Search` RAG analyzers (document/image/audio/video). Documents, HTML, and images with text are returned as `DocumentContent` (derived from `MediaContent`), while audio and video are returned as `AudioVisualContent` (also derived from `MediaContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
+
+## Prerequisites
+
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Document from a URL
 
@@ -160,3 +168,4 @@ Console.WriteLine($"Summary: {summary}");
 [cu-audio-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/audio/overview
 [cu-video-elements]: https://learn.microsoft.com/azure/ai-services/content-understanding/video/elements
 [cu-prebuilt-analyzers]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
+[sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md

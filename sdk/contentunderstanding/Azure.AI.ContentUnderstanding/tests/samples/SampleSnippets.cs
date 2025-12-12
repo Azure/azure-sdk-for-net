@@ -18,6 +18,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         {
             #region Snippet:CreateContentUnderstandingClient
 #if SNIPPET
+            // Example: https://your-foundry.services.ai.azure.com/
             string endpoint = "<endpoint>";
             var credential = new DefaultAzureCredential();
 #else
@@ -33,6 +34,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         {
             #region Snippet:CreateContentUnderstandingClientApiKey
 #if SNIPPET
+            // Example: https://your-foundry.services.ai.azure.com/
             string endpoint = "<endpoint>";
             string apiKey = "<apiKey>";
 #else

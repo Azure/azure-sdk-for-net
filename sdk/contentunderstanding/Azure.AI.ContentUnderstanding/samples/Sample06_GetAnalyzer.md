@@ -2,7 +2,7 @@
 
 This sample demonstrates how to retrieve information about analyzers, including prebuilt analyzers and custom analyzers.
 
-## Before you begin
+## About getting analyzer information
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
@@ -21,7 +21,7 @@ This is useful for:
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

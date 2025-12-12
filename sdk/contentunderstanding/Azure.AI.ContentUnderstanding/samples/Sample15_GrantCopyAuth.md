@@ -2,13 +2,11 @@
 
 This sample demonstrates how to grant copy authorization and copy an analyzer from a source resource to a target resource (cross-resource copying). This is useful for copying analyzers between different Azure resources or subscriptions.
 
-## Before you begin
+## About cross-resource copying
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 04: Create a custom analyzer][sample04] - Understanding analyzer creation
 - [Sample 14: Copy analyzer][sample14] - Understanding same-resource copying
-
-## About cross-resource copying
 
 The `GrantCopyAuthorization` and `CopyAnalyzer` APIs allow you to copy an analyzer between different Azure resources:
 
@@ -20,11 +18,10 @@ The `GrantCopyAuthorization` and `CopyAnalyzer` APIs allow you to copy an analyz
 
 ## Prerequisites
 
-To get started you'll need:
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance. For this cross-resource scenario, you'll also need:
 - **Source Microsoft Foundry resource** with model deployments configured
 - **Target Microsoft Foundry resource** with model deployments configured
 - Both resources require 'Cognitive Services User' role for cross-resource copying
-- See [Sample 00][sample00] for setup instructions
 
 ## Configuration
 

@@ -2,13 +2,11 @@
 
 This sample demonstrates how to copy an analyzer from source to target within the same resource using the `CopyAnalyzer` API. This is useful for creating copies of analyzers for testing, staging, or production deployment.
 
-## Before you begin
+## About copying analyzers
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 04: Create a custom analyzer][sample04] - Understanding analyzer creation
 - [Sample 09: Delete analyzer][sample09] - Understanding analyzer lifecycle
-
-## About copying analyzers
 
 The `CopyAnalyzer` API allows you to copy an analyzer within the same Azure resource:
 
@@ -20,7 +18,7 @@ The `CopyAnalyzer` API allows you to copy an analyzer within the same Azure reso
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

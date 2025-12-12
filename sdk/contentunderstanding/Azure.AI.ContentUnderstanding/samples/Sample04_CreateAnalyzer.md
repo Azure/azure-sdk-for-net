@@ -2,7 +2,7 @@
 
 This sample demonstrates how to create a custom analyzer with a field schema to extract structured data from documents.
 
-## Before you begin
+## About creating a custom analyzer
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 00: Configure model deployment defaults][sample00] - Required setup before creating custom analyzers
@@ -30,7 +30,7 @@ Custom analyzers allow you to define a field schema that specifies what structur
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

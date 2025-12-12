@@ -2,7 +2,7 @@
 
 This sample demonstrates how to create a classifier analyzer to categorize documents and use it to analyze documents with and without automatic segmentation.
 
-## Before you begin
+## About creating and using a classifier
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 00: Configure model deployment defaults][sample00] - Required setup before creating custom analyzers
@@ -19,7 +19,7 @@ Classifiers use **content categories** to define the types of documents they can
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

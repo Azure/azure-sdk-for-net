@@ -2,13 +2,11 @@
 
 This sample demonstrates how to update an existing custom analyzer, including updating its description and tags.
 
-## Before you begin
+## About updating analyzers
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
 - [Sample 06: Get analyzer information][sample06] - Understanding analyzer details
-
-## About updating analyzers
 
 The `UpdateAnalyzerAsync` method allows you to modify certain properties of an existing analyzer:
 - **Description**: Update the analyzer's description
@@ -18,7 +16,7 @@ The `UpdateAnalyzerAsync` method allows you to modify certain properties of an e
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

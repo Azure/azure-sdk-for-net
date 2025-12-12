@@ -32,6 +32,7 @@ To create a new `ContentUnderstandingClient` you need the endpoint and credentia
 ### Using DefaultAzureCredential (recommended)
 
 ```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
 string endpoint = "<endpoint>";
 var credential = new DefaultAzureCredential();
 var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
@@ -40,6 +41,7 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 ### Using API key
 
 ```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
 string endpoint = "<endpoint>";
 string apiKey = "<apiKey>";
 var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));

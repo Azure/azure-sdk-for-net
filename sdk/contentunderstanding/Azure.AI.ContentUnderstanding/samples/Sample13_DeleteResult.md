@@ -2,13 +2,11 @@
 
 This sample demonstrates how to delete analysis results using the `DeleteResult` API. This is useful for removing temporary or sensitive analysis results immediately, rather than waiting for automatic deletion after 24 hours.
 
-## Before you begin
+## About deleting results
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
 - [Sample 12: Get result files][sample12] - Understanding operation IDs
-
-## About deleting results
 
 Analysis results are stored temporarily and can be deleted using the `DeleteResult` API:
 
@@ -20,7 +18,7 @@ Analysis results are stored temporarily and can be deleted using the `DeleteResu
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

@@ -2,12 +2,10 @@
 
 This sample demonstrates how to extract additional features from documents such as charts, hyperlinks, formulas, and annotations using the `prebuilt-documentSearch` analyzer, which has formulas, layout, and OCR enabled by default.
 
-## Before you begin
+## About analysis configs
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-
-## About analysis configs
 
 The `prebuilt-documentSearch` analyzer has the following configurations enabled by default:
 - **EnableFormula**: Extracts mathematical formulas from documents
@@ -24,7 +22,7 @@ For custom analyzers, you can configure these options in `ContentAnalyzerConfig`
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 

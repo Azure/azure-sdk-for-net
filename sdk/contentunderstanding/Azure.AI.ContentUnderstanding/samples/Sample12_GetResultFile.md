@@ -2,12 +2,10 @@
 
 This sample demonstrates how to retrieve result files (such as keyframe images) from a video analysis operation using the `GetResultFile` API.
 
-## Before you begin
+## About result files
 
 This sample builds on concepts introduced in previous samples:
 - [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-
-## About result files
 
 When analyzing video content, the Content Understanding service can generate result files such as:
 - **Keyframe images**: Extracted frames from the video at specific timestamps
@@ -19,7 +17,7 @@ The `GetResultFile` API allows you to retrieve these files using:
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 
