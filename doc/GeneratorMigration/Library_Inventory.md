@@ -12,15 +12,15 @@
 
 ## Summary
 
-- Total libraries: 394
-- Management Plane (MPG): 225
+- Total libraries: 397
+- Management Plane (MPG): 226
   - Autorest/Swagger: 158
-  - New Emitter (TypeSpec): 26
-  - Old TypeSpec: 41
-- Data Plane (DPG): 169
+  - New Emitter (TypeSpec): 31
+  - Old TypeSpec: 37
+- Data Plane (DPG): 171
   - Autorest/Swagger: 86
   - New Emitter (TypeSpec): 19
-  - Old TypeSpec: 15
+  - Old TypeSpec: 17
 - No generator: 49
 
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 19 / 34 (55.9%)
+**Migration Status**: 19 / 36 (52.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -40,6 +40,8 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | batch | Azure.Compute.Batch |  |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
 | communication | Azure.Communication.JobRouter |  |
@@ -166,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 26 / 67 (38.8%)
+**Migration Status**: 31 / 68 (45.6%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -174,7 +176,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | avs | Azure.ResourceManager.Avs |  |
 | azurestackhci | Azure.ResourceManager.Hci.Vm |  |
-| carbon | Azure.ResourceManager.CarbonOptimization |  |
+| carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | chaos | Azure.ResourceManager.Chaos |  |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet |  |
@@ -193,15 +195,16 @@ Libraries that provide resource management APIs for Azure services and have been
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations |  |
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
 | dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
+| edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric |  |
 | grafana | Azure.ResourceManager.Grafana |  |
-| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules |  |
+| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
-| impactreporting | Azure.ResourceManager.ImpactReporting |  |
+| impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations |  |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
@@ -218,7 +221,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock |  |
 | qumulo | Azure.ResourceManager.Qumulo |  |
-| quota | Azure.ResourceManager.Quota |  |
+| quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
 | resources | Azure.ResourceManager.Resources.Bicep |  |

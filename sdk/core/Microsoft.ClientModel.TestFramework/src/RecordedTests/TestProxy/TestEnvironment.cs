@@ -20,20 +20,19 @@ namespace Microsoft.ClientModel.TestFramework;
 /// </summary>
 public abstract class TestEnvironment
 {
-    private static readonly Dictionary<Type, Task> s_environmentStateCache = new();
     private AuthenticationTokenProvider? _credential;
     private TestRecording? _recording;
-    private Dictionary<string, string>? _environmentFile;
-    private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = new();
+    private readonly Dictionary<string, string>? _environmentFile;
+    private static readonly HashSet<Type> s_bootstrappingAttemptedTypes = [];
     private static readonly object s_syncLock = new();
     private Exception? _bootstrappingException;
     private readonly Type _type;
 
     /// <summary>
     /// Gets the root directory of the repository containing the test project.
-    /// This is determined by searching for common repository indicators like .git directories or build files.
+    /// This is determined by searching for common repository indicators like .github directories or build files.
     /// </summary>
-    public static string? RepositoryRoot { get; }
+    public static string? RepositoryRoot { get; protected set; }
 
     /// <summary>
     /// Gets or sets the path to the development certificate used by the test proxy for HTTPS connections.
@@ -61,11 +60,6 @@ public abstract class TestEnvironment
     /// </exception>
     protected TestEnvironment()
     {
-        if (RepositoryRoot == null)
-        {
-            throw new InvalidOperationException("Repository root is not set");
-        }
-
         // DevCertPath is optional - if null, the test proxy will run without HTTPS support
         if (DevCertPath != null && !File.Exists(DevCertPath))
         {
@@ -86,16 +80,12 @@ public abstract class TestEnvironment
         var directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
         string? repositoryRoot = null;
 
-        // Strategy 1: Look for common repository root indicators
         while (directoryInfo != null)
         {
-            // Check for common repository root files/folders
-            if (File.Exists(Path.Combine(directoryInfo.FullName, ".git", "config")) ||
-                Directory.Exists(Path.Combine(directoryInfo.FullName, ".git")) ||
-                File.Exists(Path.Combine(directoryInfo.FullName, "Directory.Build.props")) ||
-                File.Exists(Path.Combine(directoryInfo.FullName, "Directory.Build.targets")) ||
+            if (Directory.Exists(Path.Combine(directoryInfo.FullName, ".git")) ||
+                Directory.Exists(Path.Combine(directoryInfo.FullName, ".github")) ||
                 File.Exists(Path.Combine(directoryInfo.FullName, "global.json")) ||
-                directoryInfo.Name == "artifacts")  // Keep existing Azure SDK logic
+                directoryInfo.Name == "artifacts")
             {
                 repositoryRoot = directoryInfo.Name == "artifacts" ? directoryInfo.Parent?.FullName : directoryInfo.FullName;
                 break;
@@ -104,26 +94,14 @@ public abstract class TestEnvironment
             directoryInfo = directoryInfo.Parent;
         }
 
-        // Strategy 2: Fallback to a reasonable default if no indicators found
-        if (repositoryRoot == null)
-        {
-            // Go up a few levels from the assembly location as a reasonable guess
-            directoryInfo = new DirectoryInfo(Assembly.GetExecutingAssembly().Location);
-            for (int i = 0; i < 4 && directoryInfo?.Parent != null; i++)
-            {
-                directoryInfo = directoryInfo.Parent;
-            }
-            repositoryRoot = directoryInfo?.FullName;
-        }
-
-        if (repositoryRoot is null)
-        {
-            throw new InvalidOperationException("Repository root was not found");
-        }
-
         RepositoryRoot ??= repositoryRoot;
 
-        // Make DevCertPath more flexible too
+        if (RepositoryRoot == null)
+        {
+            throw new InvalidOperationException("Repository root has not been set and was not found when searching. " +
+                "Be sure that the value is set in a static constructor if setting directly.");
+        }
+
         DevCertPath ??= Path.Combine(
             RepositoryRoot,
             "eng",
@@ -155,20 +133,12 @@ public abstract class TestEnvironment
     {
         get
         {
-            if (_credential != null)
+            if (Mode is RecordedTestMode.Live or RecordedTestMode.Record)
             {
-                return _credential;
+                throw new InvalidOperationException("Credential must be overridden in derived class for Live and Record modes.");
             }
 
-            if (Mode == RecordedTestMode.Playback)
-            {
-                _credential = new MockCredential();
-            }
-            else
-            {
-                throw new InvalidOperationException("This getter must be overridden in Live/Record mode");
-            }
-
+            _credential ??= new MockCredential();
             return _credential;
         }
     }
@@ -276,9 +246,6 @@ public abstract class TestEnvironment
     /// <returns>The environment variable value, or null if not found.</returns>
     protected string? GetOptionalVariable(string name)
     {
-        // TODO - add prefix var prefixedName = _prefix + name;
-
-        // Prefixed name overrides non-prefixed
         var value = Environment.GetEnvironmentVariable(name);
 
         if (value == null)

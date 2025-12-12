@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ImpactReporting
 {
+    /// <summary></summary>
     public partial class ImpactInsightResource : IJsonModel<ImpactInsightData>
     {
-        private static ImpactInsightData s_dataDeserializationInstance;
-        private static ImpactInsightData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ImpactInsightData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ImpactInsightData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ImpactInsightData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ImpactInsightData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ImpactInsightData>)Data).Write(writer, options);
 
-        ImpactInsightData IJsonModel<ImpactInsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ImpactInsightData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ImpactInsightData IJsonModel<ImpactInsightData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ImpactInsightData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ImpactInsightData>(Data, options, AzureResourceManagerImpactReportingContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ImpactInsightData IPersistableModel<ImpactInsightData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ImpactInsightData>(data, options, AzureResourceManagerImpactReportingContext.Default);
 
-        string IPersistableModel<ImpactInsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ImpactInsightData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ImpactInsightData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

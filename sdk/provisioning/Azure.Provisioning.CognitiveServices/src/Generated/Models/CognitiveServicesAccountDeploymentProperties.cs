@@ -134,6 +134,18 @@ public partial class CognitiveServicesAccountDeploymentProperties : Provisionabl
     private BicepValue<string>? _parentDeploymentName;
 
     /// <summary>
+    /// Specifies the deployment name that should serve requests when the
+    /// request would have otherwise been throttled due to reaching current
+    /// deployment throughput limit.
+    /// </summary>
+    public BicepValue<string> SpilloverDeploymentName 
+    {
+        get { Initialize(); return _spilloverDeploymentName!; }
+        set { Initialize(); _spilloverDeploymentName!.Assign(value); }
+    }
+    private BicepValue<string>? _spilloverDeploymentName;
+
+    /// <summary>
     /// Creates a new CognitiveServicesAccountDeploymentProperties.
     /// </summary>
     public CognitiveServicesAccountDeploymentProperties()
@@ -159,5 +171,6 @@ public partial class CognitiveServicesAccountDeploymentProperties : Provisionabl
         _currentCapacity = DefineProperty<int>("CurrentCapacity", ["currentCapacity"]);
         _capacitySettings = DefineModelProperty<DeploymentCapacitySettings>("CapacitySettings", ["capacitySettings"]);
         _parentDeploymentName = DefineProperty<string>("ParentDeploymentName", ["parentDeploymentName"]);
+        _spilloverDeploymentName = DefineProperty<string>("SpilloverDeploymentName", ["spilloverDeploymentName"]);
     }
 }

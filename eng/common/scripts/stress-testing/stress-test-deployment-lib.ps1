@@ -172,6 +172,10 @@ function DeployStressTests(
                 -MatrixFilters $MatrixFilters `
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
+    if (!$pkgs -or !$pkgs.Length) {
+        Write-Warning "No stress test packages found in $searchDirectory"
+        exit 0
+    }
     Write-Host "" "Found $($pkgs.Length) stress test packages:"
     Write-Host $pkgs.Directory ""
     foreach ($pkg in $pkgs) {
