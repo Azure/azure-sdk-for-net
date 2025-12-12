@@ -175,7 +175,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
 
         FineTuningClient client = GetTestClient(GetTestClientOptions(version));
 
-        FineTuningJob? job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
+        FineTuningJob? job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded);
 
         Assert.NotNull(job);
         Assert.AreEqual(job!.Status, "succeeded");
@@ -252,7 +252,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
             }
         });
 
-        FineTuningJob? job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded)!;
+        FineTuningJob? job = await client.GetJobsAsync().FirstOrDefaultAsync(j => j.Status == FineTuningStatus.Succeeded);
 
         if (job?.Value == null)
         {
