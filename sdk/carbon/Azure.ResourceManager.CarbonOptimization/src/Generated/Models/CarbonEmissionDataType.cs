@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -14,65 +15,102 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     internal readonly partial struct CarbonEmissionDataType : IEquatable<CarbonEmissionDataType>
     {
         private readonly string _value;
+        /// <summary> The response data type for OverallSummaryReport. </summary>
+        private const string OverallSummaryDataValue = "OverallSummaryData";
+        /// <summary> The response data type for MonthlySummaryReport. </summary>
+        private const string MonthlySummaryDataValue = "MonthlySummaryData";
+        /// <summary> The response data type for TopItemsSummaryReport. </summary>
+        private const string TopItemsSummaryDataValue = "TopItemsSummaryData";
+        /// <summary> The response data type for Resource's TopItemsSummaryReport. </summary>
+        private const string ResourceTopItemsSummaryDataValue = "ResourceTopItemsSummaryData";
+        /// <summary> The response data type for ResourceGroup's TopItemsSummaryReport. </summary>
+        private const string ResourceGroupTopItemsSummaryDataValue = "ResourceGroupTopItemsSummaryData";
+        /// <summary> The response data type for TopItemsMonthlySummaryReport. </summary>
+        private const string TopItemsMonthlySummaryDataValue = "TopItemsMonthlySummaryData";
+        /// <summary> The response data type for Resource's TopItemsMonthlySummaryReport. </summary>
+        private const string ResourceTopItemsMonthlySummaryDataValue = "ResourceTopItemsMonthlySummaryData";
+        /// <summary> The response data type for ResourceGroup's TopItemsMonthlySummaryReport. </summary>
+        private const string ResourceGroupTopItemsMonthlySummaryDataValue = "ResourceGroupTopItemsMonthlySummaryData";
+        /// <summary> The response data type for ItemDetailsReport. </summary>
+        private const string ItemDetailsDataValue = "ItemDetailsData";
+        /// <summary> The response data type for Resource's ItemDetailsReport. </summary>
+        private const string ResourceItemDetailsDataValue = "ResourceItemDetailsData";
+        /// <summary> The response data type for ResourceGroup's ItemDetailsReport. </summary>
+        private const string ResourceGroupItemDetailsDataValue = "ResourceGroupItemDetailsData";
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CarbonEmissionDataType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OverallSummaryDataValue = "OverallSummaryData";
-        private const string MonthlySummaryDataValue = "MonthlySummaryData";
-        private const string TopItemsSummaryDataValue = "TopItemsSummaryData";
-        private const string ResourceTopItemsSummaryDataValue = "ResourceTopItemsSummaryData";
-        private const string ResourceGroupTopItemsSummaryDataValue = "ResourceGroupTopItemsSummaryData";
-        private const string TopItemsMonthlySummaryDataValue = "TopItemsMonthlySummaryData";
-        private const string ResourceTopItemsMonthlySummaryDataValue = "ResourceTopItemsMonthlySummaryData";
-        private const string ResourceGroupTopItemsMonthlySummaryDataValue = "ResourceGroupTopItemsMonthlySummaryData";
-        private const string ItemDetailsDataValue = "ItemDetailsData";
-        private const string ResourceItemDetailsDataValue = "ResourceItemDetailsData";
-        private const string ResourceGroupItemDetailsDataValue = "ResourceGroupItemDetailsData";
+            _value = value;
+        }
 
         /// <summary> The response data type for OverallSummaryReport. </summary>
         public static CarbonEmissionDataType OverallSummaryData { get; } = new CarbonEmissionDataType(OverallSummaryDataValue);
+
         /// <summary> The response data type for MonthlySummaryReport. </summary>
         public static CarbonEmissionDataType MonthlySummaryData { get; } = new CarbonEmissionDataType(MonthlySummaryDataValue);
+
         /// <summary> The response data type for TopItemsSummaryReport. </summary>
         public static CarbonEmissionDataType TopItemsSummaryData { get; } = new CarbonEmissionDataType(TopItemsSummaryDataValue);
+
         /// <summary> The response data type for Resource's TopItemsSummaryReport. </summary>
         public static CarbonEmissionDataType ResourceTopItemsSummaryData { get; } = new CarbonEmissionDataType(ResourceTopItemsSummaryDataValue);
+
         /// <summary> The response data type for ResourceGroup's TopItemsSummaryReport. </summary>
         public static CarbonEmissionDataType ResourceGroupTopItemsSummaryData { get; } = new CarbonEmissionDataType(ResourceGroupTopItemsSummaryDataValue);
+
         /// <summary> The response data type for TopItemsMonthlySummaryReport. </summary>
         public static CarbonEmissionDataType TopItemsMonthlySummaryData { get; } = new CarbonEmissionDataType(TopItemsMonthlySummaryDataValue);
+
         /// <summary> The response data type for Resource's TopItemsMonthlySummaryReport. </summary>
         public static CarbonEmissionDataType ResourceTopItemsMonthlySummaryData { get; } = new CarbonEmissionDataType(ResourceTopItemsMonthlySummaryDataValue);
+
         /// <summary> The response data type for ResourceGroup's TopItemsMonthlySummaryReport. </summary>
         public static CarbonEmissionDataType ResourceGroupTopItemsMonthlySummaryData { get; } = new CarbonEmissionDataType(ResourceGroupTopItemsMonthlySummaryDataValue);
+
         /// <summary> The response data type for ItemDetailsReport. </summary>
         public static CarbonEmissionDataType ItemDetailsData { get; } = new CarbonEmissionDataType(ItemDetailsDataValue);
+
         /// <summary> The response data type for Resource's ItemDetailsReport. </summary>
         public static CarbonEmissionDataType ResourceItemDetailsData { get; } = new CarbonEmissionDataType(ResourceItemDetailsDataValue);
+
         /// <summary> The response data type for ResourceGroup's ItemDetailsReport. </summary>
         public static CarbonEmissionDataType ResourceGroupItemDetailsData { get; } = new CarbonEmissionDataType(ResourceGroupItemDetailsDataValue);
+
         /// <summary> Determines if two <see cref="CarbonEmissionDataType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CarbonEmissionDataType left, CarbonEmissionDataType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CarbonEmissionDataType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CarbonEmissionDataType left, CarbonEmissionDataType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionDataType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CarbonEmissionDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CarbonEmissionDataType(string value) => new CarbonEmissionDataType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CarbonEmissionDataType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CarbonEmissionDataType?(string value) => value == null ? null : new CarbonEmissionDataType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CarbonEmissionDataType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CarbonEmissionDataType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

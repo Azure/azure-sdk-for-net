@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core.Expressions.DataFactory" />
 	  <PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
