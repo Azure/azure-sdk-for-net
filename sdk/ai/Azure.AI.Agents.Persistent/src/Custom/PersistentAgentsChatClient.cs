@@ -5,7 +5,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ClientModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
@@ -13,6 +15,8 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure.Core.Pipeline;
 using Microsoft.Extensions.AI;
 
 #pragma warning disable MEAI001 // MCP-related types are currently marked as [Experimental]
@@ -81,6 +85,8 @@ namespace Azure.AI.Agents.Persistent
         {
             Argument.AssertNotNull(messages, nameof(messages));
 
+            RequestContext requestContext = CreateMeaiRequestContext(cancellationToken);
+
             // Extract necessary state from messages and options.
             (ThreadAndRunOptions runOptions, List<FunctionResultContent>? toolResults, List<McpServerToolApprovalResponseContent>? approvalResults) =
                 await CreateRunOptionsAsync(messages, options, cancellationToken).ConfigureAwait(false);
@@ -92,7 +98,7 @@ namespace Azure.AI.Agents.Persistent
             ThreadRun? threadRun = null;
             if (threadId is not null)
             {
-                await foreach (ThreadRun? run in _client!.Runs.GetRunsAsync(threadId, limit: 1, ListSortOrder.Descending, cancellationToken: cancellationToken).ConfigureAwait(false))
+                await foreach (ThreadRun run in _client!.Runs.GetRunsAsync(threadId, 1, ListSortOrder.Descending, after: null, before: null, context: requestContext).ConfigureAwait(false))
                 {
                     if (run.Status != RunStatus.Incomplete &&
                         run.Status != RunStatus.Completed &&
@@ -116,21 +122,28 @@ namespace Azure.AI.Agents.Persistent
                 // There's an active run and we have tool results to submit for that run, so submit the results and continue streaming.
                 // This is going to ignore any additional messages in the run options, as we are only submitting tool outputs,
                 // but there doesn't appear to be a way to submit additional messages, and having such additional messages is rare.
-                updates = _client!.Runs.SubmitToolOutputsToStreamAsync(threadRun, toolOutputs, toolApprovals, cancellationToken);
+                updates = _client!.Runs.SubmitToolOutputsToStreamWithRequestContextAsync(threadRun, toolOutputs, toolApprovals, requestContext, currentRetry: 0);
             }
             else
             {
                 if (threadId is null)
                 {
                     // No thread ID was provided, so create a new thread.
-                    PersistentAgentThread thread = await _client!.Threads.CreateThreadAsync(runOptions.ThreadOptions.Messages, runOptions.ToolResources, runOptions.Metadata, cancellationToken).ConfigureAwait(false);
-                    runOptions.ThreadOptions.Messages.Clear();
+                    CreateThreadRequest createThreadRequest = new(
+                        messages: runOptions.ThreadOptions.Messages?.ToList() as IReadOnlyList<ThreadMessageOptions> ?? new ChangeTrackingList<ThreadMessageOptions>(),
+                        toolResources: runOptions.ToolResources,
+                        metadata: runOptions.Metadata ?? new ChangeTrackingDictionary<string, string>(),
+                        serializedAdditionalRawData: null);
+
+                    Response threadResponse = await _client!.Threads.CreateThreadAsync(createThreadRequest.ToRequestContent(), requestContext).ConfigureAwait(false);
+                    PersistentAgentThread thread = PersistentAgentThread.FromResponse(threadResponse);
+                    runOptions.ThreadOptions.Messages?.Clear();
                     threadId = thread.Id;
                 }
                 else if (threadRun is not null)
                 {
                     // There was an active run; we need to cancel it before starting a new run.
-                    await _client!.Runs.CancelRunAsync(threadId, threadRun.Id, cancellationToken).ConfigureAwait(false);
+                    await _client!.Runs.CancelRunAsync(threadId, threadRun.Id, requestContext).ConfigureAwait(false);
                     threadRun = null;
                 }
 
@@ -155,12 +168,7 @@ namespace Azure.AI.Agents.Persistent
                 };
 
                 // This method added for compatibility, before the include parameter support was enabled.
-                updates = _client!.Runs.CreateRunStreamingAsync(
-                    threadId: threadId,
-                    agentId: _agentId,
-                    options: opts,
-                    cancellationToken: cancellationToken
-                );
+                updates = _client!.Runs.CreateRunStreamingWithRequestContextAsync(threadId, _agentId, opts, requestContext);
             }
 
             // Process each update.
@@ -364,7 +372,12 @@ namespace Azure.AI.Agents.Persistent
             // Load details about the agent if not already loaded.
             if (_agent is null)
             {
-                PersistentAgent agent = await _client!.Administration.GetAgentAsync(_agentId, cancellationToken).ConfigureAwait(false);
+                Argument.AssertNotNullOrEmpty(_agentId, nameof(_agentId));
+
+                RequestContext context = CreateMeaiRequestContext(cancellationToken);
+                Response response = await _client!.Administration.GetAgentAsync(_agentId, context).ConfigureAwait(false);
+                var agent = Response.FromValue(PersistentAgent.FromResponse(response), response);
+
                 Interlocked.CompareExchange(ref _agent, agent, null);
             }
 
@@ -663,6 +676,18 @@ namespace Azure.AI.Agents.Persistent
             return (runOptions, functionResults, approvalResults);
         }
 
+        private static RequestContext CreateMeaiRequestContext(CancellationToken cancellationToken)
+        {
+            RequestContext context = new();
+            if (cancellationToken.CanBeCanceled)
+            {
+                context.CancellationToken = cancellationToken;
+            }
+
+            context.AddPolicy(MeaiUserAgentPolicy.Instance, Core.HttpPipelinePosition.PerCall);
+            return context;
+        }
+
         /// <summary>Convert <see cref="FunctionResultContent"/> instances to <see cref="ToolOutput"/> instances.</summary>
         /// <param name="functionResults">The function results to process.</param>
         /// <param name="approvalResults">The MCP tool approval results to process.</param>
@@ -776,6 +801,50 @@ namespace Azure.AI.Agents.Persistent
             public int GetHashCode(ToolDefinition obj) =>
                 obj is FunctionToolDefinition ftd ? ftd.Name.GetHashCode() :
                 EqualityComparer<ToolDefinition>.Default.GetHashCode(obj);
+        }
+
+        /// <summary>Provides a pipeline policy that adds a "MEAI/x.y.z" user-agent header.</summary>
+        private sealed class MeaiUserAgentPolicy : HttpPipelinePolicy
+        {
+            public static MeaiUserAgentPolicy Instance { get; } = new MeaiUserAgentPolicy();
+
+            private static readonly string _userAgentValue = CreateUserAgentValue();
+
+            private static void AddUserAgentHeader(Core.HttpMessage message) =>
+                message.Request.Headers.Add("User-Agent", _userAgentValue);
+
+            private static string CreateUserAgentValue()
+            {
+                const string Name = "MEAI";
+
+                if (typeof(MeaiUserAgentPolicy).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion is string version)
+                {
+                    int pos = version.IndexOf('+');
+                    if (pos >= 0)
+                    {
+                        version = version.Substring(0, pos);
+                    }
+
+                    if (version.Length > 0)
+                    {
+                        return $"{Name}/{version}";
+                    }
+                }
+
+                return Name;
+            }
+
+            public override ValueTask ProcessAsync(Core.HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                AddUserAgentHeader(message);
+                return ProcessNextAsync(message, pipeline);
+            }
+
+            public override void Process(Core.HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                AddUserAgentHeader(message);
+                ProcessNext(message, pipeline);
+            }
         }
     }
 }

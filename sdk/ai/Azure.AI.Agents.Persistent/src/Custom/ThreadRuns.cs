@@ -678,6 +678,29 @@ namespace Azure.AI.Agents.Persistent
             );
         }
 
+        internal virtual AsyncPageable<ThreadRun> GetRunsAsync(string threadId, int? limit, ListSortOrder? order, string after, string before, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+
+            HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunsRequest(
+                threadId: threadId,
+                limit: limit,
+                order: order?.ToString(),
+                after: continuationToken,
+                before: before,
+                context: context);
+
+            return new ContinuationTokenPageableAsync<ThreadRun>(
+                createPageRequest: PageRequest,
+                valueFactory: e => ThreadRun.DeserializeThreadRun(e),
+                pipeline: _pipeline,
+                clientDiagnostics: ClientDiagnostics,
+                scopeName: "ThreadMessagesClient.GetMessages",
+                requestContext: context,
+                after: after
+            );
+        }
+
         /// <summary> Gets a list of runs for a specified thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
