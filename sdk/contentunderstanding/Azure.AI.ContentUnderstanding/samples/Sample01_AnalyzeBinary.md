@@ -114,7 +114,7 @@ Content Understanding generates rich GitHub Flavored Markdown that is ideal for 
 
 > **Note:** Each prebuilt analyzer and each custom analyzer use configuration to disable or enable different parts of the markdown output. The `prebuilt-documentSearch` analyzer has `enableFormula`, `enableLayout`, `enableOcr`, `enableFigureDescription`, `enableFigureAnalysis`, and `returnDetails` enabled by default, which enables extraction of charts with figure descriptions, formulas, hyperlinks, and annotations. For custom analyzers or to enable additional features, configure these options in `ContentAnalyzerConfig`. See [Sample 10: Analyze documents with configs][sample10] for more details.
 
-This structured markdown format makes documents easily searchable and consumable by AI models while maintaining the original document's layout and semantic structure. For detailed information about all markdown elements and their representation, see [Document analysis: Markdown representation](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/markdown).
+This structured markdown format makes documents easily searchable and consumable by AI models while maintaining the original document's layout and semantic structure. For detailed information about all markdown elements and their representation, see [Document analysis: Markdown representation][cu-document-markdown].
 
 ## Access document properties
 

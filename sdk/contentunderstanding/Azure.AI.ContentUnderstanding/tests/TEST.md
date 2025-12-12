@@ -2,7 +2,7 @@
 
 This guide explains how to set up and run tests for the Azure AI Content Understanding SDK for .NET.
 
-> **Note:** These tests are primarily intended for SDK contributors and maintainers. If you're an SDK user looking to learn how to use the SDK, please refer to the [samples](../samples/) directory instead, which contains working examples and documentation for common scenarios.
+> **Note:** These tests are primarily intended for SDK contributors and maintainers. If you're an SDK user looking to learn how to use the SDK, please refer to the [samples directory][samples-directory] instead, which contains working examples and documentation for common scenarios.
 
 ## Prerequisites
 
@@ -12,7 +12,7 @@ This guide explains how to set up and run tests for the Azure AI Content Underst
 
 ## Environment Setup
 
-Tests require environment variables to be set before running. The environment variable names align with the [Python SDK](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/contentunderstanding/azure-ai-contentunderstanding) for consistency.
+Tests require environment variables to be set before running. The environment variable names align with the [Python SDK](https://github.com/Azure/azure-sdk-for-python/tree/main/sdk/contentunderstanding/azure-ai-content-understanding) for consistency.
 
 ### Required Environment Variables
 
@@ -203,3 +203,4 @@ If tests fail with model deployment errors:
 - [Azure SDK Test Framework Documentation](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core.TestFramework/README.md)
 - [Content Understanding Service Documentation](https://learn.microsoft.com/azure/ai-services/content-understanding/)
 
+[samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
