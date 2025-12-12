@@ -326,32 +326,13 @@ Published Agents are available outside the Microsoft Foundry and can be used by 
 4. Select the created Agent at the central panel and click **Publish** at the upper right corner.
 
 After the Agent is published, you will be provided with two URLs
-- `https://<Fondry Name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/activityprotocol?api-version=2025-11-15-preview`
-- `https://<Fondry Name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/openai/responses?=2025-11-15-preview`
+- `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/activityprotocol?api-version=2025-11-15-preview`
+- `https://<Account name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/openai/responses?=2025-11-15-preview`
 
 The second URL can be usedto call responses API, we will use it to run sample.
 
 ### Use the published Agent
-The URL, returned during Agent publishing contains `/openai/responses` path and query parameter, setting `api-version`. These parts need to be removed by `CleanEndpoint` method.
-
-```C# Snippet:Sample_CleanUri_PublishedAgent
-private static Uri CleanEndpoint(string endpoint)
-{
-    Uri uriEndpoint = new(endpoint);
-    // Remove the Query part.
-    if (!string.IsNullOrEmpty(uriEndpoint.Query))
-    {
-        uriEndpoint = new(uriEndpoint.AbsolutePath);
-    }
-    // Remove /openai/responses path as it will be added back by framework.
-    string responsesSuffix = "/openai/responses";
-    if (uriEndpoint.LocalPath.EndsWith(responsesSuffix))
-    {
-        return new(uriEndpoint.AbsolutePath.Substring(0, uriEndpoint.AbsolutePath.Length - responsesSuffix.Length));
-    }
-    return uriEndpoint;
-}
-```
+The URL, returned during Agent publishing contains `/openai/responses` path and query parameter, setting `api-version`. These parts need to be removed.
 
 Create a `ProjectResponsesClient`, get the response from Agent and print the output.
 

@@ -12,25 +12,6 @@ namespace Azure.AI.Projects.OpenAI.Tests.Samples;
 
 public class Sample_PublishedAgent : ProjectsOpenAITestBase
 {
-    #region Snippet:Sample_CleanUri_PublishedAgent
-    private static Uri CleanEndpoint(string endpoint)
-    {
-        Uri uriEndpoint = new(endpoint);
-        // Remove the Query part.
-        if (!string.IsNullOrEmpty(uriEndpoint.Query))
-        {
-            uriEndpoint = new(uriEndpoint.AbsolutePath);
-        }
-        // Remove /openai/responses path as it will be added back by framework.
-        string responsesSuffix = "/openai/responses";
-        if (uriEndpoint.LocalPath.EndsWith(responsesSuffix))
-        {
-            return new(uriEndpoint.AbsolutePath.Substring(0, uriEndpoint.AbsolutePath.Length - responsesSuffix.Length));
-        }
-        return uriEndpoint;
-    }
-    #endregion
-
     [Test]
     [AsyncOnly]
     public async Task PublishedAgentAync()
@@ -42,7 +23,7 @@ public class Sample_PublishedAgent : ProjectsOpenAITestBase
 #else
         var publishedEndpoint = TestEnvironment.PUBLISHED_ENDPOINT;
 #endif
-        Uri endpoint = CleanEndpoint(publishedEndpoint);
+        Uri endpoint = new(publishedEndpoint);
         #endregion
         #region Snippet:Sample_CreateResponse_ReadEndpoint_Async
         ProjectResponsesClient responseClient = new(
@@ -64,7 +45,7 @@ public class Sample_PublishedAgent : ProjectsOpenAITestBase
 #else
         var publishedEndpoint = TestEnvironment.PUBLISHED_ENDPOINT;
 #endif
-        Uri endpoint = CleanEndpoint(publishedEndpoint);
+        Uri endpoint = new(publishedEndpoint);
         #region Snippet:Sample_CreateResponse_ReadEndpoint_Sync
         ProjectResponsesClient responseClient = new(
             projectEndpoint: endpoint,
