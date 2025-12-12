@@ -1,45 +1,95 @@
 import "@azure-tools/typespec-azure-resource-manager";
 import "@typespec/rest";
+import "@typespec/http";
 using Azure.ResourceManager;
+using Azure.ResourceManager.Legacy;
 using TypeSpec.Rest;
+using TypeSpec.Http;
 
 namespace MgmtTypeSpec;
 
-// This file demonstrates the scenario where different models can be used for parent/child resources.
-// The emitter now supports generating separate resource metadata for each unique resource path,
-// even if they share common properties or base models.
+// This file demonstrates the scenario where the SAME model is used by two different
+// resource interfaces operating at different paths, matching the legacy-operations pattern.
+// This uses Azure.ResourceManager.Legacy.LegacyOperations to define different path patterns
+// for the same resource model.
 
-/** A practice resource model */
+/** A best practice resource - used by both parent and child operations */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
 @tenantResource
-model Practice is ProxyResource<PracticeProperties> {
-  ...ResourceNameParameter<Practice>;
+model BestPractice is ProxyResource<BestPracticeProperties> {
+  ...ResourceNameParameter<
+    Resource = BestPractice,
+    KeyName = "bestPracticeName",
+    SegmentName = "bestPractices",
+    NamePattern = ""
+  >;
+  ...Legacy.ExtendedLocationOptionalProperty;
 }
 
-/** Practice properties */
-model PracticeProperties {
-  /** The description of the practice */
+/** Best practice properties */
+model BestPracticeProperties {
+  ...DefaultProvisioningStateProperty;
+
+  /** The description of the best practice */
   description?: string;
 }
 
-/** Practice operations on /practices/{practiceName} */
+// Define operation aliases with different path patterns using LegacyOperations
+alias BestPracticeOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    /** The name of the best practice */
+    @segment("bestPractices")
+    @key
+    @path
+    bestPracticeName: string;
+  }
+>;
+
+alias BestPracticesVersionOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+
+    /** The name of the best practice */
+    @segment("bestPractices")
+    @key
+    @path
+    bestPracticeName: string;
+  },
+  {
+    /** The name of the version */
+    @segment("versions")
+    @key
+    @path
+    versionName: string;
+  }
+>;
+
+/** Best practice operations on /bestPractices/{bestPracticeName} */
 @armResourceOperations
-interface Practices {
-  get is ArmResourceRead<Practice>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<Practice>;
-  delete is ArmResourceDeleteWithoutOkAsync<Practice>;
+interface BestPractices {
+  get is BestPracticeOps.Read<BestPractice>;
+  createOrUpdate is BestPracticeOps.CreateOrUpdateSync<BestPractice>;
+  update is BestPracticeOps.CustomPatchSync<
+    BestPractice,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<BestPractice, BestPracticeProperties>
+  >;
+  delete is BestPracticeOps.DeleteSync<BestPractice>;
 }
 
-/** A practice version child resource - shares same properties but different model */
-@tenantResource
-@parentResource(Practice)
-model PracticeVersion is ProxyResource<PracticeProperties> {
-  ...ResourceNameParameter<PracticeVersion>;
-}
-
-/** Practice version operations on /practices/{practiceName}/practiceVersions/{versionName} */
+/** Best practice version operations on /bestPractices/{bestPracticeName}/versions/{versionName} */
+/** NOTE: This interface uses the SAME BestPractice model but at a different path */
 @armResourceOperations
-interface PracticeVersions {
-  get is ArmResourceRead<PracticeVersion>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<PracticeVersion>;
-  delete is ArmResourceDeleteWithoutOkAsync<PracticeVersion>;
+interface BestPracticeVersions {
+  get is BestPracticesVersionOps.Read<BestPractice>;
+  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPractice>;
+  update is BestPracticesVersionOps.CustomPatchSync<
+    BestPractice,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<BestPractice, BestPracticeProperties>
+  >;
+  delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
 }

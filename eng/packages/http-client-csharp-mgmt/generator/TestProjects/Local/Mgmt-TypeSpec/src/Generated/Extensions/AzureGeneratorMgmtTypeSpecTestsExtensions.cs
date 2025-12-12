@@ -528,39 +528,21 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PracticeResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="BestPracticeResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetPracticeResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetBestPracticeResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PracticeResource"/> object. </returns>
-        public static PracticeResource GetPracticeResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BestPracticeResource"/> object. </returns>
+        public static BestPracticeResource GetBestPracticeResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetPracticeResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PracticeVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetPracticeVersionResource(ResourceIdentifier)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PracticeVersionResource"/> object. </returns>
-        public static PracticeVersionResource GetPracticeVersionResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetPracticeVersionResource(id);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetBestPracticeResource(id);
         }
 
         /// <summary>
@@ -1212,58 +1194,58 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Gets a collection of Practices in the <see cref="TenantResource"/>
+        /// Gets a collection of BestPractices in the <see cref="TenantResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetPractices()"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPractices()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        /// <returns> An object representing collection of Practices and their operations over a PracticeResource. </returns>
-        public static PracticeCollection GetPractices(this TenantResource tenantResource)
+        /// <returns> An object representing collection of BestPractices and their operations over a BestPracticeResource. </returns>
+        public static BestPracticeCollection GetBestPractices(this TenantResource tenantResource)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetPractices();
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPractices();
         }
 
         /// <summary>
-        /// Get a Practice
+        /// Get a BestPractice
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetPracticeAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPracticeAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="practiceName"> The name of the Practice. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<PracticeResource>> GetPracticeAsync(this TenantResource tenantResource, string practiceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BestPracticeResource>> GetBestPracticeAsync(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetPracticeAsync(practiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPracticeAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a Practice
+        /// Get a BestPractice
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetPractice(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPractice(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="practiceName"> The name of the Practice. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<PracticeResource> GetPractice(this TenantResource tenantResource, string practiceName, CancellationToken cancellationToken = default)
+        public static Response<BestPracticeResource> GetBestPractice(this TenantResource tenantResource, string bestPracticeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetPractice(practiceName, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPractice(bestPracticeName, cancellationToken);
         }
 
         /// <summary>

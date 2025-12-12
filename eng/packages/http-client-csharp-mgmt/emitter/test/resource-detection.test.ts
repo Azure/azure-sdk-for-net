@@ -1222,44 +1222,74 @@ interface Employees {
   });
 
   it("multiple resources sharing same model", async () => {
-    // This test validates the scenario where the same model is used by two different
-    // resource interfaces operating at different paths (similar to the legacy-operations example)
+    // This test validates the scenario where the SAME model is used by two different
+    // resource interfaces operating at different paths using LegacyOperations (similar to the legacy-operations example)
     const program = await typeSpecCompile(
       `
-/** A practice resource model */
+/** A best practice resource - used by both interfaces */
+#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
 @tenantResource
-model Practice is ProxyResource<PracticeProperties> {
-  ...ResourceNameParameter<Practice>;
+model BestPractice is ProxyResource<BestPracticeProperties> {
+  ...ResourceNameParameter<
+    Resource = BestPractice,
+    KeyName = "bestPracticeName",
+    SegmentName = "bestPractices",
+    NamePattern = ""
+  >;
+  ...Azure.ResourceManager.Legacy.ExtendedLocationOptionalProperty;
 }
 
-/** Practice properties */
-model PracticeProperties {
-  /** The description */
+/** Best practice properties */
+model BestPracticeProperties {
+  ...DefaultProvisioningStateProperty;
   description?: string;
 }
 
-/** Practice parent operations on /practices/{practiceName} */
+// Define operation aliases with different path patterns using LegacyOperations
+alias BestPracticeOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+  },
+  {
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+  }
+>;
+
+alias BestPracticesVersionOps = Azure.ResourceManager.Legacy.LegacyOperations<
+  {
+    ...ApiVersionParameter;
+    ...Azure.ResourceManager.Legacy.Provider;
+    @segment("bestPractices")
+    @key
+    @TypeSpec.Http.path
+    bestPracticeName: string;
+  },
+  {
+    @segment("versions")
+    @key
+    @TypeSpec.Http.path
+    versionName: string;
+  }
+>;
+
+/** Best practice operations */
 @armResourceOperations
-interface Practices {
-  get is ArmResourceRead<Practice>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<Practice>;
-  delete is ArmResourceDeleteWithoutOkAsync<Practice>;
+interface BestPractices {
+  get is BestPracticeOps.Read<BestPractice>;
+  createOrUpdate is BestPracticeOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticeOps.DeleteSync<BestPractice>;
 }
 
-/** A PracticeVersion child resource using the same Practice model */
-@tenantResource
-@parentResource(Practice)
-model PracticeVersion is ProxyResource<PracticeProperties> {
-  ...ResourceNameParameter<PracticeVersion>;
-}
-
-/** Practice child operations on /practices/{practiceName}/versions/{versionName} */
-/** Note: This uses PracticeVersion model, not the same Practice model */
+/** Best practice version operations - uses the SAME BestPractice model */
 @armResourceOperations
-interface PracticeVersions {
-  get is ArmResourceRead<PracticeVersion>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<PracticeVersion>;
-  delete is ArmResourceDeleteWithoutOkAsync<PracticeVersion>;
+interface BestPracticeVersions {
+  get is BestPracticesVersionOps.Read<BestPractice>;
+  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
 }
 `,
       runner
@@ -1269,46 +1299,62 @@ interface PracticeVersions {
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
 
-    const practicesClient = getAllClients(root).find(
-      (c) => c.name === "Practices"
-    );
-    ok(practicesClient);
+    // Verify BestPractice model exists
+    const bestPracticeModel = root.models.find((m) => m.name === "BestPractice");
+    ok(bestPracticeModel, "BestPractice model should exist");
 
-    const practiceVersionsClient = getAllClients(root).find(
-      (c) => c.name === "PracticeVersions"
-    );
-    ok(practiceVersionsClient);
-
-    // Verify Practice model has one metadata
-    const practiceModel = root.models.find((m) => m.name === "Practice");
-    ok(practiceModel);
-    const practiceMetadata = practiceModel.decorators?.filter(
+    // Verify BestPractice model has TWO metadata decorators (one for each interface)
+    const resourceMetadataDecorators = bestPracticeModel.decorators?.filter(
       (d) => d.name === resourceMetadata
     );
-    ok(practiceMetadata);
-    strictEqual(practiceMetadata.length, 1, "Practice should have one metadata");
-    strictEqual(practiceMetadata[0].arguments.resourceName, "Practice");
+    ok(resourceMetadataDecorators, "Should have resource metadata decorators");
     strictEqual(
-      practiceMetadata[0].arguments.resourceIdPattern,
-      "/providers/Microsoft.ContosoProviderHub/practices/{practiceName}"
+      resourceMetadataDecorators.length,
+      2,
+      "Should have TWO resource metadata decorators for the same model"
     );
 
-    // Verify PracticeVersion model has one metadata  
-    const versionModel = root.models.find((m) => m.name === "PracticeVersion");
-    ok(versionModel);
-    const versionMetadata = versionModel.decorators?.filter(
-      (d) => d.name === resourceMetadata
+    // Find metadata for BestPractices resource (parent-level)
+    const bestPracticesMetadata = resourceMetadataDecorators.find((d) =>
+      d.arguments?.resourceIdPattern?.includes("/bestPractices/{bestPracticeName}") &&
+      !d.arguments?.resourceIdPattern?.includes("/versions")
     );
-    ok(versionMetadata);
-    strictEqual(versionMetadata.length, 1, "PracticeVersion should have one metadata");
-    strictEqual(versionMetadata[0].arguments.resourceName, "PracticeVersion");
+    ok(bestPracticesMetadata, "Should have metadata for parent-level resource");
     strictEqual(
-      versionMetadata[0].arguments.resourceIdPattern,
-      "/providers/Microsoft.ContosoProviderHub/practices/{practiceName}/practiceVersions/{practiceVersionName}"
+      bestPracticesMetadata.arguments.resourceName,
+      "BestPractice",
+      "Parent resource should be named BestPractice"
     );
     strictEqual(
-      versionMetadata[0].arguments.parentResourceId,
-      "/providers/Microsoft.ContosoProviderHub/practices/{practiceName}"
+      bestPracticesMetadata.arguments.resourceIdPattern,
+      "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}"
     );
+    strictEqual(
+      bestPracticesMetadata.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/bestPractices"
+    );
+    strictEqual(bestPracticesMetadata.arguments.methods.length, 3, "Should have 3 methods");
+
+    // Find metadata for BestPracticeVersions resource (child-level)
+    const bestPracticeVersionsMetadata = resourceMetadataDecorators.find((d) =>
+      d.arguments?.resourceIdPattern?.includes("/versions/{versionName}")
+    );
+    ok(bestPracticeVersionsMetadata, "Should have metadata for child-level resource");
+    strictEqual(
+      bestPracticeVersionsMetadata.arguments.resourceName,
+      "BestPracticeVersion",
+      "Child resource should be named BestPracticeVersion"
+    );
+    strictEqual(
+      bestPracticeVersionsMetadata.arguments.resourceIdPattern,
+      "/providers/Microsoft.ContosoProviderHub/bestPractices/{bestPracticeName}/versions/{versionName}"
+    );
+    strictEqual(
+      bestPracticeVersionsMetadata.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/bestPractices/versions"
+    );
+    strictEqual(bestPracticeVersionsMetadata.arguments.methods.length, 3, "Should have 3 methods");
+    // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
+    // The parent-child relationship is inferred from the path structure in the generator
   });
 });

@@ -281,22 +281,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return new SAPVirtualInstanceResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="PracticeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="BestPracticeResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PracticeResource"/> object. </returns>
-        public virtual PracticeResource GetPracticeResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="BestPracticeResource"/> object. </returns>
+        public virtual BestPracticeResource GetBestPracticeResource(ResourceIdentifier id)
         {
-            PracticeResource.ValidateResourceId(id);
-            return new PracticeResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="PracticeVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PracticeVersionResource"/> object. </returns>
-        public virtual PracticeVersionResource GetPracticeVersionResource(ResourceIdentifier id)
-        {
-            PracticeVersionResource.ValidateResourceId(id);
-            return new PracticeVersionResource(Client, id);
+            BestPracticeResource.ValidateResourceId(id);
+            return new BestPracticeResource(Client, id);
         }
     }
 }

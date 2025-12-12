@@ -17,12 +17,12 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> A practice resource model. </summary>
-    public partial class PracticeData : ResourceData, IJsonModel<PracticeData>
+    /// <summary> A best practice resource - used by both parent and child operations. </summary>
+    public partial class BestPracticeData : ResourceData, IJsonModel<BestPracticeData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PracticeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<BestPracticeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PracticeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PracticeData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(BestPracticeData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -44,28 +44,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(ExtendedLocation))
+            {
+                writer.WritePropertyName("extendedLocation"u8);
+                writer.WriteObjectValue(ExtendedLocation, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PracticeData IJsonModel<PracticeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PracticeData)JsonModelCreateCore(ref reader, options);
+        BestPracticeData IJsonModel<BestPracticeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BestPracticeData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PracticeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PracticeData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(BestPracticeData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePracticeData(document.RootElement, options);
+            return DeserializeBestPracticeData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PracticeData DeserializePracticeData(JsonElement element, ModelReaderWriterOptions options)
+        internal static BestPracticeData DeserializeBestPracticeData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,7 +81,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             ResourceType resourceType = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PracticeProperties properties = default;
+            BestPracticeProperties properties = default;
+            ExtendedLocation1 extendedLocation = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -117,7 +123,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     {
                         continue;
                     }
-                    properties = PracticeProperties.DeserializePracticeProperties(prop.Value, options);
+                    properties = BestPracticeProperties.DeserializeBestPracticeProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("extendedLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extendedLocation = ExtendedLocation1.DeserializeExtendedLocation1(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,72 +140,73 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PracticeData(
+            return new BestPracticeData(
                 id,
                 name,
                 resourceType,
                 systemData,
                 additionalBinaryDataProperties,
-                properties);
+                properties,
+                extendedLocation);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PracticeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<BestPracticeData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PracticeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PracticeData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestPracticeData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PracticeData IPersistableModel<PracticeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (PracticeData)PersistableModelCreateCore(data, options);
+        BestPracticeData IPersistableModel<BestPracticeData>.Create(BinaryData data, ModelReaderWriterOptions options) => (BestPracticeData)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PracticeData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BestPracticeData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePracticeData(document.RootElement, options);
+                        return DeserializeBestPracticeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PracticeData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BestPracticeData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PracticeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<BestPracticeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="practiceData"> The <see cref="PracticeData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(PracticeData practiceData)
+        /// <param name="bestPracticeData"> The <see cref="BestPracticeData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BestPracticeData bestPracticeData)
         {
-            if (practiceData == null)
+            if (bestPracticeData == null)
             {
                 return null;
             }
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(practiceData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(bestPracticeData, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PracticeData"/> from. </param>
-        internal static PracticeData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="BestPracticeData"/> from. </param>
+        internal static BestPracticeData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializePracticeData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeBestPracticeData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

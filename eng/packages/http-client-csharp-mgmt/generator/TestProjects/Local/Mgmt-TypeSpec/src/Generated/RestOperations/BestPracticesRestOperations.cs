@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class PracticeVersions
+    internal partial class BestPractices
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of PracticeVersions for mocking. </summary>
-        protected PracticeVersions()
+        /// <summary> Initializes a new instance of BestPractices for mocking. </summary>
+        protected BestPractices()
         {
         }
 
-        /// <summary> Initializes a new instance of PracticeVersions. </summary>
+        /// <summary> Initializes a new instance of BestPractices. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal PracticeVersions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal BestPractices(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,14 +41,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string practiceName, string practiceVersionName, RequestContext context)
+        internal HttpMessage CreateGetRequest(string bestPracticeName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/MgmtTypeSpec/practices/", false);
-            uri.AppendPath(practiceName, true);
-            uri.AppendPath("/practiceVersions/", false);
-            uri.AppendPath(practiceVersionName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/bestPractices/", false);
+            uri.AppendPath(bestPracticeName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -58,14 +56,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string practiceName, string practiceVersionName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string bestPracticeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/MgmtTypeSpec/practices/", false);
-            uri.AppendPath(practiceName, true);
-            uri.AppendPath("/practiceVersions/", false);
-            uri.AppendPath(practiceVersionName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/bestPractices/", false);
+            uri.AppendPath(bestPracticeName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -77,14 +73,29 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string practiceName, string practiceVersionName, RequestContext context)
+        internal HttpMessage CreateUpdateRequest(string bestPracticeName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/providers/MgmtTypeSpec/practices/", false);
-            uri.AppendPath(practiceName, true);
-            uri.AppendPath("/practiceVersions/", false);
-            uri.AppendPath(practiceVersionName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/bestPractices/", false);
+            uri.AppendPath(bestPracticeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Patch;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(string bestPracticeName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/MgmtTypeSpec/bestPractices/", false);
+            uri.AppendPath(bestPracticeName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

@@ -46,23 +46,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
         private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
-        /// <summary> Gets a collection of Practices in the <see cref="TenantResource"/>. </summary>
-        /// <returns> An object representing collection of Practices and their operations over a PracticeResource. </returns>
-        public virtual PracticeCollection GetPractices()
+        /// <summary> Gets a collection of BestPractices in the <see cref="TenantResource"/>. </summary>
+        /// <returns> An object representing collection of BestPractices and their operations over a BestPracticeResource. </returns>
+        public virtual BestPracticeCollection GetBestPractices()
         {
-            return GetCachedClient(client => new PracticeCollection(client, Id));
+            return GetCachedClient(client => new BestPracticeCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a Practice
+        /// Get a BestPractice
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/practices/{practiceName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Practices_Get. </description>
+        /// <description> BestPractices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -70,28 +70,28 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="practiceName"> The name of the Practice. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="practiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="practiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<PracticeResource>> GetPracticeAsync(string practiceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BestPracticeResource>> GetBestPracticeAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(practiceName, nameof(practiceName));
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
-            return await GetPractices().GetAsync(practiceName, cancellationToken).ConfigureAwait(false);
+            return await GetBestPractices().GetAsync(bestPracticeName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a Practice
+        /// Get a BestPractice
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/practices/{practiceName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Practices_Get. </description>
+        /// <description> BestPractices_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -99,16 +99,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="practiceName"> The name of the Practice. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="practiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="practiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<PracticeResource> GetPractice(string practiceName, CancellationToken cancellationToken = default)
+        public virtual Response<BestPracticeResource> GetBestPractice(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(practiceName, nameof(practiceName));
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
-            return GetPractices().Get(practiceName, cancellationToken);
+            return GetBestPractices().Get(bestPracticeName, cancellationToken);
         }
 
         /// <summary>

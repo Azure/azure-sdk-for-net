@@ -13,50 +13,38 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> A practice version child resource - shares same properties but different model. </summary>
-    public partial class PracticeVersionData : ResourceData
+    /// <summary> A best practice resource - used by both parent and child operations. </summary>
+    public partial class BestPracticeData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PracticeVersionData"/>. </summary>
-        public PracticeVersionData()
+        /// <summary> Initializes a new instance of <see cref="BestPracticeData"/>. </summary>
+        public BestPracticeData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PracticeVersionData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestPracticeData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal PracticeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PracticeProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="extendedLocation"></param>
+        internal BestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BestPracticeProperties properties, ExtendedLocation1 extendedLocation) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            ExtendedLocation = extendedLocation;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        internal PracticeProperties Properties { get; set; }
+        public BestPracticeProperties Properties { get; set; }
 
-        /// <summary> The description of the practice. </summary>
-        [WirePath("properties.description")]
-        public string PracticeDescription
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PracticeProperties();
-                }
-                Properties.Description = value;
-            }
-        }
+        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        [WirePath("extendedLocation")]
+        public ExtendedLocation1 ExtendedLocation { get; set; }
     }
 }
