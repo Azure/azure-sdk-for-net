@@ -110,9 +110,9 @@ namespace Azure.Generator.Management.Primitives
         }
 
         public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression)
-            => _typeToSerializationExpression.TryGetValue(type, out expression);
+            => _typeToSerializationExpression.TryGetValue(type.WithNullable(false), out expression);
 
         public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression)
-            => _typeToDeserializationExpression.TryGetValue(type, out expression);
+            => _typeToDeserializationExpression.TryGetValue(type.WithNullable(false), out expression);
     }
 }
