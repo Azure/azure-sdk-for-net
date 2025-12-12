@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- Bugbash mcp validation
 
 ## 1.0.0 (2025-10-13)
 
