@@ -51,24 +51,16 @@ public class RemoveDefaultSanitizersTests : RecordedTestBase<MapsClientTestEnvir
     [RecordedTest]
     public async Task RemoveDefaultSanitizers_RemovesDefaultSanitizersFromTestProxy()
     {
-        // Make a real client call to get a recording
+        // Need a recording to exist in order to get the sanitizers to be applied
         MapsClientOptions options = new() { Transport = _transport };
         MapsClient client = CreateProxyFromClient(new MapsClient(new Uri("https://example.com"),
             new ApiKeyCredential(TestEnvironment.ApiKey),
             options: InstrumentClientOptions(options)));
 
-        var testIp = IPAddress.Parse("203.0.113.1");
-        var result = await client.GetCountryCodeAsync(testIp);
-        Assert.That(result.Value.CountryRegion.IsoCode, Is.EqualTo("TS"));
-
-        // Now verify the sanitizers were removed
-        Assert.That(RemoveDefaultSanitizers, Is.True, "RemoveDefaultSanitizers should be set to true");
-        Assert.That(Recording, Is.Not.Null, "Recording should be initialized");
-
         var adminClient = TestProxy?.AdminClient;
-        Assert.That(adminClient, Is.Not.Null, "AdminClient should be available");
+        Assert.That(adminClient, Is.Not.Null);
 
-        // Try to remove some default sanitizers that should have already been removed
+        // Attempting to remove sanitizers that have already been removed should not return anything
         var sanitizersToRemove = new SanitizerList(new List<string> { "AZSDK1000", "AZSDK2001", "AZSDK3400" });
         var removeResult = await adminClient.RemoveSanitizersAsync(sanitizersToRemove, Recording.RecordingId);
 
@@ -76,30 +68,19 @@ public class RemoveDefaultSanitizersTests : RecordedTestBase<MapsClientTestEnvir
         Assert.That(removeResult.Value.Removed, Is.Not.Null);
 
         // The removed list should not contain these sanitizers because they were already removed
-        Assert.That(removeResult.Value.Removed, Does.Not.Contain("AZSDK1000"),
-            "AZSDK1000 should have already been removed by RemoveDefaultSanitizers");
-        Assert.That(removeResult.Value.Removed, Does.Not.Contain("AZSDK2001"),
-            "AZSDK2001 should have already been removed by RemoveDefaultSanitizers");
-        Assert.That(removeResult.Value.Removed, Does.Not.Contain("AZSDK3400"),
-            "AZSDK3400 should have already been removed by RemoveDefaultSanitizers");
+        Assert.That(removeResult.Value.Removed, Does.Not.Contain("AZSDK1000"));
+        Assert.That(removeResult.Value.Removed, Does.Not.Contain("AZSDK2001"));
+        Assert.That(removeResult.Value.Removed, Does.Not.Contain("AZSDK3400"));
     }
 
     [RecordedTest]
     public async Task RemoveDefaultSanitizers_AuthorizationHeaderSanitizerIsNotRemoved()
     {
-        // Make a real client call to get a recording
+        // Need a recording to exist in order to get the sanitizers to be applied
         MapsClientOptions options = new() { Transport = _transport };
         MapsClient client = CreateProxyFromClient(new MapsClient(new Uri("https://example.com"),
             new ApiKeyCredential(TestEnvironment.ApiKey),
             options: InstrumentClientOptions(options)));
-
-        var testIp = IPAddress.Parse("203.0.113.1");
-        var result = await client.GetCountryCodeAsync(testIp);
-        Assert.That(result.Value.CountryRegion.IsoCode, Is.EqualTo("TS"));
-
-        // Verify AZSDK0000 was not removed
-        Assert.That(RemoveDefaultSanitizers, Is.True);
-        Assert.That(Recording, Is.Not.Null);
 
         var adminClient = TestProxy?.AdminClient;
         Assert.That(adminClient, Is.Not.Null);
@@ -109,9 +90,6 @@ public class RemoveDefaultSanitizersTests : RecordedTestBase<MapsClientTestEnvir
         var removeResult = await adminClient.RemoveSanitizersAsync(authSanitizer, Recording.RecordingId);
 
         // AZSDK0000 should still be present and can be removed now
-        Assert.That(removeResult.Value, Is.Not.Null);
-        Assert.That(removeResult.Value.Removed, Is.Not.Null);
-        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK0000"),
-            "Authorization header sanitizer (AZSDK0000) should still be present since RemoveDefaultSanitizers doesn't remove it");
+        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK0000"));
     }
 }

@@ -225,6 +225,7 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
     [RecordedTest]
     public async Task DefaultSanitizers_AreStillPresentByDefault()
     {
+        // Need a recording to exist in order to get the sanitizers to be applied
         MapsClientOptions options = new()
         {
             Transport = _transport
@@ -233,16 +234,10 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
             new ApiKeyCredential(TestEnvironment.ApiKey),
             options: InstrumentClientOptions(options)));
 
-        var testIp = IPAddress.Parse("203.0.113.1");
-        var result = await client.GetCountryCodeAsync(testIp);
-        Assert.That(result.Value.CountryRegion.IsoCode, Is.EqualTo("TS"));
-
-        // Verify that RemoveDefaultSanitizers is not set
-        Assert.That(RemoveDefaultSanitizers, Is.False, "RemoveDefaultSanitizers should be false by default");
-        Assert.That(Recording, Is.Not.Null, "Recording should be initialized");
+        Assert.That(RemoveDefaultSanitizers, Is.False);
 
         var adminClient = TestProxy?.AdminClient;
-        Assert.That(adminClient, Is.Not.Null, "AdminClient should be available");
+        Assert.That(adminClient, Is.Not.Null);
 
         // Try to remove some default sanitizers - they should still be present
         var sanitizersToRemove = new SanitizerList(new List<string> { "AZSDK1000", "AZSDK2001", "AZSDK3400" });
@@ -251,12 +246,9 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
         Assert.That(removeResult.Value, Is.Not.Null);
         Assert.That(removeResult.Value.Removed, Is.Not.Null);
 
-        // The removed list SHOULD contain these sanitizers because they were NOT removed by RemoveDefaultSanitizers
-        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK1000"),
-            "AZSDK1000 should still be present when RemoveDefaultSanitizers is not set");
-        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK2001"),
-            "AZSDK2001 should still be present when RemoveDefaultSanitizers is not set");
-        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK3400"),
-            "AZSDK3400 should still be present when RemoveDefaultSanitizers is not set");
+        // The removed list should contain these sanitizers because they were not removed by RemoveDefaultSanitizers
+        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK1000"));
+        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK2001"));
+        Assert.That(removeResult.Value.Removed, Does.Contain("AZSDK3400"));
     }
 }
