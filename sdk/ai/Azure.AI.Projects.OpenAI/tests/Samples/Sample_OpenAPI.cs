@@ -59,7 +59,7 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_OpenAPI_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
+        ResponseResult response = await responseClient.CreateResponseAsync(
                 userInputText: "Use the OpenAPI tool to print out, what is the weather in Seattle, WA today."
             );
         Console.WriteLine(response.GetOutputText());
@@ -104,7 +104,7 @@ public class Sample_OpenAPI : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_OpenAPI_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        OpenAIResponse response = responseClient.CreateResponse(
+        ResponseResult response = responseClient.CreateResponse(
                 userInputText: "Use the OpenAPI tool to print out, what is the weather in Seattle, WA today."
             );
         Console.WriteLine(response.GetOutputText());

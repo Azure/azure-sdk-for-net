@@ -77,7 +77,7 @@ internal class HeaderPolicy(string image_deployment) : PipelinePolicy
 }
 ```
 
-4. Use the policy to create the `OpenAIClient` object and create the `OpenAIResponseClient` by asking the Agent to generate the image.
+4. Use the policy to create the `OpenAIClient` object and create the `ResponsesClient` by asking the Agent to generate the image.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponse_ImageGeneration_Sync
@@ -85,7 +85,7 @@ ProjectOpenAIClientOptions options = new();
 ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
 ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
-OpenAIResponse response = responseClient.CreateResponse("Generate parody of Newton with apple.");
+ResponseResult response = responseClient.CreateResponse("Generate parody of Newton with apple.");
 ```
 
 Asynchronous sample:
@@ -94,10 +94,10 @@ ProjectOpenAIClientOptions options = new();
 ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
 ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
+ResponseResult response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
 ```
 
-5. Parse the `OpenAIResponse` object and save the generated image.
+5. Parse the `ResponseResult` object and save the generated image.
 
 ```C# Snippet:Sample_SaveImage_ImageGeneration
 foreach (ResponseItem item in response.OutputItems)

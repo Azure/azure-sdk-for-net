@@ -46,11 +46,12 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_Fabric_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems = { ResponseItem.CreateUserMessageItem("What was the number of public holidays in Norway in 2024?") },
         };
-        OpenAIResponse response = await responseClient.CreateResponseAsync("What was the number of public holidays in Norway in 2024?", options: responseOptions);
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         #endregion
 
         #region Snippet:Sample_WaitForResponse_Fabric
@@ -96,11 +97,12 @@ public class Sample_Fabric : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_Fabric_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems = { ResponseItem.CreateUserMessageItem("What was the number of public holidays in Norway in 2024?") },
         };
-        OpenAIResponse response = responseClient.CreateResponse("What was the number of public holidays in Norway in 2024?", options: responseOptions);
+        ResponseResult response = responseClient.CreateResponse(responseOptions);
         #endregion
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));

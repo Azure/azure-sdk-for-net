@@ -58,11 +58,15 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_AgentToAgent_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("What can the secondary agent do?"),
+            },
         };
-        OpenAIResponse response = await responseClient.CreateResponseAsync("What can the secondary agent do?", options: responseOptions);
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         #endregion
 
         #region Snippet:Sample_WaitForResponse_AgentToAgent
@@ -119,11 +123,12 @@ public class Sample_AgentToAgent : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_AgentToAgent_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems = { ResponseItem.CreateUserMessageItem("What can the secondary agent do?") },
         };
-        OpenAIResponse response = responseClient.CreateResponse("What can the secondary agent do?", options: responseOptions);
+        ResponseResult response = responseClient.CreateResponse(responseOptions);
         #endregion
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));

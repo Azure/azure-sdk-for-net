@@ -47,7 +47,7 @@ public class Sample_BingGrounding : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_BingGrounding_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("How does wikipedia explain Euler's Identity?");
+        ResponseResult response = await responseClient.CreateResponseAsync("How does wikipedia explain Euler's Identity?");
         #endregion
 
         #region Snippet:Sample_WaitForResponse_BingGrounding
@@ -94,7 +94,7 @@ public class Sample_BingGrounding : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_BingGrounding_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = responseClient.CreateResponse("How does wikipedia explain Euler's Identity?");
+        ResponseResult response = responseClient.CreateResponse("How does wikipedia explain Euler's Identity?");
         #endregion
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -106,7 +106,7 @@ public class Sample_BingGrounding : ProjectsOpenAITestBase
     }
 
     #region Snippet:Sample_FormatReference_BingGrounding
-    private static string GetFormattedAnnotation(OpenAIResponse response)
+    private static string GetFormattedAnnotation(ResponseResult response)
     {
         foreach (ResponseItem item in response.OutputItems)
         {

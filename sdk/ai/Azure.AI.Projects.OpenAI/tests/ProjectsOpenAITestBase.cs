@@ -125,12 +125,12 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
                 options));
     }
 
-    protected OpenAIResponseClient GetTestBaseResponsesClient(Uri overrideEndpoint = null, string overrideModel = null)
+    protected ResponsesClient GetTestBaseResponsesClient(Uri overrideEndpoint = null, string overrideModel = null)
     {
         OpenAIClientOptions options = CreateTestOpenAIClientOptions<OpenAIClientOptions>(overrideEndpoint);
 
         return CreateProxyFromClient(
-            new OpenAIResponseClient(
+            new ResponsesClient(
                 overrideModel ?? TestEnvironment.MODELDEPLOYMENTNAME,
                 new ApiKeyCredential(TestEnvironment.PARITY_OPENAI_API_KEY),
                 options));
@@ -146,7 +146,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         };
     }
 
-    protected OpenAIResponseClient GetTestResponsesClient(OpenAIClientMode clientMode, string overrideModel = null)
+    protected ResponsesClient GetTestResponsesClient(OpenAIClientMode clientMode, string overrideModel = null)
     {
         return clientMode switch
         {
@@ -171,7 +171,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
 
     protected AuthenticationPolicy GetTestAuthenticationPolicy() => new BearerTokenPolicy(GetTestAuthenticationProvider(), "https://ai.azure.com/.default");
 
-    protected async Task<OpenAIResponse> WaitForRun(OpenAIResponseClient responses, OpenAIResponse response, int waitTime=500)
+    protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime=500)
     {
         while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed)
         {

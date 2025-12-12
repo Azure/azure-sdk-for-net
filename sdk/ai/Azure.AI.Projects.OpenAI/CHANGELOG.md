@@ -1,10 +1,11 @@
 # Release History
-## 1.0.0-beta.5 (Unreleased)
+
+## 1.0.0-beta.5 (2025-12-12)
 
 ## Features Added
 
+- Added transitive compatibility for `OpenAI 2.8.0`, including significant changes to the `[Experimental]` Responses API surface
 - Added possibility of authentication to MCP server using project connection.
-
 
 ## 1.0.0-beta.4 (2025-11-17)
 
@@ -16,7 +17,7 @@ This change updates the baseline `OpenAI` dependency to the latest `2.7.0` offic
 
 **Transitive from upgrade to System.ClientModel 1.8.1**:
 
-- The extension `StructuredInputs` on `ResponseCreationOptions` will now correctly return a `BinaryData` instance with enclosing quotes included when retrieving an encoded string value
+- The extension `StructuredInputs` on `CreateResponseOptions` will now correctly return a `BinaryData` instance with enclosing quotes included when retrieving an encoded string value
 
 ## 1.0.0-beta.3 (2025-11-15)
 
@@ -44,6 +45,6 @@ This is the first release of the `Azure.AI.Projects.OpenAI` library, a new exten
 
 ### Features Added
 
-- `Responses` support, including C# 14 extension properties to `OpenAIResponse` and `ResponseCreationOptions`, together with a `ProjectResponsesClient` type (extends official `OpenAIResponseClient`)
+- `Responses` support, including C# 14 extension properties to `ResponseResult` and `CreateResponseOptions`, together with a `ProjectResponsesClient` type (extends official `ResponsesClient`)
 - `Files` support, including a `ProjectFilesClient` type (extends official `OpenAIFileClient`)
 - Types and functionality in support of `Azure.AI.Projects` OpenAI-based features, including new Microsoft Foundry Agents Service capabilities

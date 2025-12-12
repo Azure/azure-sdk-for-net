@@ -165,7 +165,7 @@ public class Sample_Function : ProjectsOpenAITestBase
         ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
         List<ResponseItem> inputItems = [request];
         bool funcionCalled = false;
-        OpenAIResponse response;
+        ResponseResult response;
         do
         {
             response = await CreateAndCheckResponseAsync(
@@ -192,9 +192,9 @@ public class Sample_Function : ProjectsOpenAITestBase
     }
 
     #region Snippet:Sample_CheckResponse_Function_Async
-    public static async Task<OpenAIResponse> CreateAndCheckResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+    public static async Task<ResponseResult> CreateAndCheckResponseAsync(ResponsesClient responseClient, IEnumerable<ResponseItem> items)
     {
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
+        ResponseResult response = await responseClient.CreateResponseAsync(
             inputItems: items);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
@@ -202,9 +202,9 @@ public class Sample_Function : ProjectsOpenAITestBase
     #endregion
 
     #region Snippet:Sample_CheckResponse_Function_Sync
-    public static OpenAIResponse CreateAndCheckResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+    public static ResponseResult CreateAndCheckResponse(ResponsesClient responseClient, IEnumerable<ResponseItem> items)
     {
-        OpenAIResponse response = responseClient.CreateResponse(
+        ResponseResult response = responseClient.CreateResponse(
             inputItems: items);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         return response;
@@ -238,12 +238,12 @@ public class Sample_Function : ProjectsOpenAITestBase
             options: new(agentDefinition));
         #endregion
         #region Snippet:Sample_CreateResponse_Function_Sync
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
         List<ResponseItem> inputItems = [request];
         bool funcionCalled = false;
-        OpenAIResponse response;
+        ResponseResult response;
         do
         {
             response = CreateAndCheckResponse(

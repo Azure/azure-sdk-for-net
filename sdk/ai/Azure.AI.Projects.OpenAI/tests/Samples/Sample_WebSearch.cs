@@ -41,7 +41,7 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_WebSearch_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Show me the latest London Underground service updates");
+        ResponseResult response = await responseClient.CreateResponseAsync("Show me the latest London Underground service updates");
         #endregion
 
         #region Snippet:Sample_WaitForResponse_WebSearch
@@ -81,7 +81,7 @@ public class Sample_WebSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_WebSearch_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = responseClient.CreateResponse("Show me the latest London Underground service updates");
+        ResponseResult response = responseClient.CreateResponse("Show me the latest London Underground service updates");
         #endregion
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));

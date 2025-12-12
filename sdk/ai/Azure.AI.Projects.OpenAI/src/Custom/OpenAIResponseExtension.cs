@@ -15,33 +15,33 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public static partial class OpenAIResponseExtension
+public static partial class ResponseResultExtension
 {
-    public static ClientResult<OpenAIResponse> CreateResponse(this OpenAIResponseClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    public static ClientResult<ResponseResult> CreateResponse(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
         ClientResult protocolResult = responseClient.CreateResponse(
             content,
             cancellationToken.ToRequestOptions() ?? new RequestOptions()
         );
-        OpenAIResponse convenienceValue = (OpenAIResponse)protocolResult;
+        ResponseResult convenienceValue = (ResponseResult)protocolResult;
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
-    public static async Task<ClientResult<OpenAIResponse>> CreateResponseAsync(this OpenAIResponseClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
+    public static async Task<ClientResult<ResponseResult>> CreateResponseAsync(this ResponsesClient responseClient, ProjectConversation conversation, AgentReference agentRef, CancellationToken cancellationToken = default)
     {
         using BinaryContent content = RemoveItems(conversation: conversation, agentRef: agentRef);
         ClientResult protocolResult = await responseClient.CreateResponseAsync(
             content,
             cancellationToken.ToRequestOptions() ?? new RequestOptions()
         ).ConfigureAwait(false);
-        OpenAIResponse convenienceValue = (OpenAIResponse)protocolResult;
+        ResponseResult convenienceValue = (ResponseResult)protocolResult;
         return ClientResult.FromValue(convenienceValue, protocolResult.GetRawResponse());
     }
 
     private static BinaryContent RemoveItems(ProjectConversation conversation, AgentReference agentRef)
     {
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Agent = agentRef,
             AgentConversationId = conversation.Id,

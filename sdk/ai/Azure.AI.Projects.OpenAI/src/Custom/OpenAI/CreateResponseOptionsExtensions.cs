@@ -18,16 +18,10 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public static partial class ResponseCreationOptionsExtensions
+public static partial class CreateResponseOptionsExtensions
 {
-    extension(ResponseCreationOptions options)
+    extension(CreateResponseOptions options)
     {
-        public string Model
-        {
-            get => options.Patch.GetStringEx("$.model"u8);
-            set => options.Patch.SetOrClearEx("$.model"u8, "$.model"u8, value);
-        }
-
         public AgentReference Agent
         {
             get => options.Patch.GetJsonModelEx<AgentReference>("$.agent"u8);

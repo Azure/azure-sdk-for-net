@@ -64,8 +64,8 @@ public class ConversationsTests : ProjectsOpenAITestBase
         }
 
         Assert.That(items, Has.Count.EqualTo(4));
-        Assert.That(items.First().AsOpenAIResponseItem(), Is.InstanceOf<FunctionCallOutputResponseItem>());
-        Assert.That(items.Last().AsOpenAIResponseItem(), Is.InstanceOf<MessageResponseItem>());
+        Assert.That(items.First().AsResponseResultItem(), Is.InstanceOf<FunctionCallOutputResponseItem>());
+        Assert.That(items.Last().AsResponseResultItem(), Is.InstanceOf<MessageResponseItem>());
 
         items.Clear();
         await foreach (AgentResponseItem item in client.Conversations.GetProjectConversationItemsAsync(conversation.Id, order: "asc"))
@@ -74,8 +74,8 @@ public class ConversationsTests : ProjectsOpenAITestBase
         }
 
         Assert.That(items, Has.Count.EqualTo(4));
-        Assert.That(items.First().AsOpenAIResponseItem(), Is.InstanceOf<MessageResponseItem>());
-        Assert.That(items.Last().AsOpenAIResponseItem(), Is.InstanceOf<FunctionCallOutputResponseItem>());
+        Assert.That(items.First().AsResponseResultItem(), Is.InstanceOf<MessageResponseItem>());
+        Assert.That(items.Last().AsResponseResultItem(), Is.InstanceOf<FunctionCallOutputResponseItem>());
 
         items.Clear();
         await foreach (AgentResponseItem item in client.Conversations.GetProjectConversationItemsAsync(conversation.Id, itemKind: AgentResponseItemKind.Message))
@@ -84,7 +84,7 @@ public class ConversationsTests : ProjectsOpenAITestBase
         }
 
         Assert.That(items, Has.Count.EqualTo(2));
-        Assert.That(items.All(item => item.AsOpenAIResponseItem() as MessageResponseItem is not null), Is.True);
+        Assert.That(items.All(item => item.AsResponseResultItem() as MessageResponseItem is not null), Is.True);
 
         AgentResponseItem retrievedItem = await client.Conversations.GetProjectConversationItemAsync(conversation.Id, items.Last().Id);
         Assert.That(retrievedItem.Id, Is.EqualTo(items.Last().Id));

@@ -97,23 +97,26 @@ private static void ParseResponse(StreamingResponseUpdate streamResponse)
 }
 ```
 
-4. Create the response stream. We also make sure that the agent using tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on the `ResponseCreationOptions`.
+4. Create the response stream. We also make sure that the agent using tool by setting `ToolChoice = ResponseToolChoice.CreateRequiredChoice()` on the `CreateResponseOptions`.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    StreamingEnabled = true,
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+            "To do that, go to the website finance.yahoo.com.\n" +
+            "At the top of the page, you will find a search bar.\n" +
+            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+    }
 };
-foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(
-        userInputText: "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-        "To do that, go to the website finance.yahoo.com.\n" +
-        "At the top of the page, you will find a search bar.\n" +
-        "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-        "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-        "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.",
-        options: responseOptions))
+foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreaming(responseOptions))
 {
     ParseResponse(update);
 }
@@ -122,18 +125,21 @@ foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamin
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    StreamingEnabled = true,
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+            "To do that, go to the website finance.yahoo.com.\n" +
+            "At the top of the page, you will find a search bar.\n" +
+            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+    }
 };
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(
-        userInputText: "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-        "To do that, go to the website finance.yahoo.com.\n" +
-        "At the top of the page, you will find a search bar.\n" +
-        "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-        "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-        "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.",
-        options: responseOptions))
+await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(update);
 }

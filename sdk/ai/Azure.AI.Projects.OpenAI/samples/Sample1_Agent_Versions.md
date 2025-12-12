@@ -72,18 +72,18 @@ ProjectConversation conversation
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Sync
-OpenAIResponseClient responseClient
+ResponsesClient responseClient
     = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
+ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateSimpleResponse_Async
-OpenAIResponseClient responseClient
+ResponsesClient responseClient
     = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 ```
 
 6. Print the output; raise the error if the request was not successful.

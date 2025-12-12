@@ -57,26 +57,26 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-3. Create a `OpenAIResponse` object.
+3. Create a `ResponseResult` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_AzureAISearch_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = responseClient.CreateResponse("What is the temperature rating of the cozynights sleeping bag?");
+ResponseResult response = responseClient.CreateResponse("What is the temperature rating of the cozynights sleeping bag?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_AzureAISearch_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("What is the temperature rating of the cozynights sleeping bag?");
+ResponseResult response = await responseClient.CreateResponseAsync("What is the temperature rating of the cozynights sleeping bag?");
 ```
 
 4. In our search we have used an index containing "embedding", "token", "category", "title" and "url" fields as shown in the image. ![Sample index](images/sample_index.png) The last two fields are needed to get citation title and url, retrieved by the agent. To get the reference we need to parse the output items. We will do it in the helper method `GetFormattedAnnotation`.
 
 ```C# Snippet:Sample_FormatReference_AzureAISearch
-private static string GetFormattedAnnotation(OpenAIResponse response)
+private static string GetFormattedAnnotation(ResponseResult response)
 {
     foreach (ResponseItem item in response.OutputItems)
     {

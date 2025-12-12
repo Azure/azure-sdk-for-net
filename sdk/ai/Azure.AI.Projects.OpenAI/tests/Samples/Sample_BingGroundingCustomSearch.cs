@@ -49,7 +49,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_CustomBingSearch_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("How many medals did the USA win in the 2024 summer olympics?");
+        ResponseResult response = await responseClient.CreateResponseAsync("How many medals did the USA win in the 2024 summer olympics?");
         #endregion
 
         #region Snippet:Sample_WaitForResponse_CustomBingSearch
@@ -97,7 +97,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_CustomBingSearch_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = responseClient.CreateResponse("How many medals did the USA win in the 2024 summer olympics?");
+        ResponseResult response = responseClient.CreateResponse("How many medals did the USA win in the 2024 summer olympics?");
         #endregion
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -109,7 +109,7 @@ public class Sample_CustomBingSearch : ProjectsOpenAITestBase
     }
 
     #region Snippet:Sample_FormatReference_CustomBingSearch
-    private static string GetFormattedAnnotation(OpenAIResponse response)
+    private static string GetFormattedAnnotation(ResponseResult response)
     {
         foreach (ResponseItem item in response.OutputItems)
         {

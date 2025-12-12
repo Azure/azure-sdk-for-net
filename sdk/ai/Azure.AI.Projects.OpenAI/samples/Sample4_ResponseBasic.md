@@ -10,18 +10,18 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Use the client to create a `ProjectResponsesClient`, which will be used to create `OpenAIResponse` object.
+2. Use the client to create a `ProjectResponsesClient`, which will be used to create `ResponseResult` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
-OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
+ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
-OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
+ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
 3. Write the response output, raise the error if the request was not successful.
