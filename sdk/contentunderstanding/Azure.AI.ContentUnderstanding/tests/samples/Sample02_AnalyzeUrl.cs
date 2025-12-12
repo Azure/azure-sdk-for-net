@@ -39,10 +39,22 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("Markdown:");
             Console.WriteLine(content.Markdown);
 
-            DocumentContent snippetDocumentContent = (DocumentContent)content;
-            Console.WriteLine($"MIME type: {snippetDocumentContent.MimeType}");
-            Console.WriteLine($"Pages: {snippetDocumentContent.StartPageNumber} - {snippetDocumentContent.EndPageNumber}");
-            Console.WriteLine($"Tables found: {snippetDocumentContent.Tables?.Count ?? 0}");
+            // Cast MediaContent to DocumentContent to access document-specific properties
+            // DocumentContent derives from MediaContent and provides additional properties
+            // to access full information about document, including Pages, Tables and many others
+            DocumentContent documentContent = (DocumentContent)content;
+            Console.WriteLine($"Pages: {documentContent.StartPageNumber} - {documentContent.EndPageNumber}");
+
+            // Check for pages
+            if (documentContent.Pages != null && documentContent.Pages.Count > 0)
+            {
+                Console.WriteLine($"Number of pages: {documentContent.Pages.Count}");
+                foreach (var page in documentContent.Pages)
+                {
+                    var unit = documentContent.Unit?.ToString() ?? "units";
+                    Console.WriteLine($"  Page {page.PageNumber}: {page.Width} x {page.Height} {unit}");
+                }
+            }
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeUrlAsync
@@ -76,134 +88,84 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"Markdown content extracted successfully ({mediaContent.Markdown.Length} characters)");
             }
 
-            // Check if this is document content to access document-specific properties
-            if (content is DocumentContent documentContent)
-            {
-                Console.WriteLine($"Document type: {documentContent.MimeType ??  "(unknown)"}");
-                Console.WriteLine($"Start page: {documentContent.StartPageNumber}");
-                Console.WriteLine($"End page: {documentContent.EndPageNumber}");
-                Console.WriteLine($"Total pages: {documentContent.EndPageNumber - documentContent.StartPageNumber + 1}");
-
-                // Check for pages
-                if (documentContent.Pages != null && documentContent.Pages.Count > 0)
-                {
-                    Console.WriteLine($"Number of pages: {documentContent.Pages.Count}");
-                    foreach (var page in documentContent.Pages)
-                    {
-                        var unit = documentContent.Unit?.ToString() ?? "units";
-                        Console.WriteLine($"  Page {page.PageNumber}: {page.Width} x {page.Height} {unit}");
-                    }
-                }
-
-                // Check for tables
-                if (documentContent.Tables != null && documentContent.Tables.Count > 0)
-                {
-                    Console.WriteLine($"Number of tables: {documentContent.Tables.Count}");
-                    int tableCounter = 1;
-                    foreach (var table in documentContent.Tables)
-                    {
-                        Console.WriteLine($"  Table {tableCounter}: {table.RowCount} rows x {table.ColumnCount} columns");
-                        tableCounter++;
-                    }
-                }
-            }
-
             Assert.IsNotNull(content, "Content should not be null for document properties validation");
+            Assert.IsInstanceOf<DocumentContent>(content, "Content should be of type DocumentContent");
+            DocumentContent docContent = (DocumentContent)content;
 
-            if (content is DocumentContent docContent)
+            // Validate MIME type
+            Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(docContent.MimeType), "MIME type should not be empty");
+            Assert.AreEqual("application/pdf", docContent.MimeType, "MIME type should be application/pdf");
+            Console.WriteLine($"MIME type verified: {docContent.MimeType}");
+
+            // Validate page numbers
+            Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
+            Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
+                "End page should be >= start page");
+            int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
+            Assert.IsTrue(totalPages > 0, "Total pages should be positive");
+            Console.WriteLine($"Page range verified: {docContent.StartPageNumber} to {docContent.EndPageNumber} ({totalPages} pages)");
+
+            // Validate pages collection
+            Assert.IsNotNull(docContent.Pages, "Pages collection should not be null");
+            Assert.IsTrue(docContent.Pages.Count > 0, "Pages collection should not be empty");
+            Assert.AreEqual(totalPages, docContent.Pages.Count,
+                "Pages collection count should match calculated total pages");
+            Console.WriteLine($"Pages collection verified: {docContent.Pages.Count} pages");
+
+            // Track page numbers to ensure they're sequential and unique
+            var pageNumbers = new System.Collections.Generic.HashSet<int>();
+
+            foreach (var page in docContent.Pages)
             {
-                // Validate MIME type
-                Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(docContent.MimeType), "MIME type should not be empty");
-                Assert.AreEqual("application/pdf", docContent.MimeType, "MIME type should be application/pdf");
-                Console.WriteLine($"MIME type verified: {docContent.MimeType}");
+                Assert.IsNotNull(page, "Page object should not be null");
+                Assert.IsTrue(page.PageNumber >= 1, "Page number should be >= 1");
+                Assert.IsTrue(page.PageNumber >= docContent.StartPageNumber &&
+                            page.PageNumber <= docContent.EndPageNumber,
+                    $"Page number {page.PageNumber} should be within document range [{docContent.StartPageNumber}, {docContent.EndPageNumber}]");
+                Assert.IsTrue(page.Width > 0, $"Page {page.PageNumber} width should be > 0, but was {page.Width}");
+                Assert.IsTrue(page.Height > 0, $"Page {page.PageNumber} height should be > 0, but was {page.Height}");
 
-                // Validate page numbers
-                Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
-                Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
-                    "End page should be >= start page");
-                int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
-                Assert.IsTrue(totalPages > 0, "Total pages should be positive");
-                Console.WriteLine($"Page range verified: {docContent.StartPageNumber} to {docContent.EndPageNumber} ({totalPages} pages)");
+                // Ensure page numbers are unique
+                Assert.IsTrue(pageNumbers.Add(page.PageNumber),
+                    $"Page number {page.PageNumber} appears multiple times");
 
-                // Validate pages collection
-                if (docContent.Pages != null && docContent.Pages.Count > 0)
+                Console.WriteLine($"  Page {page.PageNumber}: {page.Width} x {page.Height} {docContent.Unit?.ToString() ?? "units"}");
+            }
+
+            // Validate tables collection
+            Assert.IsNotNull(docContent.Tables, "Tables collection should not be null");
+            Assert.IsTrue(docContent.Tables.Count > 0, "Tables collection should not be empty");
+            Console.WriteLine($"Tables collection verified: {docContent.Tables.Count} tables");
+
+            int tableCounter = 1;
+            foreach (var table in docContent.Tables)
+            {
+                Assert.IsNotNull(table, $"Table {tableCounter} should not be null");
+                Assert.IsTrue(table.RowCount > 0, $"Table {tableCounter} should have at least 1 row, but had {table.RowCount}");
+                Assert.IsTrue(table.ColumnCount > 0, $"Table {tableCounter} should have at least 1 column, but had {table.ColumnCount}");
+
+                // Validate table cells if available
+                if (table.Cells != null)
                 {
-                    Assert.IsTrue(docContent.Pages.Count > 0, "Pages collection should not be empty when not null");
-                    Assert.AreEqual(totalPages, docContent.Pages.Count,
-                        "Pages collection count should match calculated total pages");
-                    Console.WriteLine($"Pages collection verified: {docContent.Pages.Count} pages");
+                    Assert.IsTrue(table.Cells.Count > 0, $"Table {tableCounter} cells collection should not be empty when not null");
 
-                    // Track page numbers to ensure they're sequential and unique
-                    var pageNumbers = new System.Collections.Generic.HashSet<int>();
-
-                    foreach (var page in docContent.Pages)
+                    foreach (var cell in table.Cells)
                     {
-                        Assert.IsNotNull(page, "Page object should not be null");
-                        Assert.IsTrue(page.PageNumber >= 1, "Page number should be >= 1");
-                        Assert.IsTrue(page.PageNumber >= docContent.StartPageNumber &&
-                                    page.PageNumber <= docContent.EndPageNumber,
-                            $"Page number {page.PageNumber} should be within document range [{docContent.StartPageNumber}, {docContent.EndPageNumber}]");
-                        Assert.IsTrue(page.Width > 0, $"Page {page.PageNumber} width should be > 0, but was {page.Width}");
-                        Assert.IsTrue(page.Height > 0, $"Page {page.PageNumber} height should be > 0, but was {page.Height}");
-
-                        // Ensure page numbers are unique
-                        Assert.IsTrue(pageNumbers.Add(page.PageNumber),
-                            $"Page number {page.PageNumber} appears multiple times");
-
-                        Console.WriteLine($"  Page {page.PageNumber}: {page.Width} x {page.Height} {docContent.Unit?.ToString() ?? "units"}");
+                        Assert.IsNotNull(cell, "Table cell should not be null");
+                        Assert.IsTrue(cell.RowIndex >= 0 && cell.RowIndex < table.RowCount,
+                            $"Cell row index {cell.RowIndex} should be within table row count {table.RowCount}");
+                        Assert.IsTrue(cell.ColumnIndex >= 0 && cell.ColumnIndex < table.ColumnCount,
+                            $"Cell column index {cell.ColumnIndex} should be within table column count {table.ColumnCount}");
                     }
                 }
-                else
-                {
-                    Console.WriteLine("⚠️ No pages collection available in document content");
-                }
 
-                // Validate tables collection
-                if (docContent.Tables != null && docContent.Tables.Count > 0)
-                {
-                    Assert.IsTrue(docContent.Tables.Count > 0, "Tables collection should not be empty when not null");
-                    Console.WriteLine($"Tables collection verified: {docContent.Tables.Count} tables");
-
-                    int tableCounter = 1;
-                    foreach (var table in docContent.Tables)
-                    {
-                        Assert.IsNotNull(table, $"Table {tableCounter} should not be null");
-                        Assert.IsTrue(table.RowCount > 0, $"Table {tableCounter} should have at least 1 row, but had {table.RowCount}");
-                        Assert.IsTrue(table.ColumnCount > 0, $"Table {tableCounter} should have at least 1 column, but had {table.ColumnCount}");
-
-                        // Validate table cells if available
-                        if (table.Cells != null)
-                        {
-                            Assert.IsTrue(table.Cells.Count > 0, $"Table {tableCounter} cells collection should not be empty when not null");
-
-                            foreach (var cell in table.Cells)
-                            {
-                                Assert.IsNotNull(cell, "Table cell should not be null");
-                                Assert.IsTrue(cell.RowIndex >= 0 && cell.RowIndex < table.RowCount,
-                                    $"Cell row index {cell.RowIndex} should be within table row count {table.RowCount}");
-                                Assert.IsTrue(cell.ColumnIndex >= 0 && cell.ColumnIndex < table.ColumnCount,
-                                    $"Cell column index {cell.ColumnIndex} should be within table column count {table.ColumnCount}");
-                            }
-                        }
-
-                        Console.WriteLine($"  Table {tableCounter}: {table.RowCount} rows x {table.ColumnCount} columns" +
-                            (table.Cells != null ? $" ({table.Cells.Count} cells)" : ""));
-                        tableCounter++;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("⚠️ No tables found in document content");
-                }
-
-                Console.WriteLine("All document properties validated successfully");
+                Console.WriteLine($"  Table {tableCounter}: {table.RowCount} rows x {table.ColumnCount} columns" +
+                    (table.Cells != null ? $" ({table.Cells.Count} cells)" : ""));
+                tableCounter++;
             }
-            else
-            {
-                Console.WriteLine("⚠️ Content is not DocumentContent type, skipping document-specific validations");
-                Assert.Warn("Expected DocumentContent but got " + content?.GetType().Name);
-            }
+
+            Console.WriteLine("All document properties validated successfully");
         }
 
         [RecordedTest]
@@ -222,9 +184,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             AnalyzeResult result = operation.Value;
 
+            // prebuilt-videoSearch can detect video segments, so we should iterate through all segments
             int segmentIndex = 1;
             foreach (MediaContent media in result.Contents!)
             {
+                // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
+                // AudioVisualContent derives from MediaContent and provides additional properties
+                // to access full information about audio/video, including timing, transcript phrases, and many others
                 AudioVisualContent videoContent = (AudioVisualContent)media;
                 Console.WriteLine($"--- Segment {segmentIndex} ---");
                 Console.WriteLine("Markdown:");
@@ -270,6 +236,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             AnalyzeResult result = operation.Value;
 
+            // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
+            // AudioVisualContent derives from MediaContent and provides additional properties
+            // to access full information about audio/video, including timing, transcript phrases, and many others
             AudioVisualContent audioContent = (AudioVisualContent)result.Contents!.First();
             Console.WriteLine("Markdown:");
             Console.WriteLine(audioContent.Markdown);

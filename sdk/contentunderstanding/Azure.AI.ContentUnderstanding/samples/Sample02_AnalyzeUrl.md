@@ -19,15 +19,26 @@ Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     inputs: new[] { new AnalyzeInput { Url = uriSource } });
 
 AnalyzeResult result = operation.Value;
-
 MediaContent content = result.Contents!.First();
 Console.WriteLine("Markdown:");
 Console.WriteLine(content.Markdown);
 
+// Cast MediaContent to DocumentContent to access document-specific properties
+// DocumentContent derives from MediaContent and provides additional properties
+// to access full information about document, including Pages, Tables and many others
 DocumentContent documentContent = (DocumentContent)content;
-Console.WriteLine($"MIME type: {documentContent.MimeType}");
 Console.WriteLine($"Pages: {documentContent.StartPageNumber} - {documentContent.EndPageNumber}");
-Console.WriteLine($"Tables found: {documentContent.Tables?.Count ?? 0}");
+
+// Check for pages
+if (documentContent.Pages != null && documentContent.Pages.Count > 0)
+{
+    Console.WriteLine($"Number of pages: {documentContent.Pages.Count}");
+    foreach (var page in documentContent.Pages)
+    {
+        var unit = documentContent.Unit?.ToString() ?? "units";
+        Console.WriteLine($"  Page {page.PageNumber}: {page.Width} x {page.Height} {unit}");
+    }
+}
 ```
 
 ## Video from a URL
@@ -43,9 +54,13 @@ Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
 
 AnalyzeResult result = operation.Value;
 
+// prebuilt-videoSearch can detect video segments, so we should iterate through all segments
 int segmentIndex = 1;
 foreach (MediaContent media in result.Contents!)
 {
+    // Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
+    // AudioVisualContent derives from MediaContent and provides additional properties
+    // to access full information about audio/video, including timing, transcript phrases, and many others
     AudioVisualContent videoContent = (AudioVisualContent)media;
     Console.WriteLine($"--- Segment {segmentIndex} ---");
     Console.WriteLine("Markdown:");
@@ -75,6 +90,9 @@ Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
 
 AnalyzeResult result = operation.Value;
 
+// Cast MediaContent to AudioVisualContent to access audio/visual-specific properties
+// AudioVisualContent derives from MediaContent and provides additional properties
+// to access full information about audio/video, including timing, transcript phrases, and many others
 AudioVisualContent audioContent = (AudioVisualContent)result.Contents!.First();
 Console.WriteLine("Markdown:");
 Console.WriteLine(audioContent.Markdown);

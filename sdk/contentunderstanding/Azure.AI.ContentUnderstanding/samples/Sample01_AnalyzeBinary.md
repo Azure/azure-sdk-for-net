@@ -144,7 +144,7 @@ if (content is DocumentContent documentContent)
     {
         Console.WriteLine($"Number of tables: {documentContent.Tables.Count}");
         int tableCounter = 1;
-        foreach (var table in documentContent.Tables)
+        foreach (DocumentTable table in documentContent.Tables)
         {
             Console.WriteLine($"  Table {tableCounter}: {table.RowCount} rows x {table.ColumnCount} columns");
             tableCounter++;
