@@ -22,6 +22,7 @@ steps:
           
           Write-Host "Running Check-AOT-Compatibility.ps1 for Package: $($package.ArtifactName)"
           Write-Host "Package Path: $packagePath"
+          Write-Host "$(Build.SourcesDirectory)\eng\scripts\compatibility\Check-AOT-Compatibility.ps1"
           
           & "$(Build.SourcesDirectory)\eng\scripts\compatibility\Check-AOT-Compatibility.ps1" -PackagePath "$packagePath"
           
