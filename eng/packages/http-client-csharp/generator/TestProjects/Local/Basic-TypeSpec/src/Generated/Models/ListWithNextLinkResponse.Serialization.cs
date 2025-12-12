@@ -10,9 +10,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> The ListWithNextLinkResponse. </summary>
     internal partial class ListWithNextLinkResponse : IJsonModel<ListWithNextLinkResponse>

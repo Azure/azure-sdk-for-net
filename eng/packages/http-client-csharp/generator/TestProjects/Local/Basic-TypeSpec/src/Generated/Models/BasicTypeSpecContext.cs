@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using BasicTypeSpec.Models;
 
 namespace BasicTypeSpec
 {

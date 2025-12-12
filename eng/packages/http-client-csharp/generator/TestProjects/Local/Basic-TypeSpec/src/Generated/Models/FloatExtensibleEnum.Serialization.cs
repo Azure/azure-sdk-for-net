@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary></summary>
     public readonly partial struct FloatExtensibleEnum

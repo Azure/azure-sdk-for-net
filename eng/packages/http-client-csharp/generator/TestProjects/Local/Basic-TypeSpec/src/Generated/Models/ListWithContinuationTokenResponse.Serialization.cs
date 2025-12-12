@@ -10,9 +10,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> The ListWithContinuationTokenResponse. </summary>
     internal partial class ListWithContinuationTokenResponse : IJsonModel<ListWithContinuationTokenResponse>

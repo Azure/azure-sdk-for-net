@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> The ReturnsAnonymousModelResponse. </summary>
     public partial class ReturnsAnonymousModelResponse

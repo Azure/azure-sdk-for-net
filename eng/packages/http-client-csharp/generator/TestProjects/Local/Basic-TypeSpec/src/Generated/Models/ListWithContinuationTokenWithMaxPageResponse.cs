@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> The ListWithContinuationTokenWithMaxPageResponse. </summary>
     internal partial class ListWithContinuationTokenWithMaxPageResponse

@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> The ListWithHeaderNextLinkResponse. </summary>
     internal partial class ListWithHeaderNextLinkResponse

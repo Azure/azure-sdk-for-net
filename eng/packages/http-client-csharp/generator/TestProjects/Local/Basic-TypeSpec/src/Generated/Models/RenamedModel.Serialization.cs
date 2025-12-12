@@ -11,9 +11,8 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> this is a model with a client name. </summary>
     public partial class RenamedModel : IJsonModel<RenamedModel>

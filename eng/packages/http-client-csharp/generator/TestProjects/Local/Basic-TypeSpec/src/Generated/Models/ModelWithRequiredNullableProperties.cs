@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> A model with a few required nullable properties. </summary>
     public partial class ModelWithRequiredNullableProperties

@@ -9,9 +9,8 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using BasicTypeSpec;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> A model with a few required nullable properties. </summary>
     public partial class ModelWithRequiredNullableProperties : IJsonModel<ModelWithRequiredNullableProperties>
@@ -60,7 +59,7 @@ namespace BasicTypeSpec.Models
             if (Optional.IsDefined(RequiredFixedEnum))
             {
                 writer.WritePropertyName("requiredFixedEnum"u8);
-                writer.WriteStringValue(RequiredFixedEnum.Value.ToString());
+                writer.WriteStringValue(RequiredFixedEnum.Value.ToSerialString());
             }
             else
             {
@@ -141,7 +140,7 @@ namespace BasicTypeSpec.Models
                         requiredFixedEnum = null;
                         continue;
                     }
-                    requiredFixedEnum = new StringFixedEnum(prop.Value.GetString());
+                    requiredFixedEnum = prop.Value.GetString().ToStringFixedEnum();
                     continue;
                 }
                 if (options.Format != "W")

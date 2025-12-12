@@ -24,9 +24,23 @@ namespace Azure.Generator.Visitors
             return type;
         }
 
+        protected override EnumProvider? PreVisitEnum(InputEnumType enumType, EnumProvider? type)
+        {
+            if (enumType.Usage.HasFlag(InputModelTypeUsage.ApiVersionEnum))
+            {
+                return type;
+            }
+
+            if (type is not null)
+            {
+                UpdateModelsNamespace(type);
+            }
+            return type;
+        }
+
         protected override TypeProvider? VisitType(TypeProvider type)
         {
-            if (type is EnumProvider && type.Name == "ServiceVersion")
+            if (type is EnumProvider)
             {
                 return type;
             }

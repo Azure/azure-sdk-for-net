@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BasicTypeSpec.Models
+namespace BasicTypeSpec
 {
     /// <summary> this is not a friendly model but with a friendly name. </summary>
     public partial class FriendModel
