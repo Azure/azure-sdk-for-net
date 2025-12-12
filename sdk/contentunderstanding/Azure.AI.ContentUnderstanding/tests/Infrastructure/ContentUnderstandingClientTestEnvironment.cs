@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable enable
@@ -42,12 +42,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string ApiKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_KEY", options => options.IsSecret());
 
         /// <summary>
-        /// Gets the GPT-4.1 deployment name (optional).
+        /// Gets the gpt-4.1 deployment name (optional).
         /// </summary>
         public string? Gpt41Deployment => GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT");
 
         /// <summary>
-        /// Gets the GPT-4.1-mini deployment name (optional).
+        /// Gets the gpt-4.1-mini deployment name (optional).
         /// </summary>
         public string? Gpt41MiniDeployment => GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT");
 

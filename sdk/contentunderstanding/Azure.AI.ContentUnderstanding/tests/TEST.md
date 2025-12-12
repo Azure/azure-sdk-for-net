@@ -25,8 +25,8 @@ Tests require environment variables to be set before running. The environment va
 
 | Variable Name | Description | Used By |
 |--------------|-------------|---------|
-| `GPT_4_1_DEPLOYMENT` | GPT-4.1 model deployment name | Prebuilt analyzers (invoice, receipt, etc.) |
-| `GPT_4_1_MINI_DEPLOYMENT` | GPT-4.1-mini model deployment name | Prebuilt analyzers (documentSearch, audioSearch, videoSearch) |
+| `GPT_4_1_DEPLOYMENT` | gpt-4.1 model deployment name | Prebuilt analyzers (invoice, receipt, etc.) |
+| `GPT_4_1_MINI_DEPLOYMENT` | gpt-4.1-mini model deployment name | Prebuilt analyzers (documentSearch, audioSearch, videoSearch) |
 | `TEXT_EMBEDDING_3_LARGE_DEPLOYMENT` | Text-embedding-3-large model deployment name | Prebuilt analyzers |
 | `AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID` | Source resource ID for cross-resource copying | Copy analyzer tests |
 | `AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION` | Source region for cross-resource copying | Copy analyzer tests |
