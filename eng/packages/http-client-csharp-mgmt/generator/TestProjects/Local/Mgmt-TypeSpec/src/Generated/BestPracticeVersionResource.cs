@@ -19,40 +19,40 @@ using Azure.ResourceManager.Resources;
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
-    /// A class representing a BestPractice along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BestPracticeResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBestPractices method.
+    /// A class representing a BestPracticeVersion along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BestPracticeVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBestPracticeVersions method.
     /// </summary>
-    public partial class BestPracticeResource : ArmResource
+    public partial class BestPracticeVersionResource : ArmResource
     {
-        private readonly ClientDiagnostics _bestPracticesClientDiagnostics;
-        private readonly BestPractices _bestPracticesRestClient;
+        private readonly ClientDiagnostics _bestPracticeVersionsClientDiagnostics;
+        private readonly BestPracticeVersions _bestPracticeVersionsRestClient;
         private readonly BestPracticeData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "MgmtTypeSpec/bestPractices";
+        public static readonly ResourceType ResourceType = "MgmtTypeSpec/bestPractices/versions";
 
-        /// <summary> Initializes a new instance of BestPracticeResource for mocking. </summary>
-        protected BestPracticeResource()
+        /// <summary> Initializes a new instance of BestPracticeVersionResource for mocking. </summary>
+        protected BestPracticeVersionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestPracticeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BestPracticeResource(ArmClient client, BestPracticeData data) : this(client, data.Id)
+        internal BestPracticeVersionResource(ArmClient client, BestPracticeData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestPracticeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal BestPracticeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal BestPracticeVersionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string bestPracticeApiVersion);
-            _bestPracticesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _bestPracticesRestClient = new BestPractices(_bestPracticesClientDiagnostics, Pipeline, Endpoint, bestPracticeApiVersion ?? "2024-05-01");
+            TryGetApiVersion(ResourceType, out string bestPracticeVersionApiVersion);
+            _bestPracticeVersionsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
+            _bestPracticeVersionsRestClient = new BestPracticeVersions(_bestPracticeVersionsClientDiagnostics, Pipeline, Endpoint, bestPracticeVersionApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -74,9 +74,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="bestPracticeName"> The bestPracticeName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string bestPracticeName)
+        /// <param name="versionName"> The versionName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string bestPracticeName, string versionName)
         {
-            string resourceId = $"/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}";
+            string resourceId = $"/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,11 +96,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BestPractices_Get. </description>
+        /// <description> BestPracticeVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -107,14 +108,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// <description> <see cref="BestPracticeVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<BestPracticeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Get");
+            using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Get");
             scope.Start();
             try
             {
@@ -122,7 +123,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateGetRequest(Id.Name, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -143,11 +144,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BestPractices_Get. </description>
+        /// <description> BestPracticeVersions_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -155,14 +156,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// <description> <see cref="BestPracticeVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<BestPracticeResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Get");
+            using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Get");
             scope.Start();
             try
             {
@@ -170,7 +171,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateGetRequest(Id.Name, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -191,11 +192,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BestPractices_Update. </description>
+        /// <description> BestPracticeVersions_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -203,7 +204,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// <description> <see cref="BestPracticeVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +215,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Update");
+            using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Update");
             scope.Start();
             try
             {
@@ -222,7 +223,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateUpdateRequest(Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -243,11 +244,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BestPractices_Update. </description>
+        /// <description> BestPracticeVersions_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -255,7 +256,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// <description> <see cref="BestPracticeVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,7 +267,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Update");
+            using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Update");
             scope.Start();
             try
             {
@@ -274,7 +275,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateUpdateRequest(Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -295,11 +296,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BestPractices_Delete. </description>
+        /// <description> BestPracticeVersions_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -307,7 +308,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// <description> <see cref="BestPracticeVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -315,7 +316,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Delete");
+            using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Delete");
             scope.Start();
             try
             {
@@ -323,7 +324,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateDeleteRequest(Id.Name, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -346,11 +347,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}. </description>
+        /// <description> /providers/MgmtTypeSpec/bestPractices/{bestPracticeName}/versions/{versionName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> BestPractices_Delete. </description>
+        /// <description> BestPracticeVersions_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -358,7 +359,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="BestPracticeResource"/>. </description>
+        /// <description> <see cref="BestPracticeVersionResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -366,7 +367,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Delete");
+            using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Delete");
             scope.Start();
             try
             {
@@ -374,7 +375,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateDeleteRequest(Id.Name, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateDeleteRequest(Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
