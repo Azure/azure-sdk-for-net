@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Create Insight resource, This is Admin only operation
+        /// Update a ImpactInsight.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Create Insight resource, This is Admin only operation
+        /// Update a ImpactInsight.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

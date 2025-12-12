@@ -34,7 +34,6 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.ExtensionResource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
             ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
-            ["Azure.ResourceManager.Legacy.TrackedResourceWithOptionalLocation"] = typeof(TrackedResourceData),
         };
 
         private static readonly IReadOnlyDictionary<string, CSharpType> _idToSystemTypeMap = new Dictionary<string, CSharpType>()
@@ -65,12 +64,12 @@ namespace Azure.Generator.Management.Primitives
         private static ValueExpression DeserializeNewInstanceStringLikeType(CSharpType valueType, ScopedApi<JsonElement> element, SerializationFormat format)
             => New.Instance(valueType, element.GetString());
 
-        private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, SerializationExpression> _typeToSerializationExpression = new Dictionary<CSharpType, SerializationExpression>
         {
             [typeof(ResourceType)] = SerializeTypeWithImplicitOperatorToString,
         };
 
-        private static readonly IReadOnlyDictionary<Type, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<Type, DeserializationExpression>
+        private static readonly IReadOnlyDictionary<CSharpType, DeserializationExpression> _typeToDeserializationExpression = new Dictionary<CSharpType, DeserializationExpression>
         {
             [typeof(ResourceType)] = DeserializeNewInstanceStringLikeType,
         };
@@ -110,10 +109,10 @@ namespace Azure.Generator.Management.Primitives
             }
         }
 
-        public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression)
-            => _typeToSerializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonSerializationExpression(CSharpType type, [MaybeNullWhen(false)] out SerializationExpression expression)
+            => _typeToSerializationExpression.TryGetValue(type.WithNullable(false), out expression);
 
-        public static bool TryGetJsonDeserializationExpression(Type type, [MaybeNullWhen(false)] out DeserializationExpression expression)
-            => _typeToDeserializationExpression.TryGetValue(type, out expression);
+        public static bool TryGetJsonDeserializationExpression(CSharpType type, [MaybeNullWhen(false)] out DeserializationExpression expression)
+            => _typeToDeserializationExpression.TryGetValue(type.WithNullable(false), out expression);
     }
 }
