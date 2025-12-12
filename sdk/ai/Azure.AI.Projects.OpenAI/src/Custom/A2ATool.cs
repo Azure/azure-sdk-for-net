@@ -18,7 +18,7 @@ public partial class A2ATool
     public Uri BaseUri { get; set; }
 
     /// <summary> Initializes a new instance of <see cref="A2ATool"/>. </summary>
-    internal A2ATool() : base(ToolType.A2aPreview)
+    public A2ATool() : base(ToolType.A2aPreview)
     {
     }
 

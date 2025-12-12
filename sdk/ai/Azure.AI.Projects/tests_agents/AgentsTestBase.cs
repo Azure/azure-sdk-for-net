@@ -47,6 +47,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         OpenAPI,
         OpenAPIConnection,
         A2A,
+        A2ASpecialConnection,
         BrowserAutomation,
         MicrosoftFabric,
         Sharepoint,
@@ -86,6 +87,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.MCP, "Please summarize the Azure REST API specifications Readme"},
         {ToolType.MCPConnection, "How many follower on github do I have?"},
         {ToolType.A2A, "What can the secondary agent do?"},
+        {ToolType.A2ASpecialConnection, "What can the secondary agent do?"},
     };
 
     public Dictionary<ToolType, string> ToolInstructions = new()
@@ -114,6 +116,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.MCP, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.MCPConnection, "You are a helpful agent that can use MCP tools to assist users. Use the available MCP tools to answer questions and perform tasks."},
         {ToolType.A2A, "You are a helpful assistant."},
+        {ToolType.A2ASpecialConnection, "You are a helpful assistant."},
     };
 
     public Dictionary<ToolType, string> ExpectedOutput = new()
@@ -164,6 +167,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {ToolType.Sharepoint, "sharepoint_grounding_preview_call"},
         {ToolType.MicrosoftFabric, "fabric_dataagent_preview_call_output"},
         {ToolType.A2A, "a2a_preview_call_output"},
+        {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
     };
     #endregion
 
@@ -436,12 +440,16 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         return new(fabricToolOption);
     }
 
-    private A2ATool GetA2ATool()
+    private A2ATool GetA2ATool(bool useRemoteA2AConnection)
     {
-        A2ATool a2aTool = new(new Uri(TestEnvironment.A2A_BASE_URI))
+        A2ATool a2aTool = new()
         {
-            ProjectConnectionId = TestEnvironment.A2A_CONNECTION_ID
+            ProjectConnectionId = useRemoteA2AConnection ? TestEnvironment.REMOTE_A2A_CONNECTION_ID : TestEnvironment.A2A_CONNECTION_ID
         };
+        if (!useRemoteA2AConnection)
+        {
+            a2aTool.BaseUri = new Uri(TestEnvironment.A2A_BASE_URI);
+        }
         return a2aTool;
     }
 
@@ -522,7 +530,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             )),
             ToolType.MicrosoftFabric => GetMicrosoftFabricAgentTool(),
-            ToolType.A2A => GetA2ATool(),
+            ToolType.A2A => GetA2ATool(false),
+            ToolType.A2ASpecialConnection => GetA2ATool(true),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
         return new PromptAgentDefinition(model ?? TestEnvironment.MODELDEPLOYMENTNAME)
