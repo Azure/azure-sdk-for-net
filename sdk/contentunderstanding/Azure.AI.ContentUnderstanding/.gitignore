@@ -11,3 +11,6 @@
 # Test recordings (SessionRecords) - should not be committed
 **/SessionRecords/
 
+# Environment variable files (contain secrets)
+.env
+**/.env

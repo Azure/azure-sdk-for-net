@@ -71,7 +71,11 @@ To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The
 > **Note:** Content Understanding operations are asynchronous long-running operations. The SDK handles polling automatically when using `WaitUntil.Completed`.
 
 ```C# Snippet:ContentUnderstandingAnalyzeBinaryAsync
-string filePath = "<filePath>";
+// Replace with the path to your local document file.
+// Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more.
+// For a complete list of supported file types and limits, see:
+// https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
+string filePath = "<localDocumentFilePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
@@ -96,28 +100,21 @@ The `prebuilt-documentSearch` analyzer extracts:
 
 ```C# Snippet:ContentUnderstandingExtractMarkdown
 // A PDF file has only one content element even if it contains multiple pages
-MediaContent? content = null;
-if (result.Contents == null || result.Contents.Count == 0)
-{
-    Console.WriteLine("(No content returned from analysis)");
-}
-else
-{
-    content = result.Contents.First();
-    if (!string.IsNullOrEmpty(content.Markdown))
-    {
-        Console.WriteLine(content.Markdown);
-    }
-    else
-    {
-        Console.WriteLine("(No markdown content available)");
-    }
-}
+MediaContent content = result.Contents!.First();
+Console.WriteLine(content.Markdown);
 ```
 
-The markdown output includes structured text with preserved formatting and hierarchy, table representations in markdown format, figure descriptions for images/charts/diagrams, and layout preservation maintaining document structure.
+Content Understanding generates rich GitHub Flavored Markdown that is ideal for RAG (Retrieval-Augmented Generation) applications or other downstream applications. The markdown output preserves document structure and can include:
 
-For more information about the markdown format, see [Document markdown][cu-document-markdown].
+- **Structured text** maintaining content and layout
+- **Tables** represented in HTML format (supporting merged cells and complex layouts)
+- **Charts and diagrams** with charts converted to Chart.js syntax and diagrams to Mermaid.js syntax, including figure descriptions (requires `enableFigureDescription` and `enableFigureAnalysis` configuration)
+- **Mathematical formulas** encoded in LaTeX (inline and display)
+- **Hyperlinks, barcodes, annotations, and page metadata** for complete document representation (annotations require `returnDetails` configuration)
+
+> **Note:** Each prebuilt analyzer and each custom analyzer use configuration to disable or enable different parts of the markdown output. The `prebuilt-documentSearch` analyzer has `enableFormula`, `enableLayout`, `enableOcr`, `enableFigureDescription`, `enableFigureAnalysis`, and `returnDetails` enabled by default, which enables extraction of charts with figure descriptions, formulas, hyperlinks, and annotations. For custom analyzers or to enable additional features, configure these options in `ContentAnalyzerConfig`. See [Sample 10: Analyze documents with configs][sample10] for more details.
+
+This structured markdown format makes documents easily searchable and consumable by AI models while maintaining the original document's layout and semantic structure. For detailed information about all markdown elements and their representation, see [Document analysis: Markdown representation](https://learn.microsoft.com/en-us/azure/ai-services/content-understanding/document/markdown).
 
 ## Access document properties
 
@@ -130,13 +127,12 @@ if (content is DocumentContent documentContent)
     Console.WriteLine($"Document type: {documentContent.MimeType ?? "(unknown)"}");
     Console.WriteLine($"Start page: {documentContent.StartPageNumber}");
     Console.WriteLine($"End page: {documentContent.EndPageNumber}");
-    Console.WriteLine($"Total pages: {documentContent.EndPageNumber - documentContent.StartPageNumber + 1}");
 
     // Check for pages
     if (documentContent.Pages != null && documentContent.Pages.Count > 0)
     {
         Console.WriteLine($"Number of pages: {documentContent.Pages.Count}");
-        foreach (var page in documentContent.Pages)
+        foreach (DocumentPage page in documentContent.Pages)
         {
             var unit = documentContent.Unit?.ToString() ?? "units";
             Console.WriteLine($"  Page {page.PageNumber}: {page.Width} x {page.Height} {unit}");
@@ -176,6 +172,7 @@ if (content is DocumentContent documentContent)
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding#getting-started
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [sample02-analyze-url]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
+[sample10]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md
 [cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview
 [cu-whats-new]: https://learn.microsoft.com/azure/ai-services/content-understanding/whats-new
 [cu-document-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/overview

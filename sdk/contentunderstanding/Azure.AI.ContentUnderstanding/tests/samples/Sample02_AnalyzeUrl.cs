@@ -25,17 +25,24 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             #region Snippet:ContentUnderstandingAnalyzeUrlAsync
-#if SNIPPET
-            Uri uriSource = new Uri("<uriSource>");
-#else
-            Uri uriSource = ContentUnderstandingClientTestEnvironment.CreateUri("invoice.pdf");
-#endif
+            // You can replace this URL with your own publicly accessible document URL.
+            // For a list of supported document types for prebuilt-documentSearch, see:
+            // https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
                 inputs: new[] { new AnalyzeInput { Url = uriSource } });
 
             AnalyzeResult result = operation.Value;
+            MediaContent content = result.Contents!.First();
+            Console.WriteLine("Markdown:");
+            Console.WriteLine(content.Markdown);
+
+            DocumentContent snippetDocumentContent = (DocumentContent)content;
+            Console.WriteLine($"MIME type: {snippetDocumentContent.MimeType}");
+            Console.WriteLine($"Pages: {snippetDocumentContent.StartPageNumber} - {snippetDocumentContent.EndPageNumber}");
+            Console.WriteLine($"Tables found: {snippetDocumentContent.Tables?.Count ?? 0}");
             #endregion
 
             #region Assertion:ContentUnderstandingAnalyzeUrlAsync
@@ -54,23 +61,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             // A PDF file has only one content element even if it contains multiple pages
-            MediaContent?  content = null;
-            if (result.Contents == null || result.Contents.Count == 0)
-            {
-                Console.WriteLine("(No content returned from analysis)");
-            }
-            else
-            {
-                content = result.Contents.First();
-                if (! string.IsNullOrEmpty(content.Markdown))
-                {
-                    Console.WriteLine(content.Markdown);
-                }
-                else
-                {
-                    Console.WriteLine("(No markdown content available)");
-                }
-            }
+            Console.WriteLine(content.Markdown);
             Assert.IsNotNull(result.Contents, "Result should contain contents");
             Assert.IsTrue(result.Contents!.Count > 0, "Result should have at least one content");
             Assert.AreEqual(1, result.Contents.Count, "PDF file should have exactly one content element");
@@ -213,6 +204,138 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine("⚠️ Content is not DocumentContent type, skipping document-specific validations");
                 Assert.Warn("Expected DocumentContent but got " + content?.GetType().Name);
             }
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeVideoUrlAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            #region Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
+            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-videoSearch",
+                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+
+            AnalyzeResult result = operation.Value;
+
+            int segmentIndex = 1;
+            foreach (MediaContent media in result.Contents!)
+            {
+                AudioVisualContent videoContent = (AudioVisualContent)media;
+                Console.WriteLine($"--- Segment {segmentIndex} ---");
+                Console.WriteLine("Markdown:");
+                Console.WriteLine(videoContent.Markdown);
+
+                string summary = videoContent.Fields["Summary"].Value?.ToString() ?? string.Empty;
+                Console.WriteLine($"Summary: {summary}");
+
+                Console.WriteLine($"Start: {videoContent.StartTimeMs} ms, End: {videoContent.EndTimeMs} ms");
+                Console.WriteLine($"Frame size: {videoContent.Width} x {videoContent.Height}");
+
+                Console.WriteLine("---------------------");
+                segmentIndex++;
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeVideoUrlAsync
+            Assert.IsNotNull(operation);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Contents);
+            Assert.IsTrue(result.Contents.Count > 0);
+            Assert.IsTrue(result.Contents.All(c => c is AudioVisualContent), "Video analysis should return audio/visual content.");
+            Assert.IsTrue(result.Contents.All(c => !string.IsNullOrWhiteSpace(c.Fields["Summary"].Value?.ToString())),
+                "All video segments should include a Summary field.");
+            #endregion
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeAudioUrlAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            #region Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
+            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-audioSearch",
+                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+
+            AnalyzeResult result = operation.Value;
+
+            AudioVisualContent audioContent = (AudioVisualContent)result.Contents!.First();
+            Console.WriteLine("Markdown:");
+            Console.WriteLine(audioContent.Markdown);
+
+            string summary = audioContent.Fields["Summary"].Value?.ToString() ?? string.Empty;
+            Console.WriteLine($"Summary: {summary}");
+
+            // Example: Access an additional field in AudioVisualContent (transcript phrases)
+            if (audioContent.TranscriptPhrases != null && audioContent.TranscriptPhrases.Count > 0)
+            {
+                Console.WriteLine("Transcript (first two phrases):");
+                foreach (TranscriptPhrase phrase in audioContent.TranscriptPhrases.Take(2))
+                {
+                    Console.WriteLine($"  [{phrase.Speaker}] {phrase.StartTimeMs} ms: {phrase.Text}");
+                }
+            }
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeAudioUrlAsync
+            Assert.IsNotNull(operation);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Contents);
+            Assert.IsTrue(result.Contents.Count > 0);
+            Assert.IsInstanceOf<AudioVisualContent>(audioContent);
+            Assert.IsTrue(result.Contents.All(c => c is AudioVisualContent), "Audio analysis should return audio/visual content.");
+            Assert.IsTrue(result.Contents.All(c => !string.IsNullOrWhiteSpace(c.Fields["Summary"].Value?.ToString())),
+                "Audio analysis should include a Summary field.");
+            #endregion
+        }
+
+        [RecordedTest]
+        public async Task AnalyzeImageUrlAsync()
+        {
+            string endpoint = TestEnvironment.Endpoint;
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+
+            #region Snippet:ContentUnderstandingAnalyzeImageUrlAsync
+            Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/image/pieChart.jpg");
+            Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
+                WaitUntil.Completed,
+                "prebuilt-imageSearch",
+                inputs: new[] { new AnalyzeInput { Url = uriSource } });
+
+            AnalyzeResult result = operation.Value;
+
+            MediaContent content = result.Contents!.First();
+            Console.WriteLine("Markdown:");
+            Console.WriteLine(content.Markdown);
+
+            string summary = content.Fields["Summary"].Value?.ToString() ?? string.Empty;
+            Console.WriteLine($"Summary: {summary}");
+            #endregion
+
+            #region Assertion:ContentUnderstandingAnalyzeImageUrlAsync
+            Assert.IsNotNull(operation);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsTrue(operation.HasValue);
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.Contents);
+            Assert.IsTrue(result.Contents.Count > 0);
+            Assert.IsTrue(result.Contents.All(c => !string.IsNullOrWhiteSpace(c.Fields["Summary"].Value?.ToString())),
+                "Image analysis should include a Summary field.");
+            #endregion
         }
     }
 }
