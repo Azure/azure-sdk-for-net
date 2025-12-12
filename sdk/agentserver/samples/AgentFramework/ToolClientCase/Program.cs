@@ -25,5 +25,5 @@ var agent = new ChatClientAgent(chatClient,
     .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
     .Build();
 
-// Run container agent adapter
+// The second parameter is a tool list, here's just a example from python, you need to change to correct C# implemetation
 await agent.RunAIAgentAsync(telemetrySourceName: "Agents", [{ "type": "mcp", "project_connection_id": tool_connection_id}]);
