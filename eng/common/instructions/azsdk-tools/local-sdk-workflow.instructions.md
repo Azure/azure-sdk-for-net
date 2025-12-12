@@ -14,7 +14,7 @@ High level steps involved:
 
 ---
 
-## Part A: Generate SDK Locally
+## Generate SDK Locally
 
 ### Step 1: Outline workflow
 
@@ -26,9 +26,10 @@ High level steps involved:
   2. Verify SDK repository
   3. Validate repository path
   4. Identify path to configuration file
-  5. Generate SDK using `azsdk_package_generate_code` MCP tool
-  6. Identify SDK project path
-  7. Build/Compile SDK using `azsdk_package_build_code` MCP tool
+  5. Verify setup for the selected language
+  6. Generate SDK using `azsdk_package_generate_code` MCP tool
+  7. Identify SDK project path
+  8. Build/Compile SDK using `azsdk_package_build_code` MCP tool
 - Ask the user to confirm readiness to proceed.
 
 ---
@@ -71,7 +72,6 @@ High level steps involved:
 
 - Check if the provided repository path exists and matches the selected SDK language repository.
 - If invalid → prompt user to re-enter a valid path.
-- Verify setup to ensure all required tools are installed for the selected language.
 
 ---
 
@@ -96,15 +96,20 @@ High level steps involved:
 
 ---
 
-### Step 6: Generate SDK
+### Step 6: Verify setup for selected language
+**Actions**:
+- Run `azsdk_verify_setup` MCP tool to ensure the local environment is correctly configured for the selected SDK language.
+
+---
+
+### Step 7: Generate SDK
 
 **Actions**:
-
 - Run `azsdk_package_generate_code` MCP tool to generate the SDK locally.
 
 ---
 
-## Part B: Build / Compile SDK Locally
+##  Build / Compile SDK Locally
 
 ### Step 1: Identify SDK project path
 
