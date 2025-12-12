@@ -97,7 +97,7 @@ public class RemoveDefaultSanitizersTests : RecordedTestBase<MapsClientTestEnvir
         var result = await client.GetCountryCodeAsync(testIp);
         Assert.That(result.Value.CountryRegion.IsoCode, Is.EqualTo("TS"));
 
-        // Now verify AZSDK0000 was not removed
+        // Verify AZSDK0000 was not removed
         Assert.That(RemoveDefaultSanitizers, Is.True);
         Assert.That(Recording, Is.Not.Null);
 
