@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteStringValue(ResourceType);
             }
         }
 
