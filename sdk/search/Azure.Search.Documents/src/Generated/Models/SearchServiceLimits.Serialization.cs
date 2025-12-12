@@ -94,6 +94,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("maxStoragePerIndex");
                 }
             }
+            if (Optional.IsDefined(MaxCumulativeIndexerRuntimeSeconds))
+            {
+                if (MaxCumulativeIndexerRuntimeSeconds != null)
+                {
+                    writer.WritePropertyName("maxCumulativeIndexerRuntimeSeconds"u8);
+                    writer.WriteNumberValue(MaxCumulativeIndexerRuntimeSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxCumulativeIndexerRuntimeSeconds");
+                }
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -136,6 +148,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? maxComplexCollectionFieldsPerIndex = default;
             int? maxComplexObjectsInCollectionsPerDocument = default;
             long? maxStoragePerIndex = default;
+            long? maxCumulativeIndexerRuntimeSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,6 +203,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxStoragePerIndex = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("maxCumulativeIndexerRuntimeSeconds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxCumulativeIndexerRuntimeSeconds = null;
+                        continue;
+                    }
+                    maxCumulativeIndexerRuntimeSeconds = property.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -202,6 +225,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 maxComplexCollectionFieldsPerIndex,
                 maxComplexObjectsInCollectionsPerDocument,
                 maxStoragePerIndex,
+                maxCumulativeIndexerRuntimeSeconds,
                 serializedAdditionalRawData);
         }
 

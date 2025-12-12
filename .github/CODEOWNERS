@@ -239,7 +239,13 @@
 # ServiceOwners:                                                   @olduroja
 
 # PRLabel: %Cognitive - Language
-/sdk/cognitivelanguage/                                            @quentinRobinson
+/sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+
+# PRLabel: %Cognitive - Language
+/sdk/cognitivelanguage/*.QuestionAnswering.Inference/              @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+
+# PRLabel: %Cognitive - Language
+/sdk/cognitivelanguage/*.QuestionAnswering.Authoring/              @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
 
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson
@@ -281,10 +287,10 @@
 # ServiceOwners:                                                   @quentinRobinson
 
 # PRLabel: %Cognitive - Translator
-/sdk/translation/                                                  @mikeymcz @vikaspalaskar
+/sdk/translation/                                                  @jrjrguo @SG-MS
 
 # ServiceLabel: %Cognitive - Translator
-# ServiceOwners:                                                   @swmachan @mikeymcz @vikaspalaskar
+# ServiceOwners:                                                   @jrjrguo @SG-MS
 
 # ServiceLabel: %Commerce
 # ServiceOwners:                                                   @ms-premp @qiaozha
@@ -350,10 +356,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov
+/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov
+# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
 
 # ServiceLabel: %Connected Kubernetes
 # ServiceOwners:                                                   @akashkeshari
@@ -444,6 +450,12 @@
 
 # ServiceLabel: %DataBox Edge
 # ServiceOwners:                                                   @a-t-mason @ganzee @manuaery
+
+# PRLabel: %Datadog
+/sdk/datadog/Azure.ResourceManager.*/                              @jbhanuchand @ArcturusZhang @ArthurMa1978
+
+# ServiceLabel: %Datadog %Mgmt
+# ServiceOwners:                                                   @jbhanuchand
 
 # PRLabel: %Defender EASM
 /sdk/easm/Azure.Analytics.Defender.Easm/                           @thang-bit
@@ -790,14 +802,10 @@
 # ServiceOwners:                                                   @axisc @sjkwak @hmlam
 
 # PRLabel: %Search
-/sdk/search/                                                       @Azure/azure-sdk-write-search @Azure/azsdk-search
+/sdk/search/                                                       @Azure/azure-sdk-write-search
 
 # ServiceLabel: %Search
-# AzureSdkOwners:                                                  @ShivangiReja
-# ServiceOwners:                                                   @kuanlu95 @mattgotteiner
-
-# ServiceLabel: %Security
-# ServiceOwners:                                                   @chlahav
+# ServiceOwners:                                                   @efrainretana @kuanlu95 @mattgotteiner
 
 # ServiceLabel: %SecurityInsights
 # ServiceOwners:                                                   @amirkeren
@@ -1001,10 +1009,7 @@
 # ServiceOwners:                                                   @emmeliaAra
 
 # PRLabel: %HybridConnectivity
-/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @apmehrotra
-
-# ServiceLabel: %HybridConnectivity %Mgmt
-# ServiceOwners:                                                   @apmehrotra
+/sdk/hybridconnectivity/Azure.ResourceManager.*/                   @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %LambdaTest HyperExecute
 /sdk/lambdatesthyperexecute/Azure.ResourceManager.*/               @ArcturusZhang @ArthurMa1978
@@ -1034,13 +1039,22 @@
 # ServiceOwners:                                                   @thomasp98296
 
 # PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978 @alluri02
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
 
-# ServiceLabel: %Neon Postgres %Mgmt
-# ServiceOwners:                                                   @alluri02
+# PRLabel: %NetApp Files
+/sdk/netapp/Azure.ResourceManager.*/                               @audunn @Azure/azure-sdk-write-netappfiles
+
+# ServiceLabel: %NetApp Files %Mgmt
+# ServiceOwners:                                                   @audunn
 
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# PRLabel: %Network - Edge Actions
+/sdk/edgeactions/Azure.ResourceManager.*/                          @tundwed @anamikanupur
+
+# ServiceLabel: %Network - Edge Actions %Mgmt
+# ServiceOwners:                                                   @tundwed @anamikanupur
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
@@ -1085,19 +1099,13 @@
 /sdk/pineconevectordb/Azure.ResourceManager.*/                     @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.ResourceManager.*/                    @shaktichetan23 @ArthurMa1978
-
-# ServiceLabel: %Planetary Computer %Mgmt
-# ServiceOwners:                                                   @shaktichetan23
+/sdk/planetarycomputer/Azure.ResourceManager.*/                    @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %PureStorage
 /sdk/purestorageblock/Azure.ResourceManager.*/                     @ArthurMa1978 @ArcturusZhang
 
 # PRLabel: %Quota
-/sdk/quota/Azure.ResourceManager.*/                                @tejasm-microsoft
-
-# ServiceLabel: %Quota %Mgmt
-# ServiceOwners:                                                   @tejasm-microsoft
+/sdk/quota/Azure.ResourceManager.*/                                @ArthurMa1978 @ArcturusZhang
 
 # PRLabel: %Recovery Services Backup
 /sdk/recoveryservices-backup/Azure.ResourceManager.*/              @Daya-Patil

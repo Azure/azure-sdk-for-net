@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.ServiceBus
                 name,
                 type,
                 systemData,
+                location,
                 provisioningState,
                 pendingReplicationOperationsCount,
                 targetNamespace,
                 postMigrationName,
                 migrationState,
-                location,
                 serializedAdditionalRawData);
         }
 

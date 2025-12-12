@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.DocumentIntelligence;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 #pragma warning disable SA1402 // File may only contain a single type
 

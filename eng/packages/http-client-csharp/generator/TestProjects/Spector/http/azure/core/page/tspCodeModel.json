@@ -1276,7 +1276,8 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -1517,7 +1518,8 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -1647,7 +1649,8 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         },
         {
@@ -1834,7 +1837,8 @@
                   "$ref": "123"
                 }
               ]
-            }
+            },
+            "pageSizeParameterSegments": []
           }
         }
       ],
@@ -2041,7 +2045,8 @@
                     "nextLink"
                   ],
                   "responseLocation": "Body"
-                }
+                },
+                "pageSizeParameterSegments": []
               }
             },
             {
@@ -2171,7 +2176,8 @@
                     "nextLink"
                   ],
                   "responseLocation": "Body"
-                }
+                },
+                "pageSizeParameterSegments": []
               }
             }
           ],

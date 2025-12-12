@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public readonly partial struct ImpactToolset : IEquatable<ImpactToolset>
     {
         private readonly string _value;
+        /// <summary> If communication toolset is Terraform. </summary>
+        private const string TerraformValue = "Terraform";
+        /// <summary> If communication toolset is Puppet. </summary>
+        private const string PuppetValue = "Puppet";
+        /// <summary> If communication toolset is Chef. </summary>
+        private const string ChefValue = "Chef";
+        /// <summary> If communication toolset is SDK. </summary>
+        private const string SdkValue = "SDK";
+        /// <summary> If communication toolset is Ansible. </summary>
+        private const string AnsibleValue = "Ansible";
+        /// <summary> If communication toolset is ARM. </summary>
+        private const string ArmValue = "ARM";
+        /// <summary> If communication toolset is Portal. </summary>
+        private const string PortalValue = "Portal";
+        /// <summary> If communication toolset is Shell. </summary>
+        private const string ShellValue = "Shell";
+        /// <summary> If communication toolset is Other. </summary>
+        private const string OtherValue = "Other";
 
         /// <summary> Initializes a new instance of <see cref="ImpactToolset"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ImpactToolset(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string TerraformValue = "Terraform";
-        private const string PuppetValue = "Puppet";
-        private const string ChefValue = "Chef";
-        private const string SdkValue = "SDK";
-        private const string AnsibleValue = "Ansible";
-        private const string ArmValue = "ARM";
-        private const string PortalValue = "Portal";
-        private const string ShellValue = "Shell";
-        private const string OtherValue = "Other";
+            _value = value;
+        }
 
         /// <summary> If communication toolset is Terraform. </summary>
         public static ImpactToolset Terraform { get; } = new ImpactToolset(TerraformValue);
+
         /// <summary> If communication toolset is Puppet. </summary>
         public static ImpactToolset Puppet { get; } = new ImpactToolset(PuppetValue);
+
         /// <summary> If communication toolset is Chef. </summary>
         public static ImpactToolset Chef { get; } = new ImpactToolset(ChefValue);
+
         /// <summary> If communication toolset is SDK. </summary>
         public static ImpactToolset Sdk { get; } = new ImpactToolset(SdkValue);
+
         /// <summary> If communication toolset is Ansible. </summary>
         public static ImpactToolset Ansible { get; } = new ImpactToolset(AnsibleValue);
+
         /// <summary> If communication toolset is ARM. </summary>
         public static ImpactToolset Arm { get; } = new ImpactToolset(ArmValue);
+
         /// <summary> If communication toolset is Portal. </summary>
         public static ImpactToolset Portal { get; } = new ImpactToolset(PortalValue);
+
         /// <summary> If communication toolset is Shell. </summary>
         public static ImpactToolset Shell { get; } = new ImpactToolset(ShellValue);
+
         /// <summary> If communication toolset is Other. </summary>
         public static ImpactToolset Other { get; } = new ImpactToolset(OtherValue);
+
         /// <summary> Determines if two <see cref="ImpactToolset"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ImpactToolset left, ImpactToolset right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ImpactToolset"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ImpactToolset left, ImpactToolset right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ImpactToolset"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ImpactToolset"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ImpactToolset(string value) => new ImpactToolset(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ImpactToolset"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ImpactToolset?(string value) => value == null ? null : new ImpactToolset(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ImpactToolset other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ImpactToolset other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

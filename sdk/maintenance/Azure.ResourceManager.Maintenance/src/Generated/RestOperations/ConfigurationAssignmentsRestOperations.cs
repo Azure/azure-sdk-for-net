@@ -32,140 +32,8 @@ namespace Azure.ResourceManager.Maintenance
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-01";
+            _apiVersion = apiVersion ?? "2021-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
-        }
-
-        internal RequestUriBuilder CreateGetParentRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourcegroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath(providerName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceParentType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceParentName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
-            uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetParentRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourcegroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath(providerName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceParentType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceParentName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
-            uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get configuration assignment for resource.. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationAssignmentData>> GetParentAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var message = CreateGetParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get configuration assignment for resource.. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceParentType"> Resource parent type. </param>
-        /// <param name="resourceParentName"> Resource parent identifier. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationAssignmentData> GetParent(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var message = CreateGetParentRequest(subscriptionId, resourceGroupName, providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
 
         internal RequestUriBuilder CreateCreateOrUpdateParentRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
@@ -256,7 +124,6 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
@@ -298,7 +165,6 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
@@ -446,122 +312,6 @@ namespace Azure.ResourceManager.Maintenance
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourcegroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath(providerName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
-            uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourcegroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/", false);
-            uri.AppendPath(providerName, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceType, true);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/providers/Microsoft.Maintenance/configurationAssignments/", false);
-            uri.AppendPath(configurationAssignmentName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get configuration assignment for resource.. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<MaintenanceConfigurationAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MaintenanceConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get configuration assignment for resource.. </summary>
-        /// <param name="subscriptionId"> Subscription credentials that uniquely identify a Microsoft Azure subscription. The subscription ID forms part of the URI for every service call. </param>
-        /// <param name="resourceGroupName"> Resource group name. </param>
-        /// <param name="providerName"> Resource provider name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="resourceName"> Resource identifier. </param>
-        /// <param name="configurationAssignmentName"> Configuration assignment name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="providerName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<MaintenanceConfigurationAssignmentData> Get(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, providerName, resourceType, resourceName, configurationAssignmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        MaintenanceConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = MaintenanceConfigurationAssignmentData.DeserializeMaintenanceConfigurationAssignmentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
         internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data)
         {
             var uri = new RawRequestUriBuilder();
@@ -638,7 +388,6 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
@@ -676,7 +425,6 @@ namespace Azure.ResourceManager.Maintenance
             switch (message.Response.Status)
             {
                 case 200:
-                case 201:
                     {
                         MaintenanceConfigurationAssignmentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);

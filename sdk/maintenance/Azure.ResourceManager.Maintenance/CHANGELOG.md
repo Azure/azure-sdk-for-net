@@ -1,10 +1,14 @@
 # Release History
 
-## 1.2.0 (2025-11-12)
+## 1.2.0-beta.10 (Unreleased)
 
-### Features Added
+## Features Added
 
-- Upgraded api-version tag from 'package-preview-2023-10' to 'package-2023-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b40ebb26621eef12eb91a11a08793f507cdd367f/specification/maintenance/resource-manager/Microsoft.Maintenance/Maintenance/readme.md.
+## Breaking Changes
+
+## Bugs Fixed
+
+## Other Changes
 
 ## 1.2.0-beta.9 (2025-03-11)
 
@@ -77,6 +81,14 @@
 
 - Upgraded dependent Azure.Core to 1.32.0.
 - Upgraded dependent Azure.ResourceManager to 1.6.0.
+
+## 1.1.3 (2025-11-13)
+
+This is a patch release for 1.1.2.
+
+### Bugs Fixed
+
+- fix string format serialization of DateTimeOffset.
 
 ## 1.1.2 (2023-03-11)
 

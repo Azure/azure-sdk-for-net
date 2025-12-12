@@ -17,7 +17,7 @@ The values of the `endpoint` and `apiKey` variables can be retrieved from enviro
 
 ## Detect the language of documents
 
-To detect the language of a document, call `AnalyzeText` on the `TextAnalysisClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
+To detect the language of a document, call `AnalyzeTextAsync` on the `TextAnalysisClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
 
 ```C# Snippet:Sample1_AnalyzeTextAsync_LanguageDetection
 string textA =
@@ -81,11 +81,11 @@ catch (RequestFailedException exception)
 }
 ```
 
-To detect the language of a document, call `AnalyzeText` on the `TextAnalysisClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
+To detect the language of a document, call `AnalyzeTextAsync` on the `TextAnalysisClient`, which returns a `AnalyzeTextLanguageDetectionResult` object with the name of the language, a confidence score, and more.
 
 ## Detect the language of documents with country hints
 
-If the country where a document originates from is known, you can aid the language detection model if you call `AnalyzeText` on the `TextAnalysisClient` while passing the documents as an `IEnumerable<LanguageInput>` parameter, having set the `CountryHint` property on each `LanguageInput` object accordingly.
+If the country where a document originates from is known, you can aid the language detection model if you call `AnalyzeTextAsync` on the `TextAnalysisClient` while passing the documents as an `IEnumerable<LanguageInput>` parameter, having set the `CountryHint` property on each `LanguageInput` object accordingly.
 
 ```C# Snippet:Sample1_AnalyzeTextAsync_LanguageDetection_CountryHint
 string textA =

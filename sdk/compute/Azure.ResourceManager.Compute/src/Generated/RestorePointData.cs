@@ -70,8 +70,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="timeCreated"> Gets the creation time of the restore point. </param>
         /// <param name="sourceRestorePoint"> Resource Id of the source restore point from which a copy needs to be created. </param>
         /// <param name="instanceView"> The restore point instance view. </param>
+        /// <param name="instantAccessDurationMinutes"> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, WritableSubResource sourceRestorePoint, RestorePointInstanceView instanceView, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RestorePointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<WritableSubResource> excludeDisks, RestorePointSourceMetadata sourceMetadata, string provisioningState, ConsistencyModeType? consistencyMode, DateTimeOffset? timeCreated, WritableSubResource sourceRestorePoint, RestorePointInstanceView instanceView, int? instantAccessDurationMinutes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ExcludeDisks = excludeDisks;
             SourceMetadata = sourceMetadata;
@@ -80,6 +81,7 @@ namespace Azure.ResourceManager.Compute
             TimeCreated = timeCreated;
             SourceRestorePoint = sourceRestorePoint;
             InstanceView = instanceView;
+            InstantAccessDurationMinutes = instantAccessDurationMinutes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -109,5 +111,7 @@ namespace Azure.ResourceManager.Compute
 
         /// <summary> The restore point instance view. </summary>
         public RestorePointInstanceView InstanceView { get; }
+        /// <summary> This property determines the time in minutes the snapshot is retained as instant access for restoring Premium SSD v2 or Ultra disk with fast restore performance in this restore point. </summary>
+        public int? InstantAccessDurationMinutes { get; set; }
     }
 }

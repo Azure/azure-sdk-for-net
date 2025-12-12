@@ -38,15 +38,20 @@ namespace Azure.ResourceManager.Elastic
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Sku))
-            {
-                writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku, options);
-            }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
+            }
+            if (Optional.IsDefined(Kind))
+            {
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind);
+            }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -75,8 +80,9 @@ namespace Azure.ResourceManager.Elastic
             {
                 return null;
             }
-            ElasticSku sku = default;
             ElasticMonitorProperties properties = default;
+            string kind = default;
+            ElasticSku sku = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -88,15 +94,6 @@ namespace Azure.ResourceManager.Elastic
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("sku"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sku = ElasticSku.DeserializeElasticSku(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -104,6 +101,20 @@ namespace Azure.ResourceManager.Elastic
                         continue;
                     }
                     properties = ElasticMonitorProperties.DeserializeElasticMonitorProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("sku"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = ElasticSku.DeserializeElasticSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -171,8 +182,9 @@ namespace Azure.ResourceManager.Elastic
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                sku,
                 properties,
+                kind,
+                sku,
                 identity,
                 serializedAdditionalRawData);
         }

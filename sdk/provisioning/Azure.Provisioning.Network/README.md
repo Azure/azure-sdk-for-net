@@ -9,7 +9,7 @@ Azure.Provisioning.Network simplifies declarative resource provisioning in .NET.
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.Network
+dotnet add package Azure.Provisioning.Network --prerelease
 ```
 
 ### Prerequisites

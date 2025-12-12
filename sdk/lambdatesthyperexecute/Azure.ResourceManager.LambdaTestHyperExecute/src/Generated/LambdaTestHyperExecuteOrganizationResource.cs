@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<LambdaTestHyperExecuteOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<LambdaTestHyperExecuteOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    Response<LambdaTestHyperExecuteOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<LambdaTestHyperExecuteOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     LambdaTestHyperExecuteOrganizationData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     LambdaTestHyperExecuteOrganizationPatch patch = new LambdaTestHyperExecuteOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<LambdaTestHyperExecuteOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<LambdaTestHyperExecuteOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                     LambdaTestHyperExecuteOrganizationData current = Get(cancellationToken: cancellationToken).Value.Data;
                     LambdaTestHyperExecuteOrganizationPatch patch = new LambdaTestHyperExecuteOrganizationPatch();
                     patch.Tags.ReplaceWith(tags);
-                    Response<LambdaTestHyperExecuteOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<LambdaTestHyperExecuteOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<LambdaTestHyperExecuteOrganizationResource> result = await UpdateAsync(patch, cancellationToken).ConfigureAwait(false);
+                    Response<LambdaTestHyperExecuteOrganizationResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.LambdaTestHyperExecute
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    Response<LambdaTestHyperExecuteOrganizationResource> result = Update(patch, cancellationToken);
+                    Response<LambdaTestHyperExecuteOrganizationResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

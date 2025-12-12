@@ -13,7 +13,7 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary>
     /// Represents a knowledge source definition.
     /// Please note <see cref="KnowledgeSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/> and <see cref="SearchIndexKnowledgeSource"/>.
+    /// The available derived classes include <see cref="AzureBlobKnowledgeSource"/>, <see cref="IndexedOneLakeKnowledgeSource"/>, <see cref="IndexedSharePointKnowledgeSource"/>, <see cref="RemoteSharePointKnowledgeSource"/>, <see cref="SearchIndexKnowledgeSource"/> and <see cref="WebKnowledgeSource"/>.
     /// </summary>
     public abstract partial class KnowledgeSource
     {
@@ -63,8 +63,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
-        /// <param name="eTag"> The ETag of the agent. </param>
-        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="eTag"> The ETag of the knowledge base. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge base definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge base definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge base definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KnowledgeSource(string name, string description, KnowledgeSourceKind kind, string eTag, SearchResourceEncryptionKey encryptionKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -87,7 +87,7 @@ namespace Azure.Search.Documents.Indexes.Models
         public string Description { get; set; }
         /// <summary> The type of the knowledge source. </summary>
         internal KnowledgeSourceKind Kind { get; set; }
-        /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your agent definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your agent definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your agent definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
+        /// <summary> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge base definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge base definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge base definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </summary>
         public SearchResourceEncryptionKey EncryptionKey { get; set; }
     }
 }
