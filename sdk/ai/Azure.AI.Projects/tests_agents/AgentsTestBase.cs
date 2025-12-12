@@ -444,7 +444,7 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     {
         A2ATool a2aTool = new()
         {
-            ProjectConnectionId = useRemoteA2AConnection ? TestEnvironment.A2A_SPECIAL_CONNECTION_ID : TestEnvironment.A2A_CONNECTION_ID
+            ProjectConnectionId = useRemoteA2AConnection ? TestEnvironment.REMOTE_A2A_CONNECTION_ID : TestEnvironment.A2A_CONNECTION_ID
         };
         if (!useRemoteA2AConnection)
         {

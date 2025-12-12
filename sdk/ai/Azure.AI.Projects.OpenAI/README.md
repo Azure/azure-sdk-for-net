@@ -51,7 +51,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
   - [A2ATool](#a2atool)
     - [Create a connection to A2A agent](#create-a-connection-to-a2a-agent)
       - [Classic Microsoft Foundry](#classic-microsoft-foundry)
-      - [Nextgen Microsoft Foundry](#nextgen-microsoft-foundry)
+      - [New Microsoft Foundry](#new-microsoft-foundry)
     - [Using A2A Tool](#using-a2a-tool)
 - [Tracing](#tracing)
   - [Tracing to Azure Monitor](#tracing-to-azure-monitor)
@@ -1310,7 +1310,7 @@ The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed 
 
 ### Create a connection to A2A agent
 
-The connection to A2A service can be created in two ways. In classic Microsoft Foundry, we need to create Custom keys connection, however in the new (Nextgen) version of Microsoft Foundry we can create the specialized A2A connection.
+The connection to A2A service can be created in two ways. In classic Microsoft Foundry, we need to create Custom keys connection, however in the new version of Microsoft Foundry we can create the specialized A2A connection.
 
 #### Classic Microsoft Foundry
 
@@ -1322,7 +1322,7 @@ The connection to A2A service can be created in two ways. In classic Microsoft F
    * type: custom_A2A
 5. Name and save the connection.
 
-#### Nextgen Microsoft Foundry
+#### New Microsoft Foundry
 
 If we are using the Agent2agent connection, we do not need to provide the endpoint as it already contains it.
 
