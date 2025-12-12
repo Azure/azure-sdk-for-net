@@ -241,7 +241,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             PlanetaryComputerProClient client = GetTestClient();
             IngestionClient ingestionClient = client.GetIngestionClient();
 
-            string sasContainerUri = TestEnvironment.IngestionSasContainerUri;
+            string sasContainerUri = TestEnvironment.IngestionContainerUri;
             string sasToken = TestEnvironment.IngestionSasToken;
 
             TestContext.WriteLine("Testing CreateSource (create SAS token ingestion source)");

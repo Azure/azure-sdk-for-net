@@ -24,7 +24,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
 
         /// <summary>
         /// Gets the STAC item ID used for testing.
-        /// </summary>
+    /// </summary>
         public string ItemId => GetRecordedVariable("PLANETARYCOMPUTER_ITEM_ID");
 
         /// <summary>
@@ -42,12 +42,6 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         public string LifecycleCollectionId => GetRecordedOptionalVariable("PLANETARYCOMPUTER_LIFECYCLE_COLLECTION_ID", null) ?? "sample-lifecycle-collection";
 
         /// <summary>
-        /// Gets the Azure Blob Storage container URI for ingestion tests.
-        /// Marked as secret to prevent real storage account details from being recorded.
-        /// </summary>
-        public string IngestionContainerUri => GetRecordedVariable("PLANETARYCOMPUTER_INGESTION_CONTAINER_URI", options => options.IsSecret("https://sanitized.blob.core.windows.net/sentinel2static"));
-
-        /// <summary>
         /// Gets the STAC catalog URL for ingestion tests.
         /// </summary>
         public string IngestionCatalogUrl => GetRecordedVariable("PLANETARYCOMPUTER_INGESTION_CATALOG_URL");
@@ -62,7 +56,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// Gets the Azure Blob Storage container URI with SAS token for SAS-based ingestion tests.
         /// Marked as secret to prevent real storage and token details from being recorded.
         /// </summary>
-        public string IngestionSasContainerUri => GetRecordedVariable("PLANETARYCOMPUTER_INGESTION_SAS_CONTAINER_URI", options => options.IsSecret("https://sanitized.blob.core.windows.net/sample-container"));
+        public string IngestionContainerUri => GetRecordedVariable("PLANETARYCOMPUTER_INGESTION_CONTAINER_URI", options => options.IsSecret("https://sanitized.blob.core.windows.net/sample-container"));
 
         /// <summary>
         /// Gets the SAS token for container access in SAS-based ingestion tests.
