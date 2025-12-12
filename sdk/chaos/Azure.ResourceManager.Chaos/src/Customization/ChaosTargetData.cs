@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Chaos
         {
             Location = location;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            //_serializedAdditionalRawData = serializedAdditionalRawData;
         }
     }
 }

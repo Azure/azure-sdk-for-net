@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Chaos;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -14,50 +15,77 @@ namespace Azure.ResourceManager.Chaos.Models
     public readonly partial struct ChaosProvisioningState : IEquatable<ChaosProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Resource has been created. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Resource creation failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Resource creation was canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Initial creation in progress. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Update in progress. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deletion in progress. </summary>
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Initializes a new instance of <see cref="ChaosProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ChaosProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SucceededValue = "Succeeded";
-        private const string FailedValue = "Failed";
-        private const string CanceledValue = "Canceled";
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
+            _value = value;
+        }
 
         /// <summary> Resource has been created. </summary>
         public static ChaosProvisioningState Succeeded { get; } = new ChaosProvisioningState(SucceededValue);
+
         /// <summary> Resource creation failed. </summary>
         public static ChaosProvisioningState Failed { get; } = new ChaosProvisioningState(FailedValue);
+
         /// <summary> Resource creation was canceled. </summary>
         public static ChaosProvisioningState Canceled { get; } = new ChaosProvisioningState(CanceledValue);
+
         /// <summary> Initial creation in progress. </summary>
         public static ChaosProvisioningState Creating { get; } = new ChaosProvisioningState(CreatingValue);
+
         /// <summary> Update in progress. </summary>
         public static ChaosProvisioningState Updating { get; } = new ChaosProvisioningState(UpdatingValue);
+
         /// <summary> Deletion in progress. </summary>
         public static ChaosProvisioningState Deleting { get; } = new ChaosProvisioningState(DeletingValue);
+
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ChaosProvisioningState left, ChaosProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ChaosProvisioningState left, ChaosProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ChaosProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ChaosProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ChaosProvisioningState(string value) => new ChaosProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ChaosProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ChaosProvisioningState?(string value) => value == null ? null : new ChaosProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ChaosProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ChaosProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -14,30 +14,31 @@ namespace Azure.ResourceManager.Chaos.Models
     public partial class ChaosTargetSimpleFilter : ChaosTargetFilter
     {
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilter"/>. </summary>
-        public ChaosTargetSimpleFilter()
+        public ChaosTargetSimpleFilter() : base(FilterType.Simple)
         {
-            Type = FilterType.Simple;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilter"/>. </summary>
         /// <param name="type"> Chaos target filter discriminator type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Model that represents the Simple filter parameters. </param>
-        internal ChaosTargetSimpleFilter(FilterType type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChaosTargetSimpleFilterParameters parameters) : base(type, serializedAdditionalRawData)
+        internal ChaosTargetSimpleFilter(FilterType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, ChaosTargetSimpleFilterParameters parameters) : base(@type, additionalBinaryDataProperties)
         {
             Parameters = parameters;
-            Type = type;
         }
 
         /// <summary> Model that represents the Simple filter parameters. </summary>
         internal ChaosTargetSimpleFilterParameters Parameters { get; set; }
+
         /// <summary> List of Azure availability zones to filter targets by. </summary>
         public IList<string> ParametersZones
         {
             get
             {
                 if (Parameters is null)
+                {
                     Parameters = new ChaosTargetSimpleFilterParameters();
+                }
                 return Parameters.Zones;
             }
         }
