@@ -32,10 +32,6 @@ Custom analyzers allow you to define a field schema that specifies what structur
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Create a custom analyzer
 
 Create a custom analyzer with a field schema:

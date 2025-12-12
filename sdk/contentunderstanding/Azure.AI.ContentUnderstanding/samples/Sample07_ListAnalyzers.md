@@ -9,7 +9,7 @@ This sample builds on concepts introduced in previous samples:
 - [Sample 06: Get analyzer information][sample06] - Understanding analyzer details
 
 The `GetAnalyzersAsync` method returns an async enumerable of all analyzers in your resource, including:
-- **Prebuilt analyzers**: System-provided analyzers like `prebuilt-documentSearch`, `prebuilt-invoice`, etc.
+- **Prebuilt analyzers**: System-provided analyzers (70+ and growing) like `prebuilt-documentSearch`, `prebuilt-invoice`, etc.
 - **Custom analyzers**: Analyzers you've created
 
 This is useful for:
@@ -20,10 +20,6 @@ This is useful for:
 ## Prerequisites
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
-
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
 
 ## List all analyzers
 

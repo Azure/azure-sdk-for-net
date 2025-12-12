@@ -23,10 +23,6 @@ This is useful for:
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Get prebuilt analyzer information
 
 Retrieve information about a prebuilt analyzer and display the full JSON:

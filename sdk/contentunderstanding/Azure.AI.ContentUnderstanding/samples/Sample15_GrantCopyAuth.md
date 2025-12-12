@@ -42,10 +42,6 @@ This sample requires additional environment variables for the source resource (t
 
 **Note**: API keys (`AZURE_CONTENT_UNDERSTANDING_KEY` and `AZURE_CONTENT_UNDERSTANDING_TARGET_KEY`) are only required when `DefaultAzureCredential` is not used. If you're using Azure authentication (e.g., `az login` or managed identity), you can omit the keys and the sample will use `DefaultAzureCredential` for authentication.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Grant copy authorization and copy analyzer
 
 Create a source analyzer, grant copy authorization, and copy it to a target resource:

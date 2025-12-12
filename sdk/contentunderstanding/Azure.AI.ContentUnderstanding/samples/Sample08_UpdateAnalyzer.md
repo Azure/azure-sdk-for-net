@@ -18,10 +18,6 @@ The `UpdateAnalyzerAsync` method allows you to modify certain properties of an e
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Update an analyzer
 
 Update an analyzer's description and tags:

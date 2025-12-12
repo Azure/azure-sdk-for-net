@@ -14,12 +14,15 @@ This configuration is **per Microsoft Foundry resource** and persists across ses
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource**. See [README][README] for prerequisites and instructions.
+To get started you'll need:
+- An Azure subscription and a **Microsoft Foundry resource**. To create a Microsoft Foundry resource, follow the steps in the [Azure Content Understanding quickstart][cu_quickstart]. You must create your Microsoft Foundry resource in a region that supports Content Understanding. For a list of available regions, see [Azure Content Understanding region and language support][cu_region_support].
+- After creating your Microsoft Foundry resource, you must grant yourself the **Cognitive Services User** role to enable API calls for setting default model deployments. This role assignment is required even if you are the owner of the resource.
+- Deployed the following models in Microsoft Foundry:
+  - gpt-4.1
+  - gpt-4.1-mini
+  - text-embedding-3-large
 
-You also need to have deployed the following models in Microsoft Foundry:
-- gpt-4.1
-- gpt-4.1-mini
-- text-embedding-3-large
+For detailed instructions on deploying models, see [Create model deployments in Microsoft Foundry portal][deploy_models_docs].
 
 ## Creating a `ContentUnderstandingClient`
 
@@ -103,10 +106,12 @@ After configuring model deployments, you can use prebuilt analyzers. See:
 - [Content Understanding documentation][cu-docs]
 - [Model deployment configuration][model-deployment-docs]
 
-[README]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/README.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample02]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[cu_quickstart]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
+[cu_region_support]: https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support
+[deploy_models_docs]: https://learn.microsoft.com/azure/ai-studio/how-to/deploy-models-openai
 [model-deployment-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
 
 

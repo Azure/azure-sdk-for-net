@@ -12,20 +12,14 @@ This sample focuses on **document analysis**. For prebuilt RAG analyzers coverin
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-### ⚠️ IMPORTANT: Configure model deployments first
-
-> **Before using prebuilt analyzers, you MUST configure model deployments for your Microsoft Foundry resource.** This is a **one-time setup per resource** that maps your deployed large language models to the models required by the prebuilt analyzers. Currently, Content Understanding uses OpenAI GPT models. This configuration is persisted in your Microsoft Foundry resource, so you only need to run this once per resource (or whenever you change your deployment names).
-
-The `prebuilt-documentSearch` analyzer requires **gpt-4.1-mini** and **text-embedding-3-large** model deployments. See [Sample 00: Configure model deployment defaults][sample00] for detailed instructions on configuring model deployments.
-
 ## Prebuilt analyzers
 
-Content Understanding provides prebuilt RAG analyzers (the `prebuilt-*Search` analyzers) that return markdown and a one-paragraph `Summary` for each content item, making them useful for retrieval-augmented generation (RAG) and other downstream applications:
+Content Understanding provides prebuilt RAG analyzers (the `prebuilt-*Search` analyzers, such as `prebuilt-documentSearch`) that return markdown and a one-paragraph `Summary` for each content item, making them useful for retrieval-augmented generation (RAG) and other downstream applications:
 
 - **`prebuilt-documentSearch`** - Extracts content from documents (PDF, images, Office documents) with layout preservation, table detection, figure analysis, and structured markdown output. Optimized for RAG scenarios.
 - **`prebuilt-audioSearch`** - Transcribes audio content with speaker diarization, timing information, and conversation summaries. Supports multilingual transcription.
 - **`prebuilt-videoSearch`** - Analyzes video content with visual frame extraction, audio transcription, and structured summaries. Provides temporal alignment of visual and audio content.
-- **`prebuilt-imageSearch`** - Analyzes standalone images and returns markdown plus a one-paragraph description of the image content. Note: Image analysis is not optimized for text extraction; use `prebuilt-documentSearch` for documents containing text.
+- **`prebuilt-imageSearch`** - Analyzes standalone images and returns a one-paragraph `Summary` of the image content. For images that contain text (including hand-written text), use `prebuilt-documentSearch`.
 
 This sample uses **`prebuilt-documentSearch`** to extract structured content from PDF documents.
 

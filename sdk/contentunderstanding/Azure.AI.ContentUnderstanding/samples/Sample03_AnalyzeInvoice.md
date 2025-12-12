@@ -8,9 +8,7 @@ This sample builds on concepts introduced in previous samples:
 - [Sample 00: Configure model deployment defaults][sample00] - Required setup before using prebuilt analyzers
 - [Sample 02: Analyze a document from URL][sample02] - Basic URL-based analysis
 
-## About prebuilt analyzers
-
-Content Understanding provides **70+ production-ready prebuilt analyzers** that are ready to use without any training or configuration. These analyzers are powered by rich knowledge bases of thousands of real-world document examples, enabling them to understand document structure and adapt to variations in format and content.
+Content Understanding provides **70+ and growing production-ready prebuilt analyzers** that are ready to use without any training or configuration. These analyzers are powered by rich knowledge bases of thousands of real-world document examples, enabling them to understand document structure and adapt to variations in format and content.
 
 Prebuilt analyzers are ideal for:
 - **Content ingestion** in search and retrieval-augmented generation (RAG) workflows
@@ -39,10 +37,6 @@ For a complete list of available prebuilt analyzers, see the [Prebuilt analyzers
 ## Prerequisites
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
-
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
 
 ## Analyze invoice from URL
 
@@ -202,7 +196,7 @@ For more details about `DocumentContent` and all available document elements (pa
 
 - [Content Understanding documentation][cu-docs]
 - [Document elements documentation][document-elements-docs] - Detailed information about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.)
-- [Prebuilt analyzers documentation][prebuilt-analyzers-docs] - Complete list of 70+ prebuilt analyzers
+- [Prebuilt analyzers documentation][prebuilt-analyzers-docs] - Complete list of 70+ and growing prebuilt analyzers
 - [Financial documents][financial-docs] - Overview of financial document analyzers
 
 [sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md

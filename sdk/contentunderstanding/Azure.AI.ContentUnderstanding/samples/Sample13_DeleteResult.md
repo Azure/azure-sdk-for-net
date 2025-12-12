@@ -20,10 +20,6 @@ Analysis results are stored temporarily and can be deleted using the `DeleteResu
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Analyze and delete result
 
 Analyze a document and then delete the result:

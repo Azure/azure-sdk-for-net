@@ -19,10 +19,6 @@ The `GetResultFile` API allows you to retrieve these files using:
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Analyze video for result files
 
 Analyze a video to generate result files:

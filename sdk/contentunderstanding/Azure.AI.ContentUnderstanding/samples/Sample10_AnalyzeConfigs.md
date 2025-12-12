@@ -24,10 +24,6 @@ For custom analyzers, you can configure these options in `ContentAnalyzerConfig`
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Analyze with configs
 
 Analyze a document using `prebuilt-documentSearch` which has formulas, layout, and OCR enabled:

@@ -4,7 +4,7 @@ Content Understanding ships a broad set of prebuilt RAG analyzers. This sample d
 
 ## About analyzing URLs across modalities
 
-Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBinary][sample01-analyze-binary]) and URL inputs across all modalities. This sample focuses on the `prebuilt-*Search` RAG analyzers (document/image/audio/video). Documents, HTML, and images with text are returned as `DocumentContent` (derived from `MediaContent`), while audio and video are returned as `AudioVisualContent` (also derived from `MediaContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
+Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBinary][sample01-analyze-binary]) and URL inputs across all modalities. This sample focuses on prebuilt RAG analyzers (the `prebuilt-*Search` analyzers, such as `prebuilt-documentSearch`). Documents, HTML, and images with text are returned as `DocumentContent` (derived from `MediaContent`), while audio and video are returned as `AudioVisualContent` (also derived from `MediaContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
 
 ## Prerequisites
 
@@ -121,7 +121,7 @@ if (audioContent.TranscriptPhrases != null && audioContent.TranscriptPhrases.Cou
 
 ## Image from a URL
 
-Analyze images with `prebuilt-imageSearch`. As described in [prebuilt analyzers][cu-prebuilt-analyzers], this analyzer returns markdown plus a one-paragraph description of the image content.
+Analyze images with `prebuilt-imageSearch`. As described in [prebuilt analyzers][cu-prebuilt-analyzers], this analyzer returns a one-paragraph `Summary` of the image content. For images that contain text (including hand-written text), use `prebuilt-documentSearch`.
 
 ```C# Snippet:ContentUnderstandingAnalyzeImageUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/image/pieChart.jpg");

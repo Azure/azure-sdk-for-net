@@ -28,10 +28,6 @@ Use raw JSON only when you need:
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Analyze and return raw JSON
 
 Use the protocol method to get raw JSON response:

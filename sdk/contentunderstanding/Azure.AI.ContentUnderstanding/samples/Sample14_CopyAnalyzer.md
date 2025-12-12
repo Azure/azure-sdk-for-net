@@ -20,10 +20,6 @@ The `CopyAnalyzer` API allows you to copy an analyzer within the same Azure reso
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
-## Creating a `ContentUnderstandingClient`
-
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
-
 ## Copy an analyzer
 
 Create a source analyzer and copy it to a target. First, create the source analyzer (see [Sample 04][sample04] for details on creating analyzers), then copy it:
