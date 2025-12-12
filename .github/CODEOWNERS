@@ -241,6 +241,12 @@
 # PRLabel: %Cognitive - Language
 /sdk/cognitivelanguage/                                            @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
 
+# PRLabel: %Cognitive - Language
+/sdk/cognitivelanguage/*.QuestionAnswering.Inference/              @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+
+# PRLabel: %Cognitive - Language
+/sdk/cognitivelanguage/*.QuestionAnswering.Authoring/              @Amichelangelo @quentinRobinson @bidisha-c @mikaelsitruk @sarkar-rajarshi @ahmedaashour
+
 # ServiceLabel: %Cognitive - Language
 # ServiceOwners:                                                   @quentinRobinson
 
@@ -350,10 +356,10 @@
 # ServiceOwners:                                                   @TravisCragg-MSFT @hilaryw29
 
 # PRLabel: %Confidential Ledger
-/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov
+/sdk/confidentialledger/                                           @christothes @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
 
 # ServiceLabel: %Confidential Ledger
-# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov
+# ServiceOwners:                                                   @PallabPaul @andpiccione @ivarprudnikov @musabbir @prathod09 @vimauro @ryazhang-microsoft @msftsettiy @weirenlai @Azure/azure-sdk-write-acl
 
 # ServiceLabel: %Connected Kubernetes
 # ServiceOwners:                                                   @akashkeshari
@@ -1033,13 +1039,22 @@
 # ServiceOwners:                                                   @thomasp98296
 
 # PRLabel: %Neon Postgres
-/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978 @alluri02
+/sdk/neonpostgres/Azure.ResourceManager.*/                         @ArcturusZhang @ArthurMa1978
 
-# ServiceLabel: %Neon Postgres %Mgmt
-# ServiceOwners:                                                   @alluri02
+# PRLabel: %NetApp Files
+/sdk/netapp/Azure.ResourceManager.*/                               @audunn @Azure/azure-sdk-write-netappfiles
+
+# ServiceLabel: %NetApp Files %Mgmt
+# ServiceOwners:                                                   @audunn
 
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
+
+# PRLabel: %Network - Edge Actions
+/sdk/edgeactions/Azure.ResourceManager.*/                          @tundwed @anamikanupur
+
+# ServiceLabel: %Network - Edge Actions %Mgmt
+# ServiceOwners:                                                   @tundwed @anamikanupur
 
 # PRLabel: %Network - DNS Private Resolver
 /sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet

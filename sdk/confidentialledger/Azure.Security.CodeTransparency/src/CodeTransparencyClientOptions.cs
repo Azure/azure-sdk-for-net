@@ -20,6 +20,7 @@ namespace Azure.Security.CodeTransparency
         /// The default identity service endpoint.
         /// </summary>
         public string IdentityClientEndpoint { get; set; } = "https://identity.confidential-ledger.core.azure.com/";
+
         /// <summary>
         /// Used in the regular client constructor.
         /// Creates the <see cref="CodeTransparencyCertificateClient"/> used to get the identity service certificate.

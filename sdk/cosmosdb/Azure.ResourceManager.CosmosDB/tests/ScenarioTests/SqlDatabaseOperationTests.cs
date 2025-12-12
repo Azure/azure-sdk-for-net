@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var updateOptions = new CosmosDBSqlDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, default(ManagedServiceIdentity), null);
+                AzureLocation.WestUS, database.Data.Resource, new CosmosDBCreateUpdateConfig { Throughput = TestThroughput2 }, null);
 
             database = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var updateOptions = new CosmosDBSqlDatabaseCreateOrUpdateContent(database.Id, _databaseName, database.Data.ResourceType, null,
                 new Dictionary<string, string>(),// TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-                AzureLocation.WestUS, resource, null, default(ManagedServiceIdentity), null);
+                AzureLocation.WestUS, resource, null, null);
 
             var database3 = (await SqlDatabaseContainer.CreateOrUpdateAsync(WaitUntil.Completed, _databaseName, updateOptions)).Value;
             Assert.AreEqual(_databaseName, database.Data.Resource.DatabaseName);
