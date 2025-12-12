@@ -14,9 +14,9 @@ Use the client library for Azure Planetary Computer to:
 - Generate secure access tokens for collections and assets
 
 [Source code][source_code]
+| [Product documentation][pc_product_docs]
 <!-- | [Package (NuGet)][pc_nuget] -->
 <!-- | [API reference documentation][pc_ref_docs] -->
-| [Product documentation][pc_product_docs]
 
 ## Getting started
 
