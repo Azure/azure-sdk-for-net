@@ -298,9 +298,7 @@
         "hvci",
         "imds",
         "sevsnp",
-        "wdac",
-        "Rdma",
-        "rdma"
+        "wdac"
       ]
     },
     {

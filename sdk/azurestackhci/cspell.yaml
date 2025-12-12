@@ -1,0 +1,5 @@
+import:
+  - ../../.vscode/cspell.json
+words:
+  - Rdma
+  - rdma
