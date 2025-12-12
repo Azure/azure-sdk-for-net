@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(ResourceType.Value, options);
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(prop.Value.GetString());
+                    resourceType = ModelReaderWriter.Read<ResourceType?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerCarbonOptimizationContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
