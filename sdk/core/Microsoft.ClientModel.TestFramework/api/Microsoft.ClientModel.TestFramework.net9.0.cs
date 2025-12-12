@@ -164,6 +164,7 @@ namespace Microsoft.ClientModel.TestFramework
         public Microsoft.ClientModel.TestFramework.RecordedTestMode Mode { get { throw null; } set { } }
         public bool NormalizeMultipartContentDispositionHeaders { get { throw null; } set { } }
         public virtual Microsoft.ClientModel.TestFramework.TestRecording? Recording { get { throw null; } }
+        public bool RemoveDefaultSanitizers { get { throw null; } set { } }
         public virtual System.Collections.Generic.List<string> SanitizedHeaders { get { throw null; } }
         public virtual System.Collections.Generic.List<string> SanitizedQueryParameters { get { throw null; } }
         public virtual System.Collections.Generic.List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get { throw null; } }
