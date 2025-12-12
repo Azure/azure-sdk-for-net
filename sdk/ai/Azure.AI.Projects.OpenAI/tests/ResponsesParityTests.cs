@@ -517,4 +517,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
 
         Assert.That(response.ReasoningOptions?.ReasoningEffortLevel?.ToString(), Is.EqualTo("none"));
     }
+
+    [RecordedTest]
+    public async Task TestPublihedAgent()
+    {
+        ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
+           endpoint: new Uri($"{TestEnvironment.PUBLISHED_ENDPOINT}/openai"));
+        ProjectOpenAIClient client = CreateProxyFromClient(new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
+        OpenAIResponse response = await client.Responses.CreateResponseAsync("What is the size of France in square miles?");
+        Assert.That(string.IsNullOrEmpty(response.GetOutputText()), Is.False, "The Agent did not returned a response.");
+    }
 }

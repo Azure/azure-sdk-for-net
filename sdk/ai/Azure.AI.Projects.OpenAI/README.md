@@ -25,7 +25,9 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Agents](#agents)
     - [Responses](#responses)
     - [Conversations](#conversations)
+  - [Published Agents](#published-agents)
   - [Container App](#container-app)
+    - 
   - [File search](#file-search)
   - [Code interpreter](#code-interpreter)
   - [Computer use](#computer-use)
@@ -311,6 +313,58 @@ ResponseCreationOptions responseCreationOptions = new()
 List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
 OpenAIResponse response = await responseClient.CreateResponseAsync(items, responseCreationOptions);
 ```
+
+### Published Agents
+
+Published Agents are available outside the Microsoft Foundry and can be used by external applications.
+
+#### Publish Agent
+
+1. Click **New foundry** switch at the top of Microsoft Foundry UI.
+2. Click **Build** at the upper right.
+3. Click **Create agent** button and name your Agent.
+4. Select the created Agent at the central panel and click **Publish** at the upper right corner.
+
+After the Agent is published, you will be provided with two URLs
+- `https://<Fondry Name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/activityprotocol?api-version=2025-11-15-preview`
+- `https://<Fondry Name>.services.ai.azure.com/api/projects/<Project Name>/applications/<Agent Name>/protocols/openai/responses?=2025-11-15-preview`
+
+The second URL can be usedto call responses API, we will use it to run sample.
+
+### Use the published Agent
+The URL, returned during Agent publishing contains `/openai/responses` path and query parameter, setting `api-version`. These parts need to be removed by `CleanEndpoint` method.
+
+```C# Snippet:Sample_CleanUri_PublishedAgent
+private static Uri CleanEndpoint(string endpoint)
+{
+    Uri uriEndpoint = new(endpoint);
+    // Remove the Query part.
+    if (!string.IsNullOrEmpty(uriEndpoint.Query))
+    {
+        uriEndpoint = new(uriEndpoint.AbsolutePath);
+    }
+    // Remove /openai/responses path as it will be added back by framework.
+    string responsesSuffix = "/openai/responses";
+    if (uriEndpoint.LocalPath.EndsWith(responsesSuffix))
+    {
+        return new(uriEndpoint.AbsolutePath.Substring(0, uriEndpoint.AbsolutePath.Length - responsesSuffix.Length));
+    }
+    return uriEndpoint;
+}
+```
+
+Create a `ProjectResponsesClient`, get the response from Agent and print the output.
+
+Synchronous sample:
+```C# Snippet:Sample_CreateResponse_ReadEndpoint_Sync
+ProjectResponsesClient responseClient = new(
+    projectEndpoint: endpoint,
+    tokenProvider: new DefaultAzureCredential()
+);
+OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
+Console.WriteLine(response.GetOutputText());
+```
+
 
 ### Container App
 
@@ -843,7 +897,7 @@ await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateRe
 Console.WriteLine($"{text}{annotation}");
 ```
 
-## Bing Grounding
+### Bing Grounding
 
 To support the response returned by the Agent, Bing grounding can be used. To implement it,
 create the `BingGroundingAgentTool` and use it in `PromptAgentDefinition` object.
@@ -909,7 +963,7 @@ await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateRe
 Console.WriteLine($"{text}{annotation}");
 ```
 
-## Bing Custom Search
+### Bing Custom Search
 
 Along with bing grounding, Agents can use the custom search. To implement it,
 create the `BingCustomSearchAgentTool` and use it in `PromptAgentDefinition` object. The
@@ -935,7 +989,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 
 Sending request and formatting the response is done the same way as in Bing Grounding.
 
-## MCP tool
+### MCP tool
 The `MCPTool` allows Agent to communicate with third party services using [Model Context Protocol (MCP)](https://learn.microsoft.com/windows/ai/mcp/overview).
 To use MCP we need to create agent definition with the `MCPTool`.
 
@@ -1001,7 +1055,7 @@ do
 Console.WriteLine(response.GetOutputText());
 ```
 
-## MCP tool with project connection
+### MCP tool with project connection
 Running MCP tool with project connection allows you to connect to an MCP server that requires authentication. The only difference from
 the previous example is that we need to provide the connection name. To create connection valid for GitHub please log in to your GitHub profile, click on the profile picture at the upper right corner and select "Settings". At the left panel click "Developer Settings", select "Personal access tokens > Tokens (classic)". At the top choose "Generate new token" and enter password and create a token, which can read public repositories. **Save the token, or keep the page open as once the page is closed, token cannot be shown again!**
 In the Azure portal open Microsoft Foundry you are using, at the left panel select "Management center" and then select "Connected resources". Create new connection of "Custom keys" type; name it and add a key value pair. Set the key name `Authorization` and the value should have a form of `Bearer your_github_token`.
@@ -1027,7 +1081,7 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 In this scenario the agent can be asked questions about GitHub profile, the token is attributed to. The responses from Agent with project connection should be
 handled the same way as described in the MCP tool section.
 
-## OpenAPI tool
+### OpenAPI tool
 OpenAPI tool allows Agent to get information from Web services using [OpenAPI Specification](https://en.wikipedia.org/wiki/OpenAPI_Specification).
 To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` object and provide the specification file to its constructor. `OpenAPIAgentTool` contains a `Description` property, serving as a hint when this tool should be used.
 
@@ -1061,7 +1115,7 @@ OpenAIResponse response = await responseClient.CreateResponseAsync(
 Console.WriteLine(response.GetOutputText());
 ```
 
-## OpenAPI tool with project connection
+### OpenAPI tool with project connection
 Some Web services, using OpenAPI specification, may require authentication, which can be done through the Microsoft Foundry project connection.
 In our example we are using TripAdvisor  specification, which use key authentication.
 To create a connection, in the Azure portal open Microsoft Foundry you are using, at the left panel select "Management center" and then select "Connected resources", and, finally, create new connection of "Custom keys" type; name it and add a key value pair.
@@ -1108,17 +1162,17 @@ OpenAIResponse response = await responseClient.CreateResponseAsync(
 Console.WriteLine(response.GetOutputText());
 ```
 
-## Browser automation
+### Browser automation
 
 Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
 
-### Create Azure Playwright workspace
+#### Create Azure Playwright workspace
 
 1. Deploy an Azure Playwright workspace.
 2. In the **Get started** section, open **2. Set up authentication**.
 3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
 
-### Configure Microsoft Foundry
+#### Configure Microsoft Foundry
 
 1. Open the left navigation and select **Management center**.
 2. Choose **Connected resources**.
@@ -1126,7 +1180,7 @@ Playwright is a Node.js library for browser automation. Microsoft provides the [
 4. Provide a name, then paste your Access Token into the **Key** field.
 5. Set the Playwright Workspace Browser endpoint as the **Target URI**. You can find this endpoint on the Workspace **Overview page**. It begins with `wss://`.
 
-### Using Browser automation tool
+#### Using Browser automation tool
 
 Please note that Browser automation operations may take longer than typical calls to process. Using background mode for Responses or applying a network timeout of at least five minutes for non-background calls is highly recommended.
 
@@ -1183,7 +1237,7 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
 }
 ```
 
-## SharePoint tool
+### SharePoint tool
 `SharepointAgentTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointAgentTool`.
 
 ```C# Snippet:Sample_CreateAgent_Sharepoint_Async
@@ -1245,11 +1299,11 @@ Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine($"{response.GetOutputText()}{GetFormattedAnnotation(response)}");
 ```
 
-## Fabric Data Agent tool
+### Fabric Data Agent tool
 
 As a prerequisite to this example, we will need to create Microsoft Fabric with Lakehouse data repository. Please see the end-to end tutorials on using Microsoft Fabric [here](https://learn.microsoft.com/fabric/fundamentals/end-to-end-tutorials) for more information.
 
-### Create a Fabric Capacity
+#### Create a Fabric Capacity
 
 1. Create a **Fabric Capacity** resource in the Azure Portal **(attention, the rate is being applied!)**.
 2. Create the workspace in [Power BI portal](https://msit.powerbi.com/home) by clicking **Workspaces** icon on the left panel.
@@ -1257,7 +1311,7 @@ As a prerequisite to this example, we will need to create Microsoft Fabric with 
 4. At the right panel populate the name of a workspace, select **Fabric capacity** as a **License mode**; in the **Capacity** dropdown select Fabric Capacity resource we have just created.
 5. Click **Apply**.
 
-### Create a Lakehouse data repository
+#### Create a Lakehouse data repository
 
 1. Click a **Lakehouse** icon in **Other items you can create with Microsoft Fabric** section and name the new data repository.
 2. Download the [public holidays data set](https://github.com/microsoft/fabric-samples/raw/refs/heads/main/docs-samples/data-engineering/Lakehouse/PublicholidaysSample/publicHolidays.parquet).
@@ -1265,7 +1319,7 @@ As a prerequisite to this example, we will need to create Microsoft Fabric with 
 4. In the **Files** section, click on three dots next to uploaded file and click **Load to Tables > new table** and then **Load** in the opened window.
 5. Delete the uploaded file, by clicking three dots and selecting **Delete**.
 
-### Add a data agent to the Fabric
+#### Add a data agent to the Fabric
 
 1. At the top panel select **Add to data agent > New data agent** and name the newly created Agent.
 2. In the open view on the left panel select the Lakehouse "publicholidays" table and set a checkbox next to it.
@@ -1273,7 +1327,7 @@ As a prerequisite to this example, we will need to create Microsoft Fabric with 
 5. The Agent should show a table containing one column called "NumberOfPublicHolidays" with the single row, containing number 62.
 6. Click **Publish** and in the description add "Agent has data about public holidays." If this stage was omitted the error, saying "Stage configuration not found." will be returned during sample run.
 
-### Create a Fabric connection in Microsoft Foundry.
+#### Create a Fabric connection in Microsoft Foundry.
 
 After we have created the Fabric data Agent, we can connect fabric to our Microsoft Foundry.
 1. Open the [Power BI](https://msit.powerbi.com/home) and select the workspace we have created.
@@ -1284,7 +1338,7 @@ After we have created the Fabric data Agent, we can connect fabric to our Micros
 6. Create a new connection of type **Microsoft Fabric**.
 7. Populate **workspace-id** and **artifact-id** fields with GUIDs found in the Microsoft Data Agent URL and name the new connection.
 
-### Using Microsoft Fabric tool
+#### Using Microsoft Fabric tool
 
 To use the Agent with Microsoft Fabric tool, we need to include `MicrosoftFabricAgentTool` into `PromptAgentDefinition`.
 
@@ -1304,15 +1358,15 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-## A2ATool
+### A2ATool
 
 The [A2A or Agent2Agent](https://a2a-protocol.org/latest/) protocol is designed to enable seamless communication between agents. In the scenario below we assume that we have the application endpoint, which complies  with A2A; the authentication is happening through header `x-api-key` value.
 
-### Create a connection to A2A agent
+#### Create a connection to A2A agent
 
 The connection to A2A service can be created in two ways. In classic Microsoft Foundry, we need to create Custom keys connection, however in the new version of Microsoft Foundry we can create the specialized A2A connection.
 
-#### Classic Microsoft Foundry
+##### Classic Microsoft Foundry
 
 1. In the **Microsoft Foundry** you are using for the experimentation, on the left panel select **Management center**.
 2. Choose **Connected resources**.
@@ -1322,7 +1376,7 @@ The connection to A2A service can be created in two ways. In classic Microsoft F
    * type: custom_A2A
 5. Name and save the connection.
 
-#### New Microsoft Foundry
+##### New Microsoft Foundry
 
 If we are using the Agent2agent connection, we do not need to provide the endpoint as it already contains it.
 
@@ -1334,7 +1388,7 @@ If we are using the Agent2agent connection, we do not need to provide the endpoi
 6. Populate **Name** and **A2A Agent Endpoint**, leave **Authentication** being "Key-based".
 7. In the **Credential** Section set key "x-api-key" with the value being your secret key.
 
-### Using A2A Tool
+#### Using A2A Tool
 
 To use the Agent with A2A tool, we need to include `A2ATool` into `PromptAgentDefinition`.
 
