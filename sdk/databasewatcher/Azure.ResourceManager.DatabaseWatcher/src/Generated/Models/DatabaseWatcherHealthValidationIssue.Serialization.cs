@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             if (options.Format != "W" && Optional.IsDefined(RelatedResourceType))
             {
                 writer.WritePropertyName("relatedResourceType"u8);
-                writer.WriteStringValue(RelatedResourceType.Value);
+                writer.WriteStringValue(RelatedResourceType);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
