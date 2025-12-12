@@ -262,7 +262,11 @@ if ($relatedTypeSpecProjectFolder) {
             -generatedSDKPackages $generatedSDKPackages `
             -specRepoRoot $swaggerDir
         }
-        $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
+        # workaround to mark sdk validation required if the sdk is generated from typespec and using http-client-csharp-mgmt (new mgmt plane generator)
+        $tspConfigContent = Get-Content $tspConfigFile -Raw
+        if (($serviceType -eq 'resource-manager' -and $tspConfigContent -match '@azure-typespec/http-client-csharp-mgmt') -or $serviceType -eq "data-plane") {
+            $generatedSDKPackages[$generatedSDKPackages.Count - 1]['typespecProject'] = @($typespecRelativeFolder)
+        }
     }
 }
 $outputJson = [PSCustomObject]@{
