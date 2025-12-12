@@ -169,7 +169,7 @@ public class ProjectsOpenAITestBase : RecordedTestBase<ProjectsOpenAITestEnviron
         return TestEnvironment.Credential;
     }
 
-    private AuthenticationPolicy GetTestAuthenticationPolicy() => new BearerTokenPolicy(GetTestAuthenticationProvider(), "https://ai.azure.com/.default");
+    protected AuthenticationPolicy GetTestAuthenticationPolicy() => new BearerTokenPolicy(GetTestAuthenticationProvider(), "https://ai.azure.com/.default");
 
     protected async Task<OpenAIResponse> WaitForRun(OpenAIResponseClient responses, OpenAIResponse response, int waitTime=500)
     {

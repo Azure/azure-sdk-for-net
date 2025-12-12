@@ -34,6 +34,7 @@ namespace Azure.AI.Projects.OpenAI.Tests
         public string FABRIC_CONNECTION_NAME => GetRecordedOptionalVariable("FABRIC_CONNECTION_NAME");
         public string A2A_CONNECTION_NAME => GetRecordedOptionalVariable("A2A_CONNECTION_NAME");
         public string A2A_BASE_URI => GetRecordedOptionalVariable("A2A_BASE_URI");
+        public string PUBLISHED_ENDPOINT => GetRecordedOptionalVariable("PUBLISHED_ENDPOINT");
         public string WrappedGetRecordedVariable(string key, bool isSecret = true)
         {
             try
