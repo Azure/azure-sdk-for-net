@@ -140,10 +140,10 @@ For a complete list of available prebuilt analyzers and their capabilities, see 
 >
 ### Content types
 
-The API returns different content types based on the input:
+The API returns different content types based on the input. Both `DocumentContent` and `AudioVisualContent` classes derive from `MediaContent` class, which provides basic information and markdown representation. Each derived class provides additional properties to access detailed information:
 
-* **`document`** - For document files (PDF, images, Office documents). Contains pages, tables, figures, paragraphs, and markdown representation.
-* **`audioVisual`** - For audio and video files. Contains transcript phrases, timing information, and for video, visual frame references.
+* **`DocumentContent`** - For document files (PDF, HTML, images, Office documents such as Word, Excel, PowerPoint, and more). Provides basic information such as page count and MIME type. Navigate detailed information including pages, tables, figures, paragraphs, and many others.
+* **`AudioVisualContent`** - For audio and video files. Provides basic information such as timing information (start/end times) and frame dimensions (for video). Navigate detailed information including transcript phrases, timing information, and for video, key frame references and more.
 
 ### Asynchronous operations
 
@@ -197,8 +197,8 @@ See the [samples directory][samples_directory] for complete examples.
 ### Common issues
 
 **Error: "Access denied due to invalid subscription key or wrong API endpoint"**
-- Verify your endpoint URL is correct and includes the trailing slash
-- Ensure your API key is valid or that your Microsoft Entra ID credentials have the correct permissions
+- Verify your `endpoint URL` is correct
+- Ensure your `API key` is valid or that your Microsoft Entra ID credentials have the correct permissions
 - Make sure you have the **Cognitive Services User** role assigned to your account
 
 **Error: "Model deployment not found" or "Default model deployment not configured"**

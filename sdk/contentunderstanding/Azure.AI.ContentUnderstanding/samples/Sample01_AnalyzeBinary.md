@@ -21,16 +21,16 @@ To get started you'll need a **Microsoft Foundry resource**. See [README][README
 
 > **Before using prebuilt analyzers, you MUST configure model deployments for your Microsoft Foundry resource.** This is a **one-time setup per resource** that maps your deployed large language models to the models required by the prebuilt analyzers. Currently, Content Understanding uses OpenAI GPT models. This configuration is persisted in your Microsoft Foundry resource, so you only need to run this once per resource (or whenever you change your deployment names).
 
-The `prebuilt-documentSearch` analyzer requires **gpt-4.1-mini** and **text-embedding-3-large** model deployments. See the [README][README] for detailed instructions on configuring model deployments.
+The `prebuilt-documentSearch` analyzer requires **gpt-4.1-mini** and **text-embedding-3-large** model deployments. See [Sample 00: Configure model deployment defaults][sample00] for detailed instructions on configuring model deployments.
 
 ## Prebuilt analyzers
 
 Content Understanding provides prebuilt analyzers that are ready to use without any configuration. These analyzers use the `*Search` naming pattern:
 
 - **`prebuilt-documentSearch`** - Extracts content from documents (PDF, images, Office documents) with layout preservation, table detection, figure analysis, and structured markdown output. Optimized for RAG scenarios.
-- **`prebuilt-imageSearch`** - Analyzes standalone images to generate descriptions, extract visual features, and identify objects and scenes within images. Optimized for image understanding and search scenarios. Note: Image analysis is not optimized for text extraction; use `prebuilt-documentSearch` for documents containing text.
 - **`prebuilt-audioSearch`** - Transcribes audio content with speaker diarization, timing information, and conversation summaries. Supports multilingual transcription.
 - **`prebuilt-videoSearch`** - Analyzes video content with visual frame extraction, audio transcription, and structured summaries. Provides temporal alignment of visual and audio content.
+- **`prebuilt-imageSearch`** - Analyzes standalone images to generate descriptions. Note: Image analysis is not optimized for text extraction; use `prebuilt-documentSearch` for documents containing text.
 
 This sample uses **`prebuilt-documentSearch`** to extract structured content from PDF documents.
 
@@ -171,6 +171,7 @@ if (content is DocumentContent documentContent)
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding#getting-started
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
+[sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample02-analyze-url]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
 [sample10]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md
 [cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview

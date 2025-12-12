@@ -132,6 +132,13 @@ cd sdk/contentunderstanding/Azure.AI.ContentUnderstanding
 dotnet test
 ```
 
+**Note:** `dotnet test` always builds the project before running tests by default. This ensures tests run against the latest code. The build is incremental, so only changed files are rebuilt. If you've already built the project and want to skip the build step, use the `--no-build` flag:
+
+```bash
+# Skip build and run tests (faster if no code changes)
+dotnet test --no-build
+```
+
 ### Running Specific Tests
 
 ```bash
