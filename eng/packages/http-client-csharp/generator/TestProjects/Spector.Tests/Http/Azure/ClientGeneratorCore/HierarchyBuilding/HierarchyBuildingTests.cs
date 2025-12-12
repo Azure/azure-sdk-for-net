@@ -59,5 +59,17 @@ namespace TestProjects.Spector.Tests.Http.Azure.ClientGeneratorCore.HierarchyBui
             Assert.IsTrue(dog.Trained);
             Assert.AreEqual(200, response1.GetRawResponse().Status);
         });
+
+        [SpectorTest]
+        public Task Azure_ClientGenerator_Core_HierarchyBuilding_UpdatePetAsPet() => Test(async (host) =>
+        {
+            var pet = new Pet("Buddy", true);
+            var response1 = await new HierarchyBuildingClient(host, null).GetPetOperationsClient().UpdatePetAsPetAsync(pet);
+            pet = response1.Value as Pet;
+            Assert.IsNotNull(pet);
+            Assert.AreEqual("Buddy", pet!.Name);
+            Assert.IsTrue(pet.Trained);
+            Assert.AreEqual(200, response1.GetRawResponse().Status);
+        });
     }
 }
