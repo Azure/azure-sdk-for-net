@@ -90,7 +90,7 @@ namespace Azure.Generator.Management
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
+        public override MethodBodyStatement SerializeJsonValue(CSharpType valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
         {
             if (KnownManagementTypes.IsKnownManagementType(valueType))
             {
@@ -108,7 +108,7 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
 #pragma warning disable AZC0014 // Avoid using banned types in public API
         public override ValueExpression DeserializeJsonValue(
-            Type valueType,
+            CSharpType valueType,
             ScopedApi<JsonElement> element,
             ScopedApi<BinaryData> data,
             ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter,
