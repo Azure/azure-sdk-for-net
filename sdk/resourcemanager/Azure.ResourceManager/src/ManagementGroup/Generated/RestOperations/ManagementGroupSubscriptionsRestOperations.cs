@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ManagementGroups
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupRequestUri(string groupId, string skiptoken)
+        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupRequestUri(string groupId, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.AppendPath(groupId, true);
             uri.AppendPath("/subscriptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             return uri;
         }
 
-        internal HttpMessage CreateGetSubscriptionsUnderManagementGroupRequest(string groupId, string skiptoken)
+        internal HttpMessage CreateGetSubscriptionsUnderManagementGroupRequest(string groupId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.AppendPath(groupId, true);
             uri.AppendPath("/subscriptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -74,18 +74,18 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary> Retrieves details about all subscriptions which are associated with the management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListSubscriptionUnderManagementGroup>> GetSubscriptionsUnderManagementGroupAsync(string groupId, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListSubscriptionUnderManagementGroup>> GetSubscriptionsUnderManagementGroupAsync(string groupId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetSubscriptionsUnderManagementGroupRequest(groupId, skiptoken);
+            using var message = CreateGetSubscriptionsUnderManagementGroupRequest(groupId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -103,18 +103,18 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary> Retrieves details about all subscriptions which are associated with the management group. </summary>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListSubscriptionUnderManagementGroup> GetSubscriptionsUnderManagementGroup(string groupId, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<ListSubscriptionUnderManagementGroup> GetSubscriptionsUnderManagementGroup(string groupId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetSubscriptionsUnderManagementGroupRequest(groupId, skiptoken);
+            using var message = CreateGetSubscriptionsUnderManagementGroupRequest(groupId, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupNextPageRequestUri(string nextLink, string groupId, string skiptoken)
+        internal RequestUriBuilder CreateGetSubscriptionsUnderManagementGroupNextPageRequestUri(string nextLink, string groupId, string skipToken)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return uri;
         }
 
-        internal HttpMessage CreateGetSubscriptionsUnderManagementGroupNextPageRequest(string nextLink, string groupId, string skiptoken)
+        internal HttpMessage CreateGetSubscriptionsUnderManagementGroupNextPageRequest(string nextLink, string groupId, string skipToken)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -421,19 +421,19 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary> Retrieves details about all subscriptions which are associated with the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ListSubscriptionUnderManagementGroup>> GetSubscriptionsUnderManagementGroupNextPageAsync(string nextLink, string groupId, string skiptoken = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ListSubscriptionUnderManagementGroup>> GetSubscriptionsUnderManagementGroupNextPageAsync(string nextLink, string groupId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, groupId, skiptoken);
+            using var message = CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, groupId, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -452,19 +452,19 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <summary> Retrieves details about all subscriptions which are associated with the management group. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="groupId"> Management Group ID. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="groupId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ListSubscriptionUnderManagementGroup> GetSubscriptionsUnderManagementGroupNextPage(string nextLink, string groupId, string skiptoken = null, CancellationToken cancellationToken = default)
+        public Response<ListSubscriptionUnderManagementGroup> GetSubscriptionsUnderManagementGroupNextPage(string nextLink, string groupId, string skipToken = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
 
-            using var message = CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, groupId, skiptoken);
+            using var message = CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, groupId, skipToken);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

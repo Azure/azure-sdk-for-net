@@ -756,6 +756,18 @@ directive:
     transform: >
       $['/providers/Microsoft.Management/getEntities'].post.parameters[1]['x-ms-client-name'] = 'SkipToken';
   - from: management.json
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.Management/managementGroups'].get.parameters[2]['x-ms-client-name'] = 'SkipToken';
+  - from: management.json
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.Management/managementGroups/{groupId}/descendants'].get.parameters[2]['x-ms-client-name'] = 'SkipToken';
+  - from: management.json
+    where: $.paths
+    transform: >
+      $['/providers/Microsoft.Management/managementGroups/{groupId}/subscriptions'].get.parameters[2]['x-ms-client-name'] = 'SkipToken';
+  - from: management.json
     where: $.parameters.ExpandParameter
     transform: >
       $['x-ms-enum'] = {

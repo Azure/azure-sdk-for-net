@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.ManagementGroups
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string skiptoken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        internal RequestUriBuilder CreateListRequestUri(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/getEntities", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             if (skip != null)
             {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string skiptoken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        internal HttpMessage CreateListRequest(string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.ManagementGroups
             uri.Reset(_endpoint);
             uri.AppendPath("/providers/Microsoft.Management/getEntities", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (skiptoken != null)
+            if (skipToken != null)
             {
-                uri.AppendQuery("$skiptoken", skiptoken, true);
+                uri.AppendQuery("$skiptoken", skipToken, true);
             }
             if (skip != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
@@ -149,9 +149,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="groupName"> A filter which allows the get entities call to focus on a particular group (i.e. "$filter=name eq 'groupName'"). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<EntityListResult>> ListAsync(string skiptoken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EntityListResult>> ListAsync(string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(skiptoken, skip, top, select, search, filter, view, groupName, cacheControl);
+            using var message = CreateListRequest(skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
@@ -188,9 +188,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="groupName"> A filter which allows the get entities call to focus on a particular group (i.e. "$filter=name eq 'groupName'"). </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<EntityListResult> List(string skiptoken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<EntityListResult> List(string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateListRequest(skiptoken, skip, top, select, search, filter, view, groupName, cacheControl);
+            using var message = CreateListRequest(skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skiptoken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string skiptoken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string skipToken, int? skip, int? top, string select, EntitySearchOption? search, string filter, EntityViewOption? view, string groupName, string cacheControl)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
@@ -255,11 +255,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public async Task<Response<EntityListResult>> ListNextPageAsync(string nextLink, string skiptoken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EntityListResult>> ListNextPageAsync(string nextLink, string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, skiptoken, skip, top, select, search, filter, view, groupName, cacheControl);
+            using var message = CreateListNextPageRequest(nextLink, skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary> List all entities (Management Groups, Subscriptions, etc.) for the authenticated user. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         /// </param>
@@ -298,11 +298,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> is null. </exception>
-        public Response<EntityListResult> ListNextPage(string nextLink, string skiptoken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<EntityListResult> ListNextPage(string nextLink, string skipToken = null, int? skip = null, int? top = null, string select = null, EntitySearchOption? search = null, string filter = null, EntityViewOption? view = null, string groupName = null, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
 
-            using var message = CreateListNextPageRequest(nextLink, skiptoken, skip, top, select, search, filter, view, groupName, cacheControl);
+            using var message = CreateListNextPageRequest(nextLink, skipToken, skip, top, select, search, filter, view, groupName, cacheControl);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
