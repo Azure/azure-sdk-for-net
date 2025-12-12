@@ -417,6 +417,8 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
             // make the internalized properties internal
+            // Ensure the internal property has a setter if any flattened property needs lazy initialization
+            EnsureInternalPropertyHasSetterIfNeeded(internalProperty, propertyMap);
             internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
         }
 
@@ -469,7 +471,6 @@ namespace Azure.Generator.Management.Visitors
                     innerProperty.Attributes);
 
             // make the internalized properties internal
-            internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
             if (propertyMap.TryGetValue(internalProperty, out var value))
             {
                 value.Add(new(flattenedProperty, internalProperty));
@@ -478,6 +479,9 @@ namespace Azure.Generator.Management.Visitors
             {
                 propertyMap.Add(internalProperty, new List<FlattenPropertyInfo> { new(flattenedProperty, internalProperty) });
             }
+            // Ensure the internal property has a setter if any flattened property needs lazy initialization
+            EnsureInternalPropertyHasSetterIfNeeded(internalProperty, propertyMap);
+            internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
             return isFlattened;
         }
 
@@ -656,6 +660,44 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private record FlattenPropertyInfo(PropertyProvider FlattenedProperty, PropertyProvider InternalProperty);
+
+        /// <summary>
+        /// Ensures that the internal property has a setter if any of its flattened properties require lazy initialization.
+        /// This is necessary because the flattened property getter may need to assign to the internal property.
+        /// </summary>
+        private void EnsureInternalPropertyHasSetterIfNeeded(PropertyProvider internalProperty, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap)
+        {
+            // If the property already has a setter, no need to do anything
+            if (internalProperty.Body.HasSetter)
+            {
+                return;
+            }
+
+            // Check if any flattened property requires lazy initialization of the internal property
+            if (propertyMap.TryGetValue(internalProperty, out var flattenedProperties))
+            {
+                foreach (var (flattenedProperty, _) in flattenedProperties)
+                {
+                    // Get the original (inner) property and check if it needs lazy initialization
+                    var innerProperty = (flattenedProperty as FlattenedPropertyProvider)?.OriginalProperty;
+                    if (innerProperty != null)
+                    {
+                        var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
+
+                        // Check if the getter will attempt to assign to the internal property
+                        bool needsLazyInit = (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
+                                           || includeGetterNullCheck == true;
+
+                        if (needsLazyInit)
+                        {
+                            // Update the internal property to have an AutoPropertyBody with a setter
+                            internalProperty.Update(body: new AutoPropertyBody(false));
+                            return;
+                        }
+                    }
+                }
+            }
+        }
 
         private bool IsOverriddenValueType(PropertyProvider flattenedProperty)
             => flattenedProperty.Type.IsValueType && !flattenedProperty.Type.IsNullable;
