@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             if (options.Format != "W" && Optional.IsDefined(RelatedResourceType))
             {
                 writer.WritePropertyName("relatedResourceType"u8);
-                writer.WriteStringValue(RelatedResourceType.Value);
+                writer.WriteObjectValue<ResourceType?>(RelatedResourceType.Value, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                     {
                         continue;
                     }
-                    relatedResourceType = new ResourceType(prop.Value.GetString());
+                    relatedResourceType = ModelReaderWriter.Read<ResourceType?>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDatabaseWatcherContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
