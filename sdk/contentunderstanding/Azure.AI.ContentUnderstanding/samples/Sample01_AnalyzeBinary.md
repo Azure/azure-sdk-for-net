@@ -4,7 +4,7 @@ This sample demonstrates how to analyze a PDF file from disk using the `prebuilt
 
 ## About analyzing documents from binary data
 
-Content Understanding returns rich content types from a single `AnalyzeResult`. Documents, HTML, and images with text are represented as `DocumentContent` (which derives from `MediaContent`) so you can access markdown plus detailed structure such as pages, tables, figures, and paragraphs.
+One of the key values of Content Understanding is taking a content file and extracting the content for you in one call. The service returns an `AnalyzeResult` that contains an array of `MediaContent` items in `AnalyzeResult.Contents`. This sample starts with a document file, so each item is a `DocumentContent` (a subtype of `MediaContent`) that exposes markdown plus detailed structure such as pages, tables, figures, and paragraphs.
 
 This sample focuses on **document analysis**. For prebuilt RAG analyzers covering images, audio, and video, see [Sample 02: Analyze content from URLs][sample02-analyze-url].
 
@@ -25,13 +25,7 @@ This sample uses **`prebuilt-documentSearch`** to extract structured content fro
 
 ## Creating a `ContentUnderstandingClient`
 
-To create a new `ContentUnderstandingClient` you need the endpoint and credentials from your resource. You can authenticate using either `DefaultAzureCredential` (recommended) or an API key.
-
-You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
-
-### Using DefaultAzureCredential (recommended)
-
-The simplest way to authenticate is using `DefaultAzureCredential`, which supports multiple authentication methods and works well in both local development and production environments:
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
 
 ```C# Snippet:CreateContentUnderstandingClient
 // Example: https://your-foundry.services.ai.azure.com/
@@ -39,12 +33,6 @@ string endpoint = "<endpoint>";
 var credential = new DefaultAzureCredential();
 var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
 ```
-
-### Using API key
-
-> **⚠️ Security Warning:** API key authentication is **less secure** for production use. API keys are sensitive credentials that should not be hardcoded or committed to source control. This method is **only recommended for testing purposes with test resources**. For production applications, use `DefaultAzureCredential` or other Microsoft Entra ID-based authentication methods.
-
-You can authenticate using an API key from your Microsoft Foundry resource:
 
 ```C# Snippet:CreateContentUnderstandingClientApiKey
 // Example: https://your-foundry.services.ai.azure.com/
@@ -84,17 +72,6 @@ The most common use case for document analysis is extracting markdown content, w
 
 The `prebuilt-documentSearch` analyzer extracts:
 
-1. **Content Analysis** - Text (printed and handwritten), selection marks, barcodes, mathematical formulas, hyperlinks, and annotations
-2. **Figure Analysis** - Descriptions for images/charts/diagrams, converts charts to Chart.js syntax, and diagrams to Mermaid.js syntax
-3. **Structure Analysis** - Paragraphs with contextual roles, tables with complex layouts, and hierarchical sections
-4. **GitHub Flavored Markdown** - Richly formatted markdown that preserves document structure
-
-```C# Snippet:ContentUnderstandingExtractMarkdown
-// A PDF file has only one content element even if it contains multiple pages
-MediaContent content = result.Contents!.First();
-Console.WriteLine(content.Markdown);
-```
-
 Content Understanding generates rich GitHub Flavored Markdown that is ideal for RAG (Retrieval-Augmented Generation) applications or other downstream applications. The markdown output preserves document structure and can include:
 
 - **Structured text** maintaining content and layout
@@ -102,6 +79,14 @@ Content Understanding generates rich GitHub Flavored Markdown that is ideal for 
 - **Charts and diagrams** with charts converted to Chart.js syntax and diagrams to Mermaid.js syntax, including figure descriptions (requires `enableFigureDescription` and `enableFigureAnalysis` configuration)
 - **Mathematical formulas** encoded in LaTeX (inline and display)
 - **Hyperlinks, barcodes, annotations, and page metadata** for complete document representation (annotations require `returnDetails` configuration)
+
+The `AnalyzeResult.Contents` collection holds the extracted content as `MediaContent` items. A PDF produces a single `MediaContent` entry (even when it has multiple pages), and each `MediaContent` exposes a `Markdown` property so you can read the markdown directly.
+
+```C# Snippet:ContentUnderstandingExtractMarkdown
+// A PDF file has only one content element even if it contains multiple pages
+MediaContent content = result.Contents!.First();
+Console.WriteLine(content.Markdown);
+```
 
 > **Note:** Each prebuilt analyzer and each custom analyzer use configuration to disable or enable different parts of the markdown output. The `prebuilt-documentSearch` analyzer has `enableFormula`, `enableLayout`, `enableOcr`, `enableFigureDescription`, `enableFigureAnalysis`, and `returnDetails` enabled by default, which enables extraction of charts with figure descriptions, formulas, hyperlinks, and annotations. For custom analyzers or to enable additional features, configure these options in `ContentAnalyzerConfig`. See [Sample 10: Analyze documents with configs][sample10] for more details.
 
@@ -156,9 +141,7 @@ if (content is DocumentContent documentContent)
 - **[Document overview][cu-document-overview]** - Document analysis capabilities and use cases
 - **[Document markdown][cu-document-markdown]** - Markdown format and structure for document content
 - **[Document elements][cu-document-elements]** - Detailed documentation on document extraction
-- **[Audio overview][cu-audio-overview]** - Audio capabilities and markdown format
-- **[Video overview][cu-video-overview]** - Video capabilities and elements
-- **[Image overview][cu-image-overview]** - Image analysis capabilities
+
 
 [README]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding#getting-started
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
@@ -170,6 +153,3 @@ if (content is DocumentContent documentContent)
 [cu-document-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/overview
 [cu-document-markdown]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/markdown
 [cu-document-elements]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
-[cu-audio-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/audio/overview
-[cu-video-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/video/overview
-[cu-image-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/image/overview
