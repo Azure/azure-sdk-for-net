@@ -20,14 +20,17 @@ namespace Azure.AI.ContentUnderstanding
     /// </remarks>
     internal class OperationWithId : Operation<BinaryData>
     {
+        // CUSTOM CODE NOTE: This class extends Operation<BinaryData> so that it can be returned by the protocol methods
+        // for Analyze and AnalyzeBinary. This allows the operation ID to be extracted from the Operation-Location header
+        // and exposed via the Id property, which is needed for GetResultFile and DeleteResult APIs.
         private const string OperationIdNotFoundErrorMessage = "The operation ID was not present in the service response.";
-
         private readonly Operation<BinaryData> _internalOperation;
         private readonly string? _operationId;
 
         internal OperationWithId(Operation<BinaryData> internalOperation)
         {
             _internalOperation = internalOperation;
+            // SDK-EXT: Extract Operation-Location header from the response to be exposed by the public Operation<T>.Id property.
             _operationId = GetOperationId();
         }
 
@@ -41,6 +44,7 @@ namespace Azure.AI.ContentUnderstanding
         /// Gets the operation ID from the Operation-Location header of the operation response.
         /// This operation ID can be used with GetResultFile and DeleteResult methods.
         /// </summary>
+        // SDK-EXT: Return the Operation-Location ID extracted from Analyze* protocol method calls.
         public override string Id => _operationId ?? throw new InvalidOperationException(OperationIdNotFoundErrorMessage);
 
         /// <inheritdoc/>

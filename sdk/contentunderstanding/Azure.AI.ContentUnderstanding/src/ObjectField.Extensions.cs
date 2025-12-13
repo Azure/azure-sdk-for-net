@@ -26,7 +26,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <code>
         /// try
         /// {
-        ///     // Amount is known to exist
+        ///     // Assume Amount field is known to exist in the sample code below
         ///     var amount = totalAmountObj["Amount"].Value?.ToString();
         /// }
         /// catch (KeyNotFoundException)
