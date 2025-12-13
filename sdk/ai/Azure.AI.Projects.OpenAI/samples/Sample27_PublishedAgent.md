@@ -32,7 +32,7 @@ ProjectResponsesClient responseClient = new(
     projectEndpoint: endpoint,
     tokenProvider: new DefaultAzureCredential()
 );
-OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
+ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -42,6 +42,6 @@ ProjectResponsesClient responseClient = new(
     projectEndpoint: endpoint,
     tokenProvider: new DefaultAzureCredential()
 );
-OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
+ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 Console.WriteLine(response.GetOutputText());
 ```
