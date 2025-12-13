@@ -4,10 +4,6 @@ This sample demonstrates how to grant copy authorization and copy an analyzer fr
 
 ## About cross-resource copying
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding analyzer creation
-- [Sample 14: Copy analyzer][sample14] - Understanding same-resource copying
-
 The `GrantCopyAuthorization` and `CopyAnalyzer` APIs allow you to copy an analyzer between different Azure resources:
 
 - **Cross-resource copy**: Copies an analyzer from one Azure resource to another

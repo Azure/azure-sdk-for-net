@@ -2,12 +2,6 @@
 
 This sample demonstrates how to create a classifier analyzer to categorize documents and use it to analyze documents with and without automatic segmentation.
 
-## About creating and using a classifier
-
-This sample builds on concepts introduced in previous samples:
-- [Sample 00: Configure model deployment defaults][sample00] - Required setup before creating custom analyzers
-- [Sample 04: Create a custom analyzer][sample04] - Basic custom analyzer concepts
-
 ## About classifiers
 
 Classifiers are a type of custom analyzer that categorize documents into predefined categories. They're useful for:

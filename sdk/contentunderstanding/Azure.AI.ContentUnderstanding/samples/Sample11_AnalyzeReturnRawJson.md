@@ -4,9 +4,6 @@ This sample demonstrates how to access the raw JSON response from analysis opera
 
 ## About returning raw JSON
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-
 The Content Understanding SDK provides two approaches for accessing analysis results:
 
 1. **Object model approach** (recommended): Returns strongly-typed `AnalyzeResult` objects that are easier to navigate and use. This is shown in [Sample 01][sample01].

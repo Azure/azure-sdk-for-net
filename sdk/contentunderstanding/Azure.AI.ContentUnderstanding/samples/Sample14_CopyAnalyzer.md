@@ -4,10 +4,6 @@ This sample demonstrates how to copy an analyzer from source to target within th
 
 ## About copying analyzers
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding analyzer creation
-- [Sample 09: Delete analyzer][sample09] - Understanding analyzer lifecycle
-
 The `CopyAnalyzer` API allows you to copy an analyzer within the same Azure resource:
 
 - **Same-resource copy**: Copies an analyzer from one ID to another within the same resource

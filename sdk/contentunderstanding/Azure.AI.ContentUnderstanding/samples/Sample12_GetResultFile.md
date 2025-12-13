@@ -4,9 +4,6 @@ This sample demonstrates how to retrieve result files (such as keyframe images) 
 
 ## About result files
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-
 When analyzing video content, the Content Understanding service can generate result files such as:
 - **Keyframe images**: Extracted frames from the video at specific timestamps
 - **Other result files**: Additional files generated during analysis

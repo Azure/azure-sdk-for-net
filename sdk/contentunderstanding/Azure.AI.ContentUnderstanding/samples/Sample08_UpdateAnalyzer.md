@@ -4,10 +4,6 @@ This sample demonstrates how to update an existing custom analyzer, including up
 
 ## About updating analyzers
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
-- [Sample 06: Get analyzer information][sample06] - Understanding analyzer details
-
 The `UpdateAnalyzerAsync` method allows you to modify certain properties of an existing analyzer:
 - **Description**: Update the analyzer's description
 - **Tags**: Add, update, or remove tags (set tag value to empty string to remove)

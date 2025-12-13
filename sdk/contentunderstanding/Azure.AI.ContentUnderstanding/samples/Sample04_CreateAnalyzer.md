@@ -1,21 +1,15 @@
 # Create a custom analyzer
 
-This sample demonstrates how to create a custom analyzer with a field schema to extract structured data from documents.
-
-## About creating a custom analyzer
-
-This sample builds on concepts introduced in previous samples:
-- [Sample 00: Configure model deployment defaults][sample00] - Required setup before creating custom analyzers
-- [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
+This sample demonstrates how to create a custom analyzer with a field schema to extract structured data from documents. While this sample shows document modalities, custom analyzers can also be created for video, audio, and image content. The same concepts apply across all modalities.
 
 ## About custom analyzers
 
 Custom analyzers allow you to define a field schema that specifies what structured data to extract from documents. You can:
 - Define custom fields (string, number, date, object, array)
 - Specify extraction methods to control how field values are extracted (see [method][method-docs] for details):
-  - **`extract`** - Values are extracted as they appear in the content (best for literal text extraction from specific locations). Requires `estimateSourceAndConfidence` to be set to `true` for the field.
   - **`generate`** - Values are generated freely based on the content using AI models (best for complex or variable fields requiring interpretation)
   - **`classify`** - Values are classified against a predefined set of categories (best when using `enum` with a fixed set of possible values)
+  - **`extract`** - Values are extracted as they appear in the content (best for literal text extraction from specific locations). **Note**: This method is only available for document content. Requires `estimateSourceAndConfidence` to be set to `true` for the field.
 
   When not specified, the system automatically determines the best method based on the field type and description. For more details, see the [Analyzer reference documentation][analyzer-reference-docs].
 - Use prebuilt analyzers as a base (see [baseAnalyzerId][baseanalyzerid-docs] for details). Supported base analyzers include:
@@ -51,6 +45,19 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 ```
 
 ## Create a custom analyzer
+
+`ContentAnalyzer` is the key class to define a custom analyzer. It must be created and passed to `ContentUnderstandingClient.CreateAnalyzerAsync()` to create a custom analyzer.
+
+To define a `ContentAnalyzer`, it requires:
+- A `BaseAnalyzerId` (e.g., `"prebuilt-document"`, `"prebuilt-audio"`, `"prebuilt-video"`, `"prebuilt-image"`)
+- A unique analyzer ID inside an AI Foundry resource (passed as a separate parameter to `CreateAnalyzerAsync`)
+- Optional `Name` (display name for the analyzer)
+- Optional `Description` (used as context by the AI model for field extraction, so clear descriptions improve accuracy)
+- Required: Define field schema (specifies what structured data to extract)
+- Required: Define the configuration (controls how content is processed, such as enabling OCR, layout extraction, etc.)
+- Required: Define supported large language models using model names (not model deployments)
+
+For detailed information about analyzer configuration structure, see the [Analyzer reference documentation][analyzer-reference-docs].
 
 Create a custom analyzer with a field schema:
 
@@ -122,7 +129,8 @@ var customAnalyzer = new ContentAnalyzer
     FieldSchema = fieldSchema
 };
 
-// Add model mappings (required for custom analyzers)
+// Add model mappings for supported large language models (required for custom analyzers)
+// Maps model roles (completion, embedding) to specific model names
 customAnalyzer.Models.Add("completion", "gpt-4.1");
 customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
 
@@ -130,8 +138,7 @@ customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
 var operation = await client.CreateAnalyzerAsync(
     WaitUntil.Completed,
     analyzerId,
-    customAnalyzer,
-    allowReplace: true);
+    customAnalyzer);
 
 ContentAnalyzer result = operation.Value;
 Console.WriteLine($"Analyzer '{analyzerId}' created successfully!");
@@ -160,15 +167,12 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     {
         var companyName = companyNameField is StringField sf ? sf.ValueString : null;
         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
-        if (companyNameField != null)
+        Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
+        Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
+        if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
         {
-            Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
-            Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
-            if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
-            {
-                var span = companyNameField.Spans[0];
-                Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-            }
+            var span = companyNameField.Spans[0];
+            Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
         }
     }
 
@@ -177,15 +181,12 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     {
         var totalAmount = totalAmountField is NumberField nf ? nf.ValueNumber : null;
         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
-        if (totalAmountField != null)
+        Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
+        Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
+        if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
         {
-            Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
-            Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
-            if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
-            {
-                var span = totalAmountField.Spans[0];
-                Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-            }
+            var span = totalAmountField.Spans[0];
+            Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
         }
     }
 
@@ -194,14 +195,11 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     {
         var summary = summaryField is StringField sf ? sf.ValueString : null;
         Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
-        if (summaryField != null)
+        Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
+        // Note: Generated fields may not have source information
+        if (!string.IsNullOrEmpty(summaryField.Source))
         {
-            Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
-            // Note: Generated fields may not have source information
-            if (!string.IsNullOrEmpty(summaryField.Source))
-            {
-                Console.WriteLine($"  Source: {summaryField.Source}");
-            }
+            Console.WriteLine($"  Source: {summaryField.Source}");
         }
     }
 
@@ -210,14 +208,11 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
     {
         var documentType = documentTypeField is StringField sf ? sf.ValueString : null;
         Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
-        if (documentTypeField != null)
+        Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
+        // Note: Classified fields may not have source information
+        if (!string.IsNullOrEmpty(documentTypeField.Source))
         {
-            Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
-            // Note: Classified fields may not have source information
-            if (!string.IsNullOrEmpty(documentTypeField.Source))
-            {
-                Console.WriteLine($"  Source: {documentTypeField.Source}");
-            }
+            Console.WriteLine($"  Source: {documentTypeField.Source}");
         }
     }
 }
@@ -228,7 +223,6 @@ if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent content)
 **Note:** In production code, you typically keep analyzers and reuse them for multiple analyses. Deletion is mainly useful for:
 - Testing and development cleanup
 - Removing analyzers that are no longer needed
-- Managing resource quotas
 
 If you need to delete an analyzer (for example, in test cleanup), you can do so as follows:
 
@@ -261,7 +255,7 @@ Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 [sample08]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
 [sample09]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
-[analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference
+[analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#analyzer-configuration-structure
 [baseanalyzerid-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
 [method-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#method
 [estimate-source-confidence-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#estimatesourceandconfidence

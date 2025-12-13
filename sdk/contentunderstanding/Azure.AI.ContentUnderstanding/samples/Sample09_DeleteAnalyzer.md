@@ -4,10 +4,6 @@ This sample demonstrates how to delete a custom analyzer.
 
 ## About deleting analyzers
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
-- [Sample 08: Update analyzer][sample08] - Understanding analyzer management
-
 The `DeleteAnalyzerAsync` method permanently removes a custom analyzer from your resource. This operation cannot be undone.
 
 **Important notes**:

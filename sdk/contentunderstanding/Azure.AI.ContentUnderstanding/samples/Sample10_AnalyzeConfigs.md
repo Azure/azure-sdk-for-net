@@ -4,9 +4,6 @@ This sample demonstrates how to extract additional features from documents such 
 
 ## About analysis configs
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-
 The `prebuilt-documentSearch` analyzer has the following configurations enabled by default:
 - **EnableFormula**: Extracts mathematical formulas from documents
 - **EnableLayout**: Extracts layout information (tables, figures, etc.)

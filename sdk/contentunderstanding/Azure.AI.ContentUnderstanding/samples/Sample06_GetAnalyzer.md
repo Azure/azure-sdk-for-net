@@ -4,12 +4,6 @@ This sample demonstrates how to retrieve information about analyzers, including 
 
 ## About getting analyzer information
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
-- [Sample 05: Create and use a classifier][sample05] - Understanding classifiers
-
-## About getting analyzer information
-
 The `GetAnalyzerAsync` method allows you to retrieve detailed information about any analyzer, including:
 - **Prebuilt analyzers**: System-provided analyzers like `prebuilt-documentSearch`, `prebuilt-invoice`, etc.
 - **Custom analyzers**: Analyzers you've created with custom field schemas or classifiers

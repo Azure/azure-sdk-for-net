@@ -4,10 +4,6 @@ This sample demonstrates how to delete analysis results using the `DeleteResult`
 
 ## About deleting results
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-- [Sample 12: Get result files][sample12] - Understanding operation IDs
-
 Analysis results are stored temporarily and can be deleted using the `DeleteResult` API:
 
 - **Immediate deletion**: Results are marked for deletion and permanently removed
