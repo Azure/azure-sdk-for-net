@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.SecretsStoreExtension
 {
+    /// <summary></summary>
     public partial class SecretSyncResource : IJsonModel<SecretSyncData>
     {
-        private static SecretSyncData s_dataDeserializationInstance;
-        private static SecretSyncData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<SecretSyncData> s_dataDeserializationInstance;
 
+        private static IJsonModel<SecretSyncData> DataDeserializationInstance => s_dataDeserializationInstance ??= new SecretSyncData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecretSyncData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecretSyncData>)Data).Write(writer, options);
 
-        SecretSyncData IJsonModel<SecretSyncData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecretSyncData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecretSyncData IJsonModel<SecretSyncData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<SecretSyncData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecretSyncData>(Data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         SecretSyncData IPersistableModel<SecretSyncData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecretSyncData>(data, options, AzureResourceManagerSecretsStoreExtensionContext.Default);
 
-        string IPersistableModel<SecretSyncData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecretSyncData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecretSyncData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }
