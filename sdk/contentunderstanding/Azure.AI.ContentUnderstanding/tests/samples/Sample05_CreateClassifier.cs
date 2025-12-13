@@ -284,19 +284,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 var analyzeResult = analyzeOperation.Value;
 
                 // Display classification results
-                if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
-                {
-                    Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
+                DocumentContent docContent = (DocumentContent)analyzeResult.Contents!.First();
+                Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
 
-                    // With EnableSegment=false, the document is classified as a single unit
-                    if (docContent.Segments != null && docContent.Segments.Count > 0)
-                    {
-                        foreach (var segment in docContent.Segments)
-                        {
-                            Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
-                            Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
-                        }
-                    }
+                // With EnableSegment=false, the document is classified as a single unit
+                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentSegment>())
+                {
+                    Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
+                    Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
                 }
                 #endregion
 
@@ -488,18 +483,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 var analyzeResult = analyzeOperation.Value;
 
                 // Display classification results with automatic segmentation
-                if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
+                DocumentContent docContent = (DocumentContent)analyzeResult.Contents!.First();
+                Console.WriteLine($"Found {docContent.Segments?.Count ?? 0} segment(s):");
+                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentSegment>())
                 {
-                    if (docContent.Segments != null && docContent.Segments.Count > 0)
-                    {
-                        Console.WriteLine($"Found {docContent.Segments.Count} segment(s):");
-                        foreach (var segment in docContent.Segments)
-                        {
-                            Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
-                            Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
-                            Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
-                        }
-                    }
+                    Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
+                    Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
+                    Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
                 }
                 #endregion
 

@@ -4,12 +4,18 @@ This sample demonstrates how to create a classifier analyzer to categorize docum
 
 ## About classifiers
 
-Classifiers are a type of custom analyzer that categorize documents into predefined categories. They're useful for:
+Classifiers are a type of custom analyzer that categorize documents into predefined categories using `ContentCategories`. They allow you to perform classification and content extraction as part of a single API call. Classifiers are useful for:
 - **Document routing**: Automatically route documents to the right processing pipeline based on category
 - **Content organization**: Organize large document collections by type
 - **Multi-document processing**: Process files containing multiple document types by automatically segmenting them
 
-Classifiers use **content categories** to define the types of documents they can identify. Each category has a description that helps the analyzer understand what documents belong to that category.
+Classifiers use **content categories** to define the types of documents they can identify. Each category has a `Description` that helps the AI model understand what documents belong to that category. You can define up to 200 category names and descriptions. You can include an `"other"` category to handle unmatched content; otherwise, all files are forced to be classified into one of your defined categories.
+
+The `EnableSegment` property in the analyzer configuration controls whether multi-document files are split into segments:
+- **`EnableSegment = false`**: Classifies the entire file as a single category (classify only)
+- **`EnableSegment = true`**: Automatically splits the file into segments by category (classify and segment)
+
+For detailed information about classifiers, see the [Classifier documentation][classifier-docs].
 
 ## Prerequisites
 
@@ -34,6 +40,24 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 ```
 
 ## Create a classifier
+
+Like custom analyzers, classifiers are created using `ContentAnalyzer` and passed to `ContentUnderstandingClient.CreateAnalyzerAsync()`.
+
+To define a classifier, it requires:
+- A `BaseAnalyzerId` (see [baseAnalyzerId][baseanalyzerid-docs] for details). Supported base analyzers include:
+  - `prebuilt-document` - for document-based classifiers
+  - `prebuilt-audio` - for audio-based classifiers
+  - `prebuilt-video` - for video-based classifiers
+  - `prebuilt-image` - for image-based classifiers
+
+  For the complete and up-to-date list of supported base analyzers, see the [Analyzer reference documentation][analyzer-reference-docs].
+- A unique analyzer ID inside an AI Foundry resource (passed as a separate parameter to `CreateAnalyzerAsync`)
+- Optional `Name` and `Description` (description is used as context by the AI model, so clear descriptions improve classification accuracy)
+- Required: Define `ContentCategories` in the analyzer configuration (defines the categories for classification)
+- Required: Define the configuration (controls how content is processed, including optional `EnableSegment` property for segmentation)
+- Required: Define supported large language models using model names (not model deployments)
+
+For detailed information about classifier configuration, see the [Classifier documentation][classifier-docs].
 
 Create a classifier analyzer with content categories:
 
@@ -88,51 +112,11 @@ ContentAnalyzer result = operation.Value;
 Console.WriteLine($"Classifier '{analyzerId}' created successfully!");
 ```
 
-## Analyze documents without segmentation
-
-When `EnableSegment` is `false`, the entire document is classified as a single unit without splitting. For example, consider a multi-page PDF file like [`mixed_financial_docs.pdf`][mixed-docs-example] that contains:
-- **Invoice**: page 1
-- **Bank Statement**: pages 2-3
-- **Loan Application**: page 4
-
-With `EnableSegment = false`, the entire 4-page document will be classified as one category (e.g., "Invoice" or "Bank Statement") without splitting the document into separate segments:
-
-```C# Snippet:ContentUnderstandingAnalyzeCategory
-// Analyze a document (EnableSegment=false means entire document is one category)
-string filePath = "<file_path>";
-byte[] fileBytes = File.ReadAllBytes(filePath);
-Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
-    WaitUntil.Completed,
-    analyzerId,
-    BinaryData.FromBytes(fileBytes));
-
-var analyzeResult = analyzeOperation.Value;
-
-// Display classification results
-if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
-{
-    Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
-
-    // With EnableSegment=false, the document is classified as a single unit
-    if (docContent.Segments != null && docContent.Segments.Count > 0)
-    {
-        foreach (var segment in docContent.Segments)
-        {
-            Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
-            Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
-        }
-    }
-}
-```
-
 ## Analyze documents with segmentation
 
-When `EnableSegment` is `true`, the analyzer automatically splits multi-document files into segments by category. For example, with [`mixed_financial_docs.pdf`][mixed-docs-example] that contains:
-- **Invoice**: page 1
-- **Bank Statement**: pages 2-3
-- **Loan Application**: page 4
+Use `AnalyzeBinaryAsync()` to analyze a document file with the classifier. When `EnableSegment` is `true`, the analyzer automatically splits multi-document files into segments by category. The result contains multiple segments in the `Segments` property of `DocumentContent`, each with its own category classification.
 
-With `EnableSegment = true`, the analyzer will segment the document and return classification for each segment:
+For example, with [`mixed_financial_docs.pdf`][mixed-docs-example] that contains invoice (page 1), bank statement (pages 2-3), and loan application (page 4), the analyzer will return three segments:
 - Segment 1: Category "Invoice", Pages 1-1
 - Segment 2: Category "Bank Statement", Pages 2-3
 - Segment 3: Category "Loan Application", Page 4
@@ -149,33 +133,21 @@ Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
 var analyzeResult = analyzeOperation.Value;
 
 // Display classification results with automatic segmentation
-if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
+DocumentContent docContent = (DocumentContent)analyzeResult.Contents!.First();
+Console.WriteLine($"Found {docContent.Segments?.Count ?? 0} segment(s):");
+foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentSegment>())
 {
-    if (docContent.Segments != null && docContent.Segments.Count > 0)
-    {
-        Console.WriteLine($"Found {docContent.Segments.Count} segment(s):");
-        foreach (var segment in docContent.Segments)
-        {
-            Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
-            Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
-            Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
-        }
-    }
+    Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
+    Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
+    Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
 }
 ```
 
-## Segmentation behavior
+## Analyze documents without segmentation
 
-The `EnableSegment` property controls how multi-document files are processed:
+If `EnableSegment` is set to `false` (the default), the entire document will be classified as a single unit without splitting. Use `AnalyzeBinaryAsync()` with the classifier, and the result will contain classification information in the `Segments` property of `DocumentContent` for the entire document as one category.
 
-- **`EnableSegment = false`**: The entire document is classified as one category without splitting. For example, with [`mixed_financial_docs.pdf`][mixed-docs-example] (4 pages containing invoice, bank statement, and loan application), the entire document will be classified as a single category. Useful when you know each file contains only one document type.
-
-- **`EnableSegment = true`**: The analyzer automatically splits the document into segments, with each segment having its own category. For example, with [`mixed_financial_docs.pdf`][mixed-docs-example], the analyzer will return three segments:
-  - Segment 1: "Invoice" (page 1)
-  - Segment 2: "Bank Statement" (pages 2-3)
-  - Segment 3: "Loan Application" (page 4)
-
-  Useful for processing files that contain multiple document types.
+For example, with a multi-page PDF file like [`mixed_financial_docs.pdf`][mixed-docs-example] that contains invoice (page 1), bank statement (pages 2-3), and loan application (page 4), the entire 4-page document will be classified as one category (e.g., "Invoice" or "Bank Statement") without splitting into separate segments.
 
 ## Delete the classifier (optional)
 
@@ -212,5 +184,7 @@ Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 [sample08]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [classifier-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/classifier
+[analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#analyzer-configuration-structure
+[baseanalyzerid-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
 [mixed-docs-example]: https://github.com/Azure-Samples/azure-ai-content-understanding-dotnet/blob/main/ContentUnderstanding.Common/data/mixed_financial_docs.pdf
 
