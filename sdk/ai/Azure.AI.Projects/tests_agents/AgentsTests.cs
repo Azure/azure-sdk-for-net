@@ -118,7 +118,7 @@ public class AgentsTests : AgentsTestBase
     {
         AIProjectClient projectClient = GetTestProjectClient();
         ProjectResponsesClient client = projectClient.OpenAI.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
-        OpenAIResponse response = await client.CreateResponseAsync("What is steam reactor?");
+        ResponseResult response = await client.CreateResponseAsync("What is steam reactor?");
         response = await WaitForRun(client, response);
         Assert.That(response.GetOutputText(), Is.Not.Null.Or.Empty);
     }
@@ -322,7 +322,7 @@ public class AgentsTests : AgentsTestBase
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
+        ResponseResult response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
 
         Console.WriteLine($"Response from prompt agent: {response.GetOutputText()}");
     }
@@ -343,7 +343,7 @@ public class AgentsTests : AgentsTestBase
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
+        ResponseResult response = await responseClient.CreateResponseAsync("Please greet me and tell me what would be good to wear outside today.");
         Assert.That(response?.GetOutputText(), Is.Not.Null.And.Not.Empty);
     }
 
@@ -369,7 +369,7 @@ public class AgentsTests : AgentsTestBase
     public async Task StructuredInputsWork()
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
+        ResponsesClient responseClient = projectClient.OpenAI.Responses;
 
         AgentVersion agent = await projectClient.Agents.CreateAgentVersionAsync(
             "TestPromptAgentFromDotnetTests2343",
@@ -392,34 +392,40 @@ public class AgentsTests : AgentsTestBase
                 }
             });
 
-        ResponseItem item = ResponseItem.CreateUserMessageItem("What's my name?");
-
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Agent = agent,
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("What's my name?")
+            }
         };
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync([item], responseOptions);
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         Assert.That(response.GetOutputText(), Does.Contain("Ishmael"));
 
         responseOptions = new()
         {
             Agent = agent,
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("What's my name?")
+            },
             StructuredInputs =
             {
                 ["user_name"] = BinaryData.FromString(@"""Mr. Jingles"""),
             },
         };
 
-        response = await responseClient.CreateResponseAsync([item], responseOptions);
+        response = await responseClient.CreateResponseAsync(responseOptions);
         Assert.That(response.GetOutputText(), Does.Contain("Mr. Jingles"));
 
         responseOptions.StructuredInputs["user_name"] = BinaryData.FromString(@"""Le Flufferkins""");
-        response = await responseClient.CreateResponseAsync([item], responseOptions);
+        response = await responseClient.CreateResponseAsync(responseOptions);
         Assert.That(response.GetOutputText(), Does.Contain("Le Flufferkins"));
 
         responseOptions.StructuredInputs.Remove("user_name");
-        response = await responseClient.CreateResponseAsync([item], responseOptions);
+        response = await responseClient.CreateResponseAsync(responseOptions);
         Assert.That(response.GetOutputText(), Does.Contain("Ishmael"));
     }
 
@@ -442,7 +448,7 @@ public class AgentsTests : AgentsTestBase
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion, newConversation);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, agent!");
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello, agent!");
 
         Assert.That(response.Id, Does.StartWith("wfresp"));
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -617,12 +623,15 @@ public class AgentsTests : AgentsTestBase
             options: new(await GetAgentToolDefinition(toolType, projectClient)));
         ProjectOpenAIClient oaiClient = projectClient.GetProjectOpenAIClient();
         ProjectResponsesClient responseClient = oaiClient.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]),
+            },
         };
-        OpenAIResponse response = await responseClient.CreateResponseAsync([request], responseOptions);
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         response = await WaitForRun(responseClient, response);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         if (ExpectedItems.TryGetValue(toolType, out string type))
@@ -698,12 +707,17 @@ public class AgentsTests : AgentsTestBase
         bool isFinished = false;
         bool annotationMet = false;
         bool isStatusGood = false;
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]),
+            },
+            StreamingEnabled = true,
         };
         bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
-        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync([request], responseOptions))
+        await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(responseOptions))
         {
             if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
             {
@@ -789,16 +803,19 @@ public class AgentsTests : AgentsTestBase
                     Tools = { new FunctionTool("get_name_of_user", BinaryData.FromString("{}"), strictModeEnabled: false) }
                 }));
 
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
+        ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Hello!");
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello!");
         Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.True);
 
         response = await responseClient.CreateResponseAsync(
-            "Hello!",
-            new ResponseCreationOptions()
+            new CreateResponseOptions()
             {
                 ToolChoice = ResponseToolChoice.CreateNoneChoice(),
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Hello!"),
+                },
             });
         Assert.That(response.OutputItems.Any(outputItem => outputItem is FunctionCallResponseItem), Is.False);
     }
@@ -814,25 +831,25 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient))
         );
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        CreateResponseOptions responseOptions = new()
         {
             Agent = agentVersion,
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]),
+            },
         };
-        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
-        List<ResponseItem> inputItems = [request];
         bool funcionCalled;
         bool functionWasCalled = false;
         string previousResponse = default;
-        OpenAIResponse response;
+        ResponseResult response;
         do
         {
             responseOptions.PreviousResponseId = previousResponse;
-            response = await responseClient.CreateResponseAsync(
-                inputItems: inputItems,
-                options: responseOptions);
+            response = await responseClient.CreateResponseAsync(responseOptions);
             response = await WaitForRun(responseClient, response);
-            inputItems.Clear();
+            responseOptions.InputItems.Clear();
             previousResponse = response.Id;
             funcionCalled = false;
             foreach (ResponseItem responseItem in response.OutputItems)
@@ -843,7 +860,7 @@ public class AgentsTests : AgentsTestBase
                     Assert.That(functionToolCall.FunctionName, Is.EqualTo("GetCityNicknameForTest"));
                     using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.FunctionArguments);
                     string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                    inputItems.Add(ResponseItem.CreateFunctionCallOutputItem(
+                    responseOptions.InputItems.Add(ResponseItem.CreateFunctionCallOutputItem(
                         callId: functionToolCall.CallId,
                         functionOutput: GetCityNicknameForTest(locationArgument)
                     ));
@@ -853,7 +870,7 @@ public class AgentsTests : AgentsTestBase
                 else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
                     Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
-                    inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                    responseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     funcionCalled = true;
                     functionWasCalled = true;
                 }
@@ -878,27 +895,28 @@ public class AgentsTests : AgentsTestBase
             agentName: AGENT_NAME,
             options: new(await GetAgentToolDefinition(toolType, projectClient))
         );
-        OpenAIResponseClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
-        {
-            Agent = agentVersion,
-        };
-        ResponseItem request = ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]);
-        List<ResponseItem> inputItems = [request];
-        bool funcionCalled=false;
+        ResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
+        bool functionCalled = false;
         bool functionWasCalled = false;
         bool isStarted = false, isFinished=false, isStatusGood=false;
         bool updateFound = !ExpectedUpdateTypes.TryGetValue(toolType, out Type expectedUpdateType);
-        string previousResponse = default;
+
+        CreateResponseOptions nextResponseOptions = new()
+        {
+            Agent = agentVersion,
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(ToolPrompts[toolType]),
+            },
+            StreamingEnabled = true,
+        };
+        ResponseResult latestResponse = null;
+
         do
         {
-            ResponseCreationOptions opts = new()
+            await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(nextResponseOptions))
             {
-                PreviousResponseId = previousResponse,
-            };
-            await foreach (StreamingResponseUpdate streamResponse in responseClient.CreateResponseStreamingAsync(inputItems, opts))
-            {
-                if (streamResponse is StreamingResponseCreatedUpdate createUpdate)
+                if (streamResponse is StreamingResponseCreatedUpdate createdUpdate)
                 {
                     isStarted = true;
                 }
@@ -913,14 +931,18 @@ public class AgentsTests : AgentsTestBase
                 }
                 else if (streamResponse is StreamingResponseErrorUpdate errorUpdate)
                 {
-                    Assert.Fail($"The stream has failed: {errorUpdate.Message}");
+                    Assert.Fail($"The stream has failed: {errorUpdate.Message}\n{ModelReaderWriter.Write(errorUpdate)}");
                 }
                 else if (streamResponse is StreamingResponseCompletedUpdate streamResponseCompletedUpdate)
                 {
-                    funcionCalled = false;
-                    inputItems.Clear();
                     Assert.That(streamResponseCompletedUpdate.Response.Status, Is.EqualTo(ResponseStatus.Completed));
+
+                    functionCalled = false;
                     isStatusGood = true;
+
+                    nextResponseOptions.PreviousResponseId = streamResponseCompletedUpdate.Response.Id;
+                    nextResponseOptions.InputItems.Clear();
+
                     foreach (ResponseItem responseItem in streamResponseCompletedUpdate.Response.OutputItems)
                     {
                         if (toolType == ToolType.FunctionCall && responseItem is FunctionCallResponseItem functionToolCall)
@@ -928,21 +950,21 @@ public class AgentsTests : AgentsTestBase
                             Assert.That(functionToolCall.FunctionName, Is.EqualTo("GetCityNicknameForTest"));
                             using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.FunctionArguments);
                             string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
-                            inputItems.Add(ResponseItem.CreateFunctionCallOutputItem(
+                            nextResponseOptions.InputItems.Add(ResponseItem.CreateFunctionCallOutputItem(
                                 callId: functionToolCall.CallId,
                                 functionOutput: GetCityNicknameForTest(locationArgument)
                             ));
-                            funcionCalled = true;
+                            functionCalled = true;
                             functionWasCalled = true;
                         }
                         else if ((toolType == ToolType.MCP || toolType == ToolType.MCPConnection) && responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                         {
                             Assert.That(mcpToolCall.ServerLabel, Is.EqualTo("api-specs"));
-                            inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
-                            funcionCalled = true;
+                            nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                            functionCalled = true;
                             functionWasCalled = true;
                         }
-                        previousResponse = streamResponseCompletedUpdate.Response.Id;
+                        latestResponse = streamResponseCompletedUpdate.Response;
                     }
                 }
                 if (expectedUpdateType is not null)
@@ -950,7 +972,7 @@ public class AgentsTests : AgentsTestBase
                     updateFound |= streamResponse.GetType() == expectedUpdateType;
                 }
             }
-        } while (funcionCalled);
+        } while (functionCalled);
         Assert.That(updateFound, Is.True, $"The update of type {expectedUpdateType} was not found.");
         Assert.That(isStarted, Is.True, "The stream did not started.");
         Assert.That(isFinished, Is.True, "The stream did not finished.");
@@ -1030,36 +1052,35 @@ public class AgentsTests : AgentsTestBase
         );
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(
             agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            TruncationMode = ResponseTruncationMode.Auto
+            TruncationMode = ResponseTruncationMode.Auto,
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem(
+                [
+                    ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),
+                    useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageBytes: screenshotsBin["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+                ]),
+            },
         };
-        ResponseItem request = ResponseItem.CreateUserMessageItem(
-            [
-                ResponseContentPart.CreateInputTextPart(ToolPrompts[ToolType.ComputerUse]),
-                useFileUpload ? ResponseContentPart.CreateInputImagePart(imageFileId: screenshots["browser_search"], imageDetailLevel: ResponseImageDetailLevel.High) : ResponseContentPart.CreateInputImagePart(imageBytes: screenshotsBin["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
-            ]
-        );
-        List<ResponseItem> inputItems = [request];
         bool computerUseCalled;
         bool computerUseWasCalled = false;
         int limitIteration = 10;
-        OpenAIResponse response;
+        ResponseResult response;
         do
         {
-            response = await responseClient.CreateResponseAsync(
-                inputItems: inputItems,
-                options: responseOptions);
+            response = await responseClient.CreateResponseAsync(responseOptions);
             response = await WaitForRun(responseClient, response);
-            inputItems.Clear();
+            responseOptions.InputItems.Clear();
             responseOptions.PreviousResponseId = response.Id;
             computerUseCalled = false;
             foreach (ResponseItem responseItem in response.OutputItems)
             {
-                inputItems.Add(responseItem);
+                responseOptions.InputItems.Add(responseItem);
                 if (responseItem is ComputerCallResponseItem computerCall)
                 {
-                    inputItems.Add(useFileUpload ? ProcessComputerUseCallTest(computerCall, screenshots) : ProcessComputerUseCallTest(computerCall, screenshotsBin));
+                    responseOptions.InputItems.Add(useFileUpload ? ProcessComputerUseCallTest(computerCall, screenshots) : ProcessComputerUseCallTest(computerCall, screenshotsBin));
                     computerUseCalled = true;
                     computerUseWasCalled = true;
                 }
@@ -1088,13 +1109,13 @@ public class AgentsTests : AgentsTestBase
             ResponseItem.CreateUserMessageItem("What is the size of France in square miles?")
         );
         ProjectConversation conversation = await conversationClient.CreateProjectConversationAsync(conversationOptions);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Agent = containerAgentVersion,
             AgentConversationId = conversation.Id,
         };
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync([], responseOptions);
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         response = await WaitForRun(responseClient, response);
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
         Assert.That(response.GetOutputText(), Is.Not.Null.And.Not.Empty);
@@ -1106,10 +1127,14 @@ public class AgentsTests : AgentsTestBase
     public async Task PerRequestToolsRejectedWithAgent(bool agentIsPresent)
     {
         AIProjectClient projectClient = GetTestProjectClient();
-        OpenAIResponseClient responseClient = projectClient.OpenAI.Responses;
+        ResponsesClient responseClient = projectClient.OpenAI.Responses;
 
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Hello, model!"),
+            },
             Tools =
             {
                 ResponseTool.CreateFunctionTool(
@@ -1139,16 +1164,14 @@ public class AgentsTests : AgentsTestBase
             responseOptions.Model = TestEnvironment.MODELDEPLOYMENTNAME;
         }
 
-        List<ResponseItem> inputItems = [ResponseItem.CreateUserMessageItem("Hello, model!")];
-
         if (agentIsPresent)
         {
-            ClientResultException expectedException = Assert.ThrowsAsync<ClientResultException>(async () => await responseClient.CreateResponseAsync(inputItems, responseOptions));
+            ClientResultException expectedException = Assert.ThrowsAsync<ClientResultException>(async () => await responseClient.CreateResponseAsync(responseOptions));
             Assert.That(expectedException.Message?.ToLower(), Does.Contain("agent is specified"));
         }
         else
         {
-            Assert.DoesNotThrowAsync(async () => await responseClient.CreateResponseAsync(inputItems, responseOptions));
+            Assert.DoesNotThrowAsync(async () => await responseClient.CreateResponseAsync(responseOptions));
         }
     }
 
@@ -1196,16 +1219,19 @@ public class AgentsTests : AgentsTestBase
 
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(newAgentVersion);
 
-        ResponseCreationOptions responseCreationOptions = new();
-
-        string userInput = "Hello, agent! Greet me by name.";
-        List<ResponseItem> inputItems = [ResponseItem.CreateUserMessageItem(userInput)];
+        CreateResponseOptions responseOptions = new()
+        {
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Hello, agent! Greet me by name."),
+            },
+        };
 
         // Using a conversation: here, a new conversation is created for this interaction.
         if (persistenceMode == TestItemPersistenceMode.UsingConversations)
         {
             ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync(options: null, cts.Token);
-            responseCreationOptions.AgentConversationId = conversation;
+            responseOptions.AgentConversationId = conversation;
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)
         {
@@ -1213,10 +1239,10 @@ public class AgentsTests : AgentsTestBase
         }
         else if (persistenceMode == TestItemPersistenceMode.UsingLocalItemsOnly)
         {
-            responseCreationOptions.StoredOutputEnabled = false;
+            responseOptions.StoredOutputEnabled = false;
         }
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(inputItems, responseCreationOptions, cts.Token);
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions, cts.Token);
 
         Assert.That(response.OutputItems.Count, Is.GreaterThan(0));
 
@@ -1227,21 +1253,24 @@ public class AgentsTests : AgentsTestBase
         // the next call.
         if (persistenceMode == TestItemPersistenceMode.UsingLocalItemsOnly)
         {
-            inputItems.AddRange(response.OutputItems);
+            foreach (ResponseItem outputItem in response.OutputItems)
+            {
+                responseOptions.InputItems.Add(outputItem);
+            }
         }
         else
         {
-            inputItems.Clear();
+            responseOptions.InputItems.Clear();
         }
 
         if (persistenceMode == TestItemPersistenceMode.UsingPreviousResponseId)
         {
-            responseCreationOptions.PreviousResponseId = response.Id;
+            responseOptions.PreviousResponseId = response.Id;
         }
 
         string replyToFunctionCall = "Ishmael";
-        inputItems.Add(ResponseItem.CreateFunctionCallOutputItem(functionCallItem.CallId, replyToFunctionCall));
-        response = await responseClient.CreateResponseAsync(inputItems, responseCreationOptions, cts.Token);
+        responseOptions.InputItems.Add(ResponseItem.CreateFunctionCallOutputItem(functionCallItem.CallId, replyToFunctionCall));
+        response = await responseClient.CreateResponseAsync(responseOptions, cts.Token);
 
         Assert.That(response.GetOutputText().ToLower(), Does.Contain(replyToFunctionCall.ToLower()));
     }

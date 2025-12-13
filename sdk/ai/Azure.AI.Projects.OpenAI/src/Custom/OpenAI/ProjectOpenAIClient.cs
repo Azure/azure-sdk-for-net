@@ -99,7 +99,7 @@ public partial class ProjectOpenAIClient : OpenAIClient
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public override OpenAIResponseClient GetOpenAIResponseClient(string defaultModel)
+    public override ResponsesClient GetResponsesClient(string defaultModel)
         => GetProjectResponsesClientForModel(defaultModel);
 
     public virtual ProjectResponsesClient GetProjectResponsesClientForAgent(AgentReference defaultAgent, string defaultConversationId = null)

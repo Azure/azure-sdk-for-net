@@ -49,14 +49,17 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             });
         //Validate(vectorStore);
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync(
-            "Using the file search tool, what's Travis's favorite food?",
-            new ResponseCreationOptions()
+        ResponseResult response = await client.Responses.CreateResponseAsync(
+            new CreateResponseOptions()
             {
                 Model = TestEnvironment.MODELDEPLOYMENTNAME,
                 Tools =
                 {
                     ResponseTool.CreateFileSearchTool(vectorStoreIds: [vectorStore.Id]),
+                },
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Using the file search tool, what's Travis's favorite food?"),
                 }
             });
         Assert.That(response.OutputItems?.Count, Is.GreaterThanOrEqualTo(2));
@@ -142,7 +145,7 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
                 defaultConversationId: isDefaultConversation ? TestEnvironment.KNOWN_CONVERSATION_ID : null);
         }
 
-        OpenAIResponse response = await responsesClient.CreateResponseAsync("Hello, agent or model!");
+        ResponseResult response = await responsesClient.CreateResponseAsync("Hello, agent or model!");
 
         Assert.That(
             response?.Agent?.Name,
@@ -165,15 +168,17 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             = ResponseTool.CreateCodeInterpreterTool(
                 new CodeInterpreterToolContainer(
                     CodeInterpreterToolContainerConfiguration.CreateAutomaticContainerConfiguration([])));
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Model = TestEnvironment.MODELDEPLOYMENTNAME,
             Tools = { codeInterpreterTool },
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Calculate the factorial of 5 using Python code."),
+            },
         };
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync(
-            "Calculate the factorial of 5 using Python code.",
-            responseOptions);
+        ResponseResult response = await client.Responses.CreateResponseAsync(responseOptions);
 
         Assert.That(response, Is.Not.Null);
         Assert.That(response.OutputItems, Has.Count.GreaterThanOrEqualTo(2));
@@ -202,15 +207,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             strictModeEnabled: false,
             functionDescription: "Gets the favorite food of the user");
 
-        ResponseCreationOptions responseCreationOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Model = TestEnvironment.MODELDEPLOYMENTNAME,
             Tools = { functionTool },
+            InputItems = { ResponseItem.CreateUserMessageItem("What's my favorite food?") },
         };
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("What's my favorite food?")],
-            responseCreationOptions);
+        ResponseResult response = await client.Responses.CreateResponseAsync(responseOptions);
         Assert.That(response.Id, Does.StartWith("resp_"));
         Assert.That(response.OutputItems.Count, Is.GreaterThanOrEqualTo(1));
 
@@ -220,10 +224,10 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         Assert.That(functionCallResponseItem?.Id, Is.Not.Null.And.Not.Empty);
 
         // previous_response_id not yet supported
-        //responseCreationOptions.PreviousResponseId = response.Id;
+        //CreateResponseOptions.PreviousResponseId = response.Id;
         //response = await client.Responses.CreateResponseAsync(
         //    [ResponseItem.CreateFunctionCallOutputItem(functionCallResponseItem.CallId, "pizza")],
-        //    responseCreationOptions);
+        //    CreateResponseOptions);
 
         //Assert.That(response.OutputItems.Count, Is.GreaterThanOrEqualTo(1));
         //MessageResponseItem messageResponseItem = response.OutputItems.Last() as MessageResponseItem;
@@ -268,12 +272,12 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     public async Task GetResponseWorks()
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
-        OpenAIResponseClient responseClient = client.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
+        ResponsesClient responseClient = client.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync([ResponseItem.CreateUserMessageItem("Hello, model!")]);
+        ResponseResult response = await responseClient.CreateResponseAsync([ResponseItem.CreateUserMessageItem("Hello, model!")]);
         Assert.That(response?.Id, Is.Not.Null.And.Not.Empty);
 
-        OpenAIResponse retrievedResponse = await client.Responses.GetResponseAsync(response.Id);
+        ResponseResult retrievedResponse = await client.Responses.GetResponseAsync(response.Id);
         Assert.That(retrievedResponse.Status, Is.EqualTo(ResponseStatus.Completed));
         Assert.That(retrievedResponse.Id, Is.EqualTo(response.Id));
     }
@@ -283,12 +287,12 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("Hello again, model")],
-            new ResponseCreationOptions()
+        ResponseResult response = await client.Responses.CreateResponseAsync(
+            new CreateResponseOptions()
             {
                 Model = TestEnvironment.MODELDEPLOYMENTNAME,
                 BackgroundModeEnabled = true,
+                InputItems = { ResponseItem.CreateUserMessageItem("Hello again, model") },
             });
         Assert.That(response?.Id, Does.StartWith("resp_"));
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Queued).Or.EqualTo(ResponseStatus.InProgress));
@@ -308,16 +312,20 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     [TestCase(OpenAIClientMode.UseExternalOpenAI)]
     public async Task GetResponseStreamingWorks(OpenAIClientMode clientMode)
     {
-        OpenAIResponseClient client = GetTestResponsesClient(clientMode);
+        ResponsesClient client = GetTestResponsesClient(clientMode);
 
-        OpenAIResponse startedResponse = null;
+        ResponseResult startedResponse = null;
         await foreach (StreamingResponseUpdate update
             in client.CreateResponseStreamingAsync(
-                "Hello, model!",
-                new ResponseCreationOptions()
+                new CreateResponseOptions()
                 {
                     Model = TestEnvironment.MODELDEPLOYMENTNAME,
                     BackgroundModeEnabled = true,
+                    StreamingEnabled = true,
+                    InputItems =
+                    {
+                        ResponseItem.CreateUserMessageItem("Hello, model!"),
+                    },
                 }))
         {
             if (update is StreamingResponseCreatedUpdate createdUpdate)
@@ -346,9 +354,9 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        Dictionary<string, OpenAIResponse> firstResponsesById = [];
+        Dictionary<string, ResponseResult> firstResponsesById = [];
 
-        await foreach (OpenAIResponse response in client.Responses.GetProjectResponsesAsync())
+        await foreach (ResponseResult response in client.Responses.GetProjectResponsesAsync())
         {
             Assert.That(response.Id, Is.Not.Null.And.Not.Empty);
             Assert.That(firstResponsesById.ContainsKey(response.Id), Is.False);
@@ -362,11 +370,11 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
 
         ProjectConversation newConversation = await client.Conversations.CreateProjectConversationAsync();
         ProjectResponsesClient responsesForNewConversation = client.GetProjectResponsesClientForModel(TestEnvironment.MODELDEPLOYMENTNAME, newConversation.Id);
-        OpenAIResponse newResponse = await responsesForNewConversation.CreateResponseAsync("Hello, new conversation!");
+        ResponseResult newResponse = await responsesForNewConversation.CreateResponseAsync("Hello, new conversation!");
 
-        List<OpenAIResponse> matchingResponses = [];
+        List<ResponseResult> matchingResponses = [];
 
-        await foreach (OpenAIResponse response in client.Responses.GetProjectResponsesAsync(conversationId: newConversation.Id))
+        await foreach (ResponseResult response in client.Responses.GetProjectResponsesAsync(conversationId: newConversation.Id))
         {
             matchingResponses.Add(response);
         }
@@ -384,11 +392,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     {
         ProjectOpenAIClient client = GetTestProjectOpenAIClient();
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync(
-            "Hello, model!",
-            new ResponseCreationOptions()
+        ResponseResult response = await client.Responses.CreateResponseAsync(
+            new CreateResponseOptions()
             {
-                Model = TestEnvironment.MODELDEPLOYMENTNAME
+                Model = TestEnvironment.MODELDEPLOYMENTNAME,
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Hello, model!"),
+                },
             });
         Assert.That(response?.Id, Does.StartWith("resp_"));
 
@@ -414,16 +425,15 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             strictModeEnabled: false,
             functionDescription: "Gets the favorite food of the user");
 
-        ResponseCreationOptions responseCreationOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Model = TestEnvironment.MODELDEPLOYMENTNAME,
             AgentConversationId = conversation,
             Tools = { functionTool },
+            InputItems = { ResponseItem.CreateUserMessageItem("What's my favorite food?") },
         };
 
-        OpenAIResponse response = await client.Responses.CreateResponseAsync(
-            [ResponseItem.CreateUserMessageItem("What's my favorite food?")],
-            responseCreationOptions);
+        ResponseResult response = await client.Responses.CreateResponseAsync(responseOptions);
         Assert.That(response.Id, Does.StartWith("resp_"));
         Assert.That(response.OutputItems.Count, Is.GreaterThanOrEqualTo(1));
 
@@ -432,10 +442,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
         Assert.That(functionCallResponseItem?.CallId, Is.Not.Null.And.Not.Empty);
         Assert.That(functionCallResponseItem?.Id, Is.Not.Null.And.Not.Empty);
 
-        response = await client.Responses.CreateResponseAsync(
-            [ResponseItem.CreateFunctionCallOutputItem(functionCallResponseItem.CallId, "pizza")],
-            responseCreationOptions);
+        CreateResponseOptions followupOptions = new()
+        {
+            Model = TestEnvironment.MODELDEPLOYMENTNAME,
+            AgentConversationId = conversation,
+            InputItems = { ResponseItem.CreateFunctionCallOutputItem(functionCallResponseItem.CallId, "pizza") },
+        };
 
+        response = await client.Responses.CreateResponseAsync(followupOptions);
         Assert.That(response.OutputItems.Count, Is.GreaterThanOrEqualTo(1));
         MessageResponseItem messageResponseItem = response.OutputItems.Last() as MessageResponseItem;
         Assert.That(response.GetOutputText().ToLower(), Does.Contain("pizza"));
@@ -488,11 +502,14 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
             Assert.Fail($"Unexpected initialization type for test: {clientInitializationType}");
         }
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            "Hello, model!",
-            new ResponseCreationOptions()
+        ResponseResult response = await responseClient.CreateResponseAsync(
+            new CreateResponseOptions()
             {
                 Model = TestEnvironment.MODELDEPLOYMENTNAME,
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Hello, model!"),
+                },
             });
         Assert.That(response?.Id, Is.Not.Null.And.Not.Empty);
         Assert.That(response?.OutputItems, Has.Count.GreaterThan(0));
@@ -503,28 +520,31 @@ public class ResponsesParityTests : ProjectsOpenAITestBase
     [TestCase(OpenAIClientMode.UseFDPOpenAI, Ignore = "'none' not yet supported on FDP")]
     public async Task ExtensibleReasoningEffortWorks(OpenAIClientMode clientMode)
     {
-        OpenAIResponseClient responseClient = GetTestResponsesClient(clientMode, "gpt-5.1");
+        ResponsesClient responseClient = GetTestResponsesClient(clientMode, "gpt-5.1");
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-            "Hello, gpt-5.1!",
-            new ResponseCreationOptions()
+        ResponseResult response = await responseClient.CreateResponseAsync(
+            new CreateResponseOptions()
             {
                 ReasoningOptions = new()
                 {
                     ReasoningEffortLevel = "none",
                 },
+                InputItems =
+                {
+                    ResponseItem.CreateUserMessageItem("Hello, gpt-5.1!"),
+                }
             });
 
         Assert.That(response.ReasoningOptions?.ReasoningEffortLevel?.ToString(), Is.EqualTo("none"));
     }
 
     [RecordedTest]
-    public async Task TestPublihedAgent()
+    public async Task TestPublishedAgent()
     {
         ProjectOpenAIClientOptions clientOptions = CreateTestOpenAIClientOptions<ProjectOpenAIClientOptions>(
            endpoint: new Uri($"{TestEnvironment.PUBLISHED_ENDPOINT}/openai"));
         ProjectOpenAIClient client = CreateProxyFromClient(new ProjectOpenAIClient(GetTestAuthenticationPolicy(), clientOptions));
-        OpenAIResponse response = await client.Responses.CreateResponseAsync("What is the size of France in square miles?");
+        ResponseResult response = await client.Responses.CreateResponseAsync("What is the size of France in square miles?");
         Assert.That(string.IsNullOrEmpty(response.GetOutputText()), Is.False, "The Agent did not returned a response.");
     }
 }

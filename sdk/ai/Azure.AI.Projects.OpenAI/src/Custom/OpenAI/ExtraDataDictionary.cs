@@ -18,14 +18,14 @@ namespace Azure.AI.Projects.OpenAI;
 
 public partial class ExtraDataDictionary : IDictionary<string, BinaryData>
 {
-    private readonly ResponseCreationOptions _parentOptions;
+    private readonly CreateResponseOptions _parentOptions;
     private readonly ReadOnlyMemory<byte> _rootPathBytes;
 
     internal ExtraDataDictionary()
     {
     }
 
-    internal ExtraDataDictionary(ResponseCreationOptions parentOptions, ReadOnlySpan<byte> rootPathBytes)
+    internal ExtraDataDictionary(CreateResponseOptions parentOptions, ReadOnlySpan<byte> rootPathBytes)
     {
         _parentOptions = parentOptions;
         _rootPathBytes = new(rootPathBytes.ToArray());

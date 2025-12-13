@@ -3,10 +3,14 @@ namespace Azure.AI.Projects
     public static partial class ClientConnectionProviderExtensions
     {
         public static Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(this System.ClientModel.Primitives.ClientConnectionProvider connectionProvider, Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
-        public sealed partial class <>E__0
+        public sealed partial class <G>$EE9D7A1C67932FB454531401B8375DE4
         {
-            internal <>E__0() { }
+            internal <G>$EE9D7A1C67932FB454531401B8375DE4() { }
             public Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
+            public static partial class <M>$781747A4149937EE6CD40CB5B8268DAD
+            {
+                public static void <Extension>$(System.ClientModel.Primitives.ClientConnectionProvider connectionProvider) { }
+            }
         }
     }
 }
@@ -135,7 +139,7 @@ namespace Azure.AI.Projects.OpenAI
         internal AgentResponseItem() { }
         public Azure.AI.Projects.OpenAI.AgentResponseItemSource CreatedBy { get { throw null; } }
         public virtual string Id { get { throw null; } }
-        public OpenAI.Responses.ResponseItem AsOpenAIResponseItem() { throw null; }
+        public OpenAI.Responses.ResponseItem AsResponseResultItem() { throw null; }
         public static Azure.AI.Projects.OpenAI.AgentResponseItem CreateStructuredOutputsItem(System.BinaryData output = null) { throw null; }
         public static Azure.AI.Projects.OpenAI.AgentResponseItem CreateWorkflowActionItem(string actionKind, string actionId) { throw null; }
         protected virtual Azure.AI.Projects.OpenAI.AgentResponseItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -648,9 +652,31 @@ namespace Azure.AI.Projects.OpenAI
     }
     public static partial class ConversationClientExtensions
     {
-        public sealed partial class <>E__0
+        public sealed partial class <G>$B3FF105A24B21D3EED92941BD24D963E
         {
-            internal <>E__0() { }
+            internal <G>$B3FF105A24B21D3EED92941BD24D963E() { }
+            public static partial class <M>$0BD4A66E0C6300237CE358C2FC131B6D
+            {
+            }
+        }
+    }
+    public static partial class CreateResponseOptionsExtensions
+    {
+        public static Azure.AI.Projects.OpenAI.AgentReference get_Agent(OpenAI.Responses.CreateResponseOptions options) { throw null; }
+        public static string get_AgentConversationId(OpenAI.Responses.CreateResponseOptions options) { throw null; }
+        public static Azure.AI.Projects.OpenAI.ExtraDataDictionary get_StructuredInputs(OpenAI.Responses.CreateResponseOptions options) { throw null; }
+        public static void set_Agent(OpenAI.Responses.CreateResponseOptions options, Azure.AI.Projects.OpenAI.AgentReference value) { }
+        public static void set_AgentConversationId(OpenAI.Responses.CreateResponseOptions options, string value) { }
+        public sealed partial class <G>$9441C364D6D7BED1E759B10623E362FD
+        {
+            internal <G>$9441C364D6D7BED1E759B10623E362FD() { }
+            public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } set { } }
+            public string AgentConversationId { get { throw null; } set { } }
+            public Azure.AI.Projects.OpenAI.ExtraDataDictionary StructuredInputs { get { throw null; } }
+            public static partial class <M>$CF4B939802E692FD9BEF27F36FABED87
+            {
+                public static void <Extension>$(OpenAI.Responses.CreateResponseOptions options) { }
+            }
         }
     }
     public partial class ExtraDataDictionary : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.Generic.IDictionary<string, System.BinaryData>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.IEnumerable
@@ -811,10 +837,14 @@ namespace Azure.AI.Projects.OpenAI
     {
         public static string get_ProjectConnectionId(OpenAI.Responses.McpTool mcpTool) { throw null; }
         public static void set_ProjectConnectionId(OpenAI.Responses.McpTool mcpTool, string value) { }
-        public sealed partial class <>E__0
+        public sealed partial class <G>$35DCA4819B43CF3F6CAB343048615A7E
         {
-            internal <>E__0() { }
+            internal <G>$35DCA4819B43CF3F6CAB343048615A7E() { }
             public string ProjectConnectionId { get { throw null; } set { } }
+            public static partial class <M>$057BAEB40536DD92FB57E20F2D1CDCDE
+            {
+                public static void <Extension>$(OpenAI.Responses.McpTool mcpTool) { }
+            }
         }
     }
     public abstract partial class MemoryItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.MemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemoryItem>
@@ -949,22 +979,6 @@ namespace Azure.AI.Projects.OpenAI
     public static partial class OpenAIFileExtensions
     {
         public static string GetAzureFileStatus(this OpenAI.Files.OpenAIFile file) { throw null; }
-    }
-    public static partial class OpenAIResponseExtension
-    {
-        public static System.ClientModel.ClientResult<OpenAI.Responses.OpenAIResponse> CreateResponse(this OpenAI.Responses.OpenAIResponseClient responseClient, Azure.AI.Projects.OpenAI.ProjectConversation conversation, Azure.AI.Projects.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.OpenAIResponse>> CreateResponseAsync(this OpenAI.Responses.OpenAIResponseClient responseClient, Azure.AI.Projects.OpenAI.ProjectConversation conversation, Azure.AI.Projects.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-    }
-    public static partial class OpenAIResponseExtensions
-    {
-        public static Azure.AI.Projects.OpenAI.AgentReference get_Agent(OpenAI.Responses.OpenAIResponse response) { throw null; }
-        public static string get_AgentConversationId(OpenAI.Responses.OpenAIResponse response) { throw null; }
-        public sealed partial class <>E__0
-        {
-            internal <>E__0() { }
-            public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } }
-            public string AgentConversationId { get { throw null; } }
-        }
     }
     public partial class OpenAPIAgentTool : Azure.AI.Projects.OpenAI.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenAPIAgentTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIAgentTool>
     {
@@ -1180,37 +1194,41 @@ namespace Azure.AI.Projects.OpenAI
         public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override OpenAI.Responses.OpenAIResponseClient GetOpenAIResponseClient(string defaultModel) { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectConversationsClient GetProjectConversationsClient() { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectFilesClient GetProjectFilesClient() { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectResponsesClient GetProjectResponsesClient() { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectResponsesClient GetProjectResponsesClientForAgent(Azure.AI.Projects.OpenAI.AgentReference defaultAgent, string defaultConversationId = null) { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectResponsesClient GetProjectResponsesClientForModel(string defaultModel, string defaultConversationId = null) { throw null; }
         public virtual Azure.AI.Projects.OpenAI.ProjectVectorStoresClient GetProjectVectorStoresClient() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Responses.ResponsesClient GetResponsesClient(string defaultModel) { throw null; }
     }
     public partial class ProjectOpenAIClientOptions : OpenAI.OpenAIClientOptions
     {
         public ProjectOpenAIClientOptions() { }
         public string ApiVersion { get { throw null; } set { } }
     }
-    public partial class ProjectResponsesClient : OpenAI.Responses.OpenAIResponseClient
+    public partial class ProjectResponsesClient : OpenAI.Responses.ResponsesClient
     {
         protected ProjectResponsesClient() { }
         public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.OpenAI.ProjectResponsesClientOptions options) { }
         public ProjectResponsesClient(System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.OpenAI.ProjectResponsesClientOptions options = null, Azure.AI.Projects.OpenAI.AgentReference defaultAgent = null, string defaultConversationId = null) { }
         public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.OpenAI.AgentReference defaultAgent, string defaultConversationId = null, Azure.AI.Projects.OpenAI.ProjectResponsesClientOptions options = null) { }
         public ProjectResponsesClient(System.Uri projectEndpoint, System.ClientModel.AuthenticationTokenProvider tokenProvider, Azure.AI.Projects.OpenAI.ProjectResponsesClientOptions options = null) { }
-        public override System.ClientModel.ClientResult<OpenAI.Responses.OpenAIResponse> CreateResponse(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.ClientModel.ClientResult<OpenAI.Responses.OpenAIResponse> CreateResponse(string userInputText, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.OpenAIResponse>> CreateResponseAsync(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.OpenAIResponse>> CreateResponseAsync(string userInputText, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.ClientModel.CollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreaming(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.ClientModel.CollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreaming(string userInputText, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public override System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, OpenAI.Responses.ResponseCreationOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.CollectionResult<OpenAI.Responses.OpenAIResponse> GetProjectResponses(Azure.AI.Projects.OpenAI.AgentReference agent = null, string conversationId = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Responses.OpenAIResponse> GetProjectResponsesAsync(Azure.AI.Projects.OpenAI.AgentReference agent = null, string conversationId = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(OpenAI.Responses.CreateResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(OpenAI.Responses.CreateResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.CollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreaming(OpenAI.Responses.CreateResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.CollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreaming(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.CollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreaming(string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(OpenAI.Responses.CreateResponseOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(System.Collections.Generic.IEnumerable<OpenAI.Responses.ResponseItem> inputItems, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public override System.ClientModel.AsyncCollectionResult<OpenAI.Responses.StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, string previousResponseId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.CollectionResult<OpenAI.Responses.ResponseResult> GetProjectResponses(Azure.AI.Projects.OpenAI.AgentReference agent = null, string conversationId = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.ClientModel.AsyncCollectionResult<OpenAI.Responses.ResponseResult> GetProjectResponsesAsync(Azure.AI.Projects.OpenAI.AgentReference agent = null, string conversationId = null, int? limit = default(int?), string order = null, string after = null, string before = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ProjectResponsesClientOptions : Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions
     {
@@ -1324,27 +1342,29 @@ namespace Azure.AI.Projects.OpenAI
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.ProtocolVersionRecord>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.ProtocolVersionRecord>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public static partial class ResponseCreationOptionsExtensions
-    {
-        public static Azure.AI.Projects.OpenAI.AgentReference get_Agent(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
-        public static string get_AgentConversationId(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
-        public static string get_Model(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
-        public static Azure.AI.Projects.OpenAI.ExtraDataDictionary get_StructuredInputs(OpenAI.Responses.ResponseCreationOptions options) { throw null; }
-        public static void set_Agent(OpenAI.Responses.ResponseCreationOptions options, Azure.AI.Projects.OpenAI.AgentReference value) { }
-        public static void set_AgentConversationId(OpenAI.Responses.ResponseCreationOptions options, string value) { }
-        public static void set_Model(OpenAI.Responses.ResponseCreationOptions options, string value) { }
-        public sealed partial class <>E__0
-        {
-            internal <>E__0() { }
-            public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } set { } }
-            public string AgentConversationId { get { throw null; } set { } }
-            public string Model { get { throw null; } set { } }
-            public Azure.AI.Projects.OpenAI.ExtraDataDictionary StructuredInputs { get { throw null; } }
-        }
-    }
     public static partial class ResponseItemExtensions
     {
         public static Azure.AI.Projects.OpenAI.AgentResponseItem AsAgentResponseItem(this OpenAI.Responses.ResponseItem responseItem) { throw null; }
+    }
+    public static partial class ResponseResultExtension
+    {
+        public static System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult> CreateResponse(this OpenAI.Responses.ResponsesClient responseClient, Azure.AI.Projects.OpenAI.ProjectConversation conversation, Azure.AI.Projects.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<System.ClientModel.ClientResult<OpenAI.Responses.ResponseResult>> CreateResponseAsync(this OpenAI.Responses.ResponsesClient responseClient, Azure.AI.Projects.OpenAI.ProjectConversation conversation, Azure.AI.Projects.OpenAI.AgentReference agentRef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public static partial class ResponseResultExtensions
+    {
+        public static Azure.AI.Projects.OpenAI.AgentReference get_Agent(OpenAI.Responses.ResponseResult response) { throw null; }
+        public static string get_AgentConversationId(OpenAI.Responses.ResponseResult response) { throw null; }
+        public sealed partial class <G>$D7C08262BAEC712802F8752B389F8208
+        {
+            internal <G>$D7C08262BAEC712802F8752B389F8208() { }
+            public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } }
+            public string AgentConversationId { get { throw null; } }
+            public static partial class <M>$9CB7C4485EAB7B97A3544F52CBDBA0F9
+            {
+                public static void <Extension>$(OpenAI.Responses.ResponseResult response) { }
+            }
+        }
     }
     public static partial class ResponseToolExtensions
     {

@@ -90,14 +90,14 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
+ResponseResult response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_FileSearch_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
+ResponseResult response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
 ```
 
 4. Create the response and throw an exception if the response contains the error.

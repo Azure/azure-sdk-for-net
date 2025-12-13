@@ -46,26 +46,26 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-3. Create a `OpenAIResponse` object.
+3. Create a `ResponseResult` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_BingGrounding_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = responseClient.CreateResponse("How does wikipedia explain Euler's Identity?");
+ResponseResult response = responseClient.CreateResponse("How does wikipedia explain Euler's Identity?");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_BingGrounding_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("How does wikipedia explain Euler's Identity?");
+ResponseResult response = await responseClient.CreateResponseAsync("How does wikipedia explain Euler's Identity?");
 ```
 
 4. To get the reference to the Web site from the response we need to parse the output items. We will do it in the helper method `GetFormattedAnnotation`.
 
 ```C# Snippet:Sample_FormatReference_BingGrounding
-private static string GetFormattedAnnotation(OpenAIResponse response)
+private static string GetFormattedAnnotation(ResponseResult response)
 {
     foreach (ResponseItem item in response.OutputItems)
     {

@@ -35,14 +35,14 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
     options: new(agentDefinition));
 ```
 
-4. Create get the `OpenAIResponse` object.
+4. Create get the `ResponseResult` object.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_MemoryTool_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-OpenAIResponse response = responseClient.CreateResponse([request]);
+ResponseResult response = responseClient.CreateResponse([request]);
 ```
 
 Asynchronous sample:
@@ -50,7 +50,7 @@ Asynchronous sample:
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
 ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
+ResponseResult response = await responseClient.CreateResponseAsync([request]);
 ```
 
 5. Make sure the repone has completed and record the response items to `MemoryUpdateOptions` object.

@@ -47,11 +47,12 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_Sharepoint_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems = { ResponseItem.CreateUserMessageItem("What is Contoso whistleblower policy") },
         };
-        OpenAIResponse response = await responseClient.CreateResponseAsync("What is Contoso whistleblower policy", options: responseOptions);
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         #endregion
 
         #region Snippet:Sample_WaitForResponse_Sharepoint
@@ -97,11 +98,15 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_Sharepoint_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("What is Contoso whistleblower policy"),
+            },
         };
-        OpenAIResponse response = responseClient.CreateResponse("What is Contoso whistleblower policy", options: responseOptions);
+        ResponseResult response = responseClient.CreateResponse(responseOptions);
         #endregion
 
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
@@ -113,7 +118,7 @@ public class Sample_Sharepoint : ProjectsOpenAITestBase
     }
 
     #region Snippet:Sample_FormatReference_Sharepoint
-    private static string GetFormattedAnnotation(OpenAIResponse response)
+    private static string GetFormattedAnnotation(ResponseResult response)
     {
         foreach (ResponseItem item in response.OutputItems)
         {

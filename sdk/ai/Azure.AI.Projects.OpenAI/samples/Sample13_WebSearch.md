@@ -42,14 +42,14 @@ Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_WebSearch_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = responseClient.CreateResponse("Show me the latest London Underground service updates");
+ResponseResult response = responseClient.CreateResponse("Show me the latest London Underground service updates");
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_WebSearch_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("Show me the latest London Underground service updates");
+ResponseResult response = await responseClient.CreateResponseAsync("Show me the latest London Underground service updates");
 ```
 
 4. Create the response and throw an exception if the response contains the error.

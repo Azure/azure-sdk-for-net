@@ -758,7 +758,7 @@ public class FineTuningTests : FineTuningTestsBase
         string prompt = "What is the capital of France?";
         Console.WriteLine($"Sending prompt: {prompt}");
 
-        ClientResult<OpenAIResponse> result = await responsesClient.CreateResponseAsync(prompt);
+        ClientResult<ResponseResult> result = await responsesClient.CreateResponseAsync(prompt);
 
         Assert.That(result, Is.Not.Null);
         Assert.That(result.Value, Is.Not.Null);

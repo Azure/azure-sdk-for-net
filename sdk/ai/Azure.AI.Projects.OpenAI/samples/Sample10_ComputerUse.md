@@ -141,11 +141,9 @@ private static string ProcessComputerUseCall(ComputerCallResponseItem item, stri
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateNextResponse_ComputerUse_Sync
-public static OpenAIResponse CreateResponse(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+public static ResponseResult CreateResponse(ResponsesClient responseClient, CreateResponseOptions options)
 {
-    OpenAIResponse response = responseClient.CreateResponse(
-        inputItems: items,
-        options: options);
+    ResponseResult response = responseClient.CreateResponse(options);
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
@@ -153,50 +151,48 @@ public static OpenAIResponse CreateResponse(OpenAIResponseClient responseClient,
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateNextResponse_ComputerUse_Async
-public static async Task<OpenAIResponse> CreateResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items, ResponseCreationOptions options)
+public static async Task<ResponseResult> CreateResponseAsync(ResponsesClient responseClient, CreateResponseOptions options)
 {
-    OpenAIResponse response = await responseClient.CreateResponseAsync(
-        inputItems: items,
-        options: options);
+    ResponseResult response = await responseClient.CreateResponseAsync(options);
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
 }
 ```
 
-6. Create an `OpenAIResponse` using `ResponseItem`, containing two `ResponseContentPart`: one with the image and another with the text. In the loop we will request Agent while it is continuing to browse web. Finally, print the tool output message.
+6. Create an `ResponseResult` using `ResponseItem`, containing two `ResponseContentPart`: one with the image and another with the text. In the loop we will request Agent while it is continuing to browse web. Finally, print the tool output message.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new();
-responseOptions.TruncationMode = ResponseTruncationMode.Auto;
-string currentScreenshot = "browser_search";
-ResponseItem request = ResponseItem.CreateUserMessageItem(
-    [
-        ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-        ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
-    ]
-);
-List<ResponseItem> inputItems = [request];
+CreateResponseOptions responseOptions = new()
+{
+    TruncationMode = ResponseTruncationMode.Auto,
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem(
+        [
+            ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
+            ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+        ]),
+    },
+};
 bool computerUseCalled = false;
+string currentScreenshot = "browser_search";
 int limitIteration = 10;
-OpenAIResponse response;
+ResponseResult response;
 do
 {
-    response = CreateResponse(
-        responseClient,
-        inputItems,
-        responseOptions);
+    response = CreateResponse(responseClient, responseOptions);
     computerUseCalled = false;
-    inputItems.Clear();
+    responseOptions.InputItems.Clear();
     responseOptions.PreviousResponseId = response.Id;
     foreach (ResponseItem responseItem in response.OutputItems)
     {
-        inputItems.Add(responseItem);
+        responseOptions.InputItems.Add(responseItem);
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            inputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
             computerUseCalled = true;
         }
     }
@@ -208,36 +204,38 @@ Console.WriteLine(response.GetOutputText());
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new();
-responseOptions.TruncationMode = ResponseTruncationMode.Auto;
-ResponseItem request = ResponseItem.CreateUserMessageItem(
-    [
-        ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-        ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
-    ]
-);
-List<ResponseItem> inputItems = [request];
+CreateResponseOptions responseOptions = new()
+{
+    TruncationMode = ResponseTruncationMode.Auto,
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem(
+        [
+            ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
+            ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+        ]),
+    },
+};
 bool computerUseCalled = false;
 string currentScreenshot = "browser_search";
 int limitIteration = 10;
-OpenAIResponse response;
+ResponseResult response;
 do
 {
     response = await CreateResponseAsync(
         responseClient,
-        inputItems,
         responseOptions
     );
     computerUseCalled = false;
     responseOptions.PreviousResponseId = response.Id;
-    inputItems.Clear();
+    responseOptions.InputItems.Clear();
     foreach (ResponseItem responseItem in response.OutputItems)
     {
-        inputItems.Add(responseItem);
+        responseOptions.InputItems.Add(responseItem);
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            inputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
             computerUseCalled = true;
         }
     }

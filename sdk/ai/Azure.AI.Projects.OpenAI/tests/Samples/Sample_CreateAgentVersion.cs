@@ -55,10 +55,10 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateSimpleResponse_Async
 
-        OpenAIResponseClient responseClient
+        ResponsesClient responseClient
             = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
+        ResponseResult response = await responseClient.CreateResponseAsync("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Async
@@ -108,10 +108,10 @@ public class Sample_CreateAgentVersion : ProjectsOpenAITestBase
 
         #region Snippet:Sample_CreateSimpleResponse_Sync
 
-        OpenAIResponseClient responseClient
+        ResponsesClient responseClient
             = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion, conversation.Id);
 
-        OpenAIResponse response = responseClient.CreateResponse("Hello, tell me a joke.");
+        ResponseResult response = responseClient.CreateResponse("Hello, tell me a joke.");
 
         #endregion
         #region Snippet:Sample_WriteOutput_Sync

@@ -63,7 +63,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_FileSearch_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
+        ResponseResult response = await responseClient.CreateResponseAsync("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
         #region Snippet:Sample_WaitForResponse_FileSearch_Async
@@ -123,7 +123,7 @@ public class Sample_FileSearch : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_FileSearch_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        OpenAIResponse response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
+        ResponseResult response = responseClient.CreateResponse("Can you give me the documented codes for 'banana' and 'orange'?");
         #endregion
 
         #region Snippet:Sample_WaitForResponse_FileSearch_Sync

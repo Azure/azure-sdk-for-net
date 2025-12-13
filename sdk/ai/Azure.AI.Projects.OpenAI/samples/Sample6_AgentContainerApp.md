@@ -59,7 +59,7 @@ ProjectConversation conversation = await projectClient.OpenAI.Conversations.Crea
 Synchronous sample:
 ```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(containerAgentVersion, conversation);
-OpenAIResponse response = responseClient.CreateResponse([]);
+ResponseResult response = responseClient.CreateResponse([]);
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 
@@ -73,19 +73,19 @@ Console.WriteLine(response.GetOutputText());
 
 Asynchronous sample:
 ```C# Snippet:Sample_CommunicateWithTheAgent_ContainerApp_Async
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
     Agent = containerAgentVersion,
     AgentConversationId = conversation.Id,
 };
-OpenAIResponse response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);
+ResponseResult response = await projectClient.OpenAI.Responses.CreateResponseAsync(responseOptions);
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 
 await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync(
     conversationId: conversation.Id,
     items: [ResponseItem.CreateUserMessageItem("And what is the capital city?")]);
-response = await projectClient.OpenAI.Responses.CreateResponseAsync([], responseOptions);
+response = await projectClient.OpenAI.Responses.CreateResponseAsync(responseOptions);
 Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
 Console.WriteLine(response.GetOutputText());
 ```

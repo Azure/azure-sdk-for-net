@@ -57,7 +57,7 @@ Synchronous sample:
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
-OpenAIResponse response = responseClient.CreateResponse("I need to solve the equation sin(x) + x^2 = 42");
+ResponseResult response = responseClient.CreateResponse("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
 Asynchronous sample:
@@ -65,7 +65,7 @@ Asynchronous sample:
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
+ResponseResult response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
 5 Write out the output of a response, raise the exception if the request was not successful.

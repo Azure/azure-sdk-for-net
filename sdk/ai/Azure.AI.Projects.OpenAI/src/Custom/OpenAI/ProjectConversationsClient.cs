@@ -234,7 +234,7 @@ public partial class ProjectConversationsClient : ConversationClient
         return ClientResult.FromValue(new ReadOnlyCollection<ResponseItem>(
             InternalOpenAIPaginatedListResultOfT<ResponseItem>.DeserializeInternalOpenAIPaginatedListResultOfT(
                 protocolResult,
-                (element, options) => AgentResponseItem.DeserializeAgentResponseItem(element, options).AsOpenAIResponseItem(),
+                (element, options) => AgentResponseItem.DeserializeAgentResponseItem(element, options).AsResponseResultItem(),
                 ModelSerializationExtensions.WireOptions)),
             protocolResult.GetRawResponse());
     }
@@ -259,7 +259,7 @@ public partial class ProjectConversationsClient : ConversationClient
         return ClientResult.FromValue(new ReadOnlyCollection<ResponseItem>(
             InternalOpenAIPaginatedListResultOfT<ResponseItem>.DeserializeInternalOpenAIPaginatedListResultOfT(
                 protocolResult,
-                (element, options) => AgentResponseItem.DeserializeAgentResponseItem(element, options).AsOpenAIResponseItem(),
+                (element, options) => AgentResponseItem.DeserializeAgentResponseItem(element, options).AsResponseResultItem(),
                 ModelSerializationExtensions.WireOptions)),
             protocolResult.GetRawResponse());
     }

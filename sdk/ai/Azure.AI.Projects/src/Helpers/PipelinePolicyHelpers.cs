@@ -77,7 +77,7 @@ internal static partial class PipelinePolicyHelpers
     internal static partial class OpenAI
     {
         /// <summary>
-        /// Adds a policy to <paramref name="options"/> that removes "id" and "status" properties from each item in an array of OpenAIResponse items, as needed for full compatibility in specific operations.
+        /// Adds a policy to <paramref name="options"/> that removes "id" and "status" properties from each item in an array of ResponseResult items, as needed for full compatibility in specific operations.
         /// </summary>
         /// <remarks>
         /// This is a workaround for an issue in the OpenAI library: https://github.com/openai/openai-dotnet/issues/779

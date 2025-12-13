@@ -69,34 +69,36 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 ```
 
 3. Now we will create a response object and ask the question about the hotels in France. We recommend testing the Web service access before running production scenarios. It can be done by setting
-`ToolChoice = ResponseToolChoice.CreateRequiredChoice()` in the `ResponseCreationOptions`. This setting will
+`ToolChoice = ResponseToolChoice.CreateRequiredChoice()` in the `CreateResponseOptions`. This setting will
 force Agent to use tool and will trigger the error if it is not accessible.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_OpenAPIProjectConnection_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("Recommend me 5 top hotels in paris, France."),
+    },
 };
-OpenAIResponse response = responseClient.CreateResponse(
-    userInputText: "Recommend me 5 top hotels in paris, France.",
-    options: responseOptions
-);
+ResponseResult response = responseClient.CreateResponse(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_OpenAPIProjectConnection_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("Recommend me 5 top hotels in paris, France."),
+    }
 };
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-        userInputText: "Recommend me 5 top hotels in paris, France.",
-        options: responseOptions
-    );
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 

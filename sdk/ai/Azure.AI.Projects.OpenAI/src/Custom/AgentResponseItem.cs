@@ -19,7 +19,7 @@ public partial class AgentResponseItem
     public static AgentResponseItem CreateWorkflowActionItem(string actionKind, string actionId)
         => new AgentWorkflowActionResponseItem(id: null, actionKind, actionKind, status: null);
 
-    public ResponseItem AsOpenAIResponseItem()
+    public ResponseItem AsResponseResultItem()
     {
         BinaryData serializedAgentResponseItem = ModelReaderWriter.Write(
             this,
@@ -31,7 +31,7 @@ public partial class AgentResponseItem
             OpenAIContext.Default);
     }
 
-    public static implicit operator ResponseItem(AgentResponseItem agentResponseItem) => agentResponseItem.AsOpenAIResponseItem();
+    public static implicit operator ResponseItem(AgentResponseItem agentResponseItem) => agentResponseItem.AsResponseResultItem();
 
     public static implicit operator AgentResponseItem(ResponseItem responseItem) => responseItem.AsAgentResponseItem();
 }

@@ -1,6 +1,10 @@
 # Release History
 
-## 1.2.0-beta.5 (Unreleased)
+## 1.2.0-beta.5 (2025-12-12)
+
+### Features Added
+
+- Updated for transitive compatibility with `OpenAI 2.8.0`, including substantial changes to the `[Experimental]` Responses API
 
 ### Bugs Fixed
 * Fixed the uploading of files fore fine tuning.
