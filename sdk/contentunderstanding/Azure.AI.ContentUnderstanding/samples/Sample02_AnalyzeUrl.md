@@ -1,26 +1,49 @@
 # Analyze content from URLs across modalities
 
-Content Understanding ships a broad set of prebuilt RAG analyzers. This sample demonstrates a few (`prebuilt-documentSearch`, `prebuilt-videoSearch`, `prebuilt-audioSearch`, and `prebuilt-imageSearch`). Many more are available (for example, `prebuilt-invoice`); see the invoice sample or the prebuilt analyzer documentation to explore the full list.
+Another great value of Content Understanding is its rich set of prebuilt analyzers. Great examples of these are the RAG analyzers that work for all modalities (`prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, and `prebuilt-videoSearch`). For brief descriptions of these RAG analyzers, see the [Prebuilt analyzers section in Sample 01][sample01-analyze-binary]. This sample demonstrates these RAG analyzers. Many more prebuilt analyzers are available (for example, `prebuilt-invoice`); see the invoice sample or the prebuilt analyzer documentation to explore the full list.
 
 ## About analyzing URLs across modalities
 
-Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBinary][sample01-analyze-binary]) and URL inputs across all modalities. This sample focuses on prebuilt RAG analyzers (the `prebuilt-*Search` analyzers, such as `prebuilt-documentSearch`). Documents, HTML, and images with text are returned as `DocumentContent` (derived from `MediaContent`), while audio and video are returned as `AudioVisualContent` (also derived from `MediaContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
+Content Understanding supports both local binary inputs (see [Sample01_AnalyzeBinary][sample01-analyze-binary]) and URL inputs across all modalities. This sample focuses on prebuilt RAG analyzers (the `prebuilt-*Search` analyzers, such as `prebuilt-documentSearch`) with URL inputs.
+
+**Important**: For URL inputs, use `AnalyzeAsync()` with `AnalyzeInput` objects that wrap the URL. For binary data (local files), use `AnalyzeBinaryAsync()` instead. This sample demonstrates `AnalyzeAsync()` with URL inputs.
+
+Documents, HTML, and images with text are returned as `DocumentContent` (derived from `MediaContent`), while audio and video are returned as `AudioVisualContent` (also derived from `MediaContent`). These prebuilt RAG analyzers return markdown and a one-paragraph `Summary` for each content item; `prebuilt-videoSearch` can return multiple segments, so iterate over all contents rather than just the first.
 
 ## Prerequisites
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
+## Creating a `ContentUnderstandingClient`
+
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
+
 ## Document from a URL
 
-Use the `prebuilt-documentSearch` analyzer with a public document URL.
+Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that for URL inputs, use `AnalyzeAsync()` with `AnalyzeInput` objects (as shown below). For binary data from local files, use `AnalyzeBinaryAsync()` instead (see [Sample01_AnalyzeBinary][sample01-analyze-binary]).
 
 > Content Understanding operations are long-running; the SDK handles polling when using `WaitUntil.Completed`.
 
+For a list of supported document types for `prebuilt-documentSearch`, see [Service limits][cu-service-limits].
+
 ```C# Snippet:ContentUnderstandingAnalyzeUrlAsync
 // You can replace this URL with your own publicly accessible document URL.
-// For a list of supported document types for prebuilt-documentSearch, see:
-// https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
+
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
@@ -142,22 +165,23 @@ Console.WriteLine($"Summary: {summary}");
 
 ## Next steps
 
+- **[Sample 03: Analyze an invoice using prebuilt analyzer][sample03]** - Learn about domain-specific prebuilt analyzers
 - Explore more scenarios in the [samples directory][samples-directory]
-- Learn about creating custom analyzers and classifiers
 
 ## Learn more
 
 - **[Content Understanding overview][cu-overview]** - Service capabilities and scenarios
 - **[Document markdown][cu-document-markdown]** - Markdown format for documents
+- **[Document elements][cu-document-elements]** - Detailed document extraction reference
 - **[Video overview][cu-video-overview]** - Video analysis capabilities and markdown structure
 - **[Video elements][cu-video-elements]** - Audio/visual result schema (segments, timing, key frames)
 - **[Audio overview][cu-audio-overview]** - Audio analysis capabilities
 - **[Image overview][cu-image-overview]** - Image analysis capabilities
-- **[Document elements][cu-document-elements]** - Detailed document extraction reference
 - **[Prebuilt analyzers][cu-prebuilt-analyzers]** - What `prebuilt-documentSearch`, `prebuilt-videoSearch`, `prebuilt-audioSearch`, and many other ready-to-use analyzers
 - **[Sample01_AnalyzeBinary][sample01-analyze-binary]** - Basics of analysis and result processing
 
 [sample01-analyze-binary]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample03]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md
 [samples-directory]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples
 [cu-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/overview
 [cu-document-markdown]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/markdown
@@ -168,4 +192,5 @@ Console.WriteLine($"Summary: {summary}");
 [cu-audio-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/audio/overview
 [cu-video-elements]: https://learn.microsoft.com/azure/ai-services/content-understanding/video/elements
 [cu-prebuilt-analyzers]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
+[cu-service-limits]: https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
 [sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md

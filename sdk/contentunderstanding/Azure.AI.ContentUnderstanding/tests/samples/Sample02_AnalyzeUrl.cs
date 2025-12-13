@@ -26,9 +26,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingAnalyzeUrlAsync
             // You can replace this URL with your own publicly accessible document URL.
-            // For a list of supported document types for prebuilt-documentSearch, see:
-            // https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
             Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
+
             Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",

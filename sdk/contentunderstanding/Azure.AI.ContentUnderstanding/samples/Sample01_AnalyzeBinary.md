@@ -49,11 +49,10 @@ To analyze a document from binary data, use the `AnalyzeBinaryAsync` method. The
 
 > **Note:** Content Understanding operations are asynchronous long-running operations. The SDK handles polling automatically when using `WaitUntil.Completed`.
 
+Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more. For a complete list of supported file types and limits, see [Service limits][cu-service-limits].
+
 ```C# Snippet:ContentUnderstandingAnalyzeBinaryAsync
 // Replace with the path to your local document file.
-// Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more.
-// For a complete list of supported file types and limits, see:
-// https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
 string filePath = "<localDocumentFilePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
@@ -153,3 +152,4 @@ if (content is DocumentContent documentContent)
 [cu-document-overview]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/overview
 [cu-document-markdown]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/markdown
 [cu-document-elements]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
+[cu-service-limits]: https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text

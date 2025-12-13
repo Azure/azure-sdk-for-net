@@ -28,9 +28,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingAnalyzeBinaryAsync
 #if SNIPPET
             // Replace with the path to your local document file.
-            // Content Understanding supports many document types including PDF, Word, Excel, PowerPoint, images (including scanned image files with hand-written text), and more.
-            // For a complete list of supported file types and limits, see:
-            // https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#document-and-text
             string filePath = "<localDocumentFilePath>";
 #else
             string filePath = ContentUnderstandingClientTestEnvironment.CreatePath("sample_invoice.pdf");
