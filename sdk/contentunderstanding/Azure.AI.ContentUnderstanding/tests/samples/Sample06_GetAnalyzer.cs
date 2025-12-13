@@ -37,6 +37,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #endif
             ContentAnalyzer analyzer = response.Value;
 
+            // Print a few properties from ContentAnalyzer
+            Console.WriteLine($"Analyzer ID: {analyzer.AnalyzerId}");
+            Console.WriteLine($"Base Analyzer ID: {analyzer.BaseAnalyzerId}");
+            Console.WriteLine($"Description: {analyzer.Description}");
+            Console.WriteLine($"Enable OCR: {analyzer.Config.EnableOcr}");
+            Console.WriteLine($"Enable Layout: {analyzer.Config.EnableLayout}");
+            Console.WriteLine($"Models: {string.Join(", ", analyzer.Models.Select(m => $"{m.Key}={m.Value}"))}");
+
             // Get raw response JSON and format it for nice printing
             var rawResponseForJson = response.GetRawResponse();
             string rawJson = rawResponseForJson.Content.ToString();
@@ -44,7 +52,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
                 string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
-                Console.WriteLine("Prebuilt-documentSearch Analyzer (Raw JSON):");
+                Console.WriteLine("\nPrebuilt-documentSearch Analyzer (Raw JSON):");
                 Console.WriteLine(formattedJson);
             }
             #endregion
@@ -132,7 +140,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
                 string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
-                Console.WriteLine("Prebuilt-invoice Analyzer (Raw JSON):");
                 Console.WriteLine(formattedJson);
             }
             #endregion
@@ -312,7 +319,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
                     string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
-                    Console.WriteLine("Custom Analyzer (Raw JSON):");
                     Console.WriteLine(formattedJson);
                 }
                 #endregion
