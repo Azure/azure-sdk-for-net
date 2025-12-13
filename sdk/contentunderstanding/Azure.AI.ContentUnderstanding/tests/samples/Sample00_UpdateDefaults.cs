@@ -39,7 +39,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine("Model deployments configured successfully!");
             foreach (var kvp in updatedDefaults.ModelDeployments)
             {
-                Console.WriteLine($"  {kvp.Key} → {kvp.Value}");
+                Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
             }
 #else
             // Only update if we have deployment names configured in environment
@@ -62,7 +62,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine("Model deployments configured successfully!");
                 foreach (var kvp in updatedDefaults.ModelDeployments)
                 {
-                    Console.WriteLine($"  {kvp.Key} → {kvp.Value}");
+                    Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
                 }
             }
             else
@@ -86,7 +86,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             {
                 foreach (var kvp in defaults.ModelDeployments)
                 {
-                    Console.WriteLine($"  {kvp.Key} → {kvp.Value}");
+                    Console.WriteLine($"  {kvp.Key}: {kvp.Value}");
                 }
             }
             else
