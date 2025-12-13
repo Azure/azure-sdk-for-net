@@ -52,12 +52,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         string scope = "Joke";
         MemoryUpdateOptions memoryOptions = new(scope);
         memoryOptions.Items.Add(request);
-        while (response.Status != ResponseStatus.Incomplete && response.Status != ResponseStatus.Failed && response.Status != ResponseStatus.Completed){
-            await Task.Delay(TimeSpan.FromMilliseconds(500));
-            response = await responseClient.GetResponseAsync(responseId:  response.Id);
-        }
         Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
-
         foreach (ResponseItem item in response.OutputItems)
         {
             memoryOptions.Items.Add(item);
@@ -82,13 +77,13 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         }
         #endregion
         #region Snippet:Sample_CheckMemorySearch_Async
-        MemorySearchOptions opts = new(scope)
+        MemorySearchOptions searchOptions = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
         };
         MemoryStoreSearchResponse resp = await projectClient.MemoryStores.SearchMemoriesAsync(
             memoryStoreName: memoryStore.Name,
-            options: new(scope)
+            options: searchOptions
         );
         Console.WriteLine("==The output from memory tool.==");
         foreach (Azure.AI.Projects.MemorySearchItem item in resp.Memories)
