@@ -5,7 +5,7 @@ This sample demonstrates how to list all available analyzers in your Microsoft F
 ## About listing analyzers
 
 The `GetAnalyzersAsync` method returns an async enumerable of all analyzers in your resource, including:
-- **Prebuilt analyzers**: System-provided analyzers (70+ and growing) like `prebuilt-documentSearch`, `prebuilt-invoice`, etc.
+- **Prebuilt analyzers**: System-provided analyzers like `prebuilt-documentSearch`, `prebuilt-invoice`, etc.
 - **Custom analyzers**: Analyzers you've created
 
 This is useful for:

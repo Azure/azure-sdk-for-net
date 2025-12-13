@@ -4,11 +4,9 @@ This sample demonstrates how to update an existing custom analyzer, including up
 
 ## About updating analyzers
 
-The `UpdateAnalyzerAsync` method allows you to modify certain properties of an existing analyzer:
+The `UpdateAnalyzerAsync` method allows you to modify certain properties of an existing analyzer. The following properties can be updated:
 - **Description**: Update the analyzer's description
 - **Tags**: Add, update, or remove tags (set tag value to empty string to remove)
-
-**Note**: Not all analyzer properties can be updated. Field schemas, models, and configuration typically cannot be changed after creation. To change these, you may need to delete and recreate the analyzer.
 
 ## Prerequisites
 
