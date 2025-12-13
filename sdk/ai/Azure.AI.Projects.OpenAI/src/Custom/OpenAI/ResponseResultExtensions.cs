@@ -13,9 +13,9 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public static partial class OpenAIResponseExtensions
+public static partial class ResponseResultExtensions
 {
-    extension(OpenAIResponse response)
+    extension(ResponseResult response)
     {
         public AgentReference Agent => response.Patch.GetJsonModelEx<AgentReference>("$.agent"u8);
 

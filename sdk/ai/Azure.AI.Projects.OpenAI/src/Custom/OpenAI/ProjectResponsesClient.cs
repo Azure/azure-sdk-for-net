@@ -13,7 +13,9 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.OpenAI;
 
-public partial class ProjectResponsesClient : OpenAIResponseClient
+#pragma warning disable SCME0001
+
+public partial class ProjectResponsesClient : ResponsesClient
 {
     private readonly string _defaultModelName;
     private readonly string _defaultAgentName;
@@ -75,7 +77,7 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
     { }
 
     internal ProjectResponsesClient(ClientPipeline pipeline, OpenAIClientOptions options, AgentReference defaultAgent, string defaultConversationId)
-        : base(pipeline, model: "placeholder", options)
+        : base(pipeline, "placeholder", options)
     {
         if (defaultAgent?.Name?.ToLowerInvariant()?.StartsWith("model:") == true)
         {
@@ -92,63 +94,148 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
     protected ProjectResponsesClient()
     { }
 
-    public override ClientResult<OpenAIResponse> CreateResponse(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override ClientResult<ResponseResult> CreateResponse(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNull(options, nameof(options));
         ApplyClientDefaults(options);
-        return base.CreateResponse(userInputText, options, cancellationToken);
+        return base.CreateResponse(options, cancellationToken);
     }
 
-    public override ClientResult<OpenAIResponse> CreateResponse(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override ClientResult<ResponseResult> CreateResponse(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNull(inputItems, nameof(inputItems));
+        CreateResponseOptions options = new()
+        {
+            PreviousResponseId = previousResponseId,
+        };
+        foreach (ResponseItem inputItem in inputItems)
+        {
+            options.InputItems.Add(inputItem);
+        }
         ApplyClientDefaults(options);
-        return base.CreateResponse(inputItems, options, cancellationToken);
+        return base.CreateResponse(inputItems, previousResponseId, cancellationToken);
     }
 
-    public override Task<ClientResult<OpenAIResponse>> CreateResponseAsync(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override ClientResult<ResponseResult> CreateResponse(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
+        CreateResponseOptions options = new()
+        {
+            PreviousResponseId = previousResponseId,
+            InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+        };
         ApplyClientDefaults(options);
-        return base.CreateResponseAsync(inputItems, options, cancellationToken);
+        return base.CreateResponse(options, cancellationToken);
     }
 
-    public override Task<ClientResult<OpenAIResponse>> CreateResponseAsync(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override Task<ClientResult<ResponseResult>> CreateResponseAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNull(options, nameof(options));
         ApplyClientDefaults(options);
-        return base.CreateResponseAsync(userInputText, options, cancellationToken);
+        return base.CreateResponseAsync(options, cancellationToken);
     }
 
-    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override Task<ClientResult<ResponseResult>> CreateResponseAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNull(inputItems, nameof(inputItems));
+        CreateResponseOptions options = new()
+        {
+            PreviousResponseId = previousResponseId,
+        };
+        foreach (ResponseItem inputItem in inputItems)
+        {
+            options.InputItems.Add(inputItem);
+        }
         ApplyClientDefaults(options);
-        return base.CreateResponseStreaming(inputItems, options, cancellationToken);
+
+        return base.CreateResponseAsync(options, cancellationToken);
     }
 
-    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override Task<ClientResult<ResponseResult>> CreateResponseAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
+        CreateResponseOptions options = new()
+        {
+            PreviousResponseId = previousResponseId,
+            InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+        };
         ApplyClientDefaults(options);
-        return base.CreateResponseStreaming(userInputText, options, cancellationToken);
+        return base.CreateResponseAsync(options, cancellationToken);
     }
 
-    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(IEnumerable<ResponseItem> inputItems, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(CreateResponseOptions options, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNull(options, nameof(options));
         ApplyClientDefaults(options);
-        return base.CreateResponseStreamingAsync(inputItems, options, cancellationToken);
+        return base.CreateResponseStreaming(options, cancellationToken);
     }
 
-    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, ResponseCreationOptions options = null, CancellationToken cancellationToken = default)
+    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
     {
-        options ??= new();
+        Argument.AssertNotNull(inputItems, nameof(inputItems));
+        CreateResponseOptions options = new()
+        {
+            StreamingEnabled = true,
+            PreviousResponseId = previousResponseId,
+        };
+        foreach (ResponseItem inputItem in inputItems)
+        {
+            options.InputItems.Add(inputItem);
+        }
         ApplyClientDefaults(options);
-        return base.CreateResponseStreamingAsync(userInputText, options, cancellationToken);
+        return base.CreateResponseStreaming(options, cancellationToken);
     }
 
-    public virtual CollectionResult<OpenAIResponse> GetProjectResponses(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public override CollectionResult<StreamingResponseUpdate> CreateResponseStreaming(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
+        CreateResponseOptions options = new()
+        {
+            StreamingEnabled = true,
+            PreviousResponseId = previousResponseId,
+            InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+        };
+        ApplyClientDefaults(options);
+        return base.CreateResponseStreaming(options, cancellationToken);
+    }
+
+    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(CreateResponseOptions options, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(options, nameof(options));
+        ApplyClientDefaults(options);
+        return base.CreateResponseStreamingAsync(options, cancellationToken);
+    }
+
+    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(IEnumerable<ResponseItem> inputItems, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNull(inputItems, nameof(inputItems));
+        CreateResponseOptions options = new()
+        {
+            StreamingEnabled = true,
+            PreviousResponseId = previousResponseId,
+        };
+        foreach (ResponseItem inputItem in inputItems)
+        {
+            options.InputItems.Add(inputItem);
+        }
+        ApplyClientDefaults(options);
+        return base.CreateResponseStreamingAsync(options, cancellationToken);
+    }
+
+    public override AsyncCollectionResult<StreamingResponseUpdate> CreateResponseStreamingAsync(string userInputText, string previousResponseId = null, CancellationToken cancellationToken = default)
+    {
+        Argument.AssertNotNullOrEmpty(userInputText, nameof(userInputText));
+        CreateResponseOptions options = new()
+        {
+            StreamingEnabled = true,
+            PreviousResponseId = previousResponseId,
+            InputItems = { ResponseItem.CreateUserMessageItem(userInputText) },
+        };
+        ApplyClientDefaults(options);
+        return base.CreateResponseStreamingAsync(options, cancellationToken);
+    }
+
+    public virtual CollectionResult<ResponseResult> GetProjectResponses(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()
         {
@@ -157,7 +244,7 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
             ["conversation_id"] = conversationId,
         };
 
-        return new InternalOpenAICollectionResultOfT<OpenAIResponse>(
+        return new InternalOpenAICollectionResultOfT<ResponseResult>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetProjectResponsesRequest(
@@ -169,12 +256,12 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
                     agentId: localCollectionOptions.ExtraQueryMap["agent_id"],
                     conversationId: localCollectionOptions.ExtraQueryMap["conversation_id"],
                     localRequestOptions),
-            dataItemDeserializer: DeserializeOpenAIResponse,
+            dataItemDeserializer: DeserializeResponseResult,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: extraQueryForProtocol),
             cancellationToken.ToRequestOptions());
     }
 
-    public virtual AsyncCollectionResult<OpenAIResponse> GetProjectResponsesAsync(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual AsyncCollectionResult<ResponseResult> GetProjectResponsesAsync(AgentReference agent = null, string conversationId = null, int? limit = default, string order = null, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Dictionary<string, string> extraQueryForProtocol = new()
         {
@@ -183,7 +270,7 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
             ["conversation_id"] = conversationId,
         };
 
-        return new InternalOpenAIAsyncCollectionResultOfT<OpenAIResponse>(
+        return new InternalOpenAIAsyncCollectionResultOfT<ResponseResult>(
             Pipeline,
             messageGenerator: (localCollectionOptions, localRequestOptions)
                 => CreateGetProjectResponsesRequest(
@@ -195,12 +282,12 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
                     agentId: localCollectionOptions.ExtraQueryMap["agent_id"],
                     conversationId: localCollectionOptions.ExtraQueryMap["conversation_id"],
                     localRequestOptions),
-            dataItemDeserializer: DeserializeOpenAIResponse,
+            dataItemDeserializer: DeserializeResponseResult,
             new InternalOpenAICollectionResultOptions(limit, order?.ToString(), after, before, extraQueryMap: extraQueryForProtocol),
             cancellationToken.ToRequestOptions());
     }
 
-    private void ApplyClientDefaults(ResponseCreationOptions options)
+    private void ApplyClientDefaults(CreateResponseOptions options)
     {
         if (options.Agent is null && !string.IsNullOrEmpty(_defaultAgentName))
         {
@@ -209,13 +296,20 @@ public partial class ProjectResponsesClient : OpenAIResponseClient
         options.AgentConversationId ??= _defaultConversationId;
         if (options.Model is null)
         {
-            options.Model = _defaultModelName ?? null;
+            if (!string.IsNullOrEmpty(_defaultModelName))
+            {
+                options.Patch.Set("$.model"u8, _defaultModelName);
+            }
+            else
+            {
+                options.Patch.Remove("$.model"u8);
+            }
         }
     }
 
-    private static OpenAIResponse DeserializeOpenAIResponse(JsonElement element, ModelReaderWriterOptions options)
+    private static ResponseResult DeserializeResponseResult(JsonElement element, ModelReaderWriterOptions options)
     {
-        return ModelReaderWriter.Read<OpenAIResponse>(
+        return ModelReaderWriter.Read<ResponseResult>(
             BinaryData.FromString(element.GetRawText()),
             options,
             OpenAIContext.Default);

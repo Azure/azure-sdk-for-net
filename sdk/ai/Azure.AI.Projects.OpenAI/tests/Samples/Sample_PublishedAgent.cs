@@ -30,7 +30,7 @@ public class Sample_PublishedAgent : ProjectsOpenAITestBase
             projectEndpoint: endpoint,
             tokenProvider: new DefaultAzureCredential()
         );
-        OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
+        ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
         Console.WriteLine(response.GetOutputText());
         #endregion
     }
@@ -51,7 +51,7 @@ public class Sample_PublishedAgent : ProjectsOpenAITestBase
             projectEndpoint: endpoint,
             tokenProvider: new DefaultAzureCredential()
         );
-        OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
+        ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
         Console.WriteLine(response.GetOutputText());
         #endregion
     }

@@ -45,7 +45,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-        OpenAIResponse response = await responseClient.CreateResponseAsync([request]);
+        ResponseResult response = await responseClient.CreateResponseAsync([request]);
         #endregion
 
         #region Snippet:Sample_WriteOutput_MemoryTool_Async
@@ -148,7 +148,7 @@ public class Sample_MemorySearchTool : ProjectsOpenAITestBase
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
         ResponseItem request = ResponseItem.CreateUserMessageItem("Hello, tell me a joke.");
-        OpenAIResponse response = responseClient.CreateResponse([request]);
+        ResponseResult response = responseClient.CreateResponse([request]);
         #endregion
 
         #region Snippet:Sample_WriteOutput_MemoryTool_Sync

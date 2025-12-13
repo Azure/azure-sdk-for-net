@@ -62,14 +62,15 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_OpenAPIProjectConnection_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Recommend me 5 top hotels in paris, France."),
+            }
         };
-        OpenAIResponse response = await responseClient.CreateResponseAsync(
-                userInputText: "Recommend me 5 top hotels in paris, France.",
-                options: responseOptions
-            );
+        ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
 
@@ -116,14 +117,15 @@ public class Sample_OpenAPIProjectConnection : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_OpenAPIProjectConnection_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
-            ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+            ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+            InputItems =
+            {
+                ResponseItem.CreateUserMessageItem("Recommend me 5 top hotels in paris, France."),
+            },
         };
-        OpenAIResponse response = responseClient.CreateResponse(
-            userInputText: "Recommend me 5 top hotels in paris, France.",
-            options: responseOptions
-        );
+        ResponseResult response = responseClient.CreateResponse(responseOptions);
         Console.WriteLine(response.GetOutputText());
         #endregion
 

@@ -10,7 +10,7 @@ var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLO
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
-2. Use the client to create a `ProjectOpenAIResponseClient`, which will be used to create stream.
+2. Use the client to create a `ProjectResponsesClient`, which will be used to create stream.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponseStreaming

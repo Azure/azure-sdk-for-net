@@ -97,7 +97,7 @@ AIProjectClient projectClient = new(
 ProjectOpenAIClient agentClient = projectClient.OpenAI;
 ```
 
-For operations based on OpenAI APIs like `/responses`, `/files`, and `/vector_stores`, you can retrieve `OpenAIResponseClient`, `OpenAIFileClient` and `VectorStoreClient` through the appropriate helper methods:
+For operations based on OpenAI APIs like `/responses`, `/files`, and `/vector_stores`, you can retrieve `ResponsesClient`, `OpenAIFileClient` and `VectorStoreClient` through the appropriate helper methods:
 
 ```C# Snippet:GetOpenAIClientsFromProjects
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent("AGENT_NAME");
@@ -126,19 +126,19 @@ ProjectOpenAIClient projectClient = new(
 ```
 
 ### Additional concepts
-The Azure.AI.Projects.OpenAI framework organized in a way that for each call, requiring the REST API request, there are synchronous and asynchronous counterparts where the letter has the "Async" suffix. For example, the following code demonstrates the creation of a `OpenAIResponse` object.
+The Azure.AI.Projects.OpenAI framework organized in a way that for each call, requiring the REST API request, there are synchronous and asynchronous counterparts where the letter has the "Async" suffix. For example, the following code demonstrates the creation of a `ResponseResult` object.
 
 Synchronous call:
 ```C# Snippet:Sample_CreateResponse_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
-OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
+ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
 ```
 
 Asynchronous call:
 
 ```C# Snippet:Sample_CreateResponse_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
-OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
+ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
 In the most of code snippets we will show only asynchronous sample for brevity. Please refer individual [samples](https://github.com/Azure/azure-sdk-for-net/tree/feature/ai-foundry/agents-v2/sdk/ai/Azure.AI.Projects.OpenAI/samples) for both synchronous and asynchronous code.
@@ -181,7 +181,7 @@ OpenAI API allows you to get the response without creating an agent by using the
 
 ```C# Snippet:Sample_CreateResponse_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForModel(modelDeploymentName);
-OpenAIResponse response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
+ResponseResult response = await responseClient.CreateResponseAsync("What is the size of France in square miles?");
 ```
 
 After the response was created we need to wait for it to complete.
@@ -231,20 +231,20 @@ To associate the Response with the Agent the agent reference needs to be created
 ```C# Snippet:CreateResponseBasic_Async
 var agentReference = new AgentReference(name: agentVersion.Name);
 ProjectResponsesClient responseClient = openaiClient.GetProjectResponsesClientForAgent(agentReference);
-ResponseCreationOptions responseCreationOptions = new();
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-    [ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")],
-    responseCreationOptions);
+CreateResponseOptions responseOptions = new([ResponseItem.CreateUserMessageItem("Write Maxwell's equation in LaTeX format.")]);
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
-Previous Response ID may be used to ask follow up questions. In this case we need to set `PreviousResponseId` property on `ResponseCreationOptions` object.
+Previous Response ID may be used to ask follow up questions. In this case we need to set `PreviousResponseId` property on `CreateResponseOptions` object.
 
 ```C# Snippet:FollowUp_Basic_Async
-responseCreationOptions.PreviousResponseId = response.Id;
-response = await responseClient.CreateResponseAsync(
-    [ResponseItem.CreateUserMessageItem("What was the previous question?")],
-    responseCreationOptions);
+CreateResponseOptions followupOptions = new()
+{
+    PreviousResponseId = response.Id,
+    InputItems = { ResponseItem.CreateUserMessageItem("What was the previous question?") },
+};
+response = await responseClient.CreateResponseAsync(followupOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -257,7 +257,7 @@ await projectClient.Agents.DeleteAgentAsync(agentName: "myAgent");
 Previously created responses can also be listed, typically to find all responses associated with a particular agent or conversation.
 
 ```C# Snippet:Sample_ListResponses_Async
-await foreach (OpenAIResponse response
+await foreach (ResponseResult response
     in projectClient.OpenAI.Responses.GetProjectResponsesAsync(agent: new AgentReference(agentName), conversationId: conversationId))
 {
     Console.WriteLine($"Matching response: {response.Id}");
@@ -270,7 +270,7 @@ Conversations may be used to store the history of interaction with the agent. To
 set the conversation parameter while calling `GetProjectResponsesClientForAgent`.
 
 ```C# Snippet:ConversationClient
-ResponseCreationOptions responseCreationOptions = new();
+CreateResponseOptions CreateResponseOptions = new();
 // Optionally, use a conversation to automatically maintain state between calls.
 ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME, conversation);
@@ -304,13 +304,17 @@ _ = await projectClient.OpenAI.Conversations.CreateProjectConversationItemsAsync
 // Use the agent and conversation in a response
 //
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(AGENT_NAME);
-ResponseCreationOptions responseCreationOptions = new()
+CreateResponseOptions responseOptions = new()
 {
     AgentConversationId = EXISTING_CONVERSATION_ID,
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("Tell me a one-line story."),
+    },
 };
 
-List<ResponseItem> items = [ResponseItem.CreateUserMessageItem("Tell me a one-line story.")];
-OpenAIResponse response = await responseClient.CreateResponseAsync(items, responseCreationOptions);
+List<ResponseItem> items = [];
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 ```
 
 ### Published Agents
@@ -341,7 +345,7 @@ ProjectResponsesClient responseClient = new(
     projectEndpoint: endpoint,
     tokenProvider: new DefaultAzureCredential()
 );
-OpenAIResponse response = responseClient.CreateResponse("What is the size of France in square miles?");
+ResponseResult response = responseClient.CreateResponse("What is the size of France in square miles?");
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -427,7 +431,7 @@ Now we can ask the agent a question, which requires running python code in the c
 AgentReference agentReference = new(name: agentVersion.Name, version: agentVersion.Version);
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentReference);
 
-OpenAIResponse response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
+ResponseResult response = await responseClient.CreateResponseAsync("I need to solve the equation sin(x) + x^2 = 42");
 ```
 
 ### Computer use
@@ -457,36 +461,38 @@ Users can create a message to the Agent, which contains text and screenshots.
 
 ```C# Snippet:Sample_CreateResponse_ComputerUse_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new();
-responseOptions.TruncationMode = ResponseTruncationMode.Auto;
-ResponseItem request = ResponseItem.CreateUserMessageItem(
-    [
-        ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
-        ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
-    ]
-);
-List<ResponseItem> inputItems = [request];
+CreateResponseOptions responseOptions = new()
+{
+    TruncationMode = ResponseTruncationMode.Auto,
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem(
+        [
+            ResponseContentPart.CreateInputTextPart("I need you to help me search for 'OpenAI news'. Please type 'OpenAI news' and submit the search. Once you see search results, the task is complete."),
+            ResponseContentPart.CreateInputImagePart(imageBytes: screenshots["browser_search"], imageBytesMediaType: "image/png", imageDetailLevel: ResponseImageDetailLevel.High)
+        ]),
+    },
+};
 bool computerUseCalled = false;
 string currentScreenshot = "browser_search";
 int limitIteration = 10;
-OpenAIResponse response;
+ResponseResult response;
 do
 {
     response = await CreateResponseAsync(
         responseClient,
-        inputItems,
         responseOptions
     );
     computerUseCalled = false;
     responseOptions.PreviousResponseId = response.Id;
-    inputItems.Clear();
+    responseOptions.InputItems.Clear();
     foreach (ResponseItem responseItem in response.OutputItems)
     {
-        inputItems.Add(responseItem);
+        responseOptions.InputItems.Add(responseItem);
         if (responseItem is ComputerCallResponseItem computerCall)
         {
             currentScreenshot = ProcessComputerUseCall(computerCall, currentScreenshot);
-            inputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
+            responseOptions.InputItems.Add(ResponseItem.CreateComputerCallOutputItem(callId: computerCall.CallId, output: ComputerCallOutput.CreateScreenshotOutput(screenshotImageBytes: screenshots[currentScreenshot], screenshotImageBytesMediaType: "image/png")));
             computerUseCalled = true;
         }
     }
@@ -703,9 +709,9 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 To supply functions outputs, we will need to obtain responses multiple times. We will define method `CreateAndWaitForResponseAsync` for brevity.
 
 ```C# Snippet:Sample_CheckResponse_Function_Async
-public static async Task<OpenAIResponse> CreateAndCheckResponseAsync(OpenAIResponseClient responseClient, IEnumerable<ResponseItem> items)
+public static async Task<ResponseResult> CreateAndCheckResponseAsync(ResponsesClient responseClient, IEnumerable<ResponseItem> items)
 {
-    OpenAIResponse response = await responseClient.CreateResponseAsync(
+    ResponseResult response = await responseClient.CreateResponseAsync(
         inputItems: items);
     Assert.That(response.Status, Is.EqualTo(ResponseStatus.Completed));
     return response;
@@ -720,7 +726,7 @@ ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponses
 ResponseItem request = ResponseItem.CreateUserMessageItem("What's the weather like in my favorite city?");
 List<ResponseItem> inputItems = [request];
 bool funcionCalled = false;
-OpenAIResponse response;
+ResponseResult response;
 do
 {
     response = await CreateAndCheckResponseAsync(
@@ -790,7 +796,7 @@ get sensible result, the index needs to have fields "title" and "url" in the sea
 We have created a helper method to format the reference.
 
 ```C# Snippet:Sample_FormatReference_AzureAISearch
-private static string GetFormattedAnnotation(OpenAIResponse response)
+private static string GetFormattedAnnotation(ResponseResult response)
 {
     foreach (ResponseItem item in response.OutputItems)
     {
@@ -994,45 +1000,38 @@ Because of this setup we will need to get the response and check if we need to a
 ```C# Snippet:Sample_CreateResponse_MCPTool_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-ResponseItem request = ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme");
-List<ResponseItem> inputItems = [request];
-bool mcpCalled = false;
-string previousResponseId = default;
-OpenAIResponse response;
-do
+CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("Please summarize the Azure REST API specifications Readme")]);
+ResponseResult latestResponse = null;
+
+while (nextResponseOptions is not null)
 {
-    ResponseCreationOptions options = new()
-    {
-        PreviousResponseId = previousResponseId,
-    };
-    response = await responseClient.CreateResponseAsync(
-        inputItems: inputItems,
-        options
-    );
-    previousResponseId = response.Id;
-    inputItems.Clear();
-    mcpCalled = false;
-    foreach (ResponseItem responseItem in response.OutputItems)
+    latestResponse = await responseClient.CreateResponseAsync(nextResponseOptions);
+    nextResponseOptions = null;
+
+    foreach (ResponseItem responseItem in latestResponse.OutputItems)
     {
         if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
         {
-            mcpCalled = true;
+            nextResponseOptions = new CreateResponseOptions()
+            {
+                PreviousResponseId = latestResponse.PreviousResponseId,
+            };
             if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
             {
                 Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
                 // Automatically approve the MCP request to allow the agent to proceed
                 // In production, you might want to implement more sophisticated approval logic
-                inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
             }
             else
             {
                 Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
-                inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+                nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
             }
         }
     }
-} while (mcpCalled);
-Console.WriteLine(response.GetOutputText());
+}
+Console.WriteLine(latestResponse.GetOutputText());
 ```
 
 ### MCP tool with project connection
@@ -1089,7 +1088,7 @@ The Agent created this way can be asked questions, specific to the Web service.
 
 ```C# Snippet:Sample_CreateResponse_OpenAPI_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-OpenAIResponse response = await responseClient.CreateResponseAsync(
+ResponseResult response = await responseClient.CreateResponseAsync(
         userInputText: "Use the OpenAPI tool to print out, what is the weather in Seattle, WA today."
     );
 Console.WriteLine(response.GetOutputText());
@@ -1126,19 +1125,20 @@ AgentVersion agentVersion = projectClient.Agents.CreateAgentVersion(
 ```
 
 We recommend testing the Web service access before running production scenarios. It can be done by setting
-`ToolChoice = ResponseToolChoice.CreateRequiredChoice()` in the `ResponseCreationOptions`. This setting will
+`ToolChoice = ResponseToolChoice.CreateRequiredChoice()` in the `CreateResponseOptions`. This setting will
 force Agent to use tool and will trigger the error if it is not accessible.
 
 ```C# Snippet:Sample_CreateResponse_OpenAPIProjectConnection_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("Recommend me 5 top hotels in paris, France."),
+    }
 };
-OpenAIResponse response = await responseClient.CreateResponseAsync(
-        userInputText: "Recommend me 5 top hotels in paris, France.",
-        options: responseOptions
-    );
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 Console.WriteLine(response.GetOutputText());
 ```
 
@@ -1200,18 +1200,21 @@ Streaming response outputs with browser automation provides incremental updates 
 
 ```C# Snippet:Sample_CreateResponse_BrowserAutomotion_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    StreamingEnabled = true,
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
+            "To do that, go to the website finance.yahoo.com.\n" +
+            "At the top of the page, you will find a search bar.\n" +
+            "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
+            "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
+            "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.")
+    }
 };
-await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(
-        userInputText: "Your goal is to report the percent of Microsoft year-to-date stock price change.\n" +
-        "To do that, go to the website finance.yahoo.com.\n" +
-        "At the top of the page, you will find a search bar.\n" +
-        "Enter the value 'MSFT', to get information about the Microsoft stock price.\n" +
-        "At the top of the resulting page you will see a default chart of Microsoft stock price.\n" +
-        "Click on 'YTD' at the top of that chart, and report the percent value that shows up just below it.",
-        options: responseOptions))
+await foreach (StreamingResponseUpdate update in responseClient.CreateResponseStreamingAsync(responseOptions))
 {
     ParseResponse(update);
 }
@@ -1240,17 +1243,18 @@ Create the response and make sure we are always using tool.
 
 ```C# Snippet:Sample_CreateResponse_Sharepoint_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems = { ResponseItem.CreateUserMessageItem("What is Contoso whistleblower policy") },
 };
-OpenAIResponse response = await responseClient.CreateResponseAsync("What is Contoso whistleblower policy", options: responseOptions);
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 ```
 
 SharePoint tool can create the reference to the page, grounding the data. We will create the `GetFormattedAnnotation` method to get the URI annotation.
 
 ```C# Snippet:Sample_FormatReference_Sharepoint
-private static string GetFormattedAnnotation(OpenAIResponse response)
+private static string GetFormattedAnnotation(ResponseResult response)
 {
     foreach (ResponseItem item in response.OutputItems)
     {

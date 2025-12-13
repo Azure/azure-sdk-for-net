@@ -83,7 +83,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient(options: options);
         ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
-        OpenAIResponse response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
+        ResponseResult response = await responseClient.CreateResponseAsync("Generate parody of Newton with apple.");
         #endregion
         #region Snippet:Sample_SaveImage_ImageGeneration
         foreach (ResponseItem item in response.OutputItems)
@@ -144,7 +144,7 @@ public class Sample_ImageGeneration : ProjectsOpenAITestBase
         ProjectOpenAIClient openAIClient = projectClient.GetProjectOpenAIClient();
         ProjectResponsesClient responseClient = openAIClient.GetProjectResponsesClientForAgent(new AgentReference(name: agentVersion.Name));
 
-        OpenAIResponse response = responseClient.CreateResponse("Generate parody of Newton with apple.");
+        ResponseResult response = responseClient.CreateResponse("Generate parody of Newton with apple.");
         #endregion
         foreach (ResponseItem item in response.OutputItems)
         {

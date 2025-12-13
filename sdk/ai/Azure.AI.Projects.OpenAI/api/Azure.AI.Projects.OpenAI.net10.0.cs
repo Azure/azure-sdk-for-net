@@ -6,6 +6,7 @@ namespace Azure.AI.Projects
         public sealed partial class <G>$EE9D7A1C67932FB454531401B8375DE4
         {
             internal <G>$EE9D7A1C67932FB454531401B8375DE4() { }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$781747A4149937EE6CD40CB5B8268DAD")]
             public Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
             public static partial class <M>$781747A4149937EE6CD40CB5B8268DAD
             {
@@ -670,9 +671,12 @@ namespace Azure.AI.Projects.OpenAI
         public sealed partial class <G>$9441C364D6D7BED1E759B10623E362FD
         {
             internal <G>$9441C364D6D7BED1E759B10623E362FD() { }
-            public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } set { } }
-            public string AgentConversationId { get { throw null; } set { } }
-            public Azure.AI.Projects.OpenAI.ExtraDataDictionary StructuredInputs { get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")]
+            public Azure.AI.Projects.OpenAI.AgentReference Agent { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")] set { } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")]
+            public string AgentConversationId { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")] set { } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")]
+            public Azure.AI.Projects.OpenAI.ExtraDataDictionary StructuredInputs { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$CF4B939802E692FD9BEF27F36FABED87")] get { throw null; } }
             public static partial class <M>$CF4B939802E692FD9BEF27F36FABED87
             {
                 public static void <Extension>$(OpenAI.Responses.CreateResponseOptions options) { }
@@ -840,7 +844,8 @@ namespace Azure.AI.Projects.OpenAI
         public sealed partial class <G>$35DCA4819B43CF3F6CAB343048615A7E
         {
             internal <G>$35DCA4819B43CF3F6CAB343048615A7E() { }
-            public string ProjectConnectionId { get { throw null; } set { } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$057BAEB40536DD92FB57E20F2D1CDCDE")]
+            public string ProjectConnectionId { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$057BAEB40536DD92FB57E20F2D1CDCDE")] get { throw null; } [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$057BAEB40536DD92FB57E20F2D1CDCDE")] set { } }
             public static partial class <M>$057BAEB40536DD92FB57E20F2D1CDCDE
             {
                 public static void <Extension>$(OpenAI.Responses.McpTool mcpTool) { }
@@ -1358,8 +1363,10 @@ namespace Azure.AI.Projects.OpenAI
         public sealed partial class <G>$D7C08262BAEC712802F8752B389F8208
         {
             internal <G>$D7C08262BAEC712802F8752B389F8208() { }
-            public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } }
-            public string AgentConversationId { get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$9CB7C4485EAB7B97A3544F52CBDBA0F9")]
+            public Azure.AI.Projects.OpenAI.AgentReference Agent { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$9CB7C4485EAB7B97A3544F52CBDBA0F9")] get { throw null; } }
+            [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$9CB7C4485EAB7B97A3544F52CBDBA0F9")]
+            public string AgentConversationId { [System.Runtime.CompilerServices.ExtensionMarkerAttribute("<M>$9CB7C4485EAB7B97A3544F52CBDBA0F9")] get { throw null; } }
             public static partial class <M>$9CB7C4485EAB7B97A3544F52CBDBA0F9
             {
                 public static void <Extension>$(OpenAI.Responses.ResponseResult response) { }

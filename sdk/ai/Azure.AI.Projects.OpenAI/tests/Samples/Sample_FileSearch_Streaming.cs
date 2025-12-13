@@ -99,22 +99,27 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Async
         ProjectConversation conversation = await projectClient.OpenAI.Conversations.CreateProjectConversationAsync();
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Agent = agentVersion,
             AgentConversationId = conversation.Id,
+            StreamingEnabled = true,
         };
         #endregion
 
         #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Async
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync("Can you give me the documented codes for 'banana' and 'orange'?", responseOptions))
+        responseOptions.InputItems.Clear();
+        responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
+        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(streamResponse);
         }
         #endregion
         #region Snippet:Sample_FollowUp_FileSearch_Streaming_Async
         Console.WriteLine("Demonstrating follow-up query with streaming...");
-        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync("What was my previous question about?", responseOptions))
+        responseOptions.InputItems.Clear();
+        responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
+        await foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreamingAsync(responseOptions))
         {
             ParseResponse(streamResponse);
         }
@@ -169,22 +174,27 @@ public class Sample_FileSearch_Streaming : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_CreateResponse_FileSearch_Streaming_Sync
         ProjectConversation conversation = projectClient.OpenAI.Conversations.CreateProjectConversation();
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Agent = agentVersion,
             AgentConversationId = conversation.Id,
+            StreamingEnabled = true,
         };
         #endregion
 
         #region Snippet:Sample_StreamingResponse_FileSearch_Streaming_Sync
-        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming("Can you give me the documented codes for 'banana' and 'orange'?", responseOptions))
+        responseOptions.InputItems.Clear();
+        responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("Can you give me the documented codes for 'banana' and 'orange'?"));
+        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming(responseOptions))
         {
             ParseResponse(streamResponse);
         }
         #endregion
         #region Snippet:Sample_FollowUp_FileSearch_Streaming_Sync
         Console.WriteLine("Demonstrating follow-up query with streaming...");
-        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming("What was my previous question about?", responseOptions))
+        responseOptions.InputItems.Clear();
+        responseOptions.InputItems.Add(ResponseItem.CreateUserMessageItem("What was my previous question about?"));
+        foreach (StreamingResponseUpdate streamResponse in projectClient.OpenAI.Responses.CreateResponseStreaming(responseOptions))
         {
             ParseResponse(streamResponse);
         }

@@ -52,45 +52,38 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_MCPTool_ProjectConnection_Async
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        ResponseItem request = ResponseItem.CreateUserMessageItem("What is my username in Github profile?");
-        List<ResponseItem> inputItems = [request];
-        bool mcpCalled = false;
-        string previousResponseId = default;
-        OpenAIResponse response;
-        do
+        CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("What is my username in Github profile?")]);
+        ResponseResult latestResponse = null;
+
+        while (nextResponseOptions is not null)
         {
-            ResponseCreationOptions options = new()
-            {
-                PreviousResponseId = previousResponseId,
-            };
-            response = await responseClient.CreateResponseAsync(
-                inputItems: inputItems,
-                options
-            );
-            previousResponseId = response.Id;
-            inputItems.Clear();
-            mcpCalled = false;
-            foreach (ResponseItem responseItem in response.OutputItems)
+            latestResponse = await responseClient.CreateResponseAsync(nextResponseOptions);
+            nextResponseOptions = null;
+
+            foreach (ResponseItem responseItem in latestResponse.OutputItems)
             {
                 if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    mcpCalled = true;
+                    nextResponseOptions = new()
+                    {
+                        PreviousResponseId = latestResponse.PreviousResponseId,
+                    };
                     if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
                     {
                         Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
                         // Automatically approve the MCP request to allow the agent to proceed
                         // In production, you might want to implement more sophisticated approval logic
-                        inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     }
                     else
                     {
                         Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
-                        inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
                     }
                 }
             }
-        } while (mcpCalled);
-        Console.WriteLine(response.GetOutputText());
+        }
+        Console.WriteLine(latestResponse.GetOutputText());
         #endregion
 
         #region Snippet:Sample_Cleanup_MCPTool_ProjectConnection_Async
@@ -133,45 +126,38 @@ public class Sample_MCPTool_ProjectConnection : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateResponse_MCPTool_ProjectConnection_Sync
         ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
 
-        ResponseItem request = ResponseItem.CreateUserMessageItem("What is my username in Github profile?");
-        List<ResponseItem> inputItems = [request];
-        bool mcpCalled = false;
-        string previousResponseId = default;
-        OpenAIResponse response;
-        do
+        CreateResponseOptions nextResponseOptions = new([ResponseItem.CreateUserMessageItem("What is my username in Github profile?")]);
+        ResponseResult latestResponse = null;
+
+        while (nextResponseOptions is not null)
         {
-            ResponseCreationOptions options = new()
-            {
-                PreviousResponseId = previousResponseId,
-            };
-            response = responseClient.CreateResponse(
-                inputItems: inputItems,
-                options
-            );
-            previousResponseId = response.Id;
-            inputItems.Clear();
-            mcpCalled = false;
-            foreach (ResponseItem responseItem in response.OutputItems)
+            latestResponse = responseClient.CreateResponse(nextResponseOptions);
+            nextResponseOptions = null;
+
+            foreach (ResponseItem responseItem in latestResponse.OutputItems)
             {
                 if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
                 {
-                    mcpCalled = true;
+                    nextResponseOptions = new()
+                    {
+                        PreviousResponseId = latestResponse.PreviousResponseId,
+                    };
                     if (string.Equals(mcpToolCall.ServerLabel, "api-specs"))
                     {
                         Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
                         // Automatically approve the MCP request to allow the agent to proceed
                         // In production, you might want to implement more sophisticated approval logic
-                        inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
                     }
                     else
                     {
                         Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
-                        inputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+                        nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
                     }
                 }
             }
-        } while (mcpCalled);
-        Console.WriteLine(response.GetOutputText());
+        }
+        Console.WriteLine(latestResponse.GetOutputText());
         #endregion
 
         #region Snippet:Sample_Cleanup_MCPTool_ProjectConnection_Sync

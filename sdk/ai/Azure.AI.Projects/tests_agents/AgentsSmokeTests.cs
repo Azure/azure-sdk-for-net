@@ -62,7 +62,7 @@ public class AgentsSmokeTests : AgentsTestBase
     //[Test]
     //public void TestUseAnAgentTool()
     //{
-    //    ResponseCreationOptions responseOptions = new()
+    //    CreateResponseOptions responseOptions = new()
     //    {
     //        Tools =
     //        {
@@ -84,7 +84,7 @@ public class AgentsSmokeTests : AgentsTestBase
     //    Assert.That(serializedOptions, Does.Contain("base_url"));
     //    Assert.That(serializedOptions, Does.Contain("topK"));
 
-    //    OpenAIResponse mockResponse = ModelReaderWriter.Read<OpenAIResponse>(BinaryData.FromString("""
+    //    ResponseResult mockResponse = ModelReaderWriter.Read<ResponseResult>(BinaryData.FromString("""
     //        {
     //          "id": "resp_09e840ce9e2f16c60068c4c1ce2cc481a3ad9e41ec88e4cbe5",
     //          "object": "response",
@@ -200,7 +200,7 @@ public class AgentsSmokeTests : AgentsTestBase
     [Test]
     public void TestUseAnAgentReference()
     {
-        ResponseCreationOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             Agent = "my-test-agent",
             AgentConversationId = "conv_abcd1234",

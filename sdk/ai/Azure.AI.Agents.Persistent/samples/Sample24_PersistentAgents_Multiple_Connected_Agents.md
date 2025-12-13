@@ -11,7 +11,7 @@ PersistentAgentsClient agentClient = new(projectEndpoint, new DefaultAzureCreden
 ```
 
 2. In the example below we will create two agents, one is returning the Microsoft stock price and another returns weather. Note that the `ConnectedAgentDetails` does not support local functions, we will use Azure function to return weather. The code of that function is given below; please see [Azure Function Call](#create-agent-with-azure-function-call) section for the instructions on how to deploy Azure Function. Here is the text of function we deployed to serve the toy weather forecast.
-**Note:** The Azure Function may be only used in standard agent setup. Please follow the [instruction](https://github.com/azure-ai-foundry/foundry-samples/tree/main/samples/microsoft/infrastructure-setup/41-standard-agent-setup) to deploy an agent, capable of calling Azure Functions.
+**Note:** The Azure Function may be only used in standard agent setup. Please follow the [instruction](https://github.com/azure-ai-foundry/foundry-samples/tree/main/infrastructure/infrastructure-setup-bicep/41-standard-agent-setup) to deploy an agent, capable of calling Azure Functions.
 
 ```C#
 namespace WeatherAzureFuncNet

@@ -100,21 +100,26 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_AgentToAgent_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems = { ResponseItem.CreateUserMessageItem("What can the secondary agent do?") },
 };
-OpenAIResponse response = responseClient.CreateResponse("What can the secondary agent do?", options: responseOptions);
+ResponseResult response = responseClient.CreateResponse(responseOptions);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_AgentToAgent_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems =
+    {
+        ResponseItem.CreateUserMessageItem("What can the secondary agent do?"),
+    },
 };
-OpenAIResponse response = await responseClient.CreateResponseAsync("What can the secondary agent do?", options: responseOptions);
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 ```
 
 4. Print the Agent output.

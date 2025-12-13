@@ -659,7 +659,7 @@ var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(dep
 string prompt = "What is the capital of France?";
 Console.WriteLine($"Sending prompt: {prompt}");
 
-ClientResult<OpenAIResponse> result = await responsesClient.CreateResponseAsync(prompt);
+ClientResult<ResponseResult> result = await responsesClient.CreateResponseAsync(prompt);
 
 // Get the response message
 var messageItem = result.Value.OutputItems
@@ -685,7 +685,7 @@ var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(dep
 string prompt = "What is the capital of France?";
 Console.WriteLine($"Sending prompt: {prompt}");
 
-ClientResult<OpenAIResponse> result = responsesClient.CreateResponse(prompt);
+ClientResult<ResponseResult> result = responsesClient.CreateResponse(prompt);
 
 // Get the response message
 var messageItem = result.Value.OutputItems

@@ -92,21 +92,23 @@ AgentVersion agentVersion = await projectClient.Agents.CreateAgentVersionAsync(
 Synchronous sample:
 ```C# Snippet:Sample_CreateResponse_Fabric_Sync
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems = { ResponseItem.CreateUserMessageItem("What was the number of public holidays in Norway in 2024?") },
 };
-OpenAIResponse response = responseClient.CreateResponse("What was the number of public holidays in Norway in 2024?", options: responseOptions);
+ResponseResult response = responseClient.CreateResponse(responseOptions);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateResponse_Fabric_Async
 ProjectResponsesClient responseClient = projectClient.OpenAI.GetProjectResponsesClientForAgent(agentVersion.Name);
-ResponseCreationOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
-    ToolChoice = ResponseToolChoice.CreateRequiredChoice()
+    ToolChoice = ResponseToolChoice.CreateRequiredChoice(),
+    InputItems = { ResponseItem.CreateUserMessageItem("What was the number of public holidays in Norway in 2024?") },
 };
-OpenAIResponse response = await responseClient.CreateResponseAsync("What was the number of public holidays in Norway in 2024?", options: responseOptions);
+ResponseResult response = await responseClient.CreateResponseAsync(responseOptions);
 ```
 
 4. Print the Agent output.
