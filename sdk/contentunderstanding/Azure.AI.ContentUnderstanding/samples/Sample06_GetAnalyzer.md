@@ -37,53 +37,49 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 ## Get prebuilt analyzer information
 
-Retrieve information about a prebuilt analyzer and display the full JSON:
+Retrieve information about a prebuilt analyzer and display the raw response JSON:
 
 ```C# Snippet:ContentUnderstandingGetPrebuiltAnalyzer
 // Get information about a prebuilt analyzer
 var response = await client.GetAnalyzerAsync("prebuilt-documentSearch");
 ContentAnalyzer analyzer = response.Value;
 
-// Display full analyzer JSON
-var jsonOptions = new JsonSerializerOptions
+// Get raw response JSON and format it for nice printing
+var rawResponseForJson = response.GetRawResponse();
+string rawJson = rawResponseForJson.Content.ToString();
+using (JsonDocument doc = JsonDocument.Parse(rawJson))
 {
-    WriteIndented = true,
-    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-};
-string analyzerJson = JsonSerializer.Serialize(analyzer, jsonOptions);
-Console.WriteLine("Prebuilt-documentSearch Analyzer:");
-Console.WriteLine(analyzerJson);
+    var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+    string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
+    Console.WriteLine("Prebuilt-documentSearch Analyzer (Raw JSON):");
+    Console.WriteLine(formattedJson);
+}
 ```
 
-You can also get information about other prebuilt analyzers, such as `prebuilt-invoice`:
+You can also get information about other prebuilt analyzers, such as `prebuilt-invoice`. This is particularly useful for inspecting the analyzer's schema to understand its fields and capabilities, including field names, types, and how to access them:
 
 ```C# Snippet:ContentUnderstandingGetPrebuiltInvoice
 // Get information about prebuilt-invoice analyzer
 var invoiceResponse = await client.GetAnalyzerAsync("prebuilt-invoice");
 ContentAnalyzer invoiceAnalyzer = invoiceResponse.Value;
 
-// Display full analyzer JSON
-var jsonOptions = new JsonSerializerOptions
+// Get raw response JSON and format it for nice printing
+var rawResponseForJson = invoiceResponse.GetRawResponse();
+string rawJson = rawResponseForJson.Content.ToString();
+using (JsonDocument doc = JsonDocument.Parse(rawJson))
 {
-    WriteIndented = true,
-    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-};
-string invoiceAnalyzerJson = JsonSerializer.Serialize(invoiceAnalyzer, jsonOptions);
-Console.WriteLine("Prebuilt-invoice Analyzer:");
-Console.WriteLine(invoiceAnalyzerJson);
+    var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+    string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
+    Console.WriteLine("Prebuilt-invoice Analyzer (Raw JSON):");
+    Console.WriteLine(formattedJson);
+}
 ```
 
 ## Get custom analyzer information
 
-Create a custom analyzer, retrieve its information, and display the full JSON:
+Create a custom analyzer, retrieve its information, and display the raw response JSON:
 
 ```C# Snippet:ContentUnderstandingGetCustomAnalyzer
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>"; // Set to null to use DefaultAzureCredential
-var client = !string.IsNullOrEmpty(apiKey)
-    ? new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey))
-    : new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
-
 // Generate a unique analyzer ID
 string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 
@@ -131,15 +127,16 @@ try
     var response = await client.GetAnalyzerAsync(analyzerId);
     ContentAnalyzer retrievedAnalyzer = response.Value;
 
-    // Display full analyzer JSON
-    var jsonOptions = new JsonSerializerOptions
+    // Get raw response JSON and format it for nice printing
+    var rawResponseForJson = response.GetRawResponse();
+    string rawJson = rawResponseForJson.Content.ToString();
+    using (JsonDocument doc = JsonDocument.Parse(rawJson))
     {
-        WriteIndented = true,
-        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-    };
-    string analyzerJson = JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
-    Console.WriteLine("Custom Analyzer:");
-    Console.WriteLine(analyzerJson);
+        var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+        string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
+        Console.WriteLine("Custom Analyzer (Raw JSON):");
+        Console.WriteLine(formattedJson);
+    }
 ```
 
 ## Next steps
