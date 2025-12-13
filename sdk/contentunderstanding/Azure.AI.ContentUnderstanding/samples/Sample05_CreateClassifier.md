@@ -135,7 +135,7 @@ var analyzeResult = analyzeOperation.Value;
 // Display classification results with automatic segmentation
 DocumentContent docContent = (DocumentContent)analyzeResult.Contents!.First();
 Console.WriteLine($"Found {docContent.Segments?.Count ?? 0} segment(s):");
-foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentSegment>())
+foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentContentSegment>())
 {
     Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
     Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");

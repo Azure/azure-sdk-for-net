@@ -288,7 +288,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
 
                 // With EnableSegment=false, the document is classified as a single unit
-                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentSegment>())
+                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentContentSegment>())
                 {
                     Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
                     Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
@@ -485,7 +485,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Display classification results with automatic segmentation
                 DocumentContent docContent = (DocumentContent)analyzeResult.Contents!.First();
                 Console.WriteLine($"Found {docContent.Segments?.Count ?? 0} segment(s):");
-                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentSegment>())
+                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentContentSegment>())
                 {
                     Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
                     Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
