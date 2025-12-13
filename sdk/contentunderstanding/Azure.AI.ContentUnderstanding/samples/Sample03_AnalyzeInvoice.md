@@ -69,109 +69,111 @@ AnalyzeResult result = operation.Value;
 
 ## Extract invoice fields
 
-The `prebuilt-invoice` analyzer returns structured fields that you can access type-safely. Each field includes metadata such as confidence scores and source information:
+The `prebuilt-invoice` analyzer returns **fields**, which are extracted structured data from the document. Fields can be accessed via `MediaContent.Fields`, which is an `IDictionary<string, ContentField>` where the key is the field name and the value is a `ContentField` object. Fields come in different types derived from `ContentField`:
+
+- **Simple field types**: `StringField`, `NumberField`, `IntegerField`, `DateField`, `TimeField`, `BooleanField`, `JsonField`
+- **Complex field types**: `ObjectField`, `ArrayField`
+
+The following code snippet shows small examples of extracting some of the many fields available from a `prebuilt-invoice` result:
 
 ```C# Snippet:ContentUnderstandingExtractInvoiceFields
 // Get the document content (invoices are documents)
-if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
+DocumentContent documentContent = (DocumentContent)result.Contents!.First();
+
+// Print document unit information
+// The unit indicates the measurement system used for coordinates in the source field
+Console.WriteLine($"Document unit: {documentContent.Unit ?? "unknown"}");
+Console.WriteLine($"Pages: {documentContent.StartPageNumber} to {documentContent.EndPageNumber}");
+if (documentContent.Pages != null && documentContent.Pages.Count > 0)
 {
-    // Print document unit information
-    // The unit indicates the measurement system used for coordinates in the source field
-    Console.WriteLine($"Document unit: {documentContent.Unit ?? "unknown"}");
-    Console.WriteLine($"Pages: {documentContent.StartPageNumber} to {documentContent.EndPageNumber}");
-    Console.WriteLine();
+    var page = documentContent.Pages[0];
+    var unit = documentContent.Unit?.ToString() ?? "units";
+    Console.WriteLine($"Page dimensions: {page.Width} x {page.Height} {unit}");
+}
+Console.WriteLine();
 
-    // Extract simple string fields
-    // The indexer can be used when a field is known to exist, providing direct access.
-    // Use try/catch to handle the KeyNotFoundException if the field doesn't exist.
-    ContentField? customerNameField = null;
-    if (documentContent.Fields != null)
+// Extract simple string fields
+var customerNameField = documentContent.Fields["CustomerName"];
+Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
+Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
+Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
+if (customerNameField.Spans?.Count > 0)
+{
+    var span = customerNameField.Spans[0];
+    Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
+}
+
+// Extract simple date field
+var invoiceDateField = documentContent.Fields.GetFieldOrDefault("InvoiceDate");
+Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
+Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
+Console.WriteLine($"  Source: {invoiceDateField?.Source ?? "N/A"}");
+if (invoiceDateField?.Spans?.Count > 0)
+{
+    var span = invoiceDateField.Spans[0];
+    Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
+}
+
+// Extract object fields (nested structures)
+if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
+{
+    var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
+    var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value;
+    Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
+    Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
+    Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
+}
+
+// Extract array fields (collections like line items)
+if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItems)
+{
+    Console.WriteLine($"Line Items ({lineItems.Count}):");
+    for (int i = 0; i < lineItems.Count; i++)
     {
-        try
+        if (lineItems[i] is ObjectField item)
         {
-            // CustomerName is known to exist in invoice documents
-            customerNameField = documentContent.Fields["CustomerName"];
-        }
-        catch (KeyNotFoundException)
-        {
-            // This is an exceptional case - handle the situation where the field doesn't exist
-            Console.WriteLine("CustomerName field not found");
-        }
-    }
-    var customerName = customerNameField?.Value?.ToString();
-
-    // For fields that may or may not exist, use GetFieldOrDefault() for null-safe access
-    var invoiceDateField = documentContent.Fields?.GetFieldOrDefault("InvoiceDate");
-    var invoiceDate = invoiceDateField?.Value?.ToString();
-
-    Console.WriteLine($"Customer Name: {customerName ?? "(None)"}");
-    if (customerNameField != null)
-    {
-        Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
-        // Source is an encoded identifier containing bounding box coordinates
-        // Format: D(pageNumber, x1, y1, x2, y2, x3, y3, x4, y4)
-        // Coordinates are in the document's unit (e.g., inches for US documents)
-        Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
-        if (customerNameField.Spans != null && customerNameField.Spans.Count > 0)
-        {
-            var span = customerNameField.Spans[0];
-            Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-        }
-    }
-
-    Console.WriteLine($"Invoice Date: {invoiceDate ?? "(None)"}");
-    if (invoiceDateField != null)
-    {
-        Console.WriteLine($"  Confidence: {invoiceDateField.Confidence?.ToString("F2") ?? "N/A"}");
-        Console.WriteLine($"  Source: {invoiceDateField.Source ?? "N/A"}");
-        if (invoiceDateField.Spans != null && invoiceDateField.Spans.Count > 0)
-        {
-            var span = invoiceDateField.Spans[0];
-            Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-        }
-    }
-
-    // Extract object fields (nested structures)
-    if (documentContent.Fields?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
-    {
-        // totalAmountObj is an ObjectField, which contains nested fields. To access fields inside
-        // an ObjectField, use ValueObject to get the dictionary of nested fields, then use
-        // GetFieldOrDefault() to safely retrieve individual fields.
-        var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
-        var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value?.ToString();
-        Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
-        if (totalAmountObj.Confidence.HasValue)
-        {
-            Console.WriteLine($"  Confidence: {totalAmountObj.Confidence.Value:F2}");
-        }
-        if (!string.IsNullOrEmpty(totalAmountObj.Source))
-        {
-            Console.WriteLine($"  Source: {totalAmountObj.Source}");
-        }
-    }
-
-    // Extract array fields (collections like line items)
-    if (documentContent.Fields?.GetFieldOrDefault("LineItems") is ArrayField lineItems)
-    {
-        Console.WriteLine($"Line Items ({lineItems.Count}):");
-        for (int i = 0; i < lineItems.Count; i++)
-        {
-            if (lineItems[i] is ObjectField item)
-            {
-                // item is an ObjectField containing nested fields. Use ValueObject to access the
-                // nested fields dictionary, then GetFieldOrDefault() to retrieve individual fields.
-                var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value?.ToString();
-                var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
-                Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
-                if (item.Confidence.HasValue)
-                {
-                    Console.WriteLine($"    Confidence: {item.Confidence.Value:F2}");
-                }
-            }
+            var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value;
+            var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
+            Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
+            Console.WriteLine($"    Confidence: {item.Confidence?.ToString("F2") ?? "N/A"}");
         }
     }
 }
 ```
+
+## Understanding fields
+
+### Field categories
+
+Fields are organized into three categories that can be combined to form complex data structures:
+
+- **Simple fields** - Single values of primitive types. Access values using type-specific properties:
+  - `StringField.ValueString` - Returns `string` (non-nullable)
+  - `NumberField.ValueNumber` - Returns `double?` (nullable)
+  - `IntegerField.ValueInteger` - Returns `long?` (nullable)
+  - `DateField.ValueDate` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+  - `TimeField.ValueTime` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+  - `BooleanField.ValueBoolean` - Returns `bool?` (nullable)
+  - `JsonField.ValueJson` - Returns `BinaryData` (non-nullable)
+
+  Alternatively, use the convenience property `ContentField.Value` which returns the value as an `object` (automatically converts to the appropriate type).
+- **Object fields** - Nested structures containing multiple fields. Access nested fields via `ObjectField.ValueObject`, which returns `IDictionary<string, ContentField>` (non-nullable) where the key is the nested field name and the value is a `ContentField` object. The dictionary can contain any `ContentField`-derived classes, including simple fields (e.g., `StringField`, `NumberField`), object fields (`ObjectField`), or array fields (`ArrayField`), allowing for arbitrarily nested and complex data structures. Use `GetFieldOrDefault()` or the indexer to retrieve individual nested fields (see sample code below).
+- **Array fields** - Collections of fields (can contain simple fields, object fields, or other arrays). Access elements via `ArrayField.ValueArray`, which returns `IList<ContentField>` (non-nullable). Alternatively, use the convenience `Count` property (returns `int`) and indexer `[i]` (returns `ContentField`) to access elements. Each element can be cast to the appropriate field type.
+
+### Accessing field values
+
+For **simple fields**, use the `ContentField.Value` convenience property to get the value without needing to know the specific field type. Alternatively, you can access type-specific properties directly for each field type:
+- `StringField.ValueString` - Returns `string` (non-nullable)
+- `NumberField.ValueNumber` - Returns `double?` (nullable)
+- `IntegerField.ValueInteger` - Returns `long?` (nullable)
+- `DateField.ValueDate` - Returns `DateTimeOffset?` (nullable, ISO 8601 YYYY-MM-DD format)
+- `TimeField.ValueTime` - Returns `TimeSpan?` (nullable, ISO 8601 hh:mm:ss format)
+- `BooleanField.ValueBoolean` - Returns `bool?` (nullable)
+- `JsonField.ValueJson` - Returns `BinaryData` (non-nullable)
+
+For **object fields**, access nested fields through `ValueObject` (an `IDictionary<string, ContentField>`). The dictionary can contain any `ContentField`-derived classes, including simple fields, object fields, or array fields. See the sample code above for examples.
+
+For **array fields**, access elements via `ValueArray` (returns `IList<ContentField>`) or use the convenience `Count` property and indexer. See the sample code above for examples.
 
 ### Understanding field metadata
 
@@ -195,6 +197,12 @@ Each extracted field provides metadata to help you understand the extraction qua
 
 These metadata properties are available on all field types (`StringField`, `NumberField`, `DateField`, `ObjectField`, `ArrayField`, etc.).
 
+## Understanding analyzer schemas
+
+The `prebuilt-invoice` analyzer contains many more fields than what is shown in the code snippet above. To get the complete schema of any analyzer, including all available fields and their types, use the `GetAnalyzerAsync` method. This works for both prebuilt analyzers (like `prebuilt-invoice`) and custom analyzers.
+
+See [Sample 06: Get analyzer information][sample06] to learn how to retrieve and understand the field schemas provided by any prebuilt or custom analyzer.
+
 ### Document unit
 
 The `DocumentContent.Unit` property indicates the measurement system used for coordinates in the `Source` field. For US documents, this is typically "inch", meaning all bounding box coordinates in the source field are measured in inches. This allows you to precisely locate extracted values in the original document.
@@ -208,7 +216,6 @@ For more details about `DocumentContent` and all available document elements (pa
 
 ## Learn more
 
-- [Content Understanding documentation][cu-docs]
 - [Document elements documentation][document-elements-docs] - Detailed information about `DocumentContent` and all available document elements (pages, paragraphs, tables, figures, etc.)
 - [Prebuilt analyzers documentation][prebuilt-analyzers-docs] - Complete list of 70+ and growing prebuilt analyzers
 - [Financial documents][financial-docs] - Overview of financial document analyzers
@@ -218,7 +225,7 @@ For more details about `DocumentContent` and all available document elements (pa
 [sample02]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
 [sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
 [sample05]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample05_CreateClassifier.md
-[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
 [document-elements-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/document/elements
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 [financial-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers#financial-documents

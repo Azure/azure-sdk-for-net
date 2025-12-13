@@ -53,101 +53,64 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             #region Snippet:ContentUnderstandingExtractInvoiceFields
             // Get the document content (invoices are documents)
-            if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
+            DocumentContent documentContent = (DocumentContent)result.Contents!.First();
+
+            // Print document unit information
+            // The unit indicates the measurement system used for coordinates in the source field
+            Console.WriteLine($"Document unit: {documentContent.Unit ?? "unknown"}");
+            Console.WriteLine($"Pages: {documentContent.StartPageNumber} to {documentContent.EndPageNumber}");
+            if (documentContent.Pages != null && documentContent.Pages.Count > 0)
             {
-                // Print document unit information
-                // The unit indicates the measurement system used for coordinates in the source field
-                Console.WriteLine($"Document unit: {documentContent.Unit ?? "unknown"}");
-                Console.WriteLine($"Pages: {documentContent.StartPageNumber} to {documentContent.EndPageNumber}");
-                Console.WriteLine();
+                var page = documentContent.Pages[0];
+                var unit = documentContent.Unit?.ToString() ?? "units";
+                Console.WriteLine($"Page dimensions: {page.Width} x {page.Height} {unit}");
+            }
+            Console.WriteLine();
 
-                // Extract simple string fields
-                // The indexer can be used when a field is known to exist, providing direct access.
-                // Use try/catch to handle the KeyNotFoundException if the field doesn't exist.
-                ContentField? customerNameField = null;
-                if (documentContent.Fields != null)
+            // Extract simple string fields
+            var customerNameField = documentContent.Fields["CustomerName"];
+            Console.WriteLine($"Customer Name: {customerNameField.Value ?? "(None)"}");
+            Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
+            Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
+            if (customerNameField.Spans?.Count > 0)
+            {
+                var span = customerNameField.Spans[0];
+                Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
+            }
+
+            // Extract simple date field
+            var invoiceDateField = documentContent.Fields.GetFieldOrDefault("InvoiceDate");
+            Console.WriteLine($"Invoice Date: {invoiceDateField?.Value ?? "(None)"}");
+            Console.WriteLine($"  Confidence: {invoiceDateField?.Confidence?.ToString("F2") ?? "N/A"}");
+            Console.WriteLine($"  Source: {invoiceDateField?.Source ?? "N/A"}");
+            if (invoiceDateField?.Spans?.Count > 0)
+            {
+                var span = invoiceDateField.Spans[0];
+                Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
+            }
+
+            // Extract object fields (nested structures)
+            if (documentContent.Fields.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
+            {
+                var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
+                var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value;
+                Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
+                Console.WriteLine($"  Confidence: {totalAmountObj.Confidence?.ToString("F2") ?? "N/A"}");
+                Console.WriteLine($"  Source: {totalAmountObj.Source ?? "N/A"}");
+            }
+
+            // Extract array fields (collections like line items)
+            if (documentContent.Fields.GetFieldOrDefault("LineItems") is ArrayField lineItems)
+            {
+                Console.WriteLine($"Line Items ({lineItems.Count}):");
+                for (int i = 0; i < lineItems.Count; i++)
                 {
-                    try
+                    if (lineItems[i] is ObjectField item)
                     {
-                        // CustomerName is known to exist in invoice documents
-                        customerNameField = documentContent.Fields["CustomerName"];
-                    }
-                    catch (KeyNotFoundException)
-                    {
-                        // This is an exceptional case - handle the situation where the field doesn't exist
-                        Console.WriteLine("CustomerName field not found");
-                    }
-                }
-                var customerName = customerNameField?.Value?.ToString();
-
-                // For fields that may or may not exist, use GetFieldOrDefault() for null-safe access
-                var invoiceDateField = documentContent.Fields?.GetFieldOrDefault("InvoiceDate");
-                var invoiceDate = invoiceDateField?.Value?.ToString();
-
-                Console.WriteLine($"Customer Name: {customerName ?? "(None)"}");
-                if (customerNameField != null)
-                {
-                    Console.WriteLine($"  Confidence: {customerNameField.Confidence?.ToString("F2") ?? "N/A"}");
-                    // Source is an encoded identifier containing bounding box coordinates
-                    // Format: D(pageNumber, x1, y1, x2, y2, x3, y3, x4, y4)
-                    // Coordinates are in the document's unit (e.g., inches for US documents)
-                    Console.WriteLine($"  Source: {customerNameField.Source ?? "N/A"}");
-                    if (customerNameField.Spans != null && customerNameField.Spans.Count > 0)
-                    {
-                        var span = customerNameField.Spans[0];
-                        Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-                    }
-                }
-
-                Console.WriteLine($"Invoice Date: {invoiceDate ?? "(None)"}");
-                if (invoiceDateField != null)
-                {
-                    Console.WriteLine($"  Confidence: {invoiceDateField.Confidence?.ToString("F2") ?? "N/A"}");
-                    Console.WriteLine($"  Source: {invoiceDateField.Source ?? "N/A"}");
-                    if (invoiceDateField.Spans != null && invoiceDateField.Spans.Count > 0)
-                    {
-                        var span = invoiceDateField.Spans[0];
-                        Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-                    }
-                }
-
-                // Extract object fields (nested structures)
-                if (documentContent.Fields?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmountObj)
-                {
-                    // totalAmountObj is an ObjectField, which contains nested fields. To access fields inside
-                    // an ObjectField, use ValueObject to get the dictionary of nested fields, then use
-                    // GetFieldOrDefault() to safely retrieve individual fields.
-                    var amount = totalAmountObj.ValueObject?.GetFieldOrDefault("Amount")?.Value as double?;
-                    var currency = totalAmountObj.ValueObject?.GetFieldOrDefault("CurrencyCode")?.Value?.ToString();
-                    Console.WriteLine($"Total: {currency ?? "$"}{amount?.ToString("F2") ?? "(None)"}");
-                    if (totalAmountObj.Confidence.HasValue)
-                    {
-                        Console.WriteLine($"  Confidence: {totalAmountObj.Confidence.Value:F2}");
-                    }
-                    if (!string.IsNullOrEmpty(totalAmountObj.Source))
-                    {
-                        Console.WriteLine($"  Source: {totalAmountObj.Source}");
-                    }
-                }
-
-                // Extract array fields (collections like line items)
-                if (documentContent.Fields?.GetFieldOrDefault("LineItems") is ArrayField lineItems)
-                {
-                    Console.WriteLine($"Line Items ({lineItems.Count}):");
-                    for (int i = 0; i < lineItems.Count; i++)
-                    {
-                        if (lineItems[i] is ObjectField item)
-                        {
-                            // item is an ObjectField containing nested fields. Use ValueObject to access the
-                            // nested fields dictionary, then GetFieldOrDefault() to retrieve individual fields.
-                            var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value?.ToString();
-                            var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
-                            Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
-                            if (item.Confidence.HasValue)
-                            {
-                                Console.WriteLine($"    Confidence: {item.Confidence.Value:F2}");
-                            }
-                        }
+                        var description = item.ValueObject?.GetFieldOrDefault("Description")?.Value;
+                        var quantity = item.ValueObject?.GetFieldOrDefault("Quantity")?.Value as double?;
+                        Console.WriteLine($"  Item {i + 1}: {description ?? "N/A"} (Qty: {quantity?.ToString() ?? "N/A"})");
+                        Console.WriteLine($"    Confidence: {item.Confidence?.ToString("F2") ?? "N/A"}");
                     }
                 }
             }

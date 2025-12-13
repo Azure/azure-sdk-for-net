@@ -40,6 +40,8 @@ Use the `prebuilt-documentSearch` analyzer with a public document URL. Note that
 
 For a list of supported document types for `prebuilt-documentSearch`, see [Service limits][cu-service-limits].
 
+Use `AnalyzeAsync()` with `AnalyzeInput` objects that wrap the URL. The result contains `MediaContent` items that expose markdown and detailed properties. For documents, cast to `DocumentContent` to access document-specific properties such as pages and tables.
+
 ```C# Snippet:ContentUnderstandingAnalyzeUrlAsync
 // You can replace this URL with your own publicly accessible document URL.
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/document/invoice.pdf");
@@ -75,6 +77,8 @@ if (documentContent.Pages != null && documentContent.Pages.Count > 0)
 ## Video from a URL
 
 Analyze video content (with transcript, shots, and segments enabled) using `prebuilt-videoSearch`. Markdown output follows the video markdown schema described in [Video markdown][cu-video-markdown]. The analyzer divides the video into topic- or scene-based segments rather than returning one long segment.
+
+For video content, cast `MediaContent` to `AudioVisualContent` to access video-specific properties such as timing information, transcript phrases, and frame dimensions. Iterate through all segments as `prebuilt-videoSearch` can return multiple segments.
 
 ```C# Snippet:ContentUnderstandingAnalyzeVideoUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/videos/sdk_samples/FlightSimulator.mp4");
@@ -112,6 +116,8 @@ foreach (MediaContent media in result.Contents!)
 
 Analyze audio content with `prebuilt-audioSearch`. The returned markdown captures transcript and structure similar to video markdown, and you can read summaries.
 
+For audio content, cast `MediaContent` to `AudioVisualContent` to access audio-specific properties such as transcript phrases with speaker diarization and timing information.
+
 ```C# Snippet:ContentUnderstandingAnalyzeAudioUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/audio/callCenterRecording.mp3");
 Operation<AnalyzeResult> operation = await client.AnalyzeAsync(
@@ -145,6 +151,8 @@ if (audioContent.TranscriptPhrases != null && audioContent.TranscriptPhrases.Cou
 ## Image from a URL
 
 Analyze images with `prebuilt-imageSearch`. As described in [prebuilt analyzers][cu-prebuilt-analyzers], this analyzer returns a one-paragraph `Summary` of the image content. For images that contain text (including hand-written text), use `prebuilt-documentSearch`.
+
+Access the `Summary` field from the `Fields` dictionary to get the image description.
 
 ```C# Snippet:ContentUnderstandingAnalyzeImageUrlAsync
 Uri uriSource = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-assets/main/image/pieChart.jpg");

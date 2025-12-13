@@ -81,6 +81,8 @@ Content Understanding generates rich GitHub Flavored Markdown that is ideal for 
 
 The `AnalyzeResult.Contents` collection holds the extracted content as `MediaContent` items. A PDF produces a single `MediaContent` entry (even when it has multiple pages), and each `MediaContent` exposes a `Markdown` property so you can read the markdown directly.
 
+The `AnalyzeResult.Contents` collection holds the extracted content as `MediaContent` items. A PDF produces a single `MediaContent` entry (even when it has multiple pages), and each `MediaContent` exposes a `Markdown` property so you can read the markdown directly.
+
 ```C# Snippet:ContentUnderstandingExtractMarkdown
 // A PDF file has only one content element even if it contains multiple pages
 MediaContent content = result.Contents!.First();
@@ -94,6 +96,8 @@ This structured markdown format makes documents easily searchable and consumable
 ## Access document properties
 
 Since we're analyzing a PDF document, the content is a `DocumentContent` type, which provides access to document-specific properties. The extraction results are very rich and include many more properties than shown here. The following examples demonstrate just a few ways to access document properties, page information, and structural information like tables. For detailed information about all available document elements and properties, see [Document elements][cu-document-elements].
+
+Use pattern matching to check if the content is `DocumentContent` to access document-specific properties such as pages, tables, and MIME type.
 
 ```C# Snippet:ContentUnderstandingAccessDocumentProperties
 // Check if this is document content to access document-specific properties
