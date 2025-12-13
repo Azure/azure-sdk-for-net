@@ -4,11 +4,7 @@ This sample demonstrates how to analyze an invoice from a URL using the `prebuil
 
 ## About analyzing invoices
 
-This sample builds on concepts introduced in previous samples:
-- [Sample 00: Configure model deployment defaults][sample00] - Required setup before using prebuilt analyzers
-- [Sample 02: Analyze a document from URL][sample02] - Basic URL-based analysis
-
-Content Understanding provides **70+ and growing production-ready prebuilt analyzers** that are ready to use without any training or configuration. These analyzers are powered by rich knowledge bases of thousands of real-world document examples, enabling them to understand document structure and adapt to variations in format and content.
+Content Understanding provides a rich set of prebuilt analyzers that are ready to use without any configuration. These analyzers are powered by knowledge bases of thousands of real-world document examples, enabling them to understand document structure and adapt to variations in format and content.
 
 Prebuilt analyzers are ideal for:
 - **Content ingestion** in search and retrieval-augmented generation (RAG) workflows
@@ -37,6 +33,24 @@ For a complete list of available prebuilt analyzers, see the [Prebuilt analyzers
 ## Prerequisites
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
+
+## Creating a `ContentUnderstandingClient`
+
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
 
 ## Analyze invoice from URL
 

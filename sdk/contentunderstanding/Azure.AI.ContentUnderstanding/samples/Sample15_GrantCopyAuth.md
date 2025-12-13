@@ -23,6 +23,24 @@ To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Con
 - **Target Microsoft Foundry resource** with model deployments configured
 - Both resources require 'Cognitive Services User' role for cross-resource copying
 
+## Creating a `ContentUnderstandingClient`
+
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
+
 ## Configuration
 
 This sample requires additional environment variables for the source resource (that contains the source analyzers) and the target resource (that the analyzers will be copied into):
