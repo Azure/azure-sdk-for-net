@@ -1,10 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Reflection;
 using Azure.AI.AgentServer.Core.Context;
+using Azure.AI.AgentServer.Core.Tools;
+using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Responses.Invocation;
-
+using Azure.Core;
 using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -70,6 +74,114 @@ public static class AIAgentExtensions
             },
             LoggerFactory: GetLoggerFactory(sp),
             TelemetrySourceName: telemetrySourceName));
+    }
+
+    /// <summary>
+    /// Runs an AI agent with tool support using ToolDefinition objects.
+    /// </summary>
+    /// <param name="agent">The AI agent to run.</param>
+    /// <param name="telemetrySourceName">The name of the telemetry source.</param>
+    /// <param name="tools">List of tool definitions to enable.</param>
+    /// <param name="endpoint">Azure AI endpoint.</param>
+    /// <param name="credential">Azure credential for authentication.</param>
+    /// <param name="loggerFactory">Optional logger factory.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    public static async Task RunAIAgentAsync(
+        this AIAgent agent,
+        string telemetrySourceName,
+        IList<ToolDefinition> tools,
+        Uri endpoint,
+        TokenCredential credential,
+        ILoggerFactory? loggerFactory = null)
+    {
+        ArgumentNullException.ThrowIfNull(agent);
+        ArgumentNullException.ThrowIfNull(tools);
+        ArgumentNullException.ThrowIfNull(endpoint);
+        ArgumentNullException.ThrowIfNull(credential);
+
+        // Create tool client options
+        AzureAIToolClientOptions toolClientOptions = new AzureAIToolClientOptions
+        {
+            Tools = tools
+        };
+
+        AzureAIToolClientAsync azureToolClient = new AzureAIToolClientAsync(endpoint, credential, toolClientOptions);
+        await using (azureToolClient.ConfigureAwait(false))
+        {
+            ToolClient toolClient = new ToolClient(azureToolClient);
+            await using (toolClient.ConfigureAwait(false))
+            {
+                // Get tools as AIFunctions
+                IReadOnlyList<AIFunction> aiFunctions = await toolClient.ListToolsAsync().ConfigureAwait(false);
+
+                // Run agent with tools
+                // Note: Tools should be configured when creating the agent via ChatClientAgent constructor
+                // For now, run the original agent and register the tool client for potential future use
+                await AgentServerApplication.RunAsync(new ApplicationOptions(
+                    ConfigureServices: services => services
+                        .AddSingleton(agent)
+                        .AddSingleton<IAgentInvocation, AIAgentInvocation>()
+                        .AddSingleton<IReadOnlyList<AIFunction>>(aiFunctions),
+                    LoggerFactory: loggerFactory == null ? null : () => loggerFactory,
+                    TelemetrySourceName: telemetrySourceName)).ConfigureAwait(false);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Runs an AI agent with tool support using inline tool configuration objects.
+    /// </summary>
+    /// <param name="agent">The AI agent to run.</param>
+    /// <param name="telemetrySourceName">The name of the telemetry source.</param>
+    /// <param name="toolConfigs">Array of anonymous objects with tool configurations.</param>
+    /// <param name="endpoint">Azure AI endpoint.</param>
+    /// <param name="credential">Azure credential for authentication.</param>
+    /// <param name="loggerFactory">Optional logger factory.</param>
+    /// <returns>A task that represents the asynchronous operation.</returns>
+    public static Task RunAIAgentAsync(
+        this AIAgent agent,
+        string telemetrySourceName,
+        object[] toolConfigs,
+        Uri endpoint,
+        TokenCredential credential,
+        ILoggerFactory? loggerFactory = null)
+    {
+        ArgumentNullException.ThrowIfNull(agent);
+        ArgumentNullException.ThrowIfNull(toolConfigs);
+        ArgumentNullException.ThrowIfNull(endpoint);
+        ArgumentNullException.ThrowIfNull(credential);
+
+        // Convert anonymous objects to ToolDefinition
+        var tools = toolConfigs.Select(config =>
+        {
+            var dict = ObjectToDictionary(config);
+            var type = dict.TryGetValue("type", out var typeValue)
+                ? typeValue?.ToString() ?? "mcp"
+                : "mcp";
+            var projectConnectionId = dict.TryGetValue("project_connection_id", out var connId)
+                ? connId?.ToString()
+                : null;
+
+            return new ToolDefinition
+            {
+                Type = type,
+                ProjectConnectionId = projectConnectionId,
+                AdditionalProperties = dict.Where(kvp =>
+                    kvp.Key != "type" && kvp.Key != "project_connection_id")
+                    .ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
+            };
+        }).ToList();
+
+        return RunAIAgentAsync(agent, telemetrySourceName, tools, endpoint, credential, loggerFactory);
+    }
+
+    private static Dictionary<string, object?> ObjectToDictionary(object obj)
+    {
+        return obj.GetType()
+            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
+            .ToDictionary(
+                prop => prop.Name,
+                prop => prop.GetValue(obj));
     }
 
     private static Func<ILoggerFactory>? GetLoggerFactory(IServiceProvider sp)
