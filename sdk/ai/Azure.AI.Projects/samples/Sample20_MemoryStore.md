@@ -11,7 +11,7 @@ var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDI
 AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
 ```
 
-2. Use the client to create the `MemoryStore`. Memory store requires two models, one for embedding and another for search.
+2. Use the client to create the `MemoryStore`. Memory store requires two models, one for embedding and another for chat completion.
 
 Synchronous sample:
 ```C# Snippet:Sample_Create_MemoryStore_Sync

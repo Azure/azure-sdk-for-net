@@ -548,7 +548,7 @@ Console.WriteLine($"Status: {fineTuningJob.Status}");
 Memory in Foundry Agent Service is a managed, long-term memory solution. It enables Agent continuity across sessions, devices, and workflows.
 Project client can be used to manage memory stores. In the examples below we show only synchronous version of API for brevity.
 
-Use the client to create the `MemoryStore`. Memory store requires two models, one for embedding and another for search.
+Use the client to create the `MemoryStore`. Memory store requires two models, one for embedding and another for chat completion.
 
 ```C# Snippet:Sample_Create_MemoryStore_Sync
 MemoryStoreDefaultDefinition memoryStoreDefinition = new(
