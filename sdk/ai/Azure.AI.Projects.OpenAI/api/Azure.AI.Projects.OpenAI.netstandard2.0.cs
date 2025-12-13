@@ -3,10 +3,14 @@ namespace Azure.AI.Projects
     public static partial class ClientConnectionProviderExtensions
     {
         public static Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(this System.ClientModel.Primitives.ClientConnectionProvider connectionProvider, Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
-        public sealed partial class <>E__0
+        public sealed partial class <G>$EE9D7A1C67932FB454531401B8375DE4
         {
-            internal <>E__0() { }
+            internal <G>$EE9D7A1C67932FB454531401B8375DE4() { }
             public Azure.AI.Projects.OpenAI.ProjectOpenAIClient GetProjectOpenAIClient(Azure.AI.Projects.OpenAI.ProjectOpenAIClientOptions options = null) { throw null; }
+            public static partial class <M>$781747A4149937EE6CD40CB5B8268DAD
+            {
+                public static void <Extension>$(System.ClientModel.Primitives.ClientConnectionProvider connectionProvider) { }
+            }
         }
     }
 }
@@ -648,9 +652,12 @@ namespace Azure.AI.Projects.OpenAI
     }
     public static partial class ConversationClientExtensions
     {
-        public sealed partial class <>E__0
+        public sealed partial class <G>$B3FF105A24B21D3EED92941BD24D963E
         {
-            internal <>E__0() { }
+            internal <G>$B3FF105A24B21D3EED92941BD24D963E() { }
+            public static partial class <M>$0BD4A66E0C6300237CE358C2FC131B6D
+            {
+            }
         }
     }
     public partial class ExtraDataDictionary : System.Collections.Generic.ICollection<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.Generic.IDictionary<string, System.BinaryData>, System.Collections.Generic.IEnumerable<System.Collections.Generic.KeyValuePair<string, System.BinaryData>>, System.Collections.IEnumerable
@@ -811,10 +818,14 @@ namespace Azure.AI.Projects.OpenAI
     {
         public static string get_ProjectConnectionId(OpenAI.Responses.McpTool mcpTool) { throw null; }
         public static void set_ProjectConnectionId(OpenAI.Responses.McpTool mcpTool, string value) { }
-        public sealed partial class <>E__0
+        public sealed partial class <G>$35DCA4819B43CF3F6CAB343048615A7E
         {
-            internal <>E__0() { }
+            internal <G>$35DCA4819B43CF3F6CAB343048615A7E() { }
             public string ProjectConnectionId { get { throw null; } set { } }
+            public static partial class <M>$057BAEB40536DD92FB57E20F2D1CDCDE
+            {
+                public static void <Extension>$(OpenAI.Responses.McpTool mcpTool) { }
+            }
         }
     }
     public abstract partial class MemoryItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.MemoryItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.MemoryItem>
@@ -959,11 +970,15 @@ namespace Azure.AI.Projects.OpenAI
     {
         public static Azure.AI.Projects.OpenAI.AgentReference get_Agent(OpenAI.Responses.OpenAIResponse response) { throw null; }
         public static string get_AgentConversationId(OpenAI.Responses.OpenAIResponse response) { throw null; }
-        public sealed partial class <>E__0
+        public sealed partial class <G>$8FE480C0A3760C6325E8864F91C5D206
         {
-            internal <>E__0() { }
+            internal <G>$8FE480C0A3760C6325E8864F91C5D206() { }
             public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } }
             public string AgentConversationId { get { throw null; } }
+            public static partial class <M>$DD65143469DD52AAF70402CA62061739
+            {
+                public static void <Extension>$(OpenAI.Responses.OpenAIResponse response) { }
+            }
         }
     }
     public partial class OpenAPIAgentTool : Azure.AI.Projects.OpenAI.AgentTool, System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.OpenAI.OpenAPIAgentTool>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.OpenAI.OpenAPIAgentTool>
@@ -1333,13 +1348,17 @@ namespace Azure.AI.Projects.OpenAI
         public static void set_Agent(OpenAI.Responses.ResponseCreationOptions options, Azure.AI.Projects.OpenAI.AgentReference value) { }
         public static void set_AgentConversationId(OpenAI.Responses.ResponseCreationOptions options, string value) { }
         public static void set_Model(OpenAI.Responses.ResponseCreationOptions options, string value) { }
-        public sealed partial class <>E__0
+        public sealed partial class <G>$0738494680543FABE0B40FE87BDFC587
         {
-            internal <>E__0() { }
+            internal <G>$0738494680543FABE0B40FE87BDFC587() { }
             public Azure.AI.Projects.OpenAI.AgentReference Agent { get { throw null; } set { } }
             public string AgentConversationId { get { throw null; } set { } }
             public string Model { get { throw null; } set { } }
             public Azure.AI.Projects.OpenAI.ExtraDataDictionary StructuredInputs { get { throw null; } }
+            public static partial class <M>$49EB9E4D888D257480B5F4138A58B293
+            {
+                public static void <Extension>$(OpenAI.Responses.ResponseCreationOptions options) { }
+            }
         }
     }
     public static partial class ResponseItemExtensions
