@@ -2,7 +2,7 @@
 
 ## 1.2.0-beta.5 (2025-12-12)
 
-### Feature Added
+### Features Added
 
 - Updated for transitive compatibility with `OpenAI 2.8.0`, including substantial changes to the `[Experimental]` Responses API
 

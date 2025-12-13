@@ -2,14 +2,14 @@
 
 ## 1.0.0-beta.5 (2025-12-12)
 
-## Features Added
+### Features Added
 
 - Added transitive compatibility for `OpenAI 2.8.0`, including significant changes to the `[Experimental]` Responses API surface
 - Added possibility of authentication to MCP server using project connection.
 
 ## 1.0.0-beta.4 (2025-11-17)
 
-## Features Added
+### Features Added
 
 This change updates the baseline `OpenAI` dependency to the latest `2.7.0` official version. For inherited details, please see the [OpenAI .NET changelog](https://github.com/openai/openai-dotnet/tree/main/CHANGELOG.md).
 
