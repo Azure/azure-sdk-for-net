@@ -14,15 +14,15 @@ Added Models:
 - Added `ProxyAgentSettings`
 
 Added Properties:
-- Added `ipv6Address` to `BatchNode`
-- Added `Ipv6RemoteLoginIpAddress` and `Ipv6RemoteLoginPort` to `BatchNodeRemoteLoginSettings`
+
 - Added `IpFamilies` and `IpTags` to `BatchPublicAddressConfiguration`
-- Added `JobDefaultOder` to `BatchTaskSchedulingPolicy`
-- Added `ManagedDisk` to `DataDisk`
 - Added `CustomerManagedKey` to `DiskEncryptionConfiguration`
+- Added `TaskSchedulingPolicy` to `BatchAccountPoolData`
+- Added `ManagedDisk` to `DataDisk`
 - Added `DiskEncryptionSet` to `ManagedDisk`
-- Added `DiskWithVMGuestStateValue` to `SecurityEncryptionTypes`
 - Added `ProxyAgentSetting` to `SecurityProfile`
+- Added `jobDefaultOrder` to `TaskSchedulingPolicy`
+- Added `diskEncryptionSet` to `VMDiskSecurityProfile`
 
 ### Breaking Changes
 
@@ -57,13 +57,12 @@ Removed Models:
 - Removed `NodeCommunicationMode`
 
 Removed Properties:
-- Removed `CertificateReferences` from `BatchNode`
-- Removed `ResourceTags` and `CertificateReferences` from `BatchPool`
-- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolCreateOptions`
-- Removed `CertificateReferences` and `TargetNodeCommunicationMode` from `BatchPoolReplaceOptions`
-- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolSpecifications`
-- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `BatchPoolUpdateOptions`
-- Removed `CertificateReferences`, `ResourceTags`, and `TargetNodeCommunicationMode` from `ComputeBatchModelFactory`
+
+- Removed `ApplicationLicenses` from `BatchAccountPoolData`
+- Removed `Certificates` from `BatchAccountPoolData`
+- Removed `CurrentNodeCommunicationMode` from `BatchAccountPoolData`
+- Removed `TargetNodeCommunicationMode` from `BatchAccountPoolData`
+- Removed `ResourceTags` from `BatchAccountPoolData`
 
 ## 1.5.0 (2024-09-15)
 
