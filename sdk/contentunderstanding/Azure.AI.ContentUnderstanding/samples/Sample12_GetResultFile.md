@@ -38,21 +38,21 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 Analyze a video to generate result files:
 
+> **Note**: The following code uses `WaitUntil.Completed` to wait for the analysis to finish. If you need to get the operation ID earlier (for example, to track the operation or retrieve result files while it's still running), use `WaitUntil.Started` instead. The operation ID is available immediately after the operation starts.
+
 ```C# Snippet:ContentUnderstandingAnalyzeVideoForResultFiles
-Uri videoUrl = new Uri("<videoUrl>");
-// Start the analysis operation
+// For testing, use a video URL to get keyframes for GetResultFile testing
+// You can replace this with your own video file URL
+Uri videoUrl = new Uri("https://github.com/Azure-Samples/azure-ai-content-understanding-assets/raw/refs/heads/main/videos/sdk_samples/FlightSimulator.mp4");
+// Analyze and wait for completion
 var analyzeOperation = await client.AnalyzeAsync(
-    WaitUntil.Started,
+    WaitUntil.Completed,
     "prebuilt-videoSearch",
     inputs: new[] { new AnalyzeInput { Url = videoUrl } });
 
-// Get the operation ID from the operation (available after Started)
+// Get the operation ID - this is needed to retrieve result files later
 string operationId = analyzeOperation.Id;
 Console.WriteLine($"Operation ID: {operationId}");
-
-// Wait for completion
-await analyzeOperation.WaitForCompletionAsync();
-
 AnalyzeResult result = analyzeOperation.Value;
 ```
 
@@ -71,38 +71,35 @@ Retrieve a result file (keyframe image) using the operation ID and file path:
 // 3. Call GetResultFileAsync with the operation ID and path
 
 // For video analysis, keyframes would be found in AudioVisualContent.KeyFrameTimesMs
-var videoContent = result.Contents?.FirstOrDefault(c => c is AudioVisualContent) as AudioVisualContent;
+// Cast MediaContent to AudioVisualContent to access video-specific properties
+AudioVisualContent videoContent = (AudioVisualContent)result.Contents!.First();
+// Print keyframe information
+int totalKeyframes = videoContent.KeyFrameTimesMs!.Count;
+long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
+Console.WriteLine($"Total keyframes: {totalKeyframes}");
+Console.WriteLine($"First keyframe time: {firstFrameTimeMs} ms");
 
-if (videoContent?.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count > 0)
-{
-    // Print keyframe information
-    int totalKeyframes = videoContent.KeyFrameTimesMs.Count;
-    long firstFrameTimeMs = videoContent.KeyFrameTimesMs[0];
-    Console.WriteLine($"Total keyframes: {totalKeyframes}");
-    Console.WriteLine($"First keyframe time: {firstFrameTimeMs} ms");
+// Get the first keyframe as an example
+string framePath = $"keyframes/{firstFrameTimeMs}";
 
-    // Get the first keyframe as an example
-    string framePath = $"keyframes/{firstFrameTimeMs}";
+Console.WriteLine($"Getting result file: {framePath}");
 
-    Console.WriteLine($"Getting result file: {framePath}");
+// Get the result file (keyframe image) using the operation ID obtained from Operation<T>.Id
+Response<BinaryData> fileResponse = await client.GetResultFileAsync(
+    operationId,
+    framePath);
 
-    // Get the result file (keyframe image)
-    Response<BinaryData> fileResponse = await client.GetResultFileAsync(
-        operationId,
-        framePath);
+byte[] imageBytes = fileResponse.Value.ToArray();
+Console.WriteLine($"Retrieved keyframe image ({imageBytes.Length:N0} bytes)");
 
-    byte[] imageBytes = fileResponse.Value.ToArray();
-    Console.WriteLine($"Retrieved keyframe image ({imageBytes.Length:N0} bytes)");
+// Save the keyframe image to sample_output directory
+string outputDir = Path.Combine(AppContext.BaseDirectory, "sample_output");
+Directory.CreateDirectory(outputDir);
+string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
+string outputPath = Path.Combine(outputDir, outputFileName);
+File.WriteAllBytes(outputPath, imageBytes);
 
-    // Save the keyframe image to sample_output directory
-    string outputDir = Path.Combine(AppContext.BaseDirectory, "sample_output");
-    Directory.CreateDirectory(outputDir);
-    string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
-    string outputPath = Path.Combine(outputDir, outputFileName);
-    File.WriteAllBytes(outputPath, imageBytes);
-
-    Console.WriteLine($"Keyframe image saved to: {outputPath}");
-}
+Console.WriteLine($"Keyframe image saved to: {outputPath}");
 ```
 
 ## Next steps
