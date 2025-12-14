@@ -254,14 +254,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
         [RecordedTest]
         public async Task GetCustomAnalyzerAsync()
         {
+            ContentUnderstandingClient client = default!;
             #region Snippet:ContentUnderstandingGetCustomAnalyzer
 #if SNIPPET
-            // Generate a unique analyzer ID
             string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #else
             string endpoint = TestEnvironment.Endpoint;
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
-            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+            client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First, create a custom analyzer
             string defaultId = $"test_custom_analyzer_{Recording.Random.NewGuid().ToString("N")}";

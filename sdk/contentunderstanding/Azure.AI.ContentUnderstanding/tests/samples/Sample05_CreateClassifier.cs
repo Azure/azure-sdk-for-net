@@ -262,8 +262,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             try
             {
-                #region Snippet:ContentUnderstandingAnalyzeCategory
-#if SNIPPET
+                #if SNIPPET
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
@@ -293,7 +292,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
                     Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
                 }
-                #endregion
 
                 #region Assertion:ContentUnderstandingAnalyzeCategory
                 Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");

@@ -1,25 +1,16 @@
 # Return raw JSON from analysis
 
-This sample demonstrates how to access the raw JSON response from analysis operations using protocol methods. This is useful for advanced scenarios where you need direct access to the JSON structure.
+This sample demonstrates how to access the raw JSON response from analysis operations using the convenience method and `GetRawResponse()`. This is useful for scenarios where you need to inspect the full response structure exactly as returned by the service.
 
 ## About returning raw JSON
 
-The Content Understanding SDK provides two approaches for accessing analysis results:
+The Content Understanding SDK provides a convenient object model approach (shown in [Sample 03][sample03]) that returns `AnalyzeResult` objects with deeper navigation through the object model. However, sometimes you may need access to the raw JSON response for:
 
-1. **Object model approach** (recommended): Returns strongly-typed `AnalyzeResult` objects that are easier to navigate and use. This is shown in [Sample 01][sample01].
+- **Easy inspection**: View the complete response structure in the exact format returned by the service, making it easier to understand the full data model and discover available fields
+- **Debugging**: Inspect the raw response to troubleshoot issues, verify service behavior, or understand unexpected results
+- **Advanced scenarios**: Work with response structures that may change or include additional metadata not captured in the typed model
 
-2. **Protocol method approach**: Returns raw `BinaryData` containing the JSON response. This sample demonstrates this approach for advanced scenarios.
-
-**Important**: For production use, prefer the object model approach as it provides:
-- Type safety
-- IntelliSense support
-- Easier navigation of results
-- Better error handling
-
-Use raw JSON only when you need:
-- Custom JSON processing
-- Direct access to the raw response structure
-- Integration with custom JSON parsers
+**Note**: For most production scenarios, the object model approach is recommended as it provides type safety, IntelliSense support, and easier navigation. Use raw JSON access when you specifically need the benefits listed above.
 
 ## Prerequisites
 
@@ -45,121 +36,32 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 ## Analyze and return raw JSON
 
-Use the protocol method to get raw JSON response:
+Use the convenience method and then access the raw response using `GetRawResponse()`:
 
 ```C# Snippet:ContentUnderstandingAnalyzeReturnRawJson
 string filePath = "<filePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 
-// Use protocol method to get raw JSON response
-// Note: For production use, prefer the object model approach (AnalyzeBinaryAsync with BinaryData)
-// which returns AnalyzeResult objects that are easier to work with
-var operation = await client.AnalyzeBinaryAsync(
-    WaitUntil.Completed,
-    "prebuilt-documentSearch",
-    RequestContent.Create(BinaryData.FromBytes(fileBytes)));
-
-BinaryData responseData = operation.Value;
-```
-
-## Parse raw JSON
-
-Parse and format the raw JSON response:
-
-```C# Snippet:ContentUnderstandingParseRawJson
-// Parse the raw JSON response
-using var jsonDocument = JsonDocument.Parse(responseData);
-
-// Pretty-print the JSON
-string prettyJson = JsonSerializer.Serialize(
-    jsonDocument.RootElement,
-    new JsonSerializerOptions { WriteIndented = true });
-
-// Create output directory if it doesn't exist
-string outputDir = Path.Combine(AppContext.BaseDirectory, "sample_output");
-Directory.CreateDirectory(outputDir);
-
-// Save to file
-string outputFileName = $"analyze_result_{DateTime.UtcNow:yyyyMMdd_HHmmss}.json";
-string outputPath = Path.Combine(outputDir, outputFileName);
-File.WriteAllText(outputPath, prettyJson);
-
-Console.WriteLine($"Raw JSON response saved to: {outputPath}");
-Console.WriteLine($"File size: {prettyJson.Length:N0} characters");
-```
-
-## Comparing approaches: Raw JSON vs object model
-
-The following comparison highlights the difference between the protocol method (raw JSON) and the object model approach:
-
-### Protocol method (raw JSON)
-
-```csharp
-// Get raw JSON response
-var operation = await client.AnalyzeBinaryAsync(
-    WaitUntil.Completed,
-    "prebuilt-documentSearch",
-    RequestContent.Create(BinaryData.FromBytes(fileBytes)));
-
-BinaryData responseData = operation.Value;
-
-// Parse JSON manually
-using var jsonDocument = JsonDocument.Parse(responseData);
-var resultElement = jsonDocument.RootElement.GetProperty("result");
-var analyzerId = resultElement.GetProperty("analyzerId").GetString();
-```
-
-### Object model (recommended)
-
-```csharp
-// Get strongly-typed result
+// Use convenience method to analyze the document
 var operation = await client.AnalyzeBinaryAsync(
     WaitUntil.Completed,
     "prebuilt-documentSearch",
     BinaryData.FromBytes(fileBytes));
 
-AnalyzeResult result = operation.Value;
-
-// Access properties directly
-string analyzerId = result.AnalyzerId;
-var contents = result.Contents;
+// Get the raw JSON response
+var rawResponse = operation.GetRawResponse();
+string rawJson = rawResponse.Content.ToString();
 ```
 
-**Key differences:**
-- **Raw JSON**: Requires manual JSON parsing, no type safety, more verbose
-- **Object Model**: Strongly-typed properties, IntelliSense support, cleaner code
+## Pretty-print raw JSON
 
-## Extract information from raw JSON
+Format and display the raw JSON response:
 
-Extract key information from the parsed JSON:
-
-```C# Snippet:ContentUnderstandingExtractFromRawJson
-// Extract key information from raw JSON
-var resultElement = jsonDocument.RootElement.GetProperty("result");
-
-if (resultElement.TryGetProperty("analyzerId", out var analyzerIdElement))
-{
-    Console.WriteLine($"Analyzer ID: {analyzerIdElement.GetString()}");
-}
-
-if (resultElement.TryGetProperty("contents", out var contentsElement) &&
-    contentsElement.ValueKind == JsonValueKind.Array)
-{
-    Console.WriteLine($"Contents count: {contentsElement.GetArrayLength()}");
-
-    if (contentsElement.GetArrayLength() > 0)
-    {
-        var firstContent = contentsElement[0];
-        if (firstContent.TryGetProperty("kind", out var kindElement))
-        {
-            Console.WriteLine($"Content kind: {kindElement.GetString()}");
-        }
-        if (firstContent.TryGetProperty("mimeType", out var mimeTypeElement))
-        {
-            Console.WriteLine($"MIME type: {mimeTypeElement.GetString()}");
-        }
-    }
-}
+```C# Snippet:ContentUnderstandingParseRawJson
+// Pretty-print the raw JSON response
+using var jsonDoc = JsonDocument.Parse(rawJson);
+string prettyJson = JsonSerializer.Serialize(jsonDoc.RootElement, new JsonSerializerOptions { WriteIndented = true });
+Console.WriteLine(prettyJson);
 ```
 
 ## Next steps
@@ -170,11 +72,9 @@ if (resultElement.TryGetProperty("contents", out var contentsElement) &&
 ## Learn more
 
 - [Content Understanding documentation][cu-docs]
-- [Protocol methods][protocol-methods-docs] - Learn about protocol methods in Azure SDKs
 
 [sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample10]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample10_AnalyzeConfigs.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
-[protocol-methods-docs]: https://aka.ms/azsdk/net/protocol-methods
-
+[sample03]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md

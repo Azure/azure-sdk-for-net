@@ -87,7 +87,6 @@ using (JsonDocument doc = JsonDocument.Parse(rawJson))
 Create a custom analyzer, retrieve its information, and display the raw response JSON:
 
 ```C# Snippet:ContentUnderstandingGetCustomAnalyzer
-// Generate a unique analyzer ID
 string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 
 // Define field schema with custom fields
