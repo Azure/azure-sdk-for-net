@@ -165,16 +165,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 Console.WriteLine($"Keyframe image saved to: {outputPath}");
             }
-            else
-            {
-                Console.WriteLine("Note: This sample demonstrates GetResultFile API usage.");
-                Console.WriteLine("      For video analysis with keyframes, use prebuilt-videoSearch analyzer.");
-                Console.WriteLine("      Keyframes are available in AudioVisualContent.KeyFrameTimesMs.");
-                Console.WriteLine();
-                Console.WriteLine($"Example usage with operation ID '{operationId}':");
-                Console.WriteLine("  Response<BinaryData> fileResponse = await client.GetResultFileAsync(");
-                Console.WriteLine("      operationId, \"keyframes/1000\");");
-            }
             #endregion
 
             #region Assertion:ContentUnderstandingGetResultFile

@@ -10,7 +10,7 @@ When analyzing video content, the Content Understanding service can generate res
 
 The `GetResultFile` API allows you to retrieve these files using:
 - **Operation ID**: Extracted from the analysis operation
-- **File path**: The path to the specific result file (e.g., `"keyframes/{frameTimeMs}"` for keyframe images)
+- **File path**: The path to the specific result file. In the recording, keyframes were accessed with paths like `keyframes/733` and `keyframes/9000`, following the `keyframes/{frameTimeMs}` pattern.
 
 ## Prerequisites
 
@@ -102,16 +102,6 @@ if (videoContent?.KeyFrameTimesMs != null && videoContent.KeyFrameTimesMs.Count 
     File.WriteAllBytes(outputPath, imageBytes);
 
     Console.WriteLine($"Keyframe image saved to: {outputPath}");
-}
-else
-{
-    Console.WriteLine("Note: This sample demonstrates GetResultFile API usage.");
-    Console.WriteLine("      For video analysis with keyframes, use prebuilt-videoSearch analyzer.");
-    Console.WriteLine("      Keyframes are available in AudioVisualContent.KeyFrameTimesMs.");
-    Console.WriteLine();
-    Console.WriteLine($"Example usage with operation ID '{operationId}':");
-    Console.WriteLine("  Response<BinaryData> fileResponse = await client.GetResultFileAsync(");
-    Console.WriteLine("      operationId, \"keyframes/1000\");");
 }
 ```
 
