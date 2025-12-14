@@ -56,14 +56,8 @@ AnalyzeResult result = analyzeOperation.Value;
 Console.WriteLine("Analysis completed successfully!");
 
 // Display some sample results
-if (result.Contents?.FirstOrDefault() is DocumentContent docContent && docContent.Fields != null)
-{
-    Console.WriteLine($"Total fields extracted: {docContent.Fields.Count}");
-    if (docContent.Fields.TryGetValue("CustomerName", out var customerNameField) && customerNameField is StringField sf)
-    {
-        Console.WriteLine($"Customer Name: {sf.ValueString ?? "(not found)"}");
-    }
-}
+DocumentContent documentContent = (DocumentContent)result.Contents!.First();
+Console.WriteLine($"Total fields extracted: {documentContent.Fields?.Count ?? 0}");
 
 // Step 2: Delete the analysis result
 Console.WriteLine($"Deleting analysis result (Operation ID: {operationId})...");
