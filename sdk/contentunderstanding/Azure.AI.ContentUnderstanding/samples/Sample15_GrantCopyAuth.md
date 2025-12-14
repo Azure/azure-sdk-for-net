@@ -1,6 +1,6 @@
 # Grant copy authorization and copy analyzer
 
-This sample demonstrates how to grant copy authorization and copy an analyzer from a source resource to a target resource (cross-resource copying). This is useful for copying analyzers between different Azure resources or subscriptions.
+This sample demonstrates how to grant copy authorization and copy an analyzer from a source Microsoft Foundry resource to a target Microsoft Foundry resource (cross-resource copying). This is useful for copying analyzers between different Azure resources or subscriptions.
 
 ## About cross-resource copying
 
@@ -8,70 +8,62 @@ The `GrantCopyAuthorization` and `CopyAnalyzer` APIs allow you to copy an analyz
 
 - **Cross-resource copy**: Copies an analyzer from one Azure resource to another
 - **Authorization required**: You must grant copy authorization before copying
-- **Use cases**: Cross-subscription copying, resource migration, multi-region deployment
 
-**Note**: For same-resource copying (copying within the same Azure resource), use the [CopyAnalyzer sample][sample14] instead.
+**When to use cross-resource copying**: Use cross-resource copying when you need to:
+- **Copy between subscriptions**: Move analyzers between different Azure subscriptions
+- **Multi-region deployment**: Deploy the same analyzer to multiple regions
+- **Resource migration**: Migrate analyzers from one resource to another
+- **Environment promotion**: Promote analyzers from development to production across resources
+
+**Note**: For same-resource copying (copying within the same Microsoft Foundry resource), use the [CopyAnalyzer sample][sample14] instead.
 
 ## Prerequisites
 
 To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance. For this cross-resource scenario, you'll also need:
 - **Source Microsoft Foundry resource** with model deployments configured
 - **Target Microsoft Foundry resource** with model deployments configured
-- Both resources require 'Cognitive Services User' role for cross-resource copying
 
-## Creating a `ContentUnderstandingClient`
-
-For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
-
-```C# Snippet:CreateContentUnderstandingClient
-// Example: https://your-foundry.services.ai.azure.com/
-string endpoint = "<endpoint>";
-var credential = new DefaultAzureCredential();
-var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
-```
-
-```C# Snippet:CreateContentUnderstandingClientApiKey
-// Example: https://your-foundry.services.ai.azure.com/
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
-```
-
-## Configuration
-
-This sample requires additional environment variables for the source resource (that contains the source analyzers) and the target resource (that the analyzers will be copied into):
-
-```json
-{
-  "AZURE_CONTENT_UNDERSTANDING_ENDPOINT": "https://source-resource.services.ai.azure.com/",
-  "AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}",
-  "AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION": "eastus",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_ENDPOINT": "https://target-resource.services.ai.azure.com/",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_REGION": "westus",
-  "AZURE_CONTENT_UNDERSTANDING_KEY": "optional-source-api-key",
-  "AZURE_CONTENT_UNDERSTANDING_TARGET_KEY": "optional-target-api-key"
-}
-```
-
-**Note**: API keys (`AZURE_CONTENT_UNDERSTANDING_KEY` and `AZURE_CONTENT_UNDERSTANDING_TARGET_KEY`) are only required when `DefaultAzureCredential` is not used. If you're using Azure authentication (e.g., `az login` or managed identity), you can omit the keys and the sample will use `DefaultAzureCredential` for authentication.
+> **Important**: Both the source and target resources require the **'Cognitive Services User'** role to be granted to the credential used to run the code. This role is required for cross-resource copying operations. Without this role, the `GrantCopyAuthorizationAsync` and `CopyAnalyzerAsync` operations will fail with authorization errors.
 
 ## Grant copy authorization and copy analyzer
 
-Create a source analyzer, grant copy authorization, and copy it to a target resource:
+This sample demonstrates how to copy an analyzer from one Microsoft Foundry resource to another. The goal is to enable cross-resource analyzer sharing, which is useful for scenarios like multi-region deployments, resource migration, or sharing analyzers across different Azure subscriptions.
 
-> **Note:** This snippet requires `using Azure.Identity;` for `DefaultAzureCredential`.
+**Why authorization is required**: When copying analyzers across different Microsoft Foundry resources, the source resource needs to explicitly grant permission to the target resource. This authorization mechanism ensures security and access control, preventing unauthorized copying of analyzers between resources. The authorization is time-limited and includes the target resource ID and region to ensure the copy operation is performed by the intended recipient.
+
+**How grant authorization works**: The `GrantCopyAuthorizationAsync` method must be called on the **source Microsoft Foundry resource** (where the analyzer currently exists). This is because the source resource needs to explicitly grant permission for its analyzer to be copied. The method creates a time-limited authorization record that grants permission to a specific target resource. The method takes:
+- The source analyzer ID to be copied
+- The target Azure resource ID that is allowed to receive the copy
+- The target region where the copy will be performed (optional, defaults to current region)
+
+The method returns a `CopyAuthorization` object containing:
+- The full path of the source analyzer
+- The target Azure resource ID
+- An expiration timestamp for the authorization
+
+**Where copy is performed**: The `CopyAnalyzerAsync` method must be called on the **target Microsoft Foundry resource** (where the analyzer will be copied to). This is because the target resource is the one receiving and creating the copy. When the target resource calls `CopyAnalyzerAsync`, the service validates that authorization was previously granted by the source resource. The authorization must be active (not expired) and match the target resource ID and region specified in the copy request.
+
+**Sample steps**:
+1. **Create a source analyzer** in the source Microsoft Foundry resource using the source client (the analyzer to be copied)
+2. **Grant copy authorization** on the source resource using the source client's `GrantCopyAuthorizationAsync` method. This must be called on the source resource because it needs to grant permission for its analyzer to be copied. Specify:
+   - The source analyzer ID
+   - The target Azure resource ID
+   - The target region (optional)
+3. **Copy the analyzer** to the target resource using the target client's `CopyAnalyzerAsync` method. This must be called on the target resource because it is the one receiving and creating the copy. Provide:
+   - The target analyzer ID (name for the copied analyzer)
+   - The source analyzer ID
+   - The source Azure resource ID
+   - The source region
+
+The service validates that authorization was granted by the source resource before allowing the copy operation to proceed. Both source and target resources require 'Cognitive Services User' role for cross-resource copying. The copy authorization expires after a certain time, so copy operations should be performed soon after granting authorization.
 
 ```C# Snippet:ContentUnderstandingGrantCopyAuth
 // Get source endpoint from configuration
 // Note: configuration is already loaded in Main method
 string sourceEndpoint = "https://source-resource.services.ai.azure.com/";
-string? sourceKey = "optional-source-api-key"; // Set to null to use DefaultAzureCredential
 
-// Create source client
-ContentUnderstandingClient sourceClient = !string.IsNullOrEmpty(sourceKey)
-    ? new ContentUnderstandingClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceKey))
-    : new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
+// Create source client using DefaultAzureCredential
+ContentUnderstandingClient sourceClient = new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
 
 // Source analyzer ID (must already exist in the source resource)
 string sourceAnalyzerId = "my_source_analyzer_id_in_the_source_resource";
@@ -84,12 +76,9 @@ string sourceRegion = "eastus"; // Replace with actual source region
 string targetEndpoint = "https://target-resource.services.ai.azure.com/";
 string targetResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}";
 string targetRegion = "westus"; // Replace with actual target region
-string? targetKey = "optional-target-api-key"; // Set to null to use DefaultAzureCredential
 
-// Create target client
-ContentUnderstandingClient targetClient = !string.IsNullOrEmpty(targetKey)
-    ? new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey))
-    : new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential());
+// Create target client using DefaultAzureCredential
+ContentUnderstandingClient targetClient = new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential());
 
 // Step 1: Create the source analyzer
 var sourceConfig = new ContentAnalyzerConfig
@@ -189,16 +178,6 @@ finally
 }
 ```
 
-## When to use cross-resource copying
-
-Use cross-resource copying when you need to:
-- **Copy between subscriptions**: Move analyzers between different Azure subscriptions
-- **Multi-region deployment**: Deploy the same analyzer to multiple regions
-- **Resource migration**: Migrate analyzers from one resource to another
-- **Environment promotion**: Promote analyzers from development to production across resources
-
-**Note**: Both source and target resources require 'Cognitive Services User' role for cross-resource copying. The copy authorization expires after a certain time, so copy operations should be performed soon after granting authorization.
-
 ## Next steps
 
 - [Sample 14: Copy analyzer][sample14] - Learn about same-resource copying
@@ -209,6 +188,23 @@ Use cross-resource copying when you need to:
 
 - [Content Understanding documentation][cu-docs]
 - [Analyzer management][analyzer-docs] - Learn about managing analyzers
+
+## Troubleshooting
+
+If you encounter authorization errors when running this sample, verify the following:
+
+> **Note**: Cross-resource copying requires credential-based authentication (such as `DefaultAzureCredential`). API keys cannot be used for cross-resource operations.
+
+- **Cognitive Services User role**: Ensure that the credential you're using (user, service principal, or managed identity) has been granted the **'Cognitive Services User'** role on both the source and target Microsoft Foundry resources. This role is required for:
+  - Granting copy authorization on the source resource
+  - Copying analyzers to the target resource
+
+To check or assign the role:
+1. Go to the Azure portal
+2. Navigate to your Microsoft Foundry resource
+3. Open "Access control (IAM)"
+4. Verify that your credential (user, service principal, or managed identity) has the "Cognitive Services User" role assigned
+5. Repeat this check for both the source and target resources
 
 [sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md

@@ -32,12 +32,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Get source endpoint from configuration
             // Note: configuration is already loaded in Main method
             string sourceEndpoint = "https://source-resource.services.ai.azure.com/";
-            string? sourceKey = "optional-source-api-key"; // Set to null to use DefaultAzureCredential
 
-            // Create source client
-            ContentUnderstandingClient sourceClient = !string.IsNullOrEmpty(sourceKey)
-                ? new ContentUnderstandingClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceKey))
-                : new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
+            // Create source client using DefaultAzureCredential
+            ContentUnderstandingClient sourceClient = new ContentUnderstandingClient(new Uri(sourceEndpoint), new DefaultAzureCredential());
 
             // Source analyzer ID (must already exist in the source resource)
             string sourceAnalyzerId = "my_source_analyzer_id_in_the_source_resource";
@@ -50,12 +47,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string targetEndpoint = "https://target-resource.services.ai.azure.com/";
             string targetResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{name}";
             string targetRegion = "westus"; // Replace with actual target region
-            string? targetKey = "optional-target-api-key"; // Set to null to use DefaultAzureCredential
 
-            // Create target client
-            ContentUnderstandingClient targetClient = !string.IsNullOrEmpty(targetKey)
-                ? new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey))
-                : new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential());
+            // Create target client using DefaultAzureCredential
+            ContentUnderstandingClient targetClient = new ContentUnderstandingClient(new Uri(targetEndpoint), new DefaultAzureCredential());
 #else
             // For testing, we'll use the same endpoint for both source and target
             // In production, these would be different resources
@@ -72,13 +66,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string targetEndpoint = TestEnvironment.TargetEndpoint;
             string targetResourceId = TestEnvironment.TargetResourceId ?? throw new InvalidOperationException("TARGET_RESOURCE_ID is required");
             string targetRegion = TestEnvironment.TargetRegion ?? throw new InvalidOperationException("TARGET_REGION is required");
-            string? targetKey = TestEnvironment.TargetKey;
 
-            // Create target client
+            // Create target client using DefaultAzureCredential
             var targetClientOptions = InstrumentClientOptions(new ContentUnderstandingClientOptions());
-            ContentUnderstandingClient targetClient = !string.IsNullOrEmpty(targetKey)
-                ? InstrumentClient(new ContentUnderstandingClient(new Uri(targetEndpoint), new AzureKeyCredential(targetKey!), targetClientOptions))
-                : InstrumentClient(new ContentUnderstandingClient(new Uri(targetEndpoint), TestEnvironment.Credential, targetClientOptions));
+            ContentUnderstandingClient targetClient = InstrumentClient(new ContentUnderstandingClient(new Uri(targetEndpoint), TestEnvironment.Credential, targetClientOptions));
 #endif
 
             // Step 1: Create the source analyzer
