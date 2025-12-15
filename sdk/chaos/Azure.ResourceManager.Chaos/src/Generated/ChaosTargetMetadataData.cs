@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Chaos
         {
             get
             {
-                //if (Properties is null)
-                //{
-                //    Properties = new TargetTypeProperties();
-                //}
-                return Properties?.ResourceTypes;
+                if (Properties is null)
+                {
+                    Properties = new TargetTypeProperties();
+                }
+                return Properties.ResourceTypes;
             }
         }
     }
