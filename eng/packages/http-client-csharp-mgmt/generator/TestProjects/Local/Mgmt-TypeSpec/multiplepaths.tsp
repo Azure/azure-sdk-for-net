@@ -36,9 +36,8 @@ model BestPracticeProperties {
 
 // Define operation aliases with different path patterns using LegacyOperations
 // The 4th parameter (ResourceName) explicitly specifies the resource name to use.
-// This should match the singular form of the interface name.
-// Note: The emitter will derive resource names from interface names when multiple paths exist,
-// so specifying explicit ResourceName parameters ensures consistency and clarity.
+// The emitter prioritizes this explicit ResourceName over deriving names from interface names.
+// This ensures consistent and predictable resource naming regardless of interface name variations.
 alias BestPracticeOps = Azure.ResourceManager.Legacy.LegacyOperations<
   {
     ...ApiVersionParameter;
@@ -52,7 +51,7 @@ alias BestPracticeOps = Azure.ResourceManager.Legacy.LegacyOperations<
     bestPracticeName: string;
   },
   ErrorResponse,
-  "BestPractice"  // Explicit resource name
+  "BestPractice"  // Explicit resource name - prioritized by the emitter
 >;
 
 alias BestPracticesVersionOps = Azure.ResourceManager.Legacy.LegacyOperations<
@@ -74,7 +73,7 @@ alias BestPracticesVersionOps = Azure.ResourceManager.Legacy.LegacyOperations<
     versionName: string;
   },
   ErrorResponse,
-  "BestPracticeVersion"  // Explicit resource name
+  "BestPracticeVersion"  // Explicit resource name - prioritized by the emitter
 >;
 
 /** Best practice operations on /bestPractices/{bestPracticeName} */

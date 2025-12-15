@@ -79,6 +79,9 @@ export async function updateClients(
   // Track client names associated with each resource path for name derivation
   const resourcePathToClientName = new Map<string, string>();
   
+  // Track explicit resource names from TypeSpec (e.g., from LegacyOperations ResourceName parameter)
+  const resourcePathToExplicitName = new Map<string, string>();
+  
   const nonResourceMethods: Map<string, NonResourceMethod> = new Map();
 
   // first we flatten all possible clients in the code model
@@ -92,7 +95,7 @@ export async function updateClients(
       const serviceMethod = serviceMethods.get(
         method.crossLanguageDefinitionId
       );
-      const [kind, modelId] =
+      const [kind, modelId, explicitResourceName] =
         parseResourceOperation(serviceMethod, sdkContext) ?? [];
      
       if (modelId && kind && resourceModelIds.has(modelId)) {
@@ -140,11 +143,16 @@ export async function updateClients(
         // Create a unique key combining model ID and resource path
         const metadataKey = `${modelId}|${resourcePath}`;
         
+        // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
+        if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
+          resourcePathToExplicitName.set(metadataKey, explicitResourceName);
+        }
+        
         // Get or create metadata entry for this resource path
         let entry = resourcePathToMetadataMap.get(metadataKey);
         if (!entry) {
           const model = resourceModelMap.get(modelId);
-          // Store the client name for this resource path for later use
+          // Store the client name for this resource path for later use (fallback if no explicit name)
           if (!resourcePathToClientName.has(metadataKey)) {
             resourcePathToClientName.set(metadataKey, client.name);
           }
@@ -298,20 +306,25 @@ export async function updateClients(
     modelIdToMetadataList.get(modelId)!.push(metadata);
   }
   
-  // Update resource names: if a model has multiple different resource paths, derive names from client names
+  // Update resource names: prioritize explicit ResourceName from TypeSpec, fallback to deriving from client names
   // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
-  // Note: TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
-  // The derived names from interface names (e.g., "BestPractices" -> "BestPractice") should match
-  // the explicit ResourceName parameters in TypeSpec for consistency.
+  // TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
   for (const [modelId, metadataList] of modelIdToMetadataList) {
     if (metadataList.length > 1) {
-      // Multiple resource paths for the same model - derive names from client names
+      // Multiple resource paths for the same model - use explicit names or derive from client names
       for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
         const keyModelId = metadataKey.split('|')[0];
         if (keyModelId === modelId) {
-          const clientName = resourcePathToClientName.get(metadataKey);
-          if (clientName) {
-            metadata.resourceName = deriveResourceNameFromClient(clientName);
+          // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
+          const explicitName = resourcePathToExplicitName.get(metadataKey);
+          if (explicitName) {
+            metadata.resourceName = explicitName;
+          } else {
+            // Fallback: derive from client name
+            const clientName = resourcePathToClientName.get(metadataKey);
+            if (clientName) {
+              metadata.resourceName = deriveResourceNameFromClient(clientName);
+            }
           }
         }
       }
@@ -347,7 +360,7 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
 function parseResourceOperation(
   serviceMethod: SdkMethod<SdkHttpOperation> | undefined,
   sdkContext: CSharpEmitterContext
-): [ResourceOperationKind, string | undefined] | undefined {
+): [ResourceOperationKind, string | undefined, string | undefined] | undefined {
   const decorators = serviceMethod?.__raw?.decorators;
   for (const decorator of decorators ?? []) {
     switch (decorator.definition?.name) {
@@ -355,32 +368,38 @@ function parseResourceOperation(
       case armResourceReadName:
         return [
           ResourceOperationKind.Get,
-          getResourceModelId(sdkContext, decorator)
+          getResourceModelId(sdkContext, decorator),
+          undefined // No explicit resource name for ARM operations
         ];
       case armResourceCreateOrUpdateName:
         return [
           ResourceOperationKind.Create,
-          getResourceModelId(sdkContext, decorator)
+          getResourceModelId(sdkContext, decorator),
+          undefined
         ];
       case armResourceUpdateName:
         return [
           ResourceOperationKind.Update,
-          getResourceModelId(sdkContext, decorator)
+          getResourceModelId(sdkContext, decorator),
+          undefined
         ];
       case armResourceDeleteName:
         return [
           ResourceOperationKind.Delete,
-          getResourceModelId(sdkContext, decorator)
+          getResourceModelId(sdkContext, decorator),
+          undefined
         ];
       case armResourceListName:
         return [
           ResourceOperationKind.List,
-          getResourceModelId(sdkContext, decorator)
+          getResourceModelId(sdkContext, decorator),
+          undefined
         ];
       case armResourceActionName:
         return [
           ResourceOperationKind.Action,
-          getResourceModelId(sdkContext, decorator)
+          getResourceModelId(sdkContext, decorator),
+          undefined
         ];
       case extensionResourceOperationName:
         switch (decorator.args[2].jsValue) {
@@ -391,7 +410,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "createOrUpdate":
             return [
@@ -400,7 +420,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "update":
             return [
@@ -409,7 +430,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "delete":
             return [
@@ -418,7 +440,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "list":
             return [
@@ -427,7 +450,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "action":
             return [
@@ -436,7 +460,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
         }
         break;
@@ -450,7 +475,9 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[0].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              // Extract the explicit resource name if available (4th parameter in LegacyOperations)
+              decorator.args.length > 3 ? (decorator.args[3].jsValue as string) : undefined
             ];
           case "createOrUpdate":
             return [
@@ -459,7 +486,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[0].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              decorator.args.length > 3 ? (decorator.args[3].jsValue as string) : undefined
             ];
           case "update":
             return [
@@ -468,7 +496,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[0].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              decorator.args.length > 3 ? (decorator.args[3].jsValue as string) : undefined
             ];
           case "delete":
             return [
@@ -477,7 +506,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[0].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              decorator.args.length > 3 ? (decorator.args[3].jsValue as string) : undefined
             ];
           case "list":
             return [
@@ -486,7 +516,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[0].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              decorator.args.length > 3 ? (decorator.args[3].jsValue as string) : undefined
             ];
           case "action":
             return [
@@ -495,7 +526,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[0].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              decorator.args.length > 3 ? (decorator.args[3].jsValue as string) : undefined
             ];
         }
         return undefined;
@@ -508,7 +540,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "createOrUpdate":
             return [
@@ -517,7 +550,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "update":
             return [
@@ -526,7 +560,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "delete":
             return [
@@ -535,7 +570,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "list":
             return [
@@ -544,7 +580,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
           case "action":
             return [
@@ -553,7 +590,8 @@ function parseResourceOperation(
                 sdkContext,
                 decorator.args[1].value as Model,
                 decorator.definition?.name
-              )
+              ),
+              undefined
             ];
         }
         return undefined;
@@ -655,6 +693,34 @@ function getSingletonResource(
   return singletonResource ?? "default";
 }
 
+/**
+ * Extracts the explicit resource name from the ARM resource decorator.
+ * The resource name is passed as a parameter to LegacyOperations templates.
+ * @param model - The model to extract the resource name from
+ * @returns The explicit resource name if found, otherwise undefined
+ */
+function getExplicitResourceName(
+  model: InputModelType | undefined
+): string | undefined {
+  if (!model || !model.decorators) return undefined;
+  
+  // Find the armResourceWithParameter decorator which contains the ResourceName
+  const armResourceDecorator = model.decorators.find(
+    (d) => d.name === armResourceWithParameter
+  );
+  
+  if (armResourceDecorator && armResourceDecorator.arguments) {
+    // The ResourceName is typically passed as an argument to the decorator
+    // Check common argument names used in TypeSpec Azure RM
+    const resourceName = armResourceDecorator.arguments["TName"] as string | undefined;
+    if (resourceName) {
+      return resourceName;
+    }
+  }
+  
+  return undefined;
+}
+
 function getResourceScope(
   model: InputModelType,
   methods?: ResourceMethod[]
@@ -702,12 +768,16 @@ function getResourceScopeOfMethod(
   return undefined;
 }
 
+/**
+ * Derives a resource name from a client/interface name by removing pluralization.
+ * This is used as a FALLBACK when no explicit ResourceName is specified in TypeSpec.
+ * TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates
+ * to avoid relying on this derivation logic.
+ * 
+ * Examples: "BestPractices" -> "BestPractice", "BestPracticeVersions" -> "BestPracticeVersion"
+ * Other examples: "Employees" -> "Employee", "Companies" -> "Company"
+ */
 function deriveResourceNameFromClient(clientName: string): string {
-  // Derive resource name from client/interface name by removing pluralization.
-  // This should match the explicit ResourceName parameter specified in LegacyOperations templates.
-  // For example: "BestPractices" -> "BestPractice", "BestPracticeVersions" -> "BestPracticeVersion"
-  // Other examples: "Employees" -> "Employee", "Companies" -> "Company"
-  
   // Handle common plural endings
   if (clientName.endsWith("ies") && clientName.length > 3) {
     // "Practices" -> "Practice", "Companies" -> "Company"
