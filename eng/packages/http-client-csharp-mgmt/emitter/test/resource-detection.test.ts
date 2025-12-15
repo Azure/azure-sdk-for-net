@@ -11,6 +11,7 @@ import { getAllClients, updateClients } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
 import {
   resourceMetadata,
+  nonResourceMethodMetadata,
   tenantResource,
   subscriptionResource,
   resourceGroupResource

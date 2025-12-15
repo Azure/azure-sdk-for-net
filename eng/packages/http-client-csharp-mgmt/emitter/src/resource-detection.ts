@@ -241,6 +241,8 @@ export async function updateClients(
     
     // If this entry has no resourceIdPattern, try to merge it with another entry for the same model that does
     if (metadata.resourceIdPattern === "") {
+      let merged = false;
+      
       // First try to merge with parent if it exists
       if (metadata.parentResourceModelId) {
         for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
@@ -248,6 +250,7 @@ export async function updateClients(
           if (parentModelId === metadata.parentResourceModelId && parentMetadata.resourceIdPattern) {
             parentMetadata.methods.push(...metadata.methods);
             metadataKeysToDelete.push(metadataKey);
+            merged = true;
             break;
           }
         }
@@ -259,14 +262,27 @@ export async function updateClients(
             // Merge this metadata into the other one
             otherMetadata.methods.push(...metadata.methods);
             metadataKeysToDelete.push(metadataKey);
+            merged = true;
             break;
           }
+        }
+        
+        // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
+        if (!merged) {
+          for (const method of metadata.methods) {
+            nonResourceMethods.set(method.methodId, {
+              methodId: method.methodId,
+              operationPath: method.operationPath,
+              operationScope: method.operationScope
+            });
+          }
+          metadataKeysToDelete.push(metadataKey);
         }
       }
     }
   }
   
-  // Remove entries that were merged
+  // Remove entries that were merged or converted to non-resource methods
   for (const key of metadataKeysToDelete) {
     resourcePathToMetadataMap.delete(key);
   }
