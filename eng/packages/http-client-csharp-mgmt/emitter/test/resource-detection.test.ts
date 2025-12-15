@@ -1220,4 +1220,80 @@ interface Employees {
       "ManagementGroup"
     );
   });
+
+  it("interface with only action operations (no get)", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A ScheduledAction resource model */
+model ScheduledAction is TrackedResource<ScheduledActionProperties> {
+  ...ResourceNameParameter<ScheduledAction>;
+}
+
+/** ScheduledAction properties */
+model ScheduledActionProperties {
+  /** Action type */
+  actionType?: string;
+}
+
+/** Request model for GetAssociatedScheduledActions */
+model GetAssociatedScheduledActionsRequest {
+  /** Resource IDs to query */
+  resourceIds: string[];
+}
+
+/** Response model for GetAssociatedScheduledActions */
+model GetAssociatedScheduledActionsResponse {
+  /** List of scheduled actions */
+  scheduledActions: ScheduledAction[];
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface ScheduledActionExtension {
+  @post
+  @segment("getAssociatedScheduledActions")
+  getAssociatedScheduledActions is ArmResourceActionSync<
+    ScheduledAction,
+    GetAssociatedScheduledActionsRequest,
+    GetAssociatedScheduledActionsResponse
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+
+    const scheduledActionExtensionClient = getAllClients(root).find(
+      (c) => c.name === "ScheduledActionExtension"
+    );
+    ok(scheduledActionExtensionClient, "ScheduledActionExtension client should exist");
+
+    const scheduledActionModel = root.models.find((m) => m.name === "ScheduledAction");
+    ok(scheduledActionModel, "ScheduledAction model should exist");
+
+    const getAssociatedMethod = scheduledActionExtensionClient.methods.find(
+      (m) => m.name === "getAssociatedScheduledActions"
+    );
+    ok(getAssociatedMethod, "getAssociatedScheduledActions method should exist");
+
+    // Check if resource metadata exists for ScheduledAction
+    const resourceMetadataDecorator = scheduledActionModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    
+    // The resource should have metadata with the action operation
+    ok(resourceMetadataDecorator, "ScheduledAction should have resource metadata decorator");
+    ok(resourceMetadataDecorator.arguments, "Resource metadata should have arguments");
+    
+    // Check that the action method is in the metadata
+    const actionMethodEntry = resourceMetadataDecorator.arguments.methods?.find(
+      (m: any) => m.methodId === getAssociatedMethod.crossLanguageDefinitionId
+    );
+    ok(actionMethodEntry, "getAssociatedScheduledActions method should be in resource metadata");
+    strictEqual(actionMethodEntry.kind, "Action", "Method kind should be Action");
+  });
 });
