@@ -1,4 +1,4 @@
-# Assigning Deployment Resources in Azure AI Language
+# Assigning Project Resources in Azure AI Language
 
 This sample demonstrates how to assign resources to a project using the synchronous API of the `Azure.AI.Language.Conversations.Authoring` SDK.
 It uses Azure Active Directory (Microsoft Entra ID) authentication via `DefaultAzureCredential`, which is required for resource assignment and unassignment operations.
@@ -8,9 +8,9 @@ It uses Azure Active Directory (Microsoft Entra ID) authentication via `DefaultA
 This operation is supported only via AAD authentication and requires the caller to be assigned the Cognitive Service Language Owner role for this assigned resource.
 For details on how to set up AAD authentication, refer to the [Create a client using AAD](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/README.md#create-a-client-using-azure-active-directory-authentication).
 
-## Assign Deployment Resources
+## Assign Project Resources
 
-To assign deployment resources, call `AssignProjectResources` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
+To assign project resources, call `AssignProjectResources` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
 
 ```C# Snippet:Sample16_ConversationsAuthoring_AssignProjectResources
 // Arrange
@@ -54,9 +54,9 @@ else
 }
 ```
 
-## Assign Deployment Resources Async
+## Assign Project Resources Async
 
-To assign deployment resources asynchronously, call `AssignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
+To assign project resources asynchronously, call `AssignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This operation links the project to the specified Cognitive Services resource.
 
 ```C# Snippet:Sample16_ConversationsAuthoring_AssignProjectResourcesAsync
 // Arrange

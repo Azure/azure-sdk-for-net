@@ -1,4 +1,4 @@
-# Unassigning Deployment Resources in Azure AI Language
+# Unassigning Project Resources in Azure AI Language
 
 This sample demonstrates how to unassign previously assigned resources from a project using the synchronous API of the `Azure.AI.Language.Conversations.Authoring` SDK.
 It uses Azure Active Directory (Microsoft Entra ID) authentication via `DefaultAzureCredential`, which is required for resource assignment and unassignment operations.
@@ -8,9 +8,9 @@ It uses Azure Active Directory (Microsoft Entra ID) authentication via `DefaultA
 This operation is supported only via AAD authentication and requires the caller to be assigned the Cognitive Service Language Owner role for this assigned resource.
 For details on how to set up AAD authentication, refer to the [Create a client using AAD](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/README.md#create-a-client-using-azure-active-directory-authentication).
 
-## Unassign Deployment Resources
+## Unassign Project Resources
 
-To unassign deployment resources, call `UnassignProjectResources` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource.
+To unassign project resources, call `UnassignProjectResources` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource.
 
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResources
 // Set project name and create client for the project
@@ -46,9 +46,9 @@ else
 }
 ```
 
-## Unassign Deployment Resources Async
+## Unassign Project Resources Async
 
-To unassign deployment resources asynchronously, call `UnassignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource asynchronously.
+To unassign project resources asynchronously, call `UnassignProjectResourcesAsync` on the `ConversationAuthoringProject` client. This detaches the project from the specified Cognitive Services resource asynchronously.
 
 ```C# Snippet:Sample18_ConversationsAuthoring_UnassignProjectResourcesAsync
 // Set project name and create client for the project
