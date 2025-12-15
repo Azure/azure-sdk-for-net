@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             bool skipDataMigration = default;
             SourceType sourceType = default;
             ResourceIdentifier targetResourceId = default;
-            MigrationProvisioningState? provisioningState = default;
+            RedisEnterpriseMigrationProvisioningState? provisioningState = default;
             string statusDetails = default;
             DateTimeOffset? creationTime = default;
             DateTimeOffset? lastModifiedTime = default;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    provisioningState = new MigrationProvisioningState(property.Value.GetString());
+                    provisioningState = new RedisEnterpriseMigrationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusDetails"u8))

@@ -82,7 +82,12 @@ rename-mapping:
   SkuDetailsList: RedisEnterpriseSkuDetailsList
   TlsVersion: RedisEnterpriseTlsVersion
   Migration: RedisEnterpriseMigration
-  MaintenanceWindows: ClusterCustomMaintenanceWindows
+  MigrationProperties: RedisEnterpriseMigrationProperties
+  MigrationProvisioningState: RedisEnterpriseMigrationProvisioningState
+  MaintenanceWindow: ClusterCustomMaintenanceWindow
+  MaintenanceDayOfWeek: ClusterCustomMaintenanceDayOfWeek
+  MaintenanceWindowSchedule: ClusterCustomMaintenanceWindowSchedule
+  MaintenanceWindowType: ClusterCustomMaintenanceWindowType
 
 format-by-name-rules:
   'tenantId': 'uuid'

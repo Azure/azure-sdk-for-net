@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    internal partial class UnknownMigrationProperties : IUtf8JsonSerializable, IJsonModel<MigrationProperties>
+    internal partial class UnknownMigrationProperties : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseMigrationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseMigrationProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MigrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<RedisEnterpriseMigrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,25 +29,25 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseMigrationProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        MigrationProperties IJsonModel<MigrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        RedisEnterpriseMigrationProperties IJsonModel<RedisEnterpriseMigrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseMigrationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationProperties(document.RootElement, options);
+            return DeserializeRedisEnterpriseMigrationProperties(document.RootElement, options);
         }
 
         internal static UnknownMigrationProperties DeserializeUnknownMigrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
             SourceType sourceType = "Unknown";
             ResourceIdentifier targetResourceId = default;
-            MigrationProvisioningState? provisioningState = default;
+            RedisEnterpriseMigrationProvisioningState? provisioningState = default;
             string statusDetails = default;
             DateTimeOffset? creationTime = default;
             DateTimeOffset? lastModifiedTime = default;
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    provisioningState = new MigrationProvisioningState(property.Value.GetString());
+                    provisioningState = new RedisEnterpriseMigrationProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("statusDetails"u8))
@@ -242,9 +242,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<MigrationProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<RedisEnterpriseMigrationProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -253,26 +253,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseMigrationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MigrationProperties IPersistableModel<MigrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        RedisEnterpriseMigrationProperties IPersistableModel<RedisEnterpriseMigrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMigrationProperties(document.RootElement, options);
+                        return DeserializeRedisEnterpriseMigrationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseMigrationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MigrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<RedisEnterpriseMigrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

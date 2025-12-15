@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            IList<MaintenanceWindow> maintenanceWindows = default;
+            IList<ClusterCustomMaintenanceWindow> maintenanceWindows = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    List<MaintenanceWindow> array = new List<MaintenanceWindow>();
+                    List<ClusterCustomMaintenanceWindow> array = new List<ClusterCustomMaintenanceWindow>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceWindow.DeserializeMaintenanceWindow(item, options));
+                        array.Add(ClusterCustomMaintenanceWindow.DeserializeClusterCustomMaintenanceWindow(item, options));
                     }
                     maintenanceWindows = array;
                     continue;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MaintenanceConfiguration(maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindow>(), serializedAdditionalRawData);
+            return new MaintenanceConfiguration(maintenanceWindows ?? new ChangeTrackingList<ClusterCustomMaintenanceWindow>(), serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

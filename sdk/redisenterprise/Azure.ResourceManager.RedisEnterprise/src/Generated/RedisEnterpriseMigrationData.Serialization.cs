@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 return null;
             }
-            MigrationProperties properties = default;
+            RedisEnterpriseMigrationProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                     {
                         continue;
                     }
-                    properties = MigrationProperties.DeserializeMigrationProperties(property.Value, options);
+                    properties = RedisEnterpriseMigrationProperties.DeserializeRedisEnterpriseMigrationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

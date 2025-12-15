@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfiguration"/>. </summary>
         public MaintenanceConfiguration()
         {
-            MaintenanceWindows = new ChangeTrackingList<MaintenanceWindow>();
+            MaintenanceWindows = new ChangeTrackingList<ClusterCustomMaintenanceWindow>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceConfiguration"/>. </summary>
         /// <param name="maintenanceWindows"> Custom maintenance windows that apply to the cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceConfiguration(IList<MaintenanceWindow> maintenanceWindows, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MaintenanceConfiguration(IList<ClusterCustomMaintenanceWindow> maintenanceWindows, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaintenanceWindows = maintenanceWindows;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -62,6 +62,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Custom maintenance windows that apply to the cluster. </summary>
         [WirePath("maintenanceWindows")]
-        public IList<MaintenanceWindow> MaintenanceWindows { get; }
+        public IList<ClusterCustomMaintenanceWindow> MaintenanceWindows { get; }
     }
 }

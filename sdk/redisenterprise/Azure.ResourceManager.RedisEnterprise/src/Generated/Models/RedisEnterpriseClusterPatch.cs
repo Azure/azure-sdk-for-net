@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         internal MaintenanceConfiguration MaintenanceConfiguration { get; set; }
         /// <summary> Custom maintenance windows that apply to the cluster. </summary>
         [WirePath("properties.maintenanceConfiguration.maintenanceWindows")]
-        public IList<MaintenanceWindow> MaintenanceWindows
+        public IList<ClusterCustomMaintenanceWindow> MaintenanceWindows
         {
             get
             {

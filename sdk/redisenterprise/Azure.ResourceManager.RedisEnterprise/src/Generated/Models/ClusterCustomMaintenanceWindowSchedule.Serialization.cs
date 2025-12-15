@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class MaintenanceWindowSchedule : IUtf8JsonSerializable, IJsonModel<MaintenanceWindowSchedule>
+    public partial class ClusterCustomMaintenanceWindowSchedule : IUtf8JsonSerializable, IJsonModel<ClusterCustomMaintenanceWindowSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceWindowSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterCustomMaintenanceWindowSchedule>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MaintenanceWindowSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterCustomMaintenanceWindowSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowSchedule)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindowSchedule)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DayOfWeek))
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
-        MaintenanceWindowSchedule IJsonModel<MaintenanceWindowSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterCustomMaintenanceWindowSchedule IJsonModel<ClusterCustomMaintenanceWindowSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowSchedule)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindowSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceWindowSchedule(document.RootElement, options);
+            return DeserializeClusterCustomMaintenanceWindowSchedule(document.RootElement, options);
         }
 
-        internal static MaintenanceWindowSchedule DeserializeMaintenanceWindowSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterCustomMaintenanceWindowSchedule DeserializeClusterCustomMaintenanceWindowSchedule(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            MaintenanceDayOfWeek? dayOfWeek = default;
+            ClusterCustomMaintenanceDayOfWeek? dayOfWeek = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     {
                         continue;
                     }
-                    dayOfWeek = new MaintenanceDayOfWeek(property.Value.GetString());
+                    dayOfWeek = new ClusterCustomMaintenanceDayOfWeek(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MaintenanceWindowSchedule(dayOfWeek, serializedAdditionalRawData);
+            return new ClusterCustomMaintenanceWindowSchedule(dayOfWeek, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -130,9 +130,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<MaintenanceWindowSchedule>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterCustomMaintenanceWindowSchedule>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -141,26 +141,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowSchedule)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindowSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MaintenanceWindowSchedule IPersistableModel<MaintenanceWindowSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterCustomMaintenanceWindowSchedule IPersistableModel<ClusterCustomMaintenanceWindowSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindowSchedule>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMaintenanceWindowSchedule(document.RootElement, options);
+                        return DeserializeClusterCustomMaintenanceWindowSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowSchedule)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindowSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MaintenanceWindowSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterCustomMaintenanceWindowSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    public partial class MaintenanceWindow : IUtf8JsonSerializable, IJsonModel<MaintenanceWindow>
+    public partial class ClusterCustomMaintenanceWindow : IUtf8JsonSerializable, IJsonModel<ClusterCustomMaintenanceWindow>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaintenanceWindow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterCustomMaintenanceWindow>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ClusterCustomMaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindow)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("type"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             }
         }
 
-        MaintenanceWindow IJsonModel<MaintenanceWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ClusterCustomMaintenanceWindow IJsonModel<ClusterCustomMaintenanceWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceWindow(document.RootElement, options);
+            return DeserializeClusterCustomMaintenanceWindow(document.RootElement, options);
         }
 
-        internal static MaintenanceWindow DeserializeMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ClusterCustomMaintenanceWindow DeserializeClusterCustomMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 return null;
             }
-            MaintenanceWindowType type = default;
+            ClusterCustomMaintenanceWindowType type = default;
             TimeSpan duration = default;
             int startHourUtc = default;
-            MaintenanceWindowSchedule schedule = default;
+            ClusterCustomMaintenanceWindowSchedule schedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
                 {
-                    type = new MaintenanceWindowType(property.Value.GetString());
+                    type = new ClusterCustomMaintenanceWindowType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("duration"u8))
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = MaintenanceWindowSchedule.DeserializeMaintenanceWindowSchedule(property.Value, options);
+                    schedule = ClusterCustomMaintenanceWindowSchedule.DeserializeClusterCustomMaintenanceWindowSchedule(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MaintenanceWindow(type, duration, startHourUtc, schedule, serializedAdditionalRawData);
+            return new ClusterCustomMaintenanceWindow(type, duration, startHourUtc, schedule, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<MaintenanceWindow>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ClusterCustomMaintenanceWindow>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -198,26 +198,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindow)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MaintenanceWindow IPersistableModel<MaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ClusterCustomMaintenanceWindow IPersistableModel<ClusterCustomMaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterCustomMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeMaintenanceWindow(document.RootElement, options);
+                        return DeserializeClusterCustomMaintenanceWindow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterCustomMaintenanceWindow)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MaintenanceWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ClusterCustomMaintenanceWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

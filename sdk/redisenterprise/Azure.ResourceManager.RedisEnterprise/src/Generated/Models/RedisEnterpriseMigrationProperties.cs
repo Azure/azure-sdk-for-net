@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary>
     /// Properties for Redis Enterprise migration operation.
-    /// Please note <see cref="MigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// Please note <see cref="RedisEnterpriseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureCacheForRedisMigrationProperties"/>.
     /// </summary>
-    public abstract partial class MigrationProperties
+    public abstract partial class RedisEnterpriseMigrationProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationProperties"/>. </summary>
-        protected MigrationProperties()
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationProperties"/>. </summary>
+        protected RedisEnterpriseMigrationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="RedisEnterpriseMigrationProperties"/>. </summary>
         /// <param name="sourceType"> Describes the source of the migration operation. </param>
         /// <param name="targetResourceId"> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </param>
         /// <param name="provisioningState"> Current provisioning status of the migration. </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, MigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RedisEnterpriseMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceType = sourceType;
             TargetResourceId = targetResourceId;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public ResourceIdentifier TargetResourceId { get; }
         /// <summary> Current provisioning status of the migration. </summary>
         [WirePath("provisioningState")]
-        public MigrationProvisioningState? ProvisioningState { get; }
+        public RedisEnterpriseMigrationProvisioningState? ProvisioningState { get; }
         /// <summary> Additional details about the migration operation's status in free text format. </summary>
         [WirePath("statusDetails")]
         public string StatusDetails { get; }

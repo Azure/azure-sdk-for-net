@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Schedule details for a maintenance window. </summary>
-    public partial class MaintenanceWindowSchedule
+    public partial class ClusterCustomMaintenanceWindowSchedule
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowSchedule"/>. </summary>
-        public MaintenanceWindowSchedule()
+        /// <summary> Initializes a new instance of <see cref="ClusterCustomMaintenanceWindowSchedule"/>. </summary>
+        public ClusterCustomMaintenanceWindowSchedule()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindowSchedule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCustomMaintenanceWindowSchedule"/>. </summary>
         /// <param name="dayOfWeek"> Day of week. Required when the maintenance window type is 'Weekly'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowSchedule(MaintenanceDayOfWeek? dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterCustomMaintenanceWindowSchedule(ClusterCustomMaintenanceDayOfWeek? dayOfWeek, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DayOfWeek = dayOfWeek;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -61,6 +61,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <summary> Day of week. Required when the maintenance window type is 'Weekly'. </summary>
         [WirePath("dayOfWeek")]
-        public MaintenanceDayOfWeek? DayOfWeek { get; set; }
+        public ClusterCustomMaintenanceDayOfWeek? DayOfWeek { get; set; }
     }
 }

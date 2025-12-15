@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.RedisEnterprise
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseKind? Kind { get { throw null; } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow> MaintenanceWindows { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow> MaintenanceWindows { get { throw null; } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? ProvisioningState { get { throw null; } }
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     public partial class RedisEnterpriseMigrationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData>
     {
         public RedisEnterpriseMigrationData() { }
-        public Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties Properties { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -356,16 +356,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
     public static partial class ArmRedisEnterpriseModelFactory
     {
         public static Azure.ResourceManager.RedisEnterprise.AccessPolicyAssignmentData AccessPolicyAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus?), string accessPolicyName = null, System.Guid? userObjectId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier sourceResourceId = null, bool switchDns = false, bool skipDataMigration = false) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties MigrationProperties(string sourceType = null, Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier sourceResourceId = null, bool switchDns = false, bool skipDataMigration = false) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterData RedisEnterpriseClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState, string redisVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterData RedisEnterpriseClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseKind? kind = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseKind?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? highAvailability = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow> maintenanceWindows = null, string hostName = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode? redundancyMode = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState?), string redisVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess?)) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterData RedisEnterpriseClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseKind? kind = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseKind?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku = null, System.Collections.Generic.IEnumerable<string> zones = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? highAvailability = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow> maintenanceWindows = null, string hostName = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode? redundancyMode = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState?), string redisVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterData RedisEnterpriseClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseKind? kind, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? highAvailability, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode? redundancyMode, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState, string redisVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseClusterData RedisEnterpriseClusterData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseKind? kind, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku, System.Collections.Generic.IEnumerable<string> zones, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? highAvailability, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode? redundancyMode, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState, string redisVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess? publicNetworkAccess) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? highAvailability = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow> maintenanceWindows = null, string hostName = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode? redundancyMode = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState?), string redisVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess?)) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? highAvailability = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow> maintenanceWindows = null, string hostName = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode? redundancyMode = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState?), string redisVersion = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterprisePublicNetworkAccess?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSku sku, Azure.ResourceManager.Models.ManagedServiceIdentity identity, System.Collections.Generic.IDictionary<string, string> tags, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? highAvailability, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? minimumTlsVersion, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption, string hostName, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseRedundancyMode? redundancyMode, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState, string redisVersion, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -380,7 +379,8 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClientProtocol? clientProtocol, int? port, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy? clusteringPolicy, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseEvictionPolicy? evictionPolicy, Azure.ResourceManager.RedisEnterprise.Models.RedisPersistenceSettings persistence, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseModule> modules, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabaseGeoReplication geoReplication) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabasePatch RedisEnterpriseDatabasePatch(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClientProtocol? clientProtocol = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClientProtocol?), int? port = default(int?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState? resourceState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusterResourceState?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy? clusteringPolicy = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseClusteringPolicy?), Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseEvictionPolicy? evictionPolicy = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseEvictionPolicy?), Azure.ResourceManager.RedisEnterprise.Models.RedisPersistenceSettings persistence = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseModule> modules = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabaseGeoReplication geoReplication = null, string redisVersion = null, Azure.ResourceManager.RedisEnterprise.Models.DeferUpgradeSetting? deferUpgrade = default(Azure.ResourceManager.RedisEnterprise.Models.DeferUpgradeSetting?), Azure.ResourceManager.RedisEnterprise.Models.AccessKeysAuthentication? accessKeysAuthentication = default(Azure.ResourceManager.RedisEnterprise.Models.AccessKeysAuthentication?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLinkedDatabase RedisEnterpriseLinkedDatabase(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabaseLinkState? state = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseDatabaseLinkState?)) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData RedisEnterpriseMigrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.RedisEnterpriseMigrationData RedisEnterpriseMigrationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = null, Azure.Core.ResourceIdentifier targetResourceId = null, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? provisioningState = default(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState?), string statusDetails = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseModule RedisEnterpriseModule(string name = null, string args = null, string version = null) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseOperationStatus RedisEnterpriseOperationStatus(Azure.Core.ResourceIdentifier id = null, string name = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string status = null, Azure.ResponseError error = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails RedisEnterpriseSkuDetails(string name = null, float? sizeInGB = default(float?)) { throw null; }
         public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetailsList RedisEnterpriseSkuDetailsList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseSkuDetails> skus = null) { throw null; }
     }
-    public partial class AzureCacheForRedisMigrationProperties : Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties>
+    public partial class AzureCacheForRedisMigrationProperties : Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties>
     {
         public AzureCacheForRedisMigrationProperties(Azure.Core.ResourceIdentifier sourceResourceId, bool switchDns, bool skipDataMigration) { }
         public bool SkipDataMigration { get { throw null; } set { } }
@@ -402,6 +402,71 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.AzureCacheForRedisMigrationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterCustomMaintenanceDayOfWeek : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterCustomMaintenanceDayOfWeek(string value) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek Friday { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek Monday { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek Saturday { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek Sunday { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek Thursday { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek Tuesday { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek Wednesday { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek left, Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek left, Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ClusterCustomMaintenanceWindow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow>
+    {
+        public ClusterCustomMaintenanceWindow(Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType windowType, System.TimeSpan duration, int startHourUtc, Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule schedule) { }
+        public System.TimeSpan Duration { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek? ScheduleDayOfWeek { get { throw null; } set { } }
+        public int StartHourUtc { get { throw null; } set { } }
+        public Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType WindowType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ClusterCustomMaintenanceWindowSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule>
+    {
+        public ClusterCustomMaintenanceWindowSchedule() { }
+        public Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceDayOfWeek? DayOfWeek { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ClusterCustomMaintenanceWindowType : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ClusterCustomMaintenanceWindowType(string value) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType Weekly { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType left, Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType left, Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindowType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeferUpgradeSetting : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.DeferUpgradeSetting>
@@ -489,109 +554,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.ImportRedisEnterpriseDatabaseContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceDayOfWeek : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceDayOfWeek(string value) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek Friday { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek Monday { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek Saturday { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek Sunday { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek Thursday { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek Tuesday { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek Wednesday { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek left, Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek left, Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class MaintenanceWindow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow>
-    {
-        public MaintenanceWindow(Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType windowType, System.TimeSpan duration, int startHourUtc, Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule schedule) { }
-        public System.TimeSpan Duration { get { throw null; } set { } }
-        public Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek? ScheduleDayOfWeek { get { throw null; } set { } }
-        public int StartHourUtc { get { throw null; } set { } }
-        public Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType WindowType { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaintenanceWindowSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule>
-    {
-        public MaintenanceWindowSchedule() { }
-        public Azure.ResourceManager.RedisEnterprise.Models.MaintenanceDayOfWeek? DayOfWeek { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MaintenanceWindowType : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MaintenanceWindowType(string value) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType Weekly { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType left, Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType left, Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindowType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public abstract partial class MigrationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties>
-    {
-        protected MigrationProperties() { }
-        public System.DateTimeOffset? CreatedOn { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
-        public Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState? ProvisioningState { get { throw null; } }
-        public string StatusDetails { get { throw null; } }
-        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.MigrationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MigrationProvisioningState : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public MigrationProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState Cancelled { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState Cancelling { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState InProgress { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState ReadyForDnsSwitch { get { throw null; } }
-        public static Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState left, Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState left, Azure.ResourceManager.RedisEnterprise.Models.MigrationProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PersistenceSettingAofFrequency : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.PersistenceSettingAofFrequency>
     {
         private readonly object _dummy;
@@ -677,7 +639,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseHighAvailability? HighAvailability { get { throw null; } set { } }
         public string HostName { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.MaintenanceWindow> MaintenanceWindows { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.RedisEnterprise.Models.ClusterCustomMaintenanceWindow> MaintenanceWindows { get { throw null; } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseTlsVersion? MinimumTlsVersion { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RedisEnterprise.RedisEnterprisePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseProvisioningStatus? ProvisioningState { get { throw null; } }
@@ -905,6 +867,44 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLinkedDatabase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLinkedDatabase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLinkedDatabase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseLinkedDatabase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public abstract partial class RedisEnterpriseMigrationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties>
+    {
+        protected RedisEnterpriseMigrationProperties() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
+        public Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState? ProvisioningState { get { throw null; } }
+        public string StatusDetails { get { throw null; } }
+        public Azure.Core.ResourceIdentifier TargetResourceId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RedisEnterpriseMigrationProvisioningState : System.IEquatable<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RedisEnterpriseMigrationProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState Cancelled { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState Cancelling { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState InProgress { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState ReadyForDnsSwitch { get { throw null; } }
+        public static Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState left, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState left, Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseMigrationProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class RedisEnterpriseModule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseModule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RedisEnterprise.Models.RedisEnterpriseModule>
     {

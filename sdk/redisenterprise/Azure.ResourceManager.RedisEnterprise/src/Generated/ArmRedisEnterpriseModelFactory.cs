@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseClusterData"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RedisEnterpriseKind? kind = null, RedisEnterpriseSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, RedisEnterpriseHighAvailability? highAvailability = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, IEnumerable<MaintenanceWindow> maintenanceWindows = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseRedundancyMode? redundancyMode = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = null)
+        public static RedisEnterpriseClusterData RedisEnterpriseClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, RedisEnterpriseKind? kind = null, RedisEnterpriseSku sku = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, RedisEnterpriseHighAvailability? highAvailability = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, IEnumerable<ClusterCustomMaintenanceWindow> maintenanceWindows = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseRedundancyMode? redundancyMode = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
-            maintenanceWindows ??= new List<MaintenanceWindow>();
+            maintenanceWindows ??= new List<ClusterCustomMaintenanceWindow>();
             privateEndpointConnections ??= new List<RedisEnterprisePrivateEndpointConnectionData>();
 
             return new RedisEnterpriseClusterData(
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the specified Redis Enterprise cluster. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network traffic can access the Redis cluster. Only 'Enabled' or 'Disabled' can be set. null is returned only for clusters created using an old API version which do not have this property and cannot be set. </param>
         /// <returns> A new <see cref="Models.RedisEnterpriseClusterPatch"/> instance for mocking. </returns>
-        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, RedisEnterpriseHighAvailability? highAvailability = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, IEnumerable<MaintenanceWindow> maintenanceWindows = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseRedundancyMode? redundancyMode = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = null)
+        public static RedisEnterpriseClusterPatch RedisEnterpriseClusterPatch(RedisEnterpriseSku sku = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, RedisEnterpriseHighAvailability? highAvailability = null, RedisEnterpriseTlsVersion? minimumTlsVersion = null, RedisEnterpriseCustomerManagedKeyEncryption customerManagedKeyEncryption = null, IEnumerable<ClusterCustomMaintenanceWindow> maintenanceWindows = null, string hostName = null, RedisEnterpriseProvisioningStatus? provisioningState = null, RedisEnterpriseRedundancyMode? redundancyMode = null, RedisEnterpriseClusterResourceState? resourceState = null, string redisVersion = null, IEnumerable<RedisEnterprisePrivateEndpointConnectionData> privateEndpointConnections = null, RedisEnterprisePublicNetworkAccess? publicNetworkAccess = null)
         {
             tags ??= new Dictionary<string, string>();
-            maintenanceWindows ??= new List<MaintenanceWindow>();
+            maintenanceWindows ??= new List<ClusterCustomMaintenanceWindow>();
             privateEndpointConnections ??= new List<RedisEnterprisePrivateEndpointConnectionData>();
 
             return new RedisEnterpriseClusterPatch(
@@ -310,11 +310,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the migration operation.
-        /// Please note <see cref="Models.MigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.RedisEnterpriseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.AzureCacheForRedisMigrationProperties"/>.
         /// </param>
         /// <returns> A new <see cref="RedisEnterprise.RedisEnterpriseMigrationData"/> instance for mocking. </returns>
-        public static RedisEnterpriseMigrationData RedisEnterpriseMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MigrationProperties properties = null)
+        public static RedisEnterpriseMigrationData RedisEnterpriseMigrationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, RedisEnterpriseMigrationProperties properties = null)
         {
             return new RedisEnterpriseMigrationData(
                 id,
@@ -325,15 +325,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MigrationProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RedisEnterpriseMigrationProperties"/>. </summary>
         /// <param name="sourceType"> Describes the source of the migration operation. </param>
         /// <param name="targetResourceId"> The Azure resource ID of the Azure Managed Redis destination cache to migrate. </param>
         /// <param name="provisioningState"> Current provisioning status of the migration. </param>
         /// <param name="statusDetails"> Additional details about the migration operation's status in free text format. </param>
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
-        /// <returns> A new <see cref="Models.MigrationProperties"/> instance for mocking. </returns>
-        public static MigrationProperties MigrationProperties(string sourceType = null, ResourceIdentifier targetResourceId = null, MigrationProvisioningState? provisioningState = null, string statusDetails = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
+        /// <returns> A new <see cref="Models.RedisEnterpriseMigrationProperties"/> instance for mocking. </returns>
+        public static RedisEnterpriseMigrationProperties RedisEnterpriseMigrationProperties(string sourceType = null, ResourceIdentifier targetResourceId = null, RedisEnterpriseMigrationProvisioningState? provisioningState = null, string statusDetails = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null)
         {
             return new UnknownMigrationProperties(
                 sourceType == null ? default : new SourceType(sourceType),
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="switchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
         /// <param name="skipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
         /// <returns> A new <see cref="Models.AzureCacheForRedisMigrationProperties"/> instance for mocking. </returns>
-        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = null, MigrationProvisioningState? provisioningState = null, string statusDetails = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, ResourceIdentifier sourceResourceId = null, bool switchDns = default, bool skipDataMigration = default)
+        public static AzureCacheForRedisMigrationProperties AzureCacheForRedisMigrationProperties(ResourceIdentifier targetResourceId = null, RedisEnterpriseMigrationProvisioningState? provisioningState = null, string statusDetails = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastModifiedOn = null, ResourceIdentifier sourceResourceId = null, bool switchDns = default, bool skipDataMigration = default)
         {
             return new AzureCacheForRedisMigrationProperties(
                 SourceType.AzureCacheForRedis,

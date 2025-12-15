@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
                     },
                     KeyEncryptionKeyUri = new Uri("https://your-kv.vault.azure.net/keys/your-key/your-key-version"),
                 },
-                MaintenanceWindows = {new MaintenanceWindow(MaintenanceWindowType.Weekly, XmlConvert.ToTimeSpan("PT6H"), 3, new MaintenanceWindowSchedule
+                MaintenanceWindows = {new ClusterCustomMaintenanceWindow(ClusterCustomMaintenanceWindowType.Weekly, XmlConvert.ToTimeSpan("PT6H"), 3, new ClusterCustomMaintenanceWindowSchedule
 {
-DayOfWeek = MaintenanceDayOfWeek.Monday,
-}), new MaintenanceWindow(MaintenanceWindowType.Weekly, XmlConvert.ToTimeSpan("PT6H"), 3, new MaintenanceWindowSchedule
+DayOfWeek = ClusterCustomMaintenanceDayOfWeek.Monday,
+}), new ClusterCustomMaintenanceWindow(ClusterCustomMaintenanceWindowType.Weekly, XmlConvert.ToTimeSpan("PT6H"), 3, new ClusterCustomMaintenanceWindowSchedule
 {
-DayOfWeek = MaintenanceDayOfWeek.Tuesday,
-}), new MaintenanceWindow(MaintenanceWindowType.Weekly, XmlConvert.ToTimeSpan("PT6H"), 3, new MaintenanceWindowSchedule
+DayOfWeek = ClusterCustomMaintenanceDayOfWeek.Tuesday,
+}), new ClusterCustomMaintenanceWindow(ClusterCustomMaintenanceWindowType.Weekly, XmlConvert.ToTimeSpan("PT6H"), 3, new ClusterCustomMaintenanceWindowSchedule
 {
-DayOfWeek = MaintenanceDayOfWeek.Wednesday,
+DayOfWeek = ClusterCustomMaintenanceDayOfWeek.Wednesday,
 })},
                 PublicNetworkAccess = RedisEnterprisePublicNetworkAccess.Disabled,
                 Tags =

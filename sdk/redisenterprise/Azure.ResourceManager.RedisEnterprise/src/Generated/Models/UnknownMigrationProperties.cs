@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Unknown version of MigrationProperties. </summary>
-    internal partial class UnknownMigrationProperties : MigrationProperties
+    internal partial class UnknownMigrationProperties : RedisEnterpriseMigrationProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMigrationProperties"/>. </summary>
         /// <param name="sourceType"> Describes the source of the migration operation. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="createdOn"> The timestamp when the migration operation was created. </param>
         /// <param name="lastModifiedOn"> The timestamp when the migration operation was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, MigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sourceType, targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, serializedAdditionalRawData)
+        internal UnknownMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(sourceType, targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, serializedAdditionalRawData)
         {
             SourceType = sourceType;
         }

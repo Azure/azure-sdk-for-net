@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> A single custom maintenance window. </summary>
-    public partial class MaintenanceWindow
+    public partial class ClusterCustomMaintenanceWindow
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCustomMaintenanceWindow"/>. </summary>
         /// <param name="windowType"> Maintenance window type. </param>
         /// <param name="duration"> Duration in ISO-8601 format, for example 'PT5H'. </param>
         /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
         /// <param name="schedule"> Recurring schedule for the maintenance window. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="schedule"/> is null. </exception>
-        public MaintenanceWindow(MaintenanceWindowType windowType, TimeSpan duration, int startHourUtc, MaintenanceWindowSchedule schedule)
+        public ClusterCustomMaintenanceWindow(ClusterCustomMaintenanceWindowType windowType, TimeSpan duration, int startHourUtc, ClusterCustomMaintenanceWindowSchedule schedule)
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             Schedule = schedule;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClusterCustomMaintenanceWindow"/>. </summary>
         /// <param name="windowType"> Maintenance window type. </param>
         /// <param name="duration"> Duration in ISO-8601 format, for example 'PT5H'. </param>
         /// <param name="startHourUtc"> Start hour (0-23) in UTC when the maintenance window begins. </param>
         /// <param name="schedule"> Recurring schedule for the maintenance window. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindow(MaintenanceWindowType windowType, TimeSpan duration, int startHourUtc, MaintenanceWindowSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClusterCustomMaintenanceWindow(ClusterCustomMaintenanceWindowType windowType, TimeSpan duration, int startHourUtc, ClusterCustomMaintenanceWindowSchedule schedule, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             WindowType = windowType;
             Duration = duration;
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/> for deserialization. </summary>
-        internal MaintenanceWindow()
+        /// <summary> Initializes a new instance of <see cref="ClusterCustomMaintenanceWindow"/> for deserialization. </summary>
+        internal ClusterCustomMaintenanceWindow()
         {
         }
 
         /// <summary> Maintenance window type. </summary>
         [WirePath("type")]
-        public MaintenanceWindowType WindowType { get; set; }
+        public ClusterCustomMaintenanceWindowType WindowType { get; set; }
         /// <summary> Duration in ISO-8601 format, for example 'PT5H'. </summary>
         [WirePath("duration")]
         public TimeSpan Duration { get; set; }
@@ -91,16 +91,16 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         [WirePath("startHourUtc")]
         public int StartHourUtc { get; set; }
         /// <summary> Recurring schedule for the maintenance window. </summary>
-        internal MaintenanceWindowSchedule Schedule { get; set; }
+        internal ClusterCustomMaintenanceWindowSchedule Schedule { get; set; }
         /// <summary> Day of week. Required when the maintenance window type is 'Weekly'. </summary>
         [WirePath("schedule.dayOfWeek")]
-        public MaintenanceDayOfWeek? ScheduleDayOfWeek
+        public ClusterCustomMaintenanceDayOfWeek? ScheduleDayOfWeek
         {
             get => Schedule is null ? default : Schedule.DayOfWeek;
             set
             {
                 if (Schedule is null)
-                    Schedule = new MaintenanceWindowSchedule();
+                    Schedule = new ClusterCustomMaintenanceWindowSchedule();
                 Schedule.DayOfWeek = value;
             }
         }

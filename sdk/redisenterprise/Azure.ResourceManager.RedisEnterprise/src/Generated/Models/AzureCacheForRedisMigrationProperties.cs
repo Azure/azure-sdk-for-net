@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     /// <summary> Properties for Redis Enterprise migration operation for Azure Cache for Redis. </summary>
-    public partial class AzureCacheForRedisMigrationProperties : MigrationProperties
+    public partial class AzureCacheForRedisMigrationProperties : RedisEnterpriseMigrationProperties
     {
         /// <summary> Initializes a new instance of <see cref="AzureCacheForRedisMigrationProperties"/>. </summary>
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         /// <param name="sourceResourceId"> The source resource ID to migrate from. This is the resource ID of the Azure Cache for Redis. </param>
         /// <param name="switchDns"> Sets whether the DNS is switched automatically after the data is transferred from the source cache to the target cache. This property must be true during the preview. </param>
         /// <param name="skipDataMigration"> Sets whether the data is migrated from source to target or not. This property must be true during the preview. </param>
-        internal AzureCacheForRedisMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, MigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceResourceId, bool switchDns, bool skipDataMigration) : base(sourceType, targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, serializedAdditionalRawData)
+        internal AzureCacheForRedisMigrationProperties(SourceType sourceType, ResourceIdentifier targetResourceId, RedisEnterpriseMigrationProvisioningState? provisioningState, string statusDetails, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier sourceResourceId, bool switchDns, bool skipDataMigration) : base(sourceType, targetResourceId, provisioningState, statusDetails, createdOn, lastModifiedOn, serializedAdditionalRawData)
         {
             SourceResourceId = sourceResourceId;
             SwitchDns = switchDns;

@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.RedisEnterprise
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties">
         /// Properties of the migration operation.
-        /// Please note <see cref="MigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="RedisEnterpriseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureCacheForRedisMigrationProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RedisEnterpriseMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MigrationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal RedisEnterpriseMigrationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RedisEnterpriseMigrationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.RedisEnterprise
 
         /// <summary>
         /// Properties of the migration operation.
-        /// Please note <see cref="MigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="RedisEnterpriseMigrationProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureCacheForRedisMigrationProperties"/>.
         /// </summary>
         [WirePath("properties")]
-        public MigrationProperties Properties { get; set; }
+        public RedisEnterpriseMigrationProperties Properties { get; set; }
     }
 }
