@@ -281,7 +281,9 @@
               ],
               "responseLocation": "Body"
             },
-            "pageSizeParameterSegments": []
+            "pageSizeParameterSegments": [
+              "maxpagesize"
+            ]
           }
         }
       ],
