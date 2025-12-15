@@ -5,6 +5,9 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <AssemblyTitle>Microsoft Azure Batch Common Tests</AssemblyTitle>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Stop .NET 10 from flagging the transitive System.Runtime.InteropServices, as it cannot be pruned. -->
+    <NoWarn>$(NoWarn);NU1510</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>
