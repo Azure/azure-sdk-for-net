@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
+using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -262,6 +265,37 @@ namespace Azure.Security.KeyVault.Administration
             Response result = GetRoleDefinition(scope, roleDefinitionName, cancellationToken.ToRequestContext());
             return Response.FromValue((KeyVaultRoleDefinition)result, result);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public virtual Response<IReadOnlyList<string>> GetAnimalName(string id, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(id, nameof(id));
+
+            Response result = GetRoleDefinition("foo", "bar", cancellationToken.ToRequestContext());
+            IList<string> value = new List<string>();
+            BinaryData data = result.Content;
+            Utf8JsonReader reader = new Utf8JsonReader(data.ToMemory().Span);
+
+            reader.Read();
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonTokenType.EndArray)
+                {
+                    break;
+                }
+                if (reader.TokenType == JsonTokenType.String)
+                {
+                    value.Add(reader.GetString());
+                }
+            }
+            return Response.FromValue((IReadOnlyList<string>)value, result);
+        }
+
 
         /// <summary> Get the specified role definition. </summary>
         /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
