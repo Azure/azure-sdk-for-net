@@ -514,5 +514,70 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
             return GetSAPVirtualInstances().Get(sapVirtualInstanceName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of ResourceTypeTestResources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of ResourceTypeTestResources and their operations over a ResourceTypeTestResource. </returns>
+        public virtual ResourceTypeTestResourceCollection GetResourceTypeTestResources()
+        {
+            return GetCachedClient(client => new ResourceTypeTestResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a test resource with nullable ResourceType
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/resourceTypeTestResources/{resourceTypeTestResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceTypeTests_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceTypeTestResourceName"> The name of the ResourceTypeTestResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceTypeTestResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceTypeTestResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ResourceTypeTestResource>> GetResourceTypeTestResourceAsync(string resourceTypeTestResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceTypeTestResourceName, nameof(resourceTypeTestResourceName));
+
+            return await GetResourceTypeTestResources().GetAsync(resourceTypeTestResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a test resource with nullable ResourceType
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/resourceTypeTestResources/{resourceTypeTestResourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ResourceTypeTests_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceTypeTestResourceName"> The name of the ResourceTypeTestResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceTypeTestResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceTypeTestResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ResourceTypeTestResource> GetResourceTypeTestResource(string resourceTypeTestResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceTypeTestResourceName, nameof(resourceTypeTestResourceName));
+
+            return GetResourceTypeTestResources().Get(resourceTypeTestResourceName, cancellationToken);
+        }
     }
 }
