@@ -683,7 +683,7 @@ sample-gen:
 namespace: Azure.ResourceManager.ManagementGroups
 title: ManagementClient
 input-file:
-  - https://github.com/Azure/azure-rest-api-specs/blob/f30976e91905b6b021e35a73263f24e3f91bae94/specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/management.json
+  - https://github.com/Azure/azure-rest-api-specs/blob/efa49a123da7ce3ffe093a13832258305f529711/specification/managementgroups/resource-manager/Microsoft.Management/ManagementGroups/stable/2023-04-01/management.json
 request-path-to-parent:
   /providers/Microsoft.Management/checkNameAvailability: /providers/Microsoft.Management/managementGroups/{groupId}
   /providers/Microsoft.Management/getEntities: /providers/Microsoft.Management/managementGroups/{groupId}
@@ -836,10 +836,6 @@ directive:
     where: $.definitions.ManagementGroupProperties.properties.tenantId
     transform: >
       $['format'] = "uuid"
-  - from: management.json
-    where: $.paths
-    transform: >
-      $['/providers/Microsoft.Management/managementGroups/{groupId}'].delete['x-ms-long-running-operation-options']['final-state-schema'] = undefined;
   - from: management.json
     where: $.definitions
     transform: >
