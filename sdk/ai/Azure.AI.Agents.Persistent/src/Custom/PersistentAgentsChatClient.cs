@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ClientModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -15,7 +14,6 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
 using Azure.Core.Pipeline;
 using Microsoft.Extensions.AI;
 
@@ -318,22 +316,19 @@ namespace Azure.AI.Agents.Persistent
                                 toolName = "code_interpreter";
                             }
 
-                            if (fileId is not null)
+                            if (textUpdate.Contents.Count == 0)
                             {
-                                if (textUpdate.Contents.Count == 0)
-                                {
-                                    // In case a chunk doesn't have text content, create one with empty text to hold the annotation.
-                                    textUpdate.Contents.Add(new TextContent(string.Empty));
-                                }
-
-                                (((TextContent)textUpdate.Contents[0]).Annotations ??= []).Add(new CitationAnnotation
-                                {
-                                    RawRepresentation = tau,
-                                    AnnotatedRegions = [new TextSpanAnnotatedRegion { StartIndex = tau.StartIndex, EndIndex = tau.EndIndex }],
-                                    FileId = fileId,
-                                    ToolName = toolName,
-                                });
+                                // In case a chunk doesn't have text content, create one with empty text to hold the annotation.
+                                textUpdate.Contents.Add(new TextContent(string.Empty));
                             }
+
+                            (((TextContent)textUpdate.Contents[0]).Annotations ??= []).Add(new CitationAnnotation
+                            {
+                                RawRepresentation = tau,
+                                AnnotatedRegions = [new TextSpanAnnotatedRegion { StartIndex = tau.StartIndex, EndIndex = tau.EndIndex }],
+                                FileId = fileId,
+                                ToolName = toolName,
+                            });
                         }
 
                         yield return textUpdate;
