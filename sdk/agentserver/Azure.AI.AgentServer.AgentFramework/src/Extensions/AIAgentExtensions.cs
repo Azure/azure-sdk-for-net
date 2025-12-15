@@ -115,8 +115,6 @@ public static class AIAgentExtensions
                 IReadOnlyList<AIFunction> aiFunctions = await toolClient.ListToolsAsync().ConfigureAwait(false);
 
                 // Run agent with tools
-                // Note: Tools should be configured when creating the agent via ChatClientAgent constructor
-                // For now, run the original agent and register the tool client for potential future use
                 await AgentServerApplication.RunAsync(new ApplicationOptions(
                     ConfigureServices: services => services
                         .AddSingleton(agent)
