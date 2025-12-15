@@ -6,7 +6,7 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="RL.Net" VersionOverride="0.2.0" />
+    <PackageReference Include="RL.Net" />
   </ItemGroup>
 
 
@@ -14,8 +14,8 @@
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.AI.Personalizer.csproj" />
   </ItemGroup>
-  
-  
+
+
   <!-- Add Test References -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

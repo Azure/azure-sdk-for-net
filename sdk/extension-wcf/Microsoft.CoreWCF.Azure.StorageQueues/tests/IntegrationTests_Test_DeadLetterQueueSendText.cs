@@ -6,6 +6,7 @@ using Contracts;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.CoreWCF.Azure.StorageQueues.Tests.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 using System;
 using System.Threading;
@@ -15,12 +16,12 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Tests
 {
     public class IntegrationTests_Test_DeadLetterQueueSendText
     {
-        private IWebHost host;
+        private IHost host;
 
         [SetUp]
         public void Setup()
         {
-            host = ServiceHelper.CreateWebHostBuilder<Startup_BinaryServiceQueueTextClientQueue>().Build();
+            host = ServiceHelper.CreateHost<Startup_BinaryServiceQueueTextClientQueue>();
             host.Start();
         }
 
