@@ -63,7 +63,16 @@ internal class ResourceVisitor : ScmLibraryVisitor
         }
     }
 
-    private static string TransformName(TypeProvider model) => $"{model.Name}Data";
+    private static string TransformName(TypeProvider model)
+    {
+        var name = model.Name;
+        // If the model name already ends with "Data", don't append it again
+        if (name.EndsWith("Data"))
+        {
+            return name;
+        }
+        return $"{name}Data";
+    }
 
     private static string TransformRelativeFilePath(TypeProvider model)
         => Path.Combine("src", "Generated", $"{TransformName(model)}.cs");
