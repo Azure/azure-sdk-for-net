@@ -4,6 +4,7 @@
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
+using System;
 using System.IO;
 
 namespace Azure.Generator.Management.Visitors;
@@ -67,7 +68,7 @@ internal class ResourceVisitor : ScmLibraryVisitor
     {
         var name = model.Name;
         // If the model name already ends with "Data", don't append it again
-        if (name.EndsWith("Data"))
+        if (name.EndsWith("Data", StringComparison.Ordinal))
         {
             return name;
         }
