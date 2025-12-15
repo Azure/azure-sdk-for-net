@@ -546,6 +546,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="SinglePageItemResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetSinglePageItemResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SinglePageItemResource"/> object. </returns>
+        public static SinglePageItemResource GetSinglePageItemResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetSinglePageItemResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -1005,6 +1023,61 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Gets a collection of SinglePageItems in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSinglePageItems()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of SinglePageItems and their operations over a SinglePageItemResource. </returns>
+        public static SinglePageItemCollection GetSinglePageItems(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSinglePageItems();
+        }
+
+        /// <summary>
+        /// Get a SinglePageItem
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSinglePageItemAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="singlePageItemName"> The name of the SinglePageItem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SinglePageItemResource>> GetSinglePageItemAsync(this ResourceGroupResource resourceGroupResource, string singlePageItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSinglePageItemAsync(singlePageItemName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SinglePageItem
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetSinglePageItem(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="singlePageItemName"> The name of the SinglePageItem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<SinglePageItemResource> GetSinglePageItem(this ResourceGroupResource resourceGroupResource, string singlePageItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetSinglePageItem(singlePageItemName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of PlaywrightQuotas in the <see cref="SubscriptionResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -1246,6 +1319,46 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).GetAvailabilityZoneDetails(location, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// GetAll
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetSinglePageItemsAsync(string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SinglePageItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SinglePageItemResource> GetSinglePageItemsAsync(this TenantResource tenantResource, string resourceGroupName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetSinglePageItemsAsync(resourceGroupName, subscriptionId, cancellationToken);
+        }
+
+        /// <summary>
+        /// GetAll
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetSinglePageItems(string, Guid, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SinglePageItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SinglePageItemResource> GetSinglePageItems(this TenantResource tenantResource, string resourceGroupName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetSinglePageItems(resourceGroupName, subscriptionId, cancellationToken);
         }
 
         /// <summary>

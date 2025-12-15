@@ -16,6 +16,7 @@ import "./networkaction.tsp";
 import "./joo.tsp";
 import "./workload.tsp";
 import "./testresourcetype.tsp";
+import "./listsinglepage.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;

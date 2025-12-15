@@ -579,5 +579,70 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
 
             return GetResourceTypeTestResources().Get(resourceTypeTestResourceName, cancellationToken);
         }
+
+        /// <summary> Gets a collection of SinglePageItems in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SinglePageItems and their operations over a SinglePageItemResource. </returns>
+        public virtual SinglePageItemCollection GetSinglePageItems()
+        {
+            return GetCachedClient(client => new SinglePageItemCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SinglePageItem
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/singlePageItems/{singlePageItemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SinglePageItems_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="singlePageItemName"> The name of the SinglePageItem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="singlePageItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="singlePageItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SinglePageItemResource>> GetSinglePageItemAsync(string singlePageItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(singlePageItemName, nameof(singlePageItemName));
+
+            return await GetSinglePageItems().GetAsync(singlePageItemName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SinglePageItem
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/singlePageItems/{singlePageItemName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SinglePageItems_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="singlePageItemName"> The name of the SinglePageItem. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="singlePageItemName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="singlePageItemName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SinglePageItemResource> GetSinglePageItem(string singlePageItemName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(singlePageItemName, nameof(singlePageItemName));
+
+            return GetSinglePageItems().Get(singlePageItemName, cancellationToken);
+        }
     }
 }

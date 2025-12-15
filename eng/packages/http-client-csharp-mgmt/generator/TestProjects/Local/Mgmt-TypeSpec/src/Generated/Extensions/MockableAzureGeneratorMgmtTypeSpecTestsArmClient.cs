@@ -289,5 +289,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             ResourceTypeTestResource.ValidateResourceId(id);
             return new ResourceTypeTestResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="SinglePageItemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SinglePageItemResource"/> object. </returns>
+        public virtual SinglePageItemResource GetSinglePageItemResource(ResourceIdentifier id)
+        {
+            SinglePageItemResource.ValidateResourceId(id);
+            return new SinglePageItemResource(Client, id);
+        }
     }
 }

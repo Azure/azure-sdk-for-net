@@ -21,6 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="TenantResource"/>. </summary>
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsTenantResource : ArmResource
     {
+        private ClientDiagnostics _singlePageItemsClientDiagnostics;
+        private SinglePageItems _singlePageItemsRestClient;
         private ClientDiagnostics _privateLinksClientDiagnostics;
         private PrivateLinks _privateLinksRestClient;
         private ClientDiagnostics _networkProviderActionsClientDiagnostics;
@@ -38,6 +40,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
         }
 
+        private ClientDiagnostics SinglePageItemsClientDiagnostics => _singlePageItemsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SinglePageItems SinglePageItemsRestClient => _singlePageItemsRestClient ??= new SinglePageItems(SinglePageItemsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
         private ClientDiagnostics PrivateLinksClientDiagnostics => _privateLinksClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private PrivateLinks PrivateLinksRestClient => _privateLinksRestClient ??= new PrivateLinks(PrivateLinksClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
@@ -45,6 +51,80 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         private ClientDiagnostics NetworkProviderActionsClientDiagnostics => _networkProviderActionsClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private NetworkProviderActions NetworkProviderActionsRestClient => _networkProviderActionsRestClient ??= new NetworkProviderActions(NetworkProviderActionsClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
+
+        /// <summary>
+        /// GetAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /resourceGroups/{resourceGroupName}/subscriptions/{subscriptionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SinglePageItems_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SinglePageItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SinglePageItemResource> GetSinglePageItemsAsync(string resourceGroupName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SinglePageItemData, SinglePageItemResource>(AsyncPageable<SinglePageItemData>.FromPages(new Page<SinglePageItemData>[] 
+            {
+                Page<SinglePageItemData>.FromValues(await SinglePageItemsRestClient.GetAllAsync(resourceGroupName, subscriptionId, context).Value, null, await SinglePageItemsRestClient.GetAllAsync(resourceGroupName, subscriptionId, context))
+            }), data => new SinglePageItemResource(Client, data));
+        }
+
+        /// <summary>
+        /// GetAll
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /resourceGroups/{resourceGroupName}/subscriptions/{subscriptionId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SinglePageItems_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="SinglePageItemResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SinglePageItemResource> GetSinglePageItems(string resourceGroupName, Guid subscriptionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SinglePageItemData, SinglePageItemResource>(Pageable<SinglePageItemData>.FromPages(new Page<SinglePageItemData>[] 
+            {
+                Page<SinglePageItemData>.FromValues(SinglePageItemsRestClient.GetAll(resourceGroupName, subscriptionId, context).Value, null, SinglePageItemsRestClient.GetAll(resourceGroupName, subscriptionId, context))
+            }), data => new SinglePageItemResource(Client, data));
+        }
 
         /// <summary>
         /// Starts a failed runtime resource

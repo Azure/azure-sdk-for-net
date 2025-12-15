@@ -60,7 +60,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 throw new InvalidOperationException($"List operation {_method.Name} must have a response body type");
             }
 
-            _itemType = ExtractItemType(responseBodyType);
+            _itemType = ExtractItemType(_method, responseBodyType);
             InitializeTypeInfo(
                 _itemType,
                 ref _actualItemType!,
@@ -71,11 +71,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _bodyStatements = BuildBodyStatements();
         }
 
-        private static CSharpType ExtractItemType(CSharpType responseBodyType)
+        private static CSharpType ExtractItemType(InputServiceMethod method, CSharpType responseBodyType)
         {
-            // The response body type should be a collection type like IReadOnlyList<T>, IEnumerable<T>, T[], etc.
-            // We need to extract the item type T
+            // The response body type could be:
+            // 1. A direct collection type like IReadOnlyList<T>, IEnumerable<T>, T[], etc.
+            // 2. A wrapper model with a property containing the collection (e.g., { value: T[] })
 
+            // First, check if it's a direct collection type
             if (responseBodyType.IsFrameworkType && responseBodyType.FrameworkType.IsGenericType)
             {
                 var genericTypeDef = responseBodyType.FrameworkType.GetGenericTypeDefinition();
@@ -94,9 +96,64 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 return new CSharpType(responseBodyType.FrameworkType.GetElementType()!);
             }
 
-            // If it's not a recognized collection type, the response body itself might be the item type
-            // This could happen if the spec defines a custom collection model
-            throw new InvalidOperationException($"Unable to extract item type from collection type: {responseBodyType}. Expected a collection type like IReadOnlyList<T>.");
+            // If it's not a direct collection type, it might be a wrapper model with a "value" property
+            // Look for the InputModelType in the response
+            var response = method.Operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
+            if (response?.BodyType is InputModelType modelType)
+            {
+                // Find a property named "value" (case-insensitive)
+                var valueProperty = modelType.Properties.FirstOrDefault(
+                    p => p.Name.Equals("value", StringComparison.OrdinalIgnoreCase));
+
+                if (valueProperty != null)
+                {
+                    // Check if the property type is an array type first
+                    if (valueProperty.Type is InputArrayType arrayType)
+                    {
+                        // Extract the element type from the array
+                        // InputArrayType should have a ValueType property for the element type
+                        var elementType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(arrayType.ValueType);
+                        if (elementType != null)
+                        {
+                            return elementType;
+                        }
+                    }
+
+                    // Get the C# type for the property
+                    var propertyType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(valueProperty.Type);
+
+                    if (propertyType != null)
+                    {
+                        // The property type should be a collection
+                        if (propertyType.IsFrameworkType && propertyType.FrameworkType != null && propertyType.FrameworkType.IsGenericType)
+                        {
+                            var genericTypeDef = propertyType.FrameworkType!.GetGenericTypeDefinition();
+                            if (genericTypeDef == typeof(IReadOnlyList<>) ||
+                                genericTypeDef == typeof(IEnumerable<>) ||
+                                genericTypeDef == typeof(List<>) ||
+                                genericTypeDef == typeof(ICollection<>))
+                            {
+                                return propertyType.Arguments[0];
+                            }
+                        }
+
+                        // Handle array types T[]
+                        if (propertyType.IsFrameworkType && propertyType.FrameworkType != null && propertyType.FrameworkType.IsArray)
+                        {
+                            return new CSharpType(propertyType.FrameworkType!.GetElementType()!);
+                        }
+                    }
+                }
+            }
+
+            // If we still can't find the item type, throw an error with debug info
+            var debugResponse = method.Operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
+            var debugInfo = $"Response BodyType: {debugResponse?.BodyType?.GetType().Name ?? "null"}";
+            if (debugResponse?.BodyType is InputModelType modelType2)
+            {
+                debugInfo += $", Properties: [{string.Join(", ", modelType2.Properties.Select(p => p.Name))}]";
+            }
+            throw new InvalidOperationException($"Unable to extract item type from collection type: {responseBodyType}. Expected a collection type like IReadOnlyList<T> or a model with a 'Value' property containing a collection. Debug info: {debugInfo}");
         }
 
         private static void InitializeTypeInfo(
@@ -138,10 +195,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // Generate return description for pageable methods
             FormattableString returnDescription = $"A collection of {_actualItemType:C} that may take multiple service requests to iterate over.";
 
+            // Remove the async modifier from the method modifiers since Pageable/AsyncPageable methods should not be async
+            var modifiers = _convenienceMethod.Signature.Modifiers & ~MethodSignatureModifiers.Async;
+
             return new MethodSignature(
                 _methodName,
                 _convenienceMethod.Signature.Description,
-                _convenienceMethod.Signature.Modifiers,
+                modifiers,
                 returnType,
                 returnDescription,
                 OperationMethodParameterHelper.GetOperationMethodParameters(_method, _contextualPath, _enclosingType),
