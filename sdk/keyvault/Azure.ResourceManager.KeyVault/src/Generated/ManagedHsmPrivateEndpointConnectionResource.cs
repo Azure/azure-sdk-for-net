@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary>
-        /// Updates the specified private endpoint connection associated with the managed hsm pool.
+        /// Update a ManagedHsmPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary>
-        /// Updates the specified private endpoint connection associated with the managed hsm pool.
+        /// Update a ManagedHsmPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
