@@ -1,0 +1,6 @@
+directory: specification/contosowidgetmanager/Contoso.Management
+commit: cb0b4235a0a3bc0b8a2b23ae42f6e57e60b1a428
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
