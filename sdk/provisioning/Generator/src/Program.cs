@@ -65,6 +65,7 @@ internal static class Program
         Dictionary<string, string> failures = [];
         foreach (Specification spec in baselineSpecs)
         {
+            spec.ShouldGenerateSchema = options.GenerateSchema;
             try
             {
                 Console.WriteLine($"Generating {spec.Name}...");
@@ -88,6 +89,7 @@ internal static class Program
                 Console.WriteLine($"Skipping {spec.Name}...");
                 continue;
             }
+            spec.ShouldGenerateSchema = options.GenerateSchema;
             try
             {
                 Console.WriteLine($"Generating {spec.Name}...");

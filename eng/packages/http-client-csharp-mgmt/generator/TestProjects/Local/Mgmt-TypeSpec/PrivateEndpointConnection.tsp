@@ -18,34 +18,6 @@ interface PrivateLinks {
   /** list private links on the given resource */
   @clientName("GetAllPrivateLinkResources")
   listByMongoCluster is ArmResourceListByParent<PrivateLink>;
-  
-  /**
-   * Starts the SAP Application Server Instance.
-   */
-  start is ArmResourceActionAsync<
-    PrivateLink,
-    {
-      @doc("SAP Application server instance start request body.")
-      @body
-      body?: StartRequest;
-    },
-    Foundations.OperationStatusResult
-  >;
-  
-  @doc("Starts a failed runtime resource")
-  @post
-  startFailedServerlessRuntime(
-  ): ArmNoContentResponse | ErrorResponse;
-}
-
-/**
- * Start SAP instance(s) request body.
- */
-model StartRequest {
-  /**
-   * The boolean value indicates whether to start the virtual machines before starting the SAP instances.
-   */
-  startVm?: boolean;
 }
 @parentResource(StorageSyncService)
 model PrivateEndpointConnection is PrivateEndpointConnectionResource;
