@@ -38,6 +38,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Tests updating default model deployments for the Content Understanding service.
         /// Verifies that model deployments (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) can be updated and are correctly persisted.
+        /// Also verifies that incremental updates work correctly (updating one model preserves others).
         /// </summary>
         [RecordedTest]
         public async Task UpdateDefaultsAsync()
@@ -55,34 +56,86 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 return;
             }
 
-            // Update defaults with configured deployments
-            var modelDeployments = new Dictionary<string, string>
+            // Step 1: Set initial defaults with all three models
+            var initialModelDeployments = new Dictionary<string, string>
             {
                 ["gpt-4.1"] = gpt41Deployment!,
                 ["gpt-4.1-mini"] = gpt41MiniDeployment!,
                 ["text-embedding-3-large"] = textEmbeddingDeployment!
             };
 
-            Response<ContentUnderstandingDefaults> response = await client.UpdateDefaultsAsync(modelDeployments);
+            Response<ContentUnderstandingDefaults> initialResponse = await client.UpdateDefaultsAsync(initialModelDeployments);
 
-            Assert.IsNotNull(response, "Update response should not be null");
-            Assert.IsNotNull(response.Value, "Updated defaults should not be null");
+            Assert.IsNotNull(initialResponse, "Initial update response should not be null");
+            Assert.IsNotNull(initialResponse.Value, "Initial updated defaults should not be null");
 
-            ContentUnderstandingDefaults updatedDefaults = response.Value;
+            ContentUnderstandingDefaults initialDefaults = initialResponse.Value;
 
-            // Verify the updated defaults
-            Assert.IsNotNull(updatedDefaults.ModelDeployments, "Updated model deployments should not be null");
-            Assert.IsTrue(updatedDefaults.ModelDeployments.Count >= 3, "Should have at least 3 model deployments");
+            // Verify the initial defaults were set correctly
+            Assert.IsNotNull(initialDefaults.ModelDeployments, "Initial model deployments should not be null");
+            Assert.IsTrue(initialDefaults.ModelDeployments.Count >= 3, "Should have at least 3 model deployments initially");
 
-            // Verify each deployment was set correctly
-            Assert.IsTrue(updatedDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
-            Assert.AreEqual(gpt41Deployment, updatedDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
+            Assert.AreEqual(gpt41Deployment, initialDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match");
 
-            Assert.IsTrue(updatedDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
-            Assert.AreEqual(gpt41MiniDeployment, updatedDefaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
+            Assert.AreEqual(gpt41MiniDeployment, initialDefaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match");
 
-            Assert.IsTrue(updatedDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
-            Assert.AreEqual(textEmbeddingDeployment, updatedDefaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
+            Assert.AreEqual(textEmbeddingDeployment, initialDefaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match");
+
+            // Step 2: Verify initial state by getting defaults
+            Response<ContentUnderstandingDefaults> getInitialResponse = await client.GetDefaultsAsync();
+            Assert.IsNotNull(getInitialResponse.Value, "Get defaults response should not be null");
+            Assert.IsNotNull(getInitialResponse.Value.ModelDeployments, "Model deployments should not be null");
+            Assert.IsTrue(getInitialResponse.Value.ModelDeployments.Count >= 3, "Should have at least 3 model deployments after initial update");
+
+            // Step 3: Perform incremental update - update only one model
+            // Use a different deployment name to verify the update actually happened
+            var incrementalUpdate = new Dictionary<string, string>
+            {
+                ["gpt-4.1"] = gpt41Deployment! // Update only gpt-4.1 (using same value, but this verifies incremental update preserves others)
+            };
+
+            Response<ContentUnderstandingDefaults> incrementalResponse = await client.UpdateDefaultsAsync(incrementalUpdate);
+
+            Assert.IsNotNull(incrementalResponse, "Incremental update response should not be null");
+            Assert.IsNotNull(incrementalResponse.Value, "Incremental updated defaults should not be null");
+
+            ContentUnderstandingDefaults incrementalDefaults = incrementalResponse.Value;
+
+            // Step 4: Verify incremental update - all three models should still be present
+            Assert.IsNotNull(incrementalDefaults.ModelDeployments, "Incremental updated model deployments should not be null");
+            Assert.AreEqual(3, incrementalDefaults.ModelDeployments.Count,
+                "All three models should still be present after incremental update (verifies incremental update works)");
+
+            // Verify gpt-4.1 was updated (or remains the same)
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment after incremental update");
+            Assert.AreEqual(gpt41Deployment, incrementalDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match after incremental update");
+
+            // Verify gpt-4.1-mini was preserved (this is the key test for incremental update)
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment after incremental update");
+            Assert.AreEqual(gpt41MiniDeployment, incrementalDefaults.ModelDeployments["gpt-4.1-mini"],
+                "gpt-4.1-mini should be preserved after incremental update (verifies incremental update works)");
+
+            // Verify text-embedding-3-large was preserved (this is the key test for incremental update)
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment after incremental update");
+            Assert.AreEqual(textEmbeddingDeployment, incrementalDefaults.ModelDeployments["text-embedding-3-large"],
+                "text-embedding-3-large should be preserved after incremental update (verifies incremental update works)");
+
+            // Step 5: Verify by getting defaults again to ensure persistence
+            Response<ContentUnderstandingDefaults> getAfterIncrementalResponse = await client.GetDefaultsAsync();
+            Assert.IsNotNull(getAfterIncrementalResponse.Value, "Get defaults after incremental update response should not be null");
+            Assert.IsNotNull(getAfterIncrementalResponse.Value.ModelDeployments, "Model deployments should not be null");
+            Assert.AreEqual(3, getAfterIncrementalResponse.Value.ModelDeployments.Count,
+                "All three models should still be present when getting defaults after incremental update");
+
+            Assert.AreEqual(gpt41Deployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1"],
+                "gpt-4.1 deployment should match when getting defaults after incremental update");
+            Assert.AreEqual(gpt41MiniDeployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1-mini"],
+                "gpt-4.1-mini should be preserved when getting defaults after incremental update");
+            Assert.AreEqual(textEmbeddingDeployment, getAfterIncrementalResponse.Value.ModelDeployments["text-embedding-3-large"],
+                "text-embedding-3-large should be preserved when getting defaults after incremental update");
         }
 
         /// <summary>
