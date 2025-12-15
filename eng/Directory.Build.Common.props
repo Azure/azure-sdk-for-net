@@ -186,8 +186,8 @@
 
     <!--
       The set of frameworks for API Compat checks when the current LTS is being built.  These ensure that
-      CI doesn't fail when a new target framework is added because a library has not done a refresh of the
-      exported API listing.
+      CI doesn't fail when a new target framework is added because a library has not released a version with
+      the new target framework yet.
 
       Because guidelines say that the API must be the same across all supported target frameworks, we can use
       a fallback safely.

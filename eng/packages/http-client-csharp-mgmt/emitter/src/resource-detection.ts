@@ -35,9 +35,11 @@ import {
   armResourceListName,
   armResourceReadName,
   armResourceUpdateName,
+  armResourceWithParameter,
   extensionResourceOperationName,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
+  builtInResourceOperationName,
   nonResourceMethodMetadata,
   parentResourceName,
   readsResourceName,
@@ -99,21 +101,31 @@ export async function updateClients(
       );
       const [kind, modelId] =
         parseResourceOperation(serviceMethod, sdkContext) ?? [];
+     
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
-        entry?.methods.push({
-          methodId: method.crossLanguageDefinitionId,
-          kind,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-        if (entry && !entry.resourceType) {
-          entry.resourceType = calculateResourceTypeFromPath(
-            method.operation.path
-          );
-        }
-        if (entry && !entry.resourceIdPattern && isCRUDKind(kind)) {
-          entry.resourceIdPattern = method.operation.path;
+        if (entry) {
+          entry.methods.push({
+            methodId: method.crossLanguageDefinitionId,
+            kind,
+            operationPath: method.operation.path,
+            operationScope: getOperationScope(method.operation.path)
+          });
+          if (!entry.resourceType) {
+            entry.resourceType = calculateResourceTypeFromPath(
+              method.operation.path
+            );
+          }
+          if (!entry.resourceIdPattern && isCRUDKind(kind)) {
+            entry.resourceIdPattern = method.operation.path;
+          }
+        } else {
+          // no resource model found for this modelId, treat as non-resource method
+          nonResourceMethods.set(method.crossLanguageDefinitionId, {
+            methodId: method.crossLanguageDefinitionId,
+            operationPath: method.operation.path,
+            operationScope: getOperationScope(method.operation.path)
+          });
         }
       } else {
         // we add a methodMetadata decorator to this method
@@ -346,6 +358,64 @@ function parseResourceOperation(
             ];
         }
         return undefined;
+      case builtInResourceOperationName:
+        switch (decorator.args[2].jsValue) {
+          case "read":
+            return [
+              ResourceOperationKind.Get,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "createOrUpdate":
+            return [
+              ResourceOperationKind.Create,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "update":
+            return [
+              ResourceOperationKind.Update,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "delete":
+            return [
+              ResourceOperationKind.Delete,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "list":
+            return [
+              ResourceOperationKind.List,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "action":
+            return [
+              ResourceOperationKind.Action,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+        }
+        return undefined;
     }
   }
   return undefined;
@@ -427,7 +497,7 @@ function traverseClient<T extends { children?: T[] }>(client: T, clients: T[]) {
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
-    if (model.decorators?.some((d) => d.name == armResourceInternal)) {
+    if (model.decorators?.some((d) => d.name == armResourceInternal || d.name == armResourceWithParameter)) {
       resourceModels.push(model);
     }
   }
