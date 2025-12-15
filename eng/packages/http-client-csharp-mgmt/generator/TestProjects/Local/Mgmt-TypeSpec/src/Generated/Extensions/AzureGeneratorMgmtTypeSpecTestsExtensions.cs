@@ -14,7 +14,6 @@ using Azure.Generator.MgmtTypeSpec.Tests.Mocking;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
@@ -529,6 +528,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ResourceTypeTestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetResourceTypeTestResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ResourceTypeTestResource"/> object. </returns>
+        public static ResourceTypeTestResource GetResourceTypeTestResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetResourceTypeTestResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -933,79 +950,58 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// list private links on the given resource
+        /// Gets a collection of ResourceTypeTestResources in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResourcesAsync(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetResourceTypeTestResources()"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PrivateLink"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PrivateLink> GetAllPrivateLinkResourcesAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        /// <returns> An object representing collection of ResourceTypeTestResources and their operations over a ResourceTypeTestResource. </returns>
+        public static ResourceTypeTestResourceCollection GetResourceTypeTestResources(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAllPrivateLinkResourcesAsync(cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetResourceTypeTestResources();
         }
 
         /// <summary>
-        /// list private links on the given resource
+        /// Get a test resource with nullable ResourceType
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetAllPrivateLinkResources(CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetResourceTypeTestResourceAsync(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="resourceTypeTestResourceName"> The name of the ResourceTypeTestResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PrivateLink"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PrivateLink> GetAllPrivateLinkResources(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static async Task<Response<ResourceTypeTestResource>> GetResourceTypeTestResourceAsync(this ResourceGroupResource resourceGroupResource, string resourceTypeTestResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetAllPrivateLinkResources(cancellationToken);
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetResourceTypeTestResourceAsync(resourceTypeTestResourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Starts the SAP Application Server Instance.
+        /// Get a test resource with nullable ResourceType
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.StartAsync(WaitUntil, string, StartRequest, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.GetResourceTypeTestResource(string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateLinkResourceName"> The name of the private link associated with the Azure resource. </param>
-        /// <param name="content"> SAP Application server instance start request body. </param>
+        /// <param name="resourceTypeTestResourceName"> The name of the ResourceTypeTestResource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<OperationStatusResult>> StartAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateLinkResourceName, StartRequest content = default, CancellationToken cancellationToken = default)
+        [ForwardsClientCalls]
+        public static Response<ResourceTypeTestResource> GetResourceTypeTestResource(this ResourceGroupResource resourceGroupResource, string resourceTypeTestResourceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).StartAsync(waitUntil, privateLinkResourceName, content, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Starts the SAP Application Server Instance.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.Start(WaitUntil, string, StartRequest, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="privateLinkResourceName"> The name of the private link associated with the Azure resource. </param>
-        /// <param name="content"> SAP Application server instance start request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<OperationStatusResult> Start(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string privateLinkResourceName, StartRequest content = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).Start(waitUntil, privateLinkResourceName, content, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource).GetResourceTypeTestResource(resourceTypeTestResourceName, cancellationToken);
         }
 
         /// <summary>

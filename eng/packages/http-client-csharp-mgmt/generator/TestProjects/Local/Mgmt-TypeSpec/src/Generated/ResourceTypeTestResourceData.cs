@@ -13,24 +13,24 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class JooData : TrackedResourceData
+    /// <summary> Test resource with nullable ResourceType properties. </summary>
+    public partial class ResourceTypeTestResourceData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JooData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeTestResourceData"/>. </summary>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public JooData(AzureLocation location, JooProperties properties) : base(location)
+        public ResourceTypeTestResourceData(AzureLocation location, ResourceTypeTestProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="JooData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeTestResourceData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -39,7 +39,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal JooData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, JooProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal ResourceTypeTestResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ResourceTypeTestProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -47,6 +47,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> The resource-specific properties for this resource. </summary>
         [WirePath("properties")]
-        public JooProperties Properties { get; set; }
+        public ResourceTypeTestProperties Properties { get; set; }
     }
 }

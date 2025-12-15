@@ -9,21 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> The JooProperties. </summary>
-    public partial class JooProperties : IJsonModel<JooProperties>
+    /// <summary> Properties of test resource with nullable armResourceType. </summary>
+    public partial class ResourceTypeTestProperties : IJsonModel<ResourceTypeTestProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="JooProperties"/> for deserialization. </summary>
-        internal JooProperties()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<JooProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ResourceTypeTestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,17 +30,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeTestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JooProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeTestProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            if (options.Format != "W" && Optional.IsDefined(Prediction))
+            if (Optional.IsDefined(OptionalResourceType))
             {
-                writer.WritePropertyName("prediction"u8);
-                writer.WriteObjectValue(Prediction, options);
+                writer.WritePropertyName("optionalResourceType"u8);
+                writer.WriteStringValue(OptionalResourceType.Value);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -65,46 +64,46 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JooProperties IJsonModel<JooProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ResourceTypeTestProperties IJsonModel<ResourceTypeTestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JooProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceTypeTestProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeTestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JooProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeTestProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJooProperties(document.RootElement, options);
+            return DeserializeResourceTypeTestProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static JooProperties DeserializeJooProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static ResourceTypeTestProperties DeserializeResourceTypeTestProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            Prediction prediction = default;
+            ResourceType? optionalResourceType = default;
+            string status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
-                {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("prediction"u8))
+                if (prop.NameEquals("optionalResourceType"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    prediction = Prediction.DeserializePrediction(prop.Value, options);
+                    optionalResourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("status"u8))
+                {
+                    status = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,47 +111,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JooProperties(name, prediction, additionalBinaryDataProperties);
+            return new ResourceTypeTestProperties(optionalResourceType, status, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JooProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ResourceTypeTestProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeTestProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(JooProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeTestProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JooProperties IPersistableModel<JooProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ResourceTypeTestProperties IPersistableModel<ResourceTypeTestProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JooProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceTypeTestProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JooProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ResourceTypeTestProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeJooProperties(document.RootElement, options);
+                        return DeserializeResourceTypeTestProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JooProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeTestProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JooProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ResourceTypeTestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
