@@ -692,35 +692,6 @@ function getSingletonResource(
     | undefined;
   return singletonResource ?? "default";
 }
-
-/**
- * Extracts the explicit resource name from the ARM resource decorator.
- * The resource name is passed as a parameter to LegacyOperations templates.
- * @param model - The model to extract the resource name from
- * @returns The explicit resource name if found, otherwise undefined
- */
-function getExplicitResourceName(
-  model: InputModelType | undefined
-): string | undefined {
-  if (!model || !model.decorators) return undefined;
-  
-  // Find the armResourceWithParameter decorator which contains the ResourceName
-  const armResourceDecorator = model.decorators.find(
-    (d) => d.name === armResourceWithParameter
-  );
-  
-  if (armResourceDecorator && armResourceDecorator.arguments) {
-    // The ResourceName is typically passed as an argument to the decorator
-    // Check common argument names used in TypeSpec Azure RM
-    const resourceName = armResourceDecorator.arguments["TName"] as string | undefined;
-    if (resourceName) {
-      return resourceName;
-    }
-  }
-  
-  return undefined;
-}
-
 function getResourceScope(
   model: InputModelType,
   methods?: ResourceMethod[]
