@@ -428,6 +428,16 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
+                // Check if this is a List operation that's not an InputPagingServiceMethod (e.g., ListSinglePage)
+                if (methodKind == ResourceOperationKind.List)
+                {
+                    // Use SinglePageListOperationMethodProvider for List operations that aren't pageable
+                    operationMethods.Add(new SinglePageListOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, methodName: ResourceHelpers.GetOperationMethodName(methodKind, true, false)));
+                    operationMethods.Add(new SinglePageListOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName: ResourceHelpers.GetOperationMethodName(methodKind, false, false)));
+
+                    continue;
+                }
+
                 // Check if this is an update operation (PUT or Patch method for non-singleton resource)
                 var isUpdateOperation = (methodKind == ResourceOperationKind.Create || methodKind == ResourceOperationKind.Update) && !IsSingleton;
 

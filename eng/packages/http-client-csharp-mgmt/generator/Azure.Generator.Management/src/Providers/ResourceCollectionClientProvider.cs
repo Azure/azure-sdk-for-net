@@ -376,6 +376,8 @@ namespace Azure.Generator.Management.Providers
             return getAll.InputMethod switch
             {
                 InputPagingServiceMethod pagingGetAll => new PageableOperationMethodProvider(this, _contextualPath, restClientInfo, pagingGetAll, isAsync, methodName),
+                // For List operations that are not InputPagingServiceMethod, treat them as single-page pageable operations
+                _ when getAll.Kind == ResourceOperationKind.List => new SinglePageListOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName),
                 _ => new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, getAll.InputMethod, isAsync, methodName)
             };
         }

@@ -324,7 +324,22 @@ namespace Azure.Generator.Management.Providers
         private MethodProvider BuildResourceServiceMethod(ResourceClientProvider resource, ResourceMethod resourceMethod, bool isAsync)
         {
             var methodName = ResourceHelpers.GetExtensionOperationMethodName(resourceMethod.Kind, resource.ResourceName, isAsync);
-            return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
+            var clientInfo = _clientInfos[resourceMethod.InputClient];
+
+            // Check if this is a pageable operation
+            if (resourceMethod.InputMethod is InputPagingServiceMethod pagingMethod)
+            {
+                return new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName);
+            }
+
+            // Check if this is a List operation that's not an InputPagingServiceMethod (e.g., ListSinglePage)
+            if (resourceMethod.Kind == ResourceOperationKind.List)
+            {
+                return new SinglePageListOperationMethodProvider(this, _contextualPath, clientInfo, resourceMethod.InputMethod, isAsync, methodName);
+            }
+
+            // Default to ResourceOperationMethodProvider
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, resourceMethod.InputMethod, isAsync, methodName);
         }
 
         private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
