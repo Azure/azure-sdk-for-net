@@ -280,7 +280,10 @@
                 "nextLink"
               ],
               "responseLocation": "Body"
-            }
+            },
+            "pageSizeParameterSegments": [
+              "maxpagesize"
+            ]
           }
         }
       ],

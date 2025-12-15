@@ -1,6 +1,16 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.4.0 (2025-11-14)
 
 ### Features Added
 
@@ -15,12 +25,6 @@
   - OpenTelemetry.Extensions.Hosting 1.14.0
   - OpenTelemetry.Instrumentation.AspNetCore 1.14.0
   - OpenTelemetry.Instrumentation.Http 1.14.0
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.4.0-beta.1 (2025-10-21)
 

@@ -28,7 +28,7 @@ public partial class RaiPolicyProperties : ProvisionableConstruct
     /// <summary>
     /// Rai policy mode. The enum value mapping is as below: Default = 0,
     /// Deferred=1, Blocking=2, Asynchronous_filter =3. Please use
-    /// &apos;Asynchronous_filter&apos; after 2024-10-01. It is the same as
+    /// &apos;Asynchronous_filter&apos; after 2025-06-01. It is the same as
     /// &apos;Deferred&apos; in previous version.
     /// </summary>
     public BicepValue<RaiPolicyMode> Mode 

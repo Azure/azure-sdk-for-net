@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- A new option to pass transparent statement verification key sets mapped to domain names for offline verification using `CodeTransparencyVerificationOptions.OfflineKeys`
+- A new option to restrict the use of a network resolution of the ledger keys when using `OfflineKeys` with `CodeTransparencyVerificationOptions.OfflineKeysBehavior`
+
 ### Breaking Changes
 
 ### Bugs Fixed

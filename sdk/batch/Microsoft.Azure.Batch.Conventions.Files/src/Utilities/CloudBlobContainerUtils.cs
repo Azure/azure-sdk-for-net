@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
          */
         internal static IEnumerable<BlobItem> ListBlobs(this BlobContainerClient container, string prefix = null)
         {
-            IEnumerable<Page<BlobItem>> resultSegment = container.GetBlobs(prefix: prefix).AsPages();
+            IEnumerable<Page<BlobItem>> resultSegment = container.GetBlobs(BlobTraits.None, BlobStates.None, prefix: prefix, cancellationToken: default).AsPages();
 
             foreach (Page<BlobItem> page in resultSegment)
             {
@@ -67,14 +67,9 @@ namespace Microsoft.Azure.Batch.Conventions.Files.Utilities
          **/
         internal static IEnumerable<BlobHierarchyItem> ListBlobsByHierachy(this BlobContainerClient container, string prefix = null, string delimiter = null)
         {
-            IEnumerable<Page<BlobHierarchyItem>> resultSegment = container.GetBlobsByHierarchy(delimiter: delimiter, prefix: prefix).AsPages();
-
-            foreach (Page<BlobHierarchyItem> page in resultSegment)
+            foreach (BlobHierarchyItem item in container.GetBlobsByHierarchy(traits: BlobTraits.None, states: BlobStates.None, delimiter: delimiter, prefix: prefix))
             {
-                foreach (BlobHierarchyItem blobHeiracyItem in page.Values)
-                {
-                    yield return blobHeiracyItem;
-                }
+                yield return item;
             }
         }
     }

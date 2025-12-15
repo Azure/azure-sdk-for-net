@@ -55,7 +55,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="host"> The host name of the Snowflake account. Type: string (or Expression with resultType string). </param>
         /// <param name="schema"> Schema name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal SnowflakeV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecret privateKey, DataFactorySecret privateKeyPassphrase, DataFactoryElement<string> role, DataFactoryElement<string> host, DataFactoryElement<string> schema, string encryptedCredential) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="useUtcTimestamps"> Indicates whether to use UTC timezone for timestamp data types. Type: boolean. </param>
+        internal SnowflakeV2LinkedService(string linkedServiceType, string linkedServiceVersion, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accountIdentifier, DataFactoryElement<string> user, DataFactorySecret password, DataFactoryElement<string> database, DataFactoryElement<string> warehouse, SnowflakeAuthenticationType? authenticationType, DataFactoryElement<string> clientId, DataFactorySecret clientSecret, DataFactoryElement<string> tenantId, DataFactoryElement<string> scope, DataFactorySecret privateKey, DataFactorySecret privateKeyPassphrase, DataFactoryElement<string> role, DataFactoryElement<string> host, DataFactoryElement<string> schema, string encryptedCredential, DataFactoryElement<bool> useUtcTimestamps) : base(linkedServiceType, linkedServiceVersion, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountIdentifier = accountIdentifier;
             User = user;
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Host = host;
             Schema = schema;
             EncryptedCredential = encryptedCredential;
+            UseUtcTimestamps = useUtcTimestamps;
             LinkedServiceType = linkedServiceType ?? "SnowflakeV2";
         }
 
@@ -113,5 +115,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DataFactoryElement<string> Schema { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
+        /// <summary> Indicates whether to use UTC timezone for timestamp data types. Type: boolean. </summary>
+        public DataFactoryElement<bool> UseUtcTimestamps { get; set; }
     }
 }

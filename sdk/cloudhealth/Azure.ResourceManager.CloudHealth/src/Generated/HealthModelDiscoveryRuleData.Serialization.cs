@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CloudHealth
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializeHealthModelDiscoveryRuleData(document.RootElement, options);
                     }
@@ -186,11 +186,10 @@ namespace Azure.ResourceManager.CloudHealth
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="HealthModelDiscoveryRuleData"/> from. </param>
-        internal static HealthModelDiscoveryRuleData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HealthModelDiscoveryRuleData"/> from. </param>
+        internal static HealthModelDiscoveryRuleData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHealthModelDiscoveryRuleData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
