@@ -1,0 +1,4 @@
+directory: specification/storagesync/resource-manager/Microsoft.StorageSync/StorageSync
+commit: 4cc9151dd30d1b20dced3da780acca0b10fffeb0
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
