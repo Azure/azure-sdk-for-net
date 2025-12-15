@@ -111,7 +111,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(SelfHelpResource))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceData))]
     [ModelReaderWriterBuildable(typeof(SelfHelpResourceProperties))]
-    [ModelReaderWriterBuildable(typeof(StartRequest))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceData))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceProperties))]
     [ModelReaderWriterBuildable(typeof(StorageSyncServiceResource))]
