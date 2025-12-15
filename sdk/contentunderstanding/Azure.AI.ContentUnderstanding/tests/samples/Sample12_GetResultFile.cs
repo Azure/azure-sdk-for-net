@@ -164,17 +164,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 $"All keyframe times should be non-negative, but found {invalidKeyframes.Count} negative values");
 
             // Get keyframe statistics
-            long firstFrameTimeMs = videoContentVerify.KeyFrameTimesMs[0];
+            long firstFrameTimeMsVerify = videoContentVerify.KeyFrameTimesMs[0];
             long lastFrameTimeMs = videoContentVerify.KeyFrameTimesMs[videoContentVerify.KeyFrameTimesMs.Count - 1];
             double avgFrameInterval = videoContentVerify.KeyFrameTimesMs.Count > 1
-                ? (double)(lastFrameTimeMs - firstFrameTimeMs) / (videoContentVerify.KeyFrameTimesMs.Count - 1)
+                ? (double)(lastFrameTimeMs - firstFrameTimeMsVerify) / (videoContentVerify.KeyFrameTimesMs.Count - 1)
                 : 0;
 
-            Assert.IsTrue(firstFrameTimeMs >= 0, $"First keyframe time should be >= 0, but was {firstFrameTimeMs}");
-            Assert.IsTrue(lastFrameTimeMs >= firstFrameTimeMs,
-                $"Last keyframe time ({lastFrameTimeMs}) should be >= first keyframe time ({firstFrameTimeMs})");
+            Assert.IsTrue(firstFrameTimeMsVerify >= 0, $"First keyframe time should be >= 0, but was {firstFrameTimeMsVerify}");
+            Assert.IsTrue(lastFrameTimeMs >= firstFrameTimeMsVerify,
+                $"Last keyframe time ({lastFrameTimeMs}) should be >= first keyframe time ({firstFrameTimeMsVerify})");
 
-            Console.WriteLine($"  First keyframe: {firstFrameTimeMs} ms ({firstFrameTimeMs / 1000.0:F2} seconds)");
+            Console.WriteLine($"  First keyframe: {firstFrameTimeMsVerify} ms ({firstFrameTimeMsVerify / 1000.0:F2} seconds)");
             Console.WriteLine($"  Last keyframe: {lastFrameTimeMs} ms ({lastFrameTimeMs / 1000.0:F2} seconds)");
             if (videoContentVerify.KeyFrameTimesMs.Count > 1)
             {
@@ -183,21 +183,21 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // ========== Retrieve First Keyframe ==========
             Console.WriteLine("\n📥 Retrieving first keyframe...");
-            string framePath = $"keyframes/{firstFrameTimeMs}";
-            Assert.IsFalse(string.IsNullOrWhiteSpace(framePath), "Frame path should not be empty");
-            Assert.IsTrue(framePath.StartsWith("keyframes/"), "Frame path should start with 'keyframes/'");
-            Console.WriteLine($"  Frame path: {framePath}");
+            string framePathVerify = $"keyframes/{firstFrameTimeMsVerify}";
+            Assert.IsFalse(string.IsNullOrWhiteSpace(framePathVerify), "Frame path should not be empty");
+            Assert.IsTrue(framePathVerify.StartsWith("keyframes/"), "Frame path should start with 'keyframes/'");
+            Console.WriteLine($"  Frame path: {framePathVerify}");
 
-            Response<BinaryData> fileResponse = await client.GetResultFileAsync(operationId, framePath);
+            Response<BinaryData> fileResponseVerify = await client.GetResultFileAsync(operationId, framePathVerify);
 
             // Verify response
-            Assert.IsNotNull(fileResponse, "File response should not be null");
-            Assert.IsTrue(fileResponse.HasValue, "File response should have a value");
-            Assert.IsNotNull(fileResponse.Value, "File response value should not be null");
+            Assert.IsNotNull(fileResponseVerify, "File response should not be null");
+            Assert.IsTrue(fileResponseVerify.HasValue, "File response should have a value");
+            Assert.IsNotNull(fileResponseVerify.Value, "File response value should not be null");
             Console.WriteLine("File response received");
 
             // Verify raw response
-            var fileRawResponse = fileResponse.GetRawResponse();
+            var fileRawResponse = fileResponseVerify.GetRawResponse();
             Assert.IsNotNull(fileRawResponse, "File raw response should not be null");
             Assert.AreEqual(200, fileRawResponse.Status,
                 $"File response status should be 200, but was {fileRawResponse.Status}");
@@ -213,31 +213,31 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // ========== Verify Image Data ==========
             Console.WriteLine("\nVerifying image data...");
-            byte[] imageBytes = fileResponse.Value.ToArray();
-            Assert.IsNotNull(imageBytes, "Image bytes should not be null");
-            Assert.IsTrue(imageBytes.Length > 0, "Image should have content");
-            Assert.IsTrue(imageBytes.Length >= 100,
-                $"Image should have reasonable size (>= 100 bytes), but was {imageBytes.Length} bytes");
-            Console.WriteLine($"Image size: {imageBytes.Length:N0} bytes ({imageBytes.Length / 1024.0:F2} KB)");
+            byte[] imageBytesVerify = fileResponseVerify.Value.ToArray();
+            Assert.IsNotNull(imageBytesVerify, "Image bytes should not be null");
+            Assert.IsTrue(imageBytesVerify.Length > 0, "Image should have content");
+            Assert.IsTrue(imageBytesVerify.Length >= 100,
+                $"Image should have reasonable size (>= 100 bytes), but was {imageBytesVerify.Length} bytes");
+            Console.WriteLine($"Image size: {imageBytesVerify.Length:N0} bytes ({imageBytesVerify.Length / 1024.0:F2} KB)");
 
             // Verify image format (check magic bytes for common formats)
             string imageFormat = "Unknown";
-            if (imageBytes.Length >= 2)
+            if (imageBytesVerify.Length >= 2)
             {
                 // Check JPEG magic bytes (FF D8)
-                if (imageBytes[0] == 0xFF && imageBytes[1] == 0xD8)
+                if (imageBytesVerify[0] == 0xFF && imageBytesVerify[1] == 0xD8)
                     imageFormat = "JPEG";
                 // Check PNG magic bytes (89 50 4E 47)
-                else if (imageBytes.Length >= 4 && imageBytes[0] == 0x89 && imageBytes[1] == 0x50 &&
-                        imageBytes[2] == 0x4E && imageBytes[3] == 0x47)
+                else if (imageBytesVerify.Length >= 4 && imageBytesVerify[0] == 0x89 && imageBytesVerify[1] == 0x50 &&
+                        imageBytesVerify[2] == 0x4E && imageBytesVerify[3] == 0x47)
                     imageFormat = "PNG";
                 // Check GIF magic bytes (47 49 46)
-                else if (imageBytes.Length >= 3 && imageBytes[0] == 0x47 && imageBytes[1] == 0x49 &&
-                        imageBytes[2] == 0x46)
+                else if (imageBytesVerify.Length >= 3 && imageBytesVerify[0] == 0x47 && imageBytesVerify[1] == 0x49 &&
+                        imageBytesVerify[2] == 0x46)
                     imageFormat = "GIF";
                 // Check WebP magic bytes (52 49 46 46 ...  57 45 42 50)
-                else if (imageBytes.Length >= 12 && imageBytes[0] == 0x52 && imageBytes[1] == 0x49 &&
-                        imageBytes[8] == 0x57 && imageBytes[9] == 0x45 && imageBytes[10] == 0x42 && imageBytes[11] == 0x50)
+                else if (imageBytesVerify.Length >= 12 && imageBytesVerify[0] == 0x52 && imageBytesVerify[1] == 0x49 &&
+                        imageBytesVerify[8] == 0x57 && imageBytesVerify[9] == 0x45 && imageBytesVerify[10] == 0x42 && imageBytesVerify[11] == 0x50)
                     imageFormat = "WebP";
             }
             Console.WriteLine($"Detected image format: {imageFormat}");
@@ -248,42 +248,42 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // ========== Save to File ==========
             Console.WriteLine("\n💾 Saving keyframe to file...");
-            string outputDir = Path.Combine(AppContext.BaseDirectory, "sample_output");
-            Assert.IsNotNull(outputDir, "Output directory path should not be null");
+            string outputDirVerify = Path.Combine(AppContext.BaseDirectory, "sample_output");
+            Assert.IsNotNull(outputDirVerify, "Output directory path should not be null");
 
-            Directory.CreateDirectory(outputDir);
-            Assert.IsTrue(Directory.Exists(outputDir),
-                $"Output directory should exist at {outputDir}");
-            Console.WriteLine($"Output directory: {outputDir}");
+            Directory.CreateDirectory(outputDirVerify);
+            Assert.IsTrue(Directory.Exists(outputDirVerify),
+                $"Output directory should exist at {outputDirVerify}");
+            Console.WriteLine($"Output directory: {outputDirVerify}");
 
-            string outputFileName = $"keyframe_{firstFrameTimeMs}.jpg";
-            Assert.IsFalse(string.IsNullOrWhiteSpace(outputFileName), "Output file name should not be empty");
-            Assert.IsTrue(outputFileName.Contains(firstFrameTimeMs.ToString()),
+            string outputFileNameVerify = $"keyframe_{firstFrameTimeMsVerify}.jpg";
+            Assert.IsFalse(string.IsNullOrWhiteSpace(outputFileNameVerify), "Output file name should not be empty");
+            Assert.IsTrue(outputFileNameVerify.Contains(firstFrameTimeMsVerify.ToString()),
                 "Output file name should contain the frame timestamp");
-            Console.WriteLine($"  File name: {outputFileName}");
+            Console.WriteLine($"  File name: {outputFileNameVerify}");
 
-            string outputPath = Path.Combine(outputDir, outputFileName);
-            Assert.IsFalse(string.IsNullOrWhiteSpace(outputPath), "Output path should not be empty");
+            string outputPathVerify = Path.Combine(outputDirVerify, outputFileNameVerify);
+            Assert.IsFalse(string.IsNullOrWhiteSpace(outputPathVerify), "Output path should not be empty");
 
-            File.WriteAllBytes(outputPath, imageBytes);
-            Assert.IsTrue(File.Exists(outputPath),
-                $"Keyframe image file should exist at {outputPath}");
-            Console.WriteLine($"File saved: {outputPath}");
+            File.WriteAllBytes(outputPathVerify, imageBytesVerify);
+            Assert.IsTrue(File.Exists(outputPathVerify),
+                $"Keyframe image file should exist at {outputPathVerify}");
+            Console.WriteLine($"File saved: {outputPathVerify}");
 
             // ========== Verify Saved File ==========
             Console.WriteLine("\nVerifying saved file...");
-            var savedFileInfo = new FileInfo(outputPath);
+            var savedFileInfo = new FileInfo(outputPathVerify);
             Assert.IsTrue(savedFileInfo.Exists, "Saved file should exist");
             Assert.IsTrue(savedFileInfo.Length > 0, "Saved file should have content");
-            Assert.AreEqual(imageBytes.Length, savedFileInfo.Length,
-                $"Saved file size ({savedFileInfo.Length}) should match retrieved image size ({imageBytes.Length})");
+            Assert.AreEqual(imageBytesVerify.Length, savedFileInfo.Length,
+                $"Saved file size ({savedFileInfo.Length}) should match retrieved image size ({imageBytesVerify.Length})");
             Console.WriteLine($"File size verified: {savedFileInfo.Length:N0} bytes");
 
             // Verify file can be read back
-            var readBackBytes = File.ReadAllBytes(outputPath);
-            Assert.AreEqual(imageBytes.Length, readBackBytes.Length,
+            var readBackBytes = File.ReadAllBytes(outputPathVerify);
+            Assert.AreEqual(imageBytesVerify.Length, readBackBytes.Length,
                 "Read back file size should match original");
-            Assert.IsTrue(imageBytes.SequenceEqual(readBackBytes),
+            Assert.IsTrue(imageBytesVerify.SequenceEqual(readBackBytes),
                 "Read back file content should match original");
             Console.WriteLine("File content verified (read back matches original)");
 
@@ -309,10 +309,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Console.WriteLine($"\nKeyframe retrieval verification completed successfully:");
             Console.WriteLine($"  Operation ID: {operationId}");
             Console.WriteLine($"  Total keyframes: {videoContentVerify.KeyFrameTimesMs.Count}");
-            Console.WriteLine($"  First keyframe time: {firstFrameTimeMs} ms");
+            Console.WriteLine($"  First keyframe time: {firstFrameTimeMsVerify} ms");
             Console.WriteLine($"  Image format: {imageFormat}");
-            Console.WriteLine($"  Image size: {imageBytes.Length:N0} bytes");
-            Console.WriteLine($"  Saved to: {outputPath}");
+            Console.WriteLine($"  Image size: {imageBytesVerify.Length:N0} bytes");
+            Console.WriteLine($"  Saved to: {outputPathVerify}");
             Console.WriteLine($"  File verified: Yes");
             #endregion
         }
