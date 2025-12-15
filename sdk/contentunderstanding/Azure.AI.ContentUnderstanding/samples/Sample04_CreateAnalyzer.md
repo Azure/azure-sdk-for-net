@@ -2,6 +2,8 @@
 
 This sample demonstrates how to create a custom analyzer with a field schema to extract structured data from documents. While this sample shows document modalities, custom analyzers can also be created for video, audio, and image content. The same concepts apply across all modalities.
 
+Alternatively, you can create custom analyzers using [Content Understanding Studio][content-understanding-studio-docs], a web-based UI that provides a convenient way to build and test analyzers in the same interface. Content Understanding Studio also allows you to opt-in to in-context learning by providing a knowledge base of labeled data, which can further improve model quality for document-based analyzers.
+
 ## About custom analyzers
 
 Custom analyzers allow you to define a field schema that specifies what structured data to extract from documents. You can:
@@ -243,6 +245,8 @@ Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 ## Learn more
 
 - [Content Understanding documentation][cu-docs]
+- [Create and improve your custom analyzer in Content Understanding Studio][content-understanding-studio-docs] - Learn how to create custom analyzers using the web-based UI with testing and in-context learning capabilities
+- [Content Understanding Studio Portal][content-understanding-studio-portal] - Access the web-based UI to create and manage custom analyzers
 - [Analyzer reference documentation][analyzer-reference-docs] - Complete reference for analyzer configuration, extraction methods, and field schemas
 - [baseAnalyzerId][baseanalyzerid-docs] - Learn about supported base analyzers for custom analyzers
 - [method][method-docs] - Learn about extraction methods (extract, generate, classify)
@@ -255,6 +259,8 @@ Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 [sample08]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
 [sample09]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[content-understanding-studio-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/how-to/customize-analyzer-content-understanding-studio?tabs=portal
+[content-understanding-studio-portal]: https://contentunderstanding.ai.azure.com/home
 [analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#analyzer-configuration-structure
 [baseanalyzerid-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
 [method-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#method

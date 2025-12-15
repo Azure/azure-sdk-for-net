@@ -2,14 +2,16 @@
 
 This sample demonstrates how to create a classifier analyzer to categorize documents and use it to analyze documents with and without automatic segmentation.
 
+Alternatively, you can create classification workflows using [Content Understanding Studio][content-understanding-studio-classification-docs], a web-based UI that provides a convenient way to build and test classification workflows in the same interface. Content Understanding Studio allows you to create custom categories and routing rules that route your data to specific analyzers, ensuring your data is always routed to the best analyzer for processing.
+
 ## About classifiers
 
-Classifiers are a type of custom analyzer that categorize documents into predefined categories using `ContentCategories`. They allow you to perform classification and content extraction as part of a single API call. Classifiers are useful for:
-- **Document routing**: Automatically route documents to the right processing pipeline based on category
-- **Content organization**: Organize large document collections by type
+Classifiers are a type of custom analyzer that create classification workflows to categorize documents into predefined custom categories using `ContentCategories`. They allow you to perform classification and content extraction as part of a single API call. Classifiers are useful for:
+- **Content organization**: Organize large document collections by type through categorization
+- **Data routing (optional)**: Optionally route your data to specific custom analyzers based on category, ensuring your data is routed to the best analyzer for processing when needed
 - **Multi-document processing**: Process files containing multiple document types by automatically segmenting them
 
-Classifiers use **content categories** to define the types of documents they can identify. Each category has a `Description` that helps the AI model understand what documents belong to that category. You can define up to 200 category names and descriptions. You can include an `"other"` category to handle unmatched content; otherwise, all files are forced to be classified into one of your defined categories.
+Classifiers use **custom categories** to define the types of documents they can identify. Each category has a `Description` that helps the AI model understand what documents belong to that category. You can define up to 200 category names and descriptions. You can include an `"other"` category to handle unmatched content; otherwise, all files are forced to be classified into one of your defined categories.
 
 The `EnableSegment` property in the analyzer configuration controls whether multi-document files are split into segments:
 - **`EnableSegment = false`**: Classifies the entire file as a single category (classify only)
@@ -174,6 +176,8 @@ Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 ## Learn more
 
 - [Content Understanding documentation][cu-docs]
+- [Classify and route your data using Content Understanding Studio][content-understanding-studio-classification-docs] - Learn how to create classification workflows using the web-based UI with custom categories and routing rules
+- [Content Understanding Studio Portal][content-understanding-studio-portal] - Access the web-based UI to create and manage classification workflows
 - [Classifiers documentation][classifier-docs]
 
 [sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
@@ -183,6 +187,8 @@ Console.WriteLine($"Classifier '{analyzerId}' deleted successfully.");
 [sample07]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample07_ListAnalyzers.md
 [sample08]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample08_UpdateAnalyzer.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[content-understanding-studio-classification-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/how-to/classification-content-understanding-studio?tabs=portal
+[content-understanding-studio-portal]: https://contentunderstanding.ai.azure.com/home
 [classifier-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/classifier
 [analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#analyzer-configuration-structure
 [baseanalyzerid-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference#baseanalyzerid
