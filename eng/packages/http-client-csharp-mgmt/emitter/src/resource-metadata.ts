@@ -158,7 +158,13 @@ export function convertArmProviderSchemaToArguments(
       resourceModelId: r.resourceModelId,
       resourceIdPattern: r.metadata.resourceIdPattern,
       resourceType: r.metadata.resourceType,
-      methods: r.metadata.methods,
+      methods: r.metadata.methods.map((m) => ({
+        methodId: m.methodId,
+        kind: m.kind,
+        operationPath: m.operationPath,
+        operationScope: m.operationScope,
+        resourceScope: m.resourceScope
+      })),
       resourceScope: r.metadata.resourceScope,
       parentResourceId: r.metadata.parentResourceId,
       singletonResourceName: r.metadata.singletonResourceName,
