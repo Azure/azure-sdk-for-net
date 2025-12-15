@@ -138,43 +138,6 @@ export async function updateClients(
     }
   }
 
-  // For resources without a resourceIdPattern (no CRUD operations), try to infer it from Action or List operations
-  // BUT only if they don't have a parent resource (parent resources will be handled later)
-  for (const [modelId, metadata] of resourceModelToMetadataMap) {
-    const parentResourceModelId = getParentResourceModelId(
-      sdkContext,
-      models.get(modelId)
-    );
-    
-    if (metadata.resourceIdPattern === "" && metadata.methods.length > 0 && !parentResourceModelId) {
-      // Find the first Action or List operation path that can serve as the resource ID pattern
-      const actionOrListMethod = metadata.methods.find(
-        (m) =>
-          m.kind === ResourceOperationKind.Action ||
-          m.kind === ResourceOperationKind.List
-      );
-      if (actionOrListMethod) {
-        // For Action operations, the path typically ends with the action name segment
-        // We need to extract the resource path by removing the action segment
-        let resourcePath = actionOrListMethod.operationPath;
-        
-        // For Action operations, try to infer the resource ID pattern
-        // Action paths are typically: /resource/{id}/actionName
-        // We want to extract: /resource/{id}
-        if (actionOrListMethod.kind === ResourceOperationKind.Action) {
-          const pathSegments = resourcePath.split('/').filter(s => s);
-          // Remove the last segment (action name)
-          if (pathSegments.length > 0) {
-            pathSegments.pop();
-            resourcePath = '/' + pathSegments.join('/');
-          }
-        }
-        
-        metadata.resourceIdPattern = resourcePath;
-      }
-    }
-  }
-
   // after the resourceIdPattern has been populated, we can set the parentResourceId and the resource scope of each resource method
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
     // get parent resource model id
@@ -206,12 +169,24 @@ export async function updateClients(
 
   // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
-    // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
-    if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
-      resourceModelToMetadataMap
-        .get(metadata.parentResourceModelId)
-        ?.methods.push(...metadata.methods);
-      resourceModelToMetadataMap.delete(modelId);
+    if (metadata.resourceIdPattern === "") {
+      if (metadata.parentResourceModelId) {
+        // If there's a parent, move methods to parent and delete this resource
+        resourceModelToMetadataMap
+          .get(metadata.parentResourceModelId)
+          ?.methods.push(...metadata.methods);
+        resourceModelToMetadataMap.delete(modelId);
+      } else {
+        // If there's no parent, treat all methods as non-resource methods
+        for (const method of metadata.methods) {
+          nonResourceMethods.set(method.methodId, {
+            methodId: method.methodId,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope
+          });
+        }
+        resourceModelToMetadataMap.delete(modelId);
+      }
     }
   }
 

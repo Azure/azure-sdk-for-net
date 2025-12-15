@@ -13,7 +13,8 @@ import {
   resourceMetadata,
   tenantResource,
   subscriptionResource,
-  resourceGroupResource
+  resourceGroupResource,
+  nonResourceMethodMetadata
 } from "../src/sdk-context-options.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
@@ -1285,15 +1286,26 @@ interface ScheduledActionExtension {
       (d) => d.name === resourceMetadata
     );
     
-    // The resource should have metadata with the action operation
-    ok(resourceMetadataDecorator, "ScheduledAction should have resource metadata decorator");
-    ok(resourceMetadataDecorator.arguments, "Resource metadata should have arguments");
+    // The resource should NOT have metadata since it has no CRUD operations
+    strictEqual(
+      resourceMetadataDecorator,
+      undefined,
+      "ScheduledAction should not have resource metadata decorator without CRUD operations"
+    );
     
-    // Check that the action method is in the metadata
-    const actionMethodEntry = resourceMetadataDecorator.arguments.methods?.find(
+    // Check that the method is treated as a non-resource method
+    const firstClient = root.clients[0];
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
+    );
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+    
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    const methodEntry = nonResourceMethods.find(
       (m: any) => m.methodId === getAssociatedMethod.crossLanguageDefinitionId
     );
-    ok(actionMethodEntry, "getAssociatedScheduledActions method should be in resource metadata");
-    strictEqual(actionMethodEntry.kind, "Action", "Method kind should be Action");
+    ok(methodEntry, "getAssociatedScheduledActions should be in non-resource methods");
+    strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
   });
 });
