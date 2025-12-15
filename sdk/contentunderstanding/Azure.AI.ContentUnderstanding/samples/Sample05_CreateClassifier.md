@@ -99,7 +99,7 @@ var classifier = new ContentAnalyzer
     Description = "Custom classifier for financial document categorization",
     Config = config
 };
-classifier.Models.Add("completion", "gpt-4.1");
+classifier.Models["completion"] = "gpt-4.1";
 
 // Create the classifier
 string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";

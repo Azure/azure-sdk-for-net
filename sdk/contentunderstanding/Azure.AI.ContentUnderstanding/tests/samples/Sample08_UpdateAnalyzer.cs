@@ -38,7 +38,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     ReturnDetails = true
                 }
             };
-            initialAnalyzer.Models.Add("completion", "gpt-4.1");
+            initialAnalyzer.Models["completion"] = "gpt-4.1";
             initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
             initialAnalyzer.Tags["tag2"] = "tag2_initial_value";
 

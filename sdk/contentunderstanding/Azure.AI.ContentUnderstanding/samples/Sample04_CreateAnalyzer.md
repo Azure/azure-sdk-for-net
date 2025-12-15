@@ -131,8 +131,8 @@ var customAnalyzer = new ContentAnalyzer
 
 // Add model mappings for supported large language models (required for custom analyzers)
 // Maps model roles (completion, embedding) to specific model names
-customAnalyzer.Models.Add("completion", "gpt-4.1");
-customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+customAnalyzer.Models["completion"] = "gpt-4.1";
+customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
 // Create the analyzer
 var operation = await client.CreateAnalyzerAsync(

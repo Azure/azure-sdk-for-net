@@ -101,8 +101,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Add model mappings for supported large language models (required for custom analyzers)
             // Maps model roles (completion, embedding) to specific model names
-            customAnalyzer.Models.Add("completion", "gpt-4.1");
-            customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+            customAnalyzer.Models["completion"] = "gpt-4.1";
+            customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
             // Create the analyzer
             var operation = await client.CreateAnalyzerAsync(
@@ -299,8 +299,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 FieldSchema = fieldSchema
             };
 
-            customAnalyzer.Models.Add("completion", "gpt-4.1");
-            customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+            customAnalyzer.Models["completion"] = "gpt-4.1";
+            customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,

@@ -118,7 +118,7 @@ var sourceAnalyzer = new ContentAnalyzer
     Config = sourceConfig,
     FieldSchema = sourceFieldSchema
 };
-sourceAnalyzer.Models.Add("completion", "gpt-4.1");
+sourceAnalyzer.Models["completion"] = "gpt-4.1";
 
 var createOperation = await sourceClient.CreateAnalyzerAsync(
     WaitUntil.Completed,

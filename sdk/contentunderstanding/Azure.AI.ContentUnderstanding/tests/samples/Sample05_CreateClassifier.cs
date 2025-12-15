@@ -65,7 +65,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             // Create the classifier
             string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
@@ -107,7 +107,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             // Generate a unique analyzer ID and record it for playback
             string defaultId = $"test_classifier_{Recording.Random.NewGuid().ToString("N")}";
@@ -253,7 +253,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization without segmentation",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -450,7 +450,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization with automatic segmentation",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
