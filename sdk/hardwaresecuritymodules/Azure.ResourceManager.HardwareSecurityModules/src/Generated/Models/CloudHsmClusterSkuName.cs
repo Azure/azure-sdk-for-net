@@ -10,9 +10,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     /// <summary> Sku name of the Cloud HSM Cluster. </summary>
     public enum CloudHsmClusterSkuName
     {
-        /// <summary> Standard_B1. </summary>
+        /// <summary> StandardB1. </summary>
         StandardB1,
-        /// <summary> Standard B10. </summary>
+        /// <summary> StandardB10. </summary>
         StandardB10
     }
 }

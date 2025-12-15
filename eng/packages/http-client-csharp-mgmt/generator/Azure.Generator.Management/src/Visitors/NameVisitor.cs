@@ -209,6 +209,11 @@ internal class NameVisitor : ScmLibraryVisitor
         // TODO: we will remove this manual updated when https://github.com/microsoft/typespec/issues/8079 is resolved
         if (method.EnclosingType is MrwSerializationTypeDefinition serializationTypeDefinition && _deserializationRename.TryGetValue(serializationTypeDefinition, out var newName) && method.Signature.Name.StartsWith("Deserialize"))
         {
+            // If the enclosing type name ends with "Data" (added by ResourceVisitor), ensure the method name also includes "Data"
+            if (serializationTypeDefinition.Name.EndsWith("Data") && !newName.EndsWith("Data"))
+            {
+                newName += "Data";
+            }
             method.Signature.Update(name: newName);
         }
 
@@ -224,6 +229,11 @@ internal class NameVisitor : ScmLibraryVisitor
             && statement.Expression is KeywordExpression keyword && keyword.Keyword == "return"
             && keyword.Expression is InvokeMethodExpression invokeMethod)
         {
+            // If the enclosing type name ends with "Data" (added by ResourceVisitor), ensure the method name also includes "Data"
+            if (serializationTypeDefinition.Name.EndsWith("Data") && !newName.EndsWith("Data"))
+            {
+                newName += "Data";
+            }
             invokeMethod.Update(methodName: newName);
         }
         return base.VisitExpressionStatement(statement, method);
@@ -242,6 +252,11 @@ internal class NameVisitor : ScmLibraryVisitor
                 && keywordExpression.Keyword == "return"
                 && keywordExpression.Expression is InvokeMethodExpression invokeMethod)
             {
+                // If the enclosing type name ends with "Data" (added by ResourceVisitor), ensure the method name also includes "Data"
+                if (serializationTypeDefinition.Name.EndsWith("Data") && !newName.EndsWith("Data"))
+                {
+                    newName += "Data";
+                }
                 invokeMethod.Update(methodName: newName);
             }
         }

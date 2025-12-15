@@ -287,7 +287,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Joo
+        /// Update a Joo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -343,7 +343,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Joo
+        /// Update a Joo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

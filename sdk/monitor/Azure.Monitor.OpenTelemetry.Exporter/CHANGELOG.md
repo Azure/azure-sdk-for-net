@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,25 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0-beta.1 (2025-12-03)
+
+### Bugs Fixed
+* Added Microsoft override attributes to preserve exact Application Insights
+  semantics when exporting telemetry data.
+  ([#54023](https://github.com/Azure/azure-sdk-for-net/pull/54023))
+  * Request: `microsoft.request.name`, `microsoft.request.url`,
+    `microsoft.request.source`, `microsoft.request.resultCode`
+  * Dependency: `microsoft.dependency.type`, `microsoft.dependency.target`,
+    `microsoft.dependency.name`, `microsoft.dependency.data`,
+    `microsoft.dependency.resultCode`
+  * Operation: `microsoft.operation.name`
+
+### Other Changes
+* Added distinct SDK version labels for all Application Insights shim packages
+  to enable accurate attribution and visibility of exporter, distro, and shim
+  telemetry during migration and analysis.
+  ([#54011](https://github.com/Azure/azure-sdk-for-net/pull/54011))
 
 ## 1.5.0 (2025-11-14)
 

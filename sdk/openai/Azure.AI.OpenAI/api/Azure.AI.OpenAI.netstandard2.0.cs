@@ -107,8 +107,8 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Models.OpenAIModelClient GetOpenAIModelClient() { throw null; }
-        public override OpenAI.Responses.OpenAIResponseClient GetOpenAIResponseClient(string deploymentName) { throw null; }
         public override OpenAI.Realtime.RealtimeClient GetRealtimeClient() { throw null; }
+        public override OpenAI.Responses.ResponsesClient GetResponsesClient(string deploymentName) { throw null; }
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Videos.VideoClient GetVideoClient() { throw null; }
@@ -386,6 +386,7 @@ namespace Azure.AI.OpenAI.Chat
         public static Azure.AI.OpenAI.ResponseContentFilterResult GetResponseContentFilterResult(this OpenAI.Chat.ChatCompletion chatCompletion) { throw null; }
         public static Azure.AI.OpenAI.ResponseContentFilterResult GetResponseContentFilterResult(this OpenAI.Chat.StreamingChatCompletionUpdate chatUpdate) { throw null; }
         public static Azure.AI.OpenAI.UserSecurityContext GetUserSecurityContext(this OpenAI.Chat.ChatCompletionOptions options) { throw null; }
+        public static void SetNewMaxCompletionTokensPropertyEnabled(this OpenAI.Chat.ChatCompletionOptions options, bool newPropertyEnabled = true) { }
         public static void SetUserSecurityContext(this OpenAI.Chat.ChatCompletionOptions options, Azure.AI.OpenAI.UserSecurityContext userSecurityContext) { }
     }
     public partial class AzureSearchChatDataSource : Azure.AI.OpenAI.Chat.ChatDataSource, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Chat.AzureSearchChatDataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Chat.AzureSearchChatDataSource>
