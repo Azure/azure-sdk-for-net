@@ -11,11 +11,14 @@ import {
   calculateResourceTypeFromPath,
   convertMethodMetadataToArguments,
   convertResourceMetadataToArguments,
+  convertArmProviderSchemaToArguments,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope
+  ResourceScope,
+  ArmProviderSchema,
+  ArmResourceSchema
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -47,7 +50,8 @@ import {
   resourceMetadata,
   singleton,
   subscriptionResource,
-  tenantResource
+  tenantResource,
+  armProviderSchema
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
@@ -190,6 +194,18 @@ export async function updateClients(
     }
   }
 
+  // Build the unified ARM provider schema
+  const armProviderSchema = buildArmProviderSchema(
+    resourceModels,
+    resourceModelToMetadataMap,
+    nonResourceMethods,
+    sdkContext
+  );
+
+  // Apply the unified decorator to the root client
+  applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+
+  // Also apply old decorators for backward compatibility during transition
   // the last step, add the decorator to the resource model
   for (const model of resourceModels) {
     const metadata = resourceModelToMetadataMap.get(
@@ -592,6 +608,70 @@ function getOperationScope(path: string): ResourceScope {
     return ResourceScope.ManagementGroup;
   }
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
+}
+
+/**
+ * Builds the unified ARM provider schema from resource metadata and non-resource methods.
+ * @param resourceModels - All resource models in the code model
+ * @param resourceModelToMetadataMap - Map of resource model IDs to their metadata
+ * @param nonResourceMethods - Map of non-resource method IDs to their metadata
+ * @param sdkContext - The emitter context for logging
+ * @returns The complete ARM provider schema
+ */
+function buildArmProviderSchema(
+  resourceModels: InputModelType[],
+  resourceModelToMetadataMap: Map<string, ResourceMetadata>,
+  nonResourceMethods: Map<string, NonResourceMethod>,
+  sdkContext: CSharpEmitterContext
+): ArmProviderSchema {
+  const resources: ArmResourceSchema[] = [];
+
+  // Build resource schemas from the metadata map
+  for (const model of resourceModels) {
+    const metadata = resourceModelToMetadataMap.get(
+      model.crossLanguageDefinitionId
+    );
+    if (metadata) {
+      if (metadata.resourceIdPattern === "") {
+        sdkContext.logger.reportDiagnostic({
+          code: "general-warning",
+          messageId: "default",
+          format: {
+            message: `Cannot figure out resourceIdPattern from model ${model.name}.`
+          },
+          target: NoTarget
+        });
+        continue;
+      }
+
+      resources.push({
+        resourceModelId: model.crossLanguageDefinitionId,
+        metadata: metadata
+      });
+    }
+  }
+
+  return {
+    resources: resources,
+    nonResourceMethods: Array.from(nonResourceMethods.values())
+  };
+}
+
+/**
+ * Applies the ARM provider schema as a decorator to the root client.
+ * @param codeModel - The code model to update
+ * @param schema - The ARM provider schema to apply
+ */
+function applyArmProviderSchemaDecorator(
+  codeModel: CodeModel,
+  schema: ArmProviderSchema
+): void {
+  const rootClient = codeModel.clients[0];
+  rootClient.decorators ??= [];
+  rootClient.decorators.push({
+    name: armProviderSchema,
+    arguments: convertArmProviderSchemaToArguments(schema)
+  });
 }
 
 function addNonResourceMethodDecorators(
