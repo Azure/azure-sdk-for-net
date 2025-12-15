@@ -592,6 +592,14 @@ public class AgentsTests : AgentsTestBase
         );
         Assert.That(resp.Memories.Count, Is.EqualTo(1), $"The number of found items is {resp.Memories.Count}, while expected 1.");
         Assert.That(resp.Memories[0].MemoryItem.Content.ToLower(), Does.Contain("plagiarus"));
+        MemoryStoreDeleteScopeResponse scopDelete = await projectClient.MemoryStores.DeleteScopeAsync(name: "test-memory-store", scope: MEMORY_STORE_SCOPE);
+        Assert.That(scopDelete.Name, Is.EqualTo("test-memory-store"));
+        Assert.That(scopDelete.Deleted, Is.True);
+        resp = await projectClient.MemoryStores.SearchMemoriesAsync(
+            memoryStoreName: store.Name,
+            options: opts
+        );
+        Assert.That(!resp.Memories.Any(), $"Unexpectedly found the result: {(resp.Memories.Any() ? resp.Memories.First().MemoryItem.Content : "")}");
     }
 
     [RecordedTest]
