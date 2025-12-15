@@ -133,7 +133,10 @@ directive:
       $.OperationStatus.properties.error['x-ms-client-name'] = 'ErrorResponse';
       $.OperationStatus.properties.startTime['format'] = 'date-time';
       $.OperationStatus.properties.endTime['format'] = 'date-time';
-      $.ImportClusterParameters.properties.sasUris['format'] = undefined;
       $.MaintenanceWindow.properties.duration['format'] = 'duration';
-
+  - from: redisenterprise.json
+    where: $.definitions
+    reason: The swagger spec uses format:password in a array model, which will cause modeler error.
+    transform: >
+      $.ImportClusterParameters.properties.sasUris['format'] = undefined;
 ```
