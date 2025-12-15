@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgricultureServicePatch(ManagedServiceIdentity identity, AgriculturePlatformSku sku, IDictionary<string, string> tags, AgriServiceResourceUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgricultureServicePatch(ManagedServiceIdentity identity, AgriculturePlatformSku sku, IDictionary<string, string> tags, AgricultureServicePatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Identity = identity;
             Sku = sku;
@@ -49,6 +49,6 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public AgriServiceResourceUpdateProperties Properties { get; set; }
+        public AgricultureServicePatchProperties Properties { get; set; }
     }
 }

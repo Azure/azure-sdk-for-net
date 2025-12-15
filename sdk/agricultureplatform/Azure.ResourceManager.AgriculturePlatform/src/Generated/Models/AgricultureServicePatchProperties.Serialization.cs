@@ -14,11 +14,11 @@ using Azure.ResourceManager.AgriculturePlatform;
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> The updatable properties of the AgriServiceResource. </summary>
-    public partial class AgriServiceResourceUpdateProperties : IJsonModel<AgriServiceResourceUpdateProperties>
+    public partial class AgricultureServicePatchProperties : IJsonModel<AgricultureServicePatchProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AgriServiceResourceUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AgricultureServicePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgriServiceResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgriServiceResourceUpdateProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AgricultureServicePatchProperties)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Config))
             {
@@ -78,24 +78,24 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgriServiceResourceUpdateProperties IJsonModel<AgriServiceResourceUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AgricultureServicePatchProperties IJsonModel<AgricultureServicePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgriServiceResourceUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AgricultureServicePatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgriServiceResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgriServiceResourceUpdateProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AgricultureServicePatchProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAgriServiceResourceUpdateProperties(document.RootElement, options);
+            return DeserializeAgricultureServicePatchProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AgriServiceResourceUpdateProperties DeserializeAgriServiceResourceUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static AgricultureServicePatchProperties DeserializeAgricultureServicePatchProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -149,47 +149,47 @@ namespace Azure.ResourceManager.AgriculturePlatform.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgriServiceResourceUpdateProperties(config, dataConnectorCredentials ?? new ChangeTrackingList<DataConnectorCredentialMap>(), installedSolutions ?? new ChangeTrackingList<InstalledSolutionMap>(), additionalBinaryDataProperties);
+            return new AgricultureServicePatchProperties(config, dataConnectorCredentials ?? new ChangeTrackingList<DataConnectorCredentialMap>(), installedSolutions ?? new ChangeTrackingList<InstalledSolutionMap>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AgriServiceResourceUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AgricultureServicePatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgriServiceResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerAgriculturePlatformContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AgriServiceResourceUpdateProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgricultureServicePatchProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AgriServiceResourceUpdateProperties IPersistableModel<AgriServiceResourceUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AgricultureServicePatchProperties IPersistableModel<AgricultureServicePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual AgriServiceResourceUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AgricultureServicePatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AgriServiceResourceUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AgricultureServicePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAgriServiceResourceUpdateProperties(document.RootElement, options);
+                        return DeserializeAgricultureServicePatchProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgriServiceResourceUpdateProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgricultureServicePatchProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AgriServiceResourceUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AgricultureServicePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
