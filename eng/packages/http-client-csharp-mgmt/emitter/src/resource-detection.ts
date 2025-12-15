@@ -283,7 +283,10 @@ export async function updateClients(
   }
   
   // Update resource names: if a model has multiple different resource paths, derive names from client names
-  // This handles the scenario where the same model is used by multiple resource interfaces with different paths
+  // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
+  // Note: TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
+  // The derived names from interface names (e.g., "BestPractices" -> "BestPractice") should match
+  // the explicit ResourceName parameters in TypeSpec for consistency.
   for (const [modelId, metadataList] of modelIdToMetadataList) {
     if (metadataList.length > 1) {
       // Multiple resource paths for the same model - derive names from client names
@@ -684,9 +687,10 @@ function getResourceScopeOfMethod(
 }
 
 function deriveResourceNameFromClient(clientName: string): string {
-  // Derive resource name from client/interface name by removing pluralization
-  // For example: "Practices" -> "Practice", "PracticeVersions" -> "PracticeVersion"
-  // "Employees" -> "Employee"
+  // Derive resource name from client/interface name by removing pluralization.
+  // This should match the explicit ResourceName parameter specified in LegacyOperations templates.
+  // For example: "BestPractices" -> "BestPractice", "BestPracticeVersions" -> "BestPracticeVersion"
+  // Other examples: "Employees" -> "Employee", "Companies" -> "Company"
   
   // Handle common plural endings
   if (clientName.endsWith("ies") && clientName.length > 3) {
@@ -696,7 +700,7 @@ function deriveResourceNameFromClient(clientName: string): string {
     // "Boxes" -> "Box", "Classes" -> "Class", "Watches" -> "Watch", "Bushes" -> "Bush"
     return clientName.substring(0, clientName.length - 2);
   } else if (clientName.endsWith("s") && clientName.length > 1 && !clientName.endsWith("ss")) {
-    // "Employees" -> "Employee", "Dogs" -> "Dog"
+    // "Employees" -> "Employee", "Dogs" -> "Dog", "BestPracticeVersions" -> "BestPracticeVersion"
     // But not "Class" -> "Clas"
     return clientName.substring(0, clientName.length - 1);
   }
