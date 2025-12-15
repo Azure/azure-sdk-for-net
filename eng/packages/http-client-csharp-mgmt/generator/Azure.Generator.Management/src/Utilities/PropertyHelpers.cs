@@ -87,6 +87,11 @@ namespace Azure.Generator.Management.Utilities
             // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
+                if (internalProperty.Body.HasSetter == false)
+                {
+                    return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                }
+
                 return new List<MethodBodyStatement> {
                     new IfStatement(checkNullExpression)
                     {
