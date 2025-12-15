@@ -6,7 +6,7 @@ This sample demonstrates how to update an existing custom analyzer, including up
 
 The `UpdateAnalyzerAsync` method allows you to modify certain properties of an existing analyzer. The following properties can be updated:
 - **Description**: Update the analyzer's description
-- **Tags**: Add, update, or remove tags (set tag value to empty string to remove)
+- **Tags**: Add or update tags
 
 ## Prerequisites
 
@@ -50,9 +50,8 @@ var updatedAnalyzer = new ContentAnalyzer
     Description = "Updated description"
 };
 
-// Update tags (empty string removes a tag)
+// Update tags
 updatedAnalyzer.Tags["tag1"] = "tag1_updated_value";
-updatedAnalyzer.Tags["tag2"] = "";  // Remove tag2
 updatedAnalyzer.Tags["tag3"] = "tag3_value";  // Add tag3
 
 // Update the analyzer

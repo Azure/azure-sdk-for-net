@@ -40,7 +40,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             };
             initialAnalyzer.Models["completion"] = "gpt-4.1";
             initialAnalyzer.Tags["tag1"] = "tag1_initial_value";
-            initialAnalyzer.Tags["tag2"] = "tag2_initial_value";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -67,9 +66,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Description = "Updated description"
                 };
 
-                // Update tags (empty string removes a tag)
+                // Update tags
                 updatedAnalyzer.Tags["tag1"] = "tag1_updated_value";
-                updatedAnalyzer.Tags["tag2"] = "";  // Remove tag2
                 updatedAnalyzer.Tags["tag3"] = "tag3_value";  // Add tag3
 
                 // Update the analyzer
@@ -95,9 +93,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Description = "Updated description"
                 };
 
-                // Update tags (empty string removes a tag)
+                // Update tags
                 updatedAnalyzer.Tags["tag1"] = "tag1_updated_value";
-                updatedAnalyzer.Tags["tag2"] = "";  // Remove tag2
                 updatedAnalyzer.Tags["tag3"] = "tag3_value";  // Add tag3
 
                 // Update the analyzer
@@ -137,8 +134,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
                 // Verify initial tags
                 Assert.IsNotNull(currentAnalyzer.Value.Tags, "Initial tags should not be null");
-                Assert.AreEqual(2, currentAnalyzer.Value.Tags.Count,
-                    "Should have 2 initial tags");
+                Assert.AreEqual(1, currentAnalyzer.Value.Tags.Count,
+                    "Should have 1 initial tag");
                 Console.WriteLine($"Initial tags count: {currentAnalyzer.Value.Tags.Count}");
 
                 Assert.IsTrue(currentAnalyzer.Value.Tags.ContainsKey("tag1"),
@@ -146,12 +143,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.AreEqual("tag1_initial_value", currentAnalyzer.Value.Tags["tag1"],
                     "tag1 initial value should match");
                 Console.WriteLine($"  tag1 = '{currentAnalyzer.Value.Tags["tag1"]}'");
-
-                Assert.IsTrue(currentAnalyzer.Value.Tags.ContainsKey("tag2"),
-                    "Should contain tag2");
-                Assert.AreEqual("tag2_initial_value", currentAnalyzer.Value.Tags["tag2"],
-                    "tag2 initial value should match");
-                Console.WriteLine($"  tag2 = '{currentAnalyzer.Value.Tags["tag2"]}'");
 
                 // ========== Verify Update Operation ==========
                 Assert.IsNotNull(updatedAnalyzer, "Updated analyzer object should not be null");
@@ -201,15 +192,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.AreNotEqual(currentAnalyzer.Value.Tags["tag1"], updated.Value.Tags["tag1"],
                     "tag1 value should be different from initial value");
                 Console.WriteLine($"  tag1 updated: '{currentAnalyzer.Value.Tags["tag1"]}' → '{updated.Value.Tags["tag1"]}'");
-                // Verify tag2 behavior (empty string value)
-                Assert.IsTrue(updated.Value.Tags.ContainsKey("tag2"),
-                    "tag2 should still exist (empty string doesn't remove tags)");
-                Assert.IsNotNull(updated.Value.Tags["tag2"], "tag2 value should not be null");
-                Assert.AreEqual("", updated.Value.Tags["tag2"],
-                    "tag2 should have empty string value");
-                Assert.AreNotEqual(currentAnalyzer.Value.Tags["tag2"], updated.Value.Tags["tag2"],
-                    "tag2 value should be different from initial value");
-                Console.WriteLine($"  tag2 set to empty: '{currentAnalyzer.Value.Tags["tag2"]}' → '' (empty string)");
                 // Verify tag3 was added
                 Assert.IsTrue(updated.Value.Tags.ContainsKey("tag3"),
                     "Should contain new tag3");
@@ -219,9 +201,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     "tag3 should not exist in initial analyzer");
                 Console.WriteLine($"  tag3 added: (new) → '{updated.Value.Tags["tag3"]}'");
 
-                // Verify tag count (should be 3: tag1, tag2 with empty string, tag3)
-                Assert.AreEqual(3, updated.Value.Tags.Count,
-                    "Should have 3 tags after update (tag1 updated, tag2 set to empty, tag3 added)");
+                // Verify tag count (should be 2: tag1 updated, tag3 added)
+                Assert.AreEqual(2, updated.Value.Tags.Count,
+                    "Should have 2 tags after update (tag1 updated, tag3 added)");
 
                 // ========== Verify Config Preservation ==========
                 if (currentAnalyzer.Value.Config != null)
@@ -272,10 +254,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Console.WriteLine($"  Base Analyzer: {updated.Value.BaseAnalyzerId} (preserved)");
                 Console.WriteLine($"  Tags before update: {currentAnalyzer.Value.Tags.Count} tag(s)");
                 Console.WriteLine($"    - tag1: '{currentAnalyzer.Value.Tags["tag1"]}'");
-                Console.WriteLine($"    - tag2: '{currentAnalyzer.Value.Tags["tag2"]}'");
                 Console.WriteLine($"  Tags after update: {updated.Value.Tags.Count} tag(s)");
                 Console.WriteLine($"    - tag1: '{updated.Value.Tags["tag1"]}' (updated)");
-                Console.WriteLine($"    - tag2: '' (set to empty)");
                 Console.WriteLine($"    - tag3: '{updated.Value.Tags["tag3"]}' (added)");
 
                 // ========== Verify Changes Summary ==========
