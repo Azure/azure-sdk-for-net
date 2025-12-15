@@ -24,11 +24,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <summary> Initializes a new instance of <see cref="UserRequestRetryPolicy"/>. </summary>
         /// <param name="retryCount"> Retry count for user request. </param>
         /// <param name="retryWindowInMinutes"> Retry window in minutes for user request. </param>
+        /// <param name="onFailureAction"> Action to take on failure. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserRequestRetryPolicy(int? retryCount, int? retryWindowInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserRequestRetryPolicy(int? retryCount, int? retryWindowInMinutes, ResourceOperationType? onFailureAction, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RetryCount = retryCount;
             RetryWindowInMinutes = retryWindowInMinutes;
+            OnFailureAction = onFailureAction;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -37,5 +39,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Retry window in minutes for user request. </summary>
         public int? RetryWindowInMinutes { get; set; }
+
+        /// <summary> Action to take on failure. </summary>
+        public ResourceOperationType? OnFailureAction { get; set; }
     }
 }

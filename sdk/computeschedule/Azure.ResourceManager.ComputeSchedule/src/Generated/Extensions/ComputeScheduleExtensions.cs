@@ -130,6 +130,46 @@ namespace Azure.ResourceManager.ComputeSchedule
         }
 
         /// <summary>
+        /// List resources attached to Scheduled Actions for the given occurrence
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.GetAttachedResourcesAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<OccurrenceResourceData> GetAttachedResourcesAsync(this ResourceGroupResource resourceGroupResource, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).GetAttachedResourcesAsync(scheduledActionName, occurrenceId, cancellationToken);
+        }
+
+        /// <summary>
+        /// List resources attached to Scheduled Actions for the given occurrence
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeScheduleResourceGroupResource.GetAttachedResources(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<OccurrenceResourceData> GetAttachedResources(this ResourceGroupResource resourceGroupResource, string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableComputeScheduleResourceGroupResource(resourceGroupResource).GetAttachedResources(scheduledActionName, occurrenceId, cancellationToken);
+        }
+
+        /// <summary>
         /// List ScheduledAction resources by subscription ID
         /// <item>
         /// <term> Mocking. </term>

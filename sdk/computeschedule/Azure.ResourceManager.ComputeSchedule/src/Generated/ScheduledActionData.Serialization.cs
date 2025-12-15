@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ComputeSchedule
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
-            ScheduledActionPatchProperties properties = default;
+            ScheduledActionProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ComputeSchedule
                     {
                         continue;
                     }
-                    properties = ScheduledActionPatchProperties.DeserializeScheduledActionPatchProperties(prop.Value, options);
+                    properties = ScheduledActionProperties.DeserializeScheduledActionProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

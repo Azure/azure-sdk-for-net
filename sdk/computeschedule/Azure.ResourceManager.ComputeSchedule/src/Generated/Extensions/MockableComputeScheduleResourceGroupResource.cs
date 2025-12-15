@@ -10,8 +10,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.ComputeSchedule;
+using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ComputeSchedule.Mocking
@@ -19,6 +21,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableComputeScheduleResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _occurrencesClientDiagnostics;
+        private Occurrences _occurrencesRestClient;
+
         /// <summary> Initializes a new instance of MockableComputeScheduleResourceGroupResource for mocking. </summary>
         protected MockableComputeScheduleResourceGroupResource()
         {
@@ -30,6 +35,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         internal MockableComputeScheduleResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics OccurrencesClientDiagnostics => _occurrencesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ComputeSchedule.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Occurrences OccurrencesRestClient => _occurrencesRestClient ??= new Occurrences(OccurrencesClientDiagnostics, Pipeline, Endpoint, "2026-01-01-preview");
 
         /// <summary> Gets a collection of ScheduledActions in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of ScheduledActions and their operations over a ScheduledActionResource. </returns>
@@ -51,7 +60,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-15-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +89,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-04-15-preview. </description>
+        /// <description> 2026-01-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,6 +103,88 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
             Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
 
             return GetScheduledActions().Get(scheduledActionName, cancellationToken);
+        }
+
+        /// <summary>
+        /// List resources attached to Scheduled Actions for the given occurrence
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/resources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Occurrences_ListResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<OccurrenceResourceData> GetAttachedResourcesAsync(string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new OccurrencesGetAttachedResourcesAsyncCollectionResultOfT(
+                OccurrencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                scheduledActionName,
+                occurrenceId,
+                context);
+        }
+
+        /// <summary>
+        /// List resources attached to Scheduled Actions for the given occurrence
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ComputeSchedule/scheduledActions/{scheduledActionName}/occurrences/{occurrenceId}/resources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Occurrences_ListResources. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-01-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="occurrenceId"> The name of the Occurrence. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> or <paramref name="occurrenceId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="OccurrenceResourceData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<OccurrenceResourceData> GetAttachedResources(string scheduledActionName, string occurrenceId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scheduledActionName, nameof(scheduledActionName));
+            Argument.AssertNotNullOrEmpty(occurrenceId, nameof(occurrenceId));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new OccurrencesGetAttachedResourcesCollectionResultOfT(
+                OccurrencesRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                scheduledActionName,
+                occurrenceId,
+                context);
         }
     }
 }

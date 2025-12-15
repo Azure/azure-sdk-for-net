@@ -35,10 +35,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="timezone"> Timezone for the operation. </param>
         /// <param name="operationTimezone"> Timezone for the operation. </param>
         /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
+        /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceOperationDetails(string operationId, ResourceIdentifier resourceId, ResourceOperationType? opType, string subscriptionId, DateTimeOffset? deadline, ScheduledActionDeadlineType? deadlineType, ScheduledActionOperationState? state, string timezone, string operationTimezone, ResourceOperationError resourceOperationError, FallbackOperationInfo fallbackOperationInfo, DateTimeOffset? completedOn, UserRequestRetryPolicy retryPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             OperationId = operationId;
             ResourceId = resourceId;
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             Timezone = timezone;
             OperationTimezone = operationTimezone;
             ResourceOperationError = resourceOperationError;
+            FallbackOperationInfo = fallbackOperationInfo;
             CompletedOn = completedOn;
             RetryPolicy = retryPolicy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -84,6 +86,9 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <summary> Operation level errors if they exist. </summary>
         public ResourceOperationError ResourceOperationError { get; }
+
+        /// <summary> Fallback operation details if a fallback was performed. </summary>
+        public FallbackOperationInfo FallbackOperationInfo { get; }
 
         /// <summary> Time the operation was complete if errors are null. </summary>
         public DateTimeOffset? CompletedOn { get; }

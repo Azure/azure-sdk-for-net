@@ -13,14 +13,9 @@ using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> Scheduled action properties. </summary>
+    /// <summary> The updatable properties of the ScheduledAction. </summary>
     public partial class ScheduledActionPatchProperties : IJsonModel<ScheduledActionPatchProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionPatchProperties"/> for deserialization. </summary>
-        internal ScheduledActionPatchProperties()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScheduledActionPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -39,35 +34,45 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 throw new FormatException($"The model {nameof(ScheduledActionPatchProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("resourceType"u8);
-            writer.WriteStringValue(ResourceType.ToString());
-            writer.WritePropertyName("actionType"u8);
-            writer.WriteStringValue(ActionType.ToString());
-            writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            if (Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(ActionType))
+            {
+                writer.WritePropertyName("actionType"u8);
+                writer.WriteStringValue(ActionType.Value.ToString());
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
             if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule, options);
-            writer.WritePropertyName("notificationSettings"u8);
-            writer.WriteStartArray();
-            foreach (NotificationSettings item in NotificationSettings)
+            if (Optional.IsDefined(Schedule))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("schedule"u8);
+                writer.WriteObjectValue(Schedule, options);
             }
-            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(NotificationSettings))
+            {
+                writer.WritePropertyName("notificationSettings"u8);
+                writer.WriteStartArray();
+                foreach (NotificationSettings item in NotificationSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Disabled))
             {
                 writer.WritePropertyName("disabled"u8);
                 writer.WriteBooleanValue(Disabled.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -111,29 +116,40 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             {
                 return null;
             }
-            ScheduledActionResourceType resourceType = default;
-            ScheduledActionType actionType = default;
-            DateTimeOffset startOn = default;
+            ScheduledActionResourceType? resourceType = default;
+            ScheduledActionType? actionType = default;
+            DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
             ScheduledActionsSchedule schedule = default;
             IList<NotificationSettings> notificationSettings = default;
             bool? disabled = default;
-            ScheduledActionResourceProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("resourceType"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     resourceType = new ScheduledActionResourceType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("actionType"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     actionType = new ScheduledActionType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -148,11 +164,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("schedule"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     schedule = ScheduledActionsSchedule.DeserializeScheduledActionsSchedule(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("notificationSettings"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<NotificationSettings> array = new List<NotificationSettings>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -170,15 +194,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     disabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("provisioningState"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new ScheduledActionResourceProvisioningState(prop.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -190,9 +205,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 startOn,
                 endOn,
                 schedule,
-                notificationSettings,
+                notificationSettings ?? new ChangeTrackingList<NotificationSettings>(),
                 disabled,
-                provisioningState,
                 additionalBinaryDataProperties);
         }
 

@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            ScheduledActionUpdateProperties properties = default;
+            ScheduledActionPatchProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    properties = ScheduledActionUpdateProperties.DeserializeScheduledActionUpdateProperties(prop.Value, options);
+                    properties = ScheduledActionPatchProperties.DeserializeScheduledActionPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

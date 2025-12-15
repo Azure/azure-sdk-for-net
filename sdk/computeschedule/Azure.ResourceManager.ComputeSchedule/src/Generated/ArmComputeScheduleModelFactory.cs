@@ -92,10 +92,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="timezone"> Timezone for the operation. </param>
         /// <param name="operationTimezone"> Timezone for the operation. </param>
         /// <param name="resourceOperationError"> Operation level errors if they exist. </param>
+        /// <param name="fallbackOperationInfo"> Fallback operation details if a fallback was performed. </param>
         /// <param name="completedOn"> Time the operation was complete if errors are null. </param>
         /// <param name="retryPolicy"> Retry policy the user can pass. </param>
         /// <returns> A new <see cref="Models.ResourceOperationDetails"/> instance for mocking. </returns>
-        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timezone = default, string operationTimezone = default, ResourceOperationError resourceOperationError = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
+        public static ResourceOperationDetails ResourceOperationDetails(string operationId = default, ResourceIdentifier resourceId = default, ResourceOperationType? opType = default, string subscriptionId = default, DateTimeOffset? deadline = default, ScheduledActionDeadlineType? deadlineType = default, ScheduledActionOperationState? state = default, string timezone = default, string operationTimezone = default, ResourceOperationError resourceOperationError = default, FallbackOperationInfo fallbackOperationInfo = default, DateTimeOffset? completedOn = default, UserRequestRetryPolicy retryPolicy = default)
         {
             return new ResourceOperationDetails(
                 operationId,
@@ -108,6 +109,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 timezone,
                 operationTimezone,
                 resourceOperationError,
+                fallbackOperationInfo,
                 completedOn,
                 retryPolicy,
                 additionalBinaryDataProperties: null);
@@ -120,6 +122,16 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static ResourceOperationError ResourceOperationError(string errorCode = default, string errorDetails = default)
         {
             return new ResourceOperationError(errorCode, errorDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes the fallback operation that was performed. </summary>
+        /// <param name="lastOpType"> The last operation type that was performed as a fallback. </param>
+        /// <param name="status"> The status of the fallback operation. </param>
+        /// <param name="error"> The error code if the fallback operation failed. </param>
+        /// <returns> A new <see cref="Models.FallbackOperationInfo"/> instance for mocking. </returns>
+        public static FallbackOperationInfo FallbackOperationInfo(ResourceOperationType lastOpType = default, string status = default, ResourceOperationError error = default)
+        {
+            return new FallbackOperationInfo(lastOpType, status, error, additionalBinaryDataProperties: null);
         }
 
         /// <param name="schedule"> The schedule for the request. </param>
@@ -370,7 +382,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="ComputeSchedule.ScheduledActionData"/> instance for mocking. </returns>
-        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledActionPatchProperties properties = default)
+        public static ScheduledActionData ScheduledActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ScheduledActionProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -394,12 +406,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionPatchProperties"/> instance for mocking. </returns>
-        public static ScheduledActionPatchProperties ScheduledActionPatchProperties(ScheduledActionResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default, ScheduledActionResourceProvisioningState? provisioningState = default)
+        /// <returns> A new <see cref="Models.ScheduledActionProperties"/> instance for mocking. </returns>
+        public static ScheduledActionProperties ScheduledActionProperties(ScheduledActionResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default, ScheduledActionResourceProvisioningState? provisioningState = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
 
-            return new ScheduledActionPatchProperties(
+            return new ScheduledActionProperties(
                 resourceType,
                 actionType,
                 startOn,
@@ -441,7 +453,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ScheduledActionPatch"/> instance for mocking. </returns>
-        public static ScheduledActionPatch ScheduledActionPatch(IDictionary<string, string> tags = default, ScheduledActionUpdateProperties properties = default)
+        public static ScheduledActionPatch ScheduledActionPatch(IDictionary<string, string> tags = default, ScheduledActionPatchProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -456,12 +468,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
-        /// <returns> A new <see cref="Models.ScheduledActionUpdateProperties"/> instance for mocking. </returns>
-        public static ScheduledActionUpdateProperties ScheduledActionUpdateProperties(ScheduledActionResourceType? resourceType = default, ScheduledActionType? actionType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default)
+        /// <returns> A new <see cref="Models.ScheduledActionPatchProperties"/> instance for mocking. </returns>
+        public static ScheduledActionPatchProperties ScheduledActionPatchProperties(ScheduledActionResourceType? resourceType = default, ScheduledActionType? actionType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
 
-            return new ScheduledActionUpdateProperties(
+            return new ScheduledActionPatchProperties(
                 resourceType,
                 actionType,
                 startOn,
@@ -603,6 +615,35 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static ResourceResultSummary ResourceResultSummary(string code = default, int count = default, ResponseError errorDetails = default)
         {
             return new ResourceResultSummary(code, count, errorDetails, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Represents an scheduled action resource metadata. </summary>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="id"> The compute RP resource id of the resource in the scheduled actions scope. . </param>
+        /// <param name="type"> The type of resource. </param>
+        /// <param name="resourceId">
+        /// The ARM Id of the resource.
+        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        /// </param>
+        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
+        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. </param>
+        /// <param name="provisioningState"> The current state of the resource. </param>
+        /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
+        /// <returns> A new <see cref="Models.OccurrenceResourceData"/> instance for mocking. </returns>
+        public static OccurrenceResourceData OccurrenceResourceData(string name = default, ResourceIdentifier id = default, string @type = default, ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default)
+        {
+            notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
+
+            return new OccurrenceResourceData(
+                name,
+                id,
+                @type,
+                resourceId,
+                notificationSettings.ToList(),
+                scheduledOn,
+                provisioningState,
+                errorDetails,
+                additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request to ask for a delay in an occurrence, delay should be set to client local time eg (ACST) 2025-05-30T22:03:00+09:30, (PST) 2025-05-30T06:35:00-07:00. </summary>

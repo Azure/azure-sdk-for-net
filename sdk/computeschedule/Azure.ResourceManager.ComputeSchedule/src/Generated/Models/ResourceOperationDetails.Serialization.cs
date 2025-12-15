@@ -87,6 +87,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 writer.WritePropertyName("resourceOperationError"u8);
                 writer.WriteObjectValue(ResourceOperationError, options);
             }
+            if (Optional.IsDefined(FallbackOperationInfo))
+            {
+                writer.WritePropertyName("fallbackOperationInfo"u8);
+                writer.WriteObjectValue(FallbackOperationInfo, options);
+            }
             if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedAt"u8);
@@ -149,6 +154,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             string timezone = default;
             string operationTimezone = default;
             ResourceOperationError resourceOperationError = default;
+            FallbackOperationInfo fallbackOperationInfo = default;
             DateTimeOffset? completedOn = default;
             UserRequestRetryPolicy retryPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -228,6 +234,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     resourceOperationError = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("fallbackOperationInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    fallbackOperationInfo = FallbackOperationInfo.DeserializeFallbackOperationInfo(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("completedAt"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -262,6 +277,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 timezone,
                 operationTimezone,
                 resourceOperationError,
+                fallbackOperationInfo,
                 completedOn,
                 retryPolicy,
                 additionalBinaryDataProperties);

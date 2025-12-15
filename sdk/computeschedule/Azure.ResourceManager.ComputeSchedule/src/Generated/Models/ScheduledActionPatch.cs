@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionPatch(IDictionary<string, string> tags, ScheduledActionUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionPatch(IDictionary<string, string> tags, ScheduledActionPatchProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
             Properties = properties;
@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public ScheduledActionUpdateProperties Properties { get; set; }
+        public ScheduledActionPatchProperties Properties { get; set; }
     }
 }

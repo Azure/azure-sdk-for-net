@@ -13,12 +13,17 @@ using Azure.ResourceManager.ComputeSchedule;
 
 namespace Azure.ResourceManager.ComputeSchedule.Models
 {
-    /// <summary> The retry policy for the user request. </summary>
-    public partial class UserRequestRetryPolicy : IJsonModel<UserRequestRetryPolicy>
+    /// <summary> Describes the fallback operation that was performed. </summary>
+    public partial class FallbackOperationInfo : IJsonModel<FallbackOperationInfo>
     {
+        /// <summary> Initializes a new instance of <see cref="FallbackOperationInfo"/> for deserialization. </summary>
+        internal FallbackOperationInfo()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UserRequestRetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FallbackOperationInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,25 +34,19 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RetryCount))
+            writer.WritePropertyName("lastOpType"u8);
+            writer.WriteStringValue(LastOpType.ToString());
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status);
+            if (Optional.IsDefined(Error))
             {
-                writer.WritePropertyName("retryCount"u8);
-                writer.WriteNumberValue(RetryCount.Value);
-            }
-            if (Optional.IsDefined(RetryWindowInMinutes))
-            {
-                writer.WritePropertyName("retryWindowInMinutes"u8);
-                writer.WriteNumberValue(RetryWindowInMinutes.Value);
-            }
-            if (Optional.IsDefined(OnFailureAction))
-            {
-                writer.WritePropertyName("onFailureAction"u8);
-                writer.WriteStringValue(OnFailureAction.Value.ToString());
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -68,60 +67,52 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserRequestRetryPolicy IJsonModel<UserRequestRetryPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FallbackOperationInfo IJsonModel<FallbackOperationInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserRequestRetryPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FallbackOperationInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUserRequestRetryPolicy(document.RootElement, options);
+            return DeserializeFallbackOperationInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UserRequestRetryPolicy DeserializeUserRequestRetryPolicy(JsonElement element, ModelReaderWriterOptions options)
+        internal static FallbackOperationInfo DeserializeFallbackOperationInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? retryCount = default;
-            int? retryWindowInMinutes = default;
-            ResourceOperationType? onFailureAction = default;
+            ResourceOperationType lastOpType = default;
+            string status = default;
+            ResourceOperationError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("retryCount"u8))
+                if (prop.NameEquals("lastOpType"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    retryCount = prop.Value.GetInt32();
+                    lastOpType = new ResourceOperationType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("retryWindowInMinutes"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    retryWindowInMinutes = prop.Value.GetInt32();
+                    status = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("onFailureAction"u8))
+                if (prop.NameEquals("error"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    onFailureAction = new ResourceOperationType(prop.Value.GetString());
+                    error = ResourceOperationError.DeserializeResourceOperationError(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,47 +120,47 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserRequestRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, additionalBinaryDataProperties);
+            return new FallbackOperationInfo(lastOpType, status, error, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UserRequestRetryPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FallbackOperationInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UserRequestRetryPolicy IPersistableModel<UserRequestRetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FallbackOperationInfo IPersistableModel<FallbackOperationInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual UserRequestRetryPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FallbackOperationInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UserRequestRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FallbackOperationInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUserRequestRetryPolicy(document.RootElement, options);
+                        return DeserializeFallbackOperationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserRequestRetryPolicy)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FallbackOperationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UserRequestRetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FallbackOperationInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
