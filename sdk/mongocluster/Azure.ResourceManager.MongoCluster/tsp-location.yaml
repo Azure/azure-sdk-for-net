@@ -2,3 +2,4 @@ directory: specification/mongocluster/resource-manager/Microsoft.DocumentDB/Mong
 commit: 7b956d28f9182fe7ddc319d43495e19fff57457b
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
+emitterPackageJsonPath: eng/legacy-emitter-package.json

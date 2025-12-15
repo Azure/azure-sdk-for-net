@@ -20,7 +20,11 @@ namespace Authentication.Union
 
         public UnionClient(AzureKeyCredential credential) : this(new Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
 
+        public UnionClient(AzureKeyCredential credential, UnionClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
+
         public UnionClient(TokenCredential credential) : this(new Uri("http://localhost:3000"), credential, new UnionClientOptions()) => throw null;
+
+        public UnionClient(TokenCredential credential, UnionClientOptions options) : this(new Uri("http://localhost:3000"), credential, options) => throw null;
 
         public UnionClient(Uri endpoint, AzureKeyCredential credential, UnionClientOptions options) => throw null;
 

@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.Text.Json;
-
+using Azure.Core;
 using FluentAssertions;
 
 using NUnit.Framework;
@@ -129,7 +129,7 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
         private static void TestSerializationRoundtrip(ExperimentMetricUpdate original)
         {
-            using var requestContent = original.ToRequestContent();
+            using RequestContent requestContent = original;
 
             using var buffer = new MemoryStream();
             requestContent.WriteTo(buffer, cancellation: default);
@@ -138,13 +138,13 @@ namespace Azure.Analytics.OnlineExperimentation.Tests
 
             // Deserialization matches ExperimentMetric.FromResponse()
             using var document = JsonDocument.Parse(buffer, ModelSerializationExtensions.JsonDocumentOptions);
-            var deserialized = ExperimentMetric.DeserializeExperimentMetric(document.RootElement);
+            var deserialized = ExperimentMetric.DeserializeExperimentMetric(document.RootElement, ModelSerializationExtensions.WireOptions);
 
-            // _serializedAdditionalRawData is originally null, Deserialize*() methods set it empty dictionary.
+            // _additionalBinaryDataProperties is originally null, Deserialize*() methods set it empty dictionary.
             deserialized.Should().BeEquivalentTo(
                 original,
                 c => c.Excluding(m => m.Categories)
-                      .Excluding(m => m.SelectedMemberPath.EndsWith("._serializedAdditionalRawData")));
+                      .Excluding(m => m.SelectedMemberPath.EndsWith("_additionalBinaryDataProperties")));
 
             var originalCategories = original.Categories.Should().BeOfType<ChangeTrackingList<string>>().Which;
             var categoriesEmitted = document.RootElement.TryGetProperty("categories", out var categoriesElement);
