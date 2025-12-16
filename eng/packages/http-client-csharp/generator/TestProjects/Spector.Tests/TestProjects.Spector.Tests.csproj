@@ -52,6 +52,8 @@
     <ProjectReference Include="..\Spector\http\client\structure\multi-client\src\Client.Structure.Service.Multi.Client.csproj" Aliases="ClientStructureMultiClient" />
     <ProjectReference Include="..\Spector\http\client\structure\renamed-operation\src\Client.Structure.Service.Renamed.Operation.csproj" Aliases="ClientStructureRenamedOperation" />
     <ProjectReference Include="..\Spector\http\client\structure\two-operation-group\src\Client.Structure.Service.TwoOperationGroup.csproj" Aliases="ClientStructureTwoOperationGroup" />
+		<ProjectReference Include="..\Spector\http\documentation\src\Documentation.csproj" />
+		<ProjectReference Include="..\Spector\http\encode\array\src\Encode.Array.csproj" />
     <ProjectReference Include="..\Spector\http\encode\bytes\src\Encode.Bytes.csproj" />
     <ProjectReference Include="..\Spector\http\encode\datetime\src\Encode.Datetime.csproj" />
     <ProjectReference Include="..\Spector\http\encode\duration\src\Encode.Duration.csproj" />

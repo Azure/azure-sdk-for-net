@@ -30,6 +30,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en"
             )
             {
@@ -181,12 +182,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Create metadata
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en-us")
             {
                 Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU",
-                ProjectName = projectName
             };
 
             // Define intents and entities
@@ -278,6 +279,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en"
             )
             {
@@ -428,12 +430,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             // Define project metadata
             ConversationAuthoringCreateProjectDetails projectMetadata = new ConversationAuthoringCreateProjectDetails(
                 projectKind: "Conversation",
+                projectName: projectName,
                 language: "en-us")
             {
                 Settings = new ConversationAuthoringProjectSettings(0.7F),
                 Multilingual = true,
                 Description = "Trying out CLU",
-                ProjectName = projectName
             };
 
             // Define project assets
