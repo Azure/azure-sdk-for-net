@@ -37,7 +37,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20251212.1"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20251215.3"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.33",
@@ -80,7 +80,6 @@
     "@azure-tools/typespec-liftr-base",
     "@typespec/compiler",
     "@typespec/http",
-    "@typespec/http-client-csharp",
     "@typespec/openapi",
     "@typespec/rest",
     "@typespec/versioning"
