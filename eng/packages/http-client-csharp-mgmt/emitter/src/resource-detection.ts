@@ -56,17 +56,8 @@ export async function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext
 ) {
-  // Detect and collect ARM resource information
-  const { resourceModels, resourceModelToMetadataMap, nonResourceMethods } =
-    detectArmResourcesAndMethods(sdkContext, codeModel);
-
-  // Build the unified ARM provider schema
-  const armProviderSchema = buildArmProviderSchema(
-    sdkContext,
-    resourceModels,
-    resourceModelToMetadataMap,
-    nonResourceMethods
-  );
+  // Build the unified ARM provider schema from detected resources
+  const armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
 
   // Apply the unified decorator to the root client
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
@@ -619,19 +610,21 @@ function getOperationScope(path: string): ResourceScope {
 }
 
 /**
- * Builds the unified ARM provider schema from resource metadata and non-resource methods.
- * @param sdkContext - The emitter context for logging
- * @param resourceModels - All resource models in the code model
- * @param resourceModelToMetadataMap - Map of resource model IDs to their metadata
- * @param nonResourceMethods - Map of non-resource method IDs to their metadata
- * @returns The complete ARM provider schema
+ * Builds the unified ARM provider schema by detecting resources and methods from the code model.
+ * This function is the main entry point for ARM resource detection and schema building.
+ * 
+ * @param sdkContext - The emitter context for SDK operations and logging
+ * @param codeModel - The code model to process
+ * @returns The complete ARM provider schema with resources and non-resource methods
  */
-function buildArmProviderSchema(
+export function buildArmProviderSchema(
   sdkContext: CSharpEmitterContext,
-  resourceModels: InputModelType[],
-  resourceModelToMetadataMap: Map<string, ResourceMetadata>,
-  nonResourceMethods: Map<string, NonResourceMethod>
+  codeModel: CodeModel
 ): ArmProviderSchema {
+  // Detect and collect ARM resource information
+  const { resourceModels, resourceModelToMetadataMap, nonResourceMethods } =
+    detectArmResourcesAndMethods(sdkContext, codeModel);
+
   const resources: ArmResourceSchema[] = [];
 
   // Build resource schemas from the metadata map
