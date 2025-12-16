@@ -1,4 +1,4 @@
 directory: specification/nginx/Nginx.Management
-commit: 8e03c7684307e54b1b21a779522e032dbd28f3b7
+commit: c5c49c665603a5408c5ebc2152e898566791d911
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
