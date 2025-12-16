@@ -25,5 +25,7 @@ namespace Azure.AI.Projects.Tests
         public string TESTIMAGEPNGINPUTPATH => GetRecordedVariable("TEST_IMAGE_PNG_INPUT_PATH");
         public string SAMPLEFILEPATH => GetRecordedVariable("SAMPLE_FILE_PATH");
         public string SAMPLEFOLDERPATH => GetRecordedVariable("SAMPLE_FOLDER_PATH");
+        public string MODEL_ENDPOINT => GetRecordedVariable("MODEL_ENDPOINT");
+        public string MODEL_API_KEY => GetRecordedVariable("MODEL_API_KEY");
     }
 }

@@ -1,4 +1,4 @@
-# Sample of using `MemoryStore` in Azure.AI.Projects.OpenAI.
+# Sample of using `MemoryStore` in Azure.AI.Projects.
 
 In this example we will demonstrate how to create, update, list and delete memory stores and scopes inside them.
 
