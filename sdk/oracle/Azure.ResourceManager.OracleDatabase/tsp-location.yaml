@@ -1,3 +1,4 @@
 directory: specification/oracle/Oracle.Database.Management
 commit: 05be2560fe94a920f8a2e3554c47e79268ddef64
 repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/legacy-emitter-package.json

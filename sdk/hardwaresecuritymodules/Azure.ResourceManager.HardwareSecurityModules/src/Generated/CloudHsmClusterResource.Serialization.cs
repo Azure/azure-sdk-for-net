@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
+    /// <summary></summary>
     public partial class CloudHsmClusterResource : IJsonModel<CloudHsmClusterData>
     {
-        private static CloudHsmClusterData s_dataDeserializationInstance;
-        private static CloudHsmClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<CloudHsmClusterData> s_dataDeserializationInstance;
 
+        private static IJsonModel<CloudHsmClusterData> DataDeserializationInstance => s_dataDeserializationInstance ??= new CloudHsmClusterData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudHsmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterData>)Data).Write(writer, options);
 
-        CloudHsmClusterData IJsonModel<CloudHsmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudHsmClusterData IJsonModel<CloudHsmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<CloudHsmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudHsmClusterData>(Data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         CloudHsmClusterData IPersistableModel<CloudHsmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterData>(data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
 
-        string IPersistableModel<CloudHsmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudHsmClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CloudHsmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedVirtualNetworksGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Get.json
             // this example is just showing the usage of "ManagedVirtualNetworks_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ManagedVirtualNetworksCreate()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Create.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedVirtualNetworks_Create.json
             // this example is just showing the usage of "ManagedVirtualNetworks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
