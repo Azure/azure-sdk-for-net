@@ -27,6 +27,7 @@ import {
   SdkModelType,
   SdkServiceOperation
 } from "@azure-tools/typespec-client-generator-core";
+import pluralize from "pluralize";
 import {
   armResourceActionName,
   armResourceCreateOrUpdateName,
@@ -742,6 +743,8 @@ function getResourceScopeOfMethod(
 /**
  * Derives a resource name from a client/interface name by removing pluralization.
  * This is used as a FALLBACK when no explicit ResourceName is specified in TypeSpec.
+ * Uses the pluralize library to handle English pluralization rules correctly.
+ * 
  * TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates
  * to avoid relying on this derivation logic.
  * 
@@ -749,21 +752,8 @@ function getResourceScopeOfMethod(
  * Other examples: "Employees" -> "Employee", "Companies" -> "Company"
  */
 function deriveResourceNameFromClient(clientName: string): string {
-  // Handle common plural endings
-  if (clientName.endsWith("ies") && clientName.length > 3) {
-    // "Practices" -> "Practice", "Companies" -> "Company"
-    return clientName.substring(0, clientName.length - 3) + "y";
-  } else if (clientName.endsWith("sses") || clientName.endsWith("xes") || clientName.endsWith("ches") || clientName.endsWith("shes")) {
-    // "Boxes" -> "Box", "Classes" -> "Class", "Watches" -> "Watch", "Bushes" -> "Bush"
-    return clientName.substring(0, clientName.length - 2);
-  } else if (clientName.endsWith("s") && clientName.length > 1 && !clientName.endsWith("ss")) {
-    // "Employees" -> "Employee", "Dogs" -> "Dog", "BestPracticeVersions" -> "BestPracticeVersion"
-    // But not "Class" -> "Clas"
-    return clientName.substring(0, clientName.length - 1);
-  }
-  
-  // If no plural pattern matches, return the name as-is
-  return clientName;
+  // Use pluralize library to convert plural to singular
+  return pluralize.singular(clientName);
 }
 
 function getOperationScope(path: string): ResourceScope {
