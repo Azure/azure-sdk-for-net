@@ -53,7 +53,15 @@ public class BicepDictionary<T> :
         {
             // in this case, the list is initialized as a literal list
             _kind = BicepValueKind.Literal;
-            _values = new Dictionary<string, BicepValue<T>>(values); // Shallow clone their values
+            _values = new Dictionary<string, BicepValue<T>>(values.Count);
+            // assign values from input into our own dictionary
+            foreach (var pair in values)
+            {
+                var value = new BicepValue<T>((BicepValueReference?)null);
+                SetSelfForItem(value, pair.Key);
+                value.Assign(pair.Value);
+                _values.Add(pair.Key, value);
+            }
         }
     }
 
@@ -128,9 +136,14 @@ public class BicepDictionary<T> :
             {
                 _kind = BicepValueKind.Literal;
             }
-            _values[key] = value;
-            // update the _self pointing the new item
-            SetSelfForItem(value, key);
+            if (_values.TryGetValue(key, out var result))
+            {
+                result.Assign(value);
+            }
+            else
+            {
+                Add(key, value);
+            }
         }
     }
 
@@ -144,9 +157,11 @@ public class BicepDictionary<T> :
         {
             _kind = BicepValueKind.Literal;
         }
-        _values.Add(key, value);
+        var addedItem = new BicepValue<T>((BicepValueReference?)null);
+        _values.Add(key, addedItem);
+        addedItem.Assign(value);
         // update the _self pointing the new item
-        SetSelfForItem(value, key);
+        SetSelfForItem(addedItem, key);
     }
 
     public void Add(KeyValuePair<string, BicepValue<T>> item) => Add(item.Key, item.Value);

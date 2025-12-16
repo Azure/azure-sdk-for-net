@@ -2,6 +2,7 @@
 # is used when this pipeline is going to be generating and publishing daily dev builds.
 parameters:
   ServiceDirectory: ''
+  Artifacts: []
   Condition: succeeded()
 steps:
 - ${{if ne(parameters.ServiceDirectory, '')}}:
@@ -11,6 +12,7 @@ steps:
       arguments: >
         -ServiceDirectory ${{parameters.ServiceDirectory}}
         -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+        -artifactList @('${{ replace(convertToJson(parameters.Artifacts), '''', '`''') }}' | ConvertFrom-Json | Select-Object -ExpandProperty name)
       pwsh: true
       workingDirectory: $(Pipeline.Workspace)
     displayName: Dump Package properties

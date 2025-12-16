@@ -28,12 +28,8 @@ namespace Azure.Health.Deidentification
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public DeidentificationClientGetJobDocumentsInternalCollectionResult(DeidentificationClient client, string jobName, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
-
             _client = client;
             _jobName = jobName;
             _maxpagesize = maxpagesize;
@@ -75,7 +71,8 @@ namespace Azure.Health.Deidentification
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetJobDocumentsInternalRequest(nextLink, _jobName, _maxpagesize, _continuationToken, _context) : _client.CreateGetJobDocumentsInternalRequest(_jobName, _maxpagesize, _continuationToken, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetJobDocumentsInternalRequest(nextLink, pageSize, _context) : _client.CreateGetJobDocumentsInternalRequest(_jobName, pageSize, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
             scope.Start();
             try

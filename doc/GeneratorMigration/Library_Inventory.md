@@ -12,14 +12,14 @@
 
 ## Summary
 
-- Total libraries: 395
+- Total libraries: 397
 - Management Plane (MPG): 226
-  - Autorest/Swagger: 160
-  - New Emitter (TypeSpec): 24
-  - Old TypeSpec: 42
-- Data Plane (DPG): 169
-  - Autorest/Swagger: 87
-  - New Emitter (TypeSpec): 16
+  - Autorest/Swagger: 158
+  - New Emitter (TypeSpec): 32
+  - Old TypeSpec: 36
+- Data Plane (DPG): 171
+  - Autorest/Swagger: 86
+  - New Emitter (TypeSpec): 19
   - Old TypeSpec: 17
 - No generator: 49
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 16 / 32 (50%)
+**Migration Status**: 19 / 36 (52.8%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -40,6 +40,8 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | batch | Azure.Compute.Batch |  |
 | cognitivelanguage | Azure.AI.Language.Conversations |  |
 | cognitivelanguage | Azure.AI.Language.Conversations.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Authoring |  |
+| cognitivelanguage | Azure.AI.Language.QuestionAnswering.Inference |  |
 | cognitivelanguage | Azure.AI.Language.Text |  |
 | cognitivelanguage | Azure.AI.Language.Text.Authoring |  |
 | communication | Azure.Communication.JobRouter |  |
@@ -54,13 +56,15 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | eventgrid | Azure.Messaging.EventGrid.SystemEvents | ✅ |
 | healthdataaiservices | Azure.Health.Deidentification | ✅ |
 | keyvault | Azure.Security.KeyVault.Administration | ✅ |
-| loadtestservice | Azure.Developer.LoadTesting |  |
+| loadtestservice | Azure.Developer.LoadTesting | ✅ |
 | monitor | Azure.Monitor.Ingestion | ✅ |
 | monitor | Azure.Monitor.Query.Logs | ✅ |
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
-| onlineexperimentation | Azure.Analytics.OnlineExperimentation |  |
+| onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |
+| openai | Azure.AI.OpenAI | ✅ |
 | purview | Azure.Analytics.Purview.DataMap |  |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
+| template | Azure.Template | ✅ |
 | translation | Azure.AI.Translation.Document |  |
 | translation | Azure.AI.Translation.Text | ✅ |
 | vision | Azure.AI.Vision.ImageAnalysis | ✅ |
@@ -68,7 +72,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 
 ## Data Plane Libraries (DPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 | Service | Library |
 | ------- | ------- |
@@ -153,7 +157,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 | synapse | Azure.Analytics.Synapse.Monitoring |
 | synapse | Azure.Analytics.Synapse.Spark |
 | tables | Azure.Data.Tables |
-| template | Azure.Template |
 | textanalytics | Azure.AI.TextAnalytics |
 | textanalytics | Azure.AI.TextAnalytics.Legacy.Shared |
 | timeseriesinsights | Azure.IoT.TimeSeriesInsights |
@@ -165,7 +168,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 87
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 24 / 66 (36.4%)
+**Migration Status**: 32 / 68 (47.1%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -173,7 +176,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | avs | Azure.ResourceManager.Avs |  |
 | azurestackhci | Azure.ResourceManager.Hci.Vm |  |
-| carbon | Azure.ResourceManager.CarbonOptimization |  |
+| carbon | Azure.ResourceManager.CarbonOptimization | ✅ |
 | chaos | Azure.ResourceManager.Chaos |  |
 | cloudhealth | Azure.ResourceManager.CloudHealth | ✅ |
 | computefleet | Azure.ResourceManager.ComputeFleet |  |
@@ -181,7 +184,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | computerecommender | Azure.ResourceManager.Compute.Recommender | ✅ |
 | computeschedule | Azure.ResourceManager.ComputeSchedule |  |
 | connectedcache | Azure.ResourceManager.ConnectedCache | ✅ |
-| containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime |  |
+| containerorchestratorruntime | Azure.ResourceManager.ContainerOrchestratorRuntime | ✅ |
 | databasewatcher | Azure.ResourceManager.DatabaseWatcher | ✅ |
 | databox | Azure.ResourceManager.DataBox |  |
 | dellstorage | Azure.ResourceManager.Dell.Storage | ✅ |
@@ -191,15 +194,17 @@ Libraries that provide resource management APIs for Azure services and have been
 | devopsinfrastructure | Azure.ResourceManager.DevOpsInfrastructure |  |
 | disconnectedoperations | Azure.ResourceManager.DisconnectedOperations |  |
 | durabletask | Azure.ResourceManager.DurableTask | ✅ |
+| dynatrace | Azure.ResourceManager.Dynatrace | ✅ |
+| edgeactions | Azure.ResourceManager.EdgeActions | ✅ |
 | elastic | Azure.ResourceManager.Elastic |  |
 | elasticsan | Azure.ResourceManager.ElasticSan |  |
 | fabric | Azure.ResourceManager.Fabric |  |
 | grafana | Azure.ResourceManager.Grafana |  |
-| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules |  |
+| hardwaresecuritymodules | Azure.ResourceManager.HardwareSecurityModules | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity |  |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
-| impactreporting | Azure.ResourceManager.ImpactReporting |  |
+| impactreporting | Azure.ResourceManager.ImpactReporting | ✅ |
 | informaticadatamanagement | Azure.ResourceManager.InformaticaDataManagement | ✅ |
 | iotoperations | Azure.ResourceManager.IotOperations |  |
 | lambdatesthyperexecute | Azure.ResourceManager.LambdaTestHyperExecute | ✅ |
@@ -216,11 +221,11 @@ Libraries that provide resource management APIs for Azure services and have been
 | portalservices | Azure.ResourceManager.PortalServicesCopilot | ✅ |
 | purestorageblock | Azure.ResourceManager.PureStorageBlock |  |
 | qumulo | Azure.ResourceManager.Qumulo |  |
-| quota | Azure.ResourceManager.Quota |  |
+| quota | Azure.ResourceManager.Quota | ✅ |
 | recoveryservices | Azure.ResourceManager.RecoveryServices |  |
 | recoveryservices-datareplication | Azure.ResourceManager.RecoveryServicesDataReplication |  |
 | resources | Azure.ResourceManager.Resources.Bicep |  |
-| secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension |  |
+| secretsstoreextension | Azure.ResourceManager.SecretsStoreExtension | ✅ |
 | selfhelp | Azure.ResourceManager.SelfHelp |  |
 | servicefabricmanagedclusters | Azure.ResourceManager.ServiceFabricManagedClusters |  |
 | servicenetworking | Azure.ResourceManager.ServiceNetworking |  |
@@ -239,7 +244,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 160
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 158
 
 | Service | Library |
 | ------- | ------- |
@@ -300,7 +305,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 16
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | dns | Azure.ResourceManager.Dns |
 | dnsresolver | Azure.ResourceManager.DnsResolver |
-| dynatrace | Azure.ResourceManager.Dynatrace |
 | edgeorder | Azure.ResourceManager.EdgeOrder |
 | edgezones | Azure.ResourceManager.EdgeZones |
 | eventgrid | Azure.ResourceManager.EventGrid |
@@ -312,7 +316,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 16
 | graphservices | Azure.ResourceManager.GraphServices |
 | guestconfiguration | Azure.ResourceManager.GuestConfiguration |
 | hdinsight | Azure.ResourceManager.HDInsight |
-| hdinsightcontainers | Azure.ResourceManager.HDInsight.Containers |
 | healthbot | Azure.ResourceManager.HealthBot |
 | healthcareapis | Azure.ResourceManager.HealthcareApis |
 | hybridaks | Azure.ResourceManager.HybridContainerService |

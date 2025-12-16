@@ -24,12 +24,8 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="client"> The DocumentIntelligenceClient client used to send requests. </param>
         /// <param name="modelId"> Unique document model name. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
         public DocumentIntelligenceClientGetAnalyzeBatchResultsAsyncCollectionResultOfT(DocumentIntelligenceClient client, string modelId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
-
             _client = client;
             _modelId = modelId;
             _context = context;

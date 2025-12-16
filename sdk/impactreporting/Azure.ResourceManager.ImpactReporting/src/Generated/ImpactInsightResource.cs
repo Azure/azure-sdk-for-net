@@ -6,45 +6,35 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ImpactReporting
 {
     /// <summary>
-    /// A Class representing an ImpactInsight along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ImpactInsightResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetImpactInsightResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkloadImpactResource"/> using the GetImpactInsight method.
+    /// A class representing a ImpactInsight along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ImpactInsightResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkloadImpactResource"/> using the GetImpactInsights method.
     /// </summary>
     public partial class ImpactInsightResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ImpactInsightResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="workloadImpactName"> The workloadImpactName. </param>
-        /// <param name="insightName"> The insightName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string workloadImpactName, string insightName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _impactInsightInsightsClientDiagnostics;
-        private readonly InsightsRestOperations _impactInsightInsightsRestClient;
+        private readonly ClientDiagnostics _insightsClientDiagnostics;
+        private readonly Insights _insightsRestClient;
         private readonly ImpactInsightData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Impact/workloadImpacts/insights";
 
-        /// <summary> Initializes a new instance of the <see cref="ImpactInsightResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ImpactInsightResource for mocking. </summary>
         protected ImpactInsightResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImpactInsightResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactInsightResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ImpactInsightResource(ArmClient client, ImpactInsightData data) : this(client, data.Id)
@@ -53,71 +43,92 @@ namespace Azure.ResourceManager.ImpactReporting
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ImpactInsightResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImpactInsightResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ImpactInsightResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _impactInsightInsightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string impactInsightInsightsApiVersion);
-            _impactInsightInsightsRestClient = new InsightsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, impactInsightInsightsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string impactInsightApiVersion);
+            _insightsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ImpactReporting", ResourceType.Namespace, Diagnostics);
+            _insightsRestClient = new Insights(_insightsClientDiagnostics, Pipeline, Endpoint, impactInsightApiVersion ?? "2024-05-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ImpactInsightData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="workloadImpactName"> The workloadImpactName. </param>
+        /// <param name="insightName"> The insightName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string workloadImpactName, string insightName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get Insight resources by workloadImpactName and insightName
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Insight_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Insights_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactInsightResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImpactInsightResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ImpactInsightResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _impactInsightInsightsClientDiagnostics.CreateScope("ImpactInsightResource.Get");
+            using DiagnosticScope scope = _insightsClientDiagnostics.CreateScope("ImpactInsightResource.Get");
             scope.Start();
             try
             {
-                var response = await _impactInsightInsightsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactInsightResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -131,33 +142,41 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Get Insight resources by workloadImpactName and insightName
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Insight_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Insights_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactInsightResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImpactInsightResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ImpactInsightResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _impactInsightInsightsClientDiagnostics.CreateScope("ImpactInsightResource.Get");
+            using DiagnosticScope scope = _insightsClientDiagnostics.CreateScope("ImpactInsightResource.Get");
             scope.Start();
             try
             {
-                var response = _impactInsightInsightsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _insightsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ImpactInsightResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -171,20 +190,20 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Delete Insight resource, This is Admin only operation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Insight_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Insights_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactInsightResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImpactInsightResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,16 +211,23 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _impactInsightInsightsClientDiagnostics.CreateScope("ImpactInsightResource.Delete");
+            using DiagnosticScope scope = _insightsClientDiagnostics.CreateScope("ImpactInsightResource.Delete");
             scope.Start();
             try
             {
-                var response = await _impactInsightInsightsRestClient.DeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _impactInsightInsightsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ImpactReportingArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _insightsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ImpactReportingArmOperation operation = new ImpactReportingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -215,20 +241,20 @@ namespace Azure.ResourceManager.ImpactReporting
         /// Delete Insight resource, This is Admin only operation
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Insight_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Insights_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactInsightResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImpactInsightResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,16 +262,23 @@ namespace Azure.ResourceManager.ImpactReporting
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _impactInsightInsightsClientDiagnostics.CreateScope("ImpactInsightResource.Delete");
+            using DiagnosticScope scope = _insightsClientDiagnostics.CreateScope("ImpactInsightResource.Delete");
             scope.Start();
             try
             {
-                var response = _impactInsightInsightsRestClient.Delete(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _impactInsightInsightsRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ImpactReportingArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _insightsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ImpactReportingArmOperation operation = new ImpactReportingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -256,23 +289,23 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Create Insight resource, This is Admin only operation
+        /// Update a ImpactInsight.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Insight_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Insights_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactInsightResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImpactInsightResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,16 +317,24 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _impactInsightInsightsClientDiagnostics.CreateScope("ImpactInsightResource.Update");
+            using DiagnosticScope scope = _insightsClientDiagnostics.CreateScope("ImpactInsightResource.Update");
             scope.Start();
             try
             {
-                var response = await _impactInsightInsightsRestClient.CreateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _impactInsightInsightsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ImpactReportingArmOperation<ImpactInsightResource>(Response.FromValue(new ImpactInsightResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, ImpactInsightData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ImpactReportingArmOperation<ImpactInsightResource> operation = new ImpactReportingArmOperation<ImpactInsightResource>(Response.FromValue(new ImpactInsightResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -304,23 +345,23 @@ namespace Azure.ResourceManager.ImpactReporting
         }
 
         /// <summary>
-        /// Create Insight resource, This is Admin only operation
+        /// Update a ImpactInsight.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Impact/workloadImpacts/{workloadImpactName}/insights/{insightName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Insight_Create</description>
+        /// <term> Operation Id. </term>
+        /// <description> Insights_Create. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ImpactInsightResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ImpactInsightResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,16 +373,24 @@ namespace Azure.ResourceManager.ImpactReporting
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _impactInsightInsightsClientDiagnostics.CreateScope("ImpactInsightResource.Update");
+            using DiagnosticScope scope = _insightsClientDiagnostics.CreateScope("ImpactInsightResource.Update");
             scope.Start();
             try
             {
-                var response = _impactInsightInsightsRestClient.Create(Id.SubscriptionId, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var uri = _impactInsightInsightsRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ImpactReportingArmOperation<ImpactInsightResource>(Response.FromValue(new ImpactInsightResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _insightsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, ImpactInsightData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ImpactInsightData> response = Response.FromValue(ImpactInsightData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ImpactReportingArmOperation<ImpactInsightResource> operation = new ImpactReportingArmOperation<ImpactInsightResource>(Response.FromValue(new ImpactInsightResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

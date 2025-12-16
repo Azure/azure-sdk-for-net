@@ -35,9 +35,14 @@ import {
   armResourceListName,
   armResourceReadName,
   armResourceUpdateName,
+  armResourceWithParameter,
   extensionResourceOperationName,
+  legacyExtensionResourceOperationName,
+  legacyResourceOperationName,
+  builtInResourceOperationName,
   nonResourceMethodMetadata,
   parentResourceName,
+  readsResourceName,
   resourceGroupResource,
   resourceMetadata,
   singleton,
@@ -96,21 +101,31 @@ export async function updateClients(
       );
       const [kind, modelId] =
         parseResourceOperation(serviceMethod, sdkContext) ?? [];
+     
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
-        entry?.methods.push({
-          methodId: method.crossLanguageDefinitionId,
-          kind,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-        if (entry && !entry.resourceType) {
-          entry.resourceType = calculateResourceTypeFromPath(
-            method.operation.path
-          );
-        }
-        if (entry && !entry.resourceIdPattern && isCRUDKind(kind)) {
-          entry.resourceIdPattern = method.operation.path;
+        if (entry) {
+          entry.methods.push({
+            methodId: method.crossLanguageDefinitionId,
+            kind,
+            operationPath: method.operation.path,
+            operationScope: getOperationScope(method.operation.path)
+          });
+          if (!entry.resourceType) {
+            entry.resourceType = calculateResourceTypeFromPath(
+              method.operation.path
+            );
+          }
+          if (!entry.resourceIdPattern && isCRUDKind(kind)) {
+            entry.resourceIdPattern = method.operation.path;
+          }
+        } else {
+          // no resource model found for this modelId, treat as non-resource method
+          nonResourceMethods.set(method.crossLanguageDefinitionId, {
+            methodId: method.crossLanguageDefinitionId,
+            operationPath: method.operation.path,
+            operationScope: getOperationScope(method.operation.path)
+          });
         }
       } else {
         // we add a methodMetadata decorator to this method
@@ -154,12 +169,24 @@ export async function updateClients(
 
   // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
-    // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
-    if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
-      resourceModelToMetadataMap
-        .get(metadata.parentResourceModelId)
-        ?.methods.push(...metadata.methods);
-      resourceModelToMetadataMap.delete(modelId);
+    if (metadata.resourceIdPattern === "") {
+      if (metadata.parentResourceModelId) {
+        // If there's a parent, move methods to parent and delete this resource
+        resourceModelToMetadataMap
+          .get(metadata.parentResourceModelId)
+          ?.methods.push(...metadata.methods);
+        resourceModelToMetadataMap.delete(modelId);
+      } else {
+        // If there's no parent, treat all methods as non-resource methods
+        for (const method of metadata.methods) {
+          nonResourceMethods.set(method.methodId, {
+            methodId: method.methodId,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope
+          });
+        }
+        resourceModelToMetadataMap.delete(modelId);
+      }
     }
   }
 
@@ -195,6 +222,7 @@ function parseResourceOperation(
   const decorators = serviceMethod?.__raw?.decorators;
   for (const decorator of decorators ?? []) {
     switch (decorator.definition?.name) {
+      case readsResourceName:
       case armResourceReadName:
         return [
           ResourceOperationKind.Get,
@@ -226,6 +254,123 @@ function parseResourceOperation(
           getResourceModelId(sdkContext, decorator)
         ];
       case extensionResourceOperationName:
+        switch (decorator.args[2].jsValue) {
+          case "read":
+            return [
+              ResourceOperationKind.Get,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "createOrUpdate":
+            return [
+              ResourceOperationKind.Create,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "update":
+            return [
+              ResourceOperationKind.Update,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "delete":
+            return [
+              ResourceOperationKind.Delete,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "list":
+            return [
+              ResourceOperationKind.List,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "action":
+            return [
+              ResourceOperationKind.Action,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[1].value as Model,
+                decorator.definition?.name
+              )
+            ];
+        }
+        break;
+      case legacyExtensionResourceOperationName:
+      case legacyResourceOperationName:
+        switch (decorator.args[1].jsValue) {
+          case "read":
+            return [
+              ResourceOperationKind.Get,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "createOrUpdate":
+            return [
+              ResourceOperationKind.Create,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "update":
+            return [
+              ResourceOperationKind.Update,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "delete":
+            return [
+              ResourceOperationKind.Delete,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "list":
+            return [
+              ResourceOperationKind.List,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+          case "action":
+            return [
+              ResourceOperationKind.Action,
+              getResourceModelIdCore(
+                sdkContext,
+                decorator.args[0].value as Model,
+                decorator.definition?.name
+              )
+            ];
+        }
+        return undefined;
+      case builtInResourceOperationName:
         switch (decorator.args[2].jsValue) {
           case "read":
             return [
@@ -364,7 +509,7 @@ function traverseClient<T extends { children?: T[] }>(client: T, clients: T[]) {
 function getAllResourceModels(codeModel: CodeModel): InputModelType[] {
   const resourceModels: InputModelType[] = [];
   for (const model of codeModel.models) {
-    if (model.decorators?.some((d) => d.name == armResourceInternal)) {
+    if (model.decorators?.some((d) => d.name == armResourceInternal || d.name == armResourceWithParameter)) {
       resourceModels.push(model);
     }
   }
@@ -428,9 +573,10 @@ function getResourceScopeOfMethod(
   return undefined;
 }
 
-// TODO -- this logic needs to be refined in the near future.
 function getOperationScope(path: string): ResourceScope {
-  if (
+  if (path.startsWith("/{resourceUri}") || path.startsWith("/{scope}")) {
+    return ResourceScope.Extension;
+  } else if (
     path.startsWith(
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/"
     )

@@ -27,12 +27,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role assignments. </param>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public KeyVaultAccessControlClientGetRoleAssignmentsAsyncCollectionResultOfT(KeyVaultAccessControlClient client, string scope, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-
             _client = client;
             _scope = scope;
             _filter = filter;

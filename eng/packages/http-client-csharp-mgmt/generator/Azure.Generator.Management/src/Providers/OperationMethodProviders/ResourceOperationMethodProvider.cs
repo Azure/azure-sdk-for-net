@@ -133,15 +133,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            var methodProvider = new MethodProvider(
+            var methodProvider = new ScmMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType);
+                resourceOperationMethodProvider._enclosingType,
+                ScmMethodKind.Convenience,
+                null,
+                null,
+                resourceOperationMethodProvider._serviceMethod);
 
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(
                 resourceOperationMethodProvider._serviceMethod,
-                resourceOperationMethodProvider._convenienceMethod.Signature.Description,
+                resourceOperationMethodProvider._description,
                 resourceOperationMethodProvider._enclosingType,
                 methodProvider.XmlDocs);
 

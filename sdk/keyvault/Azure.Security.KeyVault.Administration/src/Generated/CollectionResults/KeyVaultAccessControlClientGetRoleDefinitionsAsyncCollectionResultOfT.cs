@@ -27,12 +27,8 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="scope"> The scope of the role definition. </param>
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         public KeyVaultAccessControlClientGetRoleDefinitionsAsyncCollectionResultOfT(KeyVaultAccessControlClient client, string scope, string filter, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
-
             _client = client;
             _scope = scope;
             _filter = filter;
