@@ -51,7 +51,7 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
 
     public MapsClientTests(bool isAsync) : base(isAsync)
     {
-        NormalizeMultipartContentDispositionHeaders = true;
+        CustomSanitizers.Add(new ContentDispositionFilePathSanitizer());
     }
 
     [RecordedTest]

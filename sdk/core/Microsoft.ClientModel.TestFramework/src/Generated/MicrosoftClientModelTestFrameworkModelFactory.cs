@@ -44,7 +44,7 @@ namespace Microsoft.ClientModel.TestFramework
 
         /// <summary>
         /// The SanitizerAddition.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BodyKeySanitizer"/>, <see cref="BodyRegexSanitizer"/>, <see cref="BodyStringSanitizer"/>, <see cref="GeneralRegexSanitizer"/>, <see cref="GeneralStringSanitizer"/>, <see cref="HeaderRegexSanitizer"/>, <see cref="HeaderStringSanitizer"/>, <see cref="OAuthResponseSanitizer"/>, <see cref="RegexEntrySanitizer"/>, <see cref="RemoveHeaderSanitizer"/>, <see cref="UriRegexSanitizer"/>, <see cref="UriStringSanitizer"/>, and <see cref="UriSubscriptionIdSanitizer"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="TestProxy.Admin.BodyKeySanitizer"/>, <see cref="TestProxy.Admin.BodyRegexSanitizer"/>, <see cref="TestProxy.Admin.BodyStringSanitizer"/>, <see cref="TestProxy.Admin.ContentDispositionFilePathSanitizer"/>, <see cref="TestProxy.Admin.GeneralRegexSanitizer"/>, <see cref="TestProxy.Admin.GeneralStringSanitizer"/>, <see cref="TestProxy.Admin.HeaderRegexSanitizer"/>, <see cref="TestProxy.Admin.HeaderStringSanitizer"/>, <see cref="TestProxy.Admin.OAuthResponseSanitizer"/>, <see cref="TestProxy.Admin.RegexEntrySanitizer"/>, <see cref="TestProxy.Admin.RemoveHeaderSanitizer"/>, <see cref="TestProxy.Admin.UriRegexSanitizer"/>, <see cref="TestProxy.Admin.UriStringSanitizer"/>, and <see cref="TestProxy.Admin.UriSubscriptionIdSanitizer"/>.
         /// </summary>
         /// <param name="name"></param>
         /// <returns> A new <see cref="TestProxy.Admin.SanitizerAddition"/> instance for mocking. </returns>
@@ -122,6 +122,13 @@ namespace Microsoft.ClientModel.TestFramework
         public static BodyStringSanitizerBody BodyStringSanitizerBody(string target = default, string value = default, ApplyCondition condition = default)
         {
             return new BodyStringSanitizerBody(target, value, condition, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The ContentDispositionFilePathSanitizer. </summary>
+        /// <returns> A new <see cref="TestProxy.Admin.ContentDispositionFilePathSanitizer"/> instance for mocking. </returns>
+        public static ContentDispositionFilePathSanitizer ContentDispositionFilePathSanitizer()
+        {
+            return new ContentDispositionFilePathSanitizer(SanitizerType.ContentDispositionFilePathSanitizer, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The GeneralRegexSanitizer. </summary>

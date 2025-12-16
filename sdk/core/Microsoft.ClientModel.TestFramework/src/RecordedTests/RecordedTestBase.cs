@@ -90,13 +90,6 @@ public abstract class RecordedTestBase : ClientTestBase
     public RecordedTestMode Mode { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether to normalize multipart content disposition headers in recordings.
-    /// This is only applicable if your library sets Content-Disposition headers as full filepaths rather than
-    /// just the filename and extension.
-    /// </summary>
-    public bool NormalizeMultipartContentDispositionHeaders { get; set; } = false;
-
-    /// <summary>
     /// Gets or sets a value indicating whether to remove all default sanitizers that are automatically turned on
     /// in the test proxy. This can be helpful to improve performance in scenarios where libraries have very large
     /// request bodies that are expensive to sanitize.
@@ -143,6 +136,11 @@ public abstract class RecordedTestBase : ClientTestBase
     /// regex for matching on specific content in the body.
     /// </summary>
     public virtual List<BodyRegexSanitizer> BodyRegexSanitizers { get; } = new();
+
+    /// <summary>
+    /// The list of custom sanitizers to use while sanitizing request and response bodies.
+    /// </summary>
+    public virtual List<SanitizerAddition> CustomSanitizers { get; } = new();
 
     /// <summary>
     /// The list of <see cref="UriRegexSanitizer"/> to use while sanitizing request and response URIs. This allows you to specify
