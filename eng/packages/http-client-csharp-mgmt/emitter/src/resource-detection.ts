@@ -169,12 +169,24 @@ export async function updateClients(
 
   // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
   for (const [modelId, metadata] of resourceModelToMetadataMap) {
-    // TODO: handle the case where there is no parentResourceId but resourceIdPattern is missing
-    if (metadata.resourceIdPattern === "" && metadata.parentResourceModelId) {
-      resourceModelToMetadataMap
-        .get(metadata.parentResourceModelId)
-        ?.methods.push(...metadata.methods);
-      resourceModelToMetadataMap.delete(modelId);
+    if (metadata.resourceIdPattern === "") {
+      if (metadata.parentResourceModelId) {
+        // If there's a parent, move methods to parent and delete this resource
+        resourceModelToMetadataMap
+          .get(metadata.parentResourceModelId)
+          ?.methods.push(...metadata.methods);
+        resourceModelToMetadataMap.delete(modelId);
+      } else {
+        // If there's no parent, treat all methods as non-resource methods
+        for (const method of metadata.methods) {
+          nonResourceMethods.set(method.methodId, {
+            methodId: method.methodId,
+            operationPath: method.operationPath,
+            operationScope: method.operationScope
+          });
+        }
+        resourceModelToMetadataMap.delete(modelId);
+      }
     }
   }
 
