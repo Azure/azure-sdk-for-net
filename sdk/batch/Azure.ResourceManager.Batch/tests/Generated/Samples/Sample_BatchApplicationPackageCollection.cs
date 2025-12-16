@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchApplicationResource created on azure
             // for more information of creating BatchApplicationResource, please refer to the document of BatchApplicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string applicationName = "app1";
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchApplicationResource created on azure
             // for more information of creating BatchApplicationResource, please refer to the document of BatchApplicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string applicationName = "app1";
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchApplicationResource created on azure
             // for more information of creating BatchApplicationResource, please refer to the document of BatchApplicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string applicationName = "app1";
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchApplicationResource created on azure
             // for more information of creating BatchApplicationResource, please refer to the document of BatchApplicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string applicationName = "app1";
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // this example assumes you already have this BatchApplicationResource created on azure
             // for more information of creating BatchApplicationResource, please refer to the document of BatchApplicationResource
-            string subscriptionId = "subid";
+            string subscriptionId = "12345678-1234-1234-1234-123456789012";
             string resourceGroupName = "default-azurebatch-japaneast";
             string accountName = "sampleacct";
             string applicationName = "app1";

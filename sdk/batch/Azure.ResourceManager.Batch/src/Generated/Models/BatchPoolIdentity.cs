@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    /// <summary> Values returned by the List operation. </summary>
-    internal partial class ListPrivateLinkResourcesResult
+    /// <summary> The identity of the Batch pool, if configured. If the pool identity is updated during update an existing pool, only the new vms which are created after the pool shrinks to 0 will have the updated identities. </summary>
+    public partial class BatchPoolIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +46,33 @@ namespace Azure.ResourceManager.Batch.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ListPrivateLinkResourcesResult"/>. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ListPrivateLinkResourcesResult(IEnumerable<BatchPrivateLinkResourceData> value)
+        /// <summary> Initializes a new instance of <see cref="BatchPoolIdentity"/>. </summary>
+        /// <param name="poolIdentityType"> The type of identity used for the Batch Pool. </param>
+        public BatchPoolIdentity(PoolIdentityType poolIdentityType)
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            PoolIdentityType = poolIdentityType;
+            UserAssignedIdentities = new ChangeTrackingDictionary<string, UserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListPrivateLinkResourcesResult"/>. </summary>
-        /// <param name="value"> The PrivateLinkResource items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchPoolIdentity"/>. </summary>
+        /// <param name="poolIdentityType"> The type of identity used for the Batch Pool. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with the Batch pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListPrivateLinkResourcesResult(IReadOnlyList<BatchPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchPoolIdentity(PoolIdentityType poolIdentityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            PoolIdentityType = poolIdentityType;
+            UserAssignedIdentities = userAssignedIdentities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ListPrivateLinkResourcesResult"/> for deserialization. </summary>
-        internal ListPrivateLinkResourcesResult()
+        /// <summary> Initializes a new instance of <see cref="BatchPoolIdentity"/> for deserialization. </summary>
+        internal BatchPoolIdentity()
         {
         }
 
-        /// <summary> The PrivateLinkResource items on this page. </summary>
-        public IReadOnlyList<BatchPrivateLinkResourceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> The type of identity used for the Batch Pool. </summary>
+        public PoolIdentityType PoolIdentityType { get; set; }
+        /// <summary> The list of user identities associated with the Batch pool. </summary>
+        public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

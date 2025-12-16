@@ -59,18 +59,18 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="caching">
         /// Values are:
         ///
-        ///  none - The caching mode for the disk is not enabled.
-        ///  readOnly - The caching mode for the disk is read only.
-        ///  readWrite - The caching mode for the disk is read and write.
+        /// none - The caching mode for the disk is not enabled.
+        /// readOnly - The caching mode for the disk is read only.
+        /// readWrite - The caching mode for the disk is read and write.
         ///
-        ///  The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
+        /// The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// </param>
         /// <param name="diskSizeInGB"> The initial disk size in GB when creating new data disk. </param>
         /// <param name="storageAccountType">
         /// If omitted, the default is "Standard_LRS". Values are:
         ///
-        ///  Standard_LRS - The data disk should use standard locally redundant storage.
-        ///  Premium_LRS - The data disk should use premium locally redundant storage.
+        /// Standard_LRS - The data disk should use standard locally redundant storage.
+        /// Premium_LRS - The data disk should use premium locally redundant storage.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BatchVmDataDisk(int lun, BatchDiskCachingType? caching, int diskSizeInGB, BatchStorageAccountType? storageAccountType, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary>
         /// Values are:
         ///
-        ///  none - The caching mode for the disk is not enabled.
-        ///  readOnly - The caching mode for the disk is read only.
-        ///  readWrite - The caching mode for the disk is read and write.
+        /// none - The caching mode for the disk is not enabled.
+        /// readOnly - The caching mode for the disk is read only.
+        /// readWrite - The caching mode for the disk is read and write.
         ///
-        ///  The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
+        /// The default value for caching is none. For information about the caching options see: https://blogs.msdn.microsoft.com/windowsazurestorage/2012/06/27/exploring-windows-azure-drives-disks-and-images/.
         /// </summary>
         public BatchDiskCachingType? Caching { get; set; }
         /// <summary> The initial disk size in GB when creating new data disk. </summary>
@@ -104,8 +104,8 @@ namespace Azure.ResourceManager.Batch.Models
         /// <summary>
         /// If omitted, the default is "Standard_LRS". Values are:
         ///
-        ///  Standard_LRS - The data disk should use standard locally redundant storage.
-        ///  Premium_LRS - The data disk should use premium locally redundant storage.
+        /// Standard_LRS - The data disk should use standard locally redundant storage.
+        /// Premium_LRS - The data disk should use premium locally redundant storage.
         /// </summary>
         public BatchStorageAccountType? StorageAccountType { get; set; }
     }

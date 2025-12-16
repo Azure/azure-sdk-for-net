@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Lists all of the private endpoint connections in the specified account. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Lists all of the private endpoint connections in the specified account. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,8 +179,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Gets information about the specified private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -212,8 +212,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Gets information about the specified private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -291,8 +291,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Updates the properties of an existing private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="data"> PrivateEndpointConnection properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
@@ -321,8 +321,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Updates the properties of an existing private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="data"> PrivateEndpointConnection properties that should be updated. Properties that are supplied will be updated, any property not supplied will be unchanged. </param>
@@ -389,8 +389,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Deletes the specified private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -416,8 +416,8 @@ namespace Azure.ResourceManager.Batch
         }
 
         /// <summary> Deletes the specified private endpoint connection. </summary>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. This must be unique within the account. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -466,8 +466,8 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary> Lists all of the private endpoint connections in the specified account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -498,8 +498,8 @@ namespace Azure.ResourceManager.Batch
 
         /// <summary> Lists all of the private endpoint connections in the specified account. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The Azure subscription ID. This is a GUID-formatted string (e.g. 00000000-0000-0000-0000-000000000000). </param>
-        /// <param name="resourceGroupName"> The name of the resource group that contains the Batch account. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="accountName"> The name of the Batch account. </param>
         /// <param name="maxresults"> The maximum number of items to return in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

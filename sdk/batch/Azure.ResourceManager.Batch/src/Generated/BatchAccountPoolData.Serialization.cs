@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
+                writer.WriteObjectValue(Identity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Batch
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
+            BatchPoolIdentity identity = default;
             ETag? etag = default;
             IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Batch
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), options, AzureResourceManagerBatchContext.Default);
+                    identity = BatchPoolIdentity.DeserializeBatchPoolIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            provisioningState = new BatchAccountPoolProvisioningState(property0.Value.GetString());
+                            provisioningState = property0.Value.GetString().ToBatchAccountPoolProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("provisioningStateTransitionTime"u8))

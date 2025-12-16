@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="poolAllocationMode"> The allocation mode for creating pools in the Batch account. </param>
         /// <param name="keyVaultReference"> Identifies the Azure key vault associated with a Batch account. </param>
-        /// <param name="publicNetworkAccess"> If not specified, the default value is 'enabled'. </param>
+        /// <param name="publicNetworkAccess"> The network access type for operating on the resources in the Batch account. </param>
         /// <param name="networkProfile"> The network profile only takes effect when publicNetworkAccess is enabled. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections associated with the Batch account. </param>
         /// <param name="autoStorage"> Contains information about the auto-storage account associated with a Batch account. </param>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Batch
         public BatchAccountPoolAllocationMode? PoolAllocationMode { get; }
         /// <summary> Identifies the Azure key vault associated with a Batch account. </summary>
         public BatchKeyVaultReference KeyVaultReference { get; }
-        /// <summary> If not specified, the default value is 'enabled'. </summary>
+        /// <summary> The network access type for operating on the resources in the Batch account. </summary>
         public BatchPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The network profile only takes effect when publicNetworkAccess is enabled. </summary>
         public BatchNetworkProfile NetworkProfile { get; set; }
