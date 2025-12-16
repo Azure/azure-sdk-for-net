@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </summary>
         public NetworkFunctionPropertiesFormat Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
-        public ETag? ETag { get; set; }
+        public ETag? ETag { get; }
         /// <summary> The managed identity of the network function. </summary>
         public ManagedServiceIdentity Identity { get; set; }
     }

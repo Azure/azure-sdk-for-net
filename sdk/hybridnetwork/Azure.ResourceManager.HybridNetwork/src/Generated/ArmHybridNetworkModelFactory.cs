@@ -17,39 +17,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridNetworkModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ConfigurationGroupSchemaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Configuration group schema properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupSchemaData"/> instance for mocking. </returns>
-        public static ConfigurationGroupSchemaData ConfigurationGroupSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ConfigurationGroupSchemaPropertiesFormat properties = null)
+        /// <summary> Initializes a new instance of <see cref="Models.CancelInformation"/>. </summary>
+        /// <param name="siteNetworkServiceReferenceId"> The ARM id of the siteNetworkService resource. </param>
+        /// <param name="longRunningOperation"> The type of long-running operation the user wants to cancel, such as 'Put'. </param>
+        /// <returns> A new <see cref="Models.CancelInformation"/> instance for mocking. </returns>
+        public static CancelInformation CancelInformation(ResourceIdentifier siteNetworkServiceReferenceId = null, LongRunningOperation? longRunningOperation = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new ConfigurationGroupSchemaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
-        /// <param name="versionState"> The configuration group schema version state. </param>
-        /// <param name="description"> Description of what schema can contain. </param>
-        /// <param name="schemaDefinition"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
-        /// <returns> A new <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/> instance for mocking. </returns>
-        public static ConfigurationGroupSchemaPropertiesFormat ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string schemaDefinition = null)
-        {
-            return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, serializedAdditionalRawData: null);
+            return new CancelInformation(siteNetworkServiceReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteNetworkServiceReferenceId) : null, longRunningOperation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.ConfigurationGroupValueData"/>. </summary>
@@ -156,7 +130,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = null, IEnumerable<string> roleOverrideValues = null)
+        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = null, IEnumerable<string> roleOverrideValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -176,15 +150,156 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RequestMetadata"/>. </summary>
-        /// <param name="relativePath"> The relative path of the request. </param>
-        /// <param name="httpMethod"> The http method of the request. </param>
-        /// <param name="serializedBody"> The serialized body of the request. </param>
-        /// <param name="apiVersion"> The api version of the request. </param>
-        /// <returns> A new <see cref="Models.RequestMetadata"/> instance for mocking. </returns>
-        public static RequestMetadata RequestMetadata(string relativePath = null, HttpMethod httpMethod = default, string serializedBody = null, string apiVersion = null)
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.PublisherData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Publisher properties. </param>
+        /// <param name="identity"> The managed identity of the publisher, if configured. </param>
+        /// <returns> A new <see cref="HybridNetwork.PublisherData"/> instance for mocking. </returns>
+        public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PublisherPropertiesFormat properties = null, ManagedServiceIdentity identity = null)
         {
-            return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, serializedAdditionalRawData: null);
+            tags ??= new Dictionary<string, string>();
+
+            return new PublisherData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PublisherPropertiesFormat"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
+        /// <param name="scope"> The publisher scope. </param>
+        /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
+        public static PublisherPropertiesFormat PublisherPropertiesFormat(ProvisioningState? provisioningState = null, PublisherScope? scope = null)
+        {
+            return new PublisherPropertiesFormat(provisioningState, scope, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.SiteNetworkServiceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Site network service properties. </param>
+        /// <param name="identity"> The managed identity of the Site network service, if configured. </param>
+        /// <param name="sku"> Sku of the site network service. </param>
+        /// <returns> A new <see cref="HybridNetwork.SiteNetworkServiceData"/> instance for mocking. </returns>
+        public static SiteNetworkServiceData SiteNetworkServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SiteNetworkServicePropertiesFormat properties = null, ManagedServiceIdentity identity = null, HybridNetworkSku sku = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new SiteNetworkServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                identity,
+                sku,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SiteNetworkServicePropertiesFormat"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the site network service resource. </param>
+        /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
+        /// <param name="siteReferenceId"> The site details. </param>
+        /// <param name="publisherName"> The publisher name for the site network service. </param>
+        /// <param name="publisherScope"> The scope of the publisher. </param>
+        /// <param name="networkServiceDesignGroupName"> The network service design group name for the site network service. </param>
+        /// <param name="networkServiceDesignVersionName"> The network service design version for the site network service. </param>
+        /// <param name="networkServiceDesignVersionOfferingLocation"> The location of the network service design offering. </param>
+        /// <param name="networkServiceDesignVersionResourceReference">
+        /// The network service design version resource reference.
+        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
+        /// </param>
+        /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
+        /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
+        /// <param name="lastStateConfigurationGroupValueReferences"> The last state of the site network service resource. </param>
+        /// <returns> A new <see cref="Models.SiteNetworkServicePropertiesFormat"/> instance for mocking. </returns>
+        public static SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ResourceIdentifier siteReferenceId = null, string publisherName = null, PublisherScope? publisherScope = null, string networkServiceDesignGroupName = null, string networkServiceDesignVersionName = null, string networkServiceDesignVersionOfferingLocation = null, DeploymentResourceIdReference networkServiceDesignVersionResourceReference = null, IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences = null, string lastStateNetworkServiceDesignVersionName = null, IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences = null)
+        {
+            desiredStateConfigurationGroupValueReferences ??= new Dictionary<string, WritableSubResource>();
+            lastStateConfigurationGroupValueReferences ??= new Dictionary<string, WritableSubResource>();
+
+            return new SiteNetworkServicePropertiesFormat(
+                provisioningState,
+                managedResourceGroupConfiguration,
+                siteReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteReferenceId) : null,
+                publisherName,
+                publisherScope,
+                networkServiceDesignGroupName,
+                networkServiceDesignVersionName,
+                networkServiceDesignVersionOfferingLocation,
+                networkServiceDesignVersionResourceReference,
+                desiredStateConfigurationGroupValueReferences,
+                lastStateNetworkServiceDesignVersionName,
+                lastStateConfigurationGroupValueReferences,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.HybridNetworkSku"/>. </summary>
+        /// <param name="name"> Name of this Sku. </param>
+        /// <param name="tier"> The SKU tier based on the SKU name. </param>
+        /// <returns> A new <see cref="Models.HybridNetworkSku"/> instance for mocking. </returns>
+        public static HybridNetworkSku HybridNetworkSku(HybridNetworkSkuName name = default, HybridNetworkSkuTier? tier = null)
+        {
+            return new HybridNetworkSku(name, tier, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.SiteData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Site properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.SiteData"/> instance for mocking. </returns>
+        public static SiteData SiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SitePropertiesFormat properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new SiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SitePropertiesFormat"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
+        /// <param name="nfvis">
+        /// List of NFVIs
+        /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
+        /// </param>
+        /// <param name="siteNetworkServiceReferences"> The list of site network services on the site. </param>
+        /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
+        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = null, IEnumerable<NFVIs> nfvis = null, IEnumerable<WritableSubResource> siteNetworkServiceReferences = null)
+        {
+            nfvis ??= new List<NFVIs>();
+            siteNetworkServiceReferences ??= new List<WritableSubResource>();
+
+            return new SitePropertiesFormat(provisioningState, nfvis?.ToList(), siteNetworkServiceReferences?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.ComponentData"/>. </summary>
@@ -368,6 +483,171 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.RequestMetadata"/>. </summary>
+        /// <param name="relativePath"> The relative path of the request. </param>
+        /// <param name="httpMethod"> The http method of the request. </param>
+        /// <param name="serializedBody"> The serialized body of the request. </param>
+        /// <param name="apiVersion"> The api version of the request. </param>
+        /// <returns> A new <see cref="Models.RequestMetadata"/> instance for mocking. </returns>
+        public static RequestMetadata RequestMetadata(string relativePath = null, HttpMethod httpMethod = default, string serializedBody = null, string apiVersion = null)
+        {
+            return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ArtifactStoreData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> ArtifactStores properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.ArtifactStoreData"/> instance for mocking. </returns>
+        public static ArtifactStoreData ArtifactStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArtifactStorePropertiesFormat properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ArtifactStoreData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ArtifactStorePropertiesFormat"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
+        /// <param name="storeType"> The artifact store type. </param>
+        /// <param name="backingResourcePublicNetworkAccess"> The artifact store backing resource network access type. </param>
+        /// <param name="replicationStrategy"> The replication strategy. </param>
+        /// <param name="managedResourceGroupConfiguration"></param>
+        /// <param name="storageResourceId"> The created storage resource id. </param>
+        /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormat"/> instance for mocking. </returns>
+        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = null, ArtifactStoreType? storeType = null, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = null, ArtifactReplicationStrategy? replicationStrategy = null, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, string storageResourceId = null)
+        {
+            return new ArtifactStorePropertiesFormat(
+                provisioningState,
+                storeType,
+                backingResourcePublicNetworkAccess,
+                replicationStrategy,
+                managedResourceGroupConfiguration,
+                storageResourceId,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ArtifactManifestData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Artifact manifest properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.ArtifactManifestData"/> instance for mocking. </returns>
+        public static ArtifactManifestData ArtifactManifestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArtifactManifestPropertiesFormat properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ArtifactManifestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ArtifactManifestPropertiesFormat"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
+        /// <param name="artifactManifestState"> The artifact manifest state. </param>
+        /// <param name="artifacts"> The artifacts list. </param>
+        /// <returns> A new <see cref="Models.ArtifactManifestPropertiesFormat"/> instance for mocking. </returns>
+        public static ArtifactManifestPropertiesFormat ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState = null, ArtifactManifestState? artifactManifestState = null, IEnumerable<ManifestArtifactFormat> artifacts = null)
+        {
+            artifacts ??= new List<ManifestArtifactFormat>();
+
+            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactVersionsListOverview"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Proxy Artifact overview properties. </param>
+        /// <returns> A new <see cref="Models.ProxyArtifactVersionsListOverview"/> instance for mocking. </returns>
+        public static ProxyArtifactVersionsListOverview ProxyArtifactVersionsListOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProxyArtifactOverviewPropertiesValue properties = null)
+        {
+            return new ProxyArtifactVersionsListOverview(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactOverviewPropertiesValue"/>. </summary>
+        /// <param name="artifactType"> The artifact type. </param>
+        /// <param name="artifactVersion"> The artifact version. </param>
+        /// <param name="artifactState"> The artifact state. </param>
+        /// <returns> A new <see cref="Models.ProxyArtifactOverviewPropertiesValue"/> instance for mocking. </returns>
+        public static ProxyArtifactOverviewPropertiesValue ProxyArtifactOverviewPropertiesValue(ArtifactType? artifactType = null, string artifactVersion = null, ArtifactState? artifactState = null)
+        {
+            return new ProxyArtifactOverviewPropertiesValue(artifactType, artifactVersion, artifactState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactListOverview"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <returns> A new <see cref="Models.ProxyArtifactListOverview"/> instance for mocking. </returns>
+        public static ProxyArtifactListOverview ProxyArtifactListOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
+        {
+            return new ProxyArtifactListOverview(id, name, resourceType, systemData, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ConfigurationGroupSchemaData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> Configuration group schema properties. </param>
+        /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupSchemaData"/> instance for mocking. </returns>
+        public static ConfigurationGroupSchemaData ConfigurationGroupSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ConfigurationGroupSchemaPropertiesFormat properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ConfigurationGroupSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
+        /// <param name="versionState"> The configuration group schema version state. </param>
+        /// <param name="description"> Description of what schema can contain. </param>
+        /// <param name="schemaDefinition"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
+        /// <returns> A new <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/> instance for mocking. </returns>
+        public static ConfigurationGroupSchemaPropertiesFormat ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string schemaDefinition = null)
+        {
+            return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.NetworkFunctionDefinitionGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -532,275 +812,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridNetwork.PublisherData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Publisher properties. </param>
-        /// <param name="identity"> The managed identity of the publisher, if configured. </param>
-        /// <returns> A new <see cref="HybridNetwork.PublisherData"/> instance for mocking. </returns>
-        public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PublisherPropertiesFormat properties = null, ManagedServiceIdentity identity = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new PublisherData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                identity,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PublisherPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
-        /// <param name="scope"> The publisher scope. </param>
-        /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
-        public static PublisherPropertiesFormat PublisherPropertiesFormat(ProvisioningState? provisioningState = null, PublisherScope? scope = null)
-        {
-            return new PublisherPropertiesFormat(provisioningState, scope, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ArtifactStoreData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> ArtifactStores properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.ArtifactStoreData"/> instance for mocking. </returns>
-        public static ArtifactStoreData ArtifactStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArtifactStorePropertiesFormat properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ArtifactStoreData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ArtifactStorePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
-        /// <param name="storeType"> The artifact store type. </param>
-        /// <param name="replicationStrategy"> The replication strategy. </param>
-        /// <param name="managedResourceGroupConfiguration"></param>
-        /// <param name="storageResourceId"> The created storage resource id. </param>
-        /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormat"/> instance for mocking. </returns>
-        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = null, ArtifactStoreType? storeType = null, ArtifactReplicationStrategy? replicationStrategy = null, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ResourceIdentifier storageResourceId = null)
-        {
-            return new ArtifactStorePropertiesFormat(
-                provisioningState,
-                storeType,
-                replicationStrategy,
-                managedResourceGroupConfiguration,
-                storageResourceId,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridNetwork.ArtifactManifestData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Artifact manifest properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.ArtifactManifestData"/> instance for mocking. </returns>
-        public static ArtifactManifestData ArtifactManifestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArtifactManifestPropertiesFormat properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ArtifactManifestData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ArtifactManifestPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
-        /// <param name="artifactManifestState"> The artifact manifest state. </param>
-        /// <param name="artifacts"> The artifacts list. </param>
-        /// <returns> A new <see cref="Models.ArtifactManifestPropertiesFormat"/> instance for mocking. </returns>
-        public static ArtifactManifestPropertiesFormat ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState = null, ArtifactManifestState? artifactManifestState = null, IEnumerable<ManifestArtifactFormat> artifacts = null)
-        {
-            artifacts ??= new List<ManifestArtifactFormat>();
-
-            return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, artifacts?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactListOverview"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <returns> A new <see cref="Models.ProxyArtifactListOverview"/> instance for mocking. </returns>
-        public static ProxyArtifactListOverview ProxyArtifactListOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
-        {
-            return new ProxyArtifactListOverview(id, name, resourceType, systemData, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactVersionsListOverview"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Proxy Artifact overview properties. </param>
-        /// <returns> A new <see cref="Models.ProxyArtifactVersionsListOverview"/> instance for mocking. </returns>
-        public static ProxyArtifactVersionsListOverview ProxyArtifactVersionsListOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProxyArtifactOverviewPropertiesValue properties = null)
-        {
-            return new ProxyArtifactVersionsListOverview(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactOverviewPropertiesValue"/>. </summary>
-        /// <param name="artifactType"> The artifact type. </param>
-        /// <param name="artifactVersion"> The artifact version. </param>
-        /// <param name="artifactState"> The artifact state. </param>
-        /// <returns> A new <see cref="Models.ProxyArtifactOverviewPropertiesValue"/> instance for mocking. </returns>
-        public static ProxyArtifactOverviewPropertiesValue ProxyArtifactOverviewPropertiesValue(ArtifactType? artifactType = null, string artifactVersion = null, ArtifactState? artifactState = null)
-        {
-            return new ProxyArtifactOverviewPropertiesValue(artifactType, artifactVersion, artifactState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridNetwork.SiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Site properties. </param>
-        /// <returns> A new <see cref="HybridNetwork.SiteData"/> instance for mocking. </returns>
-        public static SiteData SiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SitePropertiesFormat properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new SiteData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SitePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
-        /// <param name="nfvis">
-        /// List of NFVIs
-        /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
-        /// </param>
-        /// <param name="siteNetworkServiceReferences"> The list of site network services on the site. </param>
-        /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
-        public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = null, IEnumerable<NFVIs> nfvis = null, IEnumerable<WritableSubResource> siteNetworkServiceReferences = null)
-        {
-            nfvis ??= new List<NFVIs>();
-            siteNetworkServiceReferences ??= new List<WritableSubResource>();
-
-            return new SitePropertiesFormat(provisioningState, nfvis?.ToList(), siteNetworkServiceReferences?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="HybridNetwork.SiteNetworkServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> Site network service properties. </param>
-        /// <param name="identity"> The managed identity of the Site network service, if configured. </param>
-        /// <param name="sku"> Sku of the site network service. </param>
-        /// <returns> A new <see cref="HybridNetwork.SiteNetworkServiceData"/> instance for mocking. </returns>
-        public static SiteNetworkServiceData SiteNetworkServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SiteNetworkServicePropertiesFormat properties = null, ManagedServiceIdentity identity = null, HybridNetworkSku sku = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new SiteNetworkServiceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                identity,
-                sku,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SiteNetworkServicePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site network service resource. </param>
-        /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
-        /// <param name="siteReferenceId"> The site details. </param>
-        /// <param name="publisherName"> The publisher name for the site network service. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="networkServiceDesignGroupName"> The network service design group name for the site network service. </param>
-        /// <param name="networkServiceDesignVersionName"> The network service design version for the site network service. </param>
-        /// <param name="networkServiceDesignVersionOfferingLocation"> The location of the network service design offering. </param>
-        /// <param name="networkServiceDesignVersionResourceReference">
-        /// The network service design version resource reference.
-        /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
-        /// </param>
-        /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
-        /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
-        /// <param name="lastStateConfigurationGroupValueReferences"> The last state of the site network service resource. </param>
-        /// <returns> A new <see cref="Models.SiteNetworkServicePropertiesFormat"/> instance for mocking. </returns>
-        public static SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ResourceIdentifier siteReferenceId = null, string publisherName = null, PublisherScope? publisherScope = null, string networkServiceDesignGroupName = null, string networkServiceDesignVersionName = null, string networkServiceDesignVersionOfferingLocation = null, DeploymentResourceIdReference networkServiceDesignVersionResourceReference = null, IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences = null, string lastStateNetworkServiceDesignVersionName = null, IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences = null)
-        {
-            desiredStateConfigurationGroupValueReferences ??= new Dictionary<string, WritableSubResource>();
-            lastStateConfigurationGroupValueReferences ??= new Dictionary<string, WritableSubResource>();
-
-            return new SiteNetworkServicePropertiesFormat(
-                provisioningState,
-                managedResourceGroupConfiguration,
-                siteReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteReferenceId) : null,
-                publisherName,
-                publisherScope,
-                networkServiceDesignGroupName,
-                networkServiceDesignVersionName,
-                networkServiceDesignVersionOfferingLocation,
-                networkServiceDesignVersionResourceReference,
-                desiredStateConfigurationGroupValueReferences,
-                lastStateNetworkServiceDesignVersionName,
-                lastStateConfigurationGroupValueReferences,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.HybridNetworkSku"/>. </summary>
-        /// <param name="name"> Name of this Sku. </param>
-        /// <param name="tier"> The SKU tier based on the SKU name. </param>
-        /// <returns> A new <see cref="Models.HybridNetworkSku"/> instance for mocking. </returns>
-        public static HybridNetworkSku HybridNetworkSku(HybridNetworkSkuName name = default, HybridNetworkSkuTier? tier = null)
-        {
-            return new HybridNetworkSku(name, tier, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AzureContainerRegistryScopedTokenCredential"/>. </summary>
         /// <param name="username"> The username of the credential. </param>
         /// <param name="acrToken"> The credential value. </param>
@@ -822,18 +833,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 expiry);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountCredential"/>. </summary>
-        /// <param name="storageAccountId"> The storage account Id. </param>
-        /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
-        /// <returns> A new <see cref="Models.AzureStorageAccountCredential"/> instance for mocking. </returns>
-        public static AzureStorageAccountCredential AzureStorageAccountCredential(ResourceIdentifier storageAccountId = null, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = null, DateTimeOffset? expiry = null)
-        {
-            containerCredentials ??= new List<AzureStorageAccountContainerCredential>();
-
-            return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, serializedAdditionalRawData: null, storageAccountId, containerCredentials?.ToList(), expiry);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountContainerCredential"/>. </summary>
         /// <param name="containerName"> The storage account container name. </param>
         /// <param name="containerSasUri"> The storage account container sas uri. </param>
@@ -841,6 +840,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static AzureStorageAccountContainerCredential AzureStorageAccountContainerCredential(string containerName = null, Uri containerSasUri = null)
         {
             return new AzureStorageAccountContainerCredential(containerName, containerSasUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountCredential"/>. </summary>
+        /// <param name="storageAccountId"> The storage account Id. </param>
+        /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
+        /// <param name="expiry"> The UTC time when credential will expire. </param>
+        /// <returns> A new <see cref="Models.AzureStorageAccountCredential"/> instance for mocking. </returns>
+        public static AzureStorageAccountCredential AzureStorageAccountCredential(string storageAccountId = null, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = null, DateTimeOffset? expiry = null)
+        {
+            containerCredentials ??= new List<AzureStorageAccountContainerCredential>();
+
+            return new AzureStorageAccountCredential(CredentialType.AzureStorageAccountToken, serializedAdditionalRawData: null, storageAccountId, containerCredentials?.ToList(), expiry);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationValueWithSecrets"/>. </summary>
@@ -897,6 +908,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationValue);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
+        /// <param name="versionState"> The network function definition version state. </param>
+        /// <param name="description"> The network function definition version description. </param>
+        /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
+        /// <param name="networkFunctionTemplate">
+        /// Containerized network function template.
+        /// Please note <see cref="ContainerizedNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>.
+        /// </param>
+        /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
+        public static ContainerizedNetworkFunctionDefinitionVersion ContainerizedNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, ContainerizedNetworkFunctionTemplate networkFunctionTemplate = null)
+        {
+            return new ContainerizedNetworkFunctionDefinitionVersion(
+                provisioningState,
+                versionState,
+                description,
+                deployParameters,
+                NetworkFunctionType.ContainerizedNetworkFunction,
+                serializedAdditionalRawData: null,
+                networkFunctionTemplate);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithSecrets"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
@@ -915,7 +949,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="secretDeploymentValues"> The JSON-serialized secret deployment values from the user. This contains secrets like passwords,keys etc. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string secretDeploymentValues = null)
+        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string secretDeploymentValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -954,7 +988,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="deploymentValues"> The JSON-serialized deployment values from the user. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithoutSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string deploymentValues = null)
+        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string deploymentValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -973,29 +1007,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 roleOverrideValues?.ToList(),
                 serializedAdditionalRawData: null,
                 deploymentValues);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
-        /// <param name="versionState"> The network function definition version state. </param>
-        /// <param name="description"> The network function definition version description. </param>
-        /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
-        /// <param name="networkFunctionTemplate">
-        /// Containerized network function template.
-        /// Please note <see cref="ContainerizedNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>.
-        /// </param>
-        /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> instance for mocking. </returns>
-        public static ContainerizedNetworkFunctionDefinitionVersion ContainerizedNetworkFunctionDefinitionVersion(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, ContainerizedNetworkFunctionTemplate networkFunctionTemplate = null)
-        {
-            return new ContainerizedNetworkFunctionDefinitionVersion(
-                provisioningState,
-                versionState,
-                description,
-                deployParameters,
-                NetworkFunctionType.ContainerizedNetworkFunction,
-                serializedAdditionalRawData: null,
-                networkFunctionTemplate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>. </summary>

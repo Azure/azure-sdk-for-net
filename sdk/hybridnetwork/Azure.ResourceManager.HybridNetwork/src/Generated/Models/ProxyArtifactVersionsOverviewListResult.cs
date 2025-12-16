@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The proxy artifact list result. </summary>
+    /// <summary> The description for page model. </summary>
     internal partial class ProxyArtifactVersionsOverviewListResult
     {
         /// <summary>
@@ -46,14 +47,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsOverviewListResult"/>. </summary>
-        internal ProxyArtifactVersionsOverviewListResult()
+        /// <param name="value"> The description for value property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ProxyArtifactVersionsOverviewListResult(IEnumerable<ProxyArtifactVersionsListOverview> value)
         {
-            Value = new ChangeTrackingList<ProxyArtifactVersionsListOverview>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsOverviewListResult"/>. </summary>
-        /// <param name="value"> A list of available proxy artifacts. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The description for value property. </param>
+        /// <param name="nextLink"> The description for nextLink property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProxyArtifactVersionsOverviewListResult(IReadOnlyList<ProxyArtifactVersionsListOverview> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +67,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of available proxy artifacts. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsOverviewListResult"/> for deserialization. </summary>
+        internal ProxyArtifactVersionsOverviewListResult()
+        {
+        }
+
+        /// <summary> The description for value property. </summary>
         public IReadOnlyList<ProxyArtifactVersionsListOverview> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary> The description for nextLink property. </summary>
         public string NextLink { get; }
     }
 }

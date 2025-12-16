@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> A list of network function definition versions. </summary>
+    /// <summary> The response of a NetworkFunctionDefinitionVersion list operation. </summary>
     internal partial class NetworkFunctionDefinitionVersionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionListResult"/>. </summary>
-        internal NetworkFunctionDefinitionVersionListResult()
+        /// <param name="value"> The NetworkFunctionDefinitionVersion items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkFunctionDefinitionVersionListResult(IEnumerable<NetworkFunctionDefinitionVersionData> value)
         {
-            Value = new ChangeTrackingList<NetworkFunctionDefinitionVersionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionListResult"/>. </summary>
-        /// <param name="value"> A list of network function definition versions. </param>
-        /// <param name="nextLink"> The URI to get the next set of results. </param>
+        /// <param name="value"> The NetworkFunctionDefinitionVersion items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFunctionDefinitionVersionListResult(IReadOnlyList<NetworkFunctionDefinitionVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFunctionDefinitionVersionListResult(IReadOnlyList<NetworkFunctionDefinitionVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of network function definition versions. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionListResult"/> for deserialization. </summary>
+        internal NetworkFunctionDefinitionVersionListResult()
+        {
+        }
+
+        /// <summary> The NetworkFunctionDefinitionVersion items on this page. </summary>
         public IReadOnlyList<NetworkFunctionDefinitionVersionData> Value { get; }
-        /// <summary> The URI to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

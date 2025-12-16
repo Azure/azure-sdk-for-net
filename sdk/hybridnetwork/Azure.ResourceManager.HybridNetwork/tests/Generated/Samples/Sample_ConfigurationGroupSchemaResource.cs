@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetANetworkFunctionDefinitionGroupResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ConfigurationGroupSchemaGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ConfigurationGroupSchemaGet.json
             // this example is just showing the usage of "ConfigurationGroupSchemas_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteANetworkFunctionGroupResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ConfigurationGroupSchemaDelete.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ConfigurationGroupSchemaDelete.json
             // this example is just showing the usage of "ConfigurationGroupSchemas_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateTheConfigurationGroupSchemaResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ConfigurationGroupSchemaUpdateTags.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ConfigurationGroupSchemaUpdateTags.json
             // this example is just showing the usage of "ConfigurationGroupSchemas_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateState_UpdateNetworkServiceDesignVersionState()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ConfigurationGroupSchemaVersionUpdateState.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ConfigurationGroupSchemaVersionUpdateState.json
             // this example is just showing the usage of "ConfigurationGroupSchemas_UpdateState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

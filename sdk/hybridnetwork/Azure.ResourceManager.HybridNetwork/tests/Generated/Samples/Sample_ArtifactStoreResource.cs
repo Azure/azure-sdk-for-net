@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HybridNetwork.Models;
+using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridNetwork.Samples
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAArtifactStoreResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ArtifactStoreGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ArtifactStoreGet.json
             // this example is just showing the usage of "ArtifactStores_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAArtifactStoreOfPublisherResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ArtifactStoreDelete.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ArtifactStoreDelete.json
             // this example is just showing the usage of "ArtifactStores_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateArtifactStoreResourceTags()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ArtifactStoreUpdateTags.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ArtifactStoreUpdateTags.json
             // this example is just showing the usage of "ArtifactStores_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -115,10 +116,10 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetProxyArtifacts_ListArtifactsUnderAnArtifactStore()
+        public async Task AddNetworkFabricControllerEndPoints_AddNetworkFabricEndpoint()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/PureProxyArtifact/ArtifactList.json
-            // this example is just showing the usage of "ProxyArtifact_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ArtifactStoreAddNFCEndPoints.json
+            // this example is just showing the usage of "ArtifactStores_AddNetworkFabricControllerEndPoints" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -128,17 +129,123 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             // this example assumes you already have this ArtifactStoreResource created on azure
             // for more information of creating ArtifactStoreResource, please refer to the document of ArtifactStoreResource
             string subscriptionId = "subid";
-            string resourceGroupName = "TestResourceGroup";
+            string resourceGroupName = "rg";
             string publisherName = "TestPublisher";
-            string artifactStoreName = "TestArtifactStoreName";
+            string artifactStoreName = "TestArtifactStore";
             ResourceIdentifier artifactStoreResourceId = ArtifactStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
             ArtifactStoreResource artifactStore = client.GetArtifactStoreResource(artifactStoreResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (ProxyArtifactListOverview item in artifactStore.GetProxyArtifactsAsync())
+            // invoke the operation
+            ArtifactStoreNetworkFabricControllerEndPoints artifactStoreNetworkFabricControllerEndPoints = new ArtifactStoreNetworkFabricControllerEndPoints
             {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+                NetworkFabricControllerIds = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/testsubid/resourceGroups/testNFCMRG/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/testNFCControllerId"),
+}},
+            };
+            await artifactStore.AddNetworkFabricControllerEndPointsAsync(WaitUntil.Completed, artifactStoreNetworkFabricControllerEndPoints);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ApprovePrivateEndPoints_ApproveManualPrivateEndpoints()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ArtifactStoreApprovePrivateEndPoints.json
+            // this example is just showing the usage of "ArtifactStores_ApprovePrivateEndPoints" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArtifactStoreResource created on azure
+            // for more information of creating ArtifactStoreResource, please refer to the document of ArtifactStoreResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string publisherName = "TestPublisher";
+            string artifactStoreName = "TestArtifactStore";
+            ResourceIdentifier artifactStoreResourceId = ArtifactStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
+            ArtifactStoreResource artifactStore = client.GetArtifactStoreResource(artifactStoreResourceId);
+
+            // invoke the operation
+            ArtifactStorePrivateEndPointsFormat artifactStorePrivateEndPointsFormat = new ArtifactStorePrivateEndPointsFormat
+            {
+                ManualPrivateEndPointConnections = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/testSub/resourceGroups/testRG/providers/Microsoft.Network/privateEndpoints/newpetest"),
+}},
+            };
+            await artifactStore.ApprovePrivateEndPointsAsync(WaitUntil.Completed, artifactStorePrivateEndPointsFormat);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DeleteNetworkFabricControllerEndPoints_DeleteNetworkFabricEndpoints()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ArtifactStoreDeleteNFCEndPoints.json
+            // this example is just showing the usage of "ArtifactStores_DeleteNetworkFabricControllerEndPoints" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArtifactStoreResource created on azure
+            // for more information of creating ArtifactStoreResource, please refer to the document of ArtifactStoreResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string publisherName = "TestPublisher";
+            string artifactStoreName = "TestArtifactStore";
+            ResourceIdentifier artifactStoreResourceId = ArtifactStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
+            ArtifactStoreResource artifactStore = client.GetArtifactStoreResource(artifactStoreResourceId);
+
+            // invoke the operation
+            ArtifactStoreNetworkFabricControllerEndPoints artifactStoreNetworkFabricControllerEndPoints = new ArtifactStoreNetworkFabricControllerEndPoints
+            {
+                NetworkFabricControllerIds = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/testsubid/resourceGroups/testNFCMRG/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/testNFCControllerId"),
+}},
+            };
+            await artifactStore.DeleteNetworkFabricControllerEndPointsAsync(WaitUntil.Completed, artifactStoreNetworkFabricControllerEndPoints);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task RemovePrivateEndPoints_RemoveManualEndpoint()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ArtifactStoreRemovePrivateEndPoints.json
+            // this example is just showing the usage of "ArtifactStores_RemovePrivateEndPoints" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArtifactStoreResource created on azure
+            // for more information of creating ArtifactStoreResource, please refer to the document of ArtifactStoreResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string publisherName = "TestPublisher";
+            string artifactStoreName = "TestArtifactStore";
+            ResourceIdentifier artifactStoreResourceId = ArtifactStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
+            ArtifactStoreResource artifactStore = client.GetArtifactStoreResource(artifactStoreResourceId);
+
+            // invoke the operation
+            ArtifactStorePrivateEndPointsFormat artifactStorePrivateEndPointsFormat = new ArtifactStorePrivateEndPointsFormat
+            {
+                ManualPrivateEndPointConnections = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/testSub/resourceGroups/testRG/providers/Microsoft.Network/privateEndpoints/newpetest"),
+}},
+            };
+            await artifactStore.RemovePrivateEndPointsAsync(WaitUntil.Completed, artifactStorePrivateEndPointsFormat);
 
             Console.WriteLine("Succeeded");
         }
@@ -147,7 +254,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetProxyArtifacts_GetAnArtifactOverview()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/PureProxyArtifact/ArtifactGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/PureProxyArtifact/ArtifactGet.json
             // this example is just showing the usage of "ProxyArtifact_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -178,7 +285,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task UpdateStateProxyArtifact_UpdateAnArtifactState()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/PureProxyArtifact/ArtifactChangeState.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/PureProxyArtifact/ArtifactChangeState.json
             // this example is just showing the usage of "ProxyArtifact_UpdateState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -206,6 +313,36 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             ProxyArtifactVersionsListOverview result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetProxyArtifacts_ListArtifactsUnderAnArtifactStore()
+        {
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/PureProxyArtifact/ArtifactList.json
+            // this example is just showing the usage of "ProxyArtifact_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ArtifactStoreResource created on azure
+            // for more information of creating ArtifactStoreResource, please refer to the document of ArtifactStoreResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "TestResourceGroup";
+            string publisherName = "TestPublisher";
+            string artifactStoreName = "TestArtifactStoreName";
+            ResourceIdentifier artifactStoreResourceId = ArtifactStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, publisherName, artifactStoreName);
+            ArtifactStoreResource artifactStore = client.GetArtifactStoreResource(artifactStoreResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (ProxyArtifactListOverview item in artifactStore.GetProxyArtifactsAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

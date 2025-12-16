@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());
             }
+            if (Optional.IsDefined(BackingResourcePublicNetworkAccess))
+            {
+                writer.WritePropertyName("backingResourcePublicNetworkAccess"u8);
+                writer.WriteStringValue(BackingResourcePublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(ReplicationStrategy))
             {
                 writer.WritePropertyName("replicationStrategy"u8);
@@ -98,9 +103,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             ProvisioningState? provisioningState = default;
             ArtifactStoreType? storeType = default;
+            BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = default;
             ArtifactReplicationStrategy? replicationStrategy = default;
             ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
-            ResourceIdentifier storageResourceId = default;
+            string storageResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,6 +129,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     storeType = new ArtifactStoreType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("backingResourcePublicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    backingResourcePublicNetworkAccess = new BackingResourcePublicNetworkAccess(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("replicationStrategy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -143,11 +158,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (property.NameEquals("storageResourceId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    storageResourceId = new ResourceIdentifier(property.Value.GetString());
+                    storageResourceId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -159,6 +170,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStorePropertiesFormat(
                 provisioningState,
                 storeType,
+                backingResourcePublicNetworkAccess,
                 replicationStrategy,
                 managedResourceGroupConfiguration,
                 storageResourceId,

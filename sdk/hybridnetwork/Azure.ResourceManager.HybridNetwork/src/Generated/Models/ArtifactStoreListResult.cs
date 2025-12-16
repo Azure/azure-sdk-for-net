@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> A list of artifact stores. </summary>
+    /// <summary> The response of a ArtifactStore list operation. </summary>
     internal partial class ArtifactStoreListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStoreListResult"/>. </summary>
-        internal ArtifactStoreListResult()
+        /// <param name="value"> The ArtifactStore items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ArtifactStoreListResult(IEnumerable<ArtifactStoreData> value)
         {
-            Value = new ChangeTrackingList<ArtifactStoreData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStoreListResult"/>. </summary>
-        /// <param name="value"> A list of artifact stores. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The ArtifactStore items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactStoreListResult(IReadOnlyList<ArtifactStoreData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArtifactStoreListResult(IReadOnlyList<ArtifactStoreData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of artifact stores. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactStoreListResult"/> for deserialization. </summary>
+        internal ArtifactStoreListResult()
+        {
+        }
+
+        /// <summary> The ArtifactStore items on this page. </summary>
         public IReadOnlyList<ArtifactStoreData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

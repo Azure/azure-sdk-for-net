@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionUpdateState"/>. </summary>
-        /// <param name="versionState"> The network function definition version state. Only the 'Active' and 'Deprecated' states are allowed for updates. Other states are used for internal state transitioning. </param>
+        /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionDefinitionVersionUpdateState(VersionState? versionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The network function definition version state. Only the 'Active' and 'Deprecated' states are allowed for updates. Other states are used for internal state transitioning. </summary>
+        /// <summary> The network function definition version state. </summary>
         public VersionState? VersionState { get; set; }
     }
 }

@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Response for list component API service call. </summary>
+    /// <summary> The response of a Component list operation. </summary>
     internal partial class ComponentListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ComponentListResult"/>. </summary>
-        internal ComponentListResult()
+        /// <param name="value"> The Component items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ComponentListResult(IEnumerable<ComponentData> value)
         {
-            Value = new ChangeTrackingList<ComponentData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentListResult"/>. </summary>
-        /// <param name="value"> A list of component resources in a networkFunction. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The Component items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ComponentListResult(IReadOnlyList<ComponentData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ComponentListResult(IReadOnlyList<ComponentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of component resources in a networkFunction. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComponentListResult"/> for deserialization. </summary>
+        internal ComponentListResult()
+        {
+        }
+
+        /// <summary> The Component items on this page. </summary>
         public IReadOnlyList<ComponentData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

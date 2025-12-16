@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="networkFunctionName"/> is null. </exception>

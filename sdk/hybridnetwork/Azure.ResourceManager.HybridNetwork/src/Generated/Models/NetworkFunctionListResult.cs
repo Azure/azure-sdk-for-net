@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Response for network function API service call. </summary>
+    /// <summary> The response of a NetworkFunction list operation. </summary>
     internal partial class NetworkFunctionListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionListResult"/>. </summary>
-        internal NetworkFunctionListResult()
+        /// <param name="value"> The NetworkFunction items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal NetworkFunctionListResult(IEnumerable<NetworkFunctionData> value)
         {
-            Value = new ChangeTrackingList<NetworkFunctionData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionListResult"/>. </summary>
-        /// <param name="value"> A list of network function resources in a subscription or resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The NetworkFunction items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFunctionListResult(IReadOnlyList<NetworkFunctionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFunctionListResult(IReadOnlyList<NetworkFunctionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of network function resources in a subscription or resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFunctionListResult"/> for deserialization. </summary>
+        internal NetworkFunctionListResult()
+        {
+        }
+
+        /// <summary> The NetworkFunction items on this page. </summary>
         public IReadOnlyList<NetworkFunctionData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

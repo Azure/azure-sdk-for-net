@@ -7,7 +7,7 @@ azure-arm: true
 csharp: true
 library-name: HybridNetwork
 namespace: Azure.ResourceManager.HybridNetwork
-require: https://github.com/Azure/azure-rest-api-specs/blob/eccca594dd50892ada8220fe7b1587c12cc5c871/specification/hybridnetwork/resource-manager/readme.md
+require: D:/Azure/azure-rest-api-specs-pr/specification/hybridnetwork/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,8 +20,6 @@ use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
-
-
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -83,6 +81,10 @@ rename-mapping:
   StatefulSet.ready: ReadyNumberOfPods
 
 directive:
+# operation removal - should be temporary
+# pageable lro
+- remove-operation: ArtifactStores_ListNetworkFabricControllerPrivateEndPoints
+- remove-operation: ArtifactStores_ListPrivateEndPoints
 - from: publisher.json
   where: $.definitions.ArtifactStorePropertiesFormat.properties.storageResourceId
   transform: $["x-ms-format"] = "arm-id";

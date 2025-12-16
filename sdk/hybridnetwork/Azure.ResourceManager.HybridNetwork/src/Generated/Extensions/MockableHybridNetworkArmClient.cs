@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationGroupSchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationGroupSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="SiteNetworkServiceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
-        public virtual ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
+        public virtual SiteNetworkServiceResource GetSiteNetworkServiceResource(ResourceIdentifier id)
         {
-            ConfigurationGroupSchemaResource.ValidateResourceId(id);
-            return new ConfigurationGroupSchemaResource(Client, id);
+            SiteNetworkServiceResource.ValidateResourceId(id);
+            return new SiteNetworkServiceResource(Client, id);
         }
 
         /// <summary>
@@ -71,6 +71,30 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PublisherResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
+        public virtual PublisherResource GetPublisherResource(ResourceIdentifier id)
+        {
+            PublisherResource.ValidateResourceId(id);
+            return new PublisherResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
+        public virtual SiteResource GetSiteResource(ResourceIdentifier id)
+        {
+            SiteResource.ValidateResourceId(id);
+            return new SiteResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ComponentResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ComponentResource.CreateResourceIdentifier" /> to create a <see cref="ComponentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -80,6 +104,42 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         {
             ComponentResource.ValidateResourceId(id);
             return new ComponentResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArtifactStoreResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArtifactStoreResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
+        public virtual ArtifactStoreResource GetArtifactStoreResource(ResourceIdentifier id)
+        {
+            ArtifactStoreResource.ValidateResourceId(id);
+            return new ArtifactStoreResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArtifactManifestResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArtifactManifestResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactManifestResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
+        public virtual ArtifactManifestResource GetArtifactManifestResource(ResourceIdentifier id)
+        {
+            ArtifactManifestResource.ValidateResourceId(id);
+            return new ArtifactManifestResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConfigurationGroupSchemaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfigurationGroupSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
+        public virtual ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(ResourceIdentifier id)
+        {
+            ConfigurationGroupSchemaResource.ValidateResourceId(id);
+            return new ConfigurationGroupSchemaResource(Client, id);
         }
 
         /// <summary>
@@ -128,66 +188,6 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
         {
             NetworkServiceDesignVersionResource.ValidateResourceId(id);
             return new NetworkServiceDesignVersionResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PublisherResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
-        public virtual PublisherResource GetPublisherResource(ResourceIdentifier id)
-        {
-            PublisherResource.ValidateResourceId(id);
-            return new PublisherResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArtifactStoreResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactStoreResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactStoreResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
-        public virtual ArtifactStoreResource GetArtifactStoreResource(ResourceIdentifier id)
-        {
-            ArtifactStoreResource.ValidateResourceId(id);
-            return new ArtifactStoreResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="ArtifactManifestResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactManifestResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactManifestResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
-        public virtual ArtifactManifestResource GetArtifactManifestResource(ResourceIdentifier id)
-        {
-            ArtifactManifestResource.ValidateResourceId(id);
-            return new ArtifactManifestResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
-        public virtual SiteResource GetSiteResource(ResourceIdentifier id)
-        {
-            SiteResource.ValidateResourceId(id);
-            return new SiteResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteNetworkServiceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkServiceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
-        public virtual SiteNetworkServiceResource GetSiteNetworkServiceResource(ResourceIdentifier id)
-        {
-            SiteNetworkServiceResource.ValidateResourceId(id);
-            return new SiteNetworkServiceResource(Client, id);
         }
     }
 }

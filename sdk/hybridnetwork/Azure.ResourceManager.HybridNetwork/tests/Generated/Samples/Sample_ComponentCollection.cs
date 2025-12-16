@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetComponentResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ComponentGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ComponentGet.json
             // this example is just showing the usage of "Components_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListComponentsInNetworkFunction()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ComponentListByNetworkFunction.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ComponentListByNetworkFunction.json
             // this example is just showing the usage of "Components_ListByNetworkFunction" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetComponentResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ComponentGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ComponentGet.json
             // this example is just showing the usage of "Components_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetComponentResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/ComponentGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/ComponentGet.json
             // this example is just showing the usage of "Components_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

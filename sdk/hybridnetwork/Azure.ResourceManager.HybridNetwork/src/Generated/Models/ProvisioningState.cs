@@ -30,6 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string CanceledValue = "Canceled";
         private const string DeletedValue = "Deleted";
         private const string ConvergingValue = "Converging";
+        private const string CancellingValue = "Cancelling";
 
         /// <summary> Unknown. </summary>
         public static ProvisioningState Unknown { get; } = new ProvisioningState(UnknownValue);
@@ -47,6 +48,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static ProvisioningState Deleted { get; } = new ProvisioningState(DeletedValue);
         /// <summary> Converging. </summary>
         public static ProvisioningState Converging { get; } = new ProvisioningState(ConvergingValue);
+        /// <summary> Cancelling. </summary>
+        public static ProvisioningState Cancelling { get; } = new ProvisioningState(CancellingValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>

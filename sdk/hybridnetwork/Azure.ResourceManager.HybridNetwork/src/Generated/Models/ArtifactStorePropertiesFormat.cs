@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -54,14 +53,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePropertiesFormat"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
         /// <param name="storeType"> The artifact store type. </param>
+        /// <param name="backingResourcePublicNetworkAccess"> The artifact store backing resource network access type. </param>
         /// <param name="replicationStrategy"> The replication strategy. </param>
         /// <param name="managedResourceGroupConfiguration"></param>
         /// <param name="storageResourceId"> The created storage resource id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier storageResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArtifactStorePropertiesFormat(ProvisioningState? provisioningState, ArtifactStoreType? storeType, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess, ArtifactReplicationStrategy? replicationStrategy, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration, string storageResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             StoreType = storeType;
+            BackingResourcePublicNetworkAccess = backingResourcePublicNetworkAccess;
             ReplicationStrategy = replicationStrategy;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
             StorageResourceId = storageResourceId;
@@ -72,11 +73,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The artifact store type. </summary>
         public ArtifactStoreType? StoreType { get; set; }
+        /// <summary> The artifact store backing resource network access type. </summary>
+        public BackingResourcePublicNetworkAccess? BackingResourcePublicNetworkAccess { get; set; }
         /// <summary> The replication strategy. </summary>
         public ArtifactReplicationStrategy? ReplicationStrategy { get; set; }
         /// <summary> Gets or sets the managed resource group configuration. </summary>
         public ArtifactStorePropertiesFormatManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
         /// <summary> The created storage resource id. </summary>
-        public ResourceIdentifier StorageResourceId { get; }
+        public string StorageResourceId { get; }
     }
 }

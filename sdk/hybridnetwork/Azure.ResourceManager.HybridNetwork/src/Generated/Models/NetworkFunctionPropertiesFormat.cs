@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, string nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -94,15 +93,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The provisioning state of the network function resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> The publisher name for the network function. </summary>
-        public string PublisherName { get; }
+        public string PublisherName { get; set; }
         /// <summary> The scope of the publisher. </summary>
-        public PublisherScope? PublisherScope { get; }
+        public PublisherScope? PublisherScope { get; set; }
         /// <summary> The network function definition group name for the network function. </summary>
-        public string NetworkFunctionDefinitionGroupName { get; }
+        public string NetworkFunctionDefinitionGroupName { get; set; }
         /// <summary> The network function definition version for the network function. </summary>
-        public string NetworkFunctionDefinitionVersion { get; }
+        public string NetworkFunctionDefinitionVersion { get; set; }
         /// <summary> The location of the network function definition offering. </summary>
-        public string NetworkFunctionDefinitionOfferingLocation { get; }
+        public string NetworkFunctionDefinitionOfferingLocation { get; set; }
         /// <summary>
         /// The network function definition version resource reference.
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> The nfvi type for the network function. </summary>
         public NfviType? NfviType { get; set; }
         /// <summary> The nfviId for the network function. </summary>
-        public ResourceIdentifier NfviId { get; set; }
+        public string NfviId { get; set; }
         /// <summary> Indicates if software updates are allowed during deployment. </summary>
         public bool? AllowSoftwareUpdate { get; set; }
         /// <summary> The value which indicates if NF  values are secrets. </summary>

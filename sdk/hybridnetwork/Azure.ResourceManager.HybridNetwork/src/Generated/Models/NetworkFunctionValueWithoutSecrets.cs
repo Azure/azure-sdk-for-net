@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="deploymentValues"> The JSON-serialized deployment values from the user. </param>
-        internal NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData, string deploymentValues) : base(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues, serializedAdditionalRawData)
+        internal NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, string nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData, string deploymentValues) : base(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues, serializedAdditionalRawData)
         {
             DeploymentValues = deploymentValues;
             ConfigurationType = configurationType;

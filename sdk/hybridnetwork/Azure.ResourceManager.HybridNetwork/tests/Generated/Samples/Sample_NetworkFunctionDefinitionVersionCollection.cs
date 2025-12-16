@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateANetworkFunctionDefinitionVersionResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionCreate.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/NetworkFunctionDefinitionVersionCreate.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ UpdateDependsOn = {},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateANetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionCreate.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionCreate.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -207,7 +207,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateANetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionCreate.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionCreate.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -301,7 +301,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetANetworkFunctionDefinitionVersionResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/NetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -336,7 +336,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -371,7 +371,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -406,7 +406,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetPublisherResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionListByNetworkFunctionDefinitionGroup.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/NetworkFunctionDefinitionVersionListByNetworkFunctionDefinitionGroup.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_ListByNetworkFunctionDefinitionGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -443,7 +443,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetANetworkFunctionDefinitionVersionResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/NetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -474,7 +474,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -505,7 +505,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -536,7 +536,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetANetworkFunctionDefinitionVersionResource()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/NetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/NetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -579,7 +579,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkFunctionDefinitionVersionResourceForAzureCoreVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureCore/VirtualNetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -622,7 +622,7 @@ UpdateDependsOn = {"testImageRole"},
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkFunctionDefinitionVersionResourceForAzureOperatorNexusVNF()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/AzureOperatorNexus/VirtualNetworkFunctionDefinitionVersionGet.json
             // this example is just showing the usage of "NetworkFunctionDefinitionVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

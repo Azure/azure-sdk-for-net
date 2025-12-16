@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Response for site network services API service call. </summary>
+    /// <summary> The response of a SiteNetworkService list operation. </summary>
     internal partial class SiteNetworkServiceListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceListResult"/>. </summary>
-        internal SiteNetworkServiceListResult()
+        /// <param name="value"> The SiteNetworkService items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SiteNetworkServiceListResult(IEnumerable<SiteNetworkServiceData> value)
         {
-            Value = new ChangeTrackingList<SiteNetworkServiceData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceListResult"/>. </summary>
-        /// <param name="value"> A list of site network services in a resource group. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value"> The SiteNetworkService items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteNetworkServiceListResult(IReadOnlyList<SiteNetworkServiceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SiteNetworkServiceListResult(IReadOnlyList<SiteNetworkServiceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of site network services in a resource group. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteNetworkServiceListResult"/> for deserialization. </summary>
+        internal SiteNetworkServiceListResult()
+        {
+        }
+
+        /// <summary> The SiteNetworkService items on this page. </summary>
         public IReadOnlyList<SiteNetworkServiceData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

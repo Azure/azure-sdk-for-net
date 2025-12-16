@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFirstPartySiteNetworkService()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceFirstPartyCreate.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/SiteNetworkServiceFirstPartyCreate.json
             // this example is just showing the usage of "SiteNetworkServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
                     SiteReferenceId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/providers/microsoft.hybridnetwork/sites/testSite"),
                     NetworkServiceDesignVersionResourceReference = new SecretDeploymentResourceReference
                     {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/TestPublisher/networkServiceDesignGroups/TestNetworkServiceDesignGroupName/networkServiceDesignVersions/1.0.0"),
+                        Id = "/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/TestPublisher/networkServiceDesignGroups/TestNetworkServiceDesignGroupName/networkServiceDesignVersions/1.0.0",
                     },
                     DesiredStateConfigurationGroupValueReferences =
 {
@@ -75,7 +75,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/prov
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateSiteNetworkService()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceCreate.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/SiteNetworkServiceCreate.json
             // this example is just showing the usage of "SiteNetworkServices_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -102,7 +102,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/prov
                     SiteReferenceId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/providers/microsoft.hybridnetwork/sites/testSite"),
                     NetworkServiceDesignVersionResourceReference = new OpenDeploymentResourceReference
                     {
-                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/TestPublisher/networkServiceDesignGroups/TestNetworkServiceDesignGroupName/networkServiceDesignVersions/1.0.0"),
+                        Id = "/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/TestPublisher/networkServiceDesignGroups/TestNetworkServiceDesignGroupName/networkServiceDesignVersions/1.0.0",
                     },
                     DesiredStateConfigurationGroupValueReferences =
 {
@@ -128,7 +128,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/prov
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetNetworkSite()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/SiteNetworkServiceGet.json
             // this example is just showing the usage of "SiteNetworkServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -161,7 +161,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/prov
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllNetworkSites()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceListByResourceGroup.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/SiteNetworkServiceListByResourceGroup.json
             // this example is just showing the usage of "SiteNetworkServices_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -196,7 +196,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/prov
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetNetworkSite()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/SiteNetworkServiceGet.json
             // this example is just showing the usage of "SiteNetworkServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,7 +225,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/prov
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetNetworkSite()
         {
-            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2023-09-01/examples/SiteNetworkServiceGet.json
+            // Generated from example definition: specification/hybridnetwork/resource-manager/Microsoft.HybridNetwork/stable/2025-03-30/examples/SiteNetworkServiceGet.json
             // this example is just showing the usage of "SiteNetworkServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -625,7 +625,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -682,7 +682,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.HybridNetwork.Mocking;
+using Azure.ResourceManager.HybridNetwork.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridNetwork
@@ -33,22 +34,22 @@ namespace Azure.ResourceManager.HybridNetwork
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ConfigurationGroupSchemaResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ConfigurationGroupSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="SiteNetworkServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetConfigurationGroupSchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetSiteNetworkServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
-        public static ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
+        public static SiteNetworkServiceResource GetSiteNetworkServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableHybridNetworkArmClient(client).GetConfigurationGroupSchemaResource(id);
+            return GetMockableHybridNetworkArmClient(client).GetSiteNetworkServiceResource(id);
         }
 
         /// <summary>
@@ -90,6 +91,44 @@ namespace Azure.ResourceManager.HybridNetwork
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PublisherResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetPublisherResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
+        public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridNetworkArmClient(client).GetPublisherResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SiteResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetSiteResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
+        public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridNetworkArmClient(client).GetSiteResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ComponentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ComponentResource.CreateResourceIdentifier" /> to create a <see cref="ComponentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -106,6 +145,63 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableHybridNetworkArmClient(client).GetComponentResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArtifactStoreResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArtifactStoreResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetArtifactStoreResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
+        public static ArtifactStoreResource GetArtifactStoreResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridNetworkArmClient(client).GetArtifactStoreResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ArtifactManifestResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ArtifactManifestResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactManifestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetArtifactManifestResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
+        public static ArtifactManifestResource GetArtifactManifestResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridNetworkArmClient(client).GetArtifactManifestResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ConfigurationGroupSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ConfigurationGroupSchemaResource.CreateResourceIdentifier" /> to create a <see cref="ConfigurationGroupSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetConfigurationGroupSchemaResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConfigurationGroupSchemaResource"/> object. </returns>
+        public static ConfigurationGroupSchemaResource GetConfigurationGroupSchemaResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridNetworkArmClient(client).GetConfigurationGroupSchemaResource(id);
         }
 
         /// <summary>
@@ -185,98 +281,96 @@ namespace Azure.ResourceManager.HybridNetwork
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PublisherResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PublisherResource.CreateResourceIdentifier" /> to create a <see cref="PublisherResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets a collection of SiteNetworkServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetPublisherResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkResourceGroupResource.GetSiteNetworkServices()"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="PublisherResource"/> object. </returns>
-        public static PublisherResource GetPublisherResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of SiteNetworkServiceResources and their operations over a SiteNetworkServiceResource. </returns>
+        public static SiteNetworkServiceCollection GetSiteNetworkServices(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHybridNetworkArmClient(client).GetPublisherResource(id);
+            return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServices();
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArtifactStoreResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactStoreResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactStoreResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets information about the specified site network service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SiteNetworkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
+        /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetArtifactStoreResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkResourceGroupResource.GetSiteNetworkServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ArtifactStoreResource"/> object. </returns>
-        public static ArtifactStoreResource GetArtifactStoreResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<SiteNetworkServiceResource>> GetSiteNetworkServiceAsync(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHybridNetworkArmClient(client).GetArtifactStoreResource(id);
+            return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServiceAsync(siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ArtifactManifestResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ArtifactManifestResource.CreateResourceIdentifier" /> to create an <see cref="ArtifactManifestResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets information about the specified site network service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SiteNetworkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
+        /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetArtifactManifestResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkResourceGroupResource.GetSiteNetworkService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ArtifactManifestResource"/> object. </returns>
-        public static ArtifactManifestResource GetArtifactManifestResource(this ArmClient client, ResourceIdentifier id)
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteNetworkServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<SiteNetworkServiceResource> GetSiteNetworkService(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(client, nameof(client));
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableHybridNetworkArmClient(client).GetArtifactManifestResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteResource.CreateResourceIdentifier" /> to create a <see cref="SiteResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetSiteResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteResource"/> object. </returns>
-        public static SiteResource GetSiteResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHybridNetworkArmClient(client).GetSiteResource(id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="SiteNetworkServiceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SiteNetworkServiceResource.CreateResourceIdentifier" /> to create a <see cref="SiteNetworkServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkArmClient.GetSiteNetworkServiceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SiteNetworkServiceResource"/> object. </returns>
-        public static SiteNetworkServiceResource GetSiteNetworkServiceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableHybridNetworkArmClient(client).GetSiteNetworkServiceResource(id);
+            return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkService(siteNetworkServiceName, cancellationToken);
         }
 
         /// <summary>
@@ -309,7 +403,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -347,7 +441,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -402,7 +496,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -415,7 +509,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -440,7 +534,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -453,7 +547,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="networkFunctionName"> The name of the network function resource. </param>
+        /// <param name="networkFunctionName"> Resource name for the network function resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="networkFunctionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="networkFunctionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -495,7 +589,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -533,7 +627,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -588,7 +682,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -626,7 +720,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -652,36 +746,19 @@ namespace Azure.ResourceManager.HybridNetwork
         }
 
         /// <summary>
-        /// Gets a collection of SiteNetworkServiceResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkResourceGroupResource.GetSiteNetworkServices()"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of SiteNetworkServiceResources and their operations over a SiteNetworkServiceResource. </returns>
-        public static SiteNetworkServiceCollection GetSiteNetworkServices(this ResourceGroupResource resourceGroupResource)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServices();
-        }
-
-        /// <summary>
-        /// Gets information about the specified site network service.
+        /// Cancels an ongoing long-running PUT operation for the specified Site Network Service resource. Other operations are not supported for cancellation at this time.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/cancelSiteNetworkServiceOperation</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <description>SiteNetworkServices_CancelOperation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -690,36 +767,35 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkResourceGroupResource.GetSiteNetworkServiceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.CancelOperationSiteNetworkService(WaitUntil,CancelInformation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancelInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteNetworkServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<SiteNetworkServiceResource>> GetSiteNetworkServiceAsync(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="cancelInformation"/> is null. </exception>
+        public static async Task<ArmOperation> CancelOperationSiteNetworkServiceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancelInformation cancelInformation, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkServiceAsync(siteNetworkServiceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridNetworkSubscriptionResource(subscriptionResource).CancelOperationSiteNetworkServiceAsync(waitUntil, cancelInformation, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets information about the specified site network service.
+        /// Cancels an ongoing long-running PUT operation for the specified Site Network Service resource. Other operations are not supported for cancellation at this time.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridNetwork/siteNetworkServices/{siteNetworkServiceName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/cancelSiteNetworkServiceOperation</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SiteNetworkServices_Get</description>
+        /// <description>SiteNetworkServices_CancelOperation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,308 +804,19 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkResourceGroupResource.GetSiteNetworkService(string,CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="siteNetworkServiceName"> The name of the site network service. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="siteNetworkServiceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="siteNetworkServiceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public static Response<SiteNetworkServiceResource> GetSiteNetworkService(this ResourceGroupResource resourceGroupResource, string siteNetworkServiceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableHybridNetworkResourceGroupResource(resourceGroupResource).GetSiteNetworkService(siteNetworkServiceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all sites in the configuration group value in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/configurationGroupValues</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationGroupValues_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationGroupValueResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.CancelOperationSiteNetworkService(WaitUntil,CancelInformation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="cancelInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ConfigurationGroupValueResource> GetConfigurationGroupValuesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="cancelInformation"/> is null. </exception>
+        public static ArmOperation CancelOperationSiteNetworkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancelInformation cancelInformation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValuesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all sites in the configuration group value in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/configurationGroupValues</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ConfigurationGroupValues_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ConfigurationGroupValueResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ConfigurationGroupValueResource> GetConfigurationGroupValues(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValues(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the network functions in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/networkFunctions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctions_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetNetworkFunctions(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<NetworkFunctionResource> GetNetworkFunctionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctionsAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the network functions in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/networkFunctions</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>NetworkFunctions_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NetworkFunctionResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetNetworkFunctions(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<NetworkFunctionResource> GetNetworkFunctions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctions(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the publishers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/publishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetPublishers(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<PublisherResource> GetPublishersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all the publishers in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/publishers</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Publishers_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PublisherResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetPublishers(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<PublisherResource> GetPublishers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishers(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all sites in the network service in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetSites(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<SiteResource> GetSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSitesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists all sites in the network service in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/sites</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Sites_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SiteResource"/></description>
-        /// </item>
-        /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetSites(CancellationToken)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<SiteResource> GetSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSites(cancellationToken);
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).CancelOperationSiteNetworkService(waitUntil, cancelInformation, cancellationToken);
         }
 
         /// <summary>
@@ -1045,7 +832,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1081,7 +868,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-30</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1102,6 +889,294 @@ namespace Azure.ResourceManager.HybridNetwork
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSiteNetworkServices(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all sites in the configuration group value in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/configurationGroupValues</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationGroupValues_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ConfigurationGroupValueResource> GetConfigurationGroupValuesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValuesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all sites in the configuration group value in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/configurationGroupValues</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConfigurationGroupValues_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetConfigurationGroupValues(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ConfigurationGroupValueResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ConfigurationGroupValueResource> GetConfigurationGroupValues(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetConfigurationGroupValues(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the network functions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/networkFunctions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFunctions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetNetworkFunctions(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<NetworkFunctionResource> GetNetworkFunctionsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctionsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the network functions in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/networkFunctions</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkFunctions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetNetworkFunctions(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="NetworkFunctionResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<NetworkFunctionResource> GetNetworkFunctions(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetNetworkFunctions(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the publishers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/publishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetPublishers(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<PublisherResource> GetPublishersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishersAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all the publishers in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/publishers</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetPublishers(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<PublisherResource> GetPublishers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetPublishers(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all sites in the network service in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/sites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sites_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetSites(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<SiteResource> GetSitesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSitesAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all sites in the network service in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridNetwork/sites</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Sites_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.GetSites(CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="SiteResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<SiteResource> GetSites(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).GetSites(cancellationToken);
         }
     }
 }
