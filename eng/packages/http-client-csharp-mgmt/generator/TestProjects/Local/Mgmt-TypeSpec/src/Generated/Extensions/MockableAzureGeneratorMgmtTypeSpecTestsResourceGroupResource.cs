@@ -589,6 +589,71 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             return GetResourceTypeTestResources().Get(resourceTypeTestResourceName, cancellationToken);
         }
 
+        /// <summary> Gets a collection of SampleDatas in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SampleDatas and their operations over a SampleDataResource. </returns>
+        public virtual SampleDataCollection GetSampleDatas()
+        {
+            return GetCachedClient(client => new SampleDataCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SampleData
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SampleDatas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sampleDataName"> The name of the SampleData. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sampleDataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sampleDataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SampleDataResource>> GetSampleDataAsync(string sampleDataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
+
+            return await GetSampleDatas().GetAsync(sampleDataName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SampleData
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/sampleDatas/{sampleDataName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SampleDatas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sampleDataName"> The name of the SampleData. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sampleDataName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sampleDataName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SampleDataResource> GetSampleData(string sampleDataName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sampleDataName, nameof(sampleDataName));
+
+            return GetSampleDatas().Get(sampleDataName, cancellationToken);
+        }
+
         /// <summary>
         /// list private links on the given resource
         /// <list type="bullet">
