@@ -12,9 +12,10 @@ namespace Azure.ResourceManager.Nginx.Models
     {
         /// <summary> The managed resource group to deploy VNet injection related network resources. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public string ManagedResourceGroup { get; set; }
+        public string ManagedResourceGroup { get; set; }        // This was a spec breaking change, so we’re adding the property back to restore backward compatibility.
 
         /// <summary> Gets or sets the scaling capacity. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public int? ScalingCapacity
         {
             get => ScalingProperties is null ? default : ScalingProperties.Capacity;

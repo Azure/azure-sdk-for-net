@@ -12,7 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.Nginx.Models
 {
     /// <summary> Nginx Frontend IP Configuration. </summary>
-    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(PublicIPAddresses), DeserializationValueHook = nameof(DeserializePublicIPAddresses))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(PublicIPAddresses), DeserializationValueHook = nameof(DeserializePublicIPAddresses))]      // CodeGen issue, should be removed when fixed
     public partial class NginxFrontendIPConfiguration
     {
         internal static WritableSubResource DeserializeWritableSubResource(JsonElement element)

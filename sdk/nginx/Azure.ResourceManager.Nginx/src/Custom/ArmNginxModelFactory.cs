@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="properties"></param>
         /// <param name="skuName"></param>
         /// <returns> A new <see cref="Nginx.NginxDeploymentData"/> instance for mocking. </returns>
-        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties, string skuName)
+        public static NginxDeploymentData NginxDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, NginxDeploymentProperties properties = default, string skuName = default)
             => NginxDeploymentData(id, name, resourceType, systemData, tags, location, properties, identity, skuName);
 
         /// <summary> Initializes a new instance of <see cref="Models.NginxCertificateProperties"/>. </summary>
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="scalingCapacity"></param>
         /// <param name="userPreferredEmail"></param>
         /// <returns> A new <see cref="Models.NginxDeploymentProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxStorageAccount loggingStorageAccount, int? scalingCapacity, string userPreferredEmail)
+        public static NginxDeploymentProperties NginxDeploymentProperties(NginxProvisioningState? provisioningState, string nginxVersion, string managedResourceGroup, NginxNetworkProfile networkProfile, string ipAddress, bool? enableDiagnosticsSupport, NginxStorageAccount loggingStorageAccount, int? scalingCapacity, string userPreferredEmail = default)
             => NginxDeploymentProperties(provisioningState, nginxVersion, networkProfile, ipAddress, enableDiagnosticsSupport, loggingStorageAccount, null, null, userPreferredEmail, null, null);
     }
 }

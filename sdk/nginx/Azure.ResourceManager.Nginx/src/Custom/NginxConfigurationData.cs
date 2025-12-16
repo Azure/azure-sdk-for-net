@@ -14,6 +14,6 @@ namespace Azure.ResourceManager.Nginx
     {
         /// <summary> Gets or sets the location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public AzureLocation? Location { get; set; }
+        public AzureLocation? Location { get; set; }        // This was a spec breaking change, so we’re adding the property back to restore backward compatibility.
     }
 }

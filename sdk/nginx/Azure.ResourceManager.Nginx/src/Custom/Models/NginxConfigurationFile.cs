@@ -10,6 +10,6 @@ namespace Azure.ResourceManager.Nginx.Models
     public partial class NginxConfigurationFile
     {
         /// <summary> Gets or sets the Content. </summary>
-        public string ContentHash { get; set; }
+        public string ContentHash { get; set; }     // The service returns a "contentHash" field that is missing from the spec
     }
 }
