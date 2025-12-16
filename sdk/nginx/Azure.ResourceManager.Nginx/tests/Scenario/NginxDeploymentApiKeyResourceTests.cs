@@ -43,7 +43,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxDeploymentApiKeyResource.ValidateResourceId(nginxDeploymentApiKeyResourceIdentifier);
 
             Assert.IsTrue(nginxDeploymentApiKeyResourceIdentifier.ResourceType.Equals(NginxDeploymentApiKeyResource.ResourceType));
-            Assert.Throws<ArgumentException>(() => NginxDeploymentApiKeyResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]

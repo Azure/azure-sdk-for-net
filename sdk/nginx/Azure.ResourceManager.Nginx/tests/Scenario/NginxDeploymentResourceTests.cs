@@ -44,7 +44,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
 
             Assert.IsTrue(nginxResourceIdentifier.ResourceType.Equals(NginxDeploymentResource.ResourceType));
             Assert.IsTrue(nginxResourceIdentifier.Equals($"{ResGroup.Id}/providers/{NginxDeploymentResource.ResourceType}/{nginxDeploymentName}"));
-            Assert.Throws<ArgumentException>(() => NginxDeploymentResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]

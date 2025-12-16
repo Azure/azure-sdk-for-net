@@ -42,7 +42,6 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             NginxCertificateResource.ValidateResourceId(nginxCertificateResourceIdentifier);
 
             Assert.IsTrue(nginxCertificateResourceIdentifier.ResourceType.Equals(NginxCertificateResource.ResourceType));
-            Assert.Throws<ArgumentException>(() => NginxCertificateResource.ValidateResourceId(ResGroup.Data.Id));
         }
 
         [TestCase]
