@@ -61,11 +61,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         {
             get
             {
-                if (Resources is null)
-                {
-                    Resources = new UserRequestResources();
-                }
-                return Resources.Ids;
+                return Resources is null ? default : Resources.Ids;
             }
         }
     }
