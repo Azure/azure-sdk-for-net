@@ -9,8 +9,6 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
-  convertMethodMetadataToArguments,
-  convertResourceMetadataToArguments,
   convertArmProviderSchemaToArguments,
   NonResourceMethod,
   ResourceMetadata,
@@ -43,11 +41,9 @@ import {
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName,
-  nonResourceMethodMetadata,
   parentResourceName,
   readsResourceName,
   resourceGroupResource,
-  resourceMetadata,
   singleton,
   subscriptionResource,
   tenantResource,
@@ -204,22 +200,6 @@ export async function updateClients(
 
   // Apply the unified decorator to the root client
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
-
-  // Also apply old decorators for backward compatibility during transition
-  // the last step, add the decorator to the resource model
-  for (const model of resourceModels) {
-    const metadata = resourceModelToMetadataMap.get(
-      model.crossLanguageDefinitionId
-    );
-    if (metadata) {
-      addResourceMetadata(sdkContext, model, metadata);
-    }
-  }
-  // and add the methodMetadata decorator to the non-resource methods
-  addNonResourceMethodDecorators(
-    codeModel,
-    Array.from(nonResourceMethods.values())
-  );
 }
 
 function isCRUDKind(kind: ResourceOperationKind): boolean {
@@ -674,42 +654,4 @@ function applyArmProviderSchemaDecorator(
   });
 }
 
-function addNonResourceMethodDecorators(
-  codeModel: CodeModel,
-  metadata: NonResourceMethod[]
-) {
-  codeModel.clients[0].decorators ??= [];
-  codeModel.clients[0].decorators.push({
-    name: nonResourceMethodMetadata,
-    arguments: convertMethodMetadataToArguments(metadata)
-  });
-}
 
-function addResourceMetadata(
-  sdkContext: CSharpEmitterContext,
-  model: InputModelType,
-  metadata: ResourceMetadata
-) {
-  if (metadata.resourceIdPattern === "") {
-    sdkContext.logger.reportDiagnostic({
-      code: "general-warning", // TODO -- later maybe we could define a specific code for resource hierarchy issues
-      messageId: "default",
-      format: {
-        message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-      },
-      target: NoTarget // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
-    });
-    return;
-  }
-
-  const resourceMetadataDecorator: DecoratorInfo = {
-    name: resourceMetadata,
-    arguments: convertResourceMetadataToArguments(metadata)
-  };
-
-  if (!model.decorators) {
-    model.decorators = [];
-  }
-
-  model.decorators.push(resourceMetadataDecorator);
-}

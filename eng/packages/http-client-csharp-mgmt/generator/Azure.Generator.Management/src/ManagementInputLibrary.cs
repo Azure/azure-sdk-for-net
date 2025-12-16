@@ -89,7 +89,6 @@ namespace Azure.Generator.Management
         {
             var resourceModels = new HashSet<InputModelType>();
 
-            // First, try to get resource models from the new unified decorator
             var rootClient = InputNamespace.RootClients.First();
             var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
 
@@ -104,14 +103,6 @@ namespace Azure.Generator.Management
                     {
                         resourceModels.Add(model);
                     }
-                }
-            }
-            else
-            {
-                // Fall back to old decorator on individual models
-                foreach (var model in InputNamespace.Models.Where(m => m.Decorators.Any(d => d.Name.Equals(ResourceMetadataDecoratorName))))
-                {
-                    resourceModels.Add(model);
                 }
             }
 
@@ -199,7 +190,6 @@ namespace Azure.Generator.Management
 
             if (armProviderDecorator?.Arguments != null && armProviderDecorator.Arguments.TryGetValue("resources", out var resourcesData))
             {
-                // Deserialize from the new unified decorator
                 using var document = JsonDocument.Parse(resourcesData);
                 foreach (var item in document.RootElement.EnumerateArray())
                 {
@@ -209,21 +199,6 @@ namespace Azure.Generator.Management
                     {
                         var children = new List<string>();
                         var metadata = ResourceMetadata.DeserializeResourceMetadataFromArmProviderSchema(item, model, children);
-                        resourceMetadata.Add(metadata);
-                        resourceChildren.Add(metadata.ResourceIdPattern, children);
-                    }
-                }
-            }
-            else
-            {
-                // Fall back to the old decorator on individual models for backward compatibility
-                foreach (var model in InputNamespace.Models)
-                {
-                    var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
-                    if (decorator?.Arguments != null)
-                    {
-                        var children = new List<string>();
-                        var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model, children);
                         resourceMetadata.Add(metadata);
                         resourceChildren.Add(metadata.ResourceIdPattern, children);
                     }
@@ -246,26 +221,14 @@ namespace Azure.Generator.Management
         private IReadOnlyList<NonResourceMethod> DeserializeNonResourceMethods()
         {
             var rootClient = InputNamespace.RootClients.First();
-
-            // First, try to get non-resource methods from the new unified @armProviderSchema decorator
             var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
-            IReadOnlyDictionary<string, System.BinaryData>? args = null;
 
-            if (armProviderDecorator?.Arguments != null)
-            {
-                args = armProviderDecorator.Arguments;
-            }
-            else
-            {
-                // Fall back to the old @nonResourceMethodSchema decorator for backward compatibility
-                var decorator = rootClient.Decorators.FirstOrDefault(d => d.Name == NonResourceMethodMetadata);
-                args = decorator?.Arguments;
-            }
-
-            if (args is null)
+            if (armProviderDecorator?.Arguments == null)
             {
                 return [];
             }
+
+            var args = armProviderDecorator.Arguments;
 
             var nonResourceMethodMetadata = new List<NonResourceMethod>();
             // deserialize the decorator arguments
