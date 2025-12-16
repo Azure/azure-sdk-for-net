@@ -8,7 +8,8 @@ azure-arm: true
 csharp: true
 library-name: Batch
 namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/560f5eef0eb553db1884e5b623448ebdfee7a081/specification/batch/resource-manager/readme.md
+require: D:/Azure/azure-rest-api-specs/specification/batch/resource-manager/readme.md
+# require: https://github.com/Azure/azure-rest-api-specs/blob/560f5eef0eb553db1884e5b623448ebdfee7a081/specification/batch/resource-manager/readme.md
 #tag: package-2024-07
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
@@ -223,12 +224,9 @@ directive:
     transform: $["x-csharp-usage"] = "model,input,output"
 # change the type to extensible so that the BatchPoolIdentity could be replaced
   - from: openapi.json
-    where: $.definitions.PoolIdentityType
-    transform: >
-      $["x-ms-enum"].modelAsString = true;
-  - from: openapi.json
     where: $.definitions.BatchPoolIdentity.properties
     transform: >
+      $.type["x-ms-enum"].modelAsString = true;
       $["principalId"] = {
         "type": "string",
         "readOnly": true
@@ -241,10 +239,10 @@ directive:
   - from: openapi.json
     where: $.definitions
     transform: >
-      $.ProvisioningState["x-ms-enum"].modelAsString = true;
-      $.CertificateProvisioningState["x-ms-enum"].modelAsString = true;
-      $.PrivateEndpointConnectionProvisioningState["x-ms-enum"].modelAsString = true;
-      $.PoolProvisioningState["x-ms-enum"].modelAsString = true;
+      $.BatchAccountProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
+      $.CertificateProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
+      $.PrivateEndpointConnectionProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
+      $.PoolProperties.properties.provisioningState["x-ms-enum"].modelAsString = true;
 # add some missing properties to ResizeError so that it could be replaced by Azure.ResponseError
   - from: openapi.json
     where: $.definitions.ResizeError.properties
