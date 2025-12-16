@@ -8,33 +8,31 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Nginx;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Nginx.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableNginxResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableNginxResourceGroupResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableNginxResourceGroupResource for mocking. </summary>
         protected MockableNginxResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableNginxResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableNginxResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableNginxResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of NginxDeploymentResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of NginxDeploymentResources and their operations over a NginxDeploymentResource. </returns>
+        /// <summary> Gets a collection of NginxDeployments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of NginxDeployments and their operations over a NginxDeploymentResource. </returns>
         public virtual NginxDeploymentCollection GetNginxDeployments()
         {
             return GetCachedClient(client => new NginxDeploymentCollection(client, Id));
@@ -44,20 +42,16 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeployments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -68,6 +62,8 @@ namespace Azure.ResourceManager.Nginx.Mocking
         [ForwardsClientCalls]
         public virtual async Task<Response<NginxDeploymentResource>> GetNginxDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
             return await GetNginxDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
@@ -75,20 +71,16 @@ namespace Azure.ResourceManager.Nginx.Mocking
         /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeployments_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,6 +91,8 @@ namespace Azure.ResourceManager.Nginx.Mocking
         [ForwardsClientCalls]
         public virtual Response<NginxDeploymentResource> GetNginxDeployment(string deploymentName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
             return GetNginxDeployments().Get(deploymentName, cancellationToken);
         }
     }
