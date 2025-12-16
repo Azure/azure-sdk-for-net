@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The properties for a group information object. </param>
-        internal DeviceProvisioningServicesPrivateLinkResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeviceProvisioningServicesPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
+        internal DeviceProvisioningServicesPrivateLinkResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeviceProvisioningServicesPrivateLinkResourceProperties properties) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> properties of a certificate. </param>
         /// <param name="eTag"> The entity tag. </param>
-        internal DeviceProvisioningServicesCertificateData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeviceProvisioningServicesCertificateProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DeviceProvisioningServicesCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, DeviceProvisioningServicesCertificateProperties properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

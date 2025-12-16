@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="properties"> properties of a certificate. </param>
         /// <param name="etag"> The entity tag. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesCertificateData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesCertificateData DeviceProvisioningServicesCertificateData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesCertificateProperties properties = default, ETag? etag = default)
+        public static DeviceProvisioningServicesCertificateData DeviceProvisioningServicesCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesCertificateProperties properties = default, ETag? etag = default)
         {
             return new DeviceProvisioningServicesCertificateData(
                 id,
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="sku"> Sku info for a provisioning Service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServiceData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, string resourceGroup = default, string subscriptionId = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
+        public static DeviceProvisioningServiceData DeviceProvisioningServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, string resourceGroup = default, string subscriptionId = default, DeviceProvisioningServiceProperties properties = default, DeviceProvisioningServicesSkuInfo sku = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of a private endpoint connection. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesPrivateEndpointConnectionData DeviceProvisioningServicesPrivateEndpointConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesPrivateEndpointConnectionProperties properties = default)
+        public static DeviceProvisioningServicesPrivateEndpointConnectionData DeviceProvisioningServicesPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesPrivateEndpointConnectionProperties properties = default)
         {
             return new DeviceProvisioningServicesPrivateEndpointConnectionData(
                 id,
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties for a group information object. </param>
         /// <returns> A new <see cref="DeviceProvisioningServices.DeviceProvisioningServicesPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static DeviceProvisioningServicesPrivateLinkResourceData DeviceProvisioningServicesPrivateLinkResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesPrivateLinkResourceProperties properties = default)
+        public static DeviceProvisioningServicesPrivateLinkResourceData DeviceProvisioningServicesPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DeviceProvisioningServicesPrivateLinkResourceProperties properties = default)
         {
             return new DeviceProvisioningServicesPrivateLinkResourceData(
                 id,

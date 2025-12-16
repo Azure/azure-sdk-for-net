@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.DeviceProvisioningServices
 {
     /// <summary></summary>
-    public partial class DeviceProvisioningServicesCertificateResource : IJsonModel<DeviceProvisioningServicesCertificateData>
+    public partial class DeviceProvisioningServicesCertificateResource : ArmResource, IJsonModel<DeviceProvisioningServicesCertificateData>
     {
         private static IJsonModel<DeviceProvisioningServicesCertificateData> s_dataDeserializationInstance;
 

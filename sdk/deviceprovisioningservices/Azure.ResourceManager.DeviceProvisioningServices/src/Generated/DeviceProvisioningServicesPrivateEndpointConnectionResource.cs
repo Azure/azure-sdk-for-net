@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Create or update the status of a private endpoint connection with the specified name
+        /// Update a DeviceProvisioningServicesPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Create or update the status of a private endpoint connection with the specified name
+        /// Update a DeviceProvisioningServicesPrivateEndpointConnection.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

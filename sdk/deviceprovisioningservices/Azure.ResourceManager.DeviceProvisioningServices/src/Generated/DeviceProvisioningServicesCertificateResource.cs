@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Add new certificate or update an existing certificate.
+        /// Update a DeviceProvisioningServicesCertificate.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         }
 
         /// <summary>
-        /// Add new certificate or update an existing certificate.
+        /// Update a DeviceProvisioningServicesCertificate.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

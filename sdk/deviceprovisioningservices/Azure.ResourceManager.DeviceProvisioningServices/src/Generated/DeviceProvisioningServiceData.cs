@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
         /// <param name="properties"> Service specific properties for a provisioning service. </param>
         /// <param name="sku"> Sku info for a provisioning Service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal DeviceProvisioningServiceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, string resourceGroup, string subscriptionId, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
+        internal DeviceProvisioningServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ETag? eTag, string resourceGroup, string subscriptionId, DeviceProvisioningServiceProperties properties, DeviceProvisioningServicesSkuInfo sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             ETag = eTag;
