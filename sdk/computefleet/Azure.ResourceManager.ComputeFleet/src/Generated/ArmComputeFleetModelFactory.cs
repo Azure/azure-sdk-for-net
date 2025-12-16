@@ -804,24 +804,23 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> An AzureFleet's virtualMachineScaleSet. </summary>
-        /// <param name="name"> The name of the virtualMachineScaleSet. </param>
-        /// <param name="id">
-        /// The compute RP resource id of the virtualMachineScaleSet 
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
-        /// </param>
-        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
         /// <returns> A new <see cref="Models.ComputeFleetVmss"/> instance for mocking. </returns>
-        public static ComputeFleetVmss ComputeFleetVmss(string name = default, ResourceIdentifier id = default, string @type = default, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = default)
+        public static ComputeFleetVmss ComputeFleetVmss(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ComputeFleetProvisioningState operationStatus = default, ComputeFleetApiError error = default)
         {
             return new ComputeFleetVmss(
-                name,
                 id,
-                @type,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
                 operationStatus,
-                error,
-                additionalBinaryDataProperties: null);
+                error);
         }
 
         /// <summary> ApiError for Fleet. </summary>
@@ -861,6 +860,24 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         public static ComputeFleetInnerError ComputeFleetInnerError(string exceptionType = default, string errorDetail = default)
         {
             return new ComputeFleetInnerError(exceptionType, errorDetail, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An instant Fleet's virtual machine. </summary>
+        /// <param name="name"> The name of the virtual machine. </param>
+        /// <param name="id"> The compute RP resource id of the virtual machine. subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}. </param>
+        /// <param name="type"> Type of the virtual machine. </param>
+        /// <param name="operationStatus"> This represents the operationStatus of the virtual machine in response to the last operation that was performed on it by Azure Fleet resource. </param>
+        /// <param name="error"> Error information when `operationStatus` is `Failed`. </param>
+        /// <returns> A new <see cref="Models.ComputeFleetVirtualMachine"/> instance for mocking. </returns>
+        public static ComputeFleetVirtualMachine ComputeFleetVirtualMachine(string name = default, ResourceIdentifier id = default, string @type = default, ComputeFleetVmOperationStatus operationStatus = default, ComputeFleetApiError error = default)
+        {
+            return new ComputeFleetVirtualMachine(
+                name,
+                id,
+                @type,
+                operationStatus,
+                error,
+                additionalBinaryDataProperties: null);
         }
     }
 }

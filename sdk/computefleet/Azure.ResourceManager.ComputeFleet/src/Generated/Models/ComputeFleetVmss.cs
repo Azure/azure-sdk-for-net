@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ComputeFleet.Models
 {
@@ -23,33 +24,19 @@ namespace Azure.ResourceManager.ComputeFleet.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComputeFleetVmss"/>. </summary>
-        /// <param name="name"> The name of the virtualMachineScaleSet. </param>
-        /// <param name="id">
-        /// The compute RP resource id of the virtualMachineScaleSet 
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
-        /// </param>
-        /// <param name="type"> Type of the virtualMachineScaleSet. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="operationStatus"> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </param>
         /// <param name="error"> Error Information when `operationStatus` is `Failed`. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeFleetVmss(string name, ResourceIdentifier id, string @type, ComputeFleetProvisioningState operationStatus, ComputeFleetApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeFleetVmss(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ComputeFleetProvisioningState operationStatus, ComputeFleetApiError error) : base(id, name, resourceType, systemData)
         {
-            Name = name;
-            Id = id;
-            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             OperationStatus = operationStatus;
             Error = error;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The name of the virtualMachineScaleSet. </summary>
-        public string Name { get; }
-
-        /// <summary>
-        /// The compute RP resource id of the virtualMachineScaleSet 
-        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmssName}"
-        /// </summary>
-        public ResourceIdentifier Id { get; }
 
         /// <summary> This represents the operationStatus of the VMSS in response to the last operation that was performed on it by Azure Fleet resource. </summary>
         public ComputeFleetProvisioningState OperationStatus { get; }

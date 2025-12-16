@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ComputeFleet
             return message;
         }
 
-        internal HttpMessage CreateGetVirtualMachinesRequest(Guid subscriptionId, string resourceGroupName, string name, string filter, string skipToken, RequestContext context)
+        internal HttpMessage CreateGetVirtualMachinesRequest(Guid subscriptionId, string resourceGroupName, string name, string filter, string skiptoken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -226,9 +226,9 @@ namespace Azure.ResourceManager.ComputeFleet
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            if (skipToken != null)
+            if (skiptoken != null)
             {
-                uri.AppendQuery("$skiptoken", skipToken, true);
+                uri.AppendQuery("$skiptoken", skiptoken, true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ComputeFleet
             return message;
         }
 
-        internal HttpMessage CreateNextGetVirtualMachinesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string filter, string skipToken, RequestContext context)
+        internal HttpMessage CreateNextGetVirtualMachinesRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string name, string filter, string skiptoken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
