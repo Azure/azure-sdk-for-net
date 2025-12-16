@@ -321,10 +321,10 @@ export async function updateClients(
           if (explicitName) {
             metadata.resourceName = explicitName;
           } else {
-            // Fallback: derive from client name
+            // Fallback: derive from client name using pluralize.singular
             const clientName = resourcePathToClientName.get(metadataKey);
             if (clientName) {
-              metadata.resourceName = deriveResourceNameFromClient(clientName);
+              metadata.resourceName = pluralize.singular(clientName);
             }
           }
         }
@@ -738,22 +738,6 @@ function getResourceScopeOfMethod(
     return candidates.reduce((a, b) => (a.length > b.length ? a : b));
   }
   return undefined;
-}
-
-/**
- * Derives a resource name from a client/interface name by removing pluralization.
- * This is used as a FALLBACK when no explicit ResourceName is specified in TypeSpec.
- * Uses the pluralize library to handle English pluralization rules correctly.
- * 
- * TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates
- * to avoid relying on this derivation logic.
- * 
- * Examples: "BestPractices" -> "BestPractice", "BestPracticeVersions" -> "BestPracticeVersion"
- * Other examples: "Employees" -> "Employee", "Companies" -> "Company"
- */
-function deriveResourceNameFromClient(clientName: string): string {
-  // Use pluralize library to convert plural to singular
-  return pluralize.singular(clientName);
 }
 
 function getOperationScope(path: string): ResourceScope {
