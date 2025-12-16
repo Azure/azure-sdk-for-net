@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.WorkloadsSapVirtualInstance.Models;
 using NUnit.Framework;
@@ -25,7 +27,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 
         [TestCase]
         [RecordedTest]
-        [LiveOnly(Reason = "Test regularly times out in playback.")]
+        // [LiveOnly(Reason = "Test regularly times out in playback.")]
         public async Task TestVisOperations()
         {
             _rgName ??= Recording.GenerateAssetName("netSdkTest-");
@@ -155,11 +157,11 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             SapVirtualInstanceResource result = null;
             // Create SAP VIS
             JsonDocument jsonElement = GetJsonElement(filePath);
-            var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement);
-            sviData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
-            {
-                Name = Recording.GenerateAssetName(resourceName + "mrg-")
-            };
+            var sviData = SapVirtualInstanceData.DeserializeSapVirtualInstanceData(jsonElement.RootElement, ModelReaderWriterOptions.Json);
+            // sviData.ManagedResourceGroupConfiguration = new ManagedRGConfiguration
+            // {
+            //     Name = Recording.GenerateAssetName(resourceName + "mrg-")
+            // };
 
             string appRgName = Recording.GenerateAssetName(resourceName + "appRg-");
             DeploymentWithOSConfiguration deploymentWithOSConfiguration =
@@ -208,7 +210,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
             var softwareConfiguration =
                 SapInstallWithoutOSConfigSoftwareConfiguration.
                 DeserializeSapInstallWithoutOSConfigSoftwareConfiguration(
-                    installJsonElement.RootElement);
+                    installJsonElement.RootElement, ModelReaderWriterOptions.Json);
             deploymentWithOSConfiguration.SoftwareConfiguration = softwareConfiguration;
 
             Console.WriteLine("Installing resource with Payload " + await getObjectAsString(sviData));
