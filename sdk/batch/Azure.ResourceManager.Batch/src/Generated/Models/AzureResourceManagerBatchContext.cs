@@ -73,7 +73,6 @@ namespace Azure.ResourceManager.Batch
     [ModelReaderWriterBuildable(typeof(BatchNetworkSecurityGroupRule))]
     [ModelReaderWriterBuildable(typeof(BatchNfsMountConfiguration))]
     [ModelReaderWriterBuildable(typeof(BatchOSDisk))]
-    [ModelReaderWriterBuildable(typeof(BatchPoolIdentity))]
     [ModelReaderWriterBuildable(typeof(BatchPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(BatchPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(BatchPrivateLinkResource))]

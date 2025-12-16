@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningStateTransitOn))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningState))
             {
                 writer.WritePropertyName("previousProvisioningState"u8);
-                writer.WriteStringValue(PreviousProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(PreviousProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(PreviousProvisioningStateTransitOn))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            provisioningState = property0.Value.GetString().ToBatchAccountCertificateProvisioningState();
+                            provisioningState = new BatchAccountCertificateProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningStateTransitionTime"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Batch
                             {
                                 continue;
                             }
-                            previousProvisioningState = property0.Value.GetString().ToBatchAccountCertificateProvisioningState();
+                            previousProvisioningState = new BatchAccountCertificateProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("previousProvisioningStateTransitionTime"u8))
