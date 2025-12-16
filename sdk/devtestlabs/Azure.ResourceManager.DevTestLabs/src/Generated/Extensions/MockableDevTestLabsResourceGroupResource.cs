@@ -8,33 +8,46 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.DevTestLabs;
+using Azure.ResourceManager.DevTestLabs.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs.Mocking
 {
-    /// <summary> A class to add extension methods to ResourceGroupResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableDevTestLabsResourceGroupResource : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableDevTestLabsResourceGroupResource"/> class for mocking. </summary>
+        private ClientDiagnostics _policySetsClientDiagnostics;
+        private PolicySets _policySetsRestClient;
+        private ClientDiagnostics _galleryImagesClientDiagnostics;
+        private GalleryImages _galleryImagesRestClient;
+
+        /// <summary> Initializes a new instance of MockableDevTestLabsResourceGroupResource for mocking. </summary>
         protected MockableDevTestLabsResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableDevTestLabsResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableDevTestLabsResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableDevTestLabsResourceGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private ClientDiagnostics PolicySetsClientDiagnostics => _policySetsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        /// <summary> Gets a collection of DevTestLabResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of DevTestLabResources and their operations over a DevTestLabResource. </returns>
+        private PolicySets PolicySetsRestClient => _policySetsRestClient ??= new PolicySets(PolicySetsClientDiagnostics, Pipeline, Endpoint, "2018-09-15");
+
+        private ClientDiagnostics GalleryImagesClientDiagnostics => _galleryImagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevTestLabs.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private GalleryImages GalleryImagesRestClient => _galleryImagesRestClient ??= new GalleryImages(GalleryImagesClientDiagnostics, Pipeline, Endpoint, "2018-09-15");
+
+        /// <summary> Gets a collection of DevTestLabs in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabs and their operations over a DevTestLabResource. </returns>
         public virtual DevTestLabCollection GetDevTestLabs()
         {
             return GetCachedClient(client => new DevTestLabCollection(client, Id));
@@ -44,20 +57,16 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// Get lab.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Lab_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Labs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -67,8 +76,10 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DevTestLabResource>> GetDevTestLabAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabResource>> GetDevTestLabAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return await GetDevTestLabs().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
@@ -76,20 +87,16 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// Get lab.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Lab_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Labs_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -99,36 +106,34 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DevTestLabResource> GetDevTestLab(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabResource> GetDevTestLab(string name, string expand = default, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
             return GetDevTestLabs().Get(name, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ScheduleResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ScheduleResources and their operations over a ScheduleResource. </returns>
-        public virtual ScheduleCollection GetSchedules()
+        /// <summary> Gets a collection of DevTestLabSchedules in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabSchedules and their operations over a DevTestLabScheduleResource. </returns>
+        public virtual DevTestLabScheduleCollection GetDevTestLabSchedules()
         {
-            return GetCachedClient(client => new ScheduleCollection(client, Id));
+            return GetCachedClient(client => new DevTestLabScheduleCollection(client, Id));
         }
 
         /// <summary>
         /// Get schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,29 +143,27 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ScheduleResource>> GetScheduleAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DevTestLabScheduleResource>> GetDevTestLabScheduleAsync(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            return await GetSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabSchedules().GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get schedule.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/schedules/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Schedule_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> GlobalSchedules_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ScheduleResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,9 +173,1318 @@ namespace Azure.ResourceManager.DevTestLabs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ScheduleResource> GetSchedule(string name, string expand = null, CancellationToken cancellationToken = default)
+        public virtual Response<DevTestLabScheduleResource> GetDevTestLabSchedule(string name, string expand = default, CancellationToken cancellationToken = default)
         {
-            return GetSchedules().Get(name, expand, cancellationToken);
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabSchedules().Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabArtifactSources in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabArtifactSources and their operations over a DevTestLabArtifactSourceResource. </returns>
+        public virtual DevTestLabArtifactSourceCollection GetDevTestLabArtifactSources(string labName)
+        {
+            return GetCachedClient(client => new DevTestLabArtifactSourceCollection(client, Id, labName));
+        }
+
+        /// <summary>
+        /// Get artifact source.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactSources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabArtifactSourceResource>> GetDevTestLabArtifactSourceAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabArtifactSources(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get artifact source.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArtifactSources_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the ArtifactSource. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabArtifactSourceResource> GetDevTestLabArtifactSource(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabArtifactSources(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabArmTemplates in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabArmTemplates and their operations over a DevTestLabArmTemplateResource. </returns>
+        public virtual DevTestLabArmTemplateCollection GetDevTestLabArmTemplates(string labName, string artifactSourceName)
+        {
+            return GetCachedClient(client => new DevTestLabArmTemplateCollection(client, Id, labName, artifactSourceName));
+        }
+
+        /// <summary>
+        /// Get azure resource manager template.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArmTemplates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabArmTemplateResource>> GetDevTestLabArmTemplateAsync(string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabArmTemplates(labName, artifactSourceName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get azure resource manager template.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ArmTemplates_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
+        /// <param name="name"> The name of the ArmTemplate. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabArmTemplateResource> GetDevTestLabArmTemplate(string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabArmTemplates(labName, artifactSourceName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabArtifacts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabArtifacts and their operations over a DevTestLabArtifactResource. </returns>
+        public virtual DevTestLabArtifactCollection GetDevTestLabArtifacts(string labName, string artifactSourceName)
+        {
+            return GetCachedClient(client => new DevTestLabArtifactCollection(client, Id, labName, artifactSourceName));
+        }
+
+        /// <summary>
+        /// Get artifact.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
+        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabArtifactResource>> GetDevTestLabArtifactAsync(string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabArtifacts(labName, artifactSourceName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get artifact.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/artifacts/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Artifacts_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="artifactSourceName"> The artifactSourceName for the resource. </param>
+        /// <param name="name"> The name of the Artifact. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=title)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabArtifactResource> GetDevTestLabArtifact(string labName, string artifactSourceName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabArtifacts(labName, artifactSourceName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabCosts in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabCosts and their operations over a DevTestLabCostResource. </returns>
+        public virtual DevTestLabCostCollection GetDevTestLabCosts()
+        {
+            return GetCachedClient(client => new DevTestLabCostCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get cost.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/costs/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Costs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the LabCost. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabCostResource>> GetDevTestLabCostAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabCosts().GetAsync(labName, name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get cost.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/costs/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Costs_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the LabCost. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=labCostDetails)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabCostResource> GetDevTestLabCost(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabCosts().Get(labName, name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabCustomImages in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabCustomImages and their operations over a DevTestLabCustomImageResource. </returns>
+        public virtual DevTestLabCustomImageCollection GetDevTestLabCustomImages(string labName)
+        {
+            return GetCachedClient(client => new DevTestLabCustomImageCollection(client, Id, labName));
+        }
+
+        /// <summary>
+        /// Get custom image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomImages_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabCustomImageResource>> GetDevTestLabCustomImageAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabCustomImages(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get custom image.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/customimages/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CustomImages_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the CustomImage. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=vm)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabCustomImageResource> GetDevTestLabCustomImage(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabCustomImages(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabFormulas in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabFormulas and their operations over a DevTestLabFormulaResource. </returns>
+        public virtual DevTestLabFormulaCollection GetDevTestLabFormulas(string labName)
+        {
+            return GetCachedClient(client => new DevTestLabFormulaCollection(client, Id, labName));
+        }
+
+        /// <summary>
+        /// Get formula.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/formulas/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Formulas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the Formula. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabFormulaResource>> GetDevTestLabFormulaAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabFormulas(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get formula.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/formulas/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Formulas_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the Formula. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabFormulaResource> GetDevTestLabFormula(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabFormulas(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabNotificationChannels in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabNotificationChannels and their operations over a DevTestLabNotificationChannelResource. </returns>
+        public virtual DevTestLabNotificationChannelCollection GetDevTestLabNotificationChannels(string labName)
+        {
+            return GetCachedClient(client => new DevTestLabNotificationChannelCollection(client, Id, labName));
+        }
+
+        /// <summary>
+        /// Get notification channel.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/notificationchannels/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NotificationChannels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the NotificationChannel. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabNotificationChannelResource>> GetDevTestLabNotificationChannelAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabNotificationChannels(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get notification channel.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/notificationchannels/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NotificationChannels_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the NotificationChannel. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=webHookUrl)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabNotificationChannelResource> GetDevTestLabNotificationChannel(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabNotificationChannels(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabPolicies in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="policySetName"> The policySetName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabPolicies and their operations over a DevTestLabPolicyResource. </returns>
+        public virtual DevTestLabPolicyCollection GetDevTestLabPolicies(string labName, string policySetName)
+        {
+            return GetCachedClient(client => new DevTestLabPolicyCollection(client, Id, labName, policySetName));
+        }
+
+        /// <summary>
+        /// Get policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="policySetName"> The policySetName for the resource. </param>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabPolicyResource>> GetDevTestLabPolicyAsync(string labName, string policySetName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabPolicies(labName, policySetName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get policy.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/policysets/{policySetName}/policies/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Policies_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="policySetName"> The policySetName for the resource. </param>
+        /// <param name="name"> The name of the Schedule. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=description)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabPolicyResource> GetDevTestLabPolicy(string labName, string policySetName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabPolicies(labName, policySetName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabServiceRunners in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <returns> An object representing collection of DevTestLabServiceRunners and their operations over a DevTestLabServiceRunnerResource. </returns>
+        public virtual DevTestLabServiceRunnerCollection GetDevTestLabServiceRunners()
+        {
+            return GetCachedClient(client => new DevTestLabServiceRunnerCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get service runner.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabServiceRunnerResource>> GetDevTestLabServiceRunnerAsync(string labName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabServiceRunners().GetAsync(labName, name, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get service runner.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the ServiceRunner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabServiceRunnerResource> GetDevTestLabServiceRunner(string labName, string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabServiceRunners().Get(labName, name, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabUsers in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabUsers and their operations over a DevTestLabUserResource. </returns>
+        public virtual DevTestLabUserCollection GetDevTestLabUsers(string labName)
+        {
+            return GetCachedClient(client => new DevTestLabUserCollection(client, Id, labName));
+        }
+
+        /// <summary>
+        /// Get user profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Users_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the User. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabUserResource>> GetDevTestLabUserAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabUsers(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get user profile.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Users_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the User. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=identity)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabUserResource> GetDevTestLabUser(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabUsers(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabDisks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabDisks and their operations over a DevTestLabDiskResource. </returns>
+        public virtual DevTestLabDiskCollection GetDevTestLabDisks(string labName, string userName)
+        {
+            return GetCachedClient(client => new DevTestLabDiskCollection(client, Id, labName, userName));
+        }
+
+        /// <summary>
+        /// Get disk.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/disks/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Disks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the Disk. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabDiskResource>> GetDevTestLabDiskAsync(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabDisks(labName, userName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get disk.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/disks/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Disks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the Disk. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=diskType)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabDiskResource> GetDevTestLabDisk(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabDisks(labName, userName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabEnvironments in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabEnvironments and their operations over a DevTestLabEnvironmentResource. </returns>
+        public virtual DevTestLabEnvironmentCollection GetDevTestLabEnvironments(string labName, string userName)
+        {
+            return GetCachedClient(client => new DevTestLabEnvironmentCollection(client, Id, labName, userName));
+        }
+
+        /// <summary>
+        /// Get environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Environments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the DtlEnvironment. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabEnvironmentResource>> GetDevTestLabEnvironmentAsync(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabEnvironments(labName, userName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get environment.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/environments/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Environments_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the DtlEnvironment. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=deploymentProperties)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabEnvironmentResource> GetDevTestLabEnvironment(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabEnvironments(labName, userName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabSecrets in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabSecrets and their operations over a DevTestLabSecretResource. </returns>
+        public virtual DevTestLabSecretCollection GetDevTestLabSecrets(string labName, string userName)
+        {
+            return GetCachedClient(client => new DevTestLabSecretCollection(client, Id, labName, userName));
+        }
+
+        /// <summary>
+        /// Get secret.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabSecretResource>> GetDevTestLabSecretAsync(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabSecrets(labName, userName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get secret.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/secrets/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Secrets_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the Secret. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=value)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabSecretResource> GetDevTestLabSecret(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabSecrets(labName, userName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabServiceFabrics in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabServiceFabrics and their operations over a DevTestLabServiceFabricResource. </returns>
+        public virtual DevTestLabServiceFabricCollection GetDevTestLabServiceFabrics(string labName, string userName)
+        {
+            return GetCachedClient(client => new DevTestLabServiceFabricCollection(client, Id, labName, userName));
+        }
+
+        /// <summary>
+        /// Get service fabric.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceFabrics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the ServiceFabric. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabServiceFabricResource>> GetDevTestLabServiceFabricAsync(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabServiceFabrics(labName, userName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get service fabric.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/users/{userName}/servicefabrics/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceFabrics_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="userName"> The userName for the resource. </param>
+        /// <param name="name"> The name of the ServiceFabric. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=applicableSchedule)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabServiceFabricResource> GetDevTestLabServiceFabric(string labName, string userName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabServiceFabrics(labName, userName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabVms in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabVms and their operations over a DevTestLabVmResource. </returns>
+        public virtual DevTestLabVmCollection GetDevTestLabVms(string labName)
+        {
+            return GetCachedClient(client => new DevTestLabVmCollection(client, Id, labName));
+        }
+
+        /// <summary>
+        /// Get virtual machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the LabVirtualMachine. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabVmResource>> GetDevTestLabVmAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabVms(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get virtual machine.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualmachines/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualMachines_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the LabVirtualMachine. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=artifacts,computeVm,networkInterface,applicableSchedule)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabVmResource> GetDevTestLabVm(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabVms(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DevTestLabVirtualNetworks in the <see cref="ResourceGroupResource"/>. </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <returns> An object representing collection of DevTestLabVirtualNetworks and their operations over a DevTestLabVirtualNetworkResource. </returns>
+        public virtual DevTestLabVirtualNetworkCollection GetDevTestLabVirtualNetworks(string labName)
+        {
+            return GetCachedClient(client => new DevTestLabVirtualNetworkCollection(client, Id, labName));
+        }
+
+        /// <summary>
+        /// Get virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualnetworks/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the VirtualNetwork. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DevTestLabVirtualNetworkResource>> GetDevTestLabVirtualNetworkAsync(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return await GetDevTestLabVirtualNetworks(labName).GetAsync(name, expand, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get virtual network.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/virtualnetworks/{name}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> VirtualNetworks_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The labName for the resource. </param>
+        /// <param name="name"> The name of the VirtualNetwork. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($expand=externalSubnets)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DevTestLabVirtualNetworkResource> GetDevTestLabVirtualNetwork(string labName, string name, string expand = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            return GetDevTestLabVirtualNetworks(labName).Get(name, expand, cancellationToken);
+        }
+
+        /// <summary> Evaluates lab policy. </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the PolicySet. </param>
+        /// <param name="content"> Request body for evaluating a policy set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DevTestLabEvaluatePoliciesResult>> EvaluatePoliciesAsync(string labName, string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = PolicySetsClientDiagnostics.CreateScope("MockableDevTestLabsResourceGroupResource.EvaluatePolicies");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicySetsRestClient.CreateEvaluatePoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, DevTestLabEvaluatePoliciesContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabEvaluatePoliciesResult> response = Response.FromValue(DevTestLabEvaluatePoliciesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Evaluates lab policy. </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="name"> The name of the PolicySet. </param>
+        /// <param name="content"> Request body for evaluating a policy set. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/>, <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DevTestLabEvaluatePoliciesResult> EvaluatePolicies(string labName, string name, DevTestLabEvaluatePoliciesContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = PolicySetsClientDiagnostics.CreateScope("MockableDevTestLabsResourceGroupResource.EvaluatePolicies");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = PolicySetsRestClient.CreateEvaluatePoliciesRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, DevTestLabEvaluatePoliciesContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabEvaluatePoliciesResult> response = Response.FromValue(DevTestLabEvaluatePoliciesResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List gallery images in a given lab.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/galleryimages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevTestLabGalleryImage> GetAllAsync(string labName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new GalleryImagesGetAllAsyncCollectionResultOfT(
+                GalleryImagesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                labName,
+                expand,
+                filter,
+                top,
+                @orderby,
+                context);
+        }
+
+        /// <summary>
+        /// List gallery images in a given lab.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/galleryimages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> GalleryImages_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="filter"> The filter to apply to the operation. Example: '$filter=contains(name,'myName'). </param>
+        /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
+        /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="DevTestLabGalleryImage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevTestLabGalleryImage> GetAll(string labName, string expand = default, string filter = default, int? top = default, string @orderby = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new GalleryImagesGetAllCollectionResultOfT(
+                GalleryImagesRestClient,
+                Id.SubscriptionId,
+                Id.ResourceGroupName,
+                labName,
+                expand,
+                filter,
+                top,
+                @orderby,
+                context);
         }
     }
 }

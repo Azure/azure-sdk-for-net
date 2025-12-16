@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The state of the Linux OS (i.e. NonDeprovisioned, DeprovisionRequested, DeprovisionApplied). </summary>
-    public readonly partial struct DevTestLabLinuxOSState : IEquatable<DevTestLabLinuxOSState>
+    public readonly partial struct DevTestLabLinuxOsState : IEquatable<DevTestLabLinuxOsState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabLinuxOSState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabLinuxOSState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NonDeprovisionedValue = "NonDeprovisioned";
         private const string DeprovisionRequestedValue = "DeprovisionRequested";
         private const string DeprovisionAppliedValue = "DeprovisionApplied";
 
-        /// <summary> NonDeprovisioned. </summary>
-        public static DevTestLabLinuxOSState NonDeprovisioned { get; } = new DevTestLabLinuxOSState(NonDeprovisionedValue);
-        /// <summary> DeprovisionRequested. </summary>
-        public static DevTestLabLinuxOSState DeprovisionRequested { get; } = new DevTestLabLinuxOSState(DeprovisionRequestedValue);
-        /// <summary> DeprovisionApplied. </summary>
-        public static DevTestLabLinuxOSState DeprovisionApplied { get; } = new DevTestLabLinuxOSState(DeprovisionAppliedValue);
-        /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are the same. </summary>
-        public static bool operator ==(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="DevTestLabLinuxOSState"/> values are not the same. </summary>
-        public static bool operator !=(DevTestLabLinuxOSState left, DevTestLabLinuxOSState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabLinuxOSState"/>. </summary>
-        public static implicit operator DevTestLabLinuxOSState(string value) => new DevTestLabLinuxOSState(value);
+        /// <summary> Initializes a new instance of <see cref="DevTestLabLinuxOsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabLinuxOsState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Gets the NonDeprovisioned. </summary>
+        public static DevTestLabLinuxOsState NonDeprovisioned { get; } = new DevTestLabLinuxOsState(NonDeprovisionedValue);
+
+        /// <summary> Gets the DeprovisionRequested. </summary>
+        public static DevTestLabLinuxOsState DeprovisionRequested { get; } = new DevTestLabLinuxOsState(DeprovisionRequestedValue);
+
+        /// <summary> Gets the DeprovisionApplied. </summary>
+        public static DevTestLabLinuxOsState DeprovisionApplied { get; } = new DevTestLabLinuxOsState(DeprovisionAppliedValue);
+
+        /// <summary> Determines if two <see cref="DevTestLabLinuxOsState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(DevTestLabLinuxOsState left, DevTestLabLinuxOsState right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="DevTestLabLinuxOsState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(DevTestLabLinuxOsState left, DevTestLabLinuxOsState right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="DevTestLabLinuxOsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabLinuxOsState(string value) => new DevTestLabLinuxOsState(value);
+
+        /// <summary> Converts a string to a <see cref="DevTestLabLinuxOsState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabLinuxOsState?(string value) => value == null ? null : new DevTestLabLinuxOsState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DevTestLabLinuxOSState other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(DevTestLabLinuxOSState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is DevTestLabLinuxOsState other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(DevTestLabLinuxOsState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

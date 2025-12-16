@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public readonly partial struct DevTestLabPolicyEvaluatorType : IEquatable<DevTestLabPolicyEvaluatorType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabPolicyEvaluatorType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AllowedValuesPolicyValue = "AllowedValuesPolicy";
         private const string MaxValuePolicyValue = "MaxValuePolicy";
 
-        /// <summary> AllowedValuesPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabPolicyEvaluatorType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AllowedValuesPolicy. </summary>
         public static DevTestLabPolicyEvaluatorType AllowedValuesPolicy { get; } = new DevTestLabPolicyEvaluatorType(AllowedValuesPolicyValue);
-        /// <summary> MaxValuePolicy. </summary>
+
+        /// <summary> Gets the MaxValuePolicy. </summary>
         public static DevTestLabPolicyEvaluatorType MaxValuePolicy { get; } = new DevTestLabPolicyEvaluatorType(MaxValuePolicyValue);
+
         /// <summary> Determines if two <see cref="DevTestLabPolicyEvaluatorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevTestLabPolicyEvaluatorType left, DevTestLabPolicyEvaluatorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevTestLabPolicyEvaluatorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevTestLabPolicyEvaluatorType left, DevTestLabPolicyEvaluatorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevTestLabPolicyEvaluatorType(string value) => new DevTestLabPolicyEvaluatorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabPolicyEvaluatorType?(string value) => value == null ? null : new DevTestLabPolicyEvaluatorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevTestLabPolicyEvaluatorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevTestLabPolicyEvaluatorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

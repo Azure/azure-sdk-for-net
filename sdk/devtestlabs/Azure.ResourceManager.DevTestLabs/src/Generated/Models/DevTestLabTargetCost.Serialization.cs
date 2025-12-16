@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabTargetCost : IUtf8JsonSerializable, IJsonModel<DevTestLabTargetCost>
+    /// <summary> Properties of a cost target. </summary>
+    public partial class DevTestLabTargetCost : IJsonModel<DevTestLabTargetCost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabTargetCost>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DevTestLabTargetCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevTestLabTargetCost)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 writer.WritePropertyName("costThresholds"u8);
                 writer.WriteStartArray();
-                foreach (var item in CostThresholds)
+                foreach (DevTestLabCostThreshold item in CostThresholds)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("cycleType"u8);
                 writer.WriteStringValue(CycleType.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,22 +86,27 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        DevTestLabTargetCost IJsonModel<DevTestLabTargetCost>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevTestLabTargetCost IJsonModel<DevTestLabTargetCost>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevTestLabTargetCost JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DevTestLabTargetCost)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevTestLabTargetCost(document.RootElement, options);
         }
 
-        internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DevTestLabTargetCost DeserializeDevTestLabTargetCost(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,92 +114,93 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DevTestLabTargetCostStatus? status = default;
             int? target = default;
             IList<DevTestLabCostThreshold> costThresholds = default;
-            DateTimeOffset? cycleStartDateTime = default;
-            DateTimeOffset? cycleEndDateTime = default;
+            DateTimeOffset? cycleStartOn = default;
+            DateTimeOffset? cycleEndOn = default;
             DevTestLabReportingCycleType? cycleType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = new DevTestLabTargetCostStatus(property.Value.GetString());
+                    status = new DevTestLabTargetCostStatus(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"u8))
+                if (prop.NameEquals("target"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    target = property.Value.GetInt32();
+                    target = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("costThresholds"u8))
+                if (prop.NameEquals("costThresholds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DevTestLabCostThreshold> array = new List<DevTestLabCostThreshold>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DevTestLabCostThreshold.DeserializeDevTestLabCostThreshold(item, options));
                     }
                     costThresholds = array;
                     continue;
                 }
-                if (property.NameEquals("cycleStartDateTime"u8))
+                if (prop.NameEquals("cycleStartDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cycleStartDateTime = property.Value.GetDateTimeOffset("O");
+                    cycleStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cycleEndDateTime"u8))
+                if (prop.NameEquals("cycleEndDateTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cycleEndDateTime = property.Value.GetDateTimeOffset("O");
+                    cycleEndOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("cycleType"u8))
+                if (prop.NameEquals("cycleType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cycleType = new DevTestLabReportingCycleType(property.Value.GetString());
+                    cycleType = new DevTestLabReportingCycleType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DevTestLabTargetCost(
                 status,
                 target,
                 costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(),
-                cycleStartDateTime,
-                cycleEndDateTime,
+                cycleStartOn,
+                cycleEndOn,
                 cycleType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<DevTestLabTargetCost>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DevTestLabTargetCost>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -204,15 +210,20 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
-        DevTestLabTargetCost IPersistableModel<DevTestLabTargetCost>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DevTestLabTargetCost IPersistableModel<DevTestLabTargetCost>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DevTestLabTargetCost PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DevTestLabTargetCost>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevTestLabTargetCost(document.RootElement, options);
                     }
                 default:
@@ -220,6 +231,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DevTestLabTargetCost>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

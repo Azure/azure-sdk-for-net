@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties for plan on a custom image. </summary>
     public partial class DevTestLabCustomImagePlan
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImagePlan"/>. </summary>
         public DevTestLabCustomImagePlan()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="id"> The id of the plan, equivalent to name of the plan. </param>
         /// <param name="publisher"> The publisher for the plan from the marketplace image the custom image is derived from. </param>
         /// <param name="offer"> The offer for the plan from the marketplace image the custom image is derived from. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabCustomImagePlan(string id, string publisher, string offer, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabCustomImagePlan(string id, string publisher, string offer, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Publisher = publisher;
             Offer = offer;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The id of the plan, equivalent to name of the plan. </summary>
         public string Id { get; set; }
+
         /// <summary> The publisher for the plan from the marketplace image the custom image is derived from. </summary>
         public string Publisher { get; set; }
+
         /// <summary> The offer for the plan from the marketplace image the custom image is derived from. </summary>
         public string Offer { get; set; }
     }

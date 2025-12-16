@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
@@ -14,38 +15,55 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     public readonly partial struct DevTestLabNotificationChannelEventType : IEquatable<DevTestLabNotificationChannelEventType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelEventType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabNotificationChannelEventType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string AutoShutdownValue = "AutoShutdown";
         private const string CostValue = "Cost";
 
-        /// <summary> AutoShutdown. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabNotificationChannelEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabNotificationChannelEventType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the AutoShutdown. </summary>
         public static DevTestLabNotificationChannelEventType AutoShutdown { get; } = new DevTestLabNotificationChannelEventType(AutoShutdownValue);
-        /// <summary> Cost. </summary>
+
+        /// <summary> Gets the Cost. </summary>
         public static DevTestLabNotificationChannelEventType Cost { get; } = new DevTestLabNotificationChannelEventType(CostValue);
+
         /// <summary> Determines if two <see cref="DevTestLabNotificationChannelEventType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DevTestLabNotificationChannelEventType left, DevTestLabNotificationChannelEventType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DevTestLabNotificationChannelEventType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DevTestLabNotificationChannelEventType left, DevTestLabNotificationChannelEventType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabNotificationChannelEventType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DevTestLabNotificationChannelEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DevTestLabNotificationChannelEventType(string value) => new DevTestLabNotificationChannelEventType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DevTestLabNotificationChannelEventType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabNotificationChannelEventType?(string value) => value == null ? null : new DevTestLabNotificationChannelEventType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DevTestLabNotificationChannelEventType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DevTestLabNotificationChannelEventType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

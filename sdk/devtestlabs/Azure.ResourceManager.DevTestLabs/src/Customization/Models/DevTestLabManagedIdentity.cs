@@ -6,12 +6,11 @@
 using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> Properties of a managed identity. </summary>
-    [CodeGenSerialization(nameof(Type), SerializationValueHook = nameof(SerializeTypeValue), DeserializationValueHook = nameof(DeserializeTypeValue))]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSerialization(nameof(Type), SerializationValueHook = nameof(SerializeTypeValue), DeserializationValueHook = nameof(DeserializeTypeValue))]
     public partial class DevTestLabManagedIdentity
     {
         /// <summary> Managed identity. </summary>

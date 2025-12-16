@@ -6,90 +6,101 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
     /// A class representing a collection of <see cref="DevTestLabServiceRunnerResource"/> and their operations.
-    /// Each <see cref="DevTestLabServiceRunnerResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
-    /// To get a <see cref="DevTestLabServiceRunnerCollection"/> instance call the GetDevTestLabServiceRunners method from an instance of <see cref="DevTestLabResource"/>.
+    /// Each <see cref="DevTestLabServiceRunnerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DevTestLabServiceRunnerCollection"/> instance call the GetDevTestLabServiceRunners method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DevTestLabServiceRunnerCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _devTestLabServiceRunnerServiceRunnersClientDiagnostics;
-        private readonly ServiceRunnersRestOperations _devTestLabServiceRunnerServiceRunnersRestClient;
+        private readonly ClientDiagnostics _serviceRunnersClientDiagnostics;
+        private readonly ServiceRunners _serviceRunnersRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabServiceRunnerCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of DevTestLabServiceRunnerCollection for mocking. </summary>
         protected DevTestLabServiceRunnerCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="DevTestLabServiceRunnerCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabServiceRunnerCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal DevTestLabServiceRunnerCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _devTestLabServiceRunnerServiceRunnersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabServiceRunnerResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(DevTestLabServiceRunnerResource.ResourceType, out string devTestLabServiceRunnerServiceRunnersApiVersion);
-            _devTestLabServiceRunnerServiceRunnersRestClient = new ServiceRunnersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabServiceRunnerServiceRunnersApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(DevTestLabServiceRunnerResource.ResourceType, out string devTestLabServiceRunnerApiVersion);
+            _serviceRunnersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", DevTestLabServiceRunnerResource.ResourceType.Namespace, Diagnostics);
+            _serviceRunnersRestClient = new ServiceRunners(_serviceRunnersClientDiagnostics, Pipeline, Endpoint, devTestLabServiceRunnerApiVersion ?? "2018-09-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != DevTestLabResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, DevTestLabResource.ResourceType), nameof(id));
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Create or replace an existing service runner.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="data"> A container for a managed identity to execute DevTest lab services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<DevTestLabServiceRunnerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<DevTestLabServiceRunnerResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string labName, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _devTestLabServiceRunnerServiceRunnersRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken).ConfigureAwait(false);
-                var uri = _devTestLabServiceRunnerServiceRunnersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DevTestLabsArmOperation<DevTestLabServiceRunnerResource> operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -103,44 +114,50 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Create or replace an existing service runner.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="data"> A container for a managed identity to execute DevTest lab services. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<DevTestLabServiceRunnerResource> CreateOrUpdate(WaitUntil waitUntil, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/>, <paramref name="name"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<DevTestLabServiceRunnerResource> CreateOrUpdate(WaitUntil waitUntil, string labName, string name, DevTestLabServiceRunnerData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _devTestLabServiceRunnerServiceRunnersRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data, cancellationToken);
-                var uri = _devTestLabServiceRunnerServiceRunnersRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, DevTestLabServiceRunnerData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                DevTestLabsArmOperation<DevTestLabServiceRunnerResource> operation = new DevTestLabsArmOperation<DevTestLabServiceRunnerResource>(Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -154,38 +171,44 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get service runner.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<DevTestLabServiceRunnerResource>> GetAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DevTestLabServiceRunnerResource>> GetAsync(string labName, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Get");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Get");
             scope.Start();
             try
             {
-                var response = await _devTestLabServiceRunnerServiceRunnersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -199,38 +222,44 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Get service runner.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<DevTestLabServiceRunnerResource> Get(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DevTestLabServiceRunnerResource> Get(string labName, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Get");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Get");
             scope.Start();
             try
             {
-                var response = _devTestLabServiceRunnerServiceRunnersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<DevTestLabServiceRunnerData> response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -244,36 +273,52 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string labName, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Exists");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _devTestLabServiceRunnerServiceRunnersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevTestLabServiceRunnerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevTestLabServiceRunnerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -287,36 +332,52 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual Response<bool> Exists(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string labName, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Exists");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.Exists");
             scope.Start();
             try
             {
-                var response = _devTestLabServiceRunnerServiceRunnersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevTestLabServiceRunnerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevTestLabServiceRunnerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -330,38 +391,56 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual async Task<NullableResponse<DevTestLabServiceRunnerResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DevTestLabServiceRunnerResource>> GetIfExistsAsync(string labName, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _devTestLabServiceRunnerServiceRunnersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<DevTestLabServiceRunnerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevTestLabServiceRunnerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevTestLabServiceRunnerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,38 +454,56 @@ namespace Azure.ResourceManager.DevTestLabs
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServiceRunner_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceRunners_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-09-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2018-09-15. </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="labName"> The name of the lab. </param>
         /// <param name="name"> The name of the ServiceRunner. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public virtual NullableResponse<DevTestLabServiceRunnerResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="labName"/> or <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="labName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DevTestLabServiceRunnerResource> GetIfExists(string labName, string name, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(labName, nameof(labName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
+            using DiagnosticScope scope = _serviceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _devTestLabServiceRunnerServiceRunnersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _serviceRunnersRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, labName, name, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<DevTestLabServiceRunnerData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(DevTestLabServiceRunnerData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((DevTestLabServiceRunnerData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<DevTestLabServiceRunnerResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)

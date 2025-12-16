@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Properties of a network interface. </summary>
     public partial class DevTestLabNetworkInterface
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabNetworkInterface"/>. </summary>
         public DevTestLabNetworkInterface()
@@ -54,54 +25,65 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <summary> Initializes a new instance of <see cref="DevTestLabNetworkInterface"/>. </summary>
         /// <param name="virtualNetworkId"> The resource ID of the virtual network. </param>
         /// <param name="subnetId"> The resource ID of the sub net. </param>
-        /// <param name="publicIPAddressId"> The resource ID of the public IP address. </param>
-        /// <param name="publicIPAddress"> The public IP address. </param>
-        /// <param name="privateIPAddress"> The private IP address. </param>
+        /// <param name="publicIpAddressId"> The resource ID of the public IP address. </param>
+        /// <param name="publicIpAddress"> The public IP address. </param>
+        /// <param name="privateIpAddress"> The private IP address. </param>
         /// <param name="dnsName"> The DNS name. </param>
         /// <param name="rdpAuthority"> The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol). </param>
         /// <param name="sshAuthority"> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </param>
-        /// <param name="sharedPublicIPAddressConfiguration"> The configuration for sharing a public IP address across multiple virtual machines. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIPAddressId, string publicIPAddress, string privateIPAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIPAddressConfiguration sharedPublicIPAddressConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sharedPublicIpAddressConfiguration"> The configuration for sharing a public IP address across multiple virtual machines. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabNetworkInterface(ResourceIdentifier virtualNetworkId, ResourceIdentifier subnetId, ResourceIdentifier publicIpAddressId, string publicIpAddress, string privateIpAddress, string dnsName, string rdpAuthority, string sshAuthority, SharedPublicIpAddressConfiguration sharedPublicIpAddressConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VirtualNetworkId = virtualNetworkId;
             SubnetId = subnetId;
-            PublicIPAddressId = publicIPAddressId;
-            PublicIPAddress = publicIPAddress;
-            PrivateIPAddress = privateIPAddress;
+            PublicIpAddressId = publicIpAddressId;
+            PublicIpAddress = publicIpAddress;
+            PrivateIpAddress = privateIpAddress;
             DnsName = dnsName;
             RdpAuthority = rdpAuthority;
             SshAuthority = sshAuthority;
-            SharedPublicIPAddressConfiguration = sharedPublicIPAddressConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SharedPublicIpAddressConfiguration = sharedPublicIpAddressConfiguration;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource ID of the virtual network. </summary>
         public ResourceIdentifier VirtualNetworkId { get; set; }
+
         /// <summary> The resource ID of the sub net. </summary>
         public ResourceIdentifier SubnetId { get; set; }
+
         /// <summary> The resource ID of the public IP address. </summary>
-        public ResourceIdentifier PublicIPAddressId { get; set; }
+        public ResourceIdentifier PublicIpAddressId { get; set; }
+
         /// <summary> The public IP address. </summary>
-        public string PublicIPAddress { get; set; }
+        public string PublicIpAddress { get; set; }
+
         /// <summary> The private IP address. </summary>
-        public string PrivateIPAddress { get; set; }
+        public string PrivateIpAddress { get; set; }
+
         /// <summary> The DNS name. </summary>
         public string DnsName { get; set; }
+
         /// <summary> The RdpAuthority property is a server DNS host name or IP address followed by the service port number for RDP (Remote Desktop Protocol). </summary>
         public string RdpAuthority { get; set; }
+
         /// <summary> The SshAuthority property is a server DNS host name or IP address followed by the service port number for SSH. </summary>
         public string SshAuthority { get; set; }
+
         /// <summary> The configuration for sharing a public IP address across multiple virtual machines. </summary>
-        internal SharedPublicIPAddressConfiguration SharedPublicIPAddressConfiguration { get; set; }
+        internal SharedPublicIpAddressConfiguration SharedPublicIpAddressConfiguration { get; set; }
+
         /// <summary> The incoming NAT rules. </summary>
-        public IList<DevTestLabInboundNatRule> SharedPublicIPAddressInboundNatRules
+        public IList<DevTestLabInboundNatRule> SharedPublicIpAddressInboundNatRules
         {
             get
             {
-                if (SharedPublicIPAddressConfiguration is null)
-                    SharedPublicIPAddressConfiguration = new SharedPublicIPAddressConfiguration();
-                return SharedPublicIPAddressConfiguration.InboundNatRules;
+                if (SharedPublicIpAddressConfiguration is null)
+                {
+                    SharedPublicIpAddressConfiguration = new SharedPublicIpAddressConfiguration();
+                }
+                return SharedPublicIpAddressConfiguration.InboundNatRules;
             }
         }
     }

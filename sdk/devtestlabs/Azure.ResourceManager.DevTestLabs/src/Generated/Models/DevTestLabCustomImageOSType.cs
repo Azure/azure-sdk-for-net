@@ -7,48 +7,67 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DevTestLabs;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
     /// <summary> The OS type of the custom image (i.e. Windows, Linux). </summary>
-    public readonly partial struct DevTestLabCustomImageOSType : IEquatable<DevTestLabCustomImageOSType>
+    public readonly partial struct DevTestLabCustomImageOsType : IEquatable<DevTestLabCustomImageOsType>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageOSType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DevTestLabCustomImageOSType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string WindowsValue = "Windows";
         private const string LinuxValue = "Linux";
         private const string NoneValue = "None";
 
-        /// <summary> Windows. </summary>
-        public static DevTestLabCustomImageOSType Windows { get; } = new DevTestLabCustomImageOSType(WindowsValue);
-        /// <summary> Linux. </summary>
-        public static DevTestLabCustomImageOSType Linux { get; } = new DevTestLabCustomImageOSType(LinuxValue);
-        /// <summary> None. </summary>
-        public static DevTestLabCustomImageOSType None { get; } = new DevTestLabCustomImageOSType(NoneValue);
-        /// <summary> Determines if two <see cref="DevTestLabCustomImageOSType"/> values are the same. </summary>
-        public static bool operator ==(DevTestLabCustomImageOSType left, DevTestLabCustomImageOSType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="DevTestLabCustomImageOSType"/> values are not the same. </summary>
-        public static bool operator !=(DevTestLabCustomImageOSType left, DevTestLabCustomImageOSType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabCustomImageOSType"/>. </summary>
-        public static implicit operator DevTestLabCustomImageOSType(string value) => new DevTestLabCustomImageOSType(value);
+        /// <summary> Initializes a new instance of <see cref="DevTestLabCustomImageOsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public DevTestLabCustomImageOsType(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
 
-        /// <inheritdoc />
+            _value = value;
+        }
+
+        /// <summary> Gets the Windows. </summary>
+        public static DevTestLabCustomImageOsType Windows { get; } = new DevTestLabCustomImageOsType(WindowsValue);
+
+        /// <summary> Gets the Linux. </summary>
+        public static DevTestLabCustomImageOsType Linux { get; } = new DevTestLabCustomImageOsType(LinuxValue);
+
+        /// <summary> Gets the None. </summary>
+        public static DevTestLabCustomImageOsType None { get; } = new DevTestLabCustomImageOsType(NoneValue);
+
+        /// <summary> Determines if two <see cref="DevTestLabCustomImageOsType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator ==(DevTestLabCustomImageOsType left, DevTestLabCustomImageOsType right) => left.Equals(right);
+
+        /// <summary> Determines if two <see cref="DevTestLabCustomImageOsType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
+        public static bool operator !=(DevTestLabCustomImageOsType left, DevTestLabCustomImageOsType right) => !left.Equals(right);
+
+        /// <summary> Converts a string to a <see cref="DevTestLabCustomImageOsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabCustomImageOsType(string value) => new DevTestLabCustomImageOsType(value);
+
+        /// <summary> Converts a string to a <see cref="DevTestLabCustomImageOsType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DevTestLabCustomImageOsType?(string value) => value == null ? null : new DevTestLabCustomImageOsType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DevTestLabCustomImageOSType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(DevTestLabCustomImageOSType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public override bool Equals(object obj) => obj is DevTestLabCustomImageOsType other && Equals(other);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
+        public bool Equals(DevTestLabCustomImageOsType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

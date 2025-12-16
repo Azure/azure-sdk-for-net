@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.DevTestLabs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
@@ -15,70 +16,59 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> Schedules applicable to a virtual machine. The schedules may have been defined on a VM or on lab level. </summary>
     public partial class DevTestLabApplicableSchedule : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
-        internal DevTestLabApplicableSchedule()
+        /// <param name="properties"> The properties of the resource. </param>
+        internal DevTestLabApplicableSchedule(ApplicableScheduleProperties properties)
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabApplicableSchedule"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> The location of the resource. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        /// <param name="labVmsShutdown"> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </param>
-        /// <param name="labVmsStartup"> The auto-startup schedule, if one has been set at the lab or lab resource level. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, IReadOnlyDictionary<string, string> tags, DevTestLabScheduleData labVmsShutdown, DevTestLabScheduleData labVmsStartup, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="properties"> The properties of the resource. </param>
+        internal DevTestLabApplicableSchedule(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, AzureLocation? location, IDictionary<string, string> tags, ApplicableScheduleProperties properties) : base(id, name, resourceType, systemData)
         {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Location = location;
             Tags = tags;
-            LabVmsShutdown = labVmsShutdown;
-            LabVmsStartup = labVmsStartup;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
         }
 
         /// <summary> The location of the resource. </summary>
         public AzureLocation? Location { get; }
+
         /// <summary> The tags of the resource. </summary>
-        public IReadOnlyDictionary<string, string> Tags { get; }
+        public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The properties of the resource. </summary>
+        internal ApplicableScheduleProperties Properties { get; }
+
         /// <summary> The auto-shutdown schedule, if one has been set at the lab or lab resource level. </summary>
-        public DevTestLabScheduleData LabVmsShutdown { get; }
+        public DevTestLabScheduleData LabVmsShutdown
+        {
+            get
+            {
+                return Properties.LabVmsShutdown;
+            }
+        }
+
         /// <summary> The auto-startup schedule, if one has been set at the lab or lab resource level. </summary>
-        public DevTestLabScheduleData LabVmsStartup { get; }
+        public DevTestLabScheduleData LabVmsStartup
+        {
+            get
+            {
+                return Properties.LabVmsStartup;
+            }
+        }
     }
 }
