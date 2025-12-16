@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
-using Azure;
 using Azure.AI.Translation.Text;
 using Azure.Core;
 using Azure.Core.Extensions;
@@ -15,7 +13,7 @@ using Azure.Core.Extensions;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-    public static partial class TranslationTextClientBuilderExtensions
+    public static partial class TextTranslationClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
@@ -24,27 +22,6 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilder
         {
             return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(endpoint, options));
-        }
-
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="credential"></param>
-        /// <param name="region"></param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, AzureKeyCredential credential, string region = "global")
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(credential, region, options));
-        }
-
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="credential"></param>
-        /// <param name="endpoint"></param>
-        /// <param name="region"></param>
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder>(this TBuilder builder, AzureKeyCredential credential, Uri endpoint, string region = "global")
-            where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(options => new TextTranslationClient(credential, endpoint, region, options));
         }
 
         /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
@@ -95,17 +72,6 @@ namespace Microsoft.Extensions.Azure
                 region,
                 tokenScope,
                 options));
-        }
-
-        /// <summary> Registers a <see cref="TextTranslationClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration to use for the client. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<TextTranslationClient, TextTranslationClientOptions> AddTextTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-            where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<TextTranslationClient, TextTranslationClientOptions>(configuration);
         }
     }
 }
