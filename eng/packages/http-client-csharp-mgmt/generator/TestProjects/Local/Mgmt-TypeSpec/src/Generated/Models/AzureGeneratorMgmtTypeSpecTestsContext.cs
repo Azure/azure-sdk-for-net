@@ -50,6 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(FooActionRequest))]
     [ModelReaderWriterBuildable(typeof(FooActionResult))]
     [ModelReaderWriterBuildable(typeof(FooData))]
+    [ModelReaderWriterBuildable(typeof(FooDependency))]
     [ModelReaderWriterBuildable(typeof(FooListResult))]
     [ModelReaderWriterBuildable(typeof(FooPreviewAction))]
     [ModelReaderWriterBuildable(typeof(FooProperties))]

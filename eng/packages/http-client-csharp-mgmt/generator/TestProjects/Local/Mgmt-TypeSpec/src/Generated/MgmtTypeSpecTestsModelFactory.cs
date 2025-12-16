@@ -213,6 +213,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new FooActionResult(msg, error, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The FooDependency. </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="type"></param>
+        /// <returns> A new <see cref="Models.FooDependency"/> instance for mocking. </returns>
+        public static FooDependency FooDependency(string id = default, string name = default, string @type = default)
+        {
+            return new FooDependency(id, name, @type, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>

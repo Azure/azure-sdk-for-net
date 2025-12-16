@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
+using Azure.Generator.Management.Visitors;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Expressions;
@@ -119,10 +120,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // Generate return description for pageable methods
             FormattableString returnDescription = $"A collection of {_actualItemType:C} that may take multiple service requests to iterate over.";
 
+            // For pageable methods, we need to remove the 'async' modifier since the return type is AsyncPageable/Pageable
+            // These types implement IEnumerable and are not awaitable themselves
+            var modifiers = _convenienceMethod.Signature.Modifiers & ~MethodSignatureModifiers.Async;
+
             return new MethodSignature(
                 _methodName,
                 _convenienceMethod.Signature.Description,
-                _convenienceMethod.Signature.Modifiers,
+                modifiers,
                 returnType,
                 returnDescription,
                 OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType),
@@ -170,22 +175,29 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 arguments,
                 out var messageVariable));
 
-            // Process the pipeline and get the response
-            tryStatements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
+            // Process the pipeline and get the raw response (without deserialization)
+            tryStatements.AddRange(ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
                 messageVariable,
                 contextVariable,
-                _listType,
                 _isAsync,
                 out var responseVariable));
 
-            // Add null check for the response value
+            // Deserialize the response body to the list type
+            var listDeclaration = Declare(
+                "list",
+                _listType,
+                Static(_listType).Invoke(SerializationVisitor.FromResponseMethodName, [responseVariable]),
+                out var listVariable);
+            tryStatements.Add(listDeclaration);
+
+            // Add null check for the list
             var nullCheckStatement = new IfStatement(
-                responseVariable.Value().Equal(Null))
+                listVariable.Equal(Null))
             {
                 ((KeywordExpression)ThrowExpression(
                     New.Instance(
                         typeof(RequestFailedException),
-                        responseVariable.GetRawResponse()))).Terminate()
+                        responseVariable))).Terminate()
             };
             tryStatements.Add(nullCheckStatement);
 
@@ -193,23 +205,23 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             if (_itemResourceClient != null)
             {
                 // Need to convert item types from ResourceData to Resource
-                tryStatements.Add(BuildResourceDataConversionStatement(responseVariable));
+                tryStatements.Add(BuildResourceDataConversionStatement(listVariable, responseVariable.As<Response>()));
             }
             else
             {
                 // Direct conversion without type transformation
-                tryStatements.Add(BuildDirectConversionStatement(responseVariable));
+                tryStatements.Add(BuildDirectConversionStatement(listVariable, responseVariable.As<Response>()));
             }
 
             return new TryExpression(tryStatements);
         }
 
-        private MethodBodyStatement BuildDirectConversionStatement(ScopedApi<Response> responseVariable)
+        private MethodBodyStatement BuildDirectConversionStatement(VariableExpression listVariable, ValueExpression responseExpression)
         {
-            // Create a single page from the list: Page<T>.FromValues(response.Value, null, response.GetRawResponse())
+            // Create a single page from the list: Page<T>.FromValues(list, null, response)
             var pageExpression = Static(new CSharpType(typeof(Page<>), _itemType)).Invoke(
                 nameof(Page<object>.FromValues),
-                [responseVariable.Value(), Null, responseVariable.GetRawResponse()]);
+                [listVariable, Null, responseExpression]);
 
             // Wrap in a Pageable: Pageable<T>.FromPages(new[] { page })
             var pageableType = _isAsync
@@ -224,12 +236,12 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return Return(pageableExpression);
         }
 
-        private MethodBodyStatement BuildResourceDataConversionStatement(ScopedApi<Response> responseVariable)
+        private MethodBodyStatement BuildResourceDataConversionStatement(VariableExpression listVariable, ValueExpression responseExpression)
         {
             // Create a page with the original data type
             var pageExpression = Static(new CSharpType(typeof(Page<>), _itemType)).Invoke(
                 nameof(Page<object>.FromValues),
-                [responseVariable.Value(), Null, responseVariable.GetRawResponse()]);
+                [listVariable, Null, responseExpression]);
 
             // Create the pageable from the page
             var sourcePageableType = _isAsync
