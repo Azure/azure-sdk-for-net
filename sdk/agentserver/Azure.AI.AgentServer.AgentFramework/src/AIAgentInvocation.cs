@@ -9,6 +9,7 @@ using Azure.AI.AgentServer.Core.Telemetry;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Azure.AI.AgentServer.Responses.Invocation.Stream;
 using Microsoft.Agents.AI;
+using Microsoft.Extensions.AI;
 
 namespace Azure.AI.AgentServer.AgentFramework;
 
@@ -16,8 +17,12 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// Provides an implementation of agent invocation using the Microsoft Agents AI framework.
 /// </summary>
 /// <param name="agent">The AI agent to invoke.</param>
-public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
+/// <param name="aiFunctions">Optional tools to surface to the agent for tool-calling.</param>
+public class AIAgentInvocation(AIAgent agent, IReadOnlyList<AIFunction>? aiFunctions = null) : AgentInvocationBase
 {
+    private readonly AIAgent _agent = agent ?? throw new ArgumentNullException(nameof(agent));
+    private readonly AgentRunOptions? _runOptions = BuildRunOptions(aiFunctions);
+
     /// <summary>
     /// Invokes the agent asynchronously and returns a complete response.
     /// </summary>
@@ -32,7 +37,10 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
         Activity.Current?.SetServiceNamespace("agentframework");
 
         var messages = request.GetInputMessages();
-        var response = await agent.RunAsync(messages, cancellationToken: cancellationToken).ConfigureAwait(false);
+        var response = await _agent.RunAsync(
+            messages,
+            options: _runOptions,
+            cancellationToken: cancellationToken).ConfigureAwait(false);
         return response.ToResponse(request, context);
     }
 
@@ -51,7 +59,10 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
         Activity.Current?.SetServiceNamespace("agentframework");
 
         var messages = request.GetInputMessages();
-        var updates = agent.RunStreamingAsync(messages, cancellationToken: cancellationToken);
+        var updates = _agent.RunStreamingAsync(
+            messages,
+            options: _runOptions,
+            cancellationToken: cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
@@ -78,5 +89,22 @@ public class AIAgentInvocation(AIAgent agent) : AgentInvocationBase
                 CancellationToken = cancellationToken,
             }
         };
+    }
+
+    private static AgentRunOptions? BuildRunOptions(IReadOnlyList<AIFunction>? aiFunctions)
+    {
+        if (aiFunctions is { Count: > 0 })
+        {
+            // Surface tool definitions to the agent so the model can request them.
+            var chatOptions = new ChatOptions
+            {
+                Tools = aiFunctions.Cast<AITool>().ToList()
+            };
+
+            // Console.WriteLine($"[AgentInvocation] Registered {chatOptions.Tools.Count} tools with ChatOptions for invocation.");
+            return new ChatClientAgentRunOptions(chatOptions);
+        }
+
+        return null;
     }
 }
