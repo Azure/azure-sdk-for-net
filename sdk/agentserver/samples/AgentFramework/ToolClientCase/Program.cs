@@ -27,12 +27,29 @@ var chatClient = new AzureOpenAIClient(
     .Build();
 
 // Create agent
+// var agent = new ChatClientAgent(chatClient,
+//         name: "test-agent",
+//         instructions: "You are a helpful assistant with access to various tools.")
+//     .AsBuilder()
+//     .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
+//     .Build();
+
 var agent = new ChatClientAgent(chatClient,
-        name: "test-agent",
-        instructions: "You are a helpful assistant with access to various tools.")
-    .AsBuilder()
-    .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
-    .Build();
+      name: "test-agent",
+      instructions: @"You are a helpful assistant with access to tools for fetching Microsoft documentation.
+
+  IMPORTANT: When the user asks about Microsoft Learn articles or documentation:
+  1. You MUST use the microsoft_docs_fetch tool to retrieve the actual content
+  2. Do NOT rely on your training data
+  3. Always fetch the latest information from the provided URL
+
+  Available tools:
+  - microsoft_docs_fetch: Fetches and converts Microsoft Learn documentation
+  - microsoft_docs_search: Searches Microsoft/Azure documentation
+  - microsoft_code_sample_search: Searches for code examples")
+      .AsBuilder()
+      .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
+      .Build();
 
 // Run agent with tool support using ToolDefinition objects
 await agent.RunAIAgentAsync(
