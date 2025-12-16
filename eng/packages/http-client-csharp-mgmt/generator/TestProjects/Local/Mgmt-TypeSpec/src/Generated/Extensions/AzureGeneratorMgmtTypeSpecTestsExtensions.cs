@@ -1405,7 +1405,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<BestPracticeResource>> GetBestPracticeVersionAsync(this TenantResource tenantResource, string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
+        public static async Task<Response<BestPracticeVersionResource>> GetBestPracticeVersionAsync(this TenantResource tenantResource, string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
@@ -1425,7 +1425,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<BestPracticeResource> GetBestPracticeVersion(this TenantResource tenantResource, string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
+        public static Response<BestPracticeVersionResource> GetBestPracticeVersion(this TenantResource tenantResource, string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 

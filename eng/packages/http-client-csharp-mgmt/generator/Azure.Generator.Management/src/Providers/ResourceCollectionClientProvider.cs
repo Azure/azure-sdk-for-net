@@ -132,6 +132,16 @@ namespace Azure.Generator.Management.Providers
         internal string ResourceName => _resource.ResourceName;
         internal ResourceScope ResourceScope => _resource.ResourceScope;
 
+        /// <summary>
+        /// Gets the resource client provider associated with this collection.
+        /// </summary>
+        internal ResourceClientProvider GetResource() => _resource;
+
+        /// <summary>
+        /// Gets the resource data type for the resource in this collection.
+        /// </summary>
+        internal CSharpType GetResourceDataType() => _resource.ResourceData.Type;
+
         protected override TypeProvider[] BuildSerializationProviders() => [];
 
         protected override string BuildName() => $"{ResourceName}Collection";

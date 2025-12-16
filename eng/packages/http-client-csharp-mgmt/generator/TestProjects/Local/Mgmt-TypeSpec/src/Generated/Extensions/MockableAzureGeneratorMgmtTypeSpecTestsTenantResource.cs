@@ -135,7 +135,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BestPracticeResource>> GetBestPracticeVersionAsync(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BestPracticeVersionResource>> GetBestPracticeVersionAsync(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
@@ -166,7 +166,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<BestPracticeResource> GetBestPracticeVersion(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
+        public virtual Response<BestPracticeVersionResource> GetBestPracticeVersion(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));

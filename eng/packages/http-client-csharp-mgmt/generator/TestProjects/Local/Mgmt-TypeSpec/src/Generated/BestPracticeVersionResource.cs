@@ -113,7 +113,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BestPracticeResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BestPracticeVersionResource>> GetAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Get");
             scope.Start();
@@ -130,7 +130,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BestPracticeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -161,7 +161,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BestPracticeResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<BestPracticeVersionResource> Get(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Get");
             scope.Start();
@@ -178,7 +178,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BestPracticeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="properties"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<BestPracticeResource>> UpdateAsync(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<BestPracticeVersionResource>> UpdateAsync(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -230,7 +230,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BestPracticeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +263,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="properties"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<BestPracticeResource> Update(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
+        public virtual Response<BestPracticeVersionResource> Update(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -282,7 +282,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new BestPracticeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new BestPracticeVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
