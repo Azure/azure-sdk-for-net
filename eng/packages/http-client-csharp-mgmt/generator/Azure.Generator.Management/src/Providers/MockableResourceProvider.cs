@@ -333,8 +333,20 @@ namespace Azure.Generator.Management.Providers
             return method switch
             {
                 InputPagingServiceMethod pagingMethod => new PageableOperationMethodProvider(this, _contextualPath, clientInfo, pagingMethod, isAsync, methodName),
-                _ => new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName)
+                _ => BuildNonPagingServiceMethod(method, clientInfo, isAsync, methodName)
             };
+        }
+
+        private MethodProvider BuildNonPagingServiceMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new SinglePageListOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+            }
+            
+            return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
         }
 
         public static ValueExpression BuildSingletonResourceIdentifier(ScopedApi<ResourceIdentifier> resourceId, string resourceType, string resourceName)

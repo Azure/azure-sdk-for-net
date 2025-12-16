@@ -442,9 +442,9 @@ namespace Azure.Generator.Management.Providers
                 else
                 {
                     var asyncMethodName = ResourceHelpers.GetOperationMethodName(methodKind, true, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, true, asyncMethodName, forceLro: isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, true, asyncMethodName, isFakeLro));
                     var methodName = ResourceHelpers.GetOperationMethodName(methodKind, false, false);
-                    operationMethods.Add(new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, false, methodName, forceLro: isFakeLro));
+                    operationMethods.Add(BuildResourceOperationMethod(method, restClientInfo, false, methodName, isFakeLro));
                 }
             }
 
@@ -481,6 +481,18 @@ namespace Azure.Generator.Management.Providers
             methods.AddRange(BuildGetChildResourceMethods());
 
             return [.. methods];
+        }
+
+        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string methodName, bool isFakeLro)
+        {
+            // Check if the response body type is a list - if so, wrap it in a single-page pageable
+            var responseBodyType = method.GetResponseBodyType();
+            if (responseBodyType != null && responseBodyType.IsList)
+            {
+                return new SinglePageListOperationMethodProvider(this, _contextualPath, restClientInfo, method, isAsync, methodName);
+            }
+            
+            return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
         }
 
         private InputClient? PopulateGetClient()
