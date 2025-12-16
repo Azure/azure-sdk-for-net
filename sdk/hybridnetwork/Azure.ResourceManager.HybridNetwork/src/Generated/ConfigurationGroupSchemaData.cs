@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the ConfigurationGroupSchema data model.
     /// Configuration group schema resource.
+    /// Serialized Name: ConfigurationGroupSchema
     /// </summary>
     public partial class ConfigurationGroupSchemaData : TrackedResourceData
     {
@@ -64,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Configuration group schema properties. </param>
+        /// <param name="properties">
+        /// Configuration group schema properties.
+        /// Serialized Name: ConfigurationGroupSchema.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ConfigurationGroupSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ConfigurationGroupSchemaPropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Configuration group schema properties. </summary>
+        /// <summary>
+        /// Configuration group schema properties.
+        /// Serialized Name: ConfigurationGroupSchema.properties
+        /// </summary>
         public ConfigurationGroupSchemaPropertiesFormat Properties { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the SiteNetworkService data model.
     /// Site network service resource.
+    /// Serialized Name: SiteNetworkService
     /// </summary>
     public partial class SiteNetworkServiceData : TrackedResourceData
     {
@@ -64,9 +65,18 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Site network service properties. </param>
-        /// <param name="identity"> The managed identity of the Site network service, if configured. </param>
-        /// <param name="sku"> Sku of the site network service. </param>
+        /// <param name="properties">
+        /// Site network service properties.
+        /// Serialized Name: SiteNetworkService.properties
+        /// </param>
+        /// <param name="identity">
+        /// The managed identity of the Site network service, if configured.
+        /// Serialized Name: SiteNetworkService.identity
+        /// </param>
+        /// <param name="sku">
+        /// Sku of the site network service.
+        /// Serialized Name: SiteNetworkService.sku
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteNetworkServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SiteNetworkServicePropertiesFormat properties, ManagedServiceIdentity identity, HybridNetworkSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -81,11 +91,20 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Site network service properties. </summary>
+        /// <summary>
+        /// Site network service properties.
+        /// Serialized Name: SiteNetworkService.properties
+        /// </summary>
         public SiteNetworkServicePropertiesFormat Properties { get; set; }
-        /// <summary> The managed identity of the Site network service, if configured. </summary>
+        /// <summary>
+        /// The managed identity of the Site network service, if configured.
+        /// Serialized Name: SiteNetworkService.identity
+        /// </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Sku of the site network service. </summary>
+        /// <summary>
+        /// Sku of the site network service.
+        /// Serialized Name: SiteNetworkService.sku
+        /// </summary>
         public HybridNetworkSku Sku { get; set; }
     }
 }

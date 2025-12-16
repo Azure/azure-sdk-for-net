@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Vhd artifact profile. </summary>
+    /// <summary>
+    /// Vhd artifact profile.
+    /// Serialized Name: VhdImageArtifactProfile
+    /// </summary>
     public partial class VhdImageArtifactProfile
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VhdImageArtifactProfile"/>. </summary>
-        /// <param name="vhdName"> Vhd name. </param>
-        /// <param name="vhdVersion"> Vhd version. </param>
+        /// <param name="vhdName">
+        /// Vhd name.
+        /// Serialized Name: VhdImageArtifactProfile.vhdName
+        /// </param>
+        /// <param name="vhdVersion">
+        /// Vhd version.
+        /// Serialized Name: VhdImageArtifactProfile.vhdVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VhdImageArtifactProfile(string vhdName, string vhdVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Vhd name. </summary>
+        /// <summary>
+        /// Vhd name.
+        /// Serialized Name: VhdImageArtifactProfile.vhdName
+        /// </summary>
         public string VhdName { get; set; }
-        /// <summary> Vhd version. </summary>
+        /// <summary>
+        /// Vhd version.
+        /// Serialized Name: VhdImageArtifactProfile.vhdVersion
+        /// </summary>
         public string VhdVersion { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Network function definition version properties.
+    /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat
     /// Please note <see cref="NetworkFunctionDefinitionVersionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ContainerizedNetworkFunctionDefinitionVersion"/> and <see cref="VirtualNetworkFunctionDefinitionVersion"/>.
     /// </summary>
@@ -55,11 +56,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
-        /// <param name="versionState"> The network function definition version state. </param>
-        /// <param name="description"> The network function definition version description. </param>
-        /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
-        /// <param name="networkFunctionType"> The network function type. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function definition version resource.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// The network function definition version description.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.description
+        /// </param>
+        /// <param name="deployParameters">
+        /// The deployment parameters of the network function definition version.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.deployParameters
+        /// </param>
+        /// <param name="networkFunctionType">
+        /// The network function type.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.networkFunctionType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState, VersionState? versionState, string description, string deployParameters, NetworkFunctionType networkFunctionType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +87,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the network function definition version resource. </summary>
+        /// <summary>
+        /// The provisioning state of the network function definition version resource.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> The network function definition version state. </summary>
+        /// <summary>
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.versionState
+        /// </summary>
         public VersionState? VersionState { get; }
-        /// <summary> The network function definition version description. </summary>
+        /// <summary>
+        /// The network function definition version description.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.description
+        /// </summary>
         public string Description { get; set; }
-        /// <summary> The deployment parameters of the network function definition version. </summary>
+        /// <summary>
+        /// The deployment parameters of the network function definition version.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.deployParameters
+        /// </summary>
         public string DeployParameters { get; set; }
-        /// <summary> The network function type. </summary>
+        /// <summary>
+        /// The network function type.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.networkFunctionType
+        /// </summary>
         internal NetworkFunctionType NetworkFunctionType { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.HybridNetwork
     /// <summary>
     /// A class representing the NetworkFunctionDefinitionGroup data model.
     /// Network function definition group resource.
+    /// Serialized Name: NetworkFunctionDefinitionGroup
     /// </summary>
     public partial class NetworkFunctionDefinitionGroupData : TrackedResourceData
     {
@@ -64,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Network function definition group properties. </param>
+        /// <param name="properties">
+        /// Network function definition group properties.
+        /// Serialized Name: NetworkFunctionDefinitionGroup.properties
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionDefinitionGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkFunctionDefinitionGroupPropertiesFormat properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +81,10 @@ namespace Azure.ResourceManager.HybridNetwork
         {
         }
 
-        /// <summary> Network function definition group properties. </summary>
+        /// <summary>
+        /// Network function definition group properties.
+        /// Serialized Name: NetworkFunctionDefinitionGroup.properties
+        /// </summary>
         public NetworkFunctionDefinitionGroupPropertiesFormat Properties { get; set; }
     }
 }

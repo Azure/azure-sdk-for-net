@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The backing resource network access type. </summary>
+    /// <summary>
+    /// The backing resource network access type.
+    /// Serialized Name: BackingResourcePublicNetworkAccess
+    /// </summary>
     public readonly partial struct BackingResourcePublicNetworkAccess : IEquatable<BackingResourcePublicNetworkAccess>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: BackingResourcePublicNetworkAccess.Enabled
+        /// </summary>
         public static BackingResourcePublicNetworkAccess Enabled { get; } = new BackingResourcePublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: BackingResourcePublicNetworkAccess.Disabled
+        /// </summary>
         public static BackingResourcePublicNetworkAccess Disabled { get; } = new BackingResourcePublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="BackingResourcePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(BackingResourcePublicNetworkAccess left, BackingResourcePublicNetworkAccess right) => left.Equals(right);

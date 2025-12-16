@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The current provisioning state. </summary>
+    /// <summary>
+    /// The current provisioning state.
+    /// Serialized Name: ProvisioningState
+    /// </summary>
     public readonly partial struct ProvisioningState : IEquatable<ProvisioningState>
     {
         private readonly string _value;
@@ -32,23 +35,50 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ConvergingValue = "Converging";
         private const string CancellingValue = "Cancelling";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ProvisioningState.Unknown
+        /// </summary>
         public static ProvisioningState Unknown { get; } = new ProvisioningState(UnknownValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ProvisioningState.Succeeded
+        /// </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-        /// <summary> Accepted. </summary>
+        /// <summary>
+        /// Accepted
+        /// Serialized Name: ProvisioningState.Accepted
+        /// </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: ProvisioningState.Deleting
+        /// </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ProvisioningState.Failed
+        /// </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary>
+        /// Canceled
+        /// Serialized Name: ProvisioningState.Canceled
+        /// </summary>
         public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
-        /// <summary> Deleted. </summary>
+        /// <summary>
+        /// Deleted
+        /// Serialized Name: ProvisioningState.Deleted
+        /// </summary>
         public static ProvisioningState Deleted { get; } = new ProvisioningState(DeletedValue);
-        /// <summary> Converging. </summary>
+        /// <summary>
+        /// Converging
+        /// Serialized Name: ProvisioningState.Converging
+        /// </summary>
         public static ProvisioningState Converging { get; } = new ProvisioningState(ConvergingValue);
-        /// <summary> Cancelling. </summary>
+        /// <summary>
+        /// Cancelling
+        /// Serialized Name: ProvisioningState.Cancelling
+        /// </summary>
         public static ProvisioningState Cancelling { get; } = new ProvisioningState(CancellingValue);
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);

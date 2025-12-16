@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Site network service properties. </summary>
+    /// <summary>
+    /// Site network service properties.
+    /// Serialized Name: SiteNetworkServicePropertiesFormat
+    /// </summary>
     public partial class SiteNetworkServicePropertiesFormat
     {
         /// <summary>
@@ -55,22 +58,56 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site network service resource. </param>
-        /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
-        /// <param name="siteReference"> The site details. </param>
-        /// <param name="publisherName"> The publisher name for the site network service. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="networkServiceDesignGroupName"> The network service design group name for the site network service. </param>
-        /// <param name="networkServiceDesignVersionName"> The network service design version for the site network service. </param>
-        /// <param name="networkServiceDesignVersionOfferingLocation"> The location of the network service design offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site network service resource.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="managedResourceGroupConfiguration">
+        /// Managed resource group configuration.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.managedResourceGroupConfiguration
+        /// </param>
+        /// <param name="siteReference">
+        /// The site details
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.siteReference
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="networkServiceDesignGroupName">
+        /// The network service design group name for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignGroupName
+        /// </param>
+        /// <param name="networkServiceDesignVersionName">
+        /// The network service design version for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionName
+        /// </param>
+        /// <param name="networkServiceDesignVersionOfferingLocation">
+        /// The location of the network service design offering.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionOfferingLocation
+        /// </param>
         /// <param name="networkServiceDesignVersionResourceReference">
         /// The network service design version resource reference.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
-        /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
-        /// <param name="lastStateConfigurationGroupValueReferences"> The last state of the site network service resource. </param>
+        /// <param name="desiredStateConfigurationGroupValueReferences">
+        /// The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.desiredStateConfigurationGroupValueReferences
+        /// </param>
+        /// <param name="lastStateNetworkServiceDesignVersionName">
+        /// The network service design version for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.lastStateNetworkServiceDesignVersionName
+        /// </param>
+        /// <param name="lastStateConfigurationGroupValueReferences">
+        /// The last state of the site network service resource.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.lastStateConfigurationGroupValueReferences
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, WritableSubResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, string networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -89,11 +126,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the site network service resource. </summary>
+        /// <summary>
+        /// The provisioning state of the site network service resource.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.provisioningState
+        /// </summary>
         public ProvisioningState? ProvisioningState { get; }
-        /// <summary> Managed resource group configuration. </summary>
+        /// <summary>
+        /// Managed resource group configuration.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.managedResourceGroupConfiguration
+        /// </summary>
         public ManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
-        /// <summary> The site details. </summary>
+        /// <summary>
+        /// The site details
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.siteReference
+        /// </summary>
         internal WritableSubResource SiteReference { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SiteReferenceId
@@ -107,27 +153,52 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
         }
 
-        /// <summary> The publisher name for the site network service. </summary>
+        /// <summary>
+        /// The publisher name for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.publisherName
+        /// </summary>
         public string PublisherName { get; }
-        /// <summary> The scope of the publisher. </summary>
+        /// <summary>
+        /// The scope of the publisher.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.publisherScope
+        /// </summary>
         public PublisherScope? PublisherScope { get; }
-        /// <summary> The network service design group name for the site network service. </summary>
+        /// <summary>
+        /// The network service design group name for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignGroupName
+        /// </summary>
         public string NetworkServiceDesignGroupName { get; }
-        /// <summary> The network service design version for the site network service. </summary>
+        /// <summary>
+        /// The network service design version for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionName
+        /// </summary>
         public string NetworkServiceDesignVersionName { get; }
-        /// <summary> The location of the network service design offering. </summary>
+        /// <summary>
+        /// The location of the network service design offering.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionOfferingLocation
+        /// </summary>
         public string NetworkServiceDesignVersionOfferingLocation { get; }
         /// <summary>
         /// The network service design version resource reference.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </summary>
         public DeploymentResourceIdReference NetworkServiceDesignVersionResourceReference { get; set; }
-        /// <summary> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </summary>
+        /// <summary>
+        /// The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.desiredStateConfigurationGroupValueReferences
+        /// </summary>
         public IDictionary<string, WritableSubResource> DesiredStateConfigurationGroupValueReferences { get; }
-        /// <summary> The network service design version for the site network service. </summary>
+        /// <summary>
+        /// The network service design version for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.lastStateNetworkServiceDesignVersionName
+        /// </summary>
         public string LastStateNetworkServiceDesignVersionName { get; }
-        /// <summary> The last state of the site network service resource. </summary>
+        /// <summary>
+        /// The last state of the site network service resource.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.lastStateConfigurationGroupValueReferences
+        /// </summary>
         public IReadOnlyDictionary<string, WritableSubResource> LastStateConfigurationGroupValueReferences { get; }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Helm DaemonSet status properties. </summary>
+    /// <summary>
+    /// Helm DaemonSet status properties.
+    /// Serialized Name: DaemonSet
+    /// </summary>
     public partial class KubernetesDaemonSet
     {
         /// <summary>
@@ -51,14 +54,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesDaemonSet"/>. </summary>
-        /// <param name="name"> The name of the daemonSet. </param>
-        /// <param name="namespace"> The namespace of the daemonSet. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="currentNumberOfPods"> Current number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of Ready pods. </param>
-        /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
-        /// <param name="availableNumberOfPods"> Number of available pods. </param>
-        /// <param name="createdOn"> Creation Time of daemonSet. </param>
+        /// <param name="name">
+        /// The name of the daemonSet.
+        /// Serialized Name: DaemonSet.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the daemonSet.
+        /// Serialized Name: DaemonSet.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: DaemonSet.desired
+        /// </param>
+        /// <param name="currentNumberOfPods">
+        /// Current number of pods
+        /// Serialized Name: DaemonSet.current
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of Ready pods
+        /// Serialized Name: DaemonSet.ready
+        /// </param>
+        /// <param name="upToDateNumberOfPods">
+        /// Number of  upto date pods
+        /// Serialized Name: DaemonSet.upToDate
+        /// </param>
+        /// <param name="availableNumberOfPods">
+        /// Number of available pods.
+        /// Serialized Name: DaemonSet.available
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of daemonSet.
+        /// Serialized Name: DaemonSet.creationTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesDaemonSet(string name, string @namespace, int? desiredNumberOfPods, int? currentNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,21 +100,45 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the daemonSet. </summary>
+        /// <summary>
+        /// The name of the daemonSet.
+        /// Serialized Name: DaemonSet.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The namespace of the daemonSet. </summary>
+        /// <summary>
+        /// The namespace of the daemonSet.
+        /// Serialized Name: DaemonSet.namespace
+        /// </summary>
         public string Namespace { get; }
-        /// <summary> Desired number of pods. </summary>
+        /// <summary>
+        /// Desired number of pods
+        /// Serialized Name: DaemonSet.desired
+        /// </summary>
         public int? DesiredNumberOfPods { get; }
-        /// <summary> Current number of pods. </summary>
+        /// <summary>
+        /// Current number of pods
+        /// Serialized Name: DaemonSet.current
+        /// </summary>
         public int? CurrentNumberOfPods { get; }
-        /// <summary> Number of Ready pods. </summary>
+        /// <summary>
+        /// Number of Ready pods
+        /// Serialized Name: DaemonSet.ready
+        /// </summary>
         public int? ReadyNumberOfPods { get; }
-        /// <summary> Number of  upto date pods. </summary>
+        /// <summary>
+        /// Number of  upto date pods
+        /// Serialized Name: DaemonSet.upToDate
+        /// </summary>
         public int? UpToDateNumberOfPods { get; }
-        /// <summary> Number of available pods. </summary>
+        /// <summary>
+        /// Number of available pods.
+        /// Serialized Name: DaemonSet.available
+        /// </summary>
         public int? AvailableNumberOfPods { get; }
-        /// <summary> Creation Time of daemonSet. </summary>
+        /// <summary>
+        /// Creation Time of daemonSet.
+        /// Serialized Name: DaemonSet.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The AzureArcK8sCluster NFVI detail. </summary>
+    /// <summary>
+    /// The AzureArcK8sCluster NFVI detail.
+    /// Serialized Name: AzureArcK8SClusterNfviDetails
+    /// </summary>
     public partial class AzureArcK8SClusterNfviDetails : NFVIs
     {
         /// <summary> Initializes a new instance of <see cref="AzureArcK8SClusterNfviDetails"/>. </summary>
@@ -22,17 +25,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureArcK8SClusterNfviDetails"/>. </summary>
-        /// <param name="name"> Name of the nfvi. </param>
-        /// <param name="nfviType"> The NFVI type. </param>
+        /// <param name="name">
+        /// Name of the nfvi.
+        /// Serialized Name: NFVIs.name
+        /// </param>
+        /// <param name="nfviType">
+        /// The NFVI type.
+        /// Serialized Name: NFVIs.nfviType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="customLocationReference"> The reference to the custom location. </param>
+        /// <param name="customLocationReference">
+        /// The reference to the custom location.
+        /// Serialized Name: AzureArcK8SClusterNfviDetails.customLocationReference
+        /// </param>
         internal AzureArcK8SClusterNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource customLocationReference) : base(name, nfviType, serializedAdditionalRawData)
         {
             CustomLocationReference = customLocationReference;
             NfviType = nfviType;
         }
 
-        /// <summary> The reference to the custom location. </summary>
+        /// <summary>
+        /// The reference to the custom location.
+        /// Serialized Name: AzureArcK8SClusterNfviDetails.customLocationReference
+        /// </summary>
         internal WritableSubResource CustomLocationReference { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier CustomLocationReferenceId

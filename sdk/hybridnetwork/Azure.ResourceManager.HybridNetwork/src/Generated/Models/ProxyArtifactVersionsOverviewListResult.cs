@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The description for page model. </summary>
+    /// <summary>
+    /// The description for page model
+    /// Serialized Name: ProxyArtifactVersionsOverviewListResult
+    /// </summary>
     internal partial class ProxyArtifactVersionsOverviewListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsOverviewListResult"/>. </summary>
-        /// <param name="value"> The description for value property. </param>
+        /// <param name="value">
+        /// The description for value property
+        /// Serialized Name: ProxyArtifactVersionsOverviewListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ProxyArtifactVersionsOverviewListResult(IEnumerable<ProxyArtifactVersionsListOverview> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProxyArtifactVersionsOverviewListResult"/>. </summary>
-        /// <param name="value"> The description for value property. </param>
-        /// <param name="nextLink"> The description for nextLink property. </param>
+        /// <param name="value">
+        /// The description for value property
+        /// Serialized Name: ProxyArtifactVersionsOverviewListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The description for nextLink property
+        /// Serialized Name: ProxyArtifactVersionsOverviewListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ProxyArtifactVersionsOverviewListResult(IReadOnlyList<ProxyArtifactVersionsListOverview> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The description for value property. </summary>
+        /// <summary>
+        /// The description for value property
+        /// Serialized Name: ProxyArtifactVersionsOverviewListResult.value
+        /// </summary>
         public IReadOnlyList<ProxyArtifactVersionsListOverview> Value { get; }
-        /// <summary> The description for nextLink property. </summary>
+        /// <summary>
+        /// The description for nextLink property
+        /// Serialized Name: ProxyArtifactVersionsOverviewListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

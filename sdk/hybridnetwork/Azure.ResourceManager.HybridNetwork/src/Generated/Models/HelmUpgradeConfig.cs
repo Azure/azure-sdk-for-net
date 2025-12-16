@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The helm deployment install options. </summary>
+    /// <summary>
+    /// The helm deployment install options
+    /// Serialized Name: HelmUpgradeOptions
+    /// </summary>
     public partial class HelmUpgradeConfig
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HelmUpgradeConfig"/>. </summary>
-        /// <param name="atomic"> The helm deployment atomic options. </param>
-        /// <param name="wait"> The helm deployment wait options. </param>
-        /// <param name="timeout"> The helm deployment timeout options. </param>
+        /// <param name="atomic">
+        /// The helm deployment atomic options
+        /// Serialized Name: HelmUpgradeOptions.atomic
+        /// </param>
+        /// <param name="wait">
+        /// The helm deployment wait options
+        /// Serialized Name: HelmUpgradeOptions.wait
+        /// </param>
+        /// <param name="timeout">
+        /// The helm deployment timeout options
+        /// Serialized Name: HelmUpgradeOptions.timeout
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HelmUpgradeConfig(string atomic, string wait, string timeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,11 +75,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The helm deployment atomic options. </summary>
+        /// <summary>
+        /// The helm deployment atomic options
+        /// Serialized Name: HelmUpgradeOptions.atomic
+        /// </summary>
         public string Atomic { get; set; }
-        /// <summary> The helm deployment wait options. </summary>
+        /// <summary>
+        /// The helm deployment wait options
+        /// Serialized Name: HelmUpgradeOptions.wait
+        /// </summary>
         public string Wait { get; set; }
-        /// <summary> The helm deployment timeout options. </summary>
+        /// <summary>
+        /// The helm deployment timeout options
+        /// Serialized Name: HelmUpgradeOptions.timeout
+        /// </summary>
         public string Timeout { get; set; }
     }
 }

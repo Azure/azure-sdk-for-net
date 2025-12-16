@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The NFVI object.
+    /// Serialized Name: NFVIs
     /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
     /// </summary>
@@ -55,8 +56,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NFVIs"/>. </summary>
-        /// <param name="name"> Name of the nfvi. </param>
-        /// <param name="nfviType"> The NFVI type. </param>
+        /// <param name="name">
+        /// Name of the nfvi.
+        /// Serialized Name: NFVIs.name
+        /// </param>
+        /// <param name="nfviType">
+        /// The NFVI type.
+        /// Serialized Name: NFVIs.nfviType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NFVIs(string name, NfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,9 +72,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the nfvi. </summary>
+        /// <summary>
+        /// Name of the nfvi.
+        /// Serialized Name: NFVIs.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> The NFVI type. </summary>
+        /// <summary>
+        /// The NFVI type.
+        /// Serialized Name: NFVIs.nfviType
+        /// </summary>
         internal NfviType NfviType { get; set; }
     }
 }

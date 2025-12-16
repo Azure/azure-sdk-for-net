@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The network function type. </summary>
+    /// <summary>
+    /// The network function type.
+    /// Serialized Name: NetworkFunctionType
+    /// </summary>
     internal readonly partial struct NetworkFunctionType : IEquatable<NetworkFunctionType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string VirtualNetworkFunctionValue = "VirtualNetworkFunction";
         private const string ContainerizedNetworkFunctionValue = "ContainerizedNetworkFunction";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: NetworkFunctionType.Unknown
+        /// </summary>
         public static NetworkFunctionType Unknown { get; } = new NetworkFunctionType(UnknownValue);
-        /// <summary> VirtualNetworkFunction. </summary>
+        /// <summary>
+        /// VirtualNetworkFunction
+        /// Serialized Name: NetworkFunctionType.VirtualNetworkFunction
+        /// </summary>
         public static NetworkFunctionType VirtualNetworkFunction { get; } = new NetworkFunctionType(VirtualNetworkFunctionValue);
-        /// <summary> ContainerizedNetworkFunction. </summary>
+        /// <summary>
+        /// ContainerizedNetworkFunction
+        /// Serialized Name: NetworkFunctionType.ContainerizedNetworkFunction
+        /// </summary>
         public static NetworkFunctionType ContainerizedNetworkFunction { get; } = new NetworkFunctionType(ContainerizedNetworkFunctionValue);
         /// <summary> Determines if two <see cref="NetworkFunctionType"/> values are the same. </summary>
         public static bool operator ==(NetworkFunctionType left, NetworkFunctionType right) => left.Equals(right);

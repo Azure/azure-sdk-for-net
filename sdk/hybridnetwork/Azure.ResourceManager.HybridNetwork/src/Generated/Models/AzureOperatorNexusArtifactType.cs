@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact type. </summary>
+    /// <summary>
+    /// The artifact type.
+    /// Serialized Name: AzureOperatorNexusArtifactType
+    /// </summary>
     internal readonly partial struct AzureOperatorNexusArtifactType : IEquatable<AzureOperatorNexusArtifactType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ImageFileValue = "ImageFile";
         private const string ArmTemplateValue = "ArmTemplate";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: AzureOperatorNexusArtifactType.Unknown
+        /// </summary>
         public static AzureOperatorNexusArtifactType Unknown { get; } = new AzureOperatorNexusArtifactType(UnknownValue);
-        /// <summary> ImageFile. </summary>
+        /// <summary>
+        /// ImageFile
+        /// Serialized Name: AzureOperatorNexusArtifactType.ImageFile
+        /// </summary>
         public static AzureOperatorNexusArtifactType ImageFile { get; } = new AzureOperatorNexusArtifactType(ImageFileValue);
-        /// <summary> ArmTemplate. </summary>
+        /// <summary>
+        /// ArmTemplate
+        /// Serialized Name: AzureOperatorNexusArtifactType.ArmTemplate
+        /// </summary>
         public static AzureOperatorNexusArtifactType ArmTemplate { get; } = new AzureOperatorNexusArtifactType(ArmTemplateValue);
         /// <summary> Determines if two <see cref="AzureOperatorNexusArtifactType"/> values are the same. </summary>
         public static bool operator ==(AzureOperatorNexusArtifactType left, AzureOperatorNexusArtifactType right) => left.Equals(right);

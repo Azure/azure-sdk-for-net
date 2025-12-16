@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The type of pod event. </summary>
+    /// <summary>
+    /// The type of pod event.
+    /// Serialized Name: PodEventType
+    /// </summary>
     public readonly partial struct PodEventType : IEquatable<PodEventType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string NormalValue = "Normal";
         private const string WarningValue = "Warning";
 
-        /// <summary> Normal. </summary>
+        /// <summary>
+        /// Normal
+        /// Serialized Name: PodEventType.Normal
+        /// </summary>
         public static PodEventType Normal { get; } = new PodEventType(NormalValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: PodEventType.Warning
+        /// </summary>
         public static PodEventType Warning { get; } = new PodEventType(WarningValue);
         /// <summary> Determines if two <see cref="PodEventType"/> values are the same. </summary>
         public static bool operator ==(PodEventType left, PodEventType right) => left.Equals(right);

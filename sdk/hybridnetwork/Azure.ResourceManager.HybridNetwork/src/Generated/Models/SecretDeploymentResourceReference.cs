@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Secret deployment resource id reference. </summary>
+    /// <summary>
+    /// Secret deployment resource id reference.
+    /// Serialized Name: SecretDeploymentResourceReference
+    /// </summary>
     public partial class SecretDeploymentResourceReference : DeploymentResourceIdReference
     {
         /// <summary> Initializes a new instance of <see cref="SecretDeploymentResourceReference"/>. </summary>
@@ -20,16 +23,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecretDeploymentResourceReference"/>. </summary>
-        /// <param name="idType"> The resource reference arm id type. </param>
+        /// <param name="idType">
+        /// The resource reference arm id type.
+        /// Serialized Name: DeploymentResourceIdReference.idType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> Resource ID. </param>
+        /// <param name="id">
+        /// Resource ID.
+        /// Serialized Name: SecretDeploymentResourceReference.id
+        /// </param>
         internal SecretDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(idType, serializedAdditionalRawData)
         {
             Id = id;
             IdType = idType;
         }
 
-        /// <summary> Resource ID. </summary>
+        /// <summary>
+        /// Resource ID.
+        /// Serialized Name: SecretDeploymentResourceReference.id
+        /// </summary>
         public string Id { get; set; }
     }
 }

@@ -102,7 +102,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/prov
                     SiteReferenceId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/contosorg1/providers/microsoft.hybridnetwork/sites/testSite"),
                     NetworkServiceDesignVersionResourceReference = new OpenDeploymentResourceReference
                     {
-                        Id = "/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/TestPublisher/networkServiceDesignGroups/TestNetworkServiceDesignGroupName/networkServiceDesignVersions/1.0.0",
+                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/TestPublisher/networkServiceDesignGroups/TestNetworkServiceDesignGroupName/networkServiceDesignVersions/1.0.0"),
                     },
                     DesiredStateConfigurationGroupValueReferences =
 {

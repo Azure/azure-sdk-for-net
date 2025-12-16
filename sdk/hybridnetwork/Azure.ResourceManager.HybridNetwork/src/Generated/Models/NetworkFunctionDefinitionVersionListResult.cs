@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The response of a NetworkFunctionDefinitionVersion list operation. </summary>
+    /// <summary>
+    /// The response of a NetworkFunctionDefinitionVersion list operation.
+    /// Serialized Name: NetworkFunctionDefinitionVersionListResult
+    /// </summary>
     internal partial class NetworkFunctionDefinitionVersionListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionListResult"/>. </summary>
-        /// <param name="value"> The NetworkFunctionDefinitionVersion items on this page. </param>
+        /// <param name="value">
+        /// The NetworkFunctionDefinitionVersion items on this page
+        /// Serialized Name: NetworkFunctionDefinitionVersionListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NetworkFunctionDefinitionVersionListResult(IEnumerable<NetworkFunctionDefinitionVersionData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionListResult"/>. </summary>
-        /// <param name="value"> The NetworkFunctionDefinitionVersion items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The NetworkFunctionDefinitionVersion items on this page
+        /// Serialized Name: NetworkFunctionDefinitionVersionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: NetworkFunctionDefinitionVersionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionDefinitionVersionListResult(IReadOnlyList<NetworkFunctionDefinitionVersionData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The NetworkFunctionDefinitionVersion items on this page. </summary>
+        /// <summary>
+        /// The NetworkFunctionDefinitionVersion items on this page
+        /// Serialized Name: NetworkFunctionDefinitionVersionListResult.value
+        /// </summary>
         public IReadOnlyList<NetworkFunctionDefinitionVersionData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: NetworkFunctionDefinitionVersionListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

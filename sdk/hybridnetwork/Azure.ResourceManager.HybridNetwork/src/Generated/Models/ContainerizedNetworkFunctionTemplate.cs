@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Containerized network function template.
+    /// Serialized Name: ContainerizedNetworkFunctionTemplate
     /// Please note <see cref="ContainerizedNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>.
     /// </summary>
@@ -55,7 +56,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerizedNetworkFunctionTemplate"/>. </summary>
-        /// <param name="nfviType"> The network function type. </param>
+        /// <param name="nfviType">
+        /// The network function type.
+        /// Serialized Name: ContainerizedNetworkFunctionTemplate.nfviType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerizedNetworkFunctionTemplate(ContainerizedNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +67,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The network function type. </summary>
+        /// <summary>
+        /// The network function type.
+        /// Serialized Name: ContainerizedNetworkFunctionTemplate.nfviType
+        /// </summary>
         internal ContainerizedNetworkFunctionNfviType NfviType { get; set; }
     }
 }

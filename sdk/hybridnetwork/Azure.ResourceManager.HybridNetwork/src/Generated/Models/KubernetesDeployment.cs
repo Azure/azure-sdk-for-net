@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Helm Deployment status properties. </summary>
+    /// <summary>
+    /// Helm Deployment status properties.
+    /// Serialized Name: Deployment
+    /// </summary>
     public partial class KubernetesDeployment
     {
         /// <summary>
@@ -51,13 +54,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesDeployment"/>. </summary>
-        /// <param name="name"> The name of the deployment. </param>
-        /// <param name="namespace"> The namespace of the deployment. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
-        /// <param name="availableNumberOfPods"> Number of available pods. </param>
-        /// <param name="createdOn"> Creation Time of deployment. </param>
+        /// <param name="name">
+        /// The name of the deployment.
+        /// Serialized Name: Deployment.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the deployment.
+        /// Serialized Name: Deployment.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: Deployment.desired
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of ready pods.
+        /// Serialized Name: Deployment.ready
+        /// </param>
+        /// <param name="upToDateNumberOfPods">
+        /// Number of upto date pods.
+        /// Serialized Name: Deployment.upToDate
+        /// </param>
+        /// <param name="availableNumberOfPods">
+        /// Number of available pods.
+        /// Serialized Name: Deployment.available
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of deployment.
+        /// Serialized Name: Deployment.creationTime
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesDeployment(string name, string @namespace, int? desiredNumberOfPods, int? readyNumberOfPods, int? upToDateNumberOfPods, int? availableNumberOfPods, DateTimeOffset? createdOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,19 +95,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the deployment. </summary>
+        /// <summary>
+        /// The name of the deployment.
+        /// Serialized Name: Deployment.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The namespace of the deployment. </summary>
+        /// <summary>
+        /// The namespace of the deployment.
+        /// Serialized Name: Deployment.namespace
+        /// </summary>
         public string Namespace { get; }
-        /// <summary> Desired number of pods. </summary>
+        /// <summary>
+        /// Desired number of pods
+        /// Serialized Name: Deployment.desired
+        /// </summary>
         public int? DesiredNumberOfPods { get; }
-        /// <summary> Number of ready pods. </summary>
+        /// <summary>
+        /// Number of ready pods.
+        /// Serialized Name: Deployment.ready
+        /// </summary>
         public int? ReadyNumberOfPods { get; }
-        /// <summary> Number of upto date pods. </summary>
+        /// <summary>
+        /// Number of upto date pods.
+        /// Serialized Name: Deployment.upToDate
+        /// </summary>
         public int? UpToDateNumberOfPods { get; }
-        /// <summary> Number of available pods. </summary>
+        /// <summary>
+        /// Number of available pods.
+        /// Serialized Name: Deployment.available
+        /// </summary>
         public int? AvailableNumberOfPods { get; }
-        /// <summary> Creation Time of deployment. </summary>
+        /// <summary>
+        /// Creation Time of deployment.
+        /// Serialized Name: Deployment.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
     }
 }

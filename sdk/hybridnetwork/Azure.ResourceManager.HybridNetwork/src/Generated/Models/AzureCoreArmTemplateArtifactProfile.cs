@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure template artifact profile properties. </summary>
+    /// <summary>
+    /// Azure template artifact profile properties.
+    /// Serialized Name: AzureCoreArmTemplateArtifactProfile
+    /// </summary>
     public partial class AzureCoreArmTemplateArtifactProfile : ArtifactProfile
     {
         /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateArtifactProfile"/>. </summary>
@@ -20,15 +23,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateArtifactProfile"/>. </summary>
-        /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="artifactStore">
+        /// The reference to artifact store.
+        /// Serialized Name: ArtifactProfile.artifactStore
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="templateArtifactProfile"> Template artifact profile. </param>
+        /// <param name="templateArtifactProfile">
+        /// Template artifact profile.
+        /// Serialized Name: AzureCoreArmTemplateArtifactProfile.templateArtifactProfile
+        /// </param>
         internal AzureCoreArmTemplateArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             TemplateArtifactProfile = templateArtifactProfile;
         }
 
-        /// <summary> Template artifact profile. </summary>
+        /// <summary>
+        /// Template artifact profile.
+        /// Serialized Name: AzureCoreArmTemplateArtifactProfile.templateArtifactProfile
+        /// </summary>
         public ArmTemplateArtifactProfile TemplateArtifactProfile { get; set; }
     }
 }

@@ -18,8 +18,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public static partial class ArmHybridNetworkModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.CancelInformation"/>. </summary>
-        /// <param name="siteNetworkServiceReferenceId"> The ARM id of the siteNetworkService resource. </param>
-        /// <param name="longRunningOperation"> The type of long-running operation the user wants to cancel, such as 'Put'. </param>
+        /// <param name="siteNetworkServiceReferenceId">
+        /// The ARM id of the siteNetworkService resource.
+        /// Serialized Name: CancelInformation.siteNetworkServiceReference
+        /// </param>
+        /// <param name="longRunningOperation">
+        /// The type of long-running operation the user wants to cancel, such as 'Put'.
+        /// Serialized Name: CancelInformation.longRunningOperation
+        /// </param>
         /// <returns> A new <see cref="Models.CancelInformation"/> instance for mocking. </returns>
         public static CancelInformation CancelInformation(ResourceIdentifier siteNetworkServiceReferenceId = null, LongRunningOperation? longRunningOperation = null)
         {
@@ -35,6 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// Hybrid configuration group value properties.
+        /// Serialized Name: ConfigurationGroupValue.properties
         /// Please note <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ConfigurationValueWithoutSecrets"/> and <see cref="Models.ConfigurationValueWithSecrets"/>.
         /// </param>
@@ -55,17 +62,36 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupValuePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site resource. </param>
-        /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="configurationGroupSchemaName"> The configuration group schema name. </param>
-        /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site resource.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the configuration group schema.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="configurationGroupSchemaName">
+        /// The configuration group schema name.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaName
+        /// </param>
+        /// <param name="configurationGroupSchemaOfferingLocation">
+        /// The location of the configuration group schema offering.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaOfferingLocation
+        /// </param>
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="configurationType"> The value which indicates if configuration values are secrets. </param>
+        /// <param name="configurationType">
+        /// The value which indicates if configuration values are secrets
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationType
+        /// </param>
         /// <returns> A new <see cref="Models.ConfigurationGroupValuePropertiesFormat"/> instance for mocking. </returns>
         public static ConfigurationGroupValuePropertiesFormat ConfigurationGroupValuePropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationType = null)
         {
@@ -89,11 +115,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// Network function properties.
+        /// Serialized Name: NetworkFunction.properties
         /// Please note <see cref="Models.NetworkFunctionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.NetworkFunctionValueWithoutSecrets"/> and <see cref="Models.NetworkFunctionValueWithSecrets"/>.
         /// </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The managed identity of the network function. </param>
+        /// <param name="etag">
+        /// A unique read-only string that changes whenever the resource is updated.
+        /// Serialized Name: NetworkFunction.etag
+        /// </param>
+        /// <param name="identity">
+        /// The managed identity of the network function.
+        /// Serialized Name: NetworkFunction.identity
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.NetworkFunctionData"/> instance for mocking. </returns>
         public static NetworkFunctionData NetworkFunctionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkFunctionPropertiesFormat properties = null, ETag? etag = null, ManagedServiceIdentity identity = null)
         {
@@ -113,24 +146,58 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
-        /// <param name="publisherName"> The publisher name for the network function. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The network function definition group name for the network function. </param>
-        /// <param name="networkFunctionDefinitionVersion"> The network function definition version for the network function. </param>
-        /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function resource.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="networkFunctionDefinitionGroupName">
+        /// The network function definition group name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionGroupName
+        /// </param>
+        /// <param name="networkFunctionDefinitionVersion">
+        /// The network function definition version for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersion
+        /// </param>
+        /// <param name="networkFunctionDefinitionOfferingLocation">
+        /// The location of the network function definition offering.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionOfferingLocation
+        /// </param>
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="nfviType"> The nfvi type for the network function. </param>
-        /// <param name="nfviId"> The nfviId for the network function. </param>
-        /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
-        /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
-        /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
+        /// <param name="nfviType">
+        /// The nfvi type for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviType
+        /// </param>
+        /// <param name="nfviId">
+        /// The nfviId for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviId
+        /// </param>
+        /// <param name="allowSoftwareUpdate">
+        /// Indicates if software updates are allowed during deployment.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.allowSoftwareUpdate
+        /// </param>
+        /// <param name="configurationType">
+        /// The value which indicates if NF  values are secrets
+        /// Serialized Name: NetworkFunctionPropertiesFormat.configurationType
+        /// </param>
+        /// <param name="roleOverrideValues">
+        /// The role configuration override values from the user.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.roleOverrideValues
+        /// </param>
         /// <returns> A new <see cref="Models.NetworkFunctionPropertiesFormat"/> instance for mocking. </returns>
-        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = null, IEnumerable<string> roleOverrideValues = null)
+        public static NetworkFunctionPropertiesFormat NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, string configurationType = null, IEnumerable<string> roleOverrideValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -157,8 +224,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Publisher properties. </param>
-        /// <param name="identity"> The managed identity of the publisher, if configured. </param>
+        /// <param name="properties">
+        /// Publisher properties.
+        /// Serialized Name: Publisher.properties
+        /// </param>
+        /// <param name="identity">
+        /// The managed identity of the publisher, if configured.
+        /// Serialized Name: Publisher.identity
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.PublisherData"/> instance for mocking. </returns>
         public static PublisherData PublisherData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PublisherPropertiesFormat properties = null, ManagedServiceIdentity identity = null)
         {
@@ -177,8 +250,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PublisherPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
-        /// <param name="scope"> The publisher scope. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the publisher resource.
+        /// Serialized Name: PublisherPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="scope">
+        /// The publisher scope.
+        /// Serialized Name: PublisherPropertiesFormat.scope
+        /// </param>
         /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
         public static PublisherPropertiesFormat PublisherPropertiesFormat(ProvisioningState? provisioningState = null, PublisherScope? scope = null)
         {
@@ -192,9 +271,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Site network service properties. </param>
-        /// <param name="identity"> The managed identity of the Site network service, if configured. </param>
-        /// <param name="sku"> Sku of the site network service. </param>
+        /// <param name="properties">
+        /// Site network service properties.
+        /// Serialized Name: SiteNetworkService.properties
+        /// </param>
+        /// <param name="identity">
+        /// The managed identity of the Site network service, if configured.
+        /// Serialized Name: SiteNetworkService.identity
+        /// </param>
+        /// <param name="sku">
+        /// Sku of the site network service.
+        /// Serialized Name: SiteNetworkService.sku
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.SiteNetworkServiceData"/> instance for mocking. </returns>
         public static SiteNetworkServiceData SiteNetworkServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SiteNetworkServicePropertiesFormat properties = null, ManagedServiceIdentity identity = null, HybridNetworkSku sku = null)
         {
@@ -214,22 +302,56 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteNetworkServicePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site network service resource. </param>
-        /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
-        /// <param name="siteReferenceId"> The site details. </param>
-        /// <param name="publisherName"> The publisher name for the site network service. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="networkServiceDesignGroupName"> The network service design group name for the site network service. </param>
-        /// <param name="networkServiceDesignVersionName"> The network service design version for the site network service. </param>
-        /// <param name="networkServiceDesignVersionOfferingLocation"> The location of the network service design offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site network service resource.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="managedResourceGroupConfiguration">
+        /// Managed resource group configuration.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.managedResourceGroupConfiguration
+        /// </param>
+        /// <param name="siteReferenceId">
+        /// The site details
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.siteReference
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="networkServiceDesignGroupName">
+        /// The network service design group name for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignGroupName
+        /// </param>
+        /// <param name="networkServiceDesignVersionName">
+        /// The network service design version for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionName
+        /// </param>
+        /// <param name="networkServiceDesignVersionOfferingLocation">
+        /// The location of the network service design offering.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionOfferingLocation
+        /// </param>
         /// <param name="networkServiceDesignVersionResourceReference">
         /// The network service design version resource reference.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.networkServiceDesignVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
-        /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
-        /// <param name="lastStateConfigurationGroupValueReferences"> The last state of the site network service resource. </param>
+        /// <param name="desiredStateConfigurationGroupValueReferences">
+        /// The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.desiredStateConfigurationGroupValueReferences
+        /// </param>
+        /// <param name="lastStateNetworkServiceDesignVersionName">
+        /// The network service design version for the site network service.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.lastStateNetworkServiceDesignVersionName
+        /// </param>
+        /// <param name="lastStateConfigurationGroupValueReferences">
+        /// The last state of the site network service resource.
+        /// Serialized Name: SiteNetworkServicePropertiesFormat.lastStateConfigurationGroupValueReferences
+        /// </param>
         /// <returns> A new <see cref="Models.SiteNetworkServicePropertiesFormat"/> instance for mocking. </returns>
         public static SiteNetworkServicePropertiesFormat SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ResourceIdentifier siteReferenceId = null, string publisherName = null, PublisherScope? publisherScope = null, string networkServiceDesignGroupName = null, string networkServiceDesignVersionName = null, string networkServiceDesignVersionOfferingLocation = null, DeploymentResourceIdReference networkServiceDesignVersionResourceReference = null, IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences = null, string lastStateNetworkServiceDesignVersionName = null, IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences = null)
         {
@@ -253,8 +375,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridNetworkSku"/>. </summary>
-        /// <param name="name"> Name of this Sku. </param>
-        /// <param name="tier"> The SKU tier based on the SKU name. </param>
+        /// <param name="name">
+        /// Name of this Sku
+        /// Serialized Name: Sku.name
+        /// </param>
+        /// <param name="tier">
+        /// The SKU tier based on the SKU name.
+        /// Serialized Name: Sku.tier
+        /// </param>
         /// <returns> A new <see cref="Models.HybridNetworkSku"/> instance for mocking. </returns>
         public static HybridNetworkSku HybridNetworkSku(HybridNetworkSkuName name = default, HybridNetworkSkuTier? tier = null)
         {
@@ -268,7 +396,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Site properties. </param>
+        /// <param name="properties">
+        /// Site properties.
+        /// Serialized Name: Site.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.SiteData"/> instance for mocking. </returns>
         public static SiteData SiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SitePropertiesFormat properties = null)
         {
@@ -286,13 +417,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SitePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site resource. **TODO**: Confirm if this is needed. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site resource. **TODO**: Confirm if this is needed.
+        /// Serialized Name: SitePropertiesFormat.provisioningState
+        /// </param>
         /// <param name="nfvis">
         /// List of NFVIs
+        /// Serialized Name: SitePropertiesFormat.nfvis
         /// Please note <see cref="NFVIs"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcK8SClusterNfviDetails"/>, <see cref="AzureCoreNfviDetails"/> and <see cref="AzureOperatorNexusClusterNfviDetails"/>.
         /// </param>
-        /// <param name="siteNetworkServiceReferences"> The list of site network services on the site. </param>
+        /// <param name="siteNetworkServiceReferences">
+        /// The list of site network services on the site.
+        /// Serialized Name: SitePropertiesFormat.siteNetworkServiceReferences
+        /// </param>
         /// <returns> A new <see cref="Models.SitePropertiesFormat"/> instance for mocking. </returns>
         public static SitePropertiesFormat SitePropertiesFormat(ProvisioningState? provisioningState = null, IEnumerable<NFVIs> nfvis = null, IEnumerable<WritableSubResource> siteNetworkServiceReferences = null)
         {
@@ -307,7 +445,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The component properties. </param>
+        /// <param name="properties">
+        /// The component properties.
+        /// Serialized Name: Component.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.ComponentData"/> instance for mocking. </returns>
         public static ComponentData ComponentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ComponentProperties properties = null)
         {
@@ -321,9 +462,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComponentProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the component resource. </param>
-        /// <param name="deploymentProfile"> The JSON-serialized deployment profile of the component resource. </param>
-        /// <param name="deploymentStatus"> The deployment status of the component resource. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the component resource.
+        /// Serialized Name: ComponentProperties.provisioningState
+        /// </param>
+        /// <param name="deploymentProfile">
+        /// The JSON-serialized deployment profile of the component resource.
+        /// Serialized Name: ComponentProperties.deploymentProfile
+        /// </param>
+        /// <param name="deploymentStatus">
+        /// The deployment status of the component resource.
+        /// Serialized Name: ComponentProperties.deploymentStatus
+        /// </param>
         /// <returns> A new <see cref="Models.ComponentProperties"/> instance for mocking. </returns>
         public static ComponentProperties ComponentProperties(ProvisioningState? provisioningState = null, string deploymentProfile = null, DeploymentStatusProperties deploymentStatus = null)
         {
@@ -331,9 +481,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentStatusProperties"/>. </summary>
-        /// <param name="status"> The status of the component resource. </param>
-        /// <param name="resources"> The resource related to the component resource. </param>
-        /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
+        /// <param name="status">
+        /// The status of the component resource.
+        /// Serialized Name: DeploymentStatusProperties.status
+        /// </param>
+        /// <param name="resources">
+        /// The resource related to the component resource.
+        /// Serialized Name: DeploymentStatusProperties.resources
+        /// </param>
+        /// <param name="nextExpectedUpdateOn">
+        /// The next expected update of deployment status.
+        /// Serialized Name: DeploymentStatusProperties.nextExpectedUpdateAt
+        /// </param>
         /// <returns> A new <see cref="Models.DeploymentStatusProperties"/> instance for mocking. </returns>
         public static DeploymentStatusProperties DeploymentStatusProperties(ComponentStatus? status = null, ComponentKubernetesResources resources = null, DateTimeOffset? nextExpectedUpdateOn = null)
         {
@@ -341,11 +500,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComponentKubernetesResources"/>. </summary>
-        /// <param name="deployments"> Deployments that are related to component resource. </param>
-        /// <param name="pods"> Pods related to component resource. </param>
-        /// <param name="replicaSets"> Replica sets related to component resource. </param>
-        /// <param name="statefulSets"> Stateful sets related to component resource. </param>
-        /// <param name="daemonSets"> Daemonsets related to component resource. </param>
+        /// <param name="deployments">
+        /// Deployments that are related to component resource.
+        /// Serialized Name: Resources.deployments
+        /// </param>
+        /// <param name="pods">
+        /// Pods related to component resource.
+        /// Serialized Name: Resources.pods
+        /// </param>
+        /// <param name="replicaSets">
+        /// Replica sets related to component resource.
+        /// Serialized Name: Resources.replicaSets
+        /// </param>
+        /// <param name="statefulSets">
+        /// Stateful sets related to component resource.
+        /// Serialized Name: Resources.statefulSets
+        /// </param>
+        /// <param name="daemonSets">
+        /// Daemonsets related to component resource.
+        /// Serialized Name: Resources.daemonSets
+        /// </param>
         /// <returns> A new <see cref="Models.ComponentKubernetesResources"/> instance for mocking. </returns>
         public static ComponentKubernetesResources ComponentKubernetesResources(IEnumerable<KubernetesDeployment> deployments = null, IEnumerable<KubernetesPod> pods = null, IEnumerable<KubernetesReplicaSet> replicaSets = null, IEnumerable<KubernetesStatefulSet> statefulSets = null, IEnumerable<KubernetesDaemonSet> daemonSets = null)
         {
@@ -365,13 +539,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesDeployment"/>. </summary>
-        /// <param name="name"> The name of the deployment. </param>
-        /// <param name="namespace"> The namespace of the deployment. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="upToDateNumberOfPods"> Number of upto date pods. </param>
-        /// <param name="availableNumberOfPods"> Number of available pods. </param>
-        /// <param name="createdOn"> Creation Time of deployment. </param>
+        /// <param name="name">
+        /// The name of the deployment.
+        /// Serialized Name: Deployment.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the deployment.
+        /// Serialized Name: Deployment.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: Deployment.desired
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of ready pods.
+        /// Serialized Name: Deployment.ready
+        /// </param>
+        /// <param name="upToDateNumberOfPods">
+        /// Number of upto date pods.
+        /// Serialized Name: Deployment.upToDate
+        /// </param>
+        /// <param name="availableNumberOfPods">
+        /// Number of available pods.
+        /// Serialized Name: Deployment.available
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of deployment.
+        /// Serialized Name: Deployment.creationTime
+        /// </param>
         /// <returns> A new <see cref="Models.KubernetesDeployment"/> instance for mocking. </returns>
         public static KubernetesDeployment KubernetesDeployment(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
@@ -387,13 +582,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesPod"/>. </summary>
-        /// <param name="name"> The name of the Pod. </param>
-        /// <param name="namespace"> The namespace of the Pod. </param>
-        /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
-        /// <param name="readyNumberOfContainers"> Number of ready containers. </param>
-        /// <param name="status"> The status of a pod. </param>
-        /// <param name="createdOn"> Creation Time of Pod. </param>
-        /// <param name="events"> Last 5 Pod events. </param>
+        /// <param name="name">
+        /// The name of the Pod.
+        /// Serialized Name: Pod.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the Pod.
+        /// Serialized Name: Pod.namespace
+        /// </param>
+        /// <param name="desiredNumberOfContainers">
+        /// Desired number of containers
+        /// Serialized Name: Pod.desired
+        /// </param>
+        /// <param name="readyNumberOfContainers">
+        /// Number of ready containers.
+        /// Serialized Name: Pod.ready
+        /// </param>
+        /// <param name="status">
+        /// The status of a pod.
+        /// Serialized Name: Pod.status
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of Pod.
+        /// Serialized Name: Pod.creationTime
+        /// </param>
+        /// <param name="events">
+        /// Last 5 Pod events.
+        /// Serialized Name: Pod.events
+        /// </param>
         /// <returns> A new <see cref="Models.KubernetesPod"/> instance for mocking. </returns>
         public static KubernetesPod KubernetesPod(string name = null, string @namespace = null, int? desiredNumberOfContainers = null, int? readyNumberOfContainers = null, PodStatus? status = null, DateTimeOffset? createdOn = null, IEnumerable<PodEvent> events = null)
         {
@@ -411,10 +627,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PodEvent"/>. </summary>
-        /// <param name="eventType"> The type of pod event. </param>
-        /// <param name="reason"> Event reason. </param>
-        /// <param name="message"> Event message. </param>
-        /// <param name="lastSeenOn"> Event Last seen. </param>
+        /// <param name="eventType">
+        /// The type of pod event.
+        /// Serialized Name: PodEvent.type
+        /// </param>
+        /// <param name="reason">
+        /// Event reason.
+        /// Serialized Name: PodEvent.reason
+        /// </param>
+        /// <param name="message">
+        /// Event message.
+        /// Serialized Name: PodEvent.message
+        /// </param>
+        /// <param name="lastSeenOn">
+        /// Event Last seen.
+        /// Serialized Name: PodEvent.lastSeenTime
+        /// </param>
         /// <returns> A new <see cref="Models.PodEvent"/> instance for mocking. </returns>
         public static PodEvent PodEvent(PodEventType? eventType = null, string reason = null, string message = null, DateTimeOffset? lastSeenOn = null)
         {
@@ -422,12 +650,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesReplicaSet"/>. </summary>
-        /// <param name="name"> The name of the replicaSet. </param>
-        /// <param name="namespace"> The namespace of the replicaSet. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="currentNumberOfPods"> Number of current pods. </param>
-        /// <param name="createdOn"> Creation Time of replicaSet. </param>
+        /// <param name="name">
+        /// The name of the replicaSet.
+        /// Serialized Name: ReplicaSet.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the replicaSet.
+        /// Serialized Name: ReplicaSet.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: ReplicaSet.desired
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of ready pods.
+        /// Serialized Name: ReplicaSet.ready
+        /// </param>
+        /// <param name="currentNumberOfPods">
+        /// Number of current pods.
+        /// Serialized Name: ReplicaSet.current
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of replicaSet.
+        /// Serialized Name: ReplicaSet.creationTime
+        /// </param>
         /// <returns> A new <see cref="Models.KubernetesReplicaSet"/> instance for mocking. </returns>
         public static KubernetesReplicaSet KubernetesReplicaSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, int? currentNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
@@ -442,11 +688,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesStatefulSet"/>. </summary>
-        /// <param name="name"> The name of the statefulset. </param>
-        /// <param name="namespace"> The namespace of the statefulset. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of ready pods. </param>
-        /// <param name="createdOn"> Creation Time of statefulset. </param>
+        /// <param name="name">
+        /// The name of the statefulset.
+        /// Serialized Name: StatefulSet.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the statefulset.
+        /// Serialized Name: StatefulSet.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: StatefulSet.desired
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of ready pods.
+        /// Serialized Name: StatefulSet.ready
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of statefulset.
+        /// Serialized Name: StatefulSet.creationTime
+        /// </param>
         /// <returns> A new <see cref="Models.KubernetesStatefulSet"/> instance for mocking. </returns>
         public static KubernetesStatefulSet KubernetesStatefulSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? readyNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
@@ -460,14 +721,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubernetesDaemonSet"/>. </summary>
-        /// <param name="name"> The name of the daemonSet. </param>
-        /// <param name="namespace"> The namespace of the daemonSet. </param>
-        /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
-        /// <param name="currentNumberOfPods"> Current number of pods. </param>
-        /// <param name="readyNumberOfPods"> Number of Ready pods. </param>
-        /// <param name="upToDateNumberOfPods"> Number of  upto date pods. </param>
-        /// <param name="availableNumberOfPods"> Number of available pods. </param>
-        /// <param name="createdOn"> Creation Time of daemonSet. </param>
+        /// <param name="name">
+        /// The name of the daemonSet.
+        /// Serialized Name: DaemonSet.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the daemonSet.
+        /// Serialized Name: DaemonSet.namespace
+        /// </param>
+        /// <param name="desiredNumberOfPods">
+        /// Desired number of pods
+        /// Serialized Name: DaemonSet.desired
+        /// </param>
+        /// <param name="currentNumberOfPods">
+        /// Current number of pods
+        /// Serialized Name: DaemonSet.current
+        /// </param>
+        /// <param name="readyNumberOfPods">
+        /// Number of Ready pods
+        /// Serialized Name: DaemonSet.ready
+        /// </param>
+        /// <param name="upToDateNumberOfPods">
+        /// Number of  upto date pods
+        /// Serialized Name: DaemonSet.upToDate
+        /// </param>
+        /// <param name="availableNumberOfPods">
+        /// Number of available pods.
+        /// Serialized Name: DaemonSet.available
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of daemonSet.
+        /// Serialized Name: DaemonSet.creationTime
+        /// </param>
         /// <returns> A new <see cref="Models.KubernetesDaemonSet"/> instance for mocking. </returns>
         public static KubernetesDaemonSet KubernetesDaemonSet(string name = null, string @namespace = null, int? desiredNumberOfPods = null, int? currentNumberOfPods = null, int? readyNumberOfPods = null, int? upToDateNumberOfPods = null, int? availableNumberOfPods = null, DateTimeOffset? createdOn = null)
         {
@@ -484,10 +769,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RequestMetadata"/>. </summary>
-        /// <param name="relativePath"> The relative path of the request. </param>
-        /// <param name="httpMethod"> The http method of the request. </param>
-        /// <param name="serializedBody"> The serialized body of the request. </param>
-        /// <param name="apiVersion"> The api version of the request. </param>
+        /// <param name="relativePath">
+        /// The relative path of the request.
+        /// Serialized Name: RequestMetadata.relativePath
+        /// </param>
+        /// <param name="httpMethod">
+        /// The http method of the request.
+        /// Serialized Name: RequestMetadata.httpMethod
+        /// </param>
+        /// <param name="serializedBody">
+        /// The serialized body of the request.
+        /// Serialized Name: RequestMetadata.serializedBody
+        /// </param>
+        /// <param name="apiVersion">
+        /// The api version of the request.
+        /// Serialized Name: RequestMetadata.apiVersion
+        /// </param>
         /// <returns> A new <see cref="Models.RequestMetadata"/> instance for mocking. </returns>
         public static RequestMetadata RequestMetadata(string relativePath = null, HttpMethod httpMethod = default, string serializedBody = null, string apiVersion = null)
         {
@@ -501,7 +798,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> ArtifactStores properties. </param>
+        /// <param name="properties">
+        /// ArtifactStores properties.
+        /// Serialized Name: ArtifactStore.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.ArtifactStoreData"/> instance for mocking. </returns>
         public static ArtifactStoreData ArtifactStoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArtifactStorePropertiesFormat properties = null)
         {
@@ -519,14 +819,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArtifactStorePropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
-        /// <param name="storeType"> The artifact store type. </param>
-        /// <param name="backingResourcePublicNetworkAccess"> The artifact store backing resource network access type. </param>
-        /// <param name="replicationStrategy"> The replication strategy. </param>
-        /// <param name="managedResourceGroupConfiguration"></param>
-        /// <param name="storageResourceId"> The created storage resource id. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the application groups resource.
+        /// Serialized Name: ArtifactStorePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="storeType">
+        /// The artifact store type.
+        /// Serialized Name: ArtifactStorePropertiesFormat.storeType
+        /// </param>
+        /// <param name="backingResourcePublicNetworkAccess">
+        /// The artifact store backing resource network access type
+        /// Serialized Name: ArtifactStorePropertiesFormat.backingResourcePublicNetworkAccess
+        /// </param>
+        /// <param name="replicationStrategy">
+        /// The replication strategy.
+        /// Serialized Name: ArtifactStorePropertiesFormat.replicationStrategy
+        /// </param>
+        /// <param name="managedResourceGroupConfiguration"> Serialized Name: ArtifactStorePropertiesFormat.managedResourceGroupConfiguration. </param>
+        /// <param name="storageResourceId">
+        /// The created storage resource id
+        /// Serialized Name: ArtifactStorePropertiesFormat.storageResourceId
+        /// </param>
         /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormat"/> instance for mocking. </returns>
-        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = null, ArtifactStoreType? storeType = null, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = null, ArtifactReplicationStrategy? replicationStrategy = null, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, string storageResourceId = null)
+        public static ArtifactStorePropertiesFormat ArtifactStorePropertiesFormat(ProvisioningState? provisioningState = null, ArtifactStoreType? storeType = null, BackingResourcePublicNetworkAccess? backingResourcePublicNetworkAccess = null, ArtifactReplicationStrategy? replicationStrategy = null, ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, ResourceIdentifier storageResourceId = null)
         {
             return new ArtifactStorePropertiesFormat(
                 provisioningState,
@@ -545,7 +860,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Artifact manifest properties. </param>
+        /// <param name="properties">
+        /// Artifact manifest properties.
+        /// Serialized Name: ArtifactManifest.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.ArtifactManifestData"/> instance for mocking. </returns>
         public static ArtifactManifestData ArtifactManifestData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ArtifactManifestPropertiesFormat properties = null)
         {
@@ -563,9 +881,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArtifactManifestPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
-        /// <param name="artifactManifestState"> The artifact manifest state. </param>
-        /// <param name="artifacts"> The artifacts list. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the ArtifactManifest resource.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="artifactManifestState">
+        /// The artifact manifest state.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.artifactManifestState
+        /// </param>
+        /// <param name="artifacts">
+        /// The artifacts list.
+        /// Serialized Name: ArtifactManifestPropertiesFormat.artifacts
+        /// </param>
         /// <returns> A new <see cref="Models.ArtifactManifestPropertiesFormat"/> instance for mocking. </returns>
         public static ArtifactManifestPropertiesFormat ArtifactManifestPropertiesFormat(ProvisioningState? provisioningState = null, ArtifactManifestState? artifactManifestState = null, IEnumerable<ManifestArtifactFormat> artifacts = null)
         {
@@ -579,7 +906,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Proxy Artifact overview properties. </param>
+        /// <param name="properties">
+        /// Proxy Artifact overview properties.
+        /// Serialized Name: ProxyArtifactVersionsListOverview.properties
+        /// </param>
         /// <returns> A new <see cref="Models.ProxyArtifactVersionsListOverview"/> instance for mocking. </returns>
         public static ProxyArtifactVersionsListOverview ProxyArtifactVersionsListOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ProxyArtifactOverviewPropertiesValue properties = null)
         {
@@ -593,9 +923,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProxyArtifactOverviewPropertiesValue"/>. </summary>
-        /// <param name="artifactType"> The artifact type. </param>
-        /// <param name="artifactVersion"> The artifact version. </param>
-        /// <param name="artifactState"> The artifact state. </param>
+        /// <param name="artifactType">
+        /// The artifact type.
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactType
+        /// </param>
+        /// <param name="artifactVersion">
+        /// The artifact version.
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactVersion
+        /// </param>
+        /// <param name="artifactState">
+        /// The artifact state
+        /// Serialized Name: ProxyArtifactOverviewPropertiesValue.artifactState
+        /// </param>
         /// <returns> A new <see cref="Models.ProxyArtifactOverviewPropertiesValue"/> instance for mocking. </returns>
         public static ProxyArtifactOverviewPropertiesValue ProxyArtifactOverviewPropertiesValue(ArtifactType? artifactType = null, string artifactVersion = null, ArtifactState? artifactState = null)
         {
@@ -620,7 +959,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Configuration group schema properties. </param>
+        /// <param name="properties">
+        /// Configuration group schema properties.
+        /// Serialized Name: ConfigurationGroupSchema.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.ConfigurationGroupSchemaData"/> instance for mocking. </returns>
         public static ConfigurationGroupSchemaData ConfigurationGroupSchemaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ConfigurationGroupSchemaPropertiesFormat properties = null)
         {
@@ -638,10 +980,22 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
-        /// <param name="versionState"> The configuration group schema version state. </param>
-        /// <param name="description"> Description of what schema can contain. </param>
-        /// <param name="schemaDefinition"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the Configuration group schema resource.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The configuration group schema version state.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// Description of what schema can contain.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.description
+        /// </param>
+        /// <param name="schemaDefinition">
+        /// Name and value pairs that define the configuration value. It can be a well formed escaped JSON string.
+        /// Serialized Name: ConfigurationGroupSchemaPropertiesFormat.schemaDefinition
+        /// </param>
         /// <returns> A new <see cref="Models.ConfigurationGroupSchemaPropertiesFormat"/> instance for mocking. </returns>
         public static ConfigurationGroupSchemaPropertiesFormat ConfigurationGroupSchemaPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string schemaDefinition = null)
         {
@@ -655,7 +1009,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> Network function definition group properties. </param>
+        /// <param name="properties">
+        /// Network function definition group properties.
+        /// Serialized Name: NetworkFunctionDefinitionGroup.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.NetworkFunctionDefinitionGroupData"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionGroupData NetworkFunctionDefinitionGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkFunctionDefinitionGroupPropertiesFormat properties = null)
         {
@@ -673,8 +1030,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
-        /// <param name="description"> The network function definition group description. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function definition groups resource.
+        /// Serialized Name: NetworkFunctionDefinitionGroupPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="description">
+        /// The network function definition group description.
+        /// Serialized Name: NetworkFunctionDefinitionGroupPropertiesFormat.description
+        /// </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionGroupPropertiesFormat NetworkFunctionDefinitionGroupPropertiesFormat(ProvisioningState? provisioningState = null, string description = null)
         {
@@ -690,6 +1053,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// Network function definition version properties.
+        /// Serialized Name: NetworkFunctionDefinitionVersion.properties
         /// Please note <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> and <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>.
         /// </param>
@@ -710,11 +1074,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
-        /// <param name="versionState"> The network function definition version state. </param>
-        /// <param name="description"> The network function definition version description. </param>
-        /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
-        /// <param name="networkFunctionType"> The network function type. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function definition version resource.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// The network function definition version description.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.description
+        /// </param>
+        /// <param name="deployParameters">
+        /// The deployment parameters of the network function definition version.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.deployParameters
+        /// </param>
+        /// <param name="networkFunctionType">
+        /// The network function type.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.networkFunctionType
+        /// </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionVersionPropertiesFormat"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionVersionPropertiesFormat NetworkFunctionDefinitionVersionPropertiesFormat(ProvisioningState? provisioningState = null, VersionState? versionState = null, string description = null, string deployParameters = null, string networkFunctionType = null)
         {
@@ -734,7 +1113,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> network service design group properties. </param>
+        /// <param name="properties">
+        /// network service design group properties.
+        /// Serialized Name: NetworkServiceDesignGroup.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.NetworkServiceDesignGroupData"/> instance for mocking. </returns>
         public static NetworkServiceDesignGroupData NetworkServiceDesignGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkServiceDesignGroupPropertiesFormat properties = null)
         {
@@ -752,8 +1134,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
-        /// <param name="description"> The network service design group description. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network service design groups resource.
+        /// Serialized Name: NetworkServiceDesignGroupPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="description">
+        /// The network service design group description.
+        /// Serialized Name: NetworkServiceDesignGroupPropertiesFormat.description
+        /// </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/> instance for mocking. </returns>
         public static NetworkServiceDesignGroupPropertiesFormat NetworkServiceDesignGroupPropertiesFormat(ProvisioningState? provisioningState = null, string description = null)
         {
@@ -767,7 +1155,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> network service design version properties. </param>
+        /// <param name="properties">
+        /// network service design version properties.
+        /// Serialized Name: NetworkServiceDesignVersion.properties
+        /// </param>
         /// <returns> A new <see cref="HybridNetwork.NetworkServiceDesignVersionData"/> instance for mocking. </returns>
         public static NetworkServiceDesignVersionData NetworkServiceDesignVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NetworkServiceDesignVersionPropertiesFormat properties = null)
         {
@@ -785,13 +1176,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkServiceDesignVersionPropertiesFormat"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
-        /// <param name="versionState"> The network service design version state. </param>
-        /// <param name="description"> The network service design version description. </param>
-        /// <param name="configurationGroupSchemaReferences"> The configuration schemas to used to define the values. </param>
-        /// <param name="nfvisFromSite"> The nfvis from the site. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network service design version resource.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The network service design version state.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// The network service design version description.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.description
+        /// </param>
+        /// <param name="configurationGroupSchemaReferences">
+        /// The configuration schemas to used to define the values.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.configurationGroupSchemaReferences
+        /// </param>
+        /// <param name="nfvisFromSite">
+        /// The nfvis from the site.
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.nfvisFromSite
+        /// </param>
         /// <param name="resourceElementTemplates">
         /// List of resource element template
+        /// Serialized Name: NetworkServiceDesignVersionPropertiesFormat.resourceElementTemplates
         /// Please note <see cref="ResourceElementTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
         /// </param>
@@ -813,11 +1220,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureContainerRegistryScopedTokenCredential"/>. </summary>
-        /// <param name="username"> The username of the credential. </param>
-        /// <param name="acrToken"> The credential value. </param>
-        /// <param name="acrServerUri"> The Acr server url. </param>
-        /// <param name="repositories"> The repositories that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
+        /// <param name="username">
+        /// The username of the credential.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.username
+        /// </param>
+        /// <param name="acrToken">
+        /// The credential value.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.acrToken
+        /// </param>
+        /// <param name="acrServerUri">
+        /// The Acr server url
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.acrServerUrl
+        /// </param>
+        /// <param name="repositories">
+        /// The repositories that could be accessed using the current credential.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.repositories
+        /// </param>
+        /// <param name="expiry">
+        /// The UTC time when credential will expire.
+        /// Serialized Name: AzureContainerRegistryScopedTokenCredential.expiry
+        /// </param>
         /// <returns> A new <see cref="Models.AzureContainerRegistryScopedTokenCredential"/> instance for mocking. </returns>
         public static AzureContainerRegistryScopedTokenCredential AzureContainerRegistryScopedTokenCredential(string username = null, string acrToken = null, Uri acrServerUri = null, IEnumerable<string> repositories = null, DateTimeOffset? expiry = null)
         {
@@ -834,8 +1256,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountContainerCredential"/>. </summary>
-        /// <param name="containerName"> The storage account container name. </param>
-        /// <param name="containerSasUri"> The storage account container sas uri. </param>
+        /// <param name="containerName">
+        /// The storage account container name
+        /// Serialized Name: AzureStorageAccountContainerCredential.containerName
+        /// </param>
+        /// <param name="containerSasUri">
+        /// The storage account container sas uri
+        /// Serialized Name: AzureStorageAccountContainerCredential.containerSasUri
+        /// </param>
         /// <returns> A new <see cref="Models.AzureStorageAccountContainerCredential"/> instance for mocking. </returns>
         public static AzureStorageAccountContainerCredential AzureStorageAccountContainerCredential(string containerName = null, Uri containerSasUri = null)
         {
@@ -843,11 +1271,20 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageAccountCredential"/>. </summary>
-        /// <param name="storageAccountId"> The storage account Id. </param>
-        /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
-        /// <param name="expiry"> The UTC time when credential will expire. </param>
+        /// <param name="storageAccountId">
+        /// The storage account Id
+        /// Serialized Name: AzureStorageAccountCredential.storageAccountId
+        /// </param>
+        /// <param name="containerCredentials">
+        /// The containers that could be accessed using the current credential.
+        /// Serialized Name: AzureStorageAccountCredential.containerCredentials
+        /// </param>
+        /// <param name="expiry">
+        /// The UTC time when credential will expire.
+        /// Serialized Name: AzureStorageAccountCredential.expiry
+        /// </param>
         /// <returns> A new <see cref="Models.AzureStorageAccountCredential"/> instance for mocking. </returns>
-        public static AzureStorageAccountCredential AzureStorageAccountCredential(string storageAccountId = null, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = null, DateTimeOffset? expiry = null)
+        public static AzureStorageAccountCredential AzureStorageAccountCredential(ResourceIdentifier storageAccountId = null, IEnumerable<AzureStorageAccountContainerCredential> containerCredentials = null, DateTimeOffset? expiry = null)
         {
             containerCredentials ??= new List<AzureStorageAccountContainerCredential>();
 
@@ -855,17 +1292,36 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationValueWithSecrets"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site resource. </param>
-        /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="configurationGroupSchemaName"> The configuration group schema name. </param>
-        /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site resource.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the configuration group schema.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="configurationGroupSchemaName">
+        /// The configuration group schema name.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaName
+        /// </param>
+        /// <param name="configurationGroupSchemaOfferingLocation">
+        /// The location of the configuration group schema offering.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaOfferingLocation
+        /// </param>
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="secretConfigurationValue"> Name and value pairs that define the configuration value secrets. It can be a well formed escaped JSON string. </param>
+        /// <param name="secretConfigurationValue">
+        /// Name and value pairs that define the configuration value secrets. It can be a well formed escaped JSON string.
+        /// Serialized Name: ConfigurationValueWithSecrets.secretConfigurationValue
+        /// </param>
         /// <returns> A new <see cref="Models.ConfigurationValueWithSecrets"/> instance for mocking. </returns>
         public static ConfigurationValueWithSecrets ConfigurationValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string secretConfigurationValue = null)
         {
@@ -882,17 +1338,36 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigurationValueWithoutSecrets"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the site resource. </param>
-        /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="configurationGroupSchemaName"> The configuration group schema name. </param>
-        /// <param name="configurationGroupSchemaOfferingLocation"> The location of the configuration group schema offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the site resource.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the configuration group schema.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="configurationGroupSchemaName">
+        /// The configuration group schema name.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaName
+        /// </param>
+        /// <param name="configurationGroupSchemaOfferingLocation">
+        /// The location of the configuration group schema offering.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaOfferingLocation
+        /// </param>
         /// <param name="configurationGroupSchemaResourceReference">
         /// The configuration group schema resource reference.
+        /// Serialized Name: ConfigurationGroupValuePropertiesFormat.configurationGroupSchemaResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="configurationValue"> Name and value pairs that define the configuration value. It can be a well formed escaped JSON string. </param>
+        /// <param name="configurationValue">
+        /// Name and value pairs that define the configuration value. It can be a well formed escaped JSON string.
+        /// Serialized Name: ConfigurationValueWithoutSecrets.configurationValue
+        /// </param>
         /// <returns> A new <see cref="Models.ConfigurationValueWithoutSecrets"/> instance for mocking. </returns>
         public static ConfigurationValueWithoutSecrets ConfigurationValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string configurationGroupSchemaName = null, string configurationGroupSchemaOfferingLocation = null, DeploymentResourceIdReference configurationGroupSchemaResourceReference = null, string configurationValue = null)
         {
@@ -909,12 +1384,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
-        /// <param name="versionState"> The network function definition version state. </param>
-        /// <param name="description"> The network function definition version description. </param>
-        /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function definition version resource.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// The network function definition version description.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.description
+        /// </param>
+        /// <param name="deployParameters">
+        /// The deployment parameters of the network function definition version.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.deployParameters
+        /// </param>
         /// <param name="networkFunctionTemplate">
         /// Containerized network function template.
+        /// Serialized Name: ContainerizedNetworkFunctionDefinitionVersion.networkFunctionTemplate
         /// Please note <see cref="ContainerizedNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureArcKubernetesNetworkFunctionTemplate"/>.
         /// </param>
@@ -932,24 +1420,58 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithSecrets"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
-        /// <param name="publisherName"> The publisher name for the network function. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The network function definition group name for the network function. </param>
-        /// <param name="networkFunctionDefinitionVersion"> The network function definition version for the network function. </param>
-        /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function resource.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="networkFunctionDefinitionGroupName">
+        /// The network function definition group name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionGroupName
+        /// </param>
+        /// <param name="networkFunctionDefinitionVersion">
+        /// The network function definition version for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersion
+        /// </param>
+        /// <param name="networkFunctionDefinitionOfferingLocation">
+        /// The location of the network function definition offering.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionOfferingLocation
+        /// </param>
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="nfviType"> The nfvi type for the network function. </param>
-        /// <param name="nfviId"> The nfviId for the network function. </param>
-        /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
-        /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        /// <param name="secretDeploymentValues"> The JSON-serialized secret deployment values from the user. This contains secrets like passwords,keys etc. </param>
+        /// <param name="nfviType">
+        /// The nfvi type for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviType
+        /// </param>
+        /// <param name="nfviId">
+        /// The nfviId for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviId
+        /// </param>
+        /// <param name="allowSoftwareUpdate">
+        /// Indicates if software updates are allowed during deployment.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.allowSoftwareUpdate
+        /// </param>
+        /// <param name="roleOverrideValues">
+        /// The role configuration override values from the user.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.roleOverrideValues
+        /// </param>
+        /// <param name="secretDeploymentValues">
+        /// The JSON-serialized secret deployment values from the user. This contains secrets like passwords,keys etc
+        /// Serialized Name: NetworkFunctionValueWithSecrets.secretDeploymentValues
+        /// </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string secretDeploymentValues = null)
+        public static NetworkFunctionValueWithSecrets NetworkFunctionValueWithSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string secretDeploymentValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -971,24 +1493,58 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFunctionValueWithoutSecrets"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
-        /// <param name="publisherName"> The publisher name for the network function. </param>
-        /// <param name="publisherScope"> The scope of the publisher. </param>
-        /// <param name="networkFunctionDefinitionGroupName"> The network function definition group name for the network function. </param>
-        /// <param name="networkFunctionDefinitionVersion"> The network function definition version for the network function. </param>
-        /// <param name="networkFunctionDefinitionOfferingLocation"> The location of the network function definition offering. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function resource.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="publisherName">
+        /// The publisher name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherName
+        /// </param>
+        /// <param name="publisherScope">
+        /// The scope of the publisher.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.publisherScope
+        /// </param>
+        /// <param name="networkFunctionDefinitionGroupName">
+        /// The network function definition group name for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionGroupName
+        /// </param>
+        /// <param name="networkFunctionDefinitionVersion">
+        /// The network function definition version for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersion
+        /// </param>
+        /// <param name="networkFunctionDefinitionOfferingLocation">
+        /// The location of the network function definition offering.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionOfferingLocation
+        /// </param>
         /// <param name="networkFunctionDefinitionVersionResourceReference">
         /// The network function definition version resource reference.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.networkFunctionDefinitionVersionResourceReference
         /// Please note <see cref="DeploymentResourceIdReference"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="OpenDeploymentResourceReference"/> and <see cref="SecretDeploymentResourceReference"/>.
         /// </param>
-        /// <param name="nfviType"> The nfvi type for the network function. </param>
-        /// <param name="nfviId"> The nfviId for the network function. </param>
-        /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
-        /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        /// <param name="deploymentValues"> The JSON-serialized deployment values from the user. </param>
+        /// <param name="nfviType">
+        /// The nfvi type for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviType
+        /// </param>
+        /// <param name="nfviId">
+        /// The nfviId for the network function.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.nfviId
+        /// </param>
+        /// <param name="allowSoftwareUpdate">
+        /// Indicates if software updates are allowed during deployment.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.allowSoftwareUpdate
+        /// </param>
+        /// <param name="roleOverrideValues">
+        /// The role configuration override values from the user.
+        /// Serialized Name: NetworkFunctionPropertiesFormat.roleOverrideValues
+        /// </param>
+        /// <param name="deploymentValues">
+        /// The JSON-serialized deployment values from the user.
+        /// Serialized Name: NetworkFunctionValueWithoutSecrets.deploymentValues
+        /// </param>
         /// <returns> A new <see cref="Models.NetworkFunctionValueWithoutSecrets"/> instance for mocking. </returns>
-        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, string nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string deploymentValues = null)
+        public static NetworkFunctionValueWithoutSecrets NetworkFunctionValueWithoutSecrets(ProvisioningState? provisioningState = null, string publisherName = null, PublisherScope? publisherScope = null, string networkFunctionDefinitionGroupName = null, string networkFunctionDefinitionVersion = null, string networkFunctionDefinitionOfferingLocation = null, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = null, NfviType? nfviType = null, ResourceIdentifier nfviId = null, bool? allowSoftwareUpdate = null, IEnumerable<string> roleOverrideValues = null, string deploymentValues = null)
         {
             roleOverrideValues ??= new List<string>();
 
@@ -1010,12 +1566,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
-        /// <param name="versionState"> The network function definition version state. </param>
-        /// <param name="description"> The network function definition version description. </param>
-        /// <param name="deployParameters"> The deployment parameters of the network function definition version. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network function definition version resource.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.provisioningState
+        /// </param>
+        /// <param name="versionState">
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.versionState
+        /// </param>
+        /// <param name="description">
+        /// The network function definition version description.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.description
+        /// </param>
+        /// <param name="deployParameters">
+        /// The deployment parameters of the network function definition version.
+        /// Serialized Name: NetworkFunctionDefinitionVersionPropertiesFormat.deployParameters
+        /// </param>
         /// <param name="networkFunctionTemplate">
         /// Virtual network function template.
+        /// Serialized Name: VirtualNetworkFunctionDefinitionVersion.networkFunctionTemplate
         /// Please note <see cref="VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureCoreNetworkFunctionTemplate"/> and <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>.
         /// </param>

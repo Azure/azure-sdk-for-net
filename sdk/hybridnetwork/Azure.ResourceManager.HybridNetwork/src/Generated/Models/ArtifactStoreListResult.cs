@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The response of a ArtifactStore list operation. </summary>
+    /// <summary>
+    /// The response of a ArtifactStore list operation.
+    /// Serialized Name: ArtifactStoreListResult
+    /// </summary>
     internal partial class ArtifactStoreListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStoreListResult"/>. </summary>
-        /// <param name="value"> The ArtifactStore items on this page. </param>
+        /// <param name="value">
+        /// The ArtifactStore items on this page
+        /// Serialized Name: ArtifactStoreListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ArtifactStoreListResult(IEnumerable<ArtifactStoreData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStoreListResult"/>. </summary>
-        /// <param name="value"> The ArtifactStore items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The ArtifactStore items on this page
+        /// Serialized Name: ArtifactStoreListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: ArtifactStoreListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactStoreListResult(IReadOnlyList<ArtifactStoreData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The ArtifactStore items on this page. </summary>
+        /// <summary>
+        /// The ArtifactStore items on this page
+        /// Serialized Name: ArtifactStoreListResult.value
+        /// </summary>
         public IReadOnlyList<ArtifactStoreData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: ArtifactStoreListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

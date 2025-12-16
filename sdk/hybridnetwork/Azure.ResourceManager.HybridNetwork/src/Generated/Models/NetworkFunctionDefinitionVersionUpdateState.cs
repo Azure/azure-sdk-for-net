@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Publisher network function definition version update request definition. </summary>
+    /// <summary>
+    /// Publisher network function definition version update request definition.
+    /// Serialized Name: NetworkFunctionDefinitionVersionUpdateState
+    /// </summary>
     public partial class NetworkFunctionDefinitionVersionUpdateState
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionVersionUpdateState"/>. </summary>
-        /// <param name="versionState"> The network function definition version state. </param>
+        /// <param name="versionState">
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionUpdateState.versionState
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionDefinitionVersionUpdateState(VersionState? versionState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The network function definition version state. </summary>
+        /// <summary>
+        /// The network function definition version state.
+        /// Serialized Name: NetworkFunctionDefinitionVersionUpdateState.versionState
+        /// </summary>
         public VersionState? VersionState { get; set; }
     }
 }

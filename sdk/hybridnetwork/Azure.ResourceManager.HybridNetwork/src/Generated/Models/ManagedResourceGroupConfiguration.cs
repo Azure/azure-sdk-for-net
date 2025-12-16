@@ -11,7 +11,10 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Managed resource group configuration. </summary>
+    /// <summary>
+    /// Managed resource group configuration.
+    /// Serialized Name: ManagedResourceGroupConfiguration
+    /// </summary>
     public partial class ManagedResourceGroupConfiguration
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedResourceGroupConfiguration"/>. </summary>
-        /// <param name="name"> Managed resource group name. </param>
-        /// <param name="location"> Managed resource group location. </param>
+        /// <param name="name">
+        /// Managed resource group name.
+        /// Serialized Name: ManagedResourceGroupConfiguration.name
+        /// </param>
+        /// <param name="location">
+        /// Managed resource group location.
+        /// Serialized Name: ManagedResourceGroupConfiguration.location
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedResourceGroupConfiguration(string name, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Managed resource group name. </summary>
+        /// <summary>
+        /// Managed resource group name.
+        /// Serialized Name: ManagedResourceGroupConfiguration.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Managed resource group location. </summary>
+        /// <summary>
+        /// Managed resource group location.
+        /// Serialized Name: ManagedResourceGroupConfiguration.location
+        /// </summary>
         public AzureLocation? Location { get; set; }
     }
 }

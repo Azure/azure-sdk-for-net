@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Image mapping rule profile. </summary>
+    /// <summary>
+    /// Image mapping rule profile
+    /// Serialized Name: ImageMappingRuleProfile
+    /// </summary>
     internal partial class ImageMappingRuleProfile
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageMappingRuleProfile"/>. </summary>
-        /// <param name="userConfiguration"> List of values. </param>
+        /// <param name="userConfiguration">
+        /// List of values.
+        /// Serialized Name: ImageMappingRuleProfile.userConfiguration
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ImageMappingRuleProfile(string userConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of values. </summary>
+        /// <summary>
+        /// List of values.
+        /// Serialized Name: ImageMappingRuleProfile.userConfiguration
+        /// </summary>
         public string UserConfiguration { get; set; }
     }
 }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The artifact manifest state. </summary>
+    /// <summary>
+    /// The artifact manifest state.
+    /// Serialized Name: ArtifactManifestState
+    /// </summary>
     public readonly partial struct ArtifactManifestState : IEquatable<ArtifactManifestState>
     {
         private readonly string _value;
@@ -29,17 +32,35 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string ValidationFailedValue = "ValidationFailed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: ArtifactManifestState.Unknown
+        /// </summary>
         public static ArtifactManifestState Unknown { get; } = new ArtifactManifestState(UnknownValue);
-        /// <summary> Uploading. </summary>
+        /// <summary>
+        /// Uploading
+        /// Serialized Name: ArtifactManifestState.Uploading
+        /// </summary>
         public static ArtifactManifestState Uploading { get; } = new ArtifactManifestState(UploadingValue);
-        /// <summary> Uploaded. </summary>
+        /// <summary>
+        /// Uploaded
+        /// Serialized Name: ArtifactManifestState.Uploaded
+        /// </summary>
         public static ArtifactManifestState Uploaded { get; } = new ArtifactManifestState(UploadedValue);
-        /// <summary> Validating. </summary>
+        /// <summary>
+        /// Validating
+        /// Serialized Name: ArtifactManifestState.Validating
+        /// </summary>
         public static ArtifactManifestState Validating { get; } = new ArtifactManifestState(ValidatingValue);
-        /// <summary> ValidationFailed. </summary>
+        /// <summary>
+        /// ValidationFailed
+        /// Serialized Name: ArtifactManifestState.ValidationFailed
+        /// </summary>
         public static ArtifactManifestState ValidationFailed { get; } = new ArtifactManifestState(ValidationFailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ArtifactManifestState.Succeeded
+        /// </summary>
         public static ArtifactManifestState Succeeded { get; } = new ArtifactManifestState(SucceededValue);
         /// <summary> Determines if two <see cref="ArtifactManifestState"/> values are the same. </summary>
         public static bool operator ==(ArtifactManifestState left, ArtifactManifestState right) => left.Equals(right);

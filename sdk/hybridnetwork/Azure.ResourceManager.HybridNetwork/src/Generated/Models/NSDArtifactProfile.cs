@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Artifact profile properties. </summary>
+    /// <summary>
+    /// Artifact profile properties.
+    /// Serialized Name: NSDArtifactProfile
+    /// </summary>
     public partial class NSDArtifactProfile
     {
         /// <summary>
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NSDArtifactProfile"/>. </summary>
-        /// <param name="artifactStoreReference"> The artifact store resource id. </param>
-        /// <param name="artifactName"> Artifact name. </param>
-        /// <param name="artifactVersion"> Artifact version. </param>
+        /// <param name="artifactStoreReference">
+        /// The artifact store resource id
+        /// Serialized Name: NSDArtifactProfile.artifactStoreReference
+        /// </param>
+        /// <param name="artifactName">
+        /// Artifact name.
+        /// Serialized Name: NSDArtifactProfile.artifactName
+        /// </param>
+        /// <param name="artifactVersion">
+        /// Artifact version.
+        /// Serialized Name: NSDArtifactProfile.artifactVersion
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NSDArtifactProfile(WritableSubResource artifactStoreReference, string artifactName, string artifactVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,7 +77,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The artifact store resource id. </summary>
+        /// <summary>
+        /// The artifact store resource id
+        /// Serialized Name: NSDArtifactProfile.artifactStoreReference
+        /// </summary>
         internal WritableSubResource ArtifactStoreReference { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier ArtifactStoreReferenceId
@@ -79,9 +94,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
         }
 
-        /// <summary> Artifact name. </summary>
+        /// <summary>
+        /// Artifact name.
+        /// Serialized Name: NSDArtifactProfile.artifactName
+        /// </summary>
         public string ArtifactName { get; set; }
-        /// <summary> Artifact version. </summary>
+        /// <summary>
+        /// Artifact version.
+        /// Serialized Name: NSDArtifactProfile.artifactVersion
+        /// </summary>
         public string ArtifactVersion { get; set; }
     }
 }

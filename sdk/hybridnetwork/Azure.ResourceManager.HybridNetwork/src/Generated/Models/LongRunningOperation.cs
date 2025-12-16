@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The type of long-running operation the user wants to cancel, such as 'Put'. </summary>
+    /// <summary>
+    /// The type of long-running operation the user wants to cancel, such as 'Put'.
+    /// Serialized Name: LongRunningOperation
+    /// </summary>
     public readonly partial struct LongRunningOperation : IEquatable<LongRunningOperation>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string UnknownValue = "Unknown";
         private const string PutValue = "Put";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: LongRunningOperation.Unknown
+        /// </summary>
         public static LongRunningOperation Unknown { get; } = new LongRunningOperation(UnknownValue);
-        /// <summary> Put. </summary>
+        /// <summary>
+        /// Put
+        /// Serialized Name: LongRunningOperation.Put
+        /// </summary>
         public static LongRunningOperation Put { get; } = new LongRunningOperation(PutValue);
         /// <summary> Determines if two <see cref="LongRunningOperation"/> values are the same. </summary>
         public static bool operator ==(LongRunningOperation left, LongRunningOperation right) => left.Equals(right);

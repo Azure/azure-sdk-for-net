@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The status of a Pod. </summary>
+    /// <summary>
+    /// The status of a Pod.
+    /// Serialized Name: PodStatus
+    /// </summary>
     public readonly partial struct PodStatus : IEquatable<PodStatus>
     {
         private readonly string _value;
@@ -30,19 +33,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string TerminatingValue = "Terminating";
         private const string NotReadyValue = "NotReady";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: PodStatus.Unknown
+        /// </summary>
         public static PodStatus Unknown { get; } = new PodStatus(UnknownValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: PodStatus.Succeeded
+        /// </summary>
         public static PodStatus Succeeded { get; } = new PodStatus(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: PodStatus.Failed
+        /// </summary>
         public static PodStatus Failed { get; } = new PodStatus(FailedValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: PodStatus.Running
+        /// </summary>
         public static PodStatus Running { get; } = new PodStatus(RunningValue);
-        /// <summary> Pending. </summary>
+        /// <summary>
+        /// Pending
+        /// Serialized Name: PodStatus.Pending
+        /// </summary>
         public static PodStatus Pending { get; } = new PodStatus(PendingValue);
-        /// <summary> Terminating. </summary>
+        /// <summary>
+        /// Terminating
+        /// Serialized Name: PodStatus.Terminating
+        /// </summary>
         public static PodStatus Terminating { get; } = new PodStatus(TerminatingValue);
-        /// <summary> NotReady. </summary>
+        /// <summary>
+        /// NotReady
+        /// Serialized Name: PodStatus.NotReady
+        /// </summary>
         public static PodStatus NotReady { get; } = new PodStatus(NotReadyValue);
         /// <summary> Determines if two <see cref="PodStatus"/> values are the same. </summary>
         public static bool operator ==(PodStatus left, PodStatus right) => left.Equals(right);

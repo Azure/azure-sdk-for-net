@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> List of manual private endpoints. </summary>
+    /// <summary>
+    /// List of manual private endpoints.
+    /// Serialized Name: ArtifactStorePrivateEndPointsFormat
+    /// </summary>
     public partial class ArtifactStorePrivateEndPointsFormat
     {
         /// <summary>
@@ -53,7 +56,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStorePrivateEndPointsFormat"/>. </summary>
-        /// <param name="manualPrivateEndPointConnections"> list of private endpoints. </param>
+        /// <param name="manualPrivateEndPointConnections">
+        /// list of private endpoints.
+        /// Serialized Name: ArtifactStorePrivateEndPointsFormat.manualPrivateEndPointConnections
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactStorePrivateEndPointsFormat(IList<WritableSubResource> manualPrivateEndPointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +67,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> list of private endpoints. </summary>
+        /// <summary>
+        /// list of private endpoints.
+        /// Serialized Name: ArtifactStorePrivateEndPointsFormat.manualPrivateEndPointConnections
+        /// </summary>
         public IList<WritableSubResource> ManualPrivateEndPointConnections { get; }
     }
 }

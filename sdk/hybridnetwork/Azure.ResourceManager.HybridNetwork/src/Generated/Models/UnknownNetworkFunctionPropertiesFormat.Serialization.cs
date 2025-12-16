@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             string networkFunctionDefinitionOfferingLocation = default;
             DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference = default;
             NfviType? nfviType = default;
-            string nfviId = default;
+            ResourceIdentifier nfviId = default;
             bool? allowSoftwareUpdate = default;
             NetworkFunctionConfigurationType configurationType = "AutoRest.CSharp.Output.Models.Types.EnumTypeValue";
             IList<string> roleOverrideValues = default;
@@ -131,7 +131,11 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (property.NameEquals("nfviId"u8))
                 {
-                    nfviId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nfviId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("allowSoftwareUpdate"u8))

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Helm Pod status properties. </summary>
+    /// <summary>
+    /// Helm Pod status properties.
+    /// Serialized Name: Pod
+    /// </summary>
     public partial class KubernetesPod
     {
         /// <summary>
@@ -52,13 +55,34 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KubernetesPod"/>. </summary>
-        /// <param name="name"> The name of the Pod. </param>
-        /// <param name="namespace"> The namespace of the Pod. </param>
-        /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
-        /// <param name="readyNumberOfContainers"> Number of ready containers. </param>
-        /// <param name="status"> The status of a pod. </param>
-        /// <param name="createdOn"> Creation Time of Pod. </param>
-        /// <param name="events"> Last 5 Pod events. </param>
+        /// <param name="name">
+        /// The name of the Pod.
+        /// Serialized Name: Pod.name
+        /// </param>
+        /// <param name="namespace">
+        /// The namespace of the Pod.
+        /// Serialized Name: Pod.namespace
+        /// </param>
+        /// <param name="desiredNumberOfContainers">
+        /// Desired number of containers
+        /// Serialized Name: Pod.desired
+        /// </param>
+        /// <param name="readyNumberOfContainers">
+        /// Number of ready containers.
+        /// Serialized Name: Pod.ready
+        /// </param>
+        /// <param name="status">
+        /// The status of a pod.
+        /// Serialized Name: Pod.status
+        /// </param>
+        /// <param name="createdOn">
+        /// Creation Time of Pod.
+        /// Serialized Name: Pod.creationTime
+        /// </param>
+        /// <param name="events">
+        /// Last 5 Pod events.
+        /// Serialized Name: Pod.events
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KubernetesPod(string name, string @namespace, int? desiredNumberOfContainers, int? readyNumberOfContainers, PodStatus? status, DateTimeOffset? createdOn, IReadOnlyList<PodEvent> events, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,19 +96,40 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the Pod. </summary>
+        /// <summary>
+        /// The name of the Pod.
+        /// Serialized Name: Pod.name
+        /// </summary>
         public string Name { get; }
-        /// <summary> The namespace of the Pod. </summary>
+        /// <summary>
+        /// The namespace of the Pod.
+        /// Serialized Name: Pod.namespace
+        /// </summary>
         public string Namespace { get; }
-        /// <summary> Desired number of containers. </summary>
+        /// <summary>
+        /// Desired number of containers
+        /// Serialized Name: Pod.desired
+        /// </summary>
         public int? DesiredNumberOfContainers { get; }
-        /// <summary> Number of ready containers. </summary>
+        /// <summary>
+        /// Number of ready containers.
+        /// Serialized Name: Pod.ready
+        /// </summary>
         public int? ReadyNumberOfContainers { get; }
-        /// <summary> The status of a pod. </summary>
+        /// <summary>
+        /// The status of a pod.
+        /// Serialized Name: Pod.status
+        /// </summary>
         public PodStatus? Status { get; }
-        /// <summary> Creation Time of Pod. </summary>
+        /// <summary>
+        /// Creation Time of Pod.
+        /// Serialized Name: Pod.creationTime
+        /// </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary> Last 5 Pod events. </summary>
+        /// <summary>
+        /// Last 5 Pod events.
+        /// Serialized Name: Pod.events
+        /// </summary>
         public IReadOnlyList<PodEvent> Events { get; }
     }
 }

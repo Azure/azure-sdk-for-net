@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Helm mapping rule profile. </summary>
+    /// <summary>
+    /// Helm mapping rule profile
+    /// Serialized Name: HelmMappingRuleProfile
+    /// </summary>
     public partial class HelmMappingRuleProfile
     {
         /// <summary>
@@ -51,11 +54,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HelmMappingRuleProfile"/>. </summary>
-        /// <param name="releaseNamespace"> Helm release namespace. </param>
-        /// <param name="releaseName"> Helm release name. </param>
-        /// <param name="helmPackageVersion"> Helm package version. </param>
-        /// <param name="values"> Helm release values. </param>
-        /// <param name="options"> The helm deployment options. </param>
+        /// <param name="releaseNamespace">
+        /// Helm release namespace.
+        /// Serialized Name: HelmMappingRuleProfile.releaseNamespace
+        /// </param>
+        /// <param name="releaseName">
+        /// Helm release name.
+        /// Serialized Name: HelmMappingRuleProfile.releaseName
+        /// </param>
+        /// <param name="helmPackageVersion">
+        /// Helm package version.
+        /// Serialized Name: HelmMappingRuleProfile.helmPackageVersion
+        /// </param>
+        /// <param name="values">
+        /// Helm release values.
+        /// Serialized Name: HelmMappingRuleProfile.values
+        /// </param>
+        /// <param name="options">
+        /// The helm deployment options
+        /// Serialized Name: HelmMappingRuleProfile.options
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HelmMappingRuleProfile(string releaseNamespace, string releaseName, string helmPackageVersion, string values, HelmMappingRuleProfileConfig options, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,15 +85,30 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Helm release namespace. </summary>
+        /// <summary>
+        /// Helm release namespace.
+        /// Serialized Name: HelmMappingRuleProfile.releaseNamespace
+        /// </summary>
         public string ReleaseNamespace { get; set; }
-        /// <summary> Helm release name. </summary>
+        /// <summary>
+        /// Helm release name.
+        /// Serialized Name: HelmMappingRuleProfile.releaseName
+        /// </summary>
         public string ReleaseName { get; set; }
-        /// <summary> Helm package version. </summary>
+        /// <summary>
+        /// Helm package version.
+        /// Serialized Name: HelmMappingRuleProfile.helmPackageVersion
+        /// </summary>
         public string HelmPackageVersion { get; set; }
-        /// <summary> Helm release values. </summary>
+        /// <summary>
+        /// Helm release values.
+        /// Serialized Name: HelmMappingRuleProfile.values
+        /// </summary>
         public string Values { get; set; }
-        /// <summary> The helm deployment options. </summary>
+        /// <summary>
+        /// The helm deployment options
+        /// Serialized Name: HelmMappingRuleProfile.options
+        /// </summary>
         public HelmMappingRuleProfileConfig Options { get; set; }
     }
 }

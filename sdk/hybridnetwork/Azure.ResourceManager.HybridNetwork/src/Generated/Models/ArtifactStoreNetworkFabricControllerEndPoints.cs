@@ -11,7 +11,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> List of network fabric controller ids. </summary>
+    /// <summary>
+    /// List of network fabric controller ids.
+    /// Serialized Name: ArtifactStoreNetworkFabricControllerEndPoints
+    /// </summary>
     public partial class ArtifactStoreNetworkFabricControllerEndPoints
     {
         /// <summary>
@@ -53,7 +56,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactStoreNetworkFabricControllerEndPoints"/>. </summary>
-        /// <param name="networkFabricControllerIds"> list of network fabric controllers. </param>
+        /// <param name="networkFabricControllerIds">
+        /// list of network fabric controllers.
+        /// Serialized Name: ArtifactStoreNetworkFabricControllerEndPoints.networkFabricControllerIds
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactStoreNetworkFabricControllerEndPoints(IList<WritableSubResource> networkFabricControllerIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,7 +67,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> list of network fabric controllers. </summary>
+        /// <summary>
+        /// list of network fabric controllers.
+        /// Serialized Name: ArtifactStoreNetworkFabricControllerEndPoints.networkFabricControllerIds
+        /// </summary>
         public IList<WritableSubResource> NetworkFabricControllerIds { get; }
     }
 }

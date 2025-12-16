@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The template type. </summary>
+    /// <summary>
+    /// The template type.
+    /// Serialized Name: TemplateType
+    /// </summary>
     public readonly partial struct TemplateType : IEquatable<TemplateType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private const string UnknownValue = "Unknown";
         private const string ArmTemplateValue = "ArmTemplate";
 
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: TemplateType.Unknown
+        /// </summary>
         public static TemplateType Unknown { get; } = new TemplateType(UnknownValue);
-        /// <summary> ArmTemplate. </summary>
+        /// <summary>
+        /// ArmTemplate
+        /// Serialized Name: TemplateType.ArmTemplate
+        /// </summary>
         public static TemplateType ArmTemplate { get; } = new TemplateType(ArmTemplateValue);
         /// <summary> Determines if two <see cref="TemplateType"/> values are the same. </summary>
         public static bool operator ==(TemplateType left, TemplateType right) => left.Equals(right);

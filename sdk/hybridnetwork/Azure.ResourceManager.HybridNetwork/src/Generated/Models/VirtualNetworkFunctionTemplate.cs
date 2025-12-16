@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// Virtual network function template.
+    /// Serialized Name: VirtualNetworkFunctionTemplate
     /// Please note <see cref="VirtualNetworkFunctionTemplate"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureCoreNetworkFunctionTemplate"/> and <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>.
     /// </summary>
@@ -55,7 +56,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkFunctionTemplate"/>. </summary>
-        /// <param name="nfviType"> The network function type. </param>
+        /// <param name="nfviType">
+        /// The network function type.
+        /// Serialized Name: VirtualNetworkFunctionTemplate.nfviType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +67,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The network function type. </summary>
+        /// <summary>
+        /// The network function type.
+        /// Serialized Name: VirtualNetworkFunctionTemplate.nfviType
+        /// </summary>
         internal VirtualNetworkFunctionNfviType NfviType { get; set; }
     }
 }

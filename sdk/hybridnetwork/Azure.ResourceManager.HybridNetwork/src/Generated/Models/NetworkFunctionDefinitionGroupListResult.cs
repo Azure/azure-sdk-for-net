@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The response of a NetworkFunctionDefinitionGroup list operation. </summary>
+    /// <summary>
+    /// The response of a NetworkFunctionDefinitionGroup list operation.
+    /// Serialized Name: NetworkFunctionDefinitionGroupListResult
+    /// </summary>
     internal partial class NetworkFunctionDefinitionGroupListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupListResult"/>. </summary>
-        /// <param name="value"> The NetworkFunctionDefinitionGroup items on this page. </param>
+        /// <param name="value">
+        /// The NetworkFunctionDefinitionGroup items on this page
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NetworkFunctionDefinitionGroupListResult(IEnumerable<NetworkFunctionDefinitionGroupData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionDefinitionGroupListResult"/>. </summary>
-        /// <param name="value"> The NetworkFunctionDefinitionGroup items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The NetworkFunctionDefinitionGroup items on this page
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionDefinitionGroupListResult(IReadOnlyList<NetworkFunctionDefinitionGroupData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The NetworkFunctionDefinitionGroup items on this page. </summary>
+        /// <summary>
+        /// The NetworkFunctionDefinitionGroup items on this page
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.value
+        /// </summary>
         public IReadOnlyList<NetworkFunctionDefinitionGroupData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: NetworkFunctionDefinitionGroupListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

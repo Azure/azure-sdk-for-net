@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The response of a Component list operation. </summary>
+    /// <summary>
+    /// The response of a Component list operation.
+    /// Serialized Name: ComponentListResult
+    /// </summary>
     internal partial class ComponentListResult
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ComponentListResult"/>. </summary>
-        /// <param name="value"> The Component items on this page. </param>
+        /// <param name="value">
+        /// The Component items on this page
+        /// Serialized Name: ComponentListResult.value
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal ComponentListResult(IEnumerable<ComponentData> value)
         {
@@ -57,8 +63,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ComponentListResult"/>. </summary>
-        /// <param name="value"> The Component items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value">
+        /// The Component items on this page
+        /// Serialized Name: ComponentListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: ComponentListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ComponentListResult(IReadOnlyList<ComponentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,9 +84,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The Component items on this page. </summary>
+        /// <summary>
+        /// The Component items on this page
+        /// Serialized Name: ComponentListResult.value
+        /// </summary>
         public IReadOnlyList<ComponentData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: ComponentListResult.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

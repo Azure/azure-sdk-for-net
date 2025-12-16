@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Cancels an ongoing long-running operation, only Put is supported now. </summary>
+    /// <summary>
+    /// Cancels an ongoing long-running operation, only Put is supported now
+    /// Serialized Name: CancelInformation
+    /// </summary>
     public partial class CancelInformation
     {
         /// <summary>
@@ -48,7 +51,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CancelInformation"/>. </summary>
-        /// <param name="siteNetworkServiceReference"> The ARM id of the siteNetworkService resource. </param>
+        /// <param name="siteNetworkServiceReference">
+        /// The ARM id of the siteNetworkService resource.
+        /// Serialized Name: CancelInformation.siteNetworkServiceReference
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="siteNetworkServiceReference"/> is null. </exception>
         public CancelInformation(WritableSubResource siteNetworkServiceReference)
         {
@@ -58,8 +64,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CancelInformation"/>. </summary>
-        /// <param name="siteNetworkServiceReference"> The ARM id of the siteNetworkService resource. </param>
-        /// <param name="longRunningOperation"> The type of long-running operation the user wants to cancel, such as 'Put'. </param>
+        /// <param name="siteNetworkServiceReference">
+        /// The ARM id of the siteNetworkService resource.
+        /// Serialized Name: CancelInformation.siteNetworkServiceReference
+        /// </param>
+        /// <param name="longRunningOperation">
+        /// The type of long-running operation the user wants to cancel, such as 'Put'.
+        /// Serialized Name: CancelInformation.longRunningOperation
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CancelInformation(WritableSubResource siteNetworkServiceReference, LongRunningOperation? longRunningOperation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -73,7 +85,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         {
         }
 
-        /// <summary> The ARM id of the siteNetworkService resource. </summary>
+        /// <summary>
+        /// The ARM id of the siteNetworkService resource.
+        /// Serialized Name: CancelInformation.siteNetworkServiceReference
+        /// </summary>
         internal WritableSubResource SiteNetworkServiceReference { get; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SiteNetworkServiceReferenceId
@@ -81,7 +96,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             get => SiteNetworkServiceReference?.Id;
         }
 
-        /// <summary> The type of long-running operation the user wants to cancel, such as 'Put'. </summary>
+        /// <summary>
+        /// The type of long-running operation the user wants to cancel, such as 'Put'.
+        /// Serialized Name: CancelInformation.longRunningOperation
+        /// </summary>
         public LongRunningOperation? LongRunningOperation { get; set; }
     }
 }

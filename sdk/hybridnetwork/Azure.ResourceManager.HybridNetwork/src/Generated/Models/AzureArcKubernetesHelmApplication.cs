@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Azure arc kubernetes helm application configurations. </summary>
+    /// <summary>
+    /// Azure arc kubernetes helm application configurations.
+    /// Serialized Name: AzureArcKubernetesHelmApplication
+    /// </summary>
     public partial class AzureArcKubernetesHelmApplication : AzureArcKubernetesNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesHelmApplication"/>. </summary>
@@ -20,12 +23,27 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesHelmApplication"/>. </summary>
-        /// <param name="name"> The name of the network function application. </param>
-        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="name">
+        /// The name of the network function application.
+        /// Serialized Name: NetworkFunctionApplication.name
+        /// </param>
+        /// <param name="dependsOnProfile">
+        /// Depends on profile definition.
+        /// Serialized Name: NetworkFunctionApplication.dependsOnProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="artifactType"> The artifact type. </param>
-        /// <param name="artifactProfile"> Azure arc kubernetes artifact profile. </param>
-        /// <param name="deployParametersMappingRuleProfile"> Deploy mapping rule profile. </param>
+        /// <param name="artifactType">
+        /// The artifact type.
+        /// Serialized Name: AzureArcKubernetesNetworkFunctionApplication.artifactType
+        /// </param>
+        /// <param name="artifactProfile">
+        /// Azure arc kubernetes artifact profile.
+        /// Serialized Name: AzureArcKubernetesHelmApplication.artifactProfile
+        /// </param>
+        /// <param name="deployParametersMappingRuleProfile">
+        /// Deploy mapping rule profile.
+        /// Serialized Name: AzureArcKubernetesHelmApplication.deployParametersMappingRuleProfile
+        /// </param>
         internal AzureArcKubernetesHelmApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureArcKubernetesArtifactType artifactType, AzureArcKubernetesArtifactProfile artifactProfile, AzureArcKubernetesDeployMappingRuleProfile deployParametersMappingRuleProfile) : base(name, dependsOnProfile, serializedAdditionalRawData, artifactType)
         {
             ArtifactProfile = artifactProfile;
@@ -33,9 +51,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             ArtifactType = artifactType;
         }
 
-        /// <summary> Azure arc kubernetes artifact profile. </summary>
+        /// <summary>
+        /// Azure arc kubernetes artifact profile.
+        /// Serialized Name: AzureArcKubernetesHelmApplication.artifactProfile
+        /// </summary>
         public AzureArcKubernetesArtifactProfile ArtifactProfile { get; set; }
-        /// <summary> Deploy mapping rule profile. </summary>
+        /// <summary>
+        /// Deploy mapping rule profile.
+        /// Serialized Name: AzureArcKubernetesHelmApplication.deployParametersMappingRuleProfile
+        /// </summary>
         public AzureArcKubernetesDeployMappingRuleProfile DeployParametersMappingRuleProfile { get; set; }
     }
 }

@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Non secret deployment resource id reference. </summary>
+    /// <summary>
+    /// Non secret deployment resource id reference.
+    /// Serialized Name: OpenDeploymentResourceReference
+    /// </summary>
     public partial class OpenDeploymentResourceReference : DeploymentResourceIdReference
     {
         /// <summary> Initializes a new instance of <see cref="OpenDeploymentResourceReference"/>. </summary>
@@ -20,16 +24,25 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenDeploymentResourceReference"/>. </summary>
-        /// <param name="idType"> The resource reference arm id type. </param>
+        /// <param name="idType">
+        /// The resource reference arm id type.
+        /// Serialized Name: DeploymentResourceIdReference.idType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="id"> Resource ID. </param>
-        internal OpenDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(idType, serializedAdditionalRawData)
+        /// <param name="id">
+        /// Resource ID.
+        /// Serialized Name: OpenDeploymentResourceReference.id
+        /// </param>
+        internal OpenDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier id) : base(idType, serializedAdditionalRawData)
         {
             Id = id;
             IdType = idType;
         }
 
-        /// <summary> Resource ID. </summary>
-        public string Id { get; set; }
+        /// <summary>
+        /// Resource ID.
+        /// Serialized Name: OpenDeploymentResourceReference.id
+        /// </summary>
+        public ResourceIdentifier Id { get; set; }
     }
 }

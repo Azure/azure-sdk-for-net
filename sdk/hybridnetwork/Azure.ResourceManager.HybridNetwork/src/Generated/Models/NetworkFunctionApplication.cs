@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> Network function application definition. </summary>
+    /// <summary>
+    /// Network function application definition.
+    /// Serialized Name: NetworkFunctionApplication
+    /// </summary>
     public partial class NetworkFunctionApplication
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionApplication"/>. </summary>
-        /// <param name="name"> The name of the network function application. </param>
-        /// <param name="dependsOnProfile"> Depends on profile definition. </param>
+        /// <param name="name">
+        /// The name of the network function application.
+        /// Serialized Name: NetworkFunctionApplication.name
+        /// </param>
+        /// <param name="dependsOnProfile">
+        /// Depends on profile definition.
+        /// Serialized Name: NetworkFunctionApplication.dependsOnProfile
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NetworkFunctionApplication(string name, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,9 +70,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the network function application. </summary>
+        /// <summary>
+        /// The name of the network function application.
+        /// Serialized Name: NetworkFunctionApplication.name
+        /// </summary>
         public string Name { get; set; }
-        /// <summary> Depends on profile definition. </summary>
+        /// <summary>
+        /// Depends on profile definition.
+        /// Serialized Name: NetworkFunctionApplication.dependsOnProfile
+        /// </summary>
         public DependsOnProfile DependsOnProfile { get; set; }
     }
 }

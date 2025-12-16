@@ -12,6 +12,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary>
     /// The artifact manifest credential definition.
+    /// Serialized Name: ArtifactAccessCredential
     /// Please note <see cref="ArtifactAccessCredential"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureContainerRegistryScopedTokenCredential"/> and <see cref="AzureStorageAccountCredential"/>.
     /// </summary>
@@ -55,7 +56,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArtifactAccessCredential"/>. </summary>
-        /// <param name="credentialType"> The credential type. </param>
+        /// <param name="credentialType">
+        /// The credential type.
+        /// Serialized Name: ArtifactAccessCredential.credentialType
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ArtifactAccessCredential(CredentialType credentialType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,7 +67,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The credential type. </summary>
+        /// <summary>
+        /// The credential type.
+        /// Serialized Name: ArtifactAccessCredential.credentialType
+        /// </summary>
         internal CredentialType CredentialType { get; set; }
     }
 }
