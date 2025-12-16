@@ -586,12 +586,12 @@ SourcePortRanges = {"*"},
             string poolName = "testpool";
             BatchAccountPoolData data = new BatchAccountPoolData
             {
-                Identity = new BatchPoolIdentity(PoolIdentityType.UserAssigned)
+                Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-["/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1"] = new UserAssignedIdentity(),
-["/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2"] = new UserAssignedIdentity()
+[new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id1")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789012/resourceGroups/default-azurebatch-japaneast/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id2")] = new UserAssignedIdentity()
 },
                 },
                 VmSize = "STANDARD_D4",
