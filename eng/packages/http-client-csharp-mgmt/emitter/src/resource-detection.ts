@@ -56,6 +56,39 @@ export async function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext
 ) {
+  // Detect and collect ARM resource information
+  const { resourceModels, resourceModelToMetadataMap, nonResourceMethods } =
+    detectArmResourcesAndMethods(sdkContext, codeModel);
+
+  // Build the unified ARM provider schema
+  const armProviderSchema = buildArmProviderSchema(
+    sdkContext,
+    resourceModels,
+    resourceModelToMetadataMap,
+    nonResourceMethods
+  );
+
+  // Apply the unified decorator to the root client
+  applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+}
+
+/**
+ * Detects ARM resources and methods from the code model.
+ * This function processes all clients and methods to identify resource operations,
+ * populates metadata including resource ID patterns, types, and scopes.
+ *
+ * @param sdkContext - The emitter context
+ * @param codeModel - The code model to process
+ * @returns Object containing resource models, metadata map, and non-resource methods
+ */
+function detectArmResourcesAndMethods(
+  sdkContext: CSharpEmitterContext,
+  codeModel: CodeModel
+): {
+  resourceModels: InputModelType[];
+  resourceModelToMetadataMap: Map<string, ResourceMetadata>;
+  nonResourceMethods: Map<string, NonResourceMethod>;
+} {
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
       .flatMap((c) => c.methods)
@@ -101,7 +134,7 @@ export async function updateClients(
       );
       const [kind, modelId] =
         parseResourceOperation(serviceMethod, sdkContext) ?? [];
-     
+
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
         if (entry) {
@@ -190,16 +223,11 @@ export async function updateClients(
     }
   }
 
-  // Build the unified ARM provider schema
-  const armProviderSchema = buildArmProviderSchema(
+  return {
     resourceModels,
     resourceModelToMetadataMap,
-    nonResourceMethods,
-    sdkContext
-  );
-
-  // Apply the unified decorator to the root client
-  applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+    nonResourceMethods
+  };
 }
 
 function isCRUDKind(kind: ResourceOperationKind): boolean {
@@ -592,17 +620,17 @@ function getOperationScope(path: string): ResourceScope {
 
 /**
  * Builds the unified ARM provider schema from resource metadata and non-resource methods.
+ * @param sdkContext - The emitter context for logging
  * @param resourceModels - All resource models in the code model
  * @param resourceModelToMetadataMap - Map of resource model IDs to their metadata
  * @param nonResourceMethods - Map of non-resource method IDs to their metadata
- * @param sdkContext - The emitter context for logging
  * @returns The complete ARM provider schema
  */
 function buildArmProviderSchema(
+  sdkContext: CSharpEmitterContext,
   resourceModels: InputModelType[],
   resourceModelToMetadataMap: Map<string, ResourceMetadata>,
-  nonResourceMethods: Map<string, NonResourceMethod>,
-  sdkContext: CSharpEmitterContext
+  nonResourceMethods: Map<string, NonResourceMethod>
 ): ArmProviderSchema {
   const resources: ArmResourceSchema[] = [];
 
