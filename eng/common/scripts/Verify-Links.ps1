@@ -163,7 +163,24 @@ function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
 function ProcessNpmLink([System.Uri]$linkUri) {
   # npmjs.com started using Cloudflare which returns 403 and we need to instead check the registry api for existence checks
   # https://github.com/orgs/community/discussions/174098#discussioncomment-14461226
-  $apiUrl = $linkUri.ToString() -replace '^https?://(?:www\.)?npmjs\.com/package/(.*)/v', 'https://registry.npmjs.org/$1'
+  
+  # Handle versioned URLs: https://www.npmjs.com/package/@azure/ai-agents/v/1.1.0 -> https://registry.npmjs.org/@azure/ai-agents/1.1.0
+  # Handle non-versioned URLs: https://www.npmjs.com/package/@azure/ai-agents -> https://registry.npmjs.org/@azure/ai-agents
+  # The regex captures the package name (which may contain a slash for scoped packages) and optionally the version.
+  # Query parameters and URL fragments are excluded from the transformation.
+  $urlString = $linkUri.ToString()
+  if ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/([^?#]+)/v/([^?#]+)') {
+    # Versioned URL: remove the /v/ segment but keep the version
+    $apiUrl = "https://registry.npmjs.org/$($matches[1])/$($matches[2])"
+  }
+  elseif ($urlString -match '^https?://(?:www\.)?npmjs\.com/package/([^?#]+)') {
+    # Non-versioned URL: just replace the domain
+    $apiUrl = "https://registry.npmjs.org/$($matches[1])"
+  }
+  else {
+    # Fallback: use the original URL if it doesn't match expected patterns
+    $apiUrl = $urlString
+  }
 
   return ProcessStandardLink ([System.Uri]$apiUrl)
 }

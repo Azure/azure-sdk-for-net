@@ -107,8 +107,8 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Models.OpenAIModelClient GetOpenAIModelClient() { throw null; }
-        public override OpenAI.Responses.OpenAIResponseClient GetOpenAIResponseClient(string deploymentName) { throw null; }
         public override OpenAI.Realtime.RealtimeClient GetRealtimeClient() { throw null; }
+        public override OpenAI.Responses.ResponsesClient GetResponsesClient(string deploymentName) { throw null; }
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Videos.VideoClient GetVideoClient() { throw null; }

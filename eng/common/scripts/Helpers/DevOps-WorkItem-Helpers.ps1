@@ -65,6 +65,14 @@ function CheckDevOpsAccess()
   }
 }
 
+function GetGroupId($pkg)
+{
+  if ($pkg.PSObject.Properties.Name -contains "GroupId") {
+    return $pkg.GroupId
+  }
+  return $null
+} 
+
 function Invoke-AzBoardsCmd($subCmd, $parameters, $output = $true)
 {
   $azCmdStr = "az boards ${subCmd} $($parameters -join ' ')"
@@ -466,10 +474,11 @@ function UpdatePackageWorkItemReleaseState($id, $state, $releaseType, $outputCom
 
 function FindOrCreateClonePackageWorkItem($lang, $pkg, $verMajorMinor, $allowPrompt = $false, $outputCommand = $false, $relatedId = $null, $tag= $null, $ignoreReleasePlannerTests = $true)
 {
-  $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $pkg.GroupId
+  $groupId = GetGroupId $pkg
+  $workItem = FindPackageWorkItem -lang $lang -packageName $pkg.Package -version $verMajorMinor -includeClosed $true -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $groupId
 
   if (!$workItem) {
-    $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $pkg.GroupId
+    $latestVersionItem = FindLatestPackageWorkItem -lang $lang -packageName $pkg.Package -outputCommand $outputCommand -tag $tag -ignoreReleasePlannerTests $ignoreReleasePlannerTests -groupId $groupId
     $assignedTo = "me"
     $extraFields = @()
     if ($latestVersionItem) {
@@ -519,11 +528,7 @@ function CreateOrUpdatePackageWorkItem($lang, $pkg, $verMajorMinor, $existingIte
   }
 
   # PackageProp object uses Group, while other places use GroupId, such as in work item fields and package csv files.
-  $pkgGroupId = if ($pkg.PSObject.Properties.Name -contains "GroupId") {
-    $pkg.GroupId
-  } else {
-    $null
-  }
+  $pkgGroupId = GetGroupId $pkg
   $pkgName = $pkg.Package
   $pkgDisplayName = $pkg.DisplayName
   $pkgType = $pkg.Type
@@ -1043,7 +1048,7 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
 function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $PipelineUrl)
 {
     $pkgName = $pkgValidationDetails.Name
-    $groupId = $pkgValidationDetails.GroupId
+    $groupId = GetGroupId $pkgValidationDetails
     $versionString = $pkgValidationDetails.Version
 
     $parsedNewVersion = [AzureEngSemanticVersion]::new($versionString)
