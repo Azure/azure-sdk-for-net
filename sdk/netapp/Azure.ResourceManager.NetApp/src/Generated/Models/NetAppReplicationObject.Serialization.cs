@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.NetApp.Models
             ExternalReplicationSetupStatus? externalReplicationSetupStatus = default;
             string externalReplicationSetupInfo = default;
             NetAppMirrorState? mirrorState = default;
-            NetAppRelationshipStatus? relationshipStatus = default;
+            VolumeReplicationRelationshipStatus? relationshipStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    relationshipStatus = new NetAppRelationshipStatus(property.Value.GetString());
+                    relationshipStatus = new VolumeReplicationRelationshipStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

@@ -26,5 +26,13 @@ namespace SpecialWords._ModelProperties
         public virtual Response SameAsModel(SameAsModel body, CancellationToken cancellationToken = default) => throw null;
 
         public virtual Task<Response> SameAsModelAsync(SameAsModel body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Response DictMethods(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Task<Response> DictMethodsAsync(RequestContent content, RequestContext context = null) => throw null;
+
+        public virtual Response DictMethods(DictMethods body, CancellationToken cancellationToken = default) => throw null;
+
+        public virtual Task<Response> DictMethodsAsync(DictMethods body, CancellationToken cancellationToken = default) => throw null;
     }
 }

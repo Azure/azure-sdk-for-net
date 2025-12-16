@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
     public readonly partial struct CloudHsmClusterPrivateEndpointServiceConnectionStatus : IEquatable<CloudHsmClusterPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Connection waiting for approval or rejection. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Connection approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Connection Rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CloudHsmClusterPrivateEndpointServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
+            _value = value;
+        }
 
         /// <summary> Connection waiting for approval or rejection. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Pending { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(PendingValue);
+
         /// <summary> Connection approved. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Approved { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(ApprovedValue);
+
         /// <summary> Connection Rejected. </summary>
         public static CloudHsmClusterPrivateEndpointServiceConnectionStatus Rejected { get; } = new CloudHsmClusterPrivateEndpointServiceConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CloudHsmClusterPrivateEndpointServiceConnectionStatus left, CloudHsmClusterPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CloudHsmClusterPrivateEndpointServiceConnectionStatus left, CloudHsmClusterPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CloudHsmClusterPrivateEndpointServiceConnectionStatus(string value) => new CloudHsmClusterPrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CloudHsmClusterPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CloudHsmClusterPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new CloudHsmClusterPrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CloudHsmClusterPrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CloudHsmClusterPrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

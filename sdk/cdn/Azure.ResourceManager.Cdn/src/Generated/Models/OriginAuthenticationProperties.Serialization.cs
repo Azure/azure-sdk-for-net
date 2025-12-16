@@ -131,6 +131,69 @@ namespace Azure.ResourceManager.Cdn.Models
             return new OriginAuthenticationProperties(type, userAssignedIdentity, scope, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AuthenticationType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AuthenticationType))
+                {
+                    builder.Append("  type: ");
+                    builder.AppendLine($"'{AuthenticationType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("UserAssignedIdentityId", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  userAssignedIdentity: ");
+                builder.AppendLine("{");
+                builder.Append("    id: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(UserAssignedIdentity))
+                {
+                    builder.Append("  userAssignedIdentity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, UserAssignedIdentity, options, 2, false, "  userAssignedIdentity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scope: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Scope))
+                {
+                    builder.Append("  scope: ");
+                    builder.AppendLine($"'{Scope.AbsoluteUri}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<OriginAuthenticationProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OriginAuthenticationProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -139,6 +202,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(OriginAuthenticationProperties)} does not support writing '{options.Format}' format.");
             }

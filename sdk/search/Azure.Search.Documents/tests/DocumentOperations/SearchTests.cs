@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Serialization;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -15,6 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01, SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
     public class SearchTests : SearchTestBase
     {
         public SearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -53,14 +55,14 @@ namespace Azure.Search.Documents.Tests
         }
 
         public FacetResult MakeRangeFacet(int count, object from, object to) =>
-            new FacetResult(count, null, null, new Dictionary<string, object>()
+            new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), additionalProperties: new Dictionary<string, object>()
             {
                 ["from"] = from,
                 ["to"] = to
             });
 
         public FacetResult MakeValueFacet(int count, object value) =>
-            new FacetResult(count, null, null, new Dictionary<string, object>()
+            new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: new Dictionary<string, IList<FacetResult>>(), new Dictionary<string, object>()
             {
                 ["value"] = value
             });
@@ -645,6 +647,48 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(4, second.Count);
         }
 
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+        public async Task MetricFacets()
+        {
+            await using SearchResources resources = await SearchResources.GetSharedHotelsIndexAsync(this);
+            Response<SearchResults<Hotel>> response =
+                await resources.GetQueryClient().SearchAsync<Hotel>(
+                    "*",
+                    new SearchOptions
+                    {
+                        Facets = new[]
+                        {
+                            "rooms/baseRate,metric:sum",
+                            "rooms/baseRate,metric:avg",
+                            "rooms/baseRate,metric:min",
+                            "rooms/baseRate,metric:max, default:0",
+                            "rooms/sleepsCount, metric:cardinality, precisionThreshold: 10"
+                        }
+                    });
+            await AssertKeysContains(
+                response,
+                h => h.Document.HotelId,
+                SearchResources.TestDocuments.Select(h => h.HotelId).ToArray());
+            var test = GetFacetsForField(response.Value.Facets, "rooms/baseRate", 4).ToList();
+
+            Assert.AreEqual(4, test.Count);
+            Assert.IsTrue(AreApproximatelyEqual(27.91, test[0].Sum.Value));
+            Assert.IsTrue(AreApproximatelyEqual(6.9775, test[1].Avg.Value));
+            Assert.IsTrue(AreApproximatelyEqual(2.44, test[2].Min.Value));
+            Assert.IsTrue(AreApproximatelyEqual(9.69, test[3].Max.Value));
+
+            var sleepsCountFacets = GetFacetsForField(response.Value.Facets, "rooms/sleepsCount", 1).ToList();
+            Assert.AreEqual(1, sleepsCountFacets.Count);
+            Assert.AreEqual(sleepsCountFacets[0].Cardinality, 1);
+
+            static bool AreApproximatelyEqual(double expected, double actual, double tolerance = 0.001)
+            {
+                var delta = Math.Abs(expected - actual);
+                return Math.Abs(expected - actual) < tolerance;
+            }
+        }
+
         public class FacetKeyValuePair
         {
             public FacetKeyValuePair() { }
@@ -1021,7 +1065,7 @@ namespace Azure.Search.Documents.Tests
                 SemanticConfigurationName = "my-config",
                 QueryAnswer = new QueryAnswer(QueryAnswerType.Extractive) { Count = 5, Threshold = 0.9, MaxCharLength = 300 },
                 QueryCaption = new QueryCaption(QueryCaptionType.Extractive) { HighlightEnabled = true, MaxCharLength = 300 },
-                QueryRewrites = new QueryRewrites(QueryRewritesType.Generative) { Count = 3},
+                QueryRewrites = new QueryRewrites(QueryRewritesType.Generative) { Count = 3 },
                 ErrorMode = SemanticErrorMode.Partial,
                 MaxWait = TimeSpan.FromMilliseconds(1000),
             };
@@ -1062,6 +1106,25 @@ namespace Azure.Search.Documents.Tests
             Assert.AreEqual(source.VectorSearch.FilterMode, clonedSearchOptions.VectorSearch.FilterMode);
             Assert.AreEqual(source.HybridSearch.MaxTextRecallSize, clonedSearchOptions.HybridSearch.MaxTextRecallSize);
             Assert.AreEqual(source.HybridSearch.CountAndFacetMode, clonedSearchOptions.HybridSearch.CountAndFacetMode);
+        }
+
+        [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2025_11_01_Preview)]
+        public async Task SearchDocumentsWithElevatedReadPermission()
+        {
+            SearchResources resource = await SearchResources.GetSharedHotelsIndexAsync(this);
+            SearchClient client = resource.GetSearchClient();
+            SearchResults<Hotel> results = await client.SearchAsync<Hotel>("*", querySourceAuthorization: null ,enableElevatedRead: true);
+
+            Assert.IsNotNull(results);
+            Assert.AreEqual(10, results.Values.Count);
+
+            // Using a simulated GUID should fail since it is malformed.
+            var fakeGuid = Recording.Random.NewGuid().ToString();
+            Assert.ThrowsAsync<RequestFailedException>(async () =>
+            {
+                await client.SearchAsync<Hotel>("*", querySourceAuthorization: fakeGuid, enableElevatedRead: true);
+            });
         }
 
         /* TODO: Enable these Track 1 tests when we have support for index creation

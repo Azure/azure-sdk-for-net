@@ -32,7 +32,7 @@ namespace Azure.Search.Documents
         /// <param name="xMsClientRequestId"> The tracking ID sent with the request to help with debugging. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public KnowledgeSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2025-08-01-preview")
+        public KnowledgeSourcesRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, Guid? xMsClientRequestId = null, string apiVersion = "2025-11-01-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -403,6 +403,76 @@ namespace Azure.Search.Documents
                         KnowledgeSource value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KnowledgeSource.DeserializeKnowledgeSource(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetStatusRequest(string sourceName)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/knowledgesources('", false);
+            uri.AppendPath(sourceName, true);
+            uri.AppendPath("')/status", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json; odata.metadata=minimal");
+            return message;
+        }
+
+        /// <summary> Returns the current status and synchronization history of a knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source for which to retrieve status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        public async Task<Response<KnowledgeSourceStatus>> GetStatusAsync(string sourceName, CancellationToken cancellationToken = default)
+        {
+            if (sourceName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceName));
+            }
+
+            using var message = CreateGetStatusRequest(sourceName);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KnowledgeSourceStatus value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = KnowledgeSourceStatus.DeserializeKnowledgeSourceStatus(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Returns the current status and synchronization history of a knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source for which to retrieve status. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        public Response<KnowledgeSourceStatus> GetStatus(string sourceName, CancellationToken cancellationToken = default)
+        {
+            if (sourceName == null)
+            {
+                throw new ArgumentNullException(nameof(sourceName));
+            }
+
+            using var message = CreateGetStatusRequest(sourceName);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        KnowledgeSourceStatus value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = KnowledgeSourceStatus.DeserializeKnowledgeSourceStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

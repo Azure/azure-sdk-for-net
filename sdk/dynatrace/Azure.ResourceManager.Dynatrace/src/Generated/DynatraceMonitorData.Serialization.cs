@@ -10,16 +10,23 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dynatrace.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Dynatrace
 {
-    public partial class DynatraceMonitorData : IUtf8JsonSerializable, IJsonModel<DynatraceMonitorData>
+    /// <summary> Dynatrace Monitor Resource. </summary>
+    public partial class DynatraceMonitorData : TrackedResourceData, IJsonModel<DynatraceMonitorData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DynatraceMonitorData"/> for deserialization. </summary>
+        internal DynatraceMonitorData()
+        {
+        }
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DynatraceMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,263 +38,149 @@ namespace Azure.ResourceManager.Dynatrace
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DynatraceMonitorData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 WriteIdentity(writer, options);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(MonitoringStatus))
-            {
-                writer.WritePropertyName("monitoringStatus"u8);
-                writer.WriteStringValue(MonitoringStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(MarketplaceSubscriptionStatus))
-            {
-                writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
-                writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(DynatraceEnvironmentProperties))
-            {
-                writer.WritePropertyName("dynatraceEnvironmentProperties"u8);
-                writer.WriteObjectValue(DynatraceEnvironmentProperties, options);
-            }
-            if (Optional.IsDefined(UserInfo))
-            {
-                writer.WritePropertyName("userInfo"u8);
-                writer.WriteObjectValue(UserInfo, options);
-            }
-            if (Optional.IsDefined(PlanData))
-            {
-                writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(LiftrResourceCategory))
-            {
-                writer.WritePropertyName("liftrResourceCategory"u8);
-                writer.WriteStringValue(LiftrResourceCategory.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(LiftrResourcePreference))
-            {
-                writer.WritePropertyName("liftrResourcePreference"u8);
-                writer.WriteNumberValue(LiftrResourcePreference.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
         }
 
-        DynatraceMonitorData IJsonModel<DynatraceMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynatraceMonitorData IJsonModel<DynatraceMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (DynatraceMonitorData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DynatraceMonitorData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDynatraceMonitorData(document.RootElement, options);
         }
 
-        internal static DynatraceMonitorData DeserializeDynatraceMonitorData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DynatraceMonitorData DeserializeDynatraceMonitorData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
-            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            DynatraceMonitoringStatus? monitoringStatus = default;
-            DynatraceMonitorMarketplaceSubscriptionStatus? marketplaceSubscriptionStatus = default;
-            DynatraceEnvironmentProperties dynatraceEnvironmentProperties = default;
-            DynatraceMonitorUserInfo userInfo = default;
-            DynatraceBillingPlanInfo planData = default;
-            LiftrResourceCategory? liftrResourceCategory = default;
-            int? liftrResourcePreference = default;
-            DynatraceProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            DynatraceMonitorProperties properties = default;
+            ManagedServiceIdentity identity = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    ReadIdentity(property, ref identity);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("tags"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDynatraceContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("tags"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     tags = dictionary;
                     continue;
                 }
-                if (property.NameEquals("location"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    location = new AzureLocation(property.Value.GetString());
+                    location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = DynatraceMonitorProperties.DeserializeDynatraceMonitorProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("identity"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDynatraceContext.Default);
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("monitoringStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            monitoringStatus = new DynatraceMonitoringStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("marketplaceSubscriptionStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            marketplaceSubscriptionStatus = new DynatraceMonitorMarketplaceSubscriptionStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dynatraceEnvironmentProperties"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dynatraceEnvironmentProperties = DynatraceEnvironmentProperties.DeserializeDynatraceEnvironmentProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("userInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            userInfo = DynatraceMonitorUserInfo.DeserializeDynatraceMonitorUserInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("planData"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            planData = DynatraceBillingPlanInfo.DeserializeDynatraceBillingPlanInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("liftrResourceCategory"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            liftrResourceCategory = new LiftrResourceCategory(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("liftrResourcePreference"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            liftrResourcePreference = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new DynatraceProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    ReadIdentity(prop, ref identity);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new DynatraceMonitorData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
+                additionalBinaryDataProperties,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                identity,
-                monitoringStatus,
-                marketplaceSubscriptionStatus,
-                dynatraceEnvironmentProperties,
-                userInfo,
-                planData,
-                liftrResourceCategory,
-                liftrResourcePreference,
-                provisioningState,
-                serializedAdditionalRawData);
+                properties,
+                identity);
         }
 
-        BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DynatraceMonitorData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -297,15 +190,20 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
-        DynatraceMonitorData IPersistableModel<DynatraceMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DynatraceMonitorData IPersistableModel<DynatraceMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => (DynatraceMonitorData)PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDynatraceMonitorData(document.RootElement, options);
                     }
                 default:
@@ -313,6 +211,26 @@ namespace Azure.ResourceManager.Dynatrace
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DynatraceMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="dynatraceMonitorData"> The <see cref="DynatraceMonitorData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DynatraceMonitorData dynatraceMonitorData)
+        {
+            if (dynatraceMonitorData == null)
+            {
+                return null;
+            }
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(dynatraceMonitorData, ModelSerializationExtensions.WireOptions);
+            return content;
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="DynatraceMonitorData"/> from. </param>
+        internal static DynatraceMonitorData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeDynatraceMonitorData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }

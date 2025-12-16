@@ -4,6 +4,10 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 ## Prerequisites
 - To use MCP tool calls, PowerShell must be installed. Provide [PowerShell installation instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) if not installed, and recommend restarting the IDE to use the MCP server.
+- When using Copilot from Visual Studio or VS Code (not applicable when using Coding Agent on Github.com):
+  - **Always run** the [`azsdk_verify_setup`](../eng/common/instructions/azsdk-tools/verify-setup.instructions.md) tool first to validate the user's development environment for SDK MCP tools.
+  - **Do not proceed** with any other tool execution until this step is complete.
+  - **Skip this check only** for queries that do not require tool execution.
 
 ## Folder Structure
 

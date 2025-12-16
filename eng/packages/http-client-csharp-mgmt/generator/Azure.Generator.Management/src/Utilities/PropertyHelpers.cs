@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Extensions;
 using Humanizer;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
@@ -32,8 +31,10 @@ namespace Azure.Generator.Management.Utilities
             while (baseTypes.TryPop(out var item))
             {
                 result.AddRange(item.Properties);
+                result.AddRange(item.CustomCodeView?.Properties ?? []);
             }
             result.AddRange(propertyModelProvider.Properties);
+            result.AddRange(propertyModelProvider.CustomCodeView?.Properties ?? []);
             return result;
         }
 
@@ -86,6 +87,11 @@ namespace Azure.Generator.Management.Utilities
             // For collection types, we initialize the internal property if it's null and return the inner property.
             if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
             {
+                if (!internalProperty.Body.HasSetter)
+                {
+                    return Return(new TernaryConditionalExpression(checkNullExpression, Default, new MemberExpression(internalProperty, innerProperty.Name)));
+                }
+
                 return new List<MethodBodyStatement> {
                     new IfStatement(checkNullExpression)
                     {

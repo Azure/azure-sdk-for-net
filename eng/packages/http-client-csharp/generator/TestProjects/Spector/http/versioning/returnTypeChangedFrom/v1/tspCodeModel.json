@@ -342,6 +342,7 @@
           "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom.version"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Versioning.ReturnTypeChangedFrom",
       "apiVersions": [

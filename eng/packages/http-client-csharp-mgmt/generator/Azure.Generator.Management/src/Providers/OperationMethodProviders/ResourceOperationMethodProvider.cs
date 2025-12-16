@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
@@ -30,6 +29,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
     internal class ResourceOperationMethodProvider
     {
         public bool IsLongRunningOperation { get; }
+        public bool IsFakeLongRunningOperation { get; }
 
         protected readonly TypeProvider _enclosingType;
         protected readonly RequestPathPattern _contextualPath;
@@ -46,7 +46,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private protected readonly CSharpType? _originalBodyType;
         private protected readonly CSharpType? _returnBodyType;
         private protected readonly ResourceClientProvider? _returnBodyResourceClient;
-        private readonly bool _isFakeLongRunningOperation;
         private readonly FormattableString? _description;
 
         /// <summary>
@@ -77,12 +76,14 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _convenienceMethod = _restClient.GetConvenienceMethodByOperation(_serviceMethod.Operation, isAsync);
             bool isLongRunningOperation = false;
+            bool isFakeLongRunningOperation = false;
             InitializeLroFlags(
                 _serviceMethod,
                 forceLro: forceLro,
                 ref isLongRunningOperation,
-                ref _isFakeLongRunningOperation);
+                ref isFakeLongRunningOperation);
             IsLongRunningOperation = isLongRunningOperation;
+            IsFakeLongRunningOperation = isFakeLongRunningOperation;
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _description = description ?? _convenienceMethod.Signature.Description;
             InitializeTypeInfo(
@@ -94,65 +95,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _restClientField = restClientInfo.RestClient;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
-        }
-
-        /// <summary>
-        /// Builds enhanced XML documentation with structured XmlDocStatement objects for proper XML rendering.
-        /// </summary>
-        private static void BuildEnhancedXmlDocs(InputServiceMethod serviceMethod, FormattableString? baseDescription, TypeProvider enclosingType, XmlDocProvider? existingXmlDocs)
-        {
-            if (existingXmlDocs == null)
-            {
-                return;
-            }
-
-            var operation = serviceMethod.Operation;
-
-            // Build list items for the operation metadata
-            var listItems = new List<XmlDocStatement>();
-
-            // Request Path item
-            listItems.Add(new XmlDocStatement("item", [],
-                new XmlDocStatement("term", [$"Request Path"]),
-                new XmlDocStatement("description", [$"{operation.Path}"])));
-
-            // Operation Id item
-            listItems.Add(new XmlDocStatement("item", [],
-                new XmlDocStatement("term", [$"Operation Id"]),
-                new XmlDocStatement("description", [$"{operation.Name}"])));
-
-            // API Version item (if available)
-            var apiVersionParam = operation.Parameters.FirstOrDefault(p => p.IsApiVersion);
-            if (apiVersionParam != null && apiVersionParam.DefaultValue?.Value != null)
-            {
-                listItems.Add(new XmlDocStatement("item", [],
-                    new XmlDocStatement("term", [$"Default Api Version"]),
-                    new XmlDocStatement("description", [$"{apiVersionParam.DefaultValue.Value}"])));
-            }
-
-            // Resource item (if enclosing type is a ResourceClientProvider)
-            if (enclosingType is ResourceClientProvider resourceClient)
-            {
-                listItems.Add(new XmlDocStatement("item", [],
-                    new XmlDocStatement("term", [$"Resource"]),
-                    new XmlDocStatement("description", [$"{resourceClient.Type:C}"])));
-            }
-
-            // Create the list statement
-            var listStatement = new XmlDocStatement($"<list type=\"bullet\">", $"</list>", [], innerStatements: listItems.ToArray());
-
-            // Build the complete summary with base description and metadata list
-            var summaryContent = new List<FormattableString>();
-            if (baseDescription != null)
-            {
-                summaryContent.Add(baseDescription);
-            }
-
-            // Create summary statement with the list as inner content
-            var summaryStatement = new XmlDocSummaryStatement(summaryContent, listStatement);
-
-            // Update the XmlDocs with the new summary
-            existingXmlDocs.Update(summary: summaryStatement);
         }
 
         private static void InitializeLroFlags(
@@ -186,20 +128,24 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected virtual CSharpType BuildReturnType()
         {
-            return _returnBodyType.WrapResponse(IsLongRunningOperation || _isFakeLongRunningOperation).WrapAsync(_isAsync);
+            return _returnBodyType.WrapResponse(IsLongRunningOperation || IsFakeLongRunningOperation).WrapAsync(_isAsync);
         }
 
         public static implicit operator MethodProvider(ResourceOperationMethodProvider resourceOperationMethodProvider)
         {
-            var methodProvider = new MethodProvider(
+            var methodProvider = new ScmMethodProvider(
                 resourceOperationMethodProvider._signature,
                 resourceOperationMethodProvider._bodyStatements,
-                resourceOperationMethodProvider._enclosingType);
+                resourceOperationMethodProvider._enclosingType,
+                ScmMethodKind.Convenience,
+                null,
+                null,
+                resourceOperationMethodProvider._serviceMethod);
 
             // Add enhanced XML documentation with structured tags
-            BuildEnhancedXmlDocs(
+            ResourceHelpers.BuildEnhancedXmlDocs(
                 resourceOperationMethodProvider._serviceMethod,
-                resourceOperationMethodProvider._convenienceMethod.Signature.Description,
+                resourceOperationMethodProvider._description,
                 resourceOperationMethodProvider._enclosingType,
                 methodProvider.XmlDocs);
 
@@ -221,7 +167,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected IReadOnlyList<ParameterProvider> GetOperationMethodParameters()
         {
-            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, _isFakeLongRunningOperation);
+            return OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, IsFakeLongRunningOperation);
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -257,10 +203,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (IsLongRunningOperation || _isFakeLongRunningOperation)
+            if (IsLongRunningOperation || IsFakeLongRunningOperation)
             {
                 tryStatements.AddRange(
-                    _isFakeLongRunningOperation ?
+                    IsFakeLongRunningOperation ?
                     BuildFakeLroHandling(messageVariable, responseVariable, cancellationTokenParameter) :
                     BuildLroHandling(messageVariable, responseVariable, cancellationTokenParameter));
             }

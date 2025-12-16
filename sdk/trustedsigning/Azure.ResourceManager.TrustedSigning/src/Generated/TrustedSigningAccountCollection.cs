@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.TrustedSigning
 {
     /// <summary>
     /// A class representing a collection of <see cref="TrustedSigningAccountResource"/> and their operations.
-    /// Each <see cref="TrustedSigningAccountResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="TrustedSigningAccountCollection"/> instance call the GetTrustedSigningAccounts method from an instance of the parent resource.
+    /// Each <see cref="TrustedSigningAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="TrustedSigningAccountCollection"/> instance call the GetTrustedSigningAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class TrustedSigningAccountCollection : ArmCollection, IEnumerable<TrustedSigningAccountResource>, IAsyncEnumerable<TrustedSigningAccountResource>
     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> CodeSigningAccounts_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Create. </description>
+        /// <description> CodeSigningAccounts_Create. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.TrustedSigning
             }
         }
 
-        /// <summary> Lists trusted signing accounts within a resource group. </summary>
+        /// <summary>
+        /// Lists trusted signing accounts within a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TrustedSigningAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.TrustedSigning
             return new AsyncPageableWrapper<TrustedSigningAccountData, TrustedSigningAccountResource>(new CodeSigningAccountsGetByResourceGroupAsyncCollectionResultOfT(_codeSigningAccountsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new TrustedSigningAccountResource(Client, data));
         }
 
-        /// <summary> Lists trusted signing accounts within a resource group. </summary>
+        /// <summary>
+        /// Lists trusted signing accounts within a resource group.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CodeSigning/codeSigningAccounts. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CodeSigningAccounts_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-10-13. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="TrustedSigningAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TrustedSigningAccountResource> GetAll(CancellationToken cancellationToken = default)
@@ -294,7 +326,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +334,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,7 +391,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,7 +440,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,7 +448,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +501,7 @@ namespace Azure.ResourceManager.TrustedSigning
         }
 
         /// <summary>
-        /// Get a trusted Signing Account.
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,7 +509,7 @@ namespace Azure.ResourceManager.TrustedSigning
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> CodeSigningAccounts_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

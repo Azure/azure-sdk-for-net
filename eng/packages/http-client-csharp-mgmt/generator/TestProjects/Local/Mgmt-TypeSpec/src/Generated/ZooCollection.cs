@@ -21,8 +21,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="ZooResource"/> and their operations.
-    /// Each <see cref="ZooResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="ZooCollection"/> instance call the GetZoos method from an instance of the parent resource.
+    /// Each <see cref="ZooResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ZooCollection"/> instance call the GetZoos method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ZooCollection : ArmCollection, IEnumerable<ZooResource>, IAsyncEnumerable<ZooResource>
     {
@@ -68,7 +68,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Zoos_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -126,7 +126,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Zoos_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -184,7 +184,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Zoos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -233,7 +233,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Zoos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -273,7 +273,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> List Zoo resources by resource group. </summary>
+        /// <summary>
+        /// List Zoo resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Zoos_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ZooResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -285,7 +301,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return new AsyncPageableWrapper<ZooData, ZooResource>(new ZoosGetAllAsyncCollectionResultOfT(_zoosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new ZooResource(Client, data));
         }
 
-        /// <summary> List Zoo resources by resource group. </summary>
+        /// <summary>
+        /// List Zoo resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/zoos. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Zoos_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ZooResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ZooResource> GetAll(CancellationToken cancellationToken = default)
@@ -298,7 +330,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Zoo
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -306,7 +338,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Zoos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -355,7 +387,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Zoo
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -363,7 +395,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Zoos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -412,7 +444,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Zoo
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -420,7 +452,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Zoos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -473,7 +505,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a Zoo
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -481,7 +513,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Zoos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

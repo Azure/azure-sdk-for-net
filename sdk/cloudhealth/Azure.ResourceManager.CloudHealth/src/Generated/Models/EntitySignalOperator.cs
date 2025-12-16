@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CloudHealth;
 
 namespace Azure.ResourceManager.CloudHealth.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public readonly partial struct EntitySignalOperator : IEquatable<EntitySignalOperator>
     {
         private readonly string _value;
+        /// <summary> Lower than. </summary>
+        private const string LowerThanValue = "LowerThan";
+        /// <summary> Lower than or equal to. </summary>
+        private const string LowerOrEqualsValue = "LowerOrEquals";
+        /// <summary> Greater than. </summary>
+        private const string GreaterThanValue = "GreaterThan";
+        /// <summary> Greater than or equal to. </summary>
+        private const string GreaterOrEqualsValue = "GreaterOrEquals";
+        /// <summary> Equal to. </summary>
+        private const string EqualsValueValue = "Equals";
 
         /// <summary> Initializes a new instance of <see cref="EntitySignalOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EntitySignalOperator(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string LowerThanValue = "LowerThan";
-        private const string LowerOrEqualsValue = "LowerOrEquals";
-        private const string GreaterThanValue = "GreaterThan";
-        private const string GreaterOrEqualsValue = "GreaterOrEquals";
-        private const string EqualsValueValue = "Equals";
+            _value = value;
+        }
 
         /// <summary> Lower than. </summary>
         public static EntitySignalOperator LowerThan { get; } = new EntitySignalOperator(LowerThanValue);
+
         /// <summary> Lower than or equal to. </summary>
         public static EntitySignalOperator LowerOrEquals { get; } = new EntitySignalOperator(LowerOrEqualsValue);
+
         /// <summary> Greater than. </summary>
         public static EntitySignalOperator GreaterThan { get; } = new EntitySignalOperator(GreaterThanValue);
+
         /// <summary> Greater than or equal to. </summary>
         public static EntitySignalOperator GreaterOrEquals { get; } = new EntitySignalOperator(GreaterOrEqualsValue);
+
         /// <summary> Equal to. </summary>
         public static EntitySignalOperator EqualsValue { get; } = new EntitySignalOperator(EqualsValueValue);
+
         /// <summary> Determines if two <see cref="EntitySignalOperator"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EntitySignalOperator left, EntitySignalOperator right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EntitySignalOperator"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EntitySignalOperator left, EntitySignalOperator right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EntitySignalOperator"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EntitySignalOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EntitySignalOperator(string value) => new EntitySignalOperator(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EntitySignalOperator"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EntitySignalOperator?(string value) => value == null ? null : new EntitySignalOperator(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EntitySignalOperator other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EntitySignalOperator other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

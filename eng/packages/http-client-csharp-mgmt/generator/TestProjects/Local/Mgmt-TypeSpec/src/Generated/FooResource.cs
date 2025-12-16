@@ -102,7 +102,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Foos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -150,7 +150,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Foos_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -198,7 +198,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Foos_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -247,7 +247,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Delete. </description>
+        /// <description> Foos_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -296,7 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> FooAction. </description>
+        /// <description> Foos_FooAction. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -355,7 +355,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> FooAction. </description>
+        /// <description> Foos_FooAction. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -406,7 +406,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Foo
+        /// Update a Foo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -414,7 +414,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Foos_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -465,7 +465,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a Foo
+        /// Update a Foo.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -473,7 +473,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Foos_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -555,7 +555,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -598,7 +598,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -640,7 +640,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -682,7 +682,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -723,7 +723,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken).ConfigureAwait(false);
+                    ArmOperation<FooResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -764,7 +764,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     FooData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken);
+                    ArmOperation<FooResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

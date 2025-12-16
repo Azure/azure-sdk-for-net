@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     /// <summary>
     /// A class representing a collection of <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> and their operations.
-    /// Each <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredAssetCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredAssets method from an instance of the parent resource.
+    /// Each <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> in the collection will belong to the same instance of <see cref="DeviceRegistryNamespaceResource"/>.
+    /// To get a <see cref="DeviceRegistryNamespaceDiscoveredAssetCollection"/> instance call the GetDeviceRegistryNamespaceDiscoveredAssets method from an instance of <see cref="DeviceRegistryNamespaceResource"/>.
     /// </summary>
     public partial class DeviceRegistryNamespaceDiscoveredAssetCollection : ArmCollection, IEnumerable<DeviceRegistryNamespaceDiscoveredAssetResource>, IAsyncEnumerable<DeviceRegistryNamespaceDiscoveredAssetResource>
     {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryNamespaceDiscoveredAssetResource.ResourceType, out string deviceRegistryNamespaceDiscoveredAssetApiVersion);
             _namespaceDiscoveredAssetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceDiscoveredAssetResource.ResourceType.Namespace, Diagnostics);
-            _namespaceDiscoveredAssetsRestClient = new NamespaceDiscoveredAssets(_namespaceDiscoveredAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDiscoveredAssetApiVersion ?? "2025-10-01");
+            _namespaceDiscoveredAssetsRestClient = new NamespaceDiscoveredAssets(_namespaceDiscoveredAssetsClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDiscoveredAssetApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrReplace. </description>
+        /// <description> NamespaceDiscoveredAssets_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,11 +121,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrReplace. </description>
+        /// <description> NamespaceDiscoveredAssets_CreateOrReplace. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,11 +179,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceDiscoveredAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceDiscoveredAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,7 +268,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             }
         }
 
-        /// <summary> List NamespaceDiscoveredAsset resources by Namespace. </summary>
+        /// <summary>
+        /// List NamespaceDiscoveredAsset resources by Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredAssets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamespaceDiscoveredAssets_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DeviceRegistryNamespaceDiscoveredAssetResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -280,7 +296,23 @@ namespace Azure.ResourceManager.DeviceRegistry
             return new AsyncPageableWrapper<DeviceRegistryNamespaceDiscoveredAssetData, DeviceRegistryNamespaceDiscoveredAssetResource>(new NamespaceDiscoveredAssetsGetByResourceGroupAsyncCollectionResultOfT(_namespaceDiscoveredAssetsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new DeviceRegistryNamespaceDiscoveredAssetResource(Client, data));
         }
 
-        /// <summary> List NamespaceDiscoveredAsset resources by Namespace. </summary>
+        /// <summary>
+        /// List NamespaceDiscoveredAsset resources by Namespace
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DeviceRegistry/namespaces/{namespaceName}/discoveredAssets. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> NamespaceDiscoveredAssets_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-11-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DeviceRegistryNamespaceDiscoveredAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DeviceRegistryNamespaceDiscoveredAssetResource> GetAll(CancellationToken cancellationToken = default)
@@ -293,7 +325,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Get a NamespaceDiscoveredAsset
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -301,11 +333,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceDiscoveredAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -350,7 +382,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Get a NamespaceDiscoveredAsset
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -358,11 +390,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceDiscoveredAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -407,7 +439,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Get a NamespaceDiscoveredAsset
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -415,11 +447,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceDiscoveredAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,7 +500,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// Get a NamespaceDiscoveredAsset
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -476,11 +508,11 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> NamespaceDiscoveredAssets_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

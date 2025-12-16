@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 {
     /// <summary>
     /// A class representing a collection of <see cref="InformaticaOrganizationResource"/> and their operations.
-    /// Each <see cref="InformaticaOrganizationResource"/> in the collection will belong to the same instance of a parent resource (TODO: add parent resource information).
-    /// To get a <see cref="InformaticaOrganizationCollection"/> instance call the GetInformaticaOrganizations method from an instance of the parent resource.
+    /// Each <see cref="InformaticaOrganizationResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="InformaticaOrganizationCollection"/> instance call the GetInformaticaOrganizations method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class InformaticaOrganizationCollection : ArmCollection, IEnumerable<InformaticaOrganizationResource>, IAsyncEnumerable<InformaticaOrganizationResource>
     {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Organizations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CreateOrUpdate. </description>
+        /// <description> Organizations_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -269,7 +269,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             }
         }
 
-        /// <summary> List InformaticaOrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List InformaticaOrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InformaticaOrganizationResource> GetAllAsync(CancellationToken cancellationToken = default)
@@ -281,7 +297,23 @@ namespace Azure.ResourceManager.InformaticaDataManagement
             return new AsyncPageableWrapper<InformaticaOrganizationData, InformaticaOrganizationResource>(new OrganizationsGetByResourceGroupAsyncCollectionResultOfT(_organizationsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context), data => new InformaticaOrganizationResource(Client, data));
         }
 
-        /// <summary> List InformaticaOrganizationResource resources by resource group. </summary>
+        /// <summary>
+        /// List InformaticaOrganizationResource resources by resource group
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Informatica.DataManagement/organizations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Organizations_ListByResourceGroup. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-08. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="InformaticaOrganizationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InformaticaOrganizationResource> GetAll(CancellationToken cancellationToken = default)
@@ -294,7 +326,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -302,7 +334,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -351,7 +383,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -359,7 +391,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -408,7 +440,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -416,7 +448,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -469,7 +501,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         }
 
         /// <summary>
-        /// Get a InformaticaOrganizationResource
+        /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -477,7 +509,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> Get. </description>
+        /// <description> Organizations_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>

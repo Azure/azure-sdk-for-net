@@ -7,7 +7,7 @@
 
 using Azure.Core;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Override
+namespace Specs.Azure.ClientGenerator.Core.Override
 {
     public partial class OverrideClientOptions : ClientOptions
     {

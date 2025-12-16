@@ -323,7 +323,7 @@ namespace Azure.Storage.Files.Shares
                     Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
                 },
-                ContentHash = response.Headers.ContentMD5,
+                //ContentHash = response.Headers.ContentMD5,
             };
 
             return shareFileInfo;

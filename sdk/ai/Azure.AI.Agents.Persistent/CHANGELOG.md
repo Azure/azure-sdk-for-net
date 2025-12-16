@@ -1,5 +1,29 @@
 # Release History
 
+## 1.2.0-beta.9 (Unreleased)
+
+### Features Added
+- Added support for `CodeInterpreterToolCallContent` from `Microsoft.Extensions.AI` abstractions when executing `HostedCodeInterpreterTool` tool.
+
+### Breaking Changes
+
+### Bugs Fixed
+- Fixed a performance issue in `PersistentAgentsChatClient.GetStreamingResponseAsync` [issue](https://github.com/Azure/azure-sdk-for-net/issues/54326).
+
+### Other Changes
+
+## 1.2.0-beta.8 (2025-12-01)
+
+### Features Added
+- Added support for Computer usage.
+- Improved handling of errors by `PersistentAgentsChatClient` in the streaming scenarios.
+
+### Bugs Fixed
+- Fix the issue with `PersistentAgentsChatClient` when the run in incomplete state is encountered [issue](https://github.com/microsoft/agent-framework/issues/2298).
+
+### Sample updates
+- Added sample for Computer usage.
+
 ## 1.2.0-beta.7 (2025-10-28)
 
 ### Breaking Changes

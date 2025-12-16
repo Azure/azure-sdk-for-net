@@ -26,7 +26,7 @@ namespace Azure.Compute.Batch
         private const string ManualValue = "manual";
         private const string RollingValue = "rolling";
 
-        /// <summary> TAll virtual machines in the scale set are automatically updated at the same time. </summary>
+        /// <summary> All virtual machines in the scale set are automatically updated at the same time. </summary>
         public static UpgradeMode Automatic { get; } = new UpgradeMode(AutomaticValue);
         /// <summary> You control the application of updates to virtual machines in the scale set. You do this by using the manualUpgrade action. </summary>
         public static UpgradeMode Manual { get; } = new UpgradeMode(ManualValue);
