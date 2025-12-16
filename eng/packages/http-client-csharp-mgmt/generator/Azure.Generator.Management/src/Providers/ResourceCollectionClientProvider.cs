@@ -380,7 +380,7 @@ namespace Azure.Generator.Management.Providers
             };
         }
 
-        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string methodName)
+        private MethodProvider BuildNonPagingGetAllMethod(InputServiceMethod method, RestClientInfo clientInfo, bool isAsync, string? methodName)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable
             var responseBodyType = method.GetResponseBodyType();
@@ -388,7 +388,7 @@ namespace Azure.Generator.Management.Providers
             {
                 return new SinglePageListOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
             }
-            
+
             return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
         }
 

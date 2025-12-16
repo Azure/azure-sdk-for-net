@@ -345,7 +345,7 @@ namespace Azure.Generator.Management.Providers
             {
                 return new SinglePageListOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
             }
-            
+
             return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
         }
 

@@ -483,7 +483,7 @@ namespace Azure.Generator.Management.Providers
             return [.. methods];
         }
 
-        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string methodName, bool isFakeLro)
+        private MethodProvider BuildResourceOperationMethod(InputServiceMethod method, RestClientInfo restClientInfo, bool isAsync, string? methodName, bool isFakeLro)
         {
             // Check if the response body type is a list - if so, wrap it in a single-page pageable
             var responseBodyType = method.GetResponseBodyType();
@@ -491,7 +491,7 @@ namespace Azure.Generator.Management.Providers
             {
                 return new SinglePageListOperationMethodProvider(this, _contextualPath, restClientInfo, method, isAsync, methodName);
             }
-            
+
             return new ResourceOperationMethodProvider(this, _contextualPath, restClientInfo, method, isAsync, methodName, forceLro: isFakeLro);
         }
 
