@@ -13,14 +13,13 @@ namespace Azure.Generator.Management
     /// <inheritdoc/>
     public class ManagementInputLibrary : InputLibrary
     {
-        private const string ResourceMetadataDecoratorName = "Azure.ClientGenerator.Core.@resourceSchema";
-        private const string NonResourceMethodMetadata = "Azure.ClientGenerator.Core.@nonResourceMethodSchema";
         private const string ArmProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@armProviderSchema";
         private const string FlattenPropertyDecoratorName = "Azure.ResourceManager.@flattenProperty";
 
         private IReadOnlyDictionary<string, InputServiceMethod>? _inputServiceMethodsByCrossLanguageDefinitionId;
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
+        private ArmProviderSchema? _providerSchema;
 
         private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
 
@@ -122,6 +121,8 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, string> ResourceUpdateModelToResourceNameMap => _resourceUpdateModelToResourceNameMap ??= BuildResourceUpdateModelToResourceNameMap();
 
+        internal ArmProviderSchema ArmProviderSchema => _providerSchema ??= BuildArmProviderSchema();
+
         // If there're multiple API versions in the input namespace, use the last one as the default.
         internal string DefaultApiVersion => InputNamespace.ApiVersions.Last();
 
@@ -169,6 +170,11 @@ namespace Azure.Generator.Management
                 }
             }
             return map;
+        }
+
+        private ArmProviderSchema BuildArmProviderSchema()
+        {
+            return new ArmProviderSchema(ResourceMetadatas, NonResourceMethods);
         }
 
         internal InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
