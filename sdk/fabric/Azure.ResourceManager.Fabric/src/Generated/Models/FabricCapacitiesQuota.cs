@@ -11,29 +11,29 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> Describes Resource Quota. </summary>
-    public partial class FabricQuota
+    public partial class FabricCapacitiesQuota
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricQuota"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricCapacitiesQuota"/>. </summary>
         /// <param name="unit"> The unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
-        internal FabricQuota(string unit, long currentValue, long limit)
+        internal FabricCapacitiesQuota(string unit, long currentValue, long limit)
         {
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricQuota"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricCapacitiesQuota"/>. </summary>
         /// <param name="name"> The name of the quota. </param>
         /// <param name="unit"> The unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricQuota(FabricQuotaName name, string unit, long currentValue, long limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricCapacitiesQuota(FabricCapacitiesQuotaName name, string unit, long currentValue, long limit, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Unit = unit;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Fabric.Models
         }
 
         /// <summary> The name of the quota. </summary>
-        public FabricQuotaName Name { get; }
+        public FabricCapacitiesQuotaName Name { get; }
 
         /// <summary> The unit of usage measurement. </summary>
         public string Unit { get; }

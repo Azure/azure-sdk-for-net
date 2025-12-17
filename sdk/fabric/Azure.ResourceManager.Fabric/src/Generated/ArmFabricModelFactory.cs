@@ -111,19 +111,19 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="unit"> The unit of usage measurement. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
         /// <param name="limit"> The maximum permitted usage of the resource. </param>
-        /// <returns> A new <see cref="Models.FabricQuota"/> instance for mocking. </returns>
-        public static FabricQuota FabricQuota(FabricQuotaName name = default, string unit = default, long currentValue = default, long limit = default)
+        /// <returns> A new <see cref="Models.FabricCapacitiesQuota"/> instance for mocking. </returns>
+        public static FabricCapacitiesQuota FabricCapacitiesQuota(FabricCapacitiesQuotaName name = default, string unit = default, long currentValue = default, long limit = default)
         {
-            return new FabricQuota(name, unit, currentValue, limit, additionalBinaryDataProperties: null);
+            return new FabricCapacitiesQuota(name, unit, currentValue, limit, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The Quota Names. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
-        /// <returns> A new <see cref="Models.FabricQuotaName"/> instance for mocking. </returns>
-        public static FabricQuotaName FabricQuotaName(string value = default, string localizedValue = default)
+        /// <returns> A new <see cref="Models.FabricCapacitiesQuotaName"/> instance for mocking. </returns>
+        public static FabricCapacitiesQuotaName FabricCapacitiesQuotaName(string value = default, string localizedValue = default)
         {
-            return new FabricQuotaName(value, localizedValue, additionalBinaryDataProperties: null);
+            return new FabricCapacitiesQuotaName(value, localizedValue, additionalBinaryDataProperties: null);
         }
     }
 }

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Fabric.Models
 {
     /// <summary> The Quota Names. </summary>
-    public partial class FabricQuotaName
+    public partial class FabricCapacitiesQuotaName
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricQuotaName"/>. </summary>
-        internal FabricQuotaName()
+        /// <summary> Initializes a new instance of <see cref="FabricCapacitiesQuotaName"/>. </summary>
+        internal FabricCapacitiesQuotaName()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricQuotaName"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FabricCapacitiesQuotaName"/>. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricQuotaName(string value, string localizedValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricCapacitiesQuotaName(string value, string localizedValue, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             LocalizedValue = localizedValue;

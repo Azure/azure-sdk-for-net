@@ -232,8 +232,8 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="FabricQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<FabricQuota> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FabricCapacitiesQuota> GetUsagesAsync(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="location"> The location name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="FabricQuota"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<FabricQuota> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FabricCapacitiesQuota> GetUsages(this SubscriptionResource subscriptionResource, string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

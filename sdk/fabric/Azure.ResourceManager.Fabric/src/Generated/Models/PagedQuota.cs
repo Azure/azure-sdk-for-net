@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <summary> Initializes a new instance of <see cref="PagedQuota"/>. </summary>
         /// <param name="value"> The Quota items on this page. </param>
-        internal PagedQuota(IEnumerable<FabricQuota> value)
+        internal PagedQuota(IEnumerable<FabricCapacitiesQuota> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="value"> The Quota items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PagedQuota(IList<FabricQuota> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PagedQuota(IList<FabricCapacitiesQuota> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Fabric.Models
         }
 
         /// <summary> The Quota items on this page. </summary>
-        public IList<FabricQuota> Value { get; }
+        public IList<FabricCapacitiesQuota> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

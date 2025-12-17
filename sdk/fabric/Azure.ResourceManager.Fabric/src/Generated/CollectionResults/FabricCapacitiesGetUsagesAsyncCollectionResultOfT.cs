@@ -15,7 +15,7 @@ using Azure.ResourceManager.Fabric.Models;
 
 namespace Azure.ResourceManager.Fabric
 {
-    internal partial class FabricCapacitiesGetUsagesAsyncCollectionResultOfT : AsyncPageable<FabricQuota>
+    internal partial class FabricCapacitiesGetUsagesAsyncCollectionResultOfT : AsyncPageable<FabricCapacitiesQuota>
     {
         private readonly FabricCapacities _client;
         private readonly Guid _subscriptionId;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Fabric
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FabricCapacitiesGetUsagesAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FabricQuota>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<FabricCapacitiesQuota>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Fabric
                     yield break;
                 }
                 PagedQuota result = PagedQuota.FromResponse(response);
-                yield return Page<FabricQuota>.FromValues((IReadOnlyList<FabricQuota>)result.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<FabricCapacitiesQuota>.FromValues((IReadOnlyList<FabricCapacitiesQuota>)result.Value, nextPage?.AbsoluteUri, response);
                 nextPage = result.NextLink;
                 if (nextPage == null)
                 {

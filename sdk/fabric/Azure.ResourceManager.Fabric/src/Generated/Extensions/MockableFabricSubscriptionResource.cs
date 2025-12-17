@@ -239,8 +239,8 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="FabricQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<FabricQuota> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FabricCapacitiesQuota> GetUsagesAsync(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 
@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <returns> A collection of <see cref="FabricQuota"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<FabricQuota> GetUsages(string location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="FabricCapacitiesQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FabricCapacitiesQuota> GetUsages(string location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(location, nameof(location));
 

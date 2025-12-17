@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.Fabric
         public static Azure.ResourceManager.Fabric.FabricCapacityResource GetFabricCapacityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity> GetSkusFabricCapacities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.Pageable<Azure.ResourceManager.Fabric.Models.FabricQuota> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static Azure.AsyncPageable<Azure.ResourceManager.Fabric.Models.FabricQuota> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Pageable<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota> GetUsages(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.AsyncPageable<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota> GetUsagesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Fabric.Mocking
@@ -108,23 +108,55 @@ namespace Azure.ResourceManager.Fabric.Mocking
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Fabric.FabricCapacityResource> GetFabricCapacitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity> GetSkusFabricCapacities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity> GetSkusFabricCapacitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Fabric.Models.FabricQuota> GetUsages(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Fabric.Models.FabricQuota> GetUsagesAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota> GetUsages(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota> GetUsagesAsync(string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Fabric.Models
 {
     public static partial class ArmFabricModelFactory
     {
+        public static Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota FabricCapacitiesQuota(Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName name = null, string unit = null, long currentValue = (long)0, long limit = (long)0) { throw null; }
+        public static Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName FabricCapacitiesQuotaName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricCapacityAdministration FabricCapacityAdministration(System.Collections.Generic.IEnumerable<string> members = null) { throw null; }
         public static Azure.ResourceManager.Fabric.FabricCapacityData FabricCapacityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Fabric.Models.FabricCapacityProperties properties = null, Azure.ResourceManager.Fabric.Models.FabricSku sku = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricCapacityPatch FabricCapacityPatch(Azure.ResourceManager.Fabric.Models.FabricSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricCapacityProperties FabricCapacityProperties(Azure.ResourceManager.Fabric.Models.FabricProvisioningState? provisioningState = default(Azure.ResourceManager.Fabric.Models.FabricProvisioningState?), Azure.ResourceManager.Fabric.Models.FabricResourceState? state = default(Azure.ResourceManager.Fabric.Models.FabricResourceState?), System.Collections.Generic.IEnumerable<string> administrationMembers = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricNameAvailabilityResult FabricNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason? reason = default(Azure.ResourceManager.Fabric.Models.FabricNameUnavailableReason?), string message = null) { throw null; }
-        public static Azure.ResourceManager.Fabric.Models.FabricQuota FabricQuota(Azure.ResourceManager.Fabric.Models.FabricQuotaName name = null, string unit = null, long currentValue = (long)0, long limit = (long)0) { throw null; }
-        public static Azure.ResourceManager.Fabric.Models.FabricQuotaName FabricQuotaName(string value = null, string localizedValue = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForExistingCapacity FabricSkuDetailsForExistingCapacity(string resourceType = null, Azure.ResourceManager.Fabric.Models.FabricSku sku = null) { throw null; }
         public static Azure.ResourceManager.Fabric.Models.FabricSkuDetailsForNewCapacity FabricSkuDetailsForNewCapacity(string resourceType = null, string name = null, System.Collections.Generic.IEnumerable<Azure.Core.AzureLocation> locations = null) { throw null; }
+    }
+    public partial class FabricCapacitiesQuota : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>
+    {
+        internal FabricCapacitiesQuota() { }
+        public long CurrentValue { get { throw null; } }
+        public long Limit { get { throw null; } }
+        public Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName Name { get { throw null; } }
+        public string Unit { get { throw null; } }
+        protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuota>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class FabricCapacitiesQuotaName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName>
+    {
+        internal FabricCapacitiesQuotaName() { }
+        public string LocalizedValue { get { throw null; } }
+        public string Value { get { throw null; } }
+        protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacitiesQuotaName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FabricCapacityAdministration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacityAdministration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacityAdministration>
     {
@@ -259,38 +291,6 @@ namespace Azure.ResourceManager.Fabric.Models
         public static implicit operator Azure.ResourceManager.Fabric.Models.FabricProvisioningState? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Fabric.Models.FabricProvisioningState left, Azure.ResourceManager.Fabric.Models.FabricProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class FabricQuota : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricQuota>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuota>
-    {
-        internal FabricQuota() { }
-        public long CurrentValue { get { throw null; } }
-        public long Limit { get { throw null; } }
-        public Azure.ResourceManager.Fabric.Models.FabricQuotaName Name { get { throw null; } }
-        public string Unit { get { throw null; } }
-        protected virtual Azure.ResourceManager.Fabric.Models.FabricQuota JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Fabric.Models.FabricQuota PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Fabric.Models.FabricQuota System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricQuota>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricQuota>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Fabric.Models.FabricQuota System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuota>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuota>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuota>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class FabricQuotaName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricQuotaName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuotaName>
-    {
-        internal FabricQuotaName() { }
-        public string LocalizedValue { get { throw null; } }
-        public string Value { get { throw null; } }
-        protected virtual Azure.ResourceManager.Fabric.Models.FabricQuotaName JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Fabric.Models.FabricQuotaName PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.Fabric.Models.FabricQuotaName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricQuotaName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricQuotaName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.Fabric.Models.FabricQuotaName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuotaName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuotaName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricQuotaName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FabricResourceState : System.IEquatable<Azure.ResourceManager.Fabric.Models.FabricResourceState>

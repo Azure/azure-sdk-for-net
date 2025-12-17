@@ -13,17 +13,12 @@ using Azure.ResourceManager.Fabric;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    /// <summary> Describes Resource Quota. </summary>
-    public partial class FabricQuota : IJsonModel<FabricQuota>
+    /// <summary> The Quota Names. </summary>
+    public partial class FabricCapacitiesQuotaName : IJsonModel<FabricCapacitiesQuotaName>
     {
-        /// <summary> Initializes a new instance of <see cref="FabricQuota"/> for deserialization. </summary>
-        internal FabricQuota()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FabricQuota>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FabricCapacitiesQuotaName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,22 +29,21 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacitiesQuotaName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricQuota)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricCapacitiesQuotaName)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name, options);
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
             }
-            writer.WritePropertyName("unit"u8);
-            writer.WriteStringValue(Unit);
-            writer.WritePropertyName("currentValue"u8);
-            writer.WriteNumberValue(CurrentValue);
-            writer.WritePropertyName("limit"u8);
-            writer.WriteNumberValue(Limit);
+            if (Optional.IsDefined(LocalizedValue))
+            {
+                writer.WritePropertyName("localizedValue"u8);
+                writer.WriteStringValue(LocalizedValue);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -69,58 +63,42 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricQuota IJsonModel<FabricQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FabricCapacitiesQuotaName IJsonModel<FabricCapacitiesQuotaName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricQuota JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FabricCapacitiesQuotaName JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacitiesQuotaName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricQuota)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FabricCapacitiesQuotaName)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricQuota(document.RootElement, options);
+            return DeserializeFabricCapacitiesQuotaName(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FabricQuota DeserializeFabricQuota(JsonElement element, ModelReaderWriterOptions options)
+        internal static FabricCapacitiesQuotaName DeserializeFabricCapacitiesQuotaName(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FabricQuotaName name = default;
-            string unit = default;
-            long currentValue = default;
-            long limit = default;
+            string value = default;
+            string localizedValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    name = FabricQuotaName.DeserializeFabricQuotaName(prop.Value, options);
+                    value = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("unit"u8))
+                if (prop.NameEquals("localizedValue"u8))
                 {
-                    unit = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("currentValue"u8))
-                {
-                    currentValue = prop.Value.GetInt64();
-                    continue;
-                }
-                if (prop.NameEquals("limit"u8))
-                {
-                    limit = prop.Value.GetInt64();
+                    localizedValue = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,47 +106,47 @@ namespace Azure.ResourceManager.Fabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricQuota(name, unit, currentValue, limit, additionalBinaryDataProperties);
+            return new FabricCapacitiesQuotaName(value, localizedValue, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FabricQuota>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FabricCapacitiesQuotaName>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacitiesQuotaName>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerFabricContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FabricQuota)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricCapacitiesQuotaName)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricQuota IPersistableModel<FabricQuota>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FabricCapacitiesQuotaName IPersistableModel<FabricCapacitiesQuotaName>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricQuota PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FabricCapacitiesQuotaName PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricQuota>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FabricCapacitiesQuotaName>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFabricQuota(document.RootElement, options);
+                        return DeserializeFabricCapacitiesQuotaName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricQuota)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FabricCapacitiesQuotaName)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FabricQuota>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FabricCapacitiesQuotaName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
