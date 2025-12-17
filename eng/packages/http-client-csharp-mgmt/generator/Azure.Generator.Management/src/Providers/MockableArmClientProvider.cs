@@ -4,6 +4,7 @@
 using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -39,7 +40,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override MethodProvider[] BuildMethods()
         {
-            var methods = new List<MethodProvider>(_resources.Count);
+            var methods = new List<MethodProvider>(_resources.Count + _nonResourceMethods.Count * 2);
+
+            // Build methods for extension resources
             foreach (var resource in _resources)
             {
                 methods.Add(BuildGetResourceIdMethodForResource(resource));
@@ -52,6 +55,34 @@ namespace Azure.Generator.Management.Providers
                     else
                     {
                         methods.AddRange(BuildMethodsForExtensionNonSingletonResource(resource));
+                    }
+                }
+            }
+
+            // Build methods for non-resource extension operations
+            foreach (var method in _nonResourceMethods)
+            {
+                // Process both async and sync method variants
+                var methodsToProcess = new[] {
+                    BuildServiceMethod(method.InputMethod, method.InputClient, true),
+                    BuildServiceMethod(method.InputMethod, method.InputClient, false)
+                };
+                foreach (var m in methodsToProcess)
+                {
+                    methods.Add(m);
+                    var updated = false;
+                    foreach (var p in m.Signature.Parameters)
+                    {
+                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
+                        if (normalizedName != null && normalizedName != p.Name)
+                        {
+                            p.Update(name: normalizedName);
+                            updated = true;
+                        }
+                    }
+                    if (updated)
+                    {
+                        m.Update();
                     }
                 }
             }
