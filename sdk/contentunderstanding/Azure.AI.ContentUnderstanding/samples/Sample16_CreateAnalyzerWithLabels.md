@@ -1,6 +1,27 @@
 # Create Analyzer with Labeled Training Data
 
-This sample demonstrates how to create a custom analyzer using labeled training data to improve extraction accuracy. Labeled data consists of document samples that have been manually annotated with expected field values, which helps the analyzer learn from examples and better recognize patterns in similar documents.
+This sample demonstrates how to create a custom analyzer using labeled training data to improve extraction accuracy.
+
+## Before you begin
+
+This sample builds on concepts introduced in previous samples:
+- [Sample 00: Configure model deployment defaults][sample00] - Required setup before creating custom analyzers
+- [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
+- [Sample 04: Create a custom analyzer][sample04] - Basic custom analyzer creation
+
+## About labeled training data
+
+Labeled data consists of document samples that have been manually annotated with expected field values. This training data helps the analyzer:
+
+- **Learn from Examples**: Understand how to extract specific fields from similar documents
+- **Improve Accuracy**: Better recognize patterns and variations in document formats
+- **Handle Edge Cases**: Learn to handle unusual or complex document layouts
+
+Use labeled training data when:
+- You have domain-specific documents that prebuilt analyzers don't handle well
+- You need higher accuracy for specific field extractions
+- You have a collection of labeled documents ready for training
+- You want to improve extraction for custom document types
 
 ## Prerequisites
 
@@ -77,7 +98,11 @@ Each training document requires three files:
 3. **OCR Results File**: Contains the OCR analysis results from `prebuilt-documentSearch`
    - Example: `receipt.jpg.result.json`
 
-## Usage
+## Creating a `ContentUnderstandingClient`
+
+See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
+
+## Create a custom analyzer with labeled data
 
 ```C# Snippet:ContentUnderstandingCreateAnalyzerWithLabels
 // Generate a unique analyzer ID
@@ -85,7 +110,7 @@ string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds(
 
 // Step 1: Upload training data to Azure Blob Storage
 // Get training data configuration from environment
-string trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL") 
+string trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")
     ?? throw new InvalidOperationException("TRAINING_DATA_SAS_URL environment variable is required");
 string trainingDataPath = Environment.GetEnvironmentVariable("TRAINING_DATA_PATH") ?? "training_data/";
 
@@ -248,7 +273,9 @@ ContentAnalyzer result = operation.Value;
 Console.WriteLine($"Analyzer '{analyzerId}' created successfully with labeled training data!");
 ```
 
-## Cleanup
+## Delete the analyzer (optional)
+
+**Note:** In production code, you typically keep analyzers and reuse them for multiple analyses. Deletion is mainly useful for testing and development cleanup.
 
 After testing, you can delete the analyzer:
 
@@ -261,14 +288,6 @@ Console.WriteLine($"Analyzer '{analyzerId}' deleted successfully.");
 
 ## Key Concepts
 
-### What is Labeled Data?
-
-Labeled data consists of document samples that have been manually annotated with expected field values. This training data helps the analyzer:
-
-- **Learn from Examples**: Understand how to extract specific fields from similar documents
-- **Improve Accuracy**: Better recognize patterns and variations in document formats
-- **Handle Edge Cases**: Learn to handle unusual or complex document layouts
-
 ### Knowledge Sources
 
 Knowledge sources provide additional context to improve extraction accuracy. When using labeled data:
@@ -277,15 +296,6 @@ Knowledge sources provide additional context to improve extraction accuracy. Whe
 - **ContainerUrl**: Azure Blob Storage SAS URL containing training files
 - **Prefix**: Folder path within the container where training data is stored
 
-### When to Use Training Data
-
-Use labeled training data when:
-
-- You have domain-specific documents that prebuilt analyzers don't handle well
-- You need higher accuracy for specific field extractions
-- You have a collection of labeled documents ready for training
-- You want to improve extraction for custom document types
-
 ### Model Requirements
 
 When using knowledge sources with labeled data:
@@ -293,14 +303,27 @@ When using knowledge sources with labeled data:
 - **Completion Model**: Required for generating and extracting field values (e.g., "gpt-4.1")
 - **Embedding Model**: Required for semantic search and matching (e.g., "text-embedding-3-large")
 
-## Related Samples
+## Next steps
 
-- [Sample04_CreateAnalyzer](Sample04_CreateAnalyzer.md) - Create a basic custom analyzer
-- [Sample06_GetAnalyzer](Sample06_GetAnalyzer.md) - Retrieve analyzer details
-- [Sample07_ListAnalyzers](Sample07_ListAnalyzers.md) - List all analyzers
+- [Sample 04: Create a custom analyzer][sample04] - Learn how to create a basic custom analyzer
+- [Sample 06: Get analyzer information][sample06] - Learn how to retrieve analyzer details
+- [Sample 07: List analyzers][sample07] - Learn how to list all analyzers
+- [Sample 09: Delete analyzer][sample09] - Learn how to delete an analyzer
 
-## Additional Resources
+## Learn more
 
-- [Azure AI Content Understanding Documentation](https://learn.microsoft.com/azure/ai-services/content-understanding/)
-- [Analyzer Training Concepts](https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-training)
-- [How to Label Training Data](https://learn.microsoft.com/azure/ai-services/content-understanding/how-to/training-data)
+- [Content Understanding Documentation][cu-docs]
+- [Analyzer Reference Documentation][analyzer-reference-docs] - Complete reference for analyzer configuration
+- [Analyzer Training Concepts][analyzer-training-docs] - Learn about training analyzers with labeled data
+- [How to Label Training Data][labeling-docs] - Guide for creating labeled training data
+
+[sample00]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
+[sample04]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
+[sample06]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md
+[sample07]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample07_ListAnalyzers.md
+[sample09]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
+[cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
+[analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference
+[analyzer-training-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-training
+[labeling-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/how-to/training-data
