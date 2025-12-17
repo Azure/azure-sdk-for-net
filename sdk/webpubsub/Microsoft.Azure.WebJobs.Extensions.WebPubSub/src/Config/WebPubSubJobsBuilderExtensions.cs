@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Hosting
@@ -35,6 +36,8 @@ namespace Microsoft.Extensions.Hosting
             builder.Services.AddSingleton<IConfigureOptions<WebPubSubServiceAccessOptions>, WebPubSubServiceAccessOptionsSetup>();
 
             builder.Services.AddAzureClientsCore();
+            builder.Services.TryAddSingleton<IWebPubSubServiceClientFactory, WebPubSubServiceClientFactory>();
+
             return builder;
         }
 

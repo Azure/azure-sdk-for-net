@@ -8,18 +8,18 @@ using System.ClientModel.Primitives;
 namespace Azure.AI.OpenAI.Responses;
 
 /// <summary>
-/// The scenario client used for Files operations with the Azure OpenAI service.
+/// The scenario client used for Responses operations with the Azure OpenAI service.
 /// </summary>
 /// <remarks>
 /// To retrieve an instance of this type, use the matching method on <see cref="AzureOpenAIClient"/>.
 /// </remarks>
-internal partial class AzureOpenAIResponseClient : OpenAIResponseClient
+internal partial class AzureResponsesClient : ResponsesClient
 {
     private readonly Uri _aoaiEndpoint;
     private readonly string _deploymentName;
     private readonly string _apiVersion;
 
-    internal AzureOpenAIResponseClient(ClientPipeline pipeline, string deploymentName, Uri endpoint, AzureOpenAIClientOptions options)
+    internal AzureResponsesClient(ClientPipeline pipeline, string deploymentName, Uri endpoint, AzureOpenAIClientOptions options)
         : base(pipeline, model: deploymentName, new OpenAIClientOptions() { Endpoint = endpoint })
     {
         Argument.AssertNotNull(pipeline, nameof(pipeline));

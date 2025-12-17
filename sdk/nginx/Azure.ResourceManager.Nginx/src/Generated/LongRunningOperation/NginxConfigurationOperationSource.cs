@@ -5,32 +5,45 @@
 
 #nullable disable
 
-using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Nginx
 {
-    internal class NginxConfigurationOperationSource : IOperationSource<NginxConfigurationResource>
+    /// <summary></summary>
+    internal partial class NginxConfigurationOperationSource : IOperationSource<NginxConfigurationResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal NginxConfigurationOperationSource(ArmClient client)
         {
             _client = client;
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         NginxConfigurationResource IOperationSource<NginxConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            NginxConfigurationData data = NginxConfigurationData.DeserializeNginxConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new NginxConfigurationResource(_client, data);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NginxConfigurationResource> IOperationSource<NginxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
-            return await Task.FromResult(new NginxConfigurationResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            NginxConfigurationData data = NginxConfigurationData.DeserializeNginxConfigurationData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new NginxConfigurationResource(_client, data);
         }
     }
 }

@@ -66,7 +66,8 @@ namespace Azure.Analytics.OnlineExperimentation
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, _top, _skip, _maxpagesize, _context) : _client.CreateGetMetricsRequest(_top, _skip, _maxpagesize, _context);
+            int? pageSize = pageSizeHint.HasValue ? pageSizeHint.Value : _maxpagesize;
+            HttpMessage message = nextLink != null ? _client.CreateNextGetMetricsRequest(nextLink, pageSize, _context) : _client.CreateGetMetricsRequest(_top, _skip, pageSize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("OnlineExperimentationClient.GetMetrics");
             scope.Start();
             try

@@ -1,6 +1,6 @@
 # Update Knowledge Sources
 
-This sample demonstrates how to update knowledge sources, question and answer pairs, synonyms, and add feedback for active learning for Question Answering projects. To get started, you'll need to create a Question Answering service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering/README.md) for links and instructions.
+This sample demonstrates how to update knowledge sources, question and answer pairs, synonyms, and add feedback for active learning for Question Answering projects. To get started, you'll need to create a Question Answering service endpoint and an API key. See the [README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.QuestionAnswering.Authoring/README.md) for links and instructions.
 
 To add knowledge sources, update question and answer pairs, or perform any other authoring actions for Question Answering projects, you need to first create a `QuestionAnsweringAuthoringClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.
 

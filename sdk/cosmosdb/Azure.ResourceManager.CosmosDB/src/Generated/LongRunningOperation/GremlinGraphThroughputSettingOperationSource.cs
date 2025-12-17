@@ -62,7 +62,6 @@ namespace Azure.ResourceManager.CosmosDB
                 data.Tags,
                 data.Location,
                 data.Resource,
-                data.Identity,
                 null);
         }
 

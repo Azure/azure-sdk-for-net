@@ -1,6 +1,4 @@
-trigger: none
-
-pr:
+trigger:
   branches:
     include:
       - main
@@ -9,89 +7,42 @@ pr:
       - .github/copilot-instructions.md
       - eng/common/instructions/azsdk-tools/**
 
+pr: none
+
 parameters:
   - name: EvalProject
     type: string
     default: 'tools/azsdk-cli/Azure.Sdk.Tools.Cli.Evaluations'
   - name: OpenAIEndPoint
     type: string
-    default: 'https://ai-prmarottai3149546654251245.openai.azure.com/'
+    default: 'https://openai-shared.openai.azure.com/'
   - name: Model
     type: string
     default: 'gpt-5'
-  - name: ToolsRepoName
-    type: string
-    default: 'azure-sdk-tools'
-  - name: ToolsRepoOwner
+  - name: EvalRepoOwner
     type: string
     default: 'Azure'
+  - name: EvalRepoName
+    type: string
+    default: 'azure-sdk-tools'
+  - name: EvalRepoCommit
+    type: string
+    default: 'main'
 
-jobs:
-  - job: Run_Eval
-    variables:
-      - template: /eng/pipelines/templates/variables/globals.yml
-      - template: /eng/pipelines/templates/variables/image.yml
-    displayName: 'Run AI Eval'
-    pool:
-      name: $(LINUXPOOL)
-      image: $(LINUXVMIMAGE)
-      os: linux
-
-    steps:
-    - task: UseDotNet@2
-      displayName: "Use .NET SDK 9.0.x"
-      retryCountOnTaskFailure: 3
-      inputs:
-        packageType: sdk
-        version: 9.0.x
-        performMultiLevelLookup: true
-
-    - task: UseDotNet@2
-      displayName: "Use .NET SDK 8.0.x"
-      retryCountOnTaskFailure: 3
-      inputs:
-        packageType: sdk
-        version: 8.0.x
-        performMultiLevelLookup: true
-
-    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
-      parameters:
-        SkipCheckoutNone: true
-        Repositories:
-          - Name: $(Build.Repository.Name)
-            Commitish: $(Build.SourceVersion)
-            WorkingDirectory: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)
-          - Name: ${{ parameters.ToolsRepoOwner }}/${{ parameters.ToolsRepoName }}
-            WorkingDirectory: $(System.DefaultWorkingDirectory)/${{ parameters.ToolsRepoName }}
-        Paths:
-          - 'tools/**'
-          - eng/common/**
-          - .github/copilot-instructions.md
-    
-    - task: AzureCLI@2
-      displayName: 'Run eval'
-      inputs:
-        azureSubscription: opensource-api-connection
-        scriptType: 'bash'
-        scriptLocation: 'inlineScript'
-        workingDirectory: '${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}'
-        inlineScript: |
-          echo "Logged in to Azure"
-          echo "Running eval in project ${{ parameters.ToolsRepoName }}/${{ parameters.EvalProject }}"
-          dotnet test /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) --logger trx
-      env:
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-        DOTNET_MULTILEVEL_LOOKUP: 0
-        AZURE_OPENAI_MODEL_DEPLOYMENT_NAME: ${{ parameters.Model }}
-        AZURE_OPENAI_ENDPOINT: ${{ parameters.OpenAIEndPoint }}
-        REPOSITORY_NAME: $(Build.Repository.Name)
-        COPILOT_INSTRUCTIONS_PATH_MCP_EVALS: $(System.DefaultWorkingDirectory)/$(Build.Repository.Name)/.github/copilot-instructions.md
-
-    - task: PublishTestResults@2
-      condition: succeededOrFailed()
-      inputs:
-        testResultsFiles: '**/*.trx'
-        testRunTitle: $(System.JobDisplayName)
-        testResultsFormat: 'VSTest'
-        mergeTestResults: true
+variables:
+  TargetRepoOwner: ${{ split(variables['Build.Repository.Name'], '/')[0] }}
+  TargetRepoName: ${{ split(variables['Build.Repository.Name'], '/')[1] }}
+  TargetRepoCommit: ${{ variables['Build.SourceVersion'] }}
+ 
+extends:
+  template: /eng/common/pipelines/templates/jobs/ai-eval-job.yml
+  parameters:
+    EvalProject: ${{ parameters.EvalProject }}
+    OpenAIEndPoint: ${{ parameters.OpenAIEndPoint }}
+    Model: ${{ parameters.Model }}
+    EvalRepoOwner: ${{ parameters.EvalRepoOwner }}
+    EvalRepoName: ${{ parameters.EvalRepoName }}
+    EvalRepoCommit: ${{ parameters.EvalRepoCommit }}
+    TargetRepoOwner: $(TargetRepoOwner)
+    TargetRepoName: $(TargetRepoName)
+    TargetRepoCommit: $(TargetRepoCommit)

@@ -101,6 +101,7 @@ parameters:
   - name: release_Azure_Provisioning_Redis
     displayName: 'Azure.Provisioning.Redis'
     type: boolean
+    default: false
   - name: release_Azure_Provisioning_RedisEnterprise
     displayName: 'Azure.Provisioning.RedisEnterprise'
     type: boolean
