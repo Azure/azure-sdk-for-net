@@ -12,24 +12,24 @@ using Azure.ResourceManager.AgriculturePlatform;
 namespace Azure.ResourceManager.AgriculturePlatform.Models
 {
     /// <summary> The updatable properties of the AgriServiceResource. </summary>
-    public partial class AgriServiceResourceUpdateProperties
+    public partial class AgricultureServicePatchProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceUpdateProperties"/>. </summary>
-        public AgriServiceResourceUpdateProperties()
+        /// <summary> Initializes a new instance of <see cref="AgricultureServicePatchProperties"/>. </summary>
+        public AgricultureServicePatchProperties()
         {
             DataConnectorCredentials = new ChangeTrackingList<DataConnectorCredentialMap>();
             InstalledSolutions = new ChangeTrackingList<InstalledSolutionMap>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgriServiceResourceUpdateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AgricultureServicePatchProperties"/>. </summary>
         /// <param name="config"> Config of the AgriService instance. </param>
         /// <param name="dataConnectorCredentials"> Data connector credentials of AgriService instance. </param>
         /// <param name="installedSolutions"> AgriService installed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgriServiceResourceUpdateProperties(AgricultureServiceConfig config, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgricultureServicePatchProperties(AgricultureServiceConfig config, IList<DataConnectorCredentialMap> dataConnectorCredentials, IList<InstalledSolutionMap> installedSolutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Config = config;
             DataConnectorCredentials = dataConnectorCredentials;
