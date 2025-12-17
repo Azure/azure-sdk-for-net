@@ -5,12 +5,6 @@
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- For C# 14 extension property support, pending full toolchain integration -->
-    <LangVersion>preview</LangVersion>
-    <EnablePreviewFeatures>true</EnablePreviewFeatures>
-  </PropertyGroup>
-
   <!-- Reference Foundry libraries via project -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />

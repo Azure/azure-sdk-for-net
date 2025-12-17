@@ -13,12 +13,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!-- For C# 14 extension property support, pending full toolchain integration -->
-    <LangVersion>preview</LangVersion>
-    <EnablePreviewFeatures>true</EnablePreviewFeatures>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <NoWarn>
       $(NoWarn)
       <!-- Acknowledge OpenAI experimental features -->

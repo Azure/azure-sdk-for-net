@@ -1,5 +1,11 @@
 # Release History
 
+## 1.2.0-beta.6 (Unreleased)
+
+### Features Added
+
+- Updated for full `net10` framework compatibility, including removal of `<EnablePreviewFeatures>` flagging.
+
 ## 1.2.0-beta.5 (2025-12-12)
 
 ### Features Added

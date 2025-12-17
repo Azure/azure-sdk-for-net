@@ -26,12 +26,6 @@
     <NoWarn>$(NoWarn);AZC0035</NoWarn>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <!-- For C# 14 extension property support, pending full toolchain integration -->
-    <LangVersion>preview</LangVersion>
-    <EnablePreviewFeatures>true</EnablePreviewFeatures>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="OpenAI" />
   </ItemGroup>
