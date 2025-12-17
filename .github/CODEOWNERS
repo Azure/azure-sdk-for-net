@@ -966,6 +966,12 @@
 # ServiceLabel: %Compute - Fleet %Mgmt
 # ServiceOwners:                                                   @sahilarora92
 
+# PRLabel: %Confidential Ledger
+/sdk/confidentialledger/Azure.ResourceManager.*/                   @Azure/azure-sdk-write-acl
+
+# ServiceLabel: %Confidential Ledger %Mgmt
+# ServiceOwners:                                                   @Azure/azure-sdk-write-acl
+
 # PRLabel: %Container Orchestrator Runtime
 /sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @ArthurMa1978
 
