@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// Resource ID.
         /// Serialized Name: SecretDeploymentResourceReference.id
         /// </param>
-        internal SecretDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData, string id) : base(idType, serializedAdditionalRawData)
+        internal SecretDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier id) : base(idType, serializedAdditionalRawData)
         {
             Id = id;
             IdType = idType;
@@ -42,6 +43,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// Resource ID.
         /// Serialized Name: SecretDeploymentResourceReference.id
         /// </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

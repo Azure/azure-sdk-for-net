@@ -284,8 +284,8 @@ namespace Azure.ResourceManager.HybridNetwork
     }
     public static partial class HybridNetworkExtensions
     {
-        public static Azure.ResourceManager.ArmOperation CancelOperationSiteNetworkService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelInformation cancelInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelOperationSiteNetworkServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelInformation cancelInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.ArmOperation CancelOperationSiteNetworkService(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelOperationSiteNetworkServiceAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.ArtifactManifestResource GetArtifactManifestResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.ArtifactStoreResource GetArtifactStoreResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.ComponentResource GetComponentResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -823,8 +823,8 @@ namespace Azure.ResourceManager.HybridNetwork.Mocking
     public partial class MockableHybridNetworkSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableHybridNetworkSubscriptionResource() { }
-        public virtual Azure.ResourceManager.ArmOperation CancelOperationSiteNetworkService(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelInformation cancelInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelOperationSiteNetworkServiceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelInformation cancelInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation CancelOperationSiteNetworkService(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> CancelOperationSiteNetworkServiceAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueResource> GetConfigurationGroupValues(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridNetwork.ConfigurationGroupValueResource> GetConfigurationGroupValuesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.HybridNetwork.NetworkFunctionResource> GetNetworkFunctions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static Azure.ResourceManager.HybridNetwork.Models.AzureContainerRegistryScopedTokenCredential AzureContainerRegistryScopedTokenCredential(string username = null, string acrToken = null, System.Uri acrServerUri = null, System.Collections.Generic.IEnumerable<string> repositories = null, System.DateTimeOffset? expiry = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountContainerCredential AzureStorageAccountContainerCredential(string containerName = null, System.Uri containerSasUri = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountCredential AzureStorageAccountCredential(Azure.Core.ResourceIdentifier storageAccountId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.AzureStorageAccountContainerCredential> containerCredentials = null, System.DateTimeOffset? expiry = default(System.DateTimeOffset?)) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.CancelInformation CancelInformation(Azure.Core.ResourceIdentifier siteNetworkServiceReferenceId = null, Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation? longRunningOperation = default(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation?)) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation CancelSiteNetworkServiceInformation(Azure.Core.ResourceIdentifier siteNetworkServiceReferenceId = null, Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType? longRunningOperation = default(Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType?)) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.ComponentData ComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HybridNetwork.Models.ComponentProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ComponentKubernetesResources ComponentKubernetesResources(System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesDeployment> deployments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesPod> pods = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesReplicaSet> replicaSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet> statefulSets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridNetwork.Models.KubernetesDaemonSet> daemonSets = null) { throw null; }
         public static Azure.ResourceManager.HybridNetwork.Models.ComponentProperties ComponentProperties(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.HybridNetwork.Models.ProvisioningState?), string deploymentProfile = null, Azure.ResourceManager.HybridNetwork.Models.DeploymentStatusProperties deploymentStatus = null) { throw null; }
@@ -1476,17 +1476,35 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess left, Azure.ResourceManager.HybridNetwork.Models.BackingResourcePublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CancelInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>
+    public partial class CancelSiteNetworkServiceInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation>
     {
-        public CancelInformation(Azure.ResourceManager.Resources.Models.WritableSubResource siteNetworkServiceReference) { }
-        public Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation? LongRunningOperation { get { throw null; } set { } }
+        public CancelSiteNetworkServiceInformation(Azure.ResourceManager.Resources.Models.WritableSubResource siteNetworkServiceReference) { }
+        public Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType? LongRunningOperation { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SiteNetworkServiceReferenceId { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridNetwork.Models.CancelInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HybridNetwork.Models.CancelInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CancelSiteNetworkServiceLongRunningOperationType : System.IEquatable<Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CancelSiteNetworkServiceLongRunningOperationType(string value) { throw null; }
+        public static Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType Put { get { throw null; } }
+        public static Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType Unknown { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType left, Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType left, Azure.ResourceManager.HybridNetwork.Models.CancelSiteNetworkServiceLongRunningOperationType right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class ComponentKubernetesResources : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.ComponentKubernetesResources>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.ComponentKubernetesResources>
     {
@@ -1910,24 +1928,6 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.KubernetesStatefulSet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct LongRunningOperation : System.IEquatable<Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public LongRunningOperation(string value) { throw null; }
-        public static Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation Put { get { throw null; } }
-        public static Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation Unknown { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation left, Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation left, Azure.ResourceManager.HybridNetwork.Models.LongRunningOperation right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class ManagedResourceGroupConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.ManagedResourceGroupConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.ManagedResourceGroupConfiguration>
     {
         public ManagedResourceGroupConfiguration() { }
@@ -2346,7 +2346,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public partial class SecretDeploymentResourceReference : Azure.ResourceManager.HybridNetwork.Models.DeploymentResourceIdReference, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.SecretDeploymentResourceReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.Models.SecretDeploymentResourceReference>
     {
         public SecretDeploymentResourceReference() { }
-        public string Id { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.HybridNetwork.Models.SecretDeploymentResourceReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.SecretDeploymentResourceReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.Models.SecretDeploymentResourceReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

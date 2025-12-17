@@ -767,19 +767,19 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.CancelOperationSiteNetworkService(WaitUntil,CancelInformation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.CancelOperationSiteNetworkService(WaitUntil,CancelSiteNetworkServiceInformation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancelInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
+        /// <param name="cancelSiteNetworkServiceInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="cancelInformation"/> is null. </exception>
-        public static async Task<ArmOperation> CancelOperationSiteNetworkServiceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancelInformation cancelInformation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="cancelSiteNetworkServiceInformation"/> is null. </exception>
+        public static async Task<ArmOperation> CancelOperationSiteNetworkServiceAsync(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableHybridNetworkSubscriptionResource(subscriptionResource).CancelOperationSiteNetworkServiceAsync(waitUntil, cancelInformation, cancellationToken).ConfigureAwait(false);
+            return await GetMockableHybridNetworkSubscriptionResource(subscriptionResource).CancelOperationSiteNetworkServiceAsync(waitUntil, cancelSiteNetworkServiceInformation, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -804,19 +804,19 @@ namespace Azure.ResourceManager.HybridNetwork
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.CancelOperationSiteNetworkService(WaitUntil,CancelInformation,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableHybridNetworkSubscriptionResource.CancelOperationSiteNetworkService(WaitUntil,CancelSiteNetworkServiceInformation,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancelInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
+        /// <param name="cancelSiteNetworkServiceInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="cancelInformation"/> is null. </exception>
-        public static ArmOperation CancelOperationSiteNetworkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancelInformation cancelInformation, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="cancelSiteNetworkServiceInformation"/> is null. </exception>
+        public static ArmOperation CancelOperationSiteNetworkService(this SubscriptionResource subscriptionResource, WaitUntil waitUntil, CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).CancelOperationSiteNetworkService(waitUntil, cancelInformation, cancellationToken);
+            return GetMockableHybridNetworkSubscriptionResource(subscriptionResource).CancelOperationSiteNetworkService(waitUntil, cancelSiteNetworkServiceInformation, cancellationToken);
         }
 
         /// <summary>

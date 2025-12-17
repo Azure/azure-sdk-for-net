@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridNetwork
     [ModelReaderWriterBuildable(typeof(AzureOperatorNexusNetworkFunctionTemplate))]
     [ModelReaderWriterBuildable(typeof(AzureStorageAccountContainerCredential))]
     [ModelReaderWriterBuildable(typeof(AzureStorageAccountCredential))]
-    [ModelReaderWriterBuildable(typeof(CancelInformation))]
+    [ModelReaderWriterBuildable(typeof(CancelSiteNetworkServiceInformation))]
     [ModelReaderWriterBuildable(typeof(ComponentData))]
     [ModelReaderWriterBuildable(typeof(ComponentKubernetesResources))]
     [ModelReaderWriterBuildable(typeof(ComponentListResult))]

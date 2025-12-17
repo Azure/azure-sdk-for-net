@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            CancelInformation cancelInformation = new CancelInformation(new WritableSubResource
+            CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation = new CancelSiteNetworkServiceInformation(new WritableSubResource
             {
                 Id = new ResourceIdentifier("/subscriptions/sub1/resourceGroups/rg/providers/Microsoft.HybridNetwork/siteNetworkServices/TestSNS1"),
             })
             {
-                LongRunningOperation = LongRunningOperation.Put,
+                LongRunningOperation = CancelSiteNetworkServiceLongRunningOperationType.Put,
             };
-            await subscriptionResource.CancelOperationSiteNetworkServiceAsync(WaitUntil.Completed, cancelInformation);
+            await subscriptionResource.CancelOperationSiteNetworkServiceAsync(WaitUntil.Completed, cancelSiteNetworkServiceInformation);
 
             Console.WriteLine("Succeeded");
         }

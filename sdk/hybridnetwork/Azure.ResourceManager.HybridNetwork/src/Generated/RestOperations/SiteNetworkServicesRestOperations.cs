@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridNetwork
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateCancelOperationRequestUri(string subscriptionId, CancelInformation cancelInformation)
+        internal RequestUriBuilder CreateCancelOperationRequestUri(string subscriptionId, CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridNetwork
             return uri;
         }
 
-        internal HttpMessage CreateCancelOperationRequest(string subscriptionId, CancelInformation cancelInformation)
+        internal HttpMessage CreateCancelOperationRequest(string subscriptionId, CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HybridNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cancelInformation, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(cancelSiteNetworkServiceInformation, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -70,16 +70,16 @@ namespace Azure.ResourceManager.HybridNetwork
 
         /// <summary> Cancels an ongoing long-running PUT operation for the specified Site Network Service resource. Other operations are not supported for cancellation at this time. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancelInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
+        /// <param name="cancelSiteNetworkServiceInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="cancelInformation"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="cancelSiteNetworkServiceInformation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CancelOperationAsync(string subscriptionId, CancelInformation cancelInformation, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelOperationAsync(string subscriptionId, CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(cancelInformation, nameof(cancelInformation));
+            Argument.AssertNotNull(cancelSiteNetworkServiceInformation, nameof(cancelSiteNetworkServiceInformation));
 
-            using var message = CreateCancelOperationRequest(subscriptionId, cancelInformation);
+            using var message = CreateCancelOperationRequest(subscriptionId, cancelSiteNetworkServiceInformation);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -92,16 +92,16 @@ namespace Azure.ResourceManager.HybridNetwork
 
         /// <summary> Cancels an ongoing long-running PUT operation for the specified Site Network Service resource. Other operations are not supported for cancellation at this time. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="cancelInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
+        /// <param name="cancelSiteNetworkServiceInformation"> The SiteNetworkService detail and an optional operation which defaults to 'Put'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="cancelInformation"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="cancelSiteNetworkServiceInformation"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CancelOperation(string subscriptionId, CancelInformation cancelInformation, CancellationToken cancellationToken = default)
+        public Response CancelOperation(string subscriptionId, CancelSiteNetworkServiceInformation cancelSiteNetworkServiceInformation, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNull(cancelInformation, nameof(cancelInformation));
+            Argument.AssertNotNull(cancelSiteNetworkServiceInformation, nameof(cancelSiteNetworkServiceInformation));
 
-            using var message = CreateCancelOperationRequest(subscriptionId, cancelInformation);
+            using var message = CreateCancelOperationRequest(subscriptionId, cancelSiteNetworkServiceInformation);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridNetwork.Samples
                     DeploymentValues = "{\"releaseName\":\"testReleaseName\",\"namespace\":\"testNamespace\"}",
                     NetworkFunctionDefinitionVersionResourceReference = new SecretDeploymentResourceReference
                     {
-                        Id = "/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1",
+                        Id = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg/providers/Microsoft.HybridNetwork/publishers/testVendor/networkFunctionDefinitionGroups/testnetworkFunctionDefinitionGroupName/networkFunctionDefinitionVersions/1.0.1"),
                     },
                     NfviType = NfviType.AzureArcKubernetes,
                     NfviId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/testResourceGroup/providers/Microsoft.ExtendedLocation/customLocations/testCustomLocation"),

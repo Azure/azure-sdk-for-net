@@ -84,10 +84,16 @@ rename-mapping:
   SecretDeploymentResourceReference.id: -|arm-id
   OpenDeploymentResourceReference.id: -|arm-id
   NetworkFunctionPropertiesFormat.nfviId: -|arm-id
+  CancelInformation: CancelSiteNetworkServiceInformation
+  LongRunningOperation: CancelSiteNetworkServiceLongRunningOperationType
 
 directive:
 # operation removal - should be temporary
 # pageable lro
-- remove-operation: ArtifactStores_ListNetworkFabricControllerPrivateEndPoints
-- remove-operation: ArtifactStores_ListPrivateEndPoints
+  - remove-operation: ArtifactStores_ListNetworkFabricControllerPrivateEndPoints
+  - remove-operation: ArtifactStores_ListPrivateEndPoints
+  - from: openapi.json
+    where: $.definitions
+    transform: >
+      $.SecretDeploymentResourceReference.properties.id['format'] = undefined;
 ```

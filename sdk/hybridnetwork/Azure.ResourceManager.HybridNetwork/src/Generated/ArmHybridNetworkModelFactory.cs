@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmHybridNetworkModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.CancelInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CancelSiteNetworkServiceInformation"/>. </summary>
         /// <param name="siteNetworkServiceReferenceId">
         /// The ARM id of the siteNetworkService resource.
         /// Serialized Name: CancelInformation.siteNetworkServiceReference
@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// The type of long-running operation the user wants to cancel, such as 'Put'.
         /// Serialized Name: CancelInformation.longRunningOperation
         /// </param>
-        /// <returns> A new <see cref="Models.CancelInformation"/> instance for mocking. </returns>
-        public static CancelInformation CancelInformation(ResourceIdentifier siteNetworkServiceReferenceId = null, LongRunningOperation? longRunningOperation = null)
+        /// <returns> A new <see cref="Models.CancelSiteNetworkServiceInformation"/> instance for mocking. </returns>
+        public static CancelSiteNetworkServiceInformation CancelSiteNetworkServiceInformation(ResourceIdentifier siteNetworkServiceReferenceId = null, CancelSiteNetworkServiceLongRunningOperationType? longRunningOperation = null)
         {
-            return new CancelInformation(siteNetworkServiceReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteNetworkServiceReferenceId) : null, longRunningOperation, serializedAdditionalRawData: null);
+            return new CancelSiteNetworkServiceInformation(siteNetworkServiceReferenceId != null ? ResourceManagerModelFactory.WritableSubResource(siteNetworkServiceReferenceId) : null, longRunningOperation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridNetwork.ConfigurationGroupValueData"/>. </summary>

@@ -15,11 +15,11 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class CancelInformation : IUtf8JsonSerializable, IJsonModel<CancelInformation>
+    public partial class CancelSiteNetworkServiceInformation : IUtf8JsonSerializable, IJsonModel<CancelSiteNetworkServiceInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CancelInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CancelSiteNetworkServiceInformation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CancelInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CancelSiteNetworkServiceInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelSiteNetworkServiceInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelInformation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelSiteNetworkServiceInformation)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("siteNetworkServiceReference"u8);
@@ -60,19 +60,19 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
         }
 
-        CancelInformation IJsonModel<CancelInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CancelSiteNetworkServiceInformation IJsonModel<CancelSiteNetworkServiceInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelSiteNetworkServiceInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CancelInformation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CancelSiteNetworkServiceInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCancelInformation(document.RootElement, options);
+            return DeserializeCancelSiteNetworkServiceInformation(document.RootElement, options);
         }
 
-        internal static CancelInformation DeserializeCancelInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CancelSiteNetworkServiceInformation DeserializeCancelSiteNetworkServiceInformation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 return null;
             }
             WritableSubResource siteNetworkServiceReference = default;
-            LongRunningOperation? longRunningOperation = default;
+            CancelSiteNetworkServiceLongRunningOperationType? longRunningOperation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    longRunningOperation = new LongRunningOperation(property.Value.GetString());
+                    longRunningOperation = new CancelSiteNetworkServiceLongRunningOperationType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,38 +106,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CancelInformation(siteNetworkServiceReference, longRunningOperation, serializedAdditionalRawData);
+            return new CancelSiteNetworkServiceInformation(siteNetworkServiceReference, longRunningOperation, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CancelInformation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CancelSiteNetworkServiceInformation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelSiteNetworkServiceInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CancelInformation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelSiteNetworkServiceInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CancelInformation IPersistableModel<CancelInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CancelSiteNetworkServiceInformation IPersistableModel<CancelSiteNetworkServiceInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CancelInformation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CancelSiteNetworkServiceInformation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeCancelInformation(document.RootElement, options);
+                        return DeserializeCancelSiteNetworkServiceInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CancelInformation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CancelSiteNetworkServiceInformation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CancelInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CancelSiteNetworkServiceInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
