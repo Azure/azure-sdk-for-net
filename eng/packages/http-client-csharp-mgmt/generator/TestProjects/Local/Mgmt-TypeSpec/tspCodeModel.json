@@ -5457,7 +5457,7 @@
                   "kind": "model",
                   "name": "WritableSubResourceProp",
                   "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.Models.WritableSubResourceProp",
+                  "crossLanguageDefinitionId": "MgmtTypeSpec.WritableSubResourceProp",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                   "decorators": [
                     {

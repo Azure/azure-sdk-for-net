@@ -138,7 +138,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="something"/>, <paramref name="prop1"/> or <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Tests.FooData"/> instance for mocking. </returns>
-        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResourceProp writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ExtendedLocation extendedLocation = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -180,7 +180,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="writableSubResourceProp"> WritableSubResource property for testing WritableSubResource type replacement. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nestedPropertyProperties"/> is null. </exception>
         /// <returns> A new <see cref="Models.FooProperties"/> instance for mocking. </returns>
-        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ETag? etag = default, WritableSubResourceProp writableSubResourceProp = default)
+        public static FooProperties FooProperties(Uri serviceUri = default, ManagedServiceIdentity something = default, bool? boolValue = default, float? floatValue = default, double? doubleValue = default, IEnumerable<string> prop1 = default, IEnumerable<int> prop2 = default, FooProperties nestedPropertyProperties = default, string flattenedProperty = default, ETag? etag = default, WritableSubResource writableSubResourceProp = default)
         {
             prop1 ??= new ChangeTrackingList<string>();
             prop2 ??= new ChangeTrackingList<int>();

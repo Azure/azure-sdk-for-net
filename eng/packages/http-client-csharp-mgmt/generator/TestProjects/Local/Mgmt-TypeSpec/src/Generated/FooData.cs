@@ -205,7 +205,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
 
         /// <summary> WritableSubResource property for testing WritableSubResource type replacement. </summary>
         [WirePath("properties.writableSubResourceProp")]
-        public WritableSubResourceProp WritableSubResourceProp
+        public WritableSubResource WritableSubResourceProp
         {
             get
             {
