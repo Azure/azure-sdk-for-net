@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Reflection;
 using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Core.Tools;
 using Azure.AI.AgentServer.Core.Tools.Models;
@@ -124,62 +123,6 @@ public static class AIAgentExtensions
                     TelemetrySourceName: telemetrySourceName)).ConfigureAwait(false);
             }
         }
-    }
-
-    /// <summary>
-    /// Runs an AI agent with tool support using inline tool configuration objects.
-    /// </summary>
-    /// <param name="agent">The AI agent to run.</param>
-    /// <param name="telemetrySourceName">The name of the telemetry source.</param>
-    /// <param name="toolConfigs">Array of anonymous objects with tool configurations.</param>
-    /// <param name="endpoint">Azure AI endpoint.</param>
-    /// <param name="credential">Azure credential for authentication.</param>
-    /// <param name="loggerFactory">Optional logger factory.</param>
-    /// <returns>A task that represents the asynchronous operation.</returns>
-    public static Task RunAIAgentAsync(
-        this AIAgent agent,
-        string telemetrySourceName,
-        object[] toolConfigs,
-        Uri endpoint,
-        TokenCredential credential,
-        ILoggerFactory? loggerFactory = null)
-    {
-        ArgumentNullException.ThrowIfNull(agent);
-        ArgumentNullException.ThrowIfNull(toolConfigs);
-        ArgumentNullException.ThrowIfNull(endpoint);
-        ArgumentNullException.ThrowIfNull(credential);
-
-        // Convert anonymous objects to ToolDefinition
-        var tools = toolConfigs.Select(config =>
-        {
-            var dict = ObjectToDictionary(config);
-            var type = dict.TryGetValue("type", out var typeValue)
-                ? typeValue?.ToString() ?? "mcp"
-                : "mcp";
-            var projectConnectionId = dict.TryGetValue("project_connection_id", out var connId)
-                ? connId?.ToString()
-                : null;
-
-            return new ToolDefinition
-            {
-                Type = type,
-                ProjectConnectionId = projectConnectionId,
-                AdditionalProperties = dict.Where(kvp =>
-                    kvp.Key != "type" && kvp.Key != "project_connection_id")
-                    .ToDictionary(kvp => kvp.Key, kvp => kvp.Value)
-            };
-        }).ToList();
-
-        return RunAIAgentAsync(agent, telemetrySourceName, tools, endpoint, credential, loggerFactory);
-    }
-
-    private static Dictionary<string, object?> ObjectToDictionary(object obj)
-    {
-        return obj.GetType()
-            .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-            .ToDictionary(
-                prop => prop.Name,
-                prop => prop.GetValue(obj));
     }
 
     private static Func<ILoggerFactory>? GetLoggerFactory(IServiceProvider sp)
