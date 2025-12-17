@@ -28,6 +28,95 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new FooPreviewAction(action, result, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.PrivateLink"/> instance for mocking. </returns>
+        public static PrivateLink PrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            return new PrivateLink(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                identity);
+        }
+
+        /// <summary> Properties of a private link resource. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        {
+            requiredMembers ??= new ChangeTrackingList<string>();
+            requiredZoneNames ??= new ChangeTrackingList<string>();
+
+            return new AzureGeneratorMgmtTypeSpecTestsPrivateLinkResourceProperties(groupId, requiredMembers.ToList(), requiredZoneNames.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A private endpoint connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The private endpoint connection properties. </param>
+        /// <returns> A new <see cref="Tests.AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData"/> instance for mocking. </returns>
+        public static AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PrivateEndpointConnectionProperties properties = default)
+        {
+            return new AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Properties of the private endpoint connection. </summary>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
+        /// <param name="privateEndpoint"> The private endpoint resource. </param>
+        /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
+        /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointConnectionProperties"/> instance for mocking. </returns>
+        public static PrivateEndpointConnectionProperties PrivateEndpointConnectionProperties(IEnumerable<string> groupIds = default, SubResource privateEndpoint = default, AzureGeneratorMgmtTypeSpecTestsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default, AzureGeneratorMgmtTypeSpecTestsPrivateEndpointConnectionProvisioningState? provisioningState = default)
+        {
+            groupIds ??= new ChangeTrackingList<string>();
+
+            return new PrivateEndpointConnectionProperties(groupIds.ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="storageSyncServiceLocation"> The storage sync service location. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Tests.StorageSyncServiceData"/> instance for mocking. </returns>
+        public static StorageSyncServiceData StorageSyncServiceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string storageSyncServiceLocation = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new StorageSyncServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                storageSyncServiceLocation is null ? default : new StorageSyncServiceProperties(storageSyncServiceLocation, null),
+                identity);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -573,6 +662,43 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 groupQuotaLimitListNextLink is null ? default : new GroupQuotaLimitListProperties(groupQuotaLimitListNextLink, null));
         }
 
+        /// <summary> The GroupQuotaLimitListPatch. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.GroupQuotaLimitListPatch"/> instance for mocking. </returns>
+        public static GroupQuotaLimitListPatch GroupQuotaLimitListPatch(string name = default)
+        {
+            return new GroupQuotaLimitListPatch(name, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Subscription quota list. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.SubscriptionQuotaAllocationsListData"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListData SubscriptionQuotaAllocationsListData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SubscriptionQuotaAllocationsListProperties properties = default)
+        {
+            return new SubscriptionQuotaAllocationsListData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The SubscriptionQuotaAllocationsListProperties. </summary>
+        /// <param name="value"> Subscription quota list. </param>
+        /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
+        /// <returns> A new <see cref="Models.SubscriptionQuotaAllocationsListProperties"/> instance for mocking. </returns>
+        public static SubscriptionQuotaAllocationsListProperties SubscriptionQuotaAllocationsListProperties(IEnumerable<string> value = default, string nextLink = default)
+        {
+            value ??= new ChangeTrackingList<string>();
+
+            return new SubscriptionQuotaAllocationsListProperties(value.ToList(), nextLink, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Request for querying network sibling set. </summary>
         /// <param name="location"> Location to query. </param>
         /// <param name="subscriptionId"> Subscription ID to query. </param>
@@ -617,15 +743,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new NetworkSibling(subscriptionId, resourceGroupName, networkInterfaceId, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="jooName"> Gets or sets the Name. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Tests.JooData"/> instance for mocking. </returns>
-        public static JooData JooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string jooName = default)
+        public static JooData JooData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, JooProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -637,7 +764,110 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 additionalBinaryDataProperties: null,
                 tags,
                 location,
-                jooName is null ? default : new JooProperties(jooName, null));
+                properties);
+        }
+
+        /// <summary> The JooProperties. </summary>
+        /// <param name="name"></param>
+        /// <param name="prediction"></param>
+        /// <returns> A new <see cref="Models.JooProperties"/> instance for mocking. </returns>
+        public static JooProperties JooProperties(string name = default, Prediction prediction = default)
+        {
+            return new JooProperties(name, prediction, additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="predictionInputHistoricalData"> Gets the HistoricalData. </param>
+        /// <returns> A new <see cref="Models.Prediction"/> instance for mocking. </returns>
+        public static Prediction Prediction(IEnumerable<long> predictionInputHistoricalData = default)
+        {
+            return new Prediction(predictionInputHistoricalData is null ? default : new PredictionInput((predictionInputHistoricalData ?? new ChangeTrackingList<long>()).ToList(), null), additionalBinaryDataProperties: null);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sapVirtualInstanceName"> Gets or sets the Name. </param>
+        /// <returns> A new <see cref="Tests.SAPVirtualInstanceData"/> instance for mocking. </returns>
+        public static SAPVirtualInstanceData SAPVirtualInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string sapVirtualInstanceName = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SAPVirtualInstanceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                sapVirtualInstanceName is null ? default : new SAPVirtualInstanceProperties(sapVirtualInstanceName, null));
+        }
+
+        /// <summary> The SAPAvailabilityZoneDetailsRequest. </summary>
+        /// <param name="preferredAvailabilityZone"> The preferred availability zone. </param>
+        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsRequest"/> instance for mocking. </returns>
+        public static SAPAvailabilityZoneDetailsRequest SAPAvailabilityZoneDetailsRequest(string preferredAvailabilityZone = default)
+        {
+            return new SAPAvailabilityZoneDetailsRequest(preferredAvailabilityZone, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The SAPAvailabilityZoneDetailsResult. </summary>
+        /// <param name="recommendedAvailabilityZonePair"> The recommended availability zone pair. </param>
+        /// <returns> A new <see cref="Models.SAPAvailabilityZoneDetailsResult"/> instance for mocking. </returns>
+        public static SAPAvailabilityZoneDetailsResult SAPAvailabilityZoneDetailsResult(string recommendedAvailabilityZonePair = default)
+        {
+            return new SAPAvailabilityZoneDetailsResult(recommendedAvailabilityZonePair, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Test resource with nullable ResourceType properties. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.ResourceTypeTestResourceData"/> instance for mocking. </returns>
+        public static ResourceTypeTestResourceData ResourceTypeTestResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceTypeTestProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceTypeTestResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
+        }
+
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Tests.SampleData"/> instance for mocking. </returns>
+        public static SampleData SampleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, SampleDataProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SampleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                tags,
+                location,
+                properties);
         }
 
         /// <summary> The ZooRecommendation. </summary>

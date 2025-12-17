@@ -27,6 +27,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         private const string InternallyReadyValue = "InternallyReady";
         private const string OnlineValue = "Online";
         private const string DeletingValue = "Deleting";
+        private const string CreatingValue = "Creating";
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
@@ -42,6 +43,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public static CosmosDBStatus Online { get; } = new CosmosDBStatus(OnlineValue);
         /// <summary> Deleting. </summary>
         public static CosmosDBStatus Deleting { get; } = new CosmosDBStatus(DeletingValue);
+        /// <summary> Creating. </summary>
+        public static CosmosDBStatus Creating { get; } = new CosmosDBStatus(CreatingValue);
         /// <summary> Succeeded. </summary>
         public static CosmosDBStatus Succeeded { get; } = new CosmosDBStatus(SucceededValue);
         /// <summary> Failed. </summary>
