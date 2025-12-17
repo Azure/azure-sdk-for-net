@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="osDiskStorageAccountType"> The Azure SKU name of the machines in the pool. </param>
         /// <param name="dataDisks"> A list of empty data disks to attach. </param>
         /// <returns> A new <see cref="Models.DevOpsStorageProfile"/> instance for mocking. </returns>
-        public static DevOpsStorageProfile DevOpsStorageProfile(OsDiskStorageAccountType? osDiskStorageAccountType = default, IEnumerable<DevOpsDataDisk> dataDisks = default)
+        public static DevOpsStorageProfile DevOpsStorageProfile(OSDiskStorageAccountType? osDiskStorageAccountType = default, IEnumerable<DevOpsDataDisk> dataDisks = default)
         {
             dataDisks ??= new ChangeTrackingList<DevOpsDataDisk>();
 
@@ -179,14 +179,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <summary> The network profile of the machines in the pool. </summary>
         /// <param name="subnetId"> The subnet id on which to put all machines created in the pool. </param>
-        /// <param name="staticIpAddressCount"> The number of static public IP addresses for outgoing connections assigned to the pool. </param>
+        /// <param name="staticIPAddressCount"> The number of static public IP addresses for outgoing connections assigned to the pool. </param>
         /// <param name="ipAddresses"> Read only. The list of static public IP addresses for outgoing connections assigned to the pool. </param>
         /// <returns> A new <see cref="Models.DevOpsNetworkProfile"/> instance for mocking. </returns>
-        public static DevOpsNetworkProfile DevOpsNetworkProfile(string subnetId = default, int? staticIpAddressCount = default, IEnumerable<string> ipAddresses = default)
+        public static DevOpsNetworkProfile DevOpsNetworkProfile(string subnetId = default, int? staticIPAddressCount = default, IEnumerable<string> ipAddresses = default)
         {
             ipAddresses ??= new ChangeTrackingList<string>();
 
-            return new DevOpsNetworkProfile(subnetId, staticIpAddressCount, ipAddresses.ToList(), additionalBinaryDataProperties: null);
+            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, ipAddresses.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> The type used for update operations of the Pool. </summary>
@@ -257,6 +257,33 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public static DevOpsResourceDetailsProperties DevOpsResourceDetailsProperties(DevOpsResourceStatus status = default, string image = default, string imageVersion = default)
         {
             return new DevOpsResourceDetailsProperties(status, image, imageVersion, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes Resource Quota. </summary>
+        /// <param name="name"> The name of the quota. </param>
+        /// <param name="id"> Fully qualified ARM resource id. </param>
+        /// <param name="unit"> The unit of usage measurement. </param>
+        /// <param name="currentValue"> The current usage of the resource. </param>
+        /// <param name="limit"> The maximum permitted usage of the resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceQuota"/> instance for mocking. </returns>
+        public static DevOpsResourceQuota DevOpsResourceQuota(DevOpsResourceQuotaName name = default, ResourceIdentifier id = default, string unit = default, long currentValue = default, long limit = default)
+        {
+            return new DevOpsResourceQuota(
+                name,
+                id,
+                unit,
+                currentValue,
+                limit,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The Quota Names. </summary>
+        /// <param name="value"> The name of the resource. </param>
+        /// <param name="localizedValue"> The localized name of the resource. </param>
+        /// <returns> A new <see cref="Models.DevOpsResourceQuotaName"/> instance for mocking. </returns>
+        public static DevOpsResourceQuotaName DevOpsResourceQuotaName(string value = default, string localizedValue = default)
+        {
+            return new DevOpsResourceQuotaName(value, localizedValue, additionalBinaryDataProperties: null);
         }
     }
 }

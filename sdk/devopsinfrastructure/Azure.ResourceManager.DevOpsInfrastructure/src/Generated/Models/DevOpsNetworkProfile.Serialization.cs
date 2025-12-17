@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsDefined(StaticIpAddressCount))
+            if (Optional.IsDefined(StaticIPAddressCount))
             {
                 writer.WritePropertyName("staticIpAddressCount"u8);
-                writer.WriteNumberValue(StaticIpAddressCount.Value);
+                writer.WriteNumberValue(StaticIPAddressCount.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(IpAddresses))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAddresses)
+                foreach (string item in IPAddresses)
                 {
                     if (item == null)
                     {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             string subnetId = default;
-            int? staticIpAddressCount = default;
+            int? staticIPAddressCount = default;
             IReadOnlyList<string> ipAddresses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    staticIpAddressCount = prop.Value.GetInt32();
+                    staticIPAddressCount = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("ipAddresses"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevOpsNetworkProfile(subnetId, staticIpAddressCount, ipAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new DevOpsNetworkProfile(subnetId, staticIPAddressCount, ipAddresses ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

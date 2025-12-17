@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         {
             Sku = sku;
             Images = images;
-            OsProfile = osProfile;
+            OSProfile = osProfile;
             StorageProfile = storageProfile;
             NetworkProfile = networkProfile;
         }
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public IList<DevOpsPoolVmImage> Images { get; }
 
         /// <summary> The OS profile of the machines in the pool. </summary>
-        public DevOpsOSProfile OsProfile { get; set; }
+        public DevOpsOSProfile OSProfile { get; set; }
 
         /// <summary> The storage profile of the machines in the pool. </summary>
         public DevOpsStorageProfile StorageProfile { get; set; }

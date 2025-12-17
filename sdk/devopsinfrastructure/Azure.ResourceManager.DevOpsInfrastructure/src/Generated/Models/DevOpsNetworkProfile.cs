@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Initializes a new instance of <see cref="DevOpsNetworkProfile"/>. </summary>
         public DevOpsNetworkProfile()
         {
-            IpAddresses = new ChangeTrackingList<string>();
+            IPAddresses = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsNetworkProfile"/>. </summary>
         /// <param name="subnetId"> The subnet id on which to put all machines created in the pool. </param>
-        /// <param name="staticIpAddressCount"> The number of static public IP addresses for outgoing connections assigned to the pool. </param>
+        /// <param name="staticIPAddressCount"> The number of static public IP addresses for outgoing connections assigned to the pool. </param>
         /// <param name="ipAddresses"> Read only. The list of static public IP addresses for outgoing connections assigned to the pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsNetworkProfile(string subnetId, int? staticIpAddressCount, IReadOnlyList<string> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevOpsNetworkProfile(string subnetId, int? staticIPAddressCount, IReadOnlyList<string> ipAddresses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubnetId = subnetId;
-            StaticIpAddressCount = staticIpAddressCount;
-            IpAddresses = ipAddresses;
+            StaticIPAddressCount = staticIPAddressCount;
+            IPAddresses = ipAddresses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,9 +40,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public string SubnetId { get; set; }
 
         /// <summary> The number of static public IP addresses for outgoing connections assigned to the pool. </summary>
-        public int? StaticIpAddressCount { get; set; }
+        public int? StaticIPAddressCount { get; set; }
 
         /// <summary> Read only. The list of static public IP addresses for outgoing connections assigned to the pool. </summary>
-        public IReadOnlyList<string> IpAddresses { get; }
+        public IReadOnlyList<string> IPAddresses { get; }
     }
 }

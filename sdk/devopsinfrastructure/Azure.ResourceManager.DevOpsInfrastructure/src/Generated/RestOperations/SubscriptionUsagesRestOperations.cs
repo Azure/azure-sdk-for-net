@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure
 {
-    internal partial class ResourceDetails
+    internal partial class SubscriptionUsages
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of ResourceDetails for mocking. </summary>
-        protected ResourceDetails()
+        /// <summary> Initializes a new instance of SubscriptionUsages for mocking. </summary>
+        protected SubscriptionUsages()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceDetails. </summary>
+        /// <summary> Initializes a new instance of SubscriptionUsages. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ResourceDetails(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal SubscriptionUsages(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -41,17 +41,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetResourceDetailsRequest(Guid subscriptionId, string resourceGroupName, string poolName, RequestContext context)
+        internal HttpMessage CreateGetUsagesRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.DevOpsInfrastructure/pools/", false);
-            uri.AppendPath(poolName, true);
-            uri.AppendPath("/resources", false);
+            uri.AppendPath("/providers/Microsoft.DevOpsInfrastructure/locations/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendPath("/usages", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
@@ -61,7 +59,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             return message;
         }
 
-        internal HttpMessage CreateNextGetResourceDetailsRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, string poolName, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

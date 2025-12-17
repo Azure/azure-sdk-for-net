@@ -12,7 +12,7 @@ using Azure.ResourceManager.DevOpsInfrastructure;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The storage account type of the OS disk. </summary>
-    public readonly partial struct OsDiskStorageAccountType : IEquatable<OsDiskStorageAccountType>
+    public readonly partial struct OSDiskStorageAccountType : IEquatable<OSDiskStorageAccountType>
     {
         private readonly string _value;
         /// <summary> Standard OS disk type. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <summary> Standard SSD OS disk type. </summary>
         private const string StandardSsdValue = "StandardSSD";
 
-        /// <summary> Initializes a new instance of <see cref="OsDiskStorageAccountType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="OSDiskStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public OsDiskStorageAccountType(string value)
+        public OSDiskStorageAccountType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         }
 
         /// <summary> Standard OS disk type. </summary>
-        public static OsDiskStorageAccountType Standard { get; } = new OsDiskStorageAccountType(StandardValue);
+        public static OSDiskStorageAccountType Standard { get; } = new OSDiskStorageAccountType(StandardValue);
 
         /// <summary> Premium OS disk type. </summary>
-        public static OsDiskStorageAccountType Premium { get; } = new OsDiskStorageAccountType(PremiumValue);
+        public static OSDiskStorageAccountType Premium { get; } = new OSDiskStorageAccountType(PremiumValue);
 
         /// <summary> Standard SSD OS disk type. </summary>
-        public static OsDiskStorageAccountType StandardSsd { get; } = new OsDiskStorageAccountType(StandardSsdValue);
+        public static OSDiskStorageAccountType StandardSsd { get; } = new OSDiskStorageAccountType(StandardSsdValue);
 
-        /// <summary> Determines if two <see cref="OsDiskStorageAccountType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="OSDiskStorageAccountType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(OsDiskStorageAccountType left, OsDiskStorageAccountType right) => left.Equals(right);
+        public static bool operator ==(OSDiskStorageAccountType left, OSDiskStorageAccountType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="OsDiskStorageAccountType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="OSDiskStorageAccountType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(OsDiskStorageAccountType left, OsDiskStorageAccountType right) => !left.Equals(right);
+        public static bool operator !=(OSDiskStorageAccountType left, OSDiskStorageAccountType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="OsDiskStorageAccountType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OSDiskStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OsDiskStorageAccountType(string value) => new OsDiskStorageAccountType(value);
+        public static implicit operator OSDiskStorageAccountType(string value) => new OSDiskStorageAccountType(value);
 
-        /// <summary> Converts a string to a <see cref="OsDiskStorageAccountType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="OSDiskStorageAccountType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator OsDiskStorageAccountType?(string value) => value == null ? null : new OsDiskStorageAccountType(value);
+        public static implicit operator OSDiskStorageAccountType?(string value) => value == null ? null : new OSDiskStorageAccountType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is OsDiskStorageAccountType other && Equals(other);
+        public override bool Equals(object obj) => obj is OSDiskStorageAccountType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(OsDiskStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(OSDiskStorageAccountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

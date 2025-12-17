@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="osDiskStorageAccountType"> The Azure SKU name of the machines in the pool. </param>
         /// <param name="dataDisks"> A list of empty data disks to attach. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsStorageProfile(OsDiskStorageAccountType? osDiskStorageAccountType, IList<DevOpsDataDisk> dataDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevOpsStorageProfile(OSDiskStorageAccountType? osDiskStorageAccountType, IList<DevOpsDataDisk> dataDisks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            OsDiskStorageAccountType = osDiskStorageAccountType;
+            OSDiskStorageAccountType = osDiskStorageAccountType;
             DataDisks = dataDisks;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The Azure SKU name of the machines in the pool. </summary>
-        public OsDiskStorageAccountType? OsDiskStorageAccountType { get; set; }
+        public OSDiskStorageAccountType? OSDiskStorageAccountType { get; set; }
 
         /// <summary> A list of empty data disks to attach. </summary>
         public IList<DevOpsDataDisk> DataDisks { get; }

@@ -526,13 +526,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevOpsResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DevOpsResourceDetails> GetByPoolAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<DevOpsResourceDetails> GetResourceDetailsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetByPoolAsyncCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceDetailsGetResourceDetailsAsyncCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -558,13 +558,13 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="DevOpsResourceDetails"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DevOpsResourceDetails> GetByPool(CancellationToken cancellationToken = default)
+        public virtual Pageable<DevOpsResourceDetails> GetResourceDetails(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ResourceDetailsGetByPoolCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+            return new ResourceDetailsGetResourceDetailsCollectionResultOfT(_resourceDetailsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>

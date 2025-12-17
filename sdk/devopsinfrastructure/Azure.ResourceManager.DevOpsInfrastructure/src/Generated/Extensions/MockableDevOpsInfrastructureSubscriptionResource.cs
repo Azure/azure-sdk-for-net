@@ -23,6 +23,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
     {
         private ClientDiagnostics _poolsClientDiagnostics;
         private Pools _poolsRestClient;
+        private ClientDiagnostics _subscriptionUsagesClientDiagnostics;
+        private SubscriptionUsages _subscriptionUsagesRestClient;
 
         /// <summary> Initializes a new instance of MockableDevOpsInfrastructureSubscriptionResource for mocking. </summary>
         protected MockableDevOpsInfrastructureSubscriptionResource()
@@ -39,6 +41,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         private ClientDiagnostics PoolsClientDiagnostics => _poolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private Pools PoolsRestClient => _poolsRestClient ??= new Pools(PoolsClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
+
+        private ClientDiagnostics SubscriptionUsagesClientDiagnostics => _subscriptionUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevOpsInfrastructure.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SubscriptionUsages SubscriptionUsagesRestClient => _subscriptionUsagesRestClient ??= new SubscriptionUsages(SubscriptionUsagesClientDiagnostics, Pipeline, Endpoint, "2025-09-20");
 
         /// <summary>
         /// List Pool resources by subscription ID
@@ -190,6 +196,64 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List Quota resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{location}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionUsages_Usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<DevOpsResourceQuota> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SubscriptionUsagesGetUsagesAsyncCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
+        }
+
+        /// <summary>
+        /// List Quota resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.DevOpsInfrastructure/locations/{location}/usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SubscriptionUsages_Usages. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-20. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="DevOpsResourceQuota"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<DevOpsResourceQuota> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new SubscriptionUsagesGetUsagesCollectionResultOfT(SubscriptionUsagesRestClient, Guid.Parse(Id.SubscriptionId), location, context);
         }
     }
 }

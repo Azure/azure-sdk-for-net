@@ -9,16 +9,22 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure;
 using Azure.ResourceManager.DevOpsInfrastructure;
 
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
-    /// <summary> The storage profile of the VMSS. </summary>
-    public partial class DevOpsStorageProfile : IJsonModel<DevOpsStorageProfile>
+    /// <summary> Paged collection of Quota items. </summary>
+    internal partial class PagedQuota : IJsonModel<PagedQuota>
     {
+        /// <summary> Initializes a new instance of <see cref="PagedQuota"/> for deserialization. </summary>
+        internal PagedQuota()
+        {
+        }
+
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DevOpsStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PagedQuota>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,25 +35,22 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsStorageProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedQuota)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OSDiskStorageAccountType))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (DevOpsResourceQuota item in Value)
             {
-                writer.WritePropertyName("osDiskStorageAccountType"u8);
-                writer.WriteStringValue(OSDiskStorageAccountType.Value.ToString());
+                writer.WriteObjectValue(item, options);
             }
-            if (Optional.IsCollectionDefined(DataDisks))
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
-                writer.WritePropertyName("dataDisks"u8);
-                writer.WriteStartArray();
-                foreach (DevOpsDataDisk item in DataDisks)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -68,55 +71,51 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsStorageProfile IJsonModel<DevOpsStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PagedQuota IJsonModel<PagedQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsStorageProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PagedQuota JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedQuota>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevOpsStorageProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PagedQuota)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDevOpsStorageProfile(document.RootElement, options);
+            return DeserializePagedQuota(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DevOpsStorageProfile DeserializeDevOpsStorageProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static PagedQuota DeserializePagedQuota(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OSDiskStorageAccountType? osDiskStorageAccountType = default;
-            IList<DevOpsDataDisk> dataDisks = default;
+            IList<DevOpsResourceQuota> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("osDiskStorageAccountType"u8))
+                if (prop.NameEquals("value"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    osDiskStorageAccountType = new OSDiskStorageAccountType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("dataDisks"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DevOpsDataDisk> array = new List<DevOpsDataDisk>();
+                    List<DevOpsResourceQuota> array = new List<DevOpsResourceQuota>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DevOpsDataDisk.DeserializeDevOpsDataDisk(item, options));
+                        array.Add(DevOpsResourceQuota.DeserializeDevOpsResourceQuota(item, options));
                     }
-                    dataDisks = array;
+                    value = array;
+                    continue;
+                }
+                if (prop.NameEquals("nextLink"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -124,47 +123,54 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevOpsStorageProfile(osDiskStorageAccountType, dataDisks ?? new ChangeTrackingList<DevOpsDataDisk>(), additionalBinaryDataProperties);
+            return new PagedQuota(value, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DevOpsStorageProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PagedQuota>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedQuota>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsStorageProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedQuota)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DevOpsStorageProfile IPersistableModel<DevOpsStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PagedQuota IPersistableModel<PagedQuota>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DevOpsStorageProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PagedQuota PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DevOpsStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PagedQuota>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDevOpsStorageProfile(document.RootElement, options);
+                        return DeserializePagedQuota(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevOpsStorageProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PagedQuota)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DevOpsStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PagedQuota>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PagedQuota"/> from. </param>
+        internal static PagedQuota FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializePagedQuota(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
     }
 }
