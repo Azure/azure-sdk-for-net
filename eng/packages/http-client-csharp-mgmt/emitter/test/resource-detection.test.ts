@@ -778,43 +778,18 @@ interface Employees {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
-
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
     ok(armProviderSchemaResult);
+    ok(armProviderSchemaResult.resources);
+    strictEqual(armProviderSchemaResult.resources.length, 3); // Employee, Department, Company
 
-    const employeeClient = getAllClients(root).find(
-      (c) => c.name === "Employees"
-    );
-    ok(employeeClient);
-    const employeeModel = root.models.find((m) => m.name === "Employee");
-
-    ok(employeeModel);
-    const departmentModel = root.models.find((m) => m.name === "Department");
-    ok(departmentModel);
-    const companyModel = root.models.find((m) => m.name === "Company");
-    ok(companyModel);
-    const employeeGetMethod = employeeClient.methods.find(
-      (m) => m.name === "get"
-    );
-    ok(employeeGetMethod);
-
-    // Find the resource in the schema
-
+    // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchemaResult.resources.find(
-
-      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
-
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
-
     ok(employeeResource);
-
-    const employeeMetadataDecorator = employeeResource;
-
-    ok(employeeMetadataDecorator);
-
-    const metadata = employeeMetadataDecorator.metadata;
-    ok(employeeMetadataDecorator);
+    const metadata = employeeResource.metadata;
+    ok(metadata);
     
     strictEqual(
       metadata.resourceIdPattern,
@@ -824,25 +799,22 @@ interface Employees {
       metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
-    strictEqual(
-      metadata.singletonResourceName,
-      undefined
-    );
+    strictEqual(metadata.singletonResourceName, undefined);
     strictEqual(metadata.resourceScope, "Tenant");
     strictEqual(metadata.methods.length, 5);
-    strictEqual(
-      metadata.methods[0].methodId,
-      employeeGetMethod.crossLanguageDefinitionId
-    );
     strictEqual(metadata.methods[0].kind, "Get");
-
-    // Find the resource in the schema
-    const departmentResourceInSchema = armProviderSchemaResult.resources.find(
-      (r) => r.resourceModelId === departmentModel.crossLanguageDefinitionId
+    strictEqual(
+      metadata.parentResourceId,
+      "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
-    const departmentMetadataDecorator = departmentResourceInSchema;
-    ok(departmentMetadataDecorator);
-    const departmentMetadata = departmentMetadataDecorator.metadata;
+    strictEqual(metadata.resourceName, "Employee");
+
+    // Find the Department resource in the schema by resource type
+    const departmentResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments"
+    );
+    ok(departmentResource);
+    const departmentMetadata = departmentResource.metadata;
     ok(departmentMetadata);
     
     strictEqual(
@@ -853,50 +825,36 @@ interface Employees {
       departmentMetadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments"
     );
-    strictEqual(
-      departmentMetadata.singletonResourceName,
-      undefined
-    );
+    strictEqual(departmentMetadata.singletonResourceName, undefined);
     strictEqual(departmentMetadata.resourceScope, "Tenant");
     strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      metadata.parentResourceId,
+      departmentMetadata.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
-    strictEqual(
-      metadata.resourceName,
-      "Department"
-    );
+    strictEqual(departmentMetadata.resourceName, "Department");
 
-    // Find the resource in the schema
-    const companyResourceInSchema = armProviderSchemaResult.resources.find(
-      (r) => r.resourceModelId === companyModel.crossLanguageDefinitionId
+    // Find the Company resource in the schema by resource type
+    const companyResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
     );
-    const companyMetadataDecorator = companyResourceInSchema;
-    ok(companyMetadataDecorator);
+    ok(companyResource);
+    const companyMetadata = companyResource.metadata;
+    ok(companyMetadata);
     
     strictEqual(
-      metadata.resourceIdPattern,
+      companyMetadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
-      metadata.resourceType,
+      companyMetadata.resourceType,
       "Microsoft.ContosoProviderHub/companies"
     );
-    strictEqual(
-      metadata.singletonResourceName,
-      undefined
-    );
-    strictEqual(departmentMetadata.resourceScope, "Tenant");
-    strictEqual(departmentMetadata.methods.length, 2);
-    strictEqual(departmentMetadata.parentResourceId, undefined);
-    strictEqual(departmentMetadata.resourceName, "Company");
-
-    strictEqual(
-      metadata.parentResourceId,
-      "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
-    );
-    strictEqual(departmentMetadata.resourceName, "Employee");
+    strictEqual(companyMetadata.singletonResourceName, undefined);
+    strictEqual(companyMetadata.resourceScope, "Tenant");
+    strictEqual(companyMetadata.methods.length, 2);
+    strictEqual(companyMetadata.parentResourceId, undefined);
+    strictEqual(companyMetadata.resourceName, "Company");
   });
 
   it("resource scope determined from Get method when no explicit decorator", async () => {
@@ -928,73 +886,23 @@ interface Employees {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
-
-
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
-
     ok(armProviderSchemaResult);
+    ok(armProviderSchemaResult.resources);
+    strictEqual(armProviderSchemaResult.resources.length, 1); // Employee
 
-
-    const employeeClient = getAllClients(root).find(
-      (c) => c.name === "Employees"
-    );
-    ok(employeeClient);
-    const employeeModel = root.models.find((m) => m.name === "Employee");
-
-
-    ok(employeeModel);
-    const getMethod = employeeClient.methods.find((m) => m.name === "get");
-    ok(getMethod);
-
-    // Find the resource in the schema
-
-
-    const employeeResource = armProviderSchemaResult.resources.find(
-
-
-      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
-
-
-    );
-
-
+    // Find the Employee resource in the schema (should be the only one)
+    const employeeResource = armProviderSchemaResult.resources[0];
     ok(employeeResource);
-
-
-    const resourceMetadataDecorator = employeeResource;
-
-
-    ok(resourceMetadataDecorator);
-
-
-    const metadata = resourceMetadataDecorator.metadata;
-    ok(resourceMetadataDecorator);
-    
-
-    // Verify that the model has NO scope-related decorators
-    const hasNoScopeDecorators = !employeeModel.decorators?.some(
-      (d) =>
-        d.name === tenantResource ||
-        d.name === subscriptionResource ||
-        d.name === resourceGroupResource
-    );
-    ok(
-      hasNoScopeDecorators,
-      "Model should have no scope-related decorators to test fallback logic"
-    );
+    const metadata = employeeResource.metadata;
+    ok(metadata);
 
     // The model should inherit its resourceScope from the Get method's operationScope (Subscription)
     // because the Get method operates at subscription scope and there are no explicit scope decorators
-    strictEqual(
-      metadata.resourceScope,
-      "Subscription"
-    );
+    strictEqual(metadata.resourceScope, "Subscription");
 
     // Verify the Get method itself has the correct scope
-    const getMethodEntry = metadata.methods.find(
-      (m: any) => m.methodId === getMethod.crossLanguageDefinitionId
-    );
+    const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Get");
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Get");
     strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
@@ -1050,71 +958,17 @@ interface Employees {
 
 
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
-
     ok(armProviderSchemaResult);
+    ok(armProviderSchemaResult.resources);
+    strictEqual(armProviderSchemaResult.resources.length, 1); // Only EmployeeParent (Employee has no CRUD ops)
 
-
-    const employeeClient = getAllClients(root).find(
-      (c) => c.name === "Employees"
+    // Find the EmployeeParent resource in the schema by resource type
+    const employeeParentResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents"
     );
-    ok(employeeClient);
-    const employeeParentClient = getAllClients(root).find(
-      (c) => c.name === "EmployeeParents"
-    );
-    ok(employeeParentClient);
-
-    const employeeModel = root.models.find((m) => m.name === "Employee");
-
-
-    ok(employeeModel);
-    const employeeParentModel = root.models.find(
-      (m) => m.name === "EmployeeParent"
-    );
-    ok(employeeParentModel);
-
-    const listByParentMethod = employeeClient.methods.find(
-      (m) => m.name === "listByParent"
-    );
-    ok(listByParentMethod);
-    const getMethod = employeeParentClient.methods.find(
-      (m) => m.name === "get"
-    );
-    ok(getMethod);
-
-    // Validate Employee resource metadata should be null (no CRUD operations)
-    // Find the resource in the schema
-
-
-    const employeeResource = armProviderSchemaResult.resources.find(
-
-
-      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
-
-
-    );
-
-
-    ok(employeeResource);
-
-
-    const employeeResourceMetadataDecorator = employeeResource;
-
-
-    ok(employeeResourceMetadataDecorator);
-
-
-    const metadata = employeeResourceMetadataDecorator.metadata;
-    strictEqual(
-      employeeResourceMetadataDecorator,
-      undefined,
-      "Employee should not have resource metadata decorator without CRUD operations"
-    );
-
-    // Validate EmployeeParent resource metadata
-    const parentResourceMetadataDecorator =
-      employeeParentModel.decorators?.find((d) => d.name === resourceMetadata);
-    ok(parentResourceMetadataDecorator);
+    ok(employeeParentResource);
+    const metadata = employeeParentResource.metadata;
+    ok(metadata);
     
     strictEqual(
       metadata.resourceIdPattern,
@@ -1124,25 +978,13 @@ interface Employees {
       metadata.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents"
     );
-    strictEqual(
-      metadata.resourceScope,
-      "ResourceGroup"
-    );
-    strictEqual(
-      metadata.parentResourceId,
-      undefined
-    );
-    strictEqual(
-      metadata.resourceName,
-      "EmployeeParent"
-    );
-    strictEqual(metadata.methods.length, 2);
+    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(metadata.parentResourceId, undefined);
+    strictEqual(metadata.resourceName, "EmployeeParent");
+    strictEqual(metadata.methods.length, 2); // Get and ListByParent
 
-    // Validate EmployeeParent listByParent method
-    const listByParentEntry =
-      metadata.methods.find(
-        (m: any) => m.methodId === listByParentMethod.crossLanguageDefinitionId
-      );
+    // Validate EmployeeParent has listByParent method
+    const listByParentEntry = metadata.methods.find((m: any) => m.kind === "List");
     ok(listByParentEntry);
   });
 
@@ -1182,28 +1024,17 @@ interface Employees {
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
+    ok(armProviderSchemaResult.resources);
+    strictEqual(armProviderSchemaResult.resources.length, 1); // Employee
 
-    const employeeClient = getAllClients(root).find(
-      (c) => c.name === "Employees"
+    // Find the Employee resource in the schema by resource type
+    const employeeResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employees"
     );
-    ok(employeeClient);
-
-    const employeeModel = root.models.find((m) => m.name === "Employee");
-    ok(employeeModel);
-
-    // Validate Employee resource metadata should be null (no CRUD operations)
-    // Find the resource in the schema
-    const employeeResourceInSchema = armProviderSchemaResult.resources.find(
-      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
-    );
-    const employeeResourceMetadataDecorator = employeeResourceInSchema;
-    ok(employeeResourceMetadataDecorator);
-    const metadata = employeeResourceMetadataDecorator.metadata;
+    ok(employeeResource);
+    const metadata = employeeResource.metadata;
     ok(metadata);
-    strictEqual(
-      metadata.resourceScope,
-      "ManagementGroup"
-    );
+    strictEqual(metadata.resourceScope, "ManagementGroup");
   });
 
   it("interface with only action operations (no get)", async () => {
@@ -1254,40 +1085,25 @@ interface ScheduledActionExtension {
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
-
-    const scheduledActionExtensionClient = getAllClients(root).find(
-      (c) => c.name === "ScheduledActionExtension"
-    );
-    ok(scheduledActionExtensionClient, "ScheduledActionExtension client should exist");
-
-    const scheduledActionModel = root.models.find((m) => m.name === "ScheduledAction");
-    ok(scheduledActionModel, "ScheduledAction model should exist");
-
-    const getAssociatedMethod = scheduledActionExtensionClient.methods.find(
-      (m) => m.name === "getAssociatedScheduledActions"
-    );
-    ok(getAssociatedMethod, "getAssociatedScheduledActions method should exist");
-
-    // Check if resource metadata exists for ScheduledAction
-    // Find the resource in the schema
-    const scheduledActionResourceInSchema = armProviderSchemaResult.resources.find(
-      (r) => r.resourceModelId === scheduledActionModel.crossLanguageDefinitionId
-    );
-    const resourceMetadataDecorator = scheduledActionResourceInSchema;
     
-    // The resource should NOT have metadata since it has no CRUD operations
+    // ScheduledAction should NOT have a resource entry since it has no CRUD operations
+    ok(armProviderSchemaResult.resources);
+    const scheduledActionResource = armProviderSchemaResult.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/scheduledActions"
+    );
     strictEqual(
-      resourceMetadataDecorator,
+      scheduledActionResource,
       undefined,
-      "ScheduledAction should not have resource metadata decorator without CRUD operations"
+      "ScheduledAction should not have resource metadata without CRUD operations"
     );
     
     // Check that the method is treated as a non-resource method
     ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods");
+    ok(armProviderSchemaResult.nonResourceMethods.length >= 1, "Should have at least one non-resource method");
     
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     const methodEntry = nonResourceMethods.find(
-      (m: any) => m.methodId === getAssociatedMethod.crossLanguageDefinitionId
+      (m: any) => m.operationPath.includes("getAssociatedScheduledActions")
     );
     ok(methodEntry, "getAssociatedScheduledActions should be in non-resource methods");
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
