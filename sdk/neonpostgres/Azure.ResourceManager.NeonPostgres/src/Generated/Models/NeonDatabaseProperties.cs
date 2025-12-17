@@ -59,8 +59,10 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="attributes"> Additional attributes for the entity. </param>
         /// <param name="branchId"> The ID of the branch this database belongs to. </param>
         /// <param name="ownerName"> The name of the role that owns the database. </param>
+        /// <param name="databaseName"> Name of the database. </param>
+        /// <param name="lastUpdatedOn"> Timestamp indicating when the database was last updated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NeonDatabaseProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, string ownerName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NeonDatabaseProperties(string entityId, string entityName, string createdAt, NeonResourceProvisioningState? provisioningState, IList<Attributes> attributes, string branchId, string ownerName, string databaseName, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EntityId = entityId;
             EntityName = entityName;
@@ -69,6 +71,8 @@ namespace Azure.ResourceManager.NeonPostgres.Models
             Attributes = attributes;
             BranchId = branchId;
             OwnerName = ownerName;
+            DatabaseName = databaseName;
+            LastUpdatedOn = lastUpdatedOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,5 +90,9 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         public string BranchId { get; set; }
         /// <summary> The name of the role that owns the database. </summary>
         public string OwnerName { get; set; }
+        /// <summary> Name of the database. </summary>
+        public string DatabaseName { get; set; }
+        /// <summary> Timestamp indicating when the database was last updated. </summary>
+        public DateTimeOffset? LastUpdatedOn { get; }
     }
 }

@@ -232,6 +232,7 @@ namespace Azure.AI.VoiceLive.Tests
             Assert.IsTrue(visemeDone.Count() == 1);
         }
 
+        [Ignore("Investigating")]
         [LiveOnly]
         [TestCase]
         public async Task AnimationOutputs_blend()

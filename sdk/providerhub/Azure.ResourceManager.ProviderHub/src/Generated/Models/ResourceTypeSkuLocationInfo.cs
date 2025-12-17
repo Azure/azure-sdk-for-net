@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuLocationInfo"/>. </summary>
-        /// <param name="location"></param>
+        /// <param name="location"> The location. </param>
         public ResourceTypeSkuLocationInfo(AzureLocation location)
         {
             Location = location;
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.ProviderHub.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuLocationInfo"/>. </summary>
-        /// <param name="location"></param>
-        /// <param name="zones"></param>
-        /// <param name="zoneDetails"></param>
-        /// <param name="extendedLocations"></param>
-        /// <param name="extendedLocationType"></param>
+        /// <param name="location"> The location. </param>
+        /// <param name="zones"> The zones. </param>
+        /// <param name="zoneDetails"> The zone details. </param>
+        /// <param name="extendedLocations"> The extended locations. </param>
+        /// <param name="locationType"> The type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderHubExtendedLocationType? extendedLocationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceTypeSkuLocationInfo(AzureLocation location, IList<string> zones, IList<ResourceTypeSkuZoneDetail> zoneDetails, IList<string> extendedLocations, ProviderExtendedLocationType? locationType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Zones = zones;
             ZoneDetails = zoneDetails;
             ExtendedLocations = extendedLocations;
-            ExtendedLocationType = extendedLocationType;
+            LocationType = locationType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,15 +78,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
         {
         }
 
-        /// <summary> Gets or sets the location. </summary>
+        /// <summary> The location. </summary>
         public AzureLocation Location { get; set; }
-        /// <summary> Gets the zones. </summary>
+        /// <summary> The zones. </summary>
         public IList<string> Zones { get; }
-        /// <summary> Gets the zone details. </summary>
+        /// <summary> The zone details. </summary>
         public IList<ResourceTypeSkuZoneDetail> ZoneDetails { get; }
-        /// <summary> Gets the extended locations. </summary>
+        /// <summary> The extended locations. </summary>
         public IList<string> ExtendedLocations { get; }
-        /// <summary> Gets or sets the extended location type. </summary>
-        public ProviderHubExtendedLocationType? ExtendedLocationType { get; set; }
+        /// <summary> The type. </summary>
+        public ProviderExtendedLocationType? LocationType { get; set; }
     }
 }

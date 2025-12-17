@@ -231,26 +231,7 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
-            var jsonElements = new List<JsonElement>();
-            foreach (MessageInputContentBlock block in contentBlocks)
-            {
-                // Write the content into a MemoryStream.
-                using var memStream = new MemoryStream();
-
-                // Write the RequestContent into the MemoryStream
-                block.ToRequestContent().WriteTo(memStream, default);
-
-                // Reset stream position to the beginning
-                memStream.Position = 0;
-
-                // Parse to a JsonDocument, then clone the root element so we can reuse it
-                using var tempDoc = JsonDocument.Parse(memStream);
-                jsonElements.Add(tempDoc.RootElement.Clone());
-            }
-
-            // Now serialize the array of JsonElements into a single BinaryData for the request:
-            var jsonString = JsonSerializer.Serialize(contentBlocks, JsonElementSerializer.Default.ListJsonElement);
-            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
 
             return await CreateMessageAsync(
                 threadId,
@@ -296,6 +277,21 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNull(contentBlocks, nameof(contentBlocks));
 
             // Convert blocks to a JSON array stored as BinaryData
+            BinaryData serializedBlocks = ConvertMessageInputContentBlocksToJson(contentBlocks);
+
+            return CreateMessage(
+                threadId,
+                role,
+                serializedBlocks,
+                attachments,
+                metadata,
+                cancellationToken
+            );
+        }
+
+        private static BinaryData ConvertMessageInputContentBlocksToJson(IEnumerable<MessageInputContentBlock> contentBlocks)
+        {
+            // Convert blocks to a JSON array stored as BinaryData
             var jsonElements = new List<JsonElement>();
             foreach (MessageInputContentBlock block in contentBlocks)
             {
@@ -315,22 +311,13 @@ namespace Azure.AI.Agents.Persistent
 
             // Now serialize the array of JsonElements into a single BinaryData for the request:
             var jsonString = JsonSerializer.Serialize(jsonElements, JsonElementSerializer.Default.ListJsonElement);
-            BinaryData serializedBlocks = BinaryData.FromString(jsonString);
-
-            return CreateMessage(
-                threadId,
-                role,
-                serializedBlocks,
-                attachments,
-                metadata,
-                cancellationToken
-            );
+            return BinaryData.FromString(jsonString);
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>
@@ -370,7 +357,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Gets a list of messages that exist on a thread. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
         /// <param name="runId"> Filter messages by the run ID that generated them. </param>
-        /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
+        /// <param name="limit"> A limit on the number of objects to be returned on one page. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="order"> Sort order by the created_at timestamp of the objects. asc for ascending order and desc for descending order. </param>
         /// <param name="after"> A cursor for use in pagination. after is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include after=obj_foo in order to fetch the next page of the list. </param>
         /// <param name="before"> A cursor for use in pagination. before is an object ID that defines your place in the list. For instance, if you make a list request and receive 100 objects, ending with obj_foo, your subsequent call can include before=obj_foo in order to fetch the previous page of the list. </param>

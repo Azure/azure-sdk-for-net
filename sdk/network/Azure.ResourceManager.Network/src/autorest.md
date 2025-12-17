@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/cbfe154470792d8aea255885a4a96609603982cc/specification/network/resource-manager/readme.md
-#tag: package-2024-10-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/4db9e81042ec3ffd1eee8df1bf2b8489a1e7fa0a/specification/network/resource-manager/readme.md
+#tag: package-2025-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -39,6 +39,7 @@ enable-bicep-serialization: true
 
 rename-mapping:
   Access: NetworkAccess
+  AccessMode: PrivateLinkServiceAccessMode
   AssociationAccessMode: NetworkSecurityPerimeterAssociationAccessMode
   AccessRuleDirection: NetworkSecurityPerimeterAccessRuleDirection
   Action: RouteMapAction
@@ -58,10 +59,13 @@ rename-mapping:
   ApplicationGatewayBackendHttpSettings.properties.requestTimeout: RequestTimeoutInSeconds
   ApplicationGatewayBackendHttpSettings.properties.validateCertChainAndExpiry: IsValidateCertChainAndExpiryEnabled
   ApplicationGatewayBackendHttpSettings.properties.validateSNI: IsValidateSniEnabled
+  ApplicationGatewayBackendSettings.properties.enableL4ClientIpPreservation: IsL4ClientIPPreservationEnabled
   ApplicationGatewayBackendSettings.properties.timeout: TimeoutInSeconds
   ApplicationGatewayConnectionDraining.drainTimeoutInSec: DrainTimeoutInSeconds
+  ApplicationGatewayOnDemandProbe.enableProbeProxyProtocolHeader: IsProbeProxyProtocolHeaderEnabled
   ApplicationGatewayPrivateEndpointConnection.properties.privateLinkServiceConnectionState: connectionState
   ApplicationGatewayPrivateLinkIpConfiguration.properties.primary: IsPrimary
+  ApplicationGatewayProbe.properties.enableProbeProxyProtocolHeader: IsProbeProxyProtocolHeaderEnabled
   ApplicationGatewayProbe.properties.interval: IntervalInSeconds
   ApplicationGatewayProbe.properties.timeout: TimeoutInSeconds
   ApplicationGatewayTierTypes.WAF: Waf
@@ -137,6 +141,7 @@ rename-mapping:
   IPTraffic: NetworkVerifierIPTraffic
   IpType: IpamIPType
   IPVersion: NetworkIPVersion
+  IsRollback: UndoReservationType
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
   IsWorkloadProtected: WorkloadProtectedFlag
@@ -304,6 +309,7 @@ acronym-mapping:
   IkeV2: IkeV2
   Stag: STag|stag
   Nsp: NetworkSecurityPerimeter
+  JWT: Jwt|jwt
 
 #TODO: remove after we resolve why DdosCustomPolicy has no list
 list-exception:

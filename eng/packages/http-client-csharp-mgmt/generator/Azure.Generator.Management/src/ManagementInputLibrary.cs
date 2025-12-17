@@ -60,7 +60,8 @@ namespace Azure.Generator.Management
         private static readonly HashSet<string> _methodsToOmit = new()
         {
             // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
-            "Azure.ResourceManager.Operations.list"
+            "Azure.ResourceManager.Operations.list",
+            "Azure.ResourceManager.Legacy.Operations.list"
         };
 
         private InputNamespace? _inputNamespace;
@@ -101,7 +102,7 @@ namespace Azure.Generator.Management
 
         private IReadOnlyDictionary<InputModelType, string> BuildResourceUpdateModelToResourceNameMap()
         {
-            Dictionary<InputModelType, string> map = new();
+            Dictionary<InputModelType, (string ResourceName, int Count)> tempMap = new();
 
             foreach (var metadata in ResourceMetadatas)
             {
@@ -112,14 +113,24 @@ namespace Azure.Generator.Management
                     {
                         if (parameter.Location == InputRequestLocation.Body && parameter.Type is InputModelType updateModel && updateModel != metadata.ResourceModel)
                         {
-                            map[updateModel] = metadata.ResourceModel.Name;
+                            if (tempMap.TryGetValue(updateModel, out var existing))
+                            {
+                                tempMap[updateModel] = (existing.ResourceName, existing.Count + 1);
+                            }
+                            else
+                            {
+                                tempMap[updateModel] = (metadata.ResourceModel.Name, 1);
+                            }
                             break;
                         }
                     }
                 }
             }
 
-            return map;
+            // Only keep update models that are used in exactly one resource (count == 1)
+            return tempMap
+                .Where(kvp => kvp.Value.Count == 1)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ResourceName);
         }
 
         private IReadOnlyDictionary<InputServiceMethod, InputClient> ConstructMethodClientMap()

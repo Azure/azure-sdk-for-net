@@ -1,8 +1,19 @@
 # Release History
 
+## 1.4.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.3 (2025-09-15)
 
 ### Features Added
+
 - Upgraded API version to `2025-05-01`.
 - Added support for `IpRules` and `ServiceTags` fields introduced in the new API version.
 

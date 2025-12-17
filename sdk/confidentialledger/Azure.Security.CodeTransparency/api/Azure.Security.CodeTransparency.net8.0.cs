@@ -1,10 +1,22 @@
 namespace Azure.Security.CodeTransparency
 {
+    public enum AuthorizedReceiptBehavior
+    {
+        VerifyAnyMatching = 0,
+        VerifyAllMatching = 1,
+        RequireAll = 2,
+    }
     public partial class AzureSecurityCodeTransparencyContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureSecurityCodeTransparencyContext() { }
         public static Azure.Security.CodeTransparency.AzureSecurityCodeTransparencyContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
+    public partial class CborUtils
+    {
+        public CborUtils() { }
+        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, int key) { throw null; }
+        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, string key) { throw null; }
     }
     public partial class CodeTransparencyCertificateClient
     {
@@ -18,6 +30,7 @@ namespace Azure.Security.CodeTransparency
     }
     public partial class CodeTransparencyClient
     {
+        public static readonly string UnknownIssuerPrefix;
         protected CodeTransparencyClient() { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
         public CodeTransparencyClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
@@ -45,7 +58,10 @@ namespace Azure.Security.CodeTransparency
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetTransparencyConfigCborAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use the static VerifyTransparentStatement method with options instead.")]
         public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
+        public virtual void RunTransparentStatementVerification(byte[] signedStatementCoseSign1Bytes, byte[] receiptCoseSign1Bytes) { }
+        public static void VerifyTransparentStatement(byte[] transparentStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyVerificationOptions verificationOptions = null, Azure.Security.CodeTransparency.CodeTransparencyClientOptions clientOptions = null) { }
     }
     public partial class CodeTransparencyClientOptions : Azure.Core.ClientOptions
     {
@@ -58,11 +74,28 @@ namespace Azure.Security.CodeTransparency
             V2025_01_31_Preview = 1,
         }
     }
+    public sealed partial class CodeTransparencyOfflineKeys
+    {
+        public CodeTransparencyOfflineKeys() { }
+        public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Security.CodeTransparency.JwksDocument> ByIssuer { get { throw null; } }
+        public void Add(string ledgerDomain, Azure.Security.CodeTransparency.JwksDocument jwksDocument) { }
+        public static Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys FromBinaryData(System.BinaryData json) { throw null; }
+        public System.BinaryData ToBinaryData() { throw null; }
+    }
     public enum CodeTransparencyOperationStatus
     {
         Running = 0,
         Failed = 1,
         Succeeded = 2,
+    }
+    public sealed partial class CodeTransparencyVerificationOptions
+    {
+        public CodeTransparencyVerificationOptions() { }
+        public System.Collections.Generic.IList<string> AuthorizedDomains { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.AuthorizedReceiptBehavior AuthorizedReceiptBehavior { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.CodeTransparencyOfflineKeys OfflineKeys { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.OfflineKeysBehavior OfflineKeysBehavior { get { throw null; } set { } }
+        public Azure.Security.CodeTransparency.UnauthorizedReceiptBehavior UnauthorizedReceiptBehavior { get { throw null; } set { } }
     }
     public partial class JsonWebKey : System.ClientModel.Primitives.IJsonModel<Azure.Security.CodeTransparency.JsonWebKey>, System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JsonWebKey>
     {
@@ -102,6 +135,11 @@ namespace Azure.Security.CodeTransparency
         string System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Security.CodeTransparency.JwksDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public enum OfflineKeysBehavior
+    {
+        FallbackToNetwork = 0,
+        NoFallbackToNetwork = 1,
+    }
     public static partial class SecurityCodeTransparencyModelFactory
     {
         public static Azure.Security.CodeTransparency.JsonWebKey JsonWebKey(string alg = null, string crv = null, string d = null, string dp = null, string dq = null, string e = null, string k = null, string kid = null, string kty = null, string n = null, string p = null, string q = null, string qi = null, string use = null, string x = null, System.Collections.Generic.IEnumerable<string> x5c = null, string y = null) { throw null; }
@@ -113,6 +151,12 @@ namespace Azure.Security.CodeTransparency
         public System.DateTime CreatedAt { get { throw null; } }
         public string TlsCertificatePem { get { throw null; } }
         public System.Security.Cryptography.X509Certificates.X509Certificate2 GetCertificate() { throw null; }
+    }
+    public enum UnauthorizedReceiptBehavior
+    {
+        VerifyAll = 0,
+        IgnoreAll = 1,
+        FailIfPresent = 2,
     }
 }
 namespace Azure.Security.CodeTransparency.Receipt

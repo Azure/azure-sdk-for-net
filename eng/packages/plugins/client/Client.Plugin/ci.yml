@@ -5,6 +5,7 @@ trigger:
   paths:
     include:
       - eng/packages/plugins/client/Client.Plugin
+      - eng/packages/http-client-csharp
 pr:
   branches:
     include:
@@ -15,6 +16,7 @@ pr:
   paths:
     include:
       - eng/packages/plugins/client/Client.Plugin
+      - eng/packages/http-client-csharp
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml

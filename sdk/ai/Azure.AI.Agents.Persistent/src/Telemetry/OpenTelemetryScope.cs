@@ -371,9 +371,12 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             // Log tool outputs as events
             if (submitToolOutputsRequest.ToolOutputs != null)
             {
-                foreach (var toolOutput in submitToolOutputsRequest.ToolOutputs)
+                foreach (var structuredToolOutput in submitToolOutputsRequest.ToolOutputs)
                 {
-                    scope.RecordToolOutputEvent(toolOutput);
+                    if (structuredToolOutput is ToolOutput toolOutput)
+                    {
+                        scope.RecordToolOutputEvent(toolOutput);
+                    }
                 }
             }
 

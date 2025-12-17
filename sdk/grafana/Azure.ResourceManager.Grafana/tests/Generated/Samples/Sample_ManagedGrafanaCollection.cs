@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Grafana.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_GrafanaCreate()
         {
-            // Generated from example definition: 2024-11-01-preview/Grafana_Create.json
+            // Generated from example definition: 2025-08-01/Grafana_Create.json
             // this example is just showing the usage of "ManagedGrafana_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -87,7 +87,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
 },
                     GrafanaMajorVersion = "9",
                 },
-                SkuName = "Standard",
+                Sku = new ManagedGrafanaSku("Standard"),
                 Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Tags =
 {
@@ -108,7 +108,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GrafanaGet()
         {
-            // Generated from example definition: 2024-11-01-preview/Grafana_Get.json
+            // Generated from example definition: 2025-08-01/Grafana_Get.json
             // this example is just showing the usage of "ManagedGrafana_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -141,7 +141,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GrafanaListByResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/Grafana_ListByResourceGroup.json
+            // Generated from example definition: 2025-08-01/Grafana_ListByResourceGroup.json
             // this example is just showing the usage of "ManagedGrafana_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -176,7 +176,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GrafanaGet()
         {
-            // Generated from example definition: 2024-11-01-preview/Grafana_Get.json
+            // Generated from example definition: 2025-08-01/Grafana_Get.json
             // this example is just showing the usage of "ManagedGrafana_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -205,7 +205,7 @@ MonitorWorkspaceResourceId = new ResourceIdentifier("/subscriptions/00000000-000
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GrafanaGet()
         {
-            // Generated from example definition: 2024-11-01-preview/Grafana_Get.json
+            // Generated from example definition: 2025-08-01/Grafana_Get.json
             // this example is just showing the usage of "ManagedGrafana_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HealthDataAIServices;
 
 namespace Azure.ResourceManager.HealthDataAIServices.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HealthDataAIServices.Models
     public readonly partial struct HealthDataAIServicesPrivateEndpointServiceConnectionStatus : IEquatable<HealthDataAIServicesPrivateEndpointServiceConnectionStatus>
     {
         private readonly string _value;
+        /// <summary> Connection waiting for approval or rejection. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Connection approved. </summary>
+        private const string ApprovedValue = "Approved";
+        /// <summary> Connection Rejected. </summary>
+        private const string RejectedValue = "Rejected";
 
         /// <summary> Initializes a new instance of <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HealthDataAIServicesPrivateEndpointServiceConnectionStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PendingValue = "Pending";
-        private const string ApprovedValue = "Approved";
-        private const string RejectedValue = "Rejected";
+            _value = value;
+        }
 
         /// <summary> Connection waiting for approval or rejection. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Pending { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(PendingValue);
+
         /// <summary> Connection approved. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Approved { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(ApprovedValue);
+
         /// <summary> Connection Rejected. </summary>
         public static HealthDataAIServicesPrivateEndpointServiceConnectionStatus Rejected { get; } = new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(RejectedValue);
+
         /// <summary> Determines if two <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HealthDataAIServicesPrivateEndpointServiceConnectionStatus left, HealthDataAIServicesPrivateEndpointServiceConnectionStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HealthDataAIServicesPrivateEndpointServiceConnectionStatus left, HealthDataAIServicesPrivateEndpointServiceConnectionStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HealthDataAIServicesPrivateEndpointServiceConnectionStatus(string value) => new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HealthDataAIServicesPrivateEndpointServiceConnectionStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HealthDataAIServicesPrivateEndpointServiceConnectionStatus?(string value) => value == null ? null : new HealthDataAIServicesPrivateEndpointServiceConnectionStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HealthDataAIServicesPrivateEndpointServiceConnectionStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HealthDataAIServicesPrivateEndpointServiceConnectionStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

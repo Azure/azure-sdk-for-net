@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             }
             if (Optional.IsDefined(ClusterLoginUri))
             {
-                writer.WritePropertyName("clusterLoginUrl"u8);
+                writer.WritePropertyName("clusterLoginUri"u8);
                 writer.WriteStringValue(ClusterLoginUri.AbsoluteUri);
             }
             if (Optional.IsCollectionDefined(PrivateIPs))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             MarketplaceDetails marketplaceDetails = default;
             QumuloUserDetails userDetails = default;
             ResourceIdentifier delegatedSubnetId = default;
-            Uri clusterLoginUrl = default;
+            Uri clusterLoginUri = default;
             IList<string> privateIPs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -137,13 +137,13 @@ namespace Azure.ResourceManager.Qumulo.Models
                     delegatedSubnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clusterLoginUrl"u8))
+                if (property.NameEquals("clusterLoginUri"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clusterLoginUrl = new Uri(property.Value.GetString());
+                    clusterLoginUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateIPs"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 marketplaceDetails,
                 userDetails,
                 delegatedSubnetId,
-                clusterLoginUrl,
+                clusterLoginUri,
                 privateIPs ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }

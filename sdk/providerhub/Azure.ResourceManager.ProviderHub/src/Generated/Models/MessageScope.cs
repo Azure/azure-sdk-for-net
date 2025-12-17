@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The MessageScope. </summary>
+    /// <summary> The message scope. </summary>
     public readonly partial struct MessageScope : IEquatable<MessageScope>
     {
         private readonly string _value;

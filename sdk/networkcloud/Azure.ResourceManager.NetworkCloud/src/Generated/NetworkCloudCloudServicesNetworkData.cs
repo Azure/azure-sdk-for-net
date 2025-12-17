@@ -15,10 +15,7 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
     /// A class representing the NetworkCloudCloudServicesNetwork data model.
-    /// Upon creation, the additional services that are provided by the platform will be allocated and
-    /// represented in the status of this resource. All resources associated with this cloud services network will be part
-    /// of the same layer 2 (L2) isolation domain. At least one service network must be created but may be reused across many
-    /// virtual machines and/or Hybrid AKS clusters.
+    /// Upon creation, the additional services that are provided by the platform will be allocated and represented in the status of this resource. All resources associated with this cloud services network will be part of the same layer 2 (L2) isolation domain. At least one service network must be created but may be reused across many virtual machines and/or Hybrid AKS clusters.
     /// </summary>
     public partial class NetworkCloudCloudServicesNetworkData : TrackedResourceData
     {
@@ -89,9 +86,11 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="hybridAksClustersAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of Hybrid AKS cluster resource IDs that are associated with this cloud services network. </param>
         /// <param name="interfaceName"> The name of the interface that will be present in the virtual machine to represent this network. </param>
         /// <param name="provisioningState"> The provisioning state of the cloud services network. </param>
+        /// <param name="storageOptions"> The storage options for the cloud services network. </param>
+        /// <param name="storageStatus"> The storage status for the cloud services network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this cloud services network. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudCloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IList<EgressEndpoint> additionalEgressEndpoints, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IReadOnlyList<EgressEndpoint> enabledEgressEndpoints, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudCloudServicesNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, IList<EgressEndpoint> additionalEgressEndpoints, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, CloudServicesNetworkDetailedStatus? detailedStatus, string detailedStatusMessage, CloudServicesNetworkEnableDefaultEgressEndpoint? enableDefaultEgressEndpoints, IReadOnlyList<EgressEndpoint> enabledEgressEndpoints, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, string interfaceName, CloudServicesNetworkProvisioningState? provisioningState, CloudServicesNetworkStorageOptions storageOptions, CloudServicesNetworkStorageStatus storageStatus, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             ExtendedLocation = extendedLocation;
@@ -105,6 +104,8 @@ namespace Azure.ResourceManager.NetworkCloud
             HybridAksClustersAssociatedIds = hybridAksClustersAssociatedIds;
             InterfaceName = interfaceName;
             ProvisioningState = provisioningState;
+            StorageOptions = storageOptions;
+            StorageStatus = storageStatus;
             VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -138,6 +139,10 @@ namespace Azure.ResourceManager.NetworkCloud
         public string InterfaceName { get; }
         /// <summary> The provisioning state of the cloud services network. </summary>
         public CloudServicesNetworkProvisioningState? ProvisioningState { get; }
+        /// <summary> The storage options for the cloud services network. </summary>
+        public CloudServicesNetworkStorageOptions StorageOptions { get; set; }
+        /// <summary> The storage status for the cloud services network. </summary>
+        public CloudServicesNetworkStorageStatus StorageStatus { get; }
         /// <summary> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource IDs, excluding any Hybrid AKS virtual machines, that are currently using this cloud services network. </summary>
         public IReadOnlyList<ResourceIdentifier> VirtualMachinesAssociatedIds { get; }
     }

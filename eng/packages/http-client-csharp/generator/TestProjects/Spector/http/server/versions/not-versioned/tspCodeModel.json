@@ -73,7 +73,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "isApiVersion": true,
+                "isApiVersion": false,
                 "explode": false,
                 "optional": false,
                 "scope": "Method",
@@ -114,7 +114,7 @@
                 "decorators": []
               },
               "location": "Query",
-              "isApiVersion": true,
+              "isApiVersion": false,
               "optional": false,
               "scope": "Method",
               "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withQueryApiVersion.apiVersion",
@@ -153,7 +153,7 @@
                   "crossLanguageDefinitionId": "TypeSpec.string",
                   "decorators": []
                 },
-                "isApiVersion": true,
+                "isApiVersion": false,
                 "explode": false,
                 "style": "simple",
                 "allowReserved": false,
@@ -197,7 +197,7 @@
                 "decorators": []
               },
               "location": "Path",
-              "isApiVersion": true,
+              "isApiVersion": false,
               "optional": false,
               "scope": "Method",
               "crossLanguageDefinitionId": "Server.Versions.NotVersioned.withPathApiVersion.apiVersion",
@@ -236,6 +236,7 @@
           "crossLanguageDefinitionId": "Server.Versions.NotVersioned.endpoint"
         }
       ],
+      "initializedBy": 1,
       "decorators": [],
       "crossLanguageDefinitionId": "Server.Versions.NotVersioned",
       "apiVersions": []

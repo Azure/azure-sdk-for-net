@@ -35,42 +35,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsResolverResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsResolverResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverResource"/> object. </returns>
-        public virtual DnsResolverResource GetDnsResolverResource(ResourceIdentifier id)
-        {
-            DnsResolverResource.ValidateResourceId(id);
-            return new DnsResolverResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DnsResolverInboundEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsResolverInboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverInboundEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverInboundEndpointResource"/> object. </returns>
-        public virtual DnsResolverInboundEndpointResource GetDnsResolverInboundEndpointResource(ResourceIdentifier id)
-        {
-            DnsResolverInboundEndpointResource.ValidateResourceId(id);
-            return new DnsResolverInboundEndpointResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="DnsResolverOutboundEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsResolverOutboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverOutboundEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverOutboundEndpointResource"/> object. </returns>
-        public virtual DnsResolverOutboundEndpointResource GetDnsResolverOutboundEndpointResource(ResourceIdentifier id)
-        {
-            DnsResolverOutboundEndpointResource.ValidateResourceId(id);
-            return new DnsResolverOutboundEndpointResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="DnsForwardingRulesetResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsForwardingRulesetResource.CreateResourceIdentifier" /> to create a <see cref="DnsForwardingRulesetResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -80,6 +44,42 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         {
             DnsForwardingRulesetResource.ValidateResourceId(id);
             return new DnsForwardingRulesetResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsResolverDomainListResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverDomainListResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverDomainListResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolverDomainListResource"/> object. </returns>
+        public virtual DnsResolverDomainListResource GetDnsResolverDomainListResource(ResourceIdentifier id)
+        {
+            DnsResolverDomainListResource.ValidateResourceId(id);
+            return new DnsResolverDomainListResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsResolverPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolverPolicyResource"/> object. </returns>
+        public virtual DnsResolverPolicyResource GetDnsResolverPolicyResource(ResourceIdentifier id)
+        {
+            DnsResolverPolicyResource.ValidateResourceId(id);
+            return new DnsResolverPolicyResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsResolverResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolverResource"/> object. </returns>
+        public virtual DnsResolverResource GetDnsResolverResource(ResourceIdentifier id)
+        {
+            DnsResolverResource.ValidateResourceId(id);
+            return new DnsResolverResource(Client, id);
         }
 
         /// <summary>
@@ -107,18 +107,6 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsResolverPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsResolverPolicyResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverPolicyResource"/> object. </returns>
-        public virtual DnsResolverPolicyResource GetDnsResolverPolicyResource(ResourceIdentifier id)
-        {
-            DnsResolverPolicyResource.ValidateResourceId(id);
-            return new DnsResolverPolicyResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="DnsSecurityRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsSecurityRuleResource.CreateResourceIdentifier" /> to create a <see cref="DnsSecurityRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -143,15 +131,27 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DnsResolverDomainListResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DnsResolverDomainListResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverDomainListResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="DnsResolverInboundEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverInboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverInboundEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DnsResolverDomainListResource"/> object. </returns>
-        public virtual DnsResolverDomainListResource GetDnsResolverDomainListResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="DnsResolverInboundEndpointResource"/> object. </returns>
+        public virtual DnsResolverInboundEndpointResource GetDnsResolverInboundEndpointResource(ResourceIdentifier id)
         {
-            DnsResolverDomainListResource.ValidateResourceId(id);
-            return new DnsResolverDomainListResource(Client, id);
+            DnsResolverInboundEndpointResource.ValidateResourceId(id);
+            return new DnsResolverInboundEndpointResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsResolverOutboundEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsResolverOutboundEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DnsResolverOutboundEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsResolverOutboundEndpointResource"/> object. </returns>
+        public virtual DnsResolverOutboundEndpointResource GetDnsResolverOutboundEndpointResource(ResourceIdentifier id)
+        {
+            DnsResolverOutboundEndpointResource.ValidateResourceId(id);
+            return new DnsResolverOutboundEndpointResource(Client, id);
         }
 
         /// <summary>

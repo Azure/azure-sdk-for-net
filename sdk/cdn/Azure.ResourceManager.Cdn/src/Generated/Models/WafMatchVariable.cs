@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Match variable to compare against.
-    /// Serialized Name: WafMatchVariable
-    /// </summary>
+    /// <summary> Match variable to compare against. </summary>
     public readonly partial struct WafMatchVariable : IEquatable<WafMatchVariable>
     {
         private readonly string _value;
@@ -35,50 +32,23 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CookiesValue = "Cookies";
         private const string PostArgsValue = "PostArgs";
 
-        /// <summary>
-        /// RemoteAddr
-        /// Serialized Name: WafMatchVariable.RemoteAddr
-        /// </summary>
+        /// <summary> RemoteAddr. </summary>
         public static WafMatchVariable RemoteAddr { get; } = new WafMatchVariable(RemoteAddrValue);
-        /// <summary>
-        /// SocketAddr
-        /// Serialized Name: WafMatchVariable.SocketAddr
-        /// </summary>
+        /// <summary> SocketAddr. </summary>
         public static WafMatchVariable SocketAddr { get; } = new WafMatchVariable(SocketAddrValue);
-        /// <summary>
-        /// RequestMethod
-        /// Serialized Name: WafMatchVariable.RequestMethod
-        /// </summary>
+        /// <summary> RequestMethod. </summary>
         public static WafMatchVariable RequestMethod { get; } = new WafMatchVariable(RequestMethodValue);
-        /// <summary>
-        /// RequestHeader
-        /// Serialized Name: WafMatchVariable.RequestHeader
-        /// </summary>
+        /// <summary> RequestHeader. </summary>
         public static WafMatchVariable RequestHeader { get; } = new WafMatchVariable(RequestHeaderValue);
-        /// <summary>
-        /// RequestUri
-        /// Serialized Name: WafMatchVariable.RequestUri
-        /// </summary>
+        /// <summary> RequestUri. </summary>
         public static WafMatchVariable RequestUri { get; } = new WafMatchVariable(RequestUriValue);
-        /// <summary>
-        /// QueryString
-        /// Serialized Name: WafMatchVariable.QueryString
-        /// </summary>
+        /// <summary> QueryString. </summary>
         public static WafMatchVariable QueryString { get; } = new WafMatchVariable(QueryStringValue);
-        /// <summary>
-        /// RequestBody
-        /// Serialized Name: WafMatchVariable.RequestBody
-        /// </summary>
+        /// <summary> RequestBody. </summary>
         public static WafMatchVariable RequestBody { get; } = new WafMatchVariable(RequestBodyValue);
-        /// <summary>
-        /// Cookies
-        /// Serialized Name: WafMatchVariable.Cookies
-        /// </summary>
+        /// <summary> Cookies. </summary>
         public static WafMatchVariable Cookies { get; } = new WafMatchVariable(CookiesValue);
-        /// <summary>
-        /// PostArgs
-        /// Serialized Name: WafMatchVariable.PostArgs
-        /// </summary>
+        /// <summary> PostArgs. </summary>
         public static WafMatchVariable PostArgs { get; } = new WafMatchVariable(PostArgsValue);
         /// <summary> Determines if two <see cref="WafMatchVariable"/> values are the same. </summary>
         public static bool operator ==(WafMatchVariable left, WafMatchVariable right) => left.Equals(right);

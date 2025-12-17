@@ -116,7 +116,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             if (snapshot != null)
             {
@@ -181,7 +181,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             if (snapshot != null)
             {
@@ -226,7 +226,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<SettingFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -324,7 +324,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<SettingFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -368,11 +368,11 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<SnapshotFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             if (status != null && !(status is ChangeTrackingList<ConfigurationSnapshotStatus> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQueryDelimited("status", status, ",", null, true);
+                uri.AppendQueryDelimited("status", status, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -428,7 +428,7 @@ namespace Azure.Data.AppConfiguration
             uri.AppendQuery("api-version", _apiVersion, true);
             if (@select != null && !(@select is ChangeTrackingList<SnapshotFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -545,7 +545,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -591,7 +591,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -682,7 +682,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
@@ -739,7 +739,7 @@ namespace Azure.Data.AppConfiguration
             }
             if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                uri.AppendQueryDelimited("$Select", @select, ",", escape: true);
             }
             if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {

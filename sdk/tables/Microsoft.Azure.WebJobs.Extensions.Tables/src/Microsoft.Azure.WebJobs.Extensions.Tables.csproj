@@ -13,12 +13,14 @@
             SA1402; <!-- Webjobs sources package has files with multiple types -->
         </NoWarn>
         <InheritDocTrimLevel>internal</InheritDocTrimLevel>
+        <AotCompatOptOut>true</AotCompatOptOut>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.WebJobs" />
         <PackageReference Include="Microsoft.Azure.WebJobs.Sources" PrivateAssets="All" />
         <PackageReference Include="Microsoft.Extensions.Azure" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" />
     </ItemGroup>
 
     <ItemGroup>

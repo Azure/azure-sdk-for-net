@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    /// <summary> The ProviderSubscriptionState. </summary>
+    /// <summary> The subscription state. </summary>
     public readonly partial struct ProviderSubscriptionState : IEquatable<ProviderSubscriptionState>
     {
         private readonly string _value;

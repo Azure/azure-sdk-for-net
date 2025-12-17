@@ -4,6 +4,10 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 ## Prerequisites
 - To use MCP tool calls, PowerShell must be installed. Provide [PowerShell installation instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell) if not installed, and recommend restarting the IDE to use the MCP server.
+- When using Copilot from Visual Studio or VS Code (not applicable when using Coding Agent on Github.com):
+  - **Always run** the [`azsdk_verify_setup`](../eng/common/instructions/azsdk-tools/verify-setup.instructions.md) tool first to validate the user's development environment for SDK MCP tools.
+  - **Do not proceed** with any other tool execution until this step is complete.
+  - **Skip this check only** for queries that do not require tool execution.
 
 ## Folder Structure
 
@@ -23,20 +27,4 @@ This repo contains Azure SDKs for various Azure services and tools that generate
 
 ## SDK release
 
-There are two tools to help with SDK releases:
-- Check SDK release readiness
-- Release SDK
-
-### Check SDK Release Readiness
-Run `CheckPackageReleaseReadiness` to verify if the package is ready for release. This tool checks:
-- API review status
-- Change log status
-- Package name approval(If package is new and releasing a preview version)
-- Release date is set in release tracker
-
-### Release SDK
-Run `ReleasePackage` to release the package. This tool requires package name and language as inputs. It will:
-- Check if the package is ready for release
-- Identify the release pipeline
-- Trigger the release pipeline.
-User needs to approve the release stage in the pipeline after it is triggered.
+For detailed workflow instructions, see [SDK Release](https://github.com/Azure/azure-sdk-for-net/tree/main/eng/common/instructions/copilot/sdk-release.instructions.md).

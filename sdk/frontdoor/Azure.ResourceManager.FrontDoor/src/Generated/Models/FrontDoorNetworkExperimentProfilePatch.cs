@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The enabled state of the Profile. </summary>
+        [WirePath("properties.enabledState")]
         public FrontDoorExperimentState? EnabledState { get; set; }
     }
 }

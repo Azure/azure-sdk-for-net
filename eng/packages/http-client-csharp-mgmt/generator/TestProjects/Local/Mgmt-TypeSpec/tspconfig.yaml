@@ -2,4 +2,5 @@ emit:
   - "@azure-typespec/http-client-csharp-mgmt"
 options:
   "@azure-typespec/http-client-csharp-mgmt":
-    namespace: "MgmtTypeSpec"
+    namespace: "Azure.Generator.MgmtTypeSpec.Tests"
+    enable-wire-path-attribute: true

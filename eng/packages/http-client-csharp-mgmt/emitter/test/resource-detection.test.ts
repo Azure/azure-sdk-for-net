@@ -9,11 +9,12 @@ import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { getAllClients, updateClients } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
-import { 
-  resourceMetadata, 
-  tenantResource, 
-  subscriptionResource, 
-  resourceGroupResource 
+import {
+  resourceMetadata,
+  tenantResource,
+  subscriptionResource,
+  resourceGroupResource,
+  nonResourceMethodMetadata
 } from "../src/sdk-context-options.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
@@ -176,13 +177,16 @@ interface Employees2 {
       getMethod.crossLanguageDefinitionId
     );
     strictEqual(resourceMetadataDecorator.arguments.methods[0].kind, "Get");
-    strictEqual(resourceMetadataDecorator.arguments.methods[0].operationPath,
+    strictEqual(
+      resourceMetadataDecorator.arguments.methods[0].operationPath,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
-    strictEqual(resourceMetadataDecorator.arguments.methods[0].operationScope,
+    strictEqual(
+      resourceMetadataDecorator.arguments.methods[0].operationScope,
       ResourceScope.ResourceGroup
     );
-    strictEqual(resourceMetadataDecorator.arguments.methods[0].resourceScope,
+    strictEqual(
+      resourceMetadataDecorator.arguments.methods[0].resourceScope,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
@@ -236,7 +240,8 @@ interface Employees2 {
 
     // Validate ListByResourceGroup (list by parent)
     const listByRgEntry = resourceMetadataDecorator.arguments.methods.find(
-      (m: any) => m.methodId === listByResourceGroupMethod.crossLanguageDefinitionId
+      (m: any) =>
+        m.methodId === listByResourceGroupMethod.crossLanguageDefinitionId
     );
     ok(listByRgEntry);
     strictEqual(listByRgEntry.kind, "List");
@@ -252,11 +257,15 @@ interface Employees2 {
 
     // Validate ListBySubscription
     const listBySubEntry = resourceMetadataDecorator.arguments.methods.find(
-      (m: any) => m.methodId === listBySubscriptionMethod.crossLanguageDefinitionId
+      (m: any) =>
+        m.methodId === listBySubscriptionMethod.crossLanguageDefinitionId
     );
     ok(listBySubEntry);
     strictEqual(listBySubEntry.kind, "List");
-    strictEqual(listBySubEntry.operationPath, "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees");
+    strictEqual(
+      listBySubEntry.operationPath,
+      "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees"
+    );
     strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
     strictEqual(listBySubEntry.resourceScope, undefined);
   });
@@ -998,7 +1007,7 @@ interface Employees {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
-    
+
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
     );
@@ -1013,22 +1022,26 @@ interface Employees {
     );
     ok(resourceMetadataDecorator);
     ok(resourceMetadataDecorator.arguments);
-    
+
     // Verify that the model has NO scope-related decorators
-    const hasNoScopeDecorators = !employeeModel.decorators?.some((d) => 
-      d.name === tenantResource || 
-      d.name === subscriptionResource || 
-      d.name === resourceGroupResource
+    const hasNoScopeDecorators = !employeeModel.decorators?.some(
+      (d) =>
+        d.name === tenantResource ||
+        d.name === subscriptionResource ||
+        d.name === resourceGroupResource
     );
-    ok(hasNoScopeDecorators, "Model should have no scope-related decorators to test fallback logic");
-    
+    ok(
+      hasNoScopeDecorators,
+      "Model should have no scope-related decorators to test fallback logic"
+    );
+
     // The model should inherit its resourceScope from the Get method's operationScope (Subscription)
     // because the Get method operates at subscription scope and there are no explicit scope decorators
     strictEqual(
       resourceMetadataDecorator.arguments.resourceScope,
       "Subscription"
     );
-    
+
     // Verify the Get method itself has the correct scope
     const getMethodEntry = resourceMetadataDecorator.arguments.methods.find(
       (m: any) => m.methodId === getMethod.crossLanguageDefinitionId
@@ -1036,5 +1049,263 @@ interface Employees {
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Get");
     strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
+  });
+
+  it("parent-child resource with list operation", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee parent resource */
+model EmployeeParent is TrackedResource<EmployeeParentProperties> {
+  ...ResourceNameParameter<EmployeeParent>;
+}
+
+/** Employee parent properties */
+model EmployeeParentProperties {
+  /** Name of parent */
+  name?: string;
+}
+
+/** An Employee resource */
+@parentResource(EmployeeParent)
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface EmployeeParents {
+  get is ArmResourceRead<EmployeeParent>;
+}
+
+@armResourceOperations
+interface Employees {
+  listByParent is ArmResourceListByParent<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+
+    const employeeClient = getAllClients(root).find(
+      (c) => c.name === "Employees"
+    );
+    ok(employeeClient);
+    const employeeParentClient = getAllClients(root).find(
+      (c) => c.name === "EmployeeParents"
+    );
+    ok(employeeParentClient);
+
+    const employeeModel = root.models.find((m) => m.name === "Employee");
+    ok(employeeModel);
+    const employeeParentModel = root.models.find(
+      (m) => m.name === "EmployeeParent"
+    );
+    ok(employeeParentModel);
+
+    const listByParentMethod = employeeClient.methods.find(
+      (m) => m.name === "listByParent"
+    );
+    ok(listByParentMethod);
+    const getMethod = employeeParentClient.methods.find(
+      (m) => m.name === "get"
+    );
+    ok(getMethod);
+
+    // Validate Employee resource metadata should be null (no CRUD operations)
+    const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    strictEqual(
+      employeeResourceMetadataDecorator,
+      undefined,
+      "Employee should not have resource metadata decorator without CRUD operations"
+    );
+
+    // Validate EmployeeParent resource metadata
+    const parentResourceMetadataDecorator =
+      employeeParentModel.decorators?.find((d) => d.name === resourceMetadata);
+    ok(parentResourceMetadataDecorator);
+    ok(parentResourceMetadataDecorator.arguments);
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
+    );
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceType,
+      "Microsoft.ContosoProviderHub/employeeParents"
+    );
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceScope,
+      "ResourceGroup"
+    );
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.parentResourceId,
+      undefined
+    );
+    strictEqual(
+      parentResourceMetadataDecorator.arguments.resourceName,
+      "EmployeeParent"
+    );
+    strictEqual(parentResourceMetadataDecorator.arguments.methods.length, 2);
+
+    // Validate EmployeeParent listByParent method
+    const listByParentEntry =
+      parentResourceMetadataDecorator.arguments.methods.find(
+        (m: any) => m.methodId === listByParentMethod.crossLanguageDefinitionId
+      );
+    ok(listByParentEntry);
+  });
+
+  it("resource scope as ManagementGroup", async () => {
+    const program = await typeSpecCompile(
+      `
+/** An Employee resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+
+  /** City of employee */
+  city?: string;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+    get is Extension.Read<
+    Extension.ManagementGroup<"managementGroupId">,
+    Employee
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+
+    const employeeClient = getAllClients(root).find(
+      (c) => c.name === "Employees"
+    );
+    ok(employeeClient);
+
+    const employeeModel = root.models.find((m) => m.name === "Employee");
+    ok(employeeModel);
+
+    // Validate Employee resource metadata should be null (no CRUD operations)
+    const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    ok(employeeResourceMetadataDecorator);
+    strictEqual(
+      employeeResourceMetadataDecorator.arguments.resourceScope,
+      "ManagementGroup"
+    );
+  });
+
+  it("interface with only action operations (no get)", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A ScheduledAction resource model */
+model ScheduledAction is TrackedResource<ScheduledActionProperties> {
+  ...ResourceNameParameter<ScheduledAction>;
+}
+
+/** ScheduledAction properties */
+model ScheduledActionProperties {
+  /** Action type */
+  actionType?: string;
+}
+
+/** Request model for GetAssociatedScheduledActions */
+model GetAssociatedScheduledActionsRequest {
+  /** Resource IDs to query */
+  resourceIds: string[];
+}
+
+/** Response model for GetAssociatedScheduledActions */
+model GetAssociatedScheduledActionsResponse {
+  /** List of scheduled actions */
+  scheduledActions: ScheduledAction[];
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface ScheduledActionExtension {
+  @post
+  @segment("getAssociatedScheduledActions")
+  getAssociatedScheduledActions is ArmResourceActionSync<
+    ScheduledAction,
+    GetAssociatedScheduledActionsRequest,
+    GetAssociatedScheduledActionsResponse
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+
+    const scheduledActionExtensionClient = getAllClients(root).find(
+      (c) => c.name === "ScheduledActionExtension"
+    );
+    ok(scheduledActionExtensionClient, "ScheduledActionExtension client should exist");
+
+    const scheduledActionModel = root.models.find((m) => m.name === "ScheduledAction");
+    ok(scheduledActionModel, "ScheduledAction model should exist");
+
+    const getAssociatedMethod = scheduledActionExtensionClient.methods.find(
+      (m) => m.name === "getAssociatedScheduledActions"
+    );
+    ok(getAssociatedMethod, "getAssociatedScheduledActions method should exist");
+
+    // Check if resource metadata exists for ScheduledAction
+    const resourceMetadataDecorator = scheduledActionModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    
+    // The resource should NOT have metadata since it has no CRUD operations
+    strictEqual(
+      resourceMetadataDecorator,
+      undefined,
+      "ScheduledAction should not have resource metadata decorator without CRUD operations"
+    );
+    
+    // Check that the method is treated as a non-resource method
+    const firstClient = root.clients[0];
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
+    );
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+    
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    const methodEntry = nonResourceMethods.find(
+      (m: any) => m.methodId === getAssociatedMethod.crossLanguageDefinitionId
+    );
+    ok(methodEntry, "getAssociatedScheduledActions should be in non-resource methods");
+    strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
   });
 });

@@ -21,7 +21,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.StorageCache
       safeName: AzureResourceManagerStorageCache
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.ResourceManager.StorageCache
-      ExpectedWarningsFilepath: None

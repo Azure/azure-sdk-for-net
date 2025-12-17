@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace _Specs_.Azure.ClientGenerator.Core.Override
+namespace Specs.Azure.ClientGenerator.Core.Override
 {
     public partial class ReorderParameters
     {

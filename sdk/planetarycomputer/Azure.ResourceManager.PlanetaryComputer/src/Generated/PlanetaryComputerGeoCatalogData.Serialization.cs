@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.PlanetaryComputer
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, options);
                     }
@@ -237,11 +237,10 @@ namespace Azure.ResourceManager.PlanetaryComputer
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PlanetaryComputerGeoCatalogData"/> from. </param>
-        internal static PlanetaryComputerGeoCatalogData FromResponse(Response result)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="PlanetaryComputerGeoCatalogData"/> from. </param>
+        internal static PlanetaryComputerGeoCatalogData FromResponse(Response response)
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePlanetaryComputerGeoCatalogData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }

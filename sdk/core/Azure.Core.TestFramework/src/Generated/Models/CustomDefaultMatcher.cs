@@ -23,5 +23,7 @@ namespace Azure.Core.TestFramework.Models
         public string IgnoredHeaders { get; set; }
         /// <summary> Gets or sets the ignored query parameters. </summary>
         public string IgnoredQueryParameters { get; set; }
+        /// <summary> Gets or sets the ignore query ordering. </summary>
+        public bool? IgnoreQueryOrdering { get; set; }
     }
 }

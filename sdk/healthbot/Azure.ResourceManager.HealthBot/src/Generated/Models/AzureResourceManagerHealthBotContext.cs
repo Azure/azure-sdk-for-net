@@ -17,6 +17,8 @@ namespace Azure.ResourceManager.HealthBot
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BotResponseList))]
     [ModelReaderWriterBuildable(typeof(HealthBotData))]
+    [ModelReaderWriterBuildable(typeof(HealthBotKey))]
+    [ModelReaderWriterBuildable(typeof(HealthBotKeysResult))]
     [ModelReaderWriterBuildable(typeof(HealthBotKeyVaultProperties))]
     [ModelReaderWriterBuildable(typeof(HealthBotPatch))]
     [ModelReaderWriterBuildable(typeof(HealthBotProperties))]

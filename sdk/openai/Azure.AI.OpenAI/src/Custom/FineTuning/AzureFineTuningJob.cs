@@ -37,7 +37,7 @@ internal partial class AzureFineTuningJob : FineTuningJob
     {
         using PipelineMessage message = CancelPipelineMessage(JobId, cancellationToken.ToRequestOptions());
         PipelineResponse response = _pipeline.ProcessMessage(message, cancellationToken.ToRequestOptions());
-        CopyLocalParameters(response, InternalFineTuningJob.FromClientResult(ClientResult.FromResponse(response)));
+        CopyLocalParameters(response, ModelReaderWriter.Read<InternalFineTuningJob>(response.Content, ModelReaderWriterOptions.Json, OpenAIContext.Default)!);
         return ClientResult.FromResponse(response);
     }
 
@@ -45,7 +45,7 @@ internal partial class AzureFineTuningJob : FineTuningJob
     {
         using PipelineMessage message = CancelPipelineMessage(JobId, cancellationToken.ToRequestOptions());
         PipelineResponse response = await _pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        CopyLocalParameters(response, InternalFineTuningJob.FromClientResult(ClientResult.FromResponse(response)));
+        CopyLocalParameters(response, ModelReaderWriter.Read<InternalFineTuningJob>(response.Content, ModelReaderWriterOptions.Json, OpenAIContext.Default)!);
         return ClientResult.FromResponse(response);
     }
 }

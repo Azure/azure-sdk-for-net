@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of <see cref="ManagedGrafanaPatchProperties"/>. </summary>
         /// <param name="zoneRedundancy"> The zone redundancy setting of the Grafana instance. </param>
         /// <param name="apiKey"> The api key setting of the Grafana instance. </param>
+        /// <param name="creatorCanAdmin"> The creator will have admin access for the Grafana instance. </param>
         /// <param name="deterministicOutboundIP"> Whether a Grafana instance uses deterministic outbound IPs. </param>
         /// <param name="publicNetworkAccess"> Indicate the state for enable or disable traffic over the public interface. </param>
         /// <param name="grafanaIntegrations"> GrafanaIntegrations is a bundled observability experience (e.g. pre-configured data source, tailored Grafana dashboards, alerting defaults) for common monitoring scenarios. </param>
@@ -62,10 +63,11 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="grafanaPlugins"> Update of Grafana plugin. Key is plugin id, value is plugin definition. If plugin definition is null, plugin with given plugin id will be removed. Otherwise, given plugin will be installed. </param>
         /// <param name="grafanaMajorVersion"> The major Grafana software version to target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations, EnterpriseConfigurations enterpriseConfigurations, GrafanaConfigurations grafanaConfigurations, IDictionary<string, GrafanaPlugin> grafanaPlugins, string grafanaMajorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedGrafanaPatchProperties(GrafanaZoneRedundancy? zoneRedundancy, GrafanaApiKey? apiKey, GrafanaCreatorCanAdmin? creatorCanAdmin, DeterministicOutboundIP? deterministicOutboundIP, GrafanaPublicNetworkAccess? publicNetworkAccess, GrafanaIntegrations grafanaIntegrations, EnterpriseConfigurations enterpriseConfigurations, GrafanaConfigurations grafanaConfigurations, IDictionary<string, GrafanaPlugin> grafanaPlugins, string grafanaMajorVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ZoneRedundancy = zoneRedundancy;
             ApiKey = apiKey;
+            CreatorCanAdmin = creatorCanAdmin;
             DeterministicOutboundIP = deterministicOutboundIP;
             PublicNetworkAccess = publicNetworkAccess;
             GrafanaIntegrations = grafanaIntegrations;
@@ -80,6 +82,8 @@ namespace Azure.ResourceManager.Grafana.Models
         public GrafanaZoneRedundancy? ZoneRedundancy { get; set; }
         /// <summary> The api key setting of the Grafana instance. </summary>
         public GrafanaApiKey? ApiKey { get; set; }
+        /// <summary> The creator will have admin access for the Grafana instance. </summary>
+        public GrafanaCreatorCanAdmin? CreatorCanAdmin { get; set; }
         /// <summary> Whether a Grafana instance uses deterministic outbound IPs. </summary>
         public DeterministicOutboundIP? DeterministicOutboundIP { get; set; }
         /// <summary> Indicate the state for enable or disable traffic over the public interface. </summary>

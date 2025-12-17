@@ -7,10 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.DnsResolver.Models
 {
-    /// <summary> The response to an enumeration operation on DNS resolver policies. </summary>
+    /// <summary> The response of a DnsResolverPolicy list operation. </summary>
     internal partial class DnsResolverPolicyListResult
     {
         /// <summary>
@@ -46,25 +47,34 @@ namespace Azure.ResourceManager.DnsResolver.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyListResult"/>. </summary>
-        internal DnsResolverPolicyListResult()
+        /// <param name="value"> The DnsResolverPolicy items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal DnsResolverPolicyListResult(IEnumerable<DnsResolverPolicyData> value)
         {
-            Value = new ChangeTrackingList<DnsResolverPolicyData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyListResult"/>. </summary>
-        /// <param name="value"> Enumeration of the DNS resolver policies. </param>
-        /// <param name="nextLink"> The continuation token for the next page of results. </param>
+        /// <param name="value"> The DnsResolverPolicy items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DnsResolverPolicyListResult(IReadOnlyList<DnsResolverPolicyData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DnsResolverPolicyListResult(IReadOnlyList<DnsResolverPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enumeration of the DNS resolver policies. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverPolicyListResult"/> for deserialization. </summary>
+        internal DnsResolverPolicyListResult()
+        {
+        }
+
+        /// <summary> The DnsResolverPolicy items on this page. </summary>
         public IReadOnlyList<DnsResolverPolicyData> Value { get; }
-        /// <summary> The continuation token for the next page of results. </summary>
-        public string NextLink { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

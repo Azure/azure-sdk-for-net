@@ -9,12 +9,237 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.OracleDatabase.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.OracleDatabase.Samples
 {
     public partial class Sample_CloudVmClusterVirtualNetworkAddressCollection
     {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateVirtualNetworkAddressGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_CreateOrUpdate_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            CloudVmClusterVirtualNetworkAddressData data = new CloudVmClusterVirtualNetworkAddressData
+            {
+                Properties = new CloudVmClusterVirtualNetworkAddressProperties
+                {
+                    IPAddress = "192.168.0.1",
+                    VipVmOcid = "ocid1..aaaa",
+                },
+            };
+            ArmOperation<CloudVmClusterVirtualNetworkAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualnetworkaddressname, data);
+            CloudVmClusterVirtualNetworkAddressResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateVirtualNetworkAddressGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_CreateOrUpdate_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            CloudVmClusterVirtualNetworkAddressData data = new CloudVmClusterVirtualNetworkAddressData();
+            ArmOperation<CloudVmClusterVirtualNetworkAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualnetworkaddressname, data);
+            CloudVmClusterVirtualNetworkAddressResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_VirtualNetworkAddressesCreateOrUpdate()
+        {
+            // Generated from example definition: 2025-09-01/virtualNetworkAddresses_create.json
+            // this example is just showing the usage of "VirtualNetworkAddress_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string cloudvmclustername = "cluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "hostname1";
+            CloudVmClusterVirtualNetworkAddressData data = new CloudVmClusterVirtualNetworkAddressData
+            {
+                Properties = new CloudVmClusterVirtualNetworkAddressProperties
+                {
+                    IPAddress = "192.168.0.1",
+                    VipVmOcid = "ocid1..aaaa",
+                },
+            };
+            ArmOperation<CloudVmClusterVirtualNetworkAddressResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, virtualnetworkaddressname, data);
+            CloudVmClusterVirtualNetworkAddressResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetVirtualNetworkAddressGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            CloudVmClusterVirtualNetworkAddressResource result = await collection.GetAsync(virtualnetworkaddressname);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetVirtualNetworkAddressGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            CloudVmClusterVirtualNetworkAddressResource result = await collection.GetAsync(virtualnetworkaddressname);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_VirtualNetworkAddressesGet()
+        {
+            // Generated from example definition: 2025-09-01/virtualNetworkAddresses_get.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string cloudvmclustername = "cluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "hostname1";
+            CloudVmClusterVirtualNetworkAddressResource result = await collection.GetAsync(virtualnetworkaddressname);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListVirtualNetworkAddressesByVMClusterGeneratedByMaximumSetRule()
@@ -85,6 +310,222 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetVirtualNetworkAddressGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            bool result = await collection.ExistsAsync(virtualnetworkaddressname);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetVirtualNetworkAddressGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            bool result = await collection.ExistsAsync(virtualnetworkaddressname);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_VirtualNetworkAddressesGet()
+        {
+            // Generated from example definition: 2025-09-01/virtualNetworkAddresses_get.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string cloudvmclustername = "cluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "hostname1";
+            bool result = await collection.ExistsAsync(virtualnetworkaddressname);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetVirtualNetworkAddressGeneratedByMaximumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            NullableResponse<CloudVmClusterVirtualNetworkAddressResource> response = await collection.GetIfExistsAsync(virtualnetworkaddressname);
+            CloudVmClusterVirtualNetworkAddressResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetVirtualNetworkAddressGeneratedByMinimumSetRule()
+        {
+            // Generated from example definition: 2025-09-01/VirtualNetworkAddresses_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rgopenapi";
+            string cloudvmclustername = "Replace this value with a string matching RegExp .*";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "Replace this value with a string matching RegExp .*";
+            NullableResponse<CloudVmClusterVirtualNetworkAddressResource> response = await collection.GetIfExistsAsync(virtualnetworkaddressname);
+            CloudVmClusterVirtualNetworkAddressResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_VirtualNetworkAddressesGet()
+        {
+            // Generated from example definition: 2025-09-01/virtualNetworkAddresses_get.json
+            // this example is just showing the usage of "VirtualNetworkAddress_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudVmClusterResource created on azure
+            // for more information of creating CloudVmClusterResource, please refer to the document of CloudVmClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg000";
+            string cloudvmclustername = "cluster1";
+            ResourceIdentifier cloudVmClusterResourceId = CloudVmClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudvmclustername);
+            CloudVmClusterResource cloudVmCluster = client.GetCloudVmClusterResource(cloudVmClusterResourceId);
+
+            // get the collection of this CloudVmClusterVirtualNetworkAddressResource
+            CloudVmClusterVirtualNetworkAddressCollection collection = cloudVmCluster.GetCloudVmClusterVirtualNetworkAddresses();
+
+            // invoke the operation
+            string virtualnetworkaddressname = "hostname1";
+            NullableResponse<CloudVmClusterVirtualNetworkAddressResource> response = await collection.GetIfExistsAsync(virtualnetworkaddressname);
+            CloudVmClusterVirtualNetworkAddressResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CloudVmClusterVirtualNetworkAddressData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

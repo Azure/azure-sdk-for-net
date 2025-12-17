@@ -80,12 +80,16 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <summary> The description of the endpoint. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The endpoint that is preconfigured. </summary>
+        [WirePath("properties.endpoint")]
         public string Endpoint { get; set; }
         /// <summary> The type of endpoint. </summary>
+        [WirePath("properties.endpointType")]
         public FrontDoorEndpointType? EndpointType { get; set; }
         /// <summary> The preconfigured endpoint backend. </summary>
+        [WirePath("properties.backend")]
         public string Backend { get; set; }
     }
 }

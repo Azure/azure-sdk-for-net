@@ -64,7 +64,7 @@ namespace Azure.Health.Deidentification
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             if (continuationToken != null)
             {
@@ -78,10 +78,14 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobsInternalRequest(Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetJobsInternalRequest(Uri nextPage, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;
@@ -100,7 +104,7 @@ namespace Azure.Health.Deidentification
             uri.AppendQuery("api-version", _apiVersion, true);
             if (maxpagesize != null)
             {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
             }
             if (continuationToken != null)
             {
@@ -114,10 +118,14 @@ namespace Azure.Health.Deidentification
             return message;
         }
 
-        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetJobDocumentsInternalRequest(Uri nextPage, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

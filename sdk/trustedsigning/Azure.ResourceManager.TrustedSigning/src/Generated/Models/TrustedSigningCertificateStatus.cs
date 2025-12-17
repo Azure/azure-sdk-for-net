@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.TrustedSigning;
 
 namespace Azure.ResourceManager.TrustedSigning.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.TrustedSigning.Models
     public readonly partial struct TrustedSigningCertificateStatus : IEquatable<TrustedSigningCertificateStatus>
     {
         private readonly string _value;
+        /// <summary> The certificate is active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> The certificate is expired. </summary>
+        private const string ExpiredValue = "Expired";
+        /// <summary> The certificate is revoked. </summary>
+        private const string RevokedValue = "Revoked";
 
         /// <summary> Initializes a new instance of <see cref="TrustedSigningCertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TrustedSigningCertificateStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ActiveValue = "Active";
-        private const string ExpiredValue = "Expired";
-        private const string RevokedValue = "Revoked";
+            _value = value;
+        }
 
         /// <summary> The certificate is active. </summary>
         public static TrustedSigningCertificateStatus Active { get; } = new TrustedSigningCertificateStatus(ActiveValue);
+
         /// <summary> The certificate is expired. </summary>
         public static TrustedSigningCertificateStatus Expired { get; } = new TrustedSigningCertificateStatus(ExpiredValue);
+
         /// <summary> The certificate is revoked. </summary>
         public static TrustedSigningCertificateStatus Revoked { get; } = new TrustedSigningCertificateStatus(RevokedValue);
+
         /// <summary> Determines if two <see cref="TrustedSigningCertificateStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TrustedSigningCertificateStatus left, TrustedSigningCertificateStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TrustedSigningCertificateStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TrustedSigningCertificateStatus left, TrustedSigningCertificateStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TrustedSigningCertificateStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TrustedSigningCertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TrustedSigningCertificateStatus(string value) => new TrustedSigningCertificateStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TrustedSigningCertificateStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TrustedSigningCertificateStatus?(string value) => value == null ? null : new TrustedSigningCertificateStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TrustedSigningCertificateStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TrustedSigningCertificateStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
