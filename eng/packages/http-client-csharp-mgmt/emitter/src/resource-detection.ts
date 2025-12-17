@@ -105,6 +105,22 @@ export async function updateClients(
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
         if (entry) {
+          // Check if we're adding a second Get method to the same resource
+          if (kind === ResourceOperationKind.Get) {
+            const existingGetMethod = entry.methods.find(
+              (m) => m.kind === ResourceOperationKind.Get
+            );
+            if (existingGetMethod) {
+              sdkContext.logger.reportDiagnostic({
+                code: "general-warning",
+                messageId: "default",
+                format: {
+                  message: `Resource ${entry.resourceName} has multiple Get methods defined. This may cause issues with resource detection.`
+                },
+                target: NoTarget
+              });
+            }
+          }
           entry.methods.push({
             methodId: method.crossLanguageDefinitionId,
             kind,
