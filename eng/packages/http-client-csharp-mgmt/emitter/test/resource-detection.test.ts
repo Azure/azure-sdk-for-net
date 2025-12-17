@@ -7,14 +7,12 @@ import {
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { getAllClients, updateClients } from "../src/resource-detection.js";
+import { getAllClients, updateClients, buildArmProviderSchema } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
 import {
-  resourceMetadata,
   tenantResource,
   subscriptionResource,
-  resourceGroupResource,
-  nonResourceMethodMetadata
+  resourceGroupResource
 } from "../src/sdk-context-options.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
@@ -117,7 +115,14 @@ interface Employees2 {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    
+    // Build ARM provider schema and verify its structure
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+    strictEqual(armProviderSchema.resources.length, 2); // Employee and EmployeeParent
+    
+    // Find the Employee resource
     const client = getAllClients(root).find((c) => c.name === "Employees1");
     ok(client);
     const client2 = getAllClients(root).find((c) => c.name === "Employees2");
@@ -145,53 +150,53 @@ interface Employees2 {
     );
     ok(listBySubscriptionMethod);
 
-    const resourceMetadataDecorator = model.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the Employee resource in the schema
+    const employeeResource = armProviderSchema.resources.find(
+      (r) => r.resourceModelId === model.crossLanguageDefinitionId
     );
-    ok(resourceMetadataDecorator);
-    ok(resourceMetadataDecorator.arguments);
+    ok(employeeResource);
+    const metadata = employeeResource.metadata;
+    ok(metadata);
+    
+    // Validate resource metadata
     strictEqual(
-      resourceMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
     strictEqual(
-      resourceMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents/employees"
     );
+    strictEqual(metadata.singletonResourceName, undefined);
+    strictEqual(metadata.resourceScope, "ResourceGroup");
     strictEqual(
-      resourceMetadataDecorator.arguments.singletonResourceName,
-      undefined
-    );
-    strictEqual(
-      resourceMetadataDecorator.arguments.resourceScope,
-      "ResourceGroup"
-    );
-    strictEqual(
-      resourceMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
-    strictEqual(resourceMetadataDecorator.arguments.resourceName, "Employee");
-    strictEqual(resourceMetadataDecorator.arguments.methods.length, 6);
+    strictEqual(metadata.resourceName, "Employee");
+    strictEqual(metadata.methods.length, 6);
+    
+    // Validate Get method
     strictEqual(
-      resourceMetadataDecorator.arguments.methods[0].methodId,
+      metadata.methods[0].methodId,
       getMethod.crossLanguageDefinitionId
     );
-    strictEqual(resourceMetadataDecorator.arguments.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Get");
     strictEqual(
-      resourceMetadataDecorator.arguments.methods[0].operationPath,
+      metadata.methods[0].operationPath,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
     strictEqual(
-      resourceMetadataDecorator.arguments.methods[0].operationScope,
+      metadata.methods[0].operationScope,
       ResourceScope.ResourceGroup
     );
     strictEqual(
-      resourceMetadataDecorator.arguments.methods[0].resourceScope,
+      metadata.methods[0].resourceScope,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}/employees/{employeeName}"
     );
 
     // Validate Create
-    const createEntry = resourceMetadataDecorator.arguments.methods.find(
+    const createEntry = metadata.methods.find(
       (m: any) => m.methodId === createOrUpdateMethod.crossLanguageDefinitionId
     );
     ok(createEntry);
@@ -207,7 +212,7 @@ interface Employees2 {
     );
 
     // Validate Update
-    const updateEntry = resourceMetadataDecorator.arguments.methods.find(
+    const updateEntry = metadata.methods.find(
       (m: any) => m.methodId === updateMethod.crossLanguageDefinitionId
     );
     ok(updateEntry);
@@ -223,7 +228,7 @@ interface Employees2 {
     );
 
     // Validate Delete
-    const deleteEntry = resourceMetadataDecorator.arguments.methods.find(
+    const deleteEntry = metadata.methods.find(
       (m: any) => m.methodId === deleteMethod.crossLanguageDefinitionId
     );
     ok(deleteEntry);
@@ -239,7 +244,7 @@ interface Employees2 {
     );
 
     // Validate ListByResourceGroup (list by parent)
-    const listByRgEntry = resourceMetadataDecorator.arguments.methods.find(
+    const listByRgEntry = metadata.methods.find(
       (m: any) =>
         m.methodId === listByResourceGroupMethod.crossLanguageDefinitionId
     );
@@ -256,7 +261,7 @@ interface Employees2 {
     );
 
     // Validate ListBySubscription
-    const listBySubEntry = resourceMetadataDecorator.arguments.methods.find(
+    const listBySubEntry = metadata.methods.find(
       (m: any) =>
         m.methodId === listBySubscriptionMethod.crossLanguageDefinitionId
     );
@@ -355,7 +360,12 @@ interface CurrentEmployees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    // Build ARM provider schema and verify its structure
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult);
+
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
     );
@@ -365,69 +375,85 @@ interface CurrentEmployees {
     );
     ok(currentEmployeeClient);
     const employeeModel = root.models.find((m) => m.name === "Employee");
+
     ok(employeeModel);
     const employeeGetMethod = employeeClient.methods.find(
       (m) => m.name === "get"
     );
     ok(employeeGetMethod);
 
-    const employeeMetadataDecorator = employeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+
+    const employeeResource = armProviderSchemaResult.resources.find(
+
+      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
+
     );
+
+    ok(employeeResource);
+
+    const employeeMetadataDecorator = employeeResource;
+
     ok(employeeMetadataDecorator);
-    ok(employeeMetadataDecorator.arguments);
+
+    const metadata = employeeMetadataDecorator.metadata;
+    ok(employeeMetadataDecorator);
+    
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees/default"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/employees"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       "default"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "ResourceGroup"
     );
-    strictEqual(employeeMetadataDecorator.arguments.methods.length, 3);
+    strictEqual(metadata.methods.length, 3);
     strictEqual(
-      employeeMetadataDecorator.arguments.methods[0].methodId,
+      metadata.methods[0].methodId,
       employeeGetMethod.crossLanguageDefinitionId
     );
-    strictEqual(employeeMetadataDecorator.arguments.methods[0].kind, "Get");
-    strictEqual(employeeMetadataDecorator.arguments.resourceName, "Employee");
+    strictEqual(metadata.methods[0].kind, "Get");
+    strictEqual(metadata.resourceName, "Employee");
 
     const currentEmployeeModel = root.models.find(
       (m) => m.name === "CurrentEmployee"
     );
     ok(currentEmployeeModel);
-    const currentMetdataDecorator = currentEmployeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const currentEmployeeResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === currentEmployeeModel.crossLanguageDefinitionId
     );
+    const currentMetdataDecorator = currentEmployeeResourceInSchema;
     ok(currentMetdataDecorator);
-    ok(currentMetdataDecorator.arguments);
+    const currentMetadata = currentMetdataDecorator.metadata;
+    ok(currentMetadata);
     strictEqual(
-      currentMetdataDecorator.arguments.resourceIdPattern,
+      currentMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/currentEmployees/current"
     );
     strictEqual(
-      currentMetdataDecorator.arguments.resourceType,
+      currentMetadata.resourceType,
       "Microsoft.ContosoProviderHub/currentEmployees"
     );
     strictEqual(
-      currentMetdataDecorator.arguments.singletonResourceName,
+      currentMetadata.singletonResourceName,
       "current"
     );
     strictEqual(
-      currentMetdataDecorator.arguments.resourceScope,
+      currentMetadata.resourceScope,
       "ResourceGroup"
     );
-    strictEqual(currentMetdataDecorator.arguments.methods.length, 3);
+    strictEqual(currentMetadata.methods.length, 3);
     strictEqual(
-      currentMetdataDecorator.arguments.resourceName,
+      currentMetadata.resourceName,
       "CurrentEmployee"
     );
   });
@@ -508,12 +534,18 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    // Build ARM provider schema and verify its structure
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult);
+
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
     );
     ok(employeeClient);
     const employeeModel = root.models.find((m) => m.name === "Employee");
+
     ok(employeeModel);
     const departmentModel = root.models.find((m) => m.name === "Department");
     ok(departmentModel);
@@ -524,95 +556,113 @@ interface Employees {
     );
     ok(employeeGetMethod);
 
-    const employeeMetadataDecorator = employeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+
+    const employeeResource = armProviderSchemaResult.resources.find(
+
+      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
+
     );
+
+    ok(employeeResource);
+
+    const employeeMetadataDecorator = employeeResource;
+
     ok(employeeMetadataDecorator);
-    ok(employeeMetadataDecorator.arguments);
+
+    const metadata = employeeMetadataDecorator.metadata;
+    ok(employeeMetadataDecorator);
+    
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       undefined
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "ResourceGroup"
     );
-    strictEqual(employeeMetadataDecorator.arguments.methods.length, 5);
+    strictEqual(metadata.methods.length, 5);
     strictEqual(
-      employeeMetadataDecorator.arguments.methods[0].methodId,
+      metadata.methods[0].methodId,
       employeeGetMethod.crossLanguageDefinitionId
     );
-    strictEqual(employeeMetadataDecorator.arguments.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Get");
 
-    const departmentMetadataDecorator = departmentModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const departmentResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === departmentModel.crossLanguageDefinitionId
     );
+    const departmentMetadataDecorator = departmentResourceInSchema;
     ok(departmentMetadataDecorator);
-    ok(departmentMetadataDecorator.arguments);
+    const departmentMetadata = departmentMetadataDecorator.metadata;
+    ok(departmentMetadata);
+    
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       undefined
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "ResourceGroup"
     );
-    strictEqual(departmentMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceName,
+      metadata.resourceName,
       "Department"
     );
 
-    const companyMetadataDecorator = companyModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const companyResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === companyModel.crossLanguageDefinitionId
     );
+    const companyMetadataDecorator = companyResourceInSchema;
     ok(companyMetadataDecorator);
-    ok(companyMetadataDecorator.arguments);
+    
     strictEqual(
-      companyMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
-      companyMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(
-      companyMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       undefined
     );
     strictEqual(
-      companyMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "ResourceGroup"
     );
-    strictEqual(companyMetadataDecorator.arguments.methods.length, 2);
-    strictEqual(companyMetadataDecorator.arguments.parentResourceId, undefined);
-    strictEqual(companyMetadataDecorator.arguments.resourceName, "Company");
+    strictEqual(departmentMetadata.methods.length, 2);
+    strictEqual(departmentMetadata.parentResourceId, undefined);
+    strictEqual(departmentMetadata.resourceName, "Company");
 
     strictEqual(
-      employeeMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
-    strictEqual(employeeMetadataDecorator.arguments.resourceName, "Employee");
+    strictEqual(departmentMetadata.resourceName, "Employee");
   });
 
   it("resource with grand parent under a subscription", async () => {
@@ -694,12 +744,18 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    // Build ARM provider schema and verify its structure
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult);
+
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
     );
     ok(employeeClient);
     const employeeModel = root.models.find((m) => m.name === "Employee");
+
     ok(employeeModel);
     const departmentModel = root.models.find((m) => m.name === "Department");
     ok(departmentModel);
@@ -710,95 +766,113 @@ interface Employees {
     );
     ok(employeeGetMethod);
 
-    const employeeMetadataDecorator = employeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+
+    const employeeResource = armProviderSchemaResult.resources.find(
+
+      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
+
     );
+
+    ok(employeeResource);
+
+    const employeeMetadataDecorator = employeeResource;
+
     ok(employeeMetadataDecorator);
-    ok(employeeMetadataDecorator.arguments);
+
+    const metadata = employeeMetadataDecorator.metadata;
+    ok(employeeMetadataDecorator);
+    
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       undefined
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "Subscription"
     );
-    strictEqual(employeeMetadataDecorator.arguments.methods.length, 5);
+    strictEqual(metadata.methods.length, 5);
     strictEqual(
-      employeeMetadataDecorator.arguments.methods[0].methodId,
+      metadata.methods[0].methodId,
       employeeGetMethod.crossLanguageDefinitionId
     );
-    strictEqual(employeeMetadataDecorator.arguments.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Get");
 
-    const departmentMetadataDecorator = departmentModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const departmentResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === departmentModel.crossLanguageDefinitionId
     );
+    const departmentMetadataDecorator = departmentResourceInSchema;
     ok(departmentMetadataDecorator);
-    ok(departmentMetadataDecorator.arguments);
+    const departmentMetadata = departmentMetadataDecorator.metadata;
+    ok(departmentMetadata);
+    
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceIdPattern,
+      departmentMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceType,
+      departmentMetadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.singletonResourceName,
+      departmentMetadata.singletonResourceName,
       undefined
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "Subscription"
     );
-    strictEqual(departmentMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceName,
+      metadata.resourceName,
       "Department"
     );
 
-    const companyMetadataDecorator = companyModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const companyResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === companyModel.crossLanguageDefinitionId
     );
+    const companyMetadataDecorator = companyResourceInSchema;
     ok(companyMetadataDecorator);
-    ok(companyMetadataDecorator.arguments);
+    
     strictEqual(
-      companyMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
-      companyMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(
-      companyMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       undefined
     );
     strictEqual(
-      companyMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "Subscription"
     );
-    strictEqual(companyMetadataDecorator.arguments.methods.length, 2);
-    strictEqual(companyMetadataDecorator.arguments.parentResourceId, undefined);
-    strictEqual(companyMetadataDecorator.arguments.resourceName, "Company");
+    strictEqual(departmentMetadata.methods.length, 2);
+    strictEqual(departmentMetadata.parentResourceId, undefined);
+    strictEqual(departmentMetadata.resourceName, "Company");
 
     strictEqual(
-      employeeMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
-    strictEqual(employeeMetadataDecorator.arguments.resourceName, "Employee");
+    strictEqual(departmentMetadata.resourceName, "Employee");
   });
 
   it("resource with grand parent under a tenant", async () => {
@@ -880,12 +954,18 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    // Build ARM provider schema and verify its structure
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+    ok(armProviderSchemaResult);
+
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
     );
     ok(employeeClient);
     const employeeModel = root.models.find((m) => m.name === "Employee");
+
     ok(employeeModel);
     const departmentModel = root.models.find((m) => m.name === "Department");
     ok(departmentModel);
@@ -896,86 +976,104 @@ interface Employees {
     );
     ok(employeeGetMethod);
 
-    const employeeMetadataDecorator = employeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+
+    const employeeResource = armProviderSchemaResult.resources.find(
+
+      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
+
     );
+
+    ok(employeeResource);
+
+    const employeeMetadataDecorator = employeeResource;
+
     ok(employeeMetadataDecorator);
-    ok(employeeMetadataDecorator.arguments);
+
+    const metadata = employeeMetadataDecorator.metadata;
+    ok(employeeMetadataDecorator);
+    
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     strictEqual(
-      employeeMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       undefined
     );
-    strictEqual(employeeMetadataDecorator.arguments.resourceScope, "Tenant");
-    strictEqual(employeeMetadataDecorator.arguments.methods.length, 5);
+    strictEqual(metadata.resourceScope, "Tenant");
+    strictEqual(metadata.methods.length, 5);
     strictEqual(
-      employeeMetadataDecorator.arguments.methods[0].methodId,
+      metadata.methods[0].methodId,
       employeeGetMethod.crossLanguageDefinitionId
     );
-    strictEqual(employeeMetadataDecorator.arguments.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Get");
 
-    const departmentMetadataDecorator = departmentModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const departmentResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === departmentModel.crossLanguageDefinitionId
     );
+    const departmentMetadataDecorator = departmentResourceInSchema;
     ok(departmentMetadataDecorator);
-    ok(departmentMetadataDecorator.arguments);
+    const departmentMetadata = departmentMetadataDecorator.metadata;
+    ok(departmentMetadata);
+    
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceIdPattern,
+      departmentMetadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceType,
+      departmentMetadata.resourceType,
       "Microsoft.ContosoProviderHub/companies/departments"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.singletonResourceName,
+      departmentMetadata.singletonResourceName,
       undefined
     );
-    strictEqual(departmentMetadataDecorator.arguments.resourceScope, "Tenant");
-    strictEqual(departmentMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(departmentMetadata.resourceScope, "Tenant");
+    strictEqual(departmentMetadata.methods.length, 2);
     strictEqual(
-      departmentMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
-      departmentMetadataDecorator.arguments.resourceName,
+      metadata.resourceName,
       "Department"
     );
 
-    const companyMetadataDecorator = companyModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const companyResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === companyModel.crossLanguageDefinitionId
     );
+    const companyMetadataDecorator = companyResourceInSchema;
     ok(companyMetadataDecorator);
-    ok(companyMetadataDecorator.arguments);
+    
     strictEqual(
-      companyMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
     );
     strictEqual(
-      companyMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/companies"
     );
     strictEqual(
-      companyMetadataDecorator.arguments.singletonResourceName,
+      metadata.singletonResourceName,
       undefined
     );
-    strictEqual(companyMetadataDecorator.arguments.resourceScope, "Tenant");
-    strictEqual(companyMetadataDecorator.arguments.methods.length, 2);
-    strictEqual(companyMetadataDecorator.arguments.parentResourceId, undefined);
-    strictEqual(companyMetadataDecorator.arguments.resourceName, "Company");
+    strictEqual(departmentMetadata.resourceScope, "Tenant");
+    strictEqual(departmentMetadata.methods.length, 2);
+    strictEqual(departmentMetadata.parentResourceId, undefined);
+    strictEqual(departmentMetadata.resourceName, "Company");
 
     strictEqual(
-      employeeMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
     );
-    strictEqual(employeeMetadataDecorator.arguments.resourceName, "Employee");
+    strictEqual(departmentMetadata.resourceName, "Employee");
   });
 
   it("resource scope determined from Get method when no explicit decorator", async () => {
@@ -1006,22 +1104,50 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    // Build ARM provider schema and verify its structure
+
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+
+    ok(armProviderSchemaResult);
+
 
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
     );
     ok(employeeClient);
     const employeeModel = root.models.find((m) => m.name === "Employee");
+
+
     ok(employeeModel);
     const getMethod = employeeClient.methods.find((m) => m.name === "get");
     ok(getMethod);
 
-    const resourceMetadataDecorator = employeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+
+
+    const employeeResource = armProviderSchemaResult.resources.find(
+
+
+      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
+
+
     );
+
+
+    ok(employeeResource);
+
+
+    const resourceMetadataDecorator = employeeResource;
+
+
     ok(resourceMetadataDecorator);
-    ok(resourceMetadataDecorator.arguments);
+
+
+    const metadata = resourceMetadataDecorator.metadata;
+    ok(resourceMetadataDecorator);
+    
 
     // Verify that the model has NO scope-related decorators
     const hasNoScopeDecorators = !employeeModel.decorators?.some(
@@ -1038,12 +1164,12 @@ interface Employees {
     // The model should inherit its resourceScope from the Get method's operationScope (Subscription)
     // because the Get method operates at subscription scope and there are no explicit scope decorators
     strictEqual(
-      resourceMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "Subscription"
     );
 
     // Verify the Get method itself has the correct scope
-    const getMethodEntry = resourceMetadataDecorator.arguments.methods.find(
+    const getMethodEntry = metadata.methods.find(
       (m: any) => m.methodId === getMethod.crossLanguageDefinitionId
     );
     ok(getMethodEntry);
@@ -1097,7 +1223,14 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    // Build ARM provider schema and verify its structure
+
+
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+
+
+    ok(armProviderSchemaResult);
+
 
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
@@ -1109,6 +1242,8 @@ interface Employees {
     ok(employeeParentClient);
 
     const employeeModel = root.models.find((m) => m.name === "Employee");
+
+
     ok(employeeModel);
     const employeeParentModel = root.models.find(
       (m) => m.name === "EmployeeParent"
@@ -1125,9 +1260,28 @@ interface Employees {
     ok(getMethod);
 
     // Validate Employee resource metadata should be null (no CRUD operations)
-    const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+
+
+    const employeeResource = armProviderSchemaResult.resources.find(
+
+
+      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
+
+
     );
+
+
+    ok(employeeResource);
+
+
+    const employeeResourceMetadataDecorator = employeeResource;
+
+
+    ok(employeeResourceMetadataDecorator);
+
+
+    const metadata = employeeResourceMetadataDecorator.metadata;
     strictEqual(
       employeeResourceMetadataDecorator,
       undefined,
@@ -1138,32 +1292,32 @@ interface Employees {
     const parentResourceMetadataDecorator =
       employeeParentModel.decorators?.find((d) => d.name === resourceMetadata);
     ok(parentResourceMetadataDecorator);
-    ok(parentResourceMetadataDecorator.arguments);
+    
     strictEqual(
-      parentResourceMetadataDecorator.arguments.resourceIdPattern,
+      metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
     );
     strictEqual(
-      parentResourceMetadataDecorator.arguments.resourceType,
+      metadata.resourceType,
       "Microsoft.ContosoProviderHub/employeeParents"
     );
     strictEqual(
-      parentResourceMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "ResourceGroup"
     );
     strictEqual(
-      parentResourceMetadataDecorator.arguments.parentResourceId,
+      metadata.parentResourceId,
       undefined
     );
     strictEqual(
-      parentResourceMetadataDecorator.arguments.resourceName,
+      metadata.resourceName,
       "EmployeeParent"
     );
-    strictEqual(parentResourceMetadataDecorator.arguments.methods.length, 2);
+    strictEqual(metadata.methods.length, 2);
 
     // Validate EmployeeParent listByParent method
     const listByParentEntry =
-      parentResourceMetadataDecorator.arguments.methods.find(
+      metadata.methods.find(
         (m: any) => m.methodId === listByParentMethod.crossLanguageDefinitionId
       );
     ok(listByParentEntry);
@@ -1201,7 +1355,10 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    
+    // Build ARM provider schema and verify its structure
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchemaResult);
 
     const employeeClient = getAllClients(root).find(
       (c) => c.name === "Employees"
@@ -1212,12 +1369,16 @@ interface Employees {
     ok(employeeModel);
 
     // Validate Employee resource metadata should be null (no CRUD operations)
-    const employeeResourceMetadataDecorator = employeeModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const employeeResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === employeeModel.crossLanguageDefinitionId
     );
+    const employeeResourceMetadataDecorator = employeeResourceInSchema;
     ok(employeeResourceMetadataDecorator);
+    const metadata = employeeResourceMetadataDecorator.metadata;
+    ok(metadata);
     strictEqual(
-      employeeResourceMetadataDecorator.arguments.resourceScope,
+      metadata.resourceScope,
       "ManagementGroup"
     );
   });
@@ -1266,7 +1427,10 @@ interface ScheduledActionExtension {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    
+    // Build ARM provider schema and verify its structure
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchemaResult);
 
     const scheduledActionExtensionClient = getAllClients(root).find(
       (c) => c.name === "ScheduledActionExtension"
@@ -1282,9 +1446,11 @@ interface ScheduledActionExtension {
     ok(getAssociatedMethod, "getAssociatedScheduledActions method should exist");
 
     // Check if resource metadata exists for ScheduledAction
-    const resourceMetadataDecorator = scheduledActionModel.decorators?.find(
-      (d) => d.name === resourceMetadata
+    // Find the resource in the schema
+    const scheduledActionResourceInSchema = armProviderSchemaResult.resources.find(
+      (r) => r.resourceModelId === scheduledActionModel.crossLanguageDefinitionId
     );
+    const resourceMetadataDecorator = scheduledActionResourceInSchema;
     
     // The resource should NOT have metadata since it has no CRUD operations
     strictEqual(
@@ -1294,14 +1460,9 @@ interface ScheduledActionExtension {
     );
     
     // Check that the method is treated as a non-resource method
-    const firstClient = root.clients[0];
-    const nonResourceMethodDecorator = firstClient.decorators?.find(
-      (d) => d.name === nonResourceMethodMetadata
-    );
-    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods");
     
-    const nonResourceMethods =
-      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     const methodEntry = nonResourceMethods.find(
       (m: any) => m.methodId === getAssociatedMethod.crossLanguageDefinitionId
     );
