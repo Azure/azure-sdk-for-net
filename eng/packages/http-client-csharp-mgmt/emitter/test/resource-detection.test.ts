@@ -7,7 +7,7 @@ import {
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { getAllClients, updateClients, buildArmProviderSchema } from "../src/resource-detection.js";
+import { getAllClients, buildArmProviderSchema } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
 import {
   tenantResource,
