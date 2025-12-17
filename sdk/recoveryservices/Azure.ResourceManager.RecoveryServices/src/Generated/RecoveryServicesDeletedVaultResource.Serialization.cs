@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
+    /// <summary></summary>
     public partial class RecoveryServicesDeletedVaultResource : IJsonModel<RecoveryServicesDeletedVaultData>
     {
-        private static RecoveryServicesDeletedVaultData s_dataDeserializationInstance;
-        private static RecoveryServicesDeletedVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RecoveryServicesDeletedVaultData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RecoveryServicesDeletedVaultData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RecoveryServicesDeletedVaultData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoveryServicesDeletedVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesDeletedVaultData>)Data).Write(writer, options);
 
-        RecoveryServicesDeletedVaultData IJsonModel<RecoveryServicesDeletedVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoveryServicesDeletedVaultData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoveryServicesDeletedVaultData IJsonModel<RecoveryServicesDeletedVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RecoveryServicesDeletedVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoveryServicesDeletedVaultData>(Data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RecoveryServicesDeletedVaultData IPersistableModel<RecoveryServicesDeletedVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoveryServicesDeletedVaultData>(data, options, AzureResourceManagerRecoveryServicesContext.Default);
 
-        string IPersistableModel<RecoveryServicesDeletedVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoveryServicesDeletedVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoveryServicesDeletedVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

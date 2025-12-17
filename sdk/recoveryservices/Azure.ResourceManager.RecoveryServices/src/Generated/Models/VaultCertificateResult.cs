@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Certificate corresponding to a vault that can be used by clients to register themselves with the vault. </summary>
-    public partial class VaultCertificateResult : ResourceData
+    public partial class VaultCertificateResult
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VaultCertificateResult"/>. </summary>
         internal VaultCertificateResult()
@@ -53,27 +22,30 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VaultCertificateResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// Certificate details representing the Vault credentials.
-        /// Please note <see cref="ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResourceCertificateAndAcsDetails"/> and <see cref="ResourceCertificateAndAadDetails"/>.
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VaultCertificateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceCertificateDetails properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="name"> Resource name associated with the resource. </param>
+        /// <param name="type"> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </param>
+        /// <param name="id"> Resource Id represents the complete path to the resource. </param>
+        /// <param name="properties"> Certificate details representing the Vault credentials. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VaultCertificateResult(string name, string @type, string id, ResourceCertificateDetails properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Name = name;
+            Type = @type;
+            Id = id;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Certificate details representing the Vault credentials.
-        /// Please note <see cref="ResourceCertificateDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ResourceCertificateAndAcsDetails"/> and <see cref="ResourceCertificateAndAadDetails"/>.
-        /// </summary>
+        /// <summary> Resource name associated with the resource. </summary>
+        public string Name { get; }
+
+        /// <summary> Resource type represents the complete path of the form Namespace/ResourceType/ResourceType/... </summary>
+        public string Type { get; }
+
+        /// <summary> Resource Id represents the complete path to the resource. </summary>
+        public string Id { get; }
+
+        /// <summary> Certificate details representing the Vault credentials. </summary>
         public ResourceCertificateDetails Properties { get; }
     }
 }

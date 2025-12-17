@@ -6,47 +6,37 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServices.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
     /// <summary>
-    /// A Class representing a RecoveryServicesDeletedVault along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoveryServicesDeletedVaultResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetRecoveryServicesDeletedVaultResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetRecoveryServicesDeletedVault method.
+    /// A class representing a RecoveryServicesDeletedVault along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RecoveryServicesDeletedVaultResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetRecoveryServicesDeletedVaults method.
     /// </summary>
     public partial class RecoveryServicesDeletedVaultResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="RecoveryServicesDeletedVaultResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="deletedVaultName"> The deletedVaultName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location, string deletedVaultName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics;
-        private readonly DeletedVaultsRestOperations _recoveryServicesDeletedVaultDeletedVaultsRestClient;
+        private readonly ClientDiagnostics _deletedVaultsClientDiagnostics;
+        private readonly DeletedVaults _deletedVaultsRestClient;
         private readonly RecoveryServicesDeletedVaultData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/locations/deletedVaults";
 
-        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesDeletedVaultResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of RecoveryServicesDeletedVaultResource for mocking. </summary>
         protected RecoveryServicesDeletedVaultResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesDeletedVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesDeletedVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RecoveryServicesDeletedVaultResource(ArmClient client, RecoveryServicesDeletedVaultData data) : this(client, data.Id)
@@ -55,71 +45,92 @@ namespace Azure.ResourceManager.RecoveryServices
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="RecoveryServicesDeletedVaultResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesDeletedVaultResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal RecoveryServicesDeletedVaultResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string recoveryServicesDeletedVaultDeletedVaultsApiVersion);
-            _recoveryServicesDeletedVaultDeletedVaultsRestClient = new DeletedVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, recoveryServicesDeletedVaultDeletedVaultsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string recoveryServicesDeletedVaultApiVersion);
+            _deletedVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
+            _deletedVaultsRestClient = new DeletedVaults(_deletedVaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesDeletedVaultApiVersion ?? "2025-08-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual RecoveryServicesDeletedVaultData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="deletedVaultName"> The deletedVaultName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string location, string deletedVaultName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get a specific deleted vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesDeletedVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<RecoveryServicesDeletedVaultResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Get");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Get");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesDeletedVaultDeletedVaultsRestClient.GetAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<RecoveryServicesDeletedVaultData> response = Response.FromValue(RecoveryServicesDeletedVaultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecoveryServicesDeletedVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.RecoveryServices
         /// Get a specific deleted vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedVault_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesDeletedVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<RecoveryServicesDeletedVaultResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Get");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Get");
             scope.Start();
             try
             {
-                var response = _recoveryServicesDeletedVaultDeletedVaultsRestClient.Get(Id.SubscriptionId, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedVaultsRestClient.CreateGetRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<RecoveryServicesDeletedVaultData> response = Response.FromValue(RecoveryServicesDeletedVaultData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new RecoveryServicesDeletedVaultResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.RecoveryServices
         /// Start undelete of a deleted vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/undelete</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/undelete. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedVaults_Undelete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Undelete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesDeletedVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,14 +217,21 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Undelete");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Undelete");
             scope.Start();
             try
             {
-                var response = await _recoveryServicesDeletedVaultDeletedVaultsRestClient.UndeleteAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new RecoveryServicesArmOperation(_recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics, Pipeline, _recoveryServicesDeletedVaultDeletedVaultsRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedVaultsRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultUndeleteContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_deletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -219,20 +245,20 @@ namespace Azure.ResourceManager.RecoveryServices
         /// Start undelete of a deleted vault.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/undelete</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}/undelete. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeletedVaults_Undelete</description>
+        /// <term> Operation Id. </term>
+        /// <description> DeletedVaults_Undelete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-08-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="RecoveryServicesDeletedVaultResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,14 +270,21 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Undelete");
+            using DiagnosticScope scope = _deletedVaultsClientDiagnostics.CreateScope("RecoveryServicesDeletedVaultResource.Undelete");
             scope.Start();
             try
             {
-                var response = _recoveryServicesDeletedVaultDeletedVaultsRestClient.Undelete(Id.SubscriptionId, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var operation = new RecoveryServicesArmOperation(_recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics, Pipeline, _recoveryServicesDeletedVaultDeletedVaultsRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _deletedVaultsRestClient.CreateUndeleteRequest(Id.SubscriptionId, Id.Parent.Name, Id.Name, DeletedVaultUndeleteContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RecoveryServicesArmOperation operation = new RecoveryServicesArmOperation(_deletedVaultsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct BackupStorageVersion : IEquatable<BackupStorageVersion>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BackupStorageVersion"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BackupStorageVersion(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string V1Value = "V1";
         private const string V2Value = "V2";
         private const string UnassignedValue = "Unassigned";
 
-        /// <summary> V1. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupStorageVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public BackupStorageVersion(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the V1. </summary>
         public static BackupStorageVersion V1 { get; } = new BackupStorageVersion(V1Value);
-        /// <summary> V2. </summary>
+
+        /// <summary> Gets the V2. </summary>
         public static BackupStorageVersion V2 { get; } = new BackupStorageVersion(V2Value);
-        /// <summary> Unassigned. </summary>
+
+        /// <summary> Gets the Unassigned. </summary>
         public static BackupStorageVersion Unassigned { get; } = new BackupStorageVersion(UnassignedValue);
+
         /// <summary> Determines if two <see cref="BackupStorageVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BackupStorageVersion left, BackupStorageVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BackupStorageVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BackupStorageVersion left, BackupStorageVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BackupStorageVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BackupStorageVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BackupStorageVersion(string value) => new BackupStorageVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BackupStorageVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BackupStorageVersion?(string value) => value == null ? null : new BackupStorageVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BackupStorageVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BackupStorageVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

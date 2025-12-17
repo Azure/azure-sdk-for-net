@@ -8,44 +8,14 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Information to be stored in Vault properties as an element of privateEndpointConnections List. </summary>
-    public partial class RecoveryServicesPrivateEndpointConnectionVaultProperties : ResourceData
+    public partial class RecoveryServicesPrivateEndpointConnectionVaultProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
         internal RecoveryServicesPrivateEndpointConnectionVaultProperties()
@@ -53,22 +23,34 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <param name="id"> Format of id subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.[Service]/{resource}/{resourceName}/privateEndpointConnections/{connectionName}. </param>
         /// <param name="properties"> Private Endpoint Connection Response Properties. </param>
+        /// <param name="name"> The name of the private Endpoint Connection. </param>
+        /// <param name="type"> The type, which will be of the format, Microsoft.RecoveryServices/vaults/privateEndpointConnections. </param>
         /// <param name="location"> The location of the private Endpoint connection. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesPrivateEndpointConnectionVaultProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, RecoveryServicesPrivateEndpointConnection properties, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryServicesPrivateEndpointConnectionVaultProperties(string id, RecoveryServicesPrivateEndpointConnection properties, string name, string @type, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Id = id;
             Properties = properties;
+            Name = name;
+            Type = @type;
             Location = location;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Format of id subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.[Service]/{resource}/{resourceName}/privateEndpointConnections/{connectionName}. </summary>
+        public string Id { get; }
 
         /// <summary> Private Endpoint Connection Response Properties. </summary>
         public RecoveryServicesPrivateEndpointConnection Properties { get; }
+
+        /// <summary> The name of the private Endpoint Connection. </summary>
+        public string Name { get; }
+
+        /// <summary> The type, which will be of the format, Microsoft.RecoveryServices/vaults/privateEndpointConnections. </summary>
+        public string Type { get; }
+
         /// <summary> The location of the private Endpoint connection. </summary>
         public AzureLocation? Location { get; }
     }

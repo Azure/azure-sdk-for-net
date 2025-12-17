@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Summary of the replication job data for this vault. </summary>
     public partial class ReplicationJobSummary
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ReplicationJobSummary"/>. </summary>
         internal ReplicationJobSummary()
@@ -54,19 +25,21 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="failedJobs"> Count of failed jobs. </param>
         /// <param name="suspendedJobs"> Count of suspended jobs. </param>
         /// <param name="inProgressJobs"> Count of in-progress jobs. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicationJobSummary(int? failedJobs, int? suspendedJobs, int? inProgressJobs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationJobSummary(int? failedJobs, int? suspendedJobs, int? inProgressJobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FailedJobs = failedJobs;
             SuspendedJobs = suspendedJobs;
             InProgressJobs = inProgressJobs;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Count of failed jobs. </summary>
         public int? FailedJobs { get; }
+
         /// <summary> Count of suspended jobs. </summary>
         public int? SuspendedJobs { get; }
+
         /// <summary> Count of in-progress jobs. </summary>
         public int? InProgressJobs { get; }
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     public readonly partial struct VaultUsageUnit : IEquatable<VaultUsageUnit>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="VaultUsageUnit"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public VaultUsageUnit(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string CountValue = "Count";
         private const string BytesValue = "Bytes";
         private const string SecondsValue = "Seconds";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         private const string CountPerSecondValue = "CountPerSecond";
         private const string BytesPerSecondValue = "BytesPerSecond";
 
-        /// <summary> Count. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VaultUsageUnit(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Count. </summary>
         public static VaultUsageUnit Count { get; } = new VaultUsageUnit(CountValue);
-        /// <summary> Bytes. </summary>
+
+        /// <summary> Gets the Bytes. </summary>
         public static VaultUsageUnit Bytes { get; } = new VaultUsageUnit(BytesValue);
-        /// <summary> Seconds. </summary>
+
+        /// <summary> Gets the Seconds. </summary>
         public static VaultUsageUnit Seconds { get; } = new VaultUsageUnit(SecondsValue);
-        /// <summary> Percent. </summary>
+
+        /// <summary> Gets the Percent. </summary>
         public static VaultUsageUnit Percent { get; } = new VaultUsageUnit(PercentValue);
-        /// <summary> CountPerSecond. </summary>
+
+        /// <summary> Gets the CountPerSecond. </summary>
         public static VaultUsageUnit CountPerSecond { get; } = new VaultUsageUnit(CountPerSecondValue);
-        /// <summary> BytesPerSecond. </summary>
+
+        /// <summary> Gets the BytesPerSecond. </summary>
         public static VaultUsageUnit BytesPerSecond { get; } = new VaultUsageUnit(BytesPerSecondValue);
+
         /// <summary> Determines if two <see cref="VaultUsageUnit"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VaultUsageUnit left, VaultUsageUnit right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VaultUsageUnit"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VaultUsageUnit left, VaultUsageUnit right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VaultUsageUnit"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VaultUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VaultUsageUnit(string value) => new VaultUsageUnit(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VaultUsageUnit"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VaultUsageUnit?(string value) => value == null ? null : new VaultUsageUnit(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VaultUsageUnit other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VaultUsageUnit other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
