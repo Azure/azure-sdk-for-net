@@ -49,7 +49,7 @@ model FooProperties {
   etag?: Azure.Core.eTag;
 
   /** WritableSubResource property for testing WritableSubResource type replacement */
-  writableSubResourceProp?: Azure.ResourceManager.Models.WritableSubResource;
+  writableSubResourceProp?: Azure.ResourceManager.Models.WritableSubResourceProp;
 }
 
 model NestedFooModel {

@@ -52,7 +52,8 @@ namespace MgmtTypeSpec {
 // We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType
 namespace Azure.ResourceManager.Models {
   model SubResource { }
-  model WritableSubResource {
+  model WritableSubResource { }
+  model WritableSubResourceProp {
     id?: Azure.Core.armResourceIdentifier;
   }
 }

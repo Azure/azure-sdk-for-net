@@ -5455,9 +5455,9 @@
                 "type": {
                   "$id": "497",
                   "kind": "model",
-                  "name": "WritableSubResource",
+                  "name": "WritableSubResourceProp",
                   "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
-                  "crossLanguageDefinitionId": "Azure.ResourceManager.Models.WritableSubResource",
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.Models.WritableSubResourceProp",
                   "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
                   "decorators": [
                     {
@@ -5490,7 +5490,7 @@
                       "discriminator": false,
                       "flatten": false,
                       "decorators": [],
-                      "crossLanguageDefinitionId": "Azure.ResourceManager.Models.WritableSubResource.id",
+                      "crossLanguageDefinitionId": "Azure.ResourceManager.Models.WritableSubResourceProp.id",
                       "serializationOptions": {
                         "json": {
                           "name": "id"
