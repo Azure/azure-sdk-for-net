@@ -11,31 +11,25 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Best practice properties - shared by both BestPractice and BestPracticeVersion. </summary>
-    public partial class BestPracticeProperties
+    /// <summary> The updatable properties of the BestPracticeVersion. </summary>
+    internal partial class BestPracticeVersionUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeProperties"/>. </summary>
-        public BestPracticeProperties()
+        /// <summary> Initializes a new instance of <see cref="BestPracticeVersionUpdateProperties"/>. </summary>
+        public BestPracticeVersionUpdateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <summary> Initializes a new instance of <see cref="BestPracticeVersionUpdateProperties"/>. </summary>
         /// <param name="description"> The description of the best practice. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BestPracticeProperties(ResourceProvisioningState? provisioningState, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BestPracticeVersionUpdateProperties(string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ProvisioningState = provisioningState;
             Description = description;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The provisioning state of the resource. </summary>
-        [WirePath("provisioningState")]
-        public ResourceProvisioningState? ProvisioningState { get; }
 
         /// <summary> The description of the best practice. </summary>
         [WirePath("description")]

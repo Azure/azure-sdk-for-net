@@ -13,18 +13,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> A best practice resource - parent resource. </summary>
-    public partial class BestPracticeData : ResourceData
+    /// <summary> A best practice version resource - child resource that shares the same properties as BestPractice. </summary>
+    public partial class BestPracticeVersionData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeData"/>. </summary>
-        public BestPracticeData()
+        /// <summary> Initializes a new instance of <see cref="BestPracticeVersionData"/>. </summary>
+        public BestPracticeVersionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticeData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestPracticeVersionData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        internal BestPracticeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BestPracticeProperties properties, ExtendedLocation1 extendedLocation) : base(id, name, resourceType, systemData)
+        internal BestPracticeVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, BestPracticeProperties properties, ExtendedLocation1 extendedLocation) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

@@ -207,12 +207,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> Resource create parameters. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<BestPracticeResource>> UpdateAsync(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<BestPracticeResource>> UpdateAsync(BestPracticePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Update");
             scope.Start();
@@ -222,7 +222,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateUpdateRequest(Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _bestPracticesRestClient.CreateUpdateRequest(Id.Name, BestPracticePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -259,12 +259,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> Resource create parameters. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<BestPracticeResource> Update(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<BestPracticeResource> Update(BestPracticePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _bestPracticesClientDiagnostics.CreateScope("BestPracticeResource.Update");
             scope.Start();
@@ -274,7 +274,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticesRestClient.CreateUpdateRequest(Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _bestPracticesRestClient.CreateUpdateRequest(Id.Name, BestPracticePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -390,6 +390,39 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of BestPracticeVersions in the <see cref="BestPracticeResource"/>. </summary>
+        /// <returns> An object representing collection of BestPracticeVersions and their operations over a BestPracticeVersionResource. </returns>
+        public virtual BestPracticeVersionCollection GetBestPracticeVersions()
+        {
+            return GetCachedClient(client => new BestPracticeVersionCollection(client, Id));
+        }
+
+        /// <summary> Get a BestPracticeVersion. </summary>
+        /// <param name="versionName"> The name of the version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<BestPracticeVersionResource>> GetBestPracticeVersionAsync(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            return await GetBestPracticeVersions().GetAsync(versionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a BestPracticeVersion. </summary>
+        /// <param name="versionName"> The name of the version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<BestPracticeVersionResource> GetBestPracticeVersion(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            return GetBestPracticeVersions().Get(versionName, cancellationToken);
         }
     }
 }

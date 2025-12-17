@@ -14,20 +14,19 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a BestPracticeVersion along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BestPracticeVersionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetBestPracticeVersions method.
+    /// Otherwise you can get one from its parent resource <see cref="BestPracticeResource"/> using the GetBestPracticeVersions method.
     /// </summary>
     public partial class BestPracticeVersionResource : ArmResource
     {
         private readonly ClientDiagnostics _bestPracticeVersionsClientDiagnostics;
         private readonly BestPracticeVersions _bestPracticeVersionsRestClient;
-        private readonly BestPracticeData _data;
+        private readonly BestPracticeVersionData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "MgmtTypeSpec/bestPractices/versions";
 
@@ -39,7 +38,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Initializes a new instance of <see cref="BestPracticeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal BestPracticeVersionResource(ArmClient client, BestPracticeData data) : this(client, data.Id)
+        internal BestPracticeVersionResource(ArmClient client, BestPracticeVersionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -60,7 +59,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual BestPracticeData Data
+        public virtual BestPracticeVersionData Data
         {
             get
             {
@@ -92,7 +91,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BestPractice
+        /// Get a BestPracticeVersion
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -125,7 +124,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
+                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -140,7 +139,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BestPractice
+        /// Get a BestPracticeVersion
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -173,7 +172,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 };
                 HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
+                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -188,7 +187,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a BestPractice
+        /// Update a BestPracticeVersion
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -208,12 +207,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> Resource create parameters. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual async Task<Response<BestPracticeVersionResource>> UpdateAsync(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<BestPracticeVersionResource>> UpdateAsync(BestPracticeVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Update");
             scope.Start();
@@ -223,9 +222,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BestPracticeVersionPatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
+                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -240,7 +239,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Update a BestPractice
+        /// Update a BestPracticeVersion
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -260,12 +259,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="properties"> Resource create parameters. </param>
+        /// <param name="patch"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public virtual Response<BestPracticeVersionResource> Update(BestPracticeUpdate properties, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<BestPracticeVersionResource> Update(BestPracticeVersionPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(properties, nameof(properties));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionResource.Update");
             scope.Start();
@@ -275,9 +274,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BestPracticeUpdate.ToRequestContent(properties), context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BestPracticeVersionPatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
+                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -292,7 +291,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Delete a BestPractice
+        /// Delete a BestPracticeVersion
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -343,7 +342,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Delete a BestPractice
+        /// Delete a BestPracticeVersion
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
