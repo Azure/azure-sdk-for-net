@@ -12,7 +12,7 @@
   instead of replica names in the Role Instance field. The resource detector order
   has been adjusted to ensure Container Apps detector runs before VM detector,
   preventing the VM detector from overwriting the Container Apps replica name.
-  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+  ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
 
 ### Other Changes
 
