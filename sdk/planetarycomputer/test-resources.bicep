@@ -7,10 +7,11 @@ param baseName string = resourceGroup().name
 param location string = resourceGroup().location
 
 // Generate unique names based on baseName
-var storageAccountName = 'pc${uniqueString(baseName, resourceGroup().id)}'
+var resourcePrefix = uniqueString(baseName, resourceGroup().id)
+var storageAccountName = '${resourcePrefix}sa'
+var identityName = '${resourcePrefix}mi'
+var catalogName = '${resourcePrefix}gc'
 var containerName = 'sample-container'
-var identityName = '${baseName}-identity'
-var catalogName = '${baseName}-catalog'
 
 // Create storage account
 resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
@@ -25,6 +26,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
     allowBlobPublicAccess: false
     allowSharedKeyAccess: false
     minimumTlsVersion: 'TLS1_2'
+    publicNetworkAccess: 'SecuredByPerimeter'
   }
 }
 
