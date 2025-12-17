@@ -52,23 +52,11 @@ var agent = new ChatClientAgent(chatClient,
       .Build();
 
 // Run agent with tool support using ToolDefinition objects
-await agent.RunAIAgentAsync(
-    telemetrySourceName: "Agents",
+await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
     tools: new List<ToolDefinition>
     {
         new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
-    },
-    endpoint: new Uri(aiProjectEndpoint),
-    credential: credential);
+    });
 
-// Alternative: Run with inline tool configuration (anonymous objects)
-/*
-await agent.RunAIAgentAsync(
-    telemetrySourceName: "Agents",
-    toolConfigs: new object[]
-    {
-        new { type = "mcp", project_connection_id = toolConnectionId }
-    },
-    endpoint: new Uri(aiProjectEndpoint),
-    credential: credential);
-*/
+// Run agent without tool support
+// await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
