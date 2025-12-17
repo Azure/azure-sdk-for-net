@@ -26,7 +26,7 @@ public class RecordedTestsSamples
 
         public override Dictionary<string, string> ParseEnvironmentFile()
         {
-            // Read environment variables or parse from a .env file as needed
+            // Read environment variables or parse and decrypt from an encrypted .env file as needed
             return new Dictionary<string, string>
             {
                 { "MAPS_ENDPOINT", Environment.GetEnvironmentVariable("MAPS_ENDPOINT") },
