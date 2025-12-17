@@ -234,7 +234,7 @@ public class MapsClientTests : RecordedTestBase<MapsClientTestEnvironment>
             new ApiKeyCredential(TestEnvironment.ApiKey),
             options: InstrumentClientOptions(options)));
 
-        Assert.That(RemoveDefaultSanitizers, Is.False);
+        Assert.That(UseDefaultSanitizers, Is.True);
 
         var adminClient = TestProxy?.AdminClient;
         Assert.That(adminClient, Is.Not.Null);

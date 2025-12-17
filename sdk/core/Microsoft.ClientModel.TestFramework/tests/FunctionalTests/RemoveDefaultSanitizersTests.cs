@@ -45,7 +45,7 @@ public class RemoveDefaultSanitizersTests : RecordedTestBase<MapsClientTestEnvir
 
     public RemoveDefaultSanitizersTests(bool isAsync) : base(isAsync)
     {
-        RemoveDefaultSanitizers = true;
+        UseDefaultSanitizers = false;
     }
 
     [RecordedTest]

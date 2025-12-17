@@ -36,6 +36,9 @@ public class TestRecording : IAsyncDisposable
 
     // This is a list of all default sanitizers applied in the test-proxy EXCEPT AZSDK0000 which is the Authorization
     // header sanitizer, which should not be removed
+    // There isn't a documented list anywhere, and it's not possible to query the test-proxy for them, this list comes
+    // from visiting http://localhost:5000/Info/Active while the test-proxy is running as described here:
+    // https://github.com/Azure/azure-sdk-tools/tree/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy#removing-a-sanitizer
     private static List<string> _defaultSanitizersApplied = [ "AZSDK1000", "AZSDK1001", "AZSDK1002", "AZSDK1003",
         "AZSDK1004", "AZSDK1005", "AZSDK1006", "AZSDK1007", "AZSDK1008", "AZSDK2001", "AZSDK2002", "AZSDK2003",
         "AZSDK2004", "AZSDK2005", "AZSDK2006", "AZSDK2007", "AZSDK2008", "AZSDK2009", "AZSDK2010", "AZSDK2011",
@@ -499,7 +502,7 @@ public class TestRecording : IAsyncDisposable
             throw new InvalidOperationException("TestProxyProcess.AdminClient is null. Ensure that the TestProxyProcess is started before attempting to create a TestRecording.");
         }
 
-        if (_recordedTestBase.RemoveDefaultSanitizers)
+        if (!_recordedTestBase.UseDefaultSanitizers)
         {
             await _proxy.AdminClient.RemoveSanitizersAsync(new SanitizerList(_defaultSanitizersApplied), RecordingId, cancellationToken).ConfigureAwait(false);
         }

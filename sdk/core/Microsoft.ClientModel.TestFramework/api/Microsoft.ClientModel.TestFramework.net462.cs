@@ -165,7 +165,6 @@ namespace Microsoft.ClientModel.TestFramework
         public virtual System.Collections.Generic.List<string> JsonPathSanitizers { get { throw null; } }
         public Microsoft.ClientModel.TestFramework.RecordedTestMode Mode { get { throw null; } set { } }
         public virtual Microsoft.ClientModel.TestFramework.TestRecording? Recording { get { throw null; } }
-        public bool RemoveDefaultSanitizers { get { throw null; } set { } }
         public virtual System.Collections.Generic.List<string> SanitizedHeaders { get { throw null; } }
         public virtual System.Collections.Generic.List<string> SanitizedQueryParameters { get { throw null; } }
         public virtual System.Collections.Generic.List<(string Header, string QueryParameter)> SanitizedQueryParametersInHeaders { get { throw null; } }
@@ -174,6 +173,7 @@ namespace Microsoft.ClientModel.TestFramework
         protected Microsoft.ClientModel.TestFramework.TestRetryHelper TestRetryHelper { get { throw null; } }
         protected override System.DateTime TestStartTime { get { throw null; } }
         public virtual System.Collections.Generic.List<Microsoft.ClientModel.TestFramework.TestProxy.Admin.UriRegexSanitizer> UriRegexSanitizers { get { throw null; } }
+        public bool UseDefaultSanitizers { get { throw null; } set { } }
         protected bool UseLocalDebugProxy { get { throw null; } set { } }
         protected bool ValidateClientInstrumentation { get { throw null; } set { } }
         protected internal override object CreateProxyFromClient(System.Type clientType, object client, System.Collections.Generic.IEnumerable<Castle.DynamicProxy.IInterceptor>? preInterceptors) { throw null; }

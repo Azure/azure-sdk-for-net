@@ -90,16 +90,16 @@ public abstract class RecordedTestBase : ClientTestBase
     public RecordedTestMode Mode { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether to remove all default sanitizers that are automatically turned on
-    /// in the test proxy. This can be helpful to improve performance in scenarios where libraries have very large
+    /// Gets or sets a value indicating whether to use all default sanitizers that are automatically added
+    /// in the test proxy. Turning this off can be helpful to improve performance in scenarios where libraries have very large
     /// request bodies that are expensive to sanitize.
     /// </summary>
     /// <remarks>
-    /// This setting should be used with caution as it may lead to sensitive data being recorded. All sanitization,
-    /// will have to be manually added as a custom sanitizer if this is enabled. The only sanitizer left by default
+    /// Turning off this setting should be used with caution as it may lead to sensitive data being recorded. All sanitization
+    /// will have to be manually added as a custom sanitizer if this is disabled. The only sanitizer left by default
     /// is the Authorization header sanitizer.
     /// </remarks>
-    public bool RemoveDefaultSanitizers { get; set; } = false;
+    public bool UseDefaultSanitizers { get; set; } = true;
 
     /// <summary>
     /// Gets or sets a value indicating whether client instrumentation validation should be performed.
