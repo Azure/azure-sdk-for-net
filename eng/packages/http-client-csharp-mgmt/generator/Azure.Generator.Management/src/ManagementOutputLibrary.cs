@@ -337,28 +337,66 @@ namespace Azure.Generator.Management
             {
                 foreach (var resourceMethod in metadata.Methods)
                 {
-                    ProcessLroMethod(resourceMethod.InputMethod, operationSources);
+                    if (resourceMethod.InputMethod is InputLongRunningServiceMethod lroMethod)
+                    {
+                        ProcessLroMethod(lroMethod, operationSources);
+                    }
+                    else
+                    {
+                        ProcessNonLroMethod(resourceMethod.InputMethod, operationSources);
+                    }
                 }
             }
 
             // Process non-resource methods
             foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
             {
-                ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
+                if (nonResourceMethod.InputMethod is InputLongRunningServiceMethod lroMethod)
+                {
+                    ProcessLroMethod(lroMethod, operationSources);
+                }
+                else
+                {
+                    ProcessNonLroMethod(nonResourceMethod.InputMethod, operationSources);
+                }
             }
 
             return operationSources;
         }
 
-        private void ProcessLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
+        private void ProcessLroMethod(InputLongRunningServiceMethod lroMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
         {
-            // Process both LRO and non-LRO methods with model return types
-            var returnCSharpType = inputMethod.GetResponseBodyType();
-            if (returnCSharpType == null)
+            var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+            if (returnType is InputModelType inputModelType)
             {
-                return;
-            }
+                var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
+                if (returnCSharpType == null)
+                {
+                    return;
+                }
 
+                AddOperationSource(returnCSharpType, operationSources);
+            }
+        }
+
+        private void ProcessNonLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
+        {
+            var operationResponses = inputMethod.Operation.Responses;
+            var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
+            if (response?.BodyType is InputModelType inputModelType)
+            {
+                var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
+                if (returnCSharpType == null)
+                {
+                    return;
+                }
+
+                AddOperationSource(returnCSharpType, operationSources);
+            }
+        }
+
+        private void AddOperationSource(CSharpType returnCSharpType, Dictionary<CSharpType, OperationSourceProvider> operationSources)
+        {
             if (!operationSources.ContainsKey(returnCSharpType))
             {
                 var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
