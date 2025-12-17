@@ -1,0 +1,20 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "Apim",
+    "apikey",
+    "clientlet",
+    "dotnetcli",
+    "flac",
+    "Persistable"
+  ],
+  "ignorePaths": [
+    "src/Generated/**",
+    "bin/**",
+    "obj/**",
+    "node_modules/**",
+    ".vs/**",
+    "api/**"
+  ]
+}
