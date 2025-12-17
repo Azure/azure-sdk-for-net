@@ -337,9 +337,9 @@ namespace Azure.Generator.Management
             {
                 foreach (var resourceMethod in metadata.Methods)
                 {
-                    if (resourceMethod.InputMethod is InputLongRunningServiceMethod lroMethod)
+                    if (resourceMethod.InputMethod.IsLongRunningOperation())
                     {
-                        ProcessLroMethod(lroMethod, operationSources);
+                        ProcessLroMethod(resourceMethod.InputMethod, operationSources);
                     }
                     else
                     {
@@ -351,9 +351,9 @@ namespace Azure.Generator.Management
             // Process non-resource methods
             foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
             {
-                if (nonResourceMethod.InputMethod is InputLongRunningServiceMethod lroMethod)
+                if (nonResourceMethod.InputMethod.IsLongRunningOperation())
                 {
-                    ProcessLroMethod(lroMethod, operationSources);
+                    ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
                 }
                 else
                 {
@@ -364,9 +364,19 @@ namespace Azure.Generator.Management
             return operationSources;
         }
 
-        private void ProcessLroMethod(InputLongRunningServiceMethod lroMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
+        private void ProcessLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
         {
-            var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+            InputType? returnType = null;
+
+            if (inputMethod is InputLongRunningServiceMethod lroMethod)
+            {
+                returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+            }
+            else if (inputMethod is InputLongRunningPagingServiceMethod lroPagingMethod)
+            {
+                returnType = lroPagingMethod.LongRunningServiceMetadata.ReturnType;
+            }
+
             if (returnType is InputModelType inputModelType)
             {
                 var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
