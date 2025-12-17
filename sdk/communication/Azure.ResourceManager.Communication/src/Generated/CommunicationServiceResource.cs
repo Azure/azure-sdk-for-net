@@ -90,6 +90,75 @@ namespace Azure.ResourceManager.Communication
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of SmtpUsernameResources in the CommunicationServiceResource. </summary>
+        /// <returns> An object representing collection of SmtpUsernameResources and their operations over a SmtpUsernameResource. </returns>
+        public virtual SmtpUsernameResourceCollection GetSmtpUsernameResources()
+        {
+            return GetCachedClient(client => new SmtpUsernameResourceCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a SmtpUsernameResource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmtpUsernames_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smtpUsername"> The name of the SmtpUsernameResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SmtpUsernameResource>> GetSmtpUsernameResourceAsync(string smtpUsername, CancellationToken cancellationToken = default)
+        {
+            return await GetSmtpUsernameResources().GetAsync(smtpUsername, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a SmtpUsernameResource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Communication/communicationServices/{communicationServiceName}/smtpUsernames/{smtpUsername}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmtpUsernames_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmtpUsernameResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smtpUsername"> The name of the SmtpUsernameResource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="smtpUsername"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="smtpUsername"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SmtpUsernameResource> GetSmtpUsernameResource(string smtpUsername, CancellationToken cancellationToken = default)
+        {
+            return GetSmtpUsernameResources().Get(smtpUsername, cancellationToken);
+        }
+
         /// <summary>
         /// Get the CommunicationService and its properties.
         /// <list type="bullet">
@@ -103,7 +172,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -143,7 +212,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -183,7 +252,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,7 +294,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -267,7 +336,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,7 +378,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,7 +420,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -390,7 +459,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -429,7 +498,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -467,7 +536,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -505,7 +574,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -547,7 +616,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -589,7 +658,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -651,7 +720,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -713,7 +782,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -770,7 +839,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -827,7 +896,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -887,7 +956,7 @@ namespace Azure.ResourceManager.Communication
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-04-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
