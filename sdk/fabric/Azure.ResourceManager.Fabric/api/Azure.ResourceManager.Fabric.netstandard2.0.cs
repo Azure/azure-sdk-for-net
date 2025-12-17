@@ -143,6 +143,7 @@ namespace Azure.ResourceManager.Fabric.Models
     public partial class FabricCapacityPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Fabric.Models.FabricCapacityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Fabric.Models.FabricCapacityPatch>
     {
         public FabricCapacityPatch() { }
+        public System.Collections.Generic.IList<string> AdministrationMembers { get { throw null; } }
         public Azure.ResourceManager.Fabric.Models.FabricCapacityUpdateProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Fabric.Models.FabricSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
