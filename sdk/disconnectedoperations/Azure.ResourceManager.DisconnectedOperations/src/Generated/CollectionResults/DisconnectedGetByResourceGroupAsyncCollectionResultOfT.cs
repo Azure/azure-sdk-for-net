@@ -15,27 +15,30 @@ using Azure.ResourceManager.DisconnectedOperations.Models;
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
-    internal partial class DisconnectedOperationsOprsGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<DisconnectedOperationData>
+    internal partial class DisconnectedGetByResourceGroupAsyncCollectionResultOfT : AsyncPageable<DisconnectedOperationData>
     {
-        private readonly DisconnectedOperationsOprs _client;
+        private readonly Disconnected _client;
         private readonly Guid _subscriptionId;
+        private readonly string _resourceGroupName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of DisconnectedOperationsOprsGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DisconnectedOperationsOprs client used to send requests. </param>
+        /// <summary> Initializes a new instance of DisconnectedGetByResourceGroupAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Disconnected client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DisconnectedOperationsOprsGetBySubscriptionAsyncCollectionResultOfT(DisconnectedOperationsOprs client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DisconnectedGetByResourceGroupAsyncCollectionResultOfT(Disconnected client, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
+            _resourceGroupName = resourceGroupName;
             _context = context;
         }
 
-        /// <summary> Gets the pages of DisconnectedOperationsOprsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DisconnectedGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DisconnectedOperationsOprsGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of DisconnectedGetByResourceGroupAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<DisconnectedOperationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
@@ -61,8 +64,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations");
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByResourceGroupRequest(nextLink, _subscriptionId, _resourceGroupName, _context) : _client.CreateGetByResourceGroupRequest(_subscriptionId, _resourceGroupName, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetAll");
             scope.Start();
             try
             {

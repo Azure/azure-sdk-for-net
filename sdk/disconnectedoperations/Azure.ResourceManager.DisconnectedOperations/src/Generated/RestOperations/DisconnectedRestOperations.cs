@@ -12,22 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
-    internal partial class DisconnectedOperationsOprs
+    internal partial class Disconnected
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of DisconnectedOperationsOprs for mocking. </summary>
-        protected DisconnectedOperationsOprs()
+        /// <summary> Initializes a new instance of Disconnected for mocking. </summary>
+        protected Disconnected()
         {
         }
 
-        /// <summary> Initializes a new instance of DisconnectedOperationsOprs. </summary>
+        /// <summary> Initializes a new instance of Disconnected. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal DisconnectedOperationsOprs(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        internal Disconnected(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;

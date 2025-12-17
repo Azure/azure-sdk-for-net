@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -14,33 +15,33 @@ using Azure.ResourceManager.DisconnectedOperations.Models;
 
 namespace Azure.ResourceManager.DisconnectedOperations
 {
-    internal partial class DisconnectedOperationsOprsGetBySubscriptionCollectionResultOfT : Pageable<DisconnectedOperationData>
+    internal partial class DisconnectedGetBySubscriptionAsyncCollectionResultOfT : AsyncPageable<DisconnectedOperationData>
     {
-        private readonly DisconnectedOperationsOprs _client;
+        private readonly Disconnected _client;
         private readonly Guid _subscriptionId;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of DisconnectedOperationsOprsGetBySubscriptionCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
-        /// <param name="client"> The DisconnectedOperationsOprs client used to send requests. </param>
+        /// <summary> Initializes a new instance of DisconnectedGetBySubscriptionAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <param name="client"> The Disconnected client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public DisconnectedOperationsOprsGetBySubscriptionCollectionResultOfT(DisconnectedOperationsOprs client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DisconnectedGetBySubscriptionAsyncCollectionResultOfT(Disconnected client, Guid subscriptionId, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
             _context = context;
         }
 
-        /// <summary> Gets the pages of DisconnectedOperationsOprsGetBySubscriptionCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DisconnectedGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DisconnectedOperationsOprsGetBySubscriptionCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DisconnectedOperationData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DisconnectedGetBySubscriptionAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<DisconnectedOperationData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponseAsync(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -58,14 +59,14 @@ namespace Azure.ResourceManager.DisconnectedOperations
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = nextLink != null ? _client.CreateNextGetBySubscriptionRequest(nextLink, _subscriptionId, _context) : _client.CreateGetBySubscriptionRequest(_subscriptionId, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("MockableDisconnectedOperationsSubscriptionResource.GetDisconnectedOperations");
             scope.Start();
             try
             {
-                return _client.Pipeline.ProcessMessage(message, _context);
+                return await _client.Pipeline.ProcessMessageAsync(message, _context).ConfigureAwait(false);
             }
             catch (Exception e)
             {

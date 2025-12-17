@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableDisconnectedOperationsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _disconnectedOperationsOprsClientDiagnostics;
-        private DisconnectedOperationsOprs _disconnectedOperationsOprsRestClient;
+        private ClientDiagnostics _disconnectedClientDiagnostics;
+        private Disconnected _disconnectedRestClient;
 
         /// <summary> Initializes a new instance of MockableDisconnectedOperationsSubscriptionResource for mocking. </summary>
         protected MockableDisconnectedOperationsSubscriptionResource()
@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
         {
         }
 
-        private ClientDiagnostics DisconnectedOperationsOprsClientDiagnostics => _disconnectedOperationsOprsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DisconnectedClientDiagnostics => _disconnectedClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DisconnectedOperationsOprs DisconnectedOperationsOprsRestClient => _disconnectedOperationsOprsRestClient ??= new DisconnectedOperationsOprs(DisconnectedOperationsOprsClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
+        private Disconnected DisconnectedRestClient => _disconnectedRestClient ??= new Disconnected(DisconnectedClientDiagnostics, Pipeline, Endpoint, "2025-06-01-preview");
 
         /// <summary>
         /// List DisconnectedOperation resources by subscription ID
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedOperationsOprsGetBySubscriptionAsyncCollectionResultOfT(DisconnectedOperationsOprsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
+            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionAsyncCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedOperationsOprsGetBySubscriptionCollectionResultOfT(DisconnectedOperationsOprsRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
+            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetBySubscriptionCollectionResultOfT(DisconnectedRestClient, Guid.Parse(Id.SubscriptionId), context), data => new DisconnectedOperationResource(Client, data));
         }
     }
 }

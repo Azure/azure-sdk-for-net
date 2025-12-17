@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
     /// </summary>
     public partial class DisconnectedOperationCollection : ArmCollection, IEnumerable<DisconnectedOperationResource>, IAsyncEnumerable<DisconnectedOperationResource>
     {
-        private readonly ClientDiagnostics _disconnectedOperationsOprsClientDiagnostics;
-        private readonly DisconnectedOperationsOprs _disconnectedOperationsOprsRestClient;
+        private readonly ClientDiagnostics _disconnectedClientDiagnostics;
+        private readonly Disconnected _disconnectedRestClient;
 
         /// <summary> Initializes a new instance of DisconnectedOperationCollection for mocking. </summary>
         protected DisconnectedOperationCollection()
@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.DisconnectedOperations
         internal DisconnectedOperationCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(DisconnectedOperationResource.ResourceType, out string disconnectedOperationApiVersion);
-            _disconnectedOperationsOprsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationResource.ResourceType.Namespace, Diagnostics);
-            _disconnectedOperationsOprsRestClient = new DisconnectedOperationsOprs(_disconnectedOperationsOprsClientDiagnostics, Pipeline, Endpoint, disconnectedOperationApiVersion ?? "2025-06-01-preview");
+            _disconnectedClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DisconnectedOperations", DisconnectedOperationResource.ResourceType.Namespace, Diagnostics);
+            _disconnectedRestClient = new Disconnected(_disconnectedClientDiagnostics, Pipeline, Endpoint, disconnectedOperationApiVersion ?? "2025-06-01-preview");
             ValidateResourceId(id);
         }
 
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
+                HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
                     new DisconnectedOperationOperationSource(Client),
-                    _disconnectedOperationsOprsClientDiagnostics,
+                    _disconnectedClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
+                HttpMessage message = _disconnectedRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, DisconnectedOperationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DisconnectedOperationsArmOperation<DisconnectedOperationResource> operation = new DisconnectedOperationsArmOperation<DisconnectedOperationResource>(
                     new DisconnectedOperationOperationSource(Client),
-                    _disconnectedOperationsOprsClientDiagnostics,
+                    _disconnectedClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
             scope.Start();
             try
             {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Get");
             scope.Start();
             try
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DisconnectedOperationData> response = Response.FromValue(DisconnectedOperationData.FromResponse(result), result);
                 if (response.Value == null)
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedOperationsOprsGetByResourceGroupAsyncCollectionResultOfT(_disconnectedOperationsOprsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
+            return new AsyncPageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupAsyncCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedOperationsOprsGetByResourceGroupCollectionResultOfT(_disconnectedOperationsOprsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
+            return new PageableWrapper<DisconnectedOperationData, DisconnectedOperationResource>(new DisconnectedGetByResourceGroupCollectionResultOfT(_disconnectedRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context), data => new DisconnectedOperationResource(Client, data));
         }
 
         /// <summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
             scope.Start();
             try
             {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DisconnectedOperationData> response = default;
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.Exists");
             scope.Start();
             try
             {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DisconnectedOperationData> response = default;
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DisconnectedOperationData> response = default;
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _disconnectedOperationsOprsClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
+            using DiagnosticScope scope = _disconnectedClientDiagnostics.CreateScope("DisconnectedOperationCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DisconnectedOperations
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _disconnectedOperationsOprsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
+                HttpMessage message = _disconnectedRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, name, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DisconnectedOperationData> response = default;
