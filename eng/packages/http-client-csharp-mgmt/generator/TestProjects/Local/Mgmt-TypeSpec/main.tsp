@@ -54,6 +54,5 @@ namespace Azure.ResourceManager.Models {
   model SubResource { }
   model WritableSubResource { }
   model WritableSubResourceProp {
-    id?: Azure.Core.armResourceIdentifier;
   }
 }

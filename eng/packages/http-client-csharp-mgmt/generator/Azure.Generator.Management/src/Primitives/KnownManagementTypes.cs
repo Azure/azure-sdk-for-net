@@ -48,7 +48,6 @@ namespace Azure.Generator.Management.Primitives
             ["Azure.ResourceManager.CommonTypes.UserAssignedIdentity"] = typeof(UserAssignedIdentity),
             ["Azure.ResourceManager.Models.SubResource"] = typeof(SubResource),
             ["Azure.ResourceManager.Models.WritableSubResource"] = typeof(WritableSubResource),
-            ["Azure.ResourceManager.Models.WritableSubResourceProp"] = typeof(WritableSubResource),
             ["Azure.ResourceManager.CommonTypes.ErrorDetail"] = typeof(ResponseError),
         };
 
