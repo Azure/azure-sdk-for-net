@@ -19,6 +19,7 @@ namespace Azure.Generator.Management.Models
         string? ParentResourceId,
         IReadOnlyList<string> ChildResourceIds)
     {
+        // ChildResourceIds is currently unpopulated and passed in as an empty array
         internal static ResourceMetadata DeserializeResourceMetadata(JsonElement element, InputModelType inputModel, IReadOnlyList<string> childResourceIds)
         {
             string? resourceIdPattern = null;
