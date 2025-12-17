@@ -547,6 +547,44 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MaintenanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="MaintenanceResource.CreateResourceIdentifier" /> to create a <see cref="MaintenanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetMaintenanceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MaintenanceResource"/> object. </returns>
+        public static MaintenanceResource GetMaintenanceResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAvsArmClient(client).GetMaintenanceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LicenseResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LicenseResource.CreateResourceIdentifier" /> to create a <see cref="LicenseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableAvsArmClient.GetLicenseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="LicenseResource"/> object. </returns>
+        public static LicenseResource GetLicenseResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAvsArmClient(client).GetLicenseResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -576,7 +614,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +652,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -652,7 +690,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -685,7 +723,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -718,7 +756,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -750,7 +788,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -782,7 +820,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -818,7 +856,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -854,7 +892,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -886,7 +924,7 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2025-09-01</description>
         /// </item>
         /// </list>
         /// <item>
