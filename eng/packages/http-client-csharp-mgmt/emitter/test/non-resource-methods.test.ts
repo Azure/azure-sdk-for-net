@@ -133,8 +133,6 @@ model GlobalSettings {
     const root = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
     ok(armProviderSchemaResult, "Should have ARM provider schema");
     ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
@@ -306,8 +304,6 @@ model MigrationResponse {
     const root = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
     ok(armProviderSchemaResult, "Should have ARM provider schema");
     ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
@@ -377,8 +373,6 @@ model WorkspaceValidationResponse {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
@@ -454,8 +448,6 @@ model SearchResult {
     const root = createModel(sdkContext);
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
     ok(armProviderSchemaResult, "Should have ARM provider schema");
     ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
@@ -509,8 +501,6 @@ model FooPreviewAction {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
     ok(armProviderSchemaResult, "Should have ARM provider schema");
