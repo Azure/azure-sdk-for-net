@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using System.ClientModel.Primitives;
 
 namespace Azure.Compute.Batch
 {
@@ -18,7 +19,7 @@ namespace Azure.Compute.Batch
             data = new Dictionary<string, string>();
             try
             {
-                BatchError batchError = BatchError.FromResponse(response);
+                BatchError batchError = ModelReaderWriter.Read<BatchError>(response.Content, new ModelReaderWriterOptions("J"), AzureComputeBatchContext.Default);
 
                 if (batchError.Values != null && batchError.Values.Count > 0)
                 {

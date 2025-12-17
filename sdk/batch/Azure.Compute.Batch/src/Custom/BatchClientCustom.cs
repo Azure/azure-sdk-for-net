@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using static Azure.Core.HttpPipelineExtensions;
 using System.Threading;
 using System.Diagnostics;
+using System.ClientModel.Primitives;
 
 namespace Azure.Compute.Batch
 {
@@ -44,7 +45,7 @@ namespace Azure.Compute.Batch
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };
-            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+            Pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _endpoint = endpoint;
             _apiVersion = options.Version;
@@ -70,7 +71,7 @@ namespace Azure.Compute.Batch
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new BatchErrorDetailsParser()
             };
-            _pipeline = HttpPipelineBuilder.Build(pipelineOptions);
+            Pipeline = HttpPipelineBuilder.Build(pipelineOptions);
 
             _endpoint = endpoint;
             _apiVersion = options.Version;
@@ -110,7 +111,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
+                return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -153,7 +154,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreatePoolExistsRequest(poolId, timeOutInSeconds, ocpdate, requestConditions, context);
-                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
+                return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -199,7 +200,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return await _pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
+                return await Pipeline.ProcessHeadAsBoolMessageAsync(message, ClientDiagnostics, context).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -245,7 +246,7 @@ namespace Azure.Compute.Batch
             try
             {
                 using HttpMessage message = CreateJobScheduleExistsRequest(jobScheduleId, timeOut, ocpDate, requestConditions, context);
-                return _pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
+                return Pipeline.ProcessHeadAsBoolMessage(message, ClientDiagnostics, context);
             }
             catch (Exception e)
             {
@@ -328,7 +329,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
+                RequestContext context = cancellationToken.ToRequestContext();
                 Response response = GetTaskFilePropertiesInternal(jobId, taskId, filePath, timeOutInSeconds, ocpdate, null, context);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
@@ -370,7 +371,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                RequestContext context = FromCancellationToken(cancellationToken);
+                RequestContext context = cancellationToken.ToRequestContext();
                 Response response = await GetNodeFilePropertiesInternalAsync(poolId, nodeId, filePath, timeOutInSeconds, ocpdate, null, context).ConfigureAwait(false);
                 return Response.FromValue(BatchFileProperties.FromResponse(response), response);
             }
@@ -452,8 +453,9 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            using RequestContent content = pool.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(pool, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UpdatePoolAsync(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -488,8 +490,9 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(pool, nameof(pool));
 
-            using RequestContent content = pool.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(pool, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UpdatePool(poolId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -524,8 +527,9 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            using RequestContent content = job.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(job, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UpdateJobAsync(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -560,8 +564,9 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(job, nameof(job));
 
-            using RequestContent content = job.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(job, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UpdateJob(jobId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -596,8 +601,9 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            using RequestContent content = jobSchedule.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(jobSchedule, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = await UpdateJobScheduleAsync(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context).ConfigureAwait(false);
             return response;
         }
@@ -632,8 +638,9 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
 
-            using RequestContent content = jobSchedule.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(jobSchedule, ModelSerializationExtensions.WireOptions);
+            RequestContext context = cancellationToken.ToRequestContext();
             Response response = UpdateJobSchedule(jobScheduleId, content, timeOutInSeconds, ocpdate, requestConditions, context);
             return response;
         }
@@ -748,7 +755,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJob");
             scope.Start();
             try
-            {   Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+            {   Response response = await DeleteJobInternalAsync(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new DeleteJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -790,7 +797,7 @@ namespace Azure.Compute.Batch
             scope.Start();
             try
             {
-                Response response = DeleteJobInternal(jobId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+                Response response = DeleteJobInternal(jobId, timeOutInSeconds, ocpDate, requestConditions, force, context);
                 return new DeleteJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -830,7 +837,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
-            {   Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context).ConfigureAwait(false);
+            {   Response response = await DeleteJobScheduleInternalAsync(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context).ConfigureAwait(false);
                 return new DeleteJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -870,7 +877,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.DeleteJobSchedule");
             scope.Start();
             try
-            {   Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, force, requestConditions, context);
+            {   Response response = DeleteJobScheduleInternal(jobScheduleId, timeOutInSeconds, ocpDate, requestConditions, force, context);
                 return new DeleteJobScheduleOperation(this, jobScheduleId, response);
             }
             catch (Exception e)
@@ -986,7 +993,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
-            {   Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, force, requestConditions, cancellationToken).ConfigureAwait(false);
+            {   Response response = await TerminateJobInternalAsync(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken).ConfigureAwait(false);
                 return new TerminateJobOperation(this, jobId, response);
             }
             catch (Exception e)
@@ -1024,7 +1031,7 @@ namespace Azure.Compute.Batch
             using var scope = ClientDiagnostics.CreateScope("BatchClient.TerminateJob");
             scope.Start();
             try
-            {   Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, force, requestConditions, cancellationToken);
+            {   Response response = TerminateJobInternal(jobId, parameters, timeOutInSeconds, ocpDate, requestConditions, force, cancellationToken);
                 return new TerminateJobOperation(this, jobId, response);
             }
             catch (Exception e)
