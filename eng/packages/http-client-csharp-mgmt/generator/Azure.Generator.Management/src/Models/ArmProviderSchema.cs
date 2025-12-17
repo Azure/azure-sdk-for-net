@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Management.Models
 {
@@ -18,6 +22,59 @@ namespace Azure.Generator.Management.Models
         {
             Resources = resources;
             NonResourceMethods = nonResourceMethods;
+        }
+
+        /// <summary>
+        /// Deserializes the ArmProviderSchema from decorator arguments.
+        /// </summary>
+        /// <param name="arguments">The decorator arguments containing resources and nonResourceMethods data</param>
+        /// <param name="inputNamespace">The input namespace containing models and clients</param>
+        /// <returns>A new ArmProviderSchema instance</returns>
+        public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, InputNamespace inputNamespace)
+        {
+            var resourceMetadata = new List<ResourceMetadata>();
+            var resourceChildren = new Dictionary<string, List<string>>();
+
+            // Deserialize resources
+            if (arguments.TryGetValue("resources", out var resourcesData))
+            {
+                using var document = JsonDocument.Parse(resourcesData);
+                foreach (var item in document.RootElement.EnumerateArray())
+                {
+                    var resourceModelId = item.GetProperty("resourceModelId").GetString();
+                    var model = inputNamespace.Models.FirstOrDefault(m => m.CrossLanguageDefinitionId == resourceModelId);
+                    if (model != null)
+                    {
+                        var children = new List<string>();
+                        var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
+                        resourceMetadata.Add(metadata);
+                        resourceChildren.Add(metadata.ResourceIdPattern, children);
+                    }
+                }
+            }
+
+            // Second pass to fulfill the children list
+            foreach (var resource in resourceMetadata)
+            {
+                if (resource.ParentResourceId is not null)
+                {
+                    resourceChildren[resource.ParentResourceId].Add(resource.ResourceIdPattern);
+                }
+            }
+
+            // Deserialize non-resource methods
+            var nonResourceMethods = new List<NonResourceMethod>();
+            if (arguments.TryGetValue("nonResourceMethods", out var nonResourceMethodsData))
+            {
+                using var document = JsonDocument.Parse(nonResourceMethodsData);
+                foreach (var item in document.RootElement.EnumerateArray())
+                {
+                    var nonResourceMethod = NonResourceMethod.DeserializeNonResourceMethod(item);
+                    nonResourceMethods.Add(nonResourceMethod);
+                }
+            }
+
+            return new ArmProviderSchema(resourceMetadata, nonResourceMethods);
         }
     }
 }

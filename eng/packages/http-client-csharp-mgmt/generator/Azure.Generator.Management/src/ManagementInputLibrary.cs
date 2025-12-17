@@ -1,12 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Models;
-using Microsoft.TypeSpec.Generator.Input;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.Json;
+using Azure.Generator.Management.Models;
+using Microsoft.TypeSpec.Generator.Input;
 
 namespace Azure.Generator.Management
 {
@@ -108,12 +109,9 @@ namespace Azure.Generator.Management
             return resourceModels;
         }
 
-        private IReadOnlyList<ResourceMetadata>? _resourceMetadatas;
-        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => _resourceMetadatas ??= DeserializeResourceMetadata();
+        internal IReadOnlyList<ResourceMetadata> ResourceMetadatas => ArmProviderSchema.Resources;
 
-        private IReadOnlyList<NonResourceMethod>? _nonResourceMethods;
-        internal IReadOnlyList<NonResourceMethod> NonResourceMethods => _nonResourceMethods
-            ??= DeserializeNonResourceMethods();
+        internal IReadOnlyList<NonResourceMethod> NonResourceMethods => ArmProviderSchema.NonResourceMethods;
 
         private IReadOnlyDictionary<string, InputServiceMethod> InputMethodsByCrossLanguageDefinitionId => _inputServiceMethodsByCrossLanguageDefinitionId ??= InputNamespace.Clients.SelectMany(c => c.Methods).ToDictionary(m => m.CrossLanguageDefinitionId, m => m);
 
@@ -174,7 +172,23 @@ namespace Azure.Generator.Management
 
         private ArmProviderSchema BuildArmProviderSchema()
         {
-            return new ArmProviderSchema(ResourceMetadatas, NonResourceMethods);
+            var rootClient = InputNamespace.RootClients.First();
+            var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
+
+            if (armProviderDecorator?.Arguments != null)
+            {
+                var schema = ArmProviderSchema.Deserialize(armProviderDecorator.Arguments, InputNamespace);
+
+                // Filter out methods that should be omitted
+                var filteredMethods = schema.NonResourceMethods
+                    .Where(m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId))
+                    .ToList();
+
+                return new ArmProviderSchema(schema.Resources, filteredMethods);
+            }
+
+            // Fallback to empty schema if decorator not found
+            return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
         }
 
         internal InputServiceMethod? GetMethodByCrossLanguageDefinitionId(string crossLanguageDefinitionId)
@@ -184,76 +198,6 @@ namespace Azure.Generator.Management
             => InputMethodClientMap.TryGetValue(method, out var client) ? client : null;
 
         internal bool IsResourceModel(InputModelType model) => ResourceModels.Contains(model);
-
-        private IReadOnlyList<ResourceMetadata> DeserializeResourceMetadata()
-        {
-            var resourceMetadata = new List<ResourceMetadata>();
-            var resourceChildren = new Dictionary<string, List<string>>();
-
-            // First, try to get resources from the new unified @armProviderSchema decorator on root client
-            var rootClient = InputNamespace.RootClients.First();
-            var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
-
-            if (armProviderDecorator?.Arguments != null && armProviderDecorator.Arguments.TryGetValue("resources", out var resourcesData))
-            {
-                using var document = JsonDocument.Parse(resourcesData);
-                foreach (var item in document.RootElement.EnumerateArray())
-                {
-                    var resourceModelId = item.GetProperty("resourceModelId").GetString();
-                    var model = InputNamespace.Models.FirstOrDefault(m => m.CrossLanguageDefinitionId == resourceModelId);
-                    if (model != null)
-                    {
-                        var children = new List<string>();
-                        var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
-                        resourceMetadata.Add(metadata);
-                        resourceChildren.Add(metadata.ResourceIdPattern, children);
-                    }
-                }
-            }
-
-            // we go a second pass to fulfill the children list
-            foreach (var resource in resourceMetadata)
-            {
-                // finds my parent
-                if (resource.ParentResourceId is not null)
-                {
-                    // add the resource id to the parent's children list
-                    resourceChildren[resource.ParentResourceId].Add(resource.ResourceIdPattern);
-                }
-            }
-            return resourceMetadata;
-        }
-
-        private IReadOnlyList<NonResourceMethod> DeserializeNonResourceMethods()
-        {
-            var rootClient = InputNamespace.RootClients.First();
-            var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
-
-            if (armProviderDecorator?.Arguments == null)
-            {
-                return [];
-            }
-
-            var args = armProviderDecorator.Arguments;
-
-            var nonResourceMethodMetadata = new List<NonResourceMethod>();
-            // deserialize the decorator arguments
-            if (args.TryGetValue("nonResourceMethods", out var nonResourceMethods))
-            {
-                using var document = JsonDocument.Parse(nonResourceMethods);
-                foreach (var item in document.RootElement.EnumerateArray())
-                {
-                    var nonResourceMethod = NonResourceMethod.DeserializeNonResourceMethod(item);
-                    if (_methodsToOmit.Contains(nonResourceMethod.InputMethod.CrossLanguageDefinitionId))
-                    {
-                        continue; // skip methods that we don't want to generate
-                    }
-                    nonResourceMethodMetadata.Add(nonResourceMethod);
-                }
-            }
-
-            return nonResourceMethodMetadata;
-        }
 
         internal bool TryFindEnclosingResourceNameForResourceUpdateModel(InputModelType model, [NotNullWhen(true)] out string? resourceName)
         {
