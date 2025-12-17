@@ -1,4 +1,4 @@
-repo: m-redding/azure-sdk-tools
-commit: 8ba1134bb5cb1e37e3ca7a0e94b18586f76fa316
+repo: Azure/azure-sdk-tools
+commit: 0252c79593ad98e323e2badc9df97b262337fa60
 directory: tools/test-proxy/typespec
 emitterPackageJsonPath: eng/http-client-csharp-emitter-package.json
