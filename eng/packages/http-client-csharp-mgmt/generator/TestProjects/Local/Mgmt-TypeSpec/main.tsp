@@ -47,7 +47,7 @@ namespace MgmtTypeSpec {
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");
   @@alternateType(ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
   @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
-  @@alternateType(WritableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
+  @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
 }
 
 // We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType

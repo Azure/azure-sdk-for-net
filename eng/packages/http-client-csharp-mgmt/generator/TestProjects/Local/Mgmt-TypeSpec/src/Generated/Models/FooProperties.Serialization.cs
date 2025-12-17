@@ -14,6 +14,7 @@ using System.Text.Json.Serialization;
 using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -103,7 +104,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             if (Optional.IsDefined(WritableSubResourceProp))
             {
                 writer.WritePropertyName("writableSubResourceProp"u8);
-                writer.WriteObjectValue(WritableSubResourceProp, options);
+                ((IJsonModel<WritableSubResource>)WritableSubResourceProp).Write(writer, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,7 +158,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             NestedFooModel nestedProperty = default;
             SafeFlattenModel optionalProperty = default;
             ETag? eTag = default;
-            WritableSubResourceProp writableSubResourceProp = default;
+            WritableSubResource writableSubResourceProp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -262,7 +263,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    writableSubResourceProp = WritableSubResourceProp.DeserializeWritableSubResourceProp(prop.Value, options);
+                    writableSubResourceProp = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                     continue;
                 }
                 if (options.Format != "W")
