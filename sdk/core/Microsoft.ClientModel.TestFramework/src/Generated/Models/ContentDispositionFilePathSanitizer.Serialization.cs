@@ -13,17 +13,12 @@ using Microsoft.ClientModel.TestFramework;
 
 namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
 {
-    /// <summary> The GeneralStringSanitizer. </summary>
-    public partial class GeneralStringSanitizer : SanitizerAddition, IJsonModel<GeneralStringSanitizer>
+    /// <summary> The ContentDispositionFilePathSanitizer. </summary>
+    public partial class ContentDispositionFilePathSanitizer : SanitizerAddition, IJsonModel<ContentDispositionFilePathSanitizer>
     {
-        /// <summary> Initializes a new instance of <see cref="GeneralStringSanitizer"/> for deserialization. </summary>
-        internal GeneralStringSanitizer()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GeneralStringSanitizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContentDispositionFilePathSanitizer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -34,36 +29,34 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeneralStringSanitizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentDispositionFilePathSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeneralStringSanitizer)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentDispositionFilePathSanitizer)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("Body"u8);
-            writer.WriteObjectValue(Body, options);
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeneralStringSanitizer IJsonModel<GeneralStringSanitizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GeneralStringSanitizer)JsonModelCreateCore(ref reader, options);
+        ContentDispositionFilePathSanitizer IJsonModel<ContentDispositionFilePathSanitizer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ContentDispositionFilePathSanitizer)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SanitizerAddition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeneralStringSanitizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentDispositionFilePathSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeneralStringSanitizer)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentDispositionFilePathSanitizer)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGeneralStringSanitizer(document.RootElement, options);
+            return DeserializeContentDispositionFilePathSanitizer(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GeneralStringSanitizer DeserializeGeneralStringSanitizer(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContentDispositionFilePathSanitizer DeserializeContentDispositionFilePathSanitizer(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -71,7 +64,6 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             }
             SanitizerType name = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            GeneralStringSanitizerBody body = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("Name"u8))
@@ -79,57 +71,52 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
                     name = prop.Value.GetString().ToSanitizerType();
                     continue;
                 }
-                if (prop.NameEquals("Body"u8))
-                {
-                    body = GeneralStringSanitizerBody.DeserializeGeneralStringSanitizerBody(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GeneralStringSanitizer(name, additionalBinaryDataProperties, body);
+            return new ContentDispositionFilePathSanitizer(name, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GeneralStringSanitizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContentDispositionFilePathSanitizer>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeneralStringSanitizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentDispositionFilePathSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, MicrosoftClientModelTestFrameworkContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GeneralStringSanitizer)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentDispositionFilePathSanitizer)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GeneralStringSanitizer IPersistableModel<GeneralStringSanitizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (GeneralStringSanitizer)PersistableModelCreateCore(data, options);
+        ContentDispositionFilePathSanitizer IPersistableModel<ContentDispositionFilePathSanitizer>.Create(BinaryData data, ModelReaderWriterOptions options) => (ContentDispositionFilePathSanitizer)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override SanitizerAddition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GeneralStringSanitizer>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContentDispositionFilePathSanitizer>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGeneralStringSanitizer(document.RootElement, options);
+                        return DeserializeContentDispositionFilePathSanitizer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeneralStringSanitizer)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentDispositionFilePathSanitizer)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GeneralStringSanitizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContentDispositionFilePathSanitizer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
