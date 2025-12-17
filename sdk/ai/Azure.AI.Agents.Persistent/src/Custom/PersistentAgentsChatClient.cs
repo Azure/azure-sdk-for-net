@@ -40,8 +40,13 @@ namespace Azure.AI.Agents.Persistent
         /// <summary>Lazily-retrieved agent instance. Used for its properties.</summary>
         private PersistentAgent? _agent;
 
+        /// <summary>
+        /// Indicates whether to throw exceptions when content errors are encountered.
+        /// </summary>
+        private readonly bool _throwOnContentErrors;
+
         /// <summary>Initializes a new instance of the <see cref="PersistentAgentsChatClient"/> class for the specified <see cref="PersistentAgentsClient"/>.</summary>
-        public PersistentAgentsChatClient(PersistentAgentsClient client, string agentId, string? defaultThreadId = null)
+        public PersistentAgentsChatClient(PersistentAgentsClient client, string agentId, string? defaultThreadId = null, bool throwOnContentErrors = true)
         {
             Argument.AssertNotNull(client, nameof(client));
             Argument.AssertNotNullOrWhiteSpace(agentId, nameof(agentId));
@@ -51,6 +56,7 @@ namespace Azure.AI.Agents.Persistent
             _defaultThreadId = defaultThreadId;
 
             _metadata = new(ProviderName);
+            _throwOnContentErrors = throwOnContentErrors;
         }
 
         protected PersistentAgentsChatClient() { }
@@ -88,11 +94,15 @@ namespace Azure.AI.Agents.Persistent
             {
                 await foreach (ThreadRun? run in _client!.Runs.GetRunsAsync(threadId, limit: 1, ListSortOrder.Descending, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    if (run.Status != RunStatus.Completed && run.Status != RunStatus.Cancelled && run.Status != RunStatus.Failed && run.Status != RunStatus.Expired)
+                    if (run.Status != RunStatus.Incomplete &&
+                        run.Status != RunStatus.Completed &&
+                        run.Status != RunStatus.Cancelled &&
+                        run.Status != RunStatus.Failed &&
+                        run.Status != RunStatus.Expired)
                     {
                         threadRun = run;
-                        break;
                     }
+                    break;
                 }
             }
 
@@ -191,6 +201,14 @@ namespace Azure.AI.Agents.Persistent
 
                         switch (ru)
                         {
+                            case RunUpdate rup when rup.Value.Status == RunStatus.Failed && rup.Value.LastError is { } error:
+                                if (_throwOnContentErrors)
+                                {
+                                    throw new InvalidOperationException(error.Message) { Data = { ["ErrorCode"] = error.Code } };
+                                }
+                                ruUpdate.Contents.Add(new ErrorContent(error.Message) { ErrorCode = error.Code, RawRepresentation = error });
+                                break;
+
                             case RequiredActionUpdate rau when rau.ToolCallId is string toolCallId && rau.FunctionName is string functionName:
                                 ruUpdate.Contents.Add(new FunctionCallContent(
                                     JsonSerializer.Serialize([ru.Value.Id, toolCallId], AgentsChatClientJsonContext.Default.StringArray),
@@ -209,6 +227,59 @@ namespace Azure.AI.Agents.Persistent
                         }
 
                         yield return ruUpdate;
+                        break;
+
+                    case RunStepDetailsUpdate details:
+                        if (!string.IsNullOrEmpty(details.CodeInterpreterInput))
+                        {
+                            CodeInterpreterToolCallContent citcc = new()
+                            {
+                                CallId = details.ToolCallId,
+                                Inputs = [new DataContent(Encoding.UTF8.GetBytes(details.CodeInterpreterInput), "text/x-python")],
+                                RawRepresentation = details,
+                            };
+
+                            yield return new ChatResponseUpdate(ChatRole.Assistant, [citcc])
+                            {
+                                AuthorName = _agentId,
+                                ConversationId = threadId,
+                                MessageId = responseId,
+                                RawRepresentation = update,
+                                ResponseId = responseId,
+                            };
+                        }
+
+                        if (details.CodeInterpreterOutputs is { Count: > 0 })
+                        {
+                            CodeInterpreterToolResultContent citrc = new()
+                            {
+                                CallId = details.ToolCallId,
+                                RawRepresentation = details,
+                            };
+
+                            foreach (var output in details.CodeInterpreterOutputs)
+                            {
+                                switch (output)
+                                {
+                                    case RunStepDeltaCodeInterpreterImageOutput imageOutput when imageOutput.Image?.FileId is string imageFileId && !string.IsNullOrWhiteSpace(imageFileId):
+                                        (citrc.Outputs ??= []).Add(new HostedFileContent(imageFileId) { MediaType = "image/*" });
+                                        break;
+
+                                    case RunStepDeltaCodeInterpreterLogOutput logOutput when logOutput.Logs is string logs && !string.IsNullOrEmpty(logs):
+                                        (citrc.Outputs ??= []).Add(new TextContent(logs));
+                                        break;
+                                }
+                            }
+
+                            yield return new ChatResponseUpdate(ChatRole.Assistant, [citrc])
+                            {
+                                AuthorName = _agentId,
+                                ConversationId = threadId,
+                                MessageId = responseId,
+                                RawRepresentation = update,
+                                ResponseId = responseId,
+                            };
+                        }
                         break;
 
                     case MessageContentUpdate mcu:

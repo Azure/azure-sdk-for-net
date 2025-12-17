@@ -6,47 +6,36 @@
 #nullable disable
 
 using System;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Nginx.Models;
 
 namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
-    /// A Class representing a NginxDeploymentApiKey along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NginxDeploymentApiKeyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetNginxDeploymentApiKeyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="NginxDeploymentResource"/> using the GetNginxDeploymentApiKey method.
+    /// A class representing a NginxDeploymentApiKey along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NginxDeploymentApiKeyResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="NginxDeploymentResource"/> using the GetNginxDeploymentApiKeys method.
     /// </summary>
     public partial class NginxDeploymentApiKeyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="NginxDeploymentApiKeyResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="deploymentName"> The deploymentName. </param>
-        /// <param name="apiKeyName"> The apiKeyName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string apiKeyName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _nginxDeploymentApiKeyApiKeysClientDiagnostics;
-        private readonly ApiKeysRestOperations _nginxDeploymentApiKeyApiKeysRestClient;
+        private readonly ClientDiagnostics _nginxDeploymentApiKeyResponsesClientDiagnostics;
+        private readonly NginxDeploymentApiKeyResponses _nginxDeploymentApiKeyResponsesRestClient;
         private readonly NginxDeploymentApiKeyData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Nginx.NginxPlus/nginxDeployments/apiKeys";
 
-        /// <summary> Initializes a new instance of the <see cref="NginxDeploymentApiKeyResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of NginxDeploymentApiKeyResource for mocking. </summary>
         protected NginxDeploymentApiKeyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NginxDeploymentApiKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NginxDeploymentApiKeyResource(ArmClient client, NginxDeploymentApiKeyData data) : this(client, data.Id)
@@ -55,71 +44,93 @@ namespace Azure.ResourceManager.Nginx
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="NginxDeploymentApiKeyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal NginxDeploymentApiKeyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _nginxDeploymentApiKeyApiKeysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string nginxDeploymentApiKeyApiKeysApiVersion);
-            _nginxDeploymentApiKeyApiKeysRestClient = new ApiKeysRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, nginxDeploymentApiKeyApiKeysApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string nginxDeploymentApiKeyApiVersion);
+            _nginxDeploymentApiKeyResponsesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
+            _nginxDeploymentApiKeyResponsesRestClient = new NginxDeploymentApiKeyResponses(_nginxDeploymentApiKeyResponsesClientDiagnostics, Pipeline, Endpoint, nginxDeploymentApiKeyApiVersion ?? "2025-03-01-preview");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual NginxDeploymentApiKeyData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="deploymentName"> The deploymentName. </param>
+        /// <param name="apiKeyName"> The apiKeyName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string deploymentName, string apiKeyName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), id);
+            }
         }
 
         /// <summary>
         /// Get the specified API Key of the given Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiKeys_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentApiKeyResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentApiKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NginxDeploymentApiKeyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentApiKeyApiKeysClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Get");
+            using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Get");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentApiKeyApiKeysRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentApiKeyResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NginxDeploymentApiKeyData> response = Response.FromValue(NginxDeploymentApiKeyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxDeploymentApiKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -133,33 +144,41 @@ namespace Azure.ResourceManager.Nginx
         /// Get the specified API Key of the given Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiKeys_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentApiKeyResponses_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentApiKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NginxDeploymentApiKeyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentApiKeyApiKeysClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Get");
+            using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Get");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentApiKeyApiKeysRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentApiKeyResponsesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NginxDeploymentApiKeyData> response = Response.FromValue(NginxDeploymentApiKeyData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new NginxDeploymentApiKeyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -173,20 +192,20 @@ namespace Azure.ResourceManager.Nginx
         /// Delete API key for Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiKeys_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentApiKeyResponses_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentApiKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,16 +213,23 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentApiKeyApiKeysClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Delete");
+            using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Delete");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentApiKeyApiKeysRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _nginxDeploymentApiKeyApiKeysRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NginxArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentApiKeyResponsesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NginxArmOperation operation = new NginxArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -217,20 +243,20 @@ namespace Azure.ResourceManager.Nginx
         /// Delete API key for Nginx deployment
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiKeys_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentApiKeyResponses_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentApiKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,16 +264,23 @@ namespace Azure.ResourceManager.Nginx
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _nginxDeploymentApiKeyApiKeysClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Delete");
+            using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Delete");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentApiKeyApiKeysRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var uri = _nginxDeploymentApiKeyApiKeysRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NginxArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentApiKeyResponsesRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NginxArmOperation operation = new NginxArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -258,44 +291,49 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update an API Key for the Nginx deployment in order to access the dataplane API endpoint
+        /// Update a NginxDeploymentApiKey.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiKeys_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentApiKeyResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentApiKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The API Key object containing fields (e.g. secret text, expiration date) to upsert the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<NginxDeploymentApiKeyResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<NginxDeploymentApiKeyResource>> UpdateAsync(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _nginxDeploymentApiKeyApiKeysClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Update");
+            using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Update");
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentApiKeyApiKeysRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var uri = _nginxDeploymentApiKeyApiKeysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NginxArmOperation<NginxDeploymentApiKeyResource>(Response.FromValue(new NginxDeploymentApiKeyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentApiKeyResponsesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentApiKeyCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<NginxDeploymentApiKeyData> response = Response.FromValue(NginxDeploymentApiKeyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NginxArmOperation<NginxDeploymentApiKeyResource> operation = new NginxArmOperation<NginxDeploymentApiKeyResource>(Response.FromValue(new NginxDeploymentApiKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -306,44 +344,49 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update an API Key for the Nginx deployment in order to access the dataplane API endpoint
+        /// Update a NginxDeploymentApiKey.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/apiKeys/{apiKeyName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiKeys_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> NginxDeploymentApiKeyResponses_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-03-01-preview. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="NginxDeploymentApiKeyResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="NginxDeploymentApiKeyResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The API Key object containing fields (e.g. secret text, expiration date) to upsert the key. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<NginxDeploymentApiKeyResource> Update(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<NginxDeploymentApiKeyResource> Update(WaitUntil waitUntil, NginxDeploymentApiKeyCreateOrUpdateContent content = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _nginxDeploymentApiKeyApiKeysClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Update");
+            using DiagnosticScope scope = _nginxDeploymentApiKeyResponsesClientDiagnostics.CreateScope("NginxDeploymentApiKeyResource.Update");
             scope.Start();
             try
             {
-                var response = _nginxDeploymentApiKeyApiKeysRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content, cancellationToken);
-                var uri = _nginxDeploymentApiKeyApiKeysRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, content);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new NginxArmOperation<NginxDeploymentApiKeyResource>(Response.FromValue(new NginxDeploymentApiKeyResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _nginxDeploymentApiKeyResponsesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, NginxDeploymentApiKeyCreateOrUpdateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<NginxDeploymentApiKeyData> response = Response.FromValue(NginxDeploymentApiKeyData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NginxArmOperation<NginxDeploymentApiKeyResource> operation = new NginxArmOperation<NginxDeploymentApiKeyResource>(Response.FromValue(new NginxDeploymentApiKeyResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)

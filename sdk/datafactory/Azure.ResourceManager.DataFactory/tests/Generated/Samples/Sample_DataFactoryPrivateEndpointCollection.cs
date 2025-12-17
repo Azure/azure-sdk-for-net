@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ManagedVirtualNetworksCreate()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Create.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Create.json
             // this example is just showing the usage of "ManagedPrivateEndpoints_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagedPrivateEndpointsGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Get.json
             // this example is just showing the usage of "ManagedPrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ManagedPrivateEndpointsListByFactory()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_ListByFactory.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_ListByFactory.json
             // this example is just showing the usage of "ManagedPrivateEndpoints_ListByFactory" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_ManagedPrivateEndpointsGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Get.json
             // this example is just showing the usage of "ManagedPrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_ManagedPrivateEndpointsGet()
         {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Get.json
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/DataFactory/stable/2018-06-01/examples/ManagedPrivateEndpoints_Get.json
             // this example is just showing the usage of "ManagedPrivateEndpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

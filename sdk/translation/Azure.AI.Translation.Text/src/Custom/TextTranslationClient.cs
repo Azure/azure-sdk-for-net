@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Linq;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.Translation.Text
 {

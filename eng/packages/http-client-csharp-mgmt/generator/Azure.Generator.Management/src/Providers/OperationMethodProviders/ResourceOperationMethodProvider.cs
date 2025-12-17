@@ -145,7 +145,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             // Add enhanced XML documentation with structured tags
             ResourceHelpers.BuildEnhancedXmlDocs(
                 resourceOperationMethodProvider._serviceMethod,
-                resourceOperationMethodProvider._convenienceMethod.Signature.Description,
+                resourceOperationMethodProvider._description,
                 resourceOperationMethodProvider._enclosingType,
                 methodProvider.XmlDocs);
 

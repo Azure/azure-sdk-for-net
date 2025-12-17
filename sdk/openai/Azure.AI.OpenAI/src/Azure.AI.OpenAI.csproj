@@ -43,7 +43,7 @@
     </When>
     <Otherwise>
       <PropertyGroup>
-        <VersionPrefix>2.7.0</VersionPrefix>
+        <VersionPrefix>2.8.0</VersionPrefix>
         <VersionSuffix>beta.1</VersionSuffix>
   </PropertyGroup>
     </Otherwise>
