@@ -25,20 +25,19 @@ Tools/
 ├── Exceptions/                      # Custom exceptions
 │   ├── OAuthConsentRequiredException.cs
 │   └── MCPToolApprovalRequiredException.cs
-├── AzureAIToolClient.cs            # Sync client
-├── AzureAIToolClientAsync.cs       # Async client (primary)
+├── AzureAIToolClient.cs       # Async client
 └── AzureAIToolClientOptions.cs     # Configuration
 ```
 
 ## Features
 
-- **Dual Protocol Support**: MCP (Model Context Protocol) and Remote Tools (Azure AI Tools API)
-- **Synchronous and Asynchronous APIs**: Both sync and async versions available
-- **Agent Framework Integration**: Seamless conversion to AIFunction
-- **OAuth Support**: Handles OAuth consent flows
-- **Tool Approval**: Supports MCP tool approval workflow
-- **Parallel Tool Listing**: Uses Task.WhenAll() for optimal performance
-- **Metadata Mapping**: Intelligent mapping of _meta schema to tool configuration
+-   **Dual Protocol Support**: MCP (Model Context Protocol) and Remote Tools (Azure AI Tools API)
+-   **Synchronous and Asynchronous APIs**: Both sync and async versions available
+-   **Agent Framework Integration**: Seamless conversion to AIFunction
+-   **OAuth Support**: Handles OAuth consent flows
+-   **Tool Approval**: Supports MCP tool approval workflow
+-   **Parallel Tool Listing**: Uses Task.WhenAll() for optimal performance
+-   **Metadata Mapping**: Intelligent mapping of \_meta schema to tool configuration
 
 ## Usage
 
@@ -60,7 +59,7 @@ var options = new AzureAIToolClientOptions
     }
 };
 
-await using var toolClient = new AzureAIToolClientAsync(endpoint, credential, options);
+await using var toolClient = new AzureAIToolClient(endpoint, credential, options);
 
 // List tools
 var tools = await toolClient.ListToolsAsync();
@@ -162,11 +161,11 @@ catch (MCPToolApprovalRequiredException ex)
 
 ## Design Patterns
 
-- **Record Types**: Immutable data models (FoundryTool, ToolDefinition, UserInfo)
-- **Async/Await**: Comprehensive async support with ConfigureAwait(false)
-- **IAsyncDisposable**: Proper resource cleanup
-- **Extension Methods**: Convenient API for agent integration
-- **Builder Pattern**: Agent.AsBuilder() for composability
+-   **Record Types**: Immutable data models (FoundryTool, ToolDefinition, UserInfo)
+-   **Async/Await**: Comprehensive async support with ConfigureAwait(false)
+-   **IAsyncDisposable**: Proper resource cleanup
+-   **Extension Methods**: Convenient API for agent integration
+-   **Builder Pattern**: Agent.AsBuilder() for composability
 
 ## API Compatibility
 
