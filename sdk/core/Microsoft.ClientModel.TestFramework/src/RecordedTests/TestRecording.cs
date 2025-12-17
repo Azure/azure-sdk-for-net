@@ -532,6 +532,7 @@ public class TestRecording : IAsyncDisposable
 
         sanitizers.AddRange(_recordedTestBase.BodyKeySanitizers);
         sanitizers.AddRange(_recordedTestBase.BodyRegexSanitizers);
+        sanitizers.AddRange(_recordedTestBase.CustomSanitizers);
 
         if (sanitizers.Count > 0)
         {
