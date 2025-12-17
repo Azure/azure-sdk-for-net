@@ -185,5 +185,93 @@ namespace Azure.Generator.Management.Tests.Providers
                 return result;
             }
         }
+
+        [TestCase]
+        public void Verify_NonLro_NonResource_Operation_Creates_OperationSource()
+        {
+            // Create test data with a non-LRO operation
+            const string TestClientName = "TestClient";
+            const string ResponseModelName = "NonLroResponseType";
+
+            var responseModel = InputFactory.Model(ResponseModelName,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("result", InputPrimitiveType.String, isReadOnly: true)
+                ]);
+
+            var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
+            var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");
+
+            // Create operation parameters
+            var subsIdOpParameter = InputFactory.PathParameter("subscriptionId", uuidType, isRequired: true);
+            var locationOpParameter = InputFactory.PathParameter("location", InputPrimitiveType.String, isRequired: true);
+
+            var nonLroOperation = InputFactory.Operation(
+                name: "performAction",
+                responses: [responseType],
+                parameters: [subsIdOpParameter, locationOpParameter],
+                path: "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/locations/{location}/performAction");
+
+            // Create method parameters
+            var subscriptionIdParameter = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
+            var locationParameter = InputFactory.MethodParameter("location", InputPrimitiveType.String, location: InputRequestLocation.Path);
+
+            // Create a non-LRO (basic) method
+            var nonLroMethod = InputFactory.BasicServiceMethod(
+                "performAction",
+                nonLroOperation,
+                parameters: [subscriptionIdParameter, locationParameter],
+                crossLanguageDefinitionId: "Test.performAction");
+
+            var client = InputFactory.Client(
+                TestClientName,
+                methods: [nonLroMethod],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            // Build decorator for non-resource method
+            var nonResourceMethodArgs = new Dictionary<string, BinaryData>
+            {
+                ["nonResourceMethods"] = BinaryData.FromString($$"""
+                    [{
+                        "methodId": "{{nonLroMethod.CrossLanguageDefinitionId}}",
+                        "operationPath": "{{nonLroOperation.Path}}",
+                        "operationScope": "Subscription"
+                    }]
+                    """)
+            };
+            var nonResourceMethodDecorator = new InputDecoratorInfo("Azure.ClientGenerator.Core.@nonResourceMethodSchema", nonResourceMethodArgs);
+
+            // Add decorator to the client
+            var clientWithDecorator = InputFactory.Client(
+                TestClientName,
+                methods: [nonLroMethod],
+                decorators: [nonResourceMethodDecorator],
+                crossLanguageDefinitionId: $"Test.{TestClientName}");
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [responseModel],
+                clients: () => [clientWithDecorator]);
+
+            var outputLibrary = plugin.Object.OutputLibrary as ManagementOutputLibrary;
+            Assert.NotNull(outputLibrary);
+
+            // Verify that an OperationSource was created for the non-LRO non-resource operation
+            var operationSourceDict = outputLibrary!.OperationSourceDict;
+            Assert.IsNotNull(operationSourceDict);
+            Assert.IsTrue(operationSourceDict.Count > 0, "Expected at least one OperationSource to be created");
+
+            // Find the operation source for our response model
+            var responseModelType = plugin.Object.TypeFactory.CreateCSharpType(responseModel);
+            Assert.IsNotNull(responseModelType);
+            Assert.IsTrue(operationSourceDict.ContainsKey(responseModelType!),
+                $"Expected OperationSource for {ResponseModelName} to be created");
+
+            var operationSource = operationSourceDict[responseModelType!];
+            Assert.IsNotNull(operationSource);
+            Assert.AreEqual($"{ResponseModelName}OperationSource", operationSource.Name);
+        }
     }
 }
