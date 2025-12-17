@@ -8,13 +8,15 @@ using Azure.AI.AgentServer.Core.Tools.Operations;
 namespace Azure.AI.AgentServer.Core.Tools;
 
 /// <summary>
-/// Synchronous client for aggregating tools from Azure AI MCP and Tools APIs.
+/// Asynchronous client for aggregating tools from Azure AI MCP and Tools APIs.
+/// This is the primary client for production use.
 /// </summary>
-#pragma warning disable AZC0005
-public class AzureAIToolClient : IDisposable
+#pragma warning disable AZC0003, AZC0004, AZC0005, AZC0007, AZC0015
+public class AzureAIToolClient : IAsyncDisposable
 {
     private readonly HttpClient _httpClient;
     private readonly AzureAIToolClientOptions _options;
+    private readonly TokenCredential _credential;
     private readonly MCPToolsOperations _mcpTools;
     private readonly RemoteToolsOperations _remoteTools;
     private bool _disposed;
@@ -25,7 +27,6 @@ public class AzureAIToolClient : IDisposable
     /// <param name="endpoint">The Azure AI endpoint URL.</param>
     /// <param name="credential">The token credential for authentication.</param>
     /// <param name="options">Optional client options.</param>
-#pragma warning disable AZC0007
     public AzureAIToolClient(
         Uri endpoint,
         TokenCredential credential,
@@ -34,136 +35,149 @@ public class AzureAIToolClient : IDisposable
         ArgumentNullException.ThrowIfNull(endpoint);
         ArgumentNullException.ThrowIfNull(credential);
 
+        _credential = credential;
         _options = options ?? new AzureAIToolClientOptions();
         _options.ValidateAndParse();
 
-        _httpClient = CreateHttpClient(endpoint, credential);
+        _httpClient = CreateHttpClient(endpoint);
         _mcpTools = new MCPToolsOperations(_httpClient, _options);
         _remoteTools = new RemoteToolsOperations(_httpClient, _options);
     }
 
     /// <summary>
-    /// Lists all available tools from configured sources.
+    /// Lists all available tools from configured sources asynchronously.
     /// </summary>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>List of available tools.</returns>
+    /// <returns>Task returning list of available tools.</returns>
     /// <exception cref="Exceptions.OAuthConsentRequiredException">OAuth consent required.</exception>
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
-    public IReadOnlyList<FoundryTool> ListTools(CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<FoundryTool>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
+        // Refresh token before making requests
+        await RefreshTokenAsync(cancellationToken).ConfigureAwait(false);
+
         var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var tools = new List<FoundryTool>();
 
-        // Fetch MCP tools
+        // Parallel execution for better performance
+        var tasks = new List<Task<IReadOnlyList<FoundryTool>>>();
+
         if (_options.ToolConfig.NamedMcpTools.Count > 0)
         {
-            var mcpTools = _mcpTools.ListTools(existingNames, cancellationToken);
-            tools.AddRange(mcpTools);
+            tasks.Add(_mcpTools.ListToolsAsync(existingNames, cancellationToken));
         }
 
-        // Fetch remote tools
         if (_options.ToolConfig.RemoteTools.Count > 0)
         {
-            var remoteTools = _remoteTools.ResolveTools(existingNames, cancellationToken);
-            tools.AddRange(remoteTools);
+            tasks.Add(_remoteTools.ResolveToolsAsync(existingNames, cancellationToken));
         }
 
-        // Attach invokers
+        if (tasks.Count > 0)
+        {
+            var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+
+            foreach (var result in results)
+            {
+                tools.AddRange(result);
+            }
+        }
+
+        // Attach async invokers
         foreach (var tool in tools)
         {
-            tool.Invoker = args => InvokeTool(tool, args, cancellationToken);
+            tool.AsyncInvoker = args => InvokeToolAsync(tool, args, cancellationToken);
         }
 
         return tools;
     }
 
     /// <summary>
-    /// Invokes a tool by name.
+    /// Invokes a tool by name asynchronously.
     /// </summary>
     /// <param name="toolName">The tool name.</param>
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The tool invocation result.</returns>
-    public object? InvokeTool(
+    /// <returns>Task returning the tool invocation result.</returns>
+    public async Task<object?> InvokeToolAsync(
         string toolName,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
     {
-        var descriptor = ResolveToolDescriptor(toolName, cancellationToken);
-        return InvokeTool(descriptor, arguments, cancellationToken);
+        var descriptor = await ResolveToolDescriptorAsync(toolName, cancellationToken).ConfigureAwait(false);
+        return await InvokeToolAsync(descriptor, arguments, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>
-    /// Invokes a tool by descriptor.
+    /// Invokes a tool by descriptor asynchronously.
     /// </summary>
     /// <param name="tool">The tool descriptor.</param>
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>The tool invocation result.</returns>
-    public object? InvokeTool(
+    /// <returns>Task returning the tool invocation result.</returns>
+    public async Task<object?> InvokeToolAsync(
         FoundryTool tool,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(tool);
 
+        // Refresh token before invocation
+        await RefreshTokenAsync(cancellationToken).ConfigureAwait(false);
+
         var payload = arguments ?? new Dictionary<string, object?>();
 
         return tool.Source switch
         {
-            ToolSource.McpTools => _mcpTools.InvokeTool(tool, payload, cancellationToken),
-            ToolSource.RemoteTools => _remoteTools.InvokeTool(tool, payload, cancellationToken),
+            ToolSource.McpTools => await _mcpTools.InvokeToolAsync(tool, payload, cancellationToken)
+                .ConfigureAwait(false),
+            ToolSource.RemoteTools => await _remoteTools.InvokeToolAsync(tool, payload, cancellationToken)
+                .ConfigureAwait(false),
             _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
         };
     }
 
-    private FoundryTool ResolveToolDescriptor(string toolName, CancellationToken cancellationToken)
+    private async Task<FoundryTool> ResolveToolDescriptorAsync(string toolName, CancellationToken cancellationToken)
     {
-        var tools = ListTools(cancellationToken);
+        var tools = await ListToolsAsync(cancellationToken).ConfigureAwait(false);
         return tools.FirstOrDefault(t =>
             string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase) ||
             string.Equals(t.Key, toolName, StringComparison.OrdinalIgnoreCase))
             ?? throw new KeyNotFoundException($"Unknown tool: {toolName}");
     }
 
-    private HttpClient CreateHttpClient(Uri endpoint, TokenCredential credential)
+    private HttpClient CreateHttpClient(Uri endpoint)
     {
         // Ensure BaseAddress ends with '/' so relative URIs are appended correctly
         var baseUri = endpoint.ToString().EndsWith("/")
             ? endpoint
             : new Uri(endpoint.ToString() + "/");
         var client = new HttpClient { BaseAddress = baseUri };
-
-        // Add authentication - simplified version
-        // In production, use Azure.Core.Pipeline.HttpPipelinePolicy for proper token refresh
-        var token = credential.GetToken(new TokenRequestContext(_options.CredentialScopes.ToArray()), default);
-        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
-
         return client;
     }
 
-    /// <summary>
-    /// Disposes the client and releases resources.
-    /// </summary>
-    public void Dispose()
+    private async Task RefreshTokenAsync(CancellationToken cancellationToken)
     {
-        Dispose(true);
-        GC.SuppressFinalize(this);
+        var token = await _credential.GetTokenAsync(
+            new TokenRequestContext(_options.CredentialScopes.ToArray()),
+            cancellationToken).ConfigureAwait(false);
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
     }
 
     /// <summary>
-    /// Disposes the client.
+    /// Disposes the client and releases resources asynchronously.
     /// </summary>
-    /// <param name="disposing">True if disposing managed resources.</param>
-    protected virtual void Dispose(bool disposing)
+    /// <returns>A task representing the asynchronous dispose operation.</returns>
+    public async ValueTask DisposeAsync()
     {
         if (!_disposed)
         {
-            if (disposing)
-            {
-                _httpClient?.Dispose();
-            }
+            _httpClient?.Dispose();
             _disposed = true;
         }
+
+        await Task.CompletedTask.ConfigureAwait(false);
+        GC.SuppressFinalize(this);
     }
 }

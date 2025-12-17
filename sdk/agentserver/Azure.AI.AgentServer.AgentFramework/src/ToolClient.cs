@@ -13,14 +13,14 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// </summary>
 internal sealed class ToolClient : IAsyncDisposable
 {
-    private readonly AzureAIToolClientAsync _toolClient;
+    private readonly AzureAIToolClient _toolClient;
     private IReadOnlyList<AIFunction>? _aiFunctionCache;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolClient"/> class.
     /// </summary>
     /// <param name="toolClient">The Azure AI tool client.</param>
-    public ToolClient(AzureAIToolClientAsync toolClient)
+    public ToolClient(AzureAIToolClient toolClient)
     {
         _toolClient = toolClient ?? throw new ArgumentNullException(nameof(toolClient));
     }

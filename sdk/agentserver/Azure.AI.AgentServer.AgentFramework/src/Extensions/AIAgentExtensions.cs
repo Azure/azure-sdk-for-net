@@ -105,7 +105,7 @@ public static class AIAgentExtensions
             Tools = tools
         };
 
-        AzureAIToolClientAsync azureToolClient = new AzureAIToolClientAsync(endpoint, credential, toolClientOptions);
+        AzureAIToolClient azureToolClient = new AzureAIToolClient(endpoint, credential, toolClientOptions);
         await using (azureToolClient.ConfigureAwait(false))
         {
             ToolClient toolClient = new ToolClient(azureToolClient);
