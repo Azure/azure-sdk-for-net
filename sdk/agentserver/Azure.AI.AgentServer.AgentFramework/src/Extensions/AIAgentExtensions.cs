@@ -6,6 +6,7 @@ using Azure.AI.AgentServer.Core.Tools;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Responses.Invocation;
 using Azure.Core;
+using Azure.Identity;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
@@ -76,27 +77,40 @@ public static class AIAgentExtensions
     }
 
     /// <summary>
-    /// Runs an AI agent with tool support using ToolDefinition objects.
+    /// Runs an AI agent with optional tool support using ToolDefinition objects.
     /// </summary>
     /// <param name="agent">The AI agent to run.</param>
     /// <param name="telemetrySourceName">The name of the telemetry source.</param>
-    /// <param name="tools">List of tool definitions to enable.</param>
     /// <param name="endpoint">Azure AI endpoint.</param>
-    /// <param name="credential">Azure credential for authentication.</param>
+    /// <param name="credential">Optional Azure credential for authentication. If null, uses DefaultAzureCredential when tools are provided.</param>
+    /// <param name="tools">Optional list of tool definitions to enable. If null or empty, runs without tool support.</param>
     /// <param name="loggerFactory">Optional logger factory.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
     public static async Task RunAIAgentAsync(
         this AIAgent agent,
         string telemetrySourceName,
-        IList<ToolDefinition> tools,
         Uri endpoint,
-        TokenCredential credential,
+        TokenCredential? credential = null,
+        IList<ToolDefinition>? tools = null,
         ILoggerFactory? loggerFactory = null)
     {
         ArgumentNullException.ThrowIfNull(agent);
-        ArgumentNullException.ThrowIfNull(tools);
         ArgumentNullException.ThrowIfNull(endpoint);
-        ArgumentNullException.ThrowIfNull(credential);
+
+        // If tools is null or empty, fall back to basic agent run mode without tools
+        if (tools == null || tools.Count == 0)
+        {
+            await AgentServerApplication.RunAsync(new ApplicationOptions(
+                ConfigureServices: services => services
+                    .AddSingleton(agent)
+                    .AddSingleton<IAgentInvocation, AIAgentInvocation>(),
+                LoggerFactory: loggerFactory == null ? null : () => loggerFactory,
+                TelemetrySourceName: telemetrySourceName)).ConfigureAwait(false);
+            return;
+        }
+
+        // Use DefaultAzureCredential if credential is not provided
+        TokenCredential effectiveCredential = credential ?? new DefaultAzureCredential();
 
         // Create tool client options
         AzureAIToolClientOptions toolClientOptions = new AzureAIToolClientOptions
@@ -104,7 +118,7 @@ public static class AIAgentExtensions
             Tools = tools
         };
 
-        AzureAIToolClient azureToolClient = new AzureAIToolClient(endpoint, credential, toolClientOptions);
+        AzureAIToolClient azureToolClient = new AzureAIToolClient(endpoint, effectiveCredential, toolClientOptions);
         await using (azureToolClient.ConfigureAwait(false))
         {
             ToolClient toolClient = new ToolClient(azureToolClient);
