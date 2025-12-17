@@ -138,7 +138,13 @@ namespace Azure.Generator.Management
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources);
+
+            // Extract extension non-resource methods for MockableArmClientProvider
+            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
+                ? extensionScope.NonResourceMethods
+                : [];
+
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -337,28 +343,14 @@ namespace Azure.Generator.Management
             {
                 foreach (var resourceMethod in metadata.Methods)
                 {
-                    if (resourceMethod.InputMethod.IsLongRunningOperation())
-                    {
-                        ProcessLroMethod(resourceMethod.InputMethod, operationSources);
-                    }
-                    else
-                    {
-                        ProcessNonLroMethod(resourceMethod.InputMethod, operationSources);
-                    }
+                    ProcessLroMethod(resourceMethod.InputMethod, operationSources);
                 }
             }
 
             // Process non-resource methods
             foreach (var nonResourceMethod in ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods)
             {
-                if (nonResourceMethod.InputMethod.IsLongRunningOperation())
-                {
-                    ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
-                }
-                else
-                {
-                    ProcessNonLroMethod(nonResourceMethod.InputMethod, operationSources);
-                }
+                ProcessLroMethod(nonResourceMethod.InputMethod, operationSources);
             }
 
             return operationSources;
@@ -366,59 +358,31 @@ namespace Azure.Generator.Management
 
         private void ProcessLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
         {
-            InputType? returnType = null;
-
             if (inputMethod is InputLongRunningServiceMethod lroMethod)
             {
-                returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
-            }
-            else if (inputMethod is InputLongRunningPagingServiceMethod lroPagingMethod)
-            {
-                returnType = lroPagingMethod.LongRunningServiceMetadata.ReturnType;
-            }
-
-            if (returnType is InputModelType inputModelType)
-            {
-                var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
-                if (returnCSharpType == null)
+                var returnType = lroMethod.LongRunningServiceMetadata.ReturnType;
+                if (returnType is InputModelType inputModelType)
                 {
-                    return;
-                }
+                    var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
+                    if (returnCSharpType == null)
+                    {
+                        return;
+                    }
 
-                AddOperationSource(returnCSharpType, operationSources);
-            }
-        }
-
-        private void ProcessNonLroMethod(InputServiceMethod inputMethod, Dictionary<CSharpType, OperationSourceProvider> operationSources)
-        {
-            var operationResponses = inputMethod.Operation.Responses;
-            var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
-            if (response?.BodyType is InputModelType inputModelType)
-            {
-                var returnCSharpType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputModelType);
-                if (returnCSharpType == null)
-                {
-                    return;
-                }
-
-                AddOperationSource(returnCSharpType, operationSources);
-            }
-        }
-
-        private void AddOperationSource(CSharpType returnCSharpType, Dictionary<CSharpType, OperationSourceProvider> operationSources)
-        {
-            if (!operationSources.ContainsKey(returnCSharpType))
-            {
-                var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
-                if (resourceProvider is not null)
-                {
-                    // This is a resource model - use the resource-based constructor
-                    operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
-                }
-                else
-                {
-                    // This is a non-resource model - use the CSharpType-based constructor
-                    operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
+                    if (!operationSources.ContainsKey(returnCSharpType))
+                    {
+                        var resourceProvider = ResourceProviders.FirstOrDefault(r => r.ResourceData.Type.Equals(returnCSharpType));
+                        if (resourceProvider is not null)
+                        {
+                            // This is a resource model - use the resource-based constructor
+                            operationSources.Add(returnCSharpType, new OperationSourceProvider(resourceProvider));
+                        }
+                        else
+                        {
+                            // This is a non-resource model - use the CSharpType-based constructor
+                            operationSources.Add(returnCSharpType, new OperationSourceProvider(returnCSharpType));
+                        }
+                    }
                 }
             }
         }
