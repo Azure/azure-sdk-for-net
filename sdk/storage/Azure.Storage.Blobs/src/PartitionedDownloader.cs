@@ -375,7 +375,7 @@ namespace Azure.Storage.Blobs
                     // CopyToAsync causes ConsumeQueuedTask to wait until the
                     // download is complete
 
-                    using (_arrayPool.RentDisposable(_checksumSize, out byte[] partitionChecksum))
+                    using (_arrayPool.RentAsMemoryDisposable(_checksumSize, out Memory<byte> partitionChecksum))
                     {
                         await CopyToInternal(
                             response,
