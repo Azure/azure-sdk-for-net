@@ -4,7 +4,7 @@
     <AssemblyTitle>SDK Code Generation Azure.AI.Speech.Transcription</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Azure.AI.Speech.Transcription</PackageTags>
-    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0;net9.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Disable AutoRest dependency since this SDK uses @typespec/http-client-csharp -->
