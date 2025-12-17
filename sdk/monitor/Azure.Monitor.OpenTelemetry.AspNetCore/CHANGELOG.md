@@ -9,9 +9,7 @@
 ### Bugs Fixed
 
 * Fixed an issue where Azure Container Apps instances were showing VM instance GUIDs
-  instead of replica names in the Role Instance field. The resource detector order
-  has been adjusted to ensure Container Apps detector runs before VM detector,
-  preventing the VM detector from overwriting the Container Apps replica name.
+  instead of replica names in the Role Instance field.
   ([#54586](https://github.com/Azure/azure-sdk-for-net/pull/54586))
 
 ### Other Changes
