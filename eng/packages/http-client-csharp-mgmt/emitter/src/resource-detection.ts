@@ -227,6 +227,28 @@ export async function updateClients(
         }
       }
     }
+    
+    // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
+    // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
+    if (!metadata.parentResourceId && metadata.resourceIdPattern) {
+      // Check if this resource's path is a child of another resource's path
+      for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
+        if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
+          // Check if this resource's path starts with the other resource's path
+          // e.g., "/providers/MgmtTypeSpec/bestPractices/{name}/versions/{versionName}" 
+          // is a child of "/providers/MgmtTypeSpec/bestPractices/{name}"
+          const thisPath = metadata.resourceIdPattern;
+          const potentialParentPath = otherMetadata.resourceIdPattern;
+          
+          // The child path should start with the parent path followed by a "/"
+          if (thisPath.startsWith(potentialParentPath + "/") && thisPath.length > potentialParentPath.length + 1) {
+            metadata.parentResourceId = potentialParentPath;
+            // Note: we don't set parentResourceModelId here since they share the same model
+            break;
+          }
+        }
+      }
+    }
 
     // figure out the resourceScope of all resource methods
     for (const method of metadata.methods) {

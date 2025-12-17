@@ -11716,6 +11716,7 @@
               }
             ],
             "resourceScope": "Tenant",
+            "parentResourceId": "/providers/MgmtTypeSpec/bestPractices/{bestPracticeName}",
             "resourceName": "BestPracticeVersion"
           }
         }
