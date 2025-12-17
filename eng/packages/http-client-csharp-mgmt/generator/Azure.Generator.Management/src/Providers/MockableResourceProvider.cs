@@ -343,7 +343,7 @@ namespace Azure.Generator.Management.Providers
             var responseBodyType = method.GetResponseBodyType();
             if (responseBodyType != null && responseBodyType.IsList)
             {
-                return new SinglePageListOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
+                return new ArrayResponseOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);
             }
 
             return new ResourceOperationMethodProvider(this, _contextualPath, clientInfo, method, isAsync, methodName);

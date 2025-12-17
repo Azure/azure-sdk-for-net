@@ -21,10 +21,10 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
 {
     /// <summary>
-    /// Provider for building single-page list operation methods that wrap IList responses into Pageable.
-    /// This is used when an operation returns a list/array type but is not a paging operation.
+    /// Provider for building operation methods that return arrays, wrapping them into Pageable.
+    /// This is used when an operation returns a list/array type but is not a standard paging operation.
     /// </summary>
-    internal class SinglePageListOperationMethodProvider
+    internal class ArrayResponseOperationMethodProvider
     {
         private readonly TypeProvider _enclosingType;
         private readonly RequestPathPattern _contextualPath;
@@ -42,7 +42,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
 
-        public SinglePageListOperationMethodProvider(
+        public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
             RequestPathPattern contextualPath,
             RestClientInfo restClientInfo,
@@ -90,7 +90,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
         }
 
-        public static implicit operator MethodProvider(SinglePageListOperationMethodProvider singlePageListOperationMethodProvider)
+        public static implicit operator MethodProvider(ArrayResponseOperationMethodProvider singlePageListOperationMethodProvider)
         {
             var methodProvider = new ScmMethodProvider(
                 singlePageListOperationMethodProvider._signature,
@@ -140,132 +140,78 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected MethodBodyStatement[] BuildBodyStatements()
         {
-            var scopeName = _signature.Name.EndsWith("Async") ? _signature.Name.Substring(0, _signature.Name.Length - "Async".Length) : _signature.Name;
-            var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_enclosingType, _clientDiagnosticsField, scopeName, out var scopeVariable);
+            var statements = new List<MethodBodyStatement>();
 
-            return [
-                .. scopeStatements,
-                new TryCatchFinallyStatement(
-                    BuildTryExpression(),
-                    ResourceMethodSnippets.CreateDiagnosticCatchBlock(scopeVariable)
-                )
-            ];
-        }
+            // Create the collection result definition
+            var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
+            var collectionResult = CreateCollectionResultDefinition(scopeName);
 
-        private TryExpression BuildTryExpression()
-        {
-            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
+            // Register the collection result with the output library
+            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, scopeName);
+
+            statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
+
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
-            var tryStatements = new List<MethodBodyStatement>
+
+            var arguments = new List<ValueExpression>
             {
-                ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
-            };
-
-            // Populate arguments for the REST client method call
-            var arguments = _contextualPath.PopulateArguments(
-                This.As<ArmResource>().Id(),
-                requestMethod.Signature.Parameters,
-                contextVariable,
-                _signature.Parameters,
-                _enclosingType);
-
-            tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(
                 _restClientField,
-                requestMethod.Signature.Name,
-                arguments,
-                out var messageVariable));
-
-            // Process the pipeline and get the raw response (without deserialization)
-            tryStatements.AddRange(ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
-                messageVariable,
-                contextVariable,
-                _isAsync,
-                out var responseVariable));
-
-            // Deserialize the response body to the list type
-            var listDeclaration = Declare(
-                "list",
-                _listType,
-                Static(_listType).Invoke(SerializationVisitor.FromResponseMethodName, [responseVariable]),
-                out var listVariable);
-            tryStatements.Add(listDeclaration);
-
-            // Add null check for the list
-            var nullCheckStatement = new IfStatement(
-                listVariable.Equal(Null))
-            {
-                ((KeywordExpression)ThrowExpression(
-                    New.Instance(
-                        typeof(RequestFailedException),
-                        responseVariable))).Terminate()
             };
-            tryStatements.Add(nullCheckStatement);
 
-            // Convert the list to a single-page Pageable
+            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType));
+
+            // Handle ResourceData type conversion if needed
             if (_itemResourceClient != null)
             {
-                // Need to convert item types from ResourceData to Resource
-                tryStatements.Add(BuildResourceDataConversionStatement(listVariable, responseVariable.As<Response>()));
+                statements.Add(BuildResourceDataConversionStatement(collectionResult.Type, _itemResourceClient.Type, arguments));
             }
             else
             {
-                // Direct conversion without type transformation
-                tryStatements.Add(BuildDirectConversionStatement(listVariable, responseVariable.As<Response>()));
+                statements.Add(Return(New.Instance(collectionResult.Type, arguments)));
             }
 
-            return new TryExpression(tryStatements);
+            return statements.ToArray();
         }
 
-        private MethodBodyStatement BuildDirectConversionStatement(VariableExpression listVariable, ValueExpression responseExpression)
+        private ArrayResponseCollectionResultDefinition CreateCollectionResultDefinition(string scopeName)
         {
-            // Create a single page from the list: Page<T>.FromValues(list, null, response)
-            var pageExpression = Static(new CSharpType(typeof(Page<>), _itemType)).Invoke(
-                nameof(Page<object>.FromValues),
-                [listVariable, Null, responseExpression]);
+            // Get the constructor parameters needed (same as the arguments we'll pass when instantiating)
+            var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
+            var constructorParams = OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, false);
 
-            // Wrap in a Pageable: Pageable<T>.FromPages(new[] { page })
-            var pageableType = _isAsync
-                ? new CSharpType(typeof(AsyncPageable<>), _itemType)
-                : new CSharpType(typeof(Pageable<>), _itemType);
+            var collectionResult = new ArrayResponseCollectionResultDefinition(
+                _restClient,
+                _serviceMethod,
+                _itemType,
+                _listType,
+                _isAsync,
+                scopeName,
+                constructorParams);
 
-            var pageType = new CSharpType(typeof(Page<>), _itemType);
-            var pageableExpression = Static(pageableType).Invoke(
-                "FromPages",
-                [New.Array(pageType, isInline: true, pageExpression)]);
+            // Add to the output library so it gets generated
+            ManagementClientGenerator.Instance.OutputLibrary.ArrayResponseCollectionResults.Add(collectionResult);
 
-            return Return(pageableExpression);
+            return collectionResult;
         }
 
-        private MethodBodyStatement BuildResourceDataConversionStatement(VariableExpression listVariable, ValueExpression responseExpression)
+        private MethodBodyStatement BuildResourceDataConversionStatement(CSharpType sourcePageable, CSharpType typeOfResource, List<ValueExpression> arguments)
         {
-            // Create a page with the original data type
-            var pageExpression = Static(new CSharpType(typeof(Page<>), _itemType)).Invoke(
-                nameof(Page<object>.FromValues),
-                [listVariable, Null, responseExpression]);
+            // Create PageableWrapper instance to convert from ResourceData to Resource
+            var pageableWrapperType = _isAsync ? ManagementClientGenerator.Instance.OutputLibrary.AsyncPageableWrapper : ManagementClientGenerator.Instance.OutputLibrary.PageableWrapper;
 
-            // Create the pageable from the page
-            var sourcePageableType = _isAsync
-                ? new CSharpType(typeof(AsyncPageable<>), _itemType)
-                : new CSharpType(typeof(Pageable<>), _itemType);
-
-            var pageType = new CSharpType(typeof(Page<>), _itemType);
-            var sourcePageableExpression = Static(sourcePageableType).Invoke(
-                "FromPages",
-                [New.Array(pageType, isInline: true, pageExpression)]);
-
-            // Wrap with PageableWrapper to convert from ResourceData to Resource
-            var pageableWrapperType = _isAsync
-                ? ManagementClientGenerator.Instance.OutputLibrary.AsyncPageableWrapper
-                : ManagementClientGenerator.Instance.OutputLibrary.PageableWrapper;
-
-            var concreteWrapperType = pageableWrapperType.Type.MakeGenericType([_itemType, _actualItemType]);
+            // Create the concrete wrapper type with proper generic parameters
+            var concreteWrapperType = pageableWrapperType.Type.MakeGenericType([_itemType, typeOfResource]);
 
             // Create converter function: data => new ResourceType(Client, data)
-            var converterFunc = CreateConverterFunction(_itemType, _actualItemType);
+            var converterFunc = CreateConverterFunction(_itemType, typeOfResource);
 
-            var wrapperExpression = New.Instance(concreteWrapperType, [sourcePageableExpression, converterFunc]);
+            var wrapperArguments = new List<ValueExpression>
+            {
+                New.Instance(sourcePageable, arguments),
+                converterFunc
+            };
 
-            return Return(wrapperExpression);
+            return Return(New.Instance(concreteWrapperType, wrapperArguments));
         }
 
         private ValueExpression CreateConverterFunction(CSharpType fromType, CSharpType toType)

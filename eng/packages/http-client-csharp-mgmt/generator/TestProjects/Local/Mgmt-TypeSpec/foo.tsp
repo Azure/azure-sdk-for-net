@@ -98,9 +98,8 @@ model FooActionResult {
 }
 
 model FooDependency {
-  id: string;
-  name: string;
-  type?: string;
+  dependencyName: string;
+  version?: string;
 }
 
 @singleton
