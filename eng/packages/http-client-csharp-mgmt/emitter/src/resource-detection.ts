@@ -106,9 +106,6 @@ export async function updateClients(
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
         if (entry) {
-          // Check for duplicate Get methods before adding
-          checkForDuplicateGetMethod(sdkContext, entry, kind);
-          
           entry.methods.push({
             methodId: method.crossLanguageDefinitionId,
             kind,
@@ -194,6 +191,11 @@ export async function updateClients(
     }
   }
 
+  // validate that each resource has exactly one Get method
+  for (const metadata of resourceModelToMetadataMap.values()) {
+    validateResourceGetMethods(sdkContext, metadata);
+  }
+
   // the last step, add the decorator to the resource model
   for (const model of resourceModels) {
     const metadata = resourceModelToMetadataMap.get(
@@ -219,22 +221,20 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
   ].includes(kind);
 }
 
-function checkForDuplicateGetMethod(
+function validateResourceGetMethods(
   sdkContext: CSharpEmitterContext,
-  resourceMetadata: ResourceMetadata,
-  kind: ResourceOperationKind
+  resourceMetadata: ResourceMetadata
 ): void {
-  if (kind === ResourceOperationKind.Get) {
-    const existingGetMethod = resourceMetadata.methods.find(
-      (m) => m.kind === ResourceOperationKind.Get
-    );
-    if (existingGetMethod) {
-      $lib.reportDiagnostic(sdkContext.program, {
-        code: "duplicate-get-method",
-        format: { resourceName: resourceMetadata.resourceName },
-        target: NoTarget
-      });
-    }
+  const getMethods = resourceMetadata.methods.filter(
+    (m) => m.kind === ResourceOperationKind.Get
+  );
+  
+  if (getMethods.length > 1) {
+    $lib.reportDiagnostic(sdkContext.program, {
+      code: "duplicate-get-method",
+      format: { resourceName: resourceMetadata.resourceName },
+      target: NoTarget
+    });
   }
 }
 

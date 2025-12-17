@@ -12,7 +12,7 @@ import { AzureMgmtEmitterOptionsSchema } from "../options.js";
 const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
   ...httpClientCSharpLib.diagnostics,
   "duplicate-get-method": {
-    severity: "warning",
+    severity: "error",
     messages: {
       default:
         "Resource {resourceName} has multiple Get methods defined. Please ensure only one Get operation is defined per resource to avoid resource detection issues."
