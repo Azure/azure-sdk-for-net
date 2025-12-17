@@ -13,13 +13,14 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
     /// <summary>
     /// A class representing a collection of <see cref="BestPracticeVersionResource"/> and their operations.
-    /// Each <see cref="BestPracticeVersionResource"/> in the collection will belong to the same instance of <see cref="BestPracticeResource"/>.
-    /// To get a <see cref="BestPracticeVersionCollection"/> instance call the GetBestPracticeVersions method from an instance of <see cref="BestPracticeResource"/>.
+    /// Each <see cref="BestPracticeVersionResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="BestPracticeVersionCollection"/> instance call the GetBestPracticeVersions method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class BestPracticeVersionCollection : ArmCollection
     {
@@ -46,14 +47,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != BestPracticeResource.ResourceType)
+            if (id.ResourceType != TenantResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, BestPracticeResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, TenantResource.ResourceType), id);
             }
         }
 
         /// <summary>
-        /// Create a BestPracticeVersion
+        /// Create a BestPractice
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -70,13 +71,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<BestPracticeVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string versionName, BestPracticeVersionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/>, <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation<BestPracticeVersionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string bestPracticeName, string versionName, BestPracticeData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -88,9 +91,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(Id.Name, versionName, BestPracticeVersionData.ToRequestContent(data), context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(bestPracticeName, versionName, BestPracticeData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 TestsArmOperation<BestPracticeVersionResource> operation = new TestsArmOperation<BestPracticeVersionResource>(Response.FromValue(new BestPracticeVersionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -108,7 +111,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Create a BestPracticeVersion
+        /// Create a BestPractice
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -125,13 +128,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<BestPracticeVersionResource> CreateOrUpdate(WaitUntil waitUntil, string versionName, BestPracticeVersionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/>, <paramref name="versionName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation<BestPracticeVersionResource> CreateOrUpdate(WaitUntil waitUntil, string bestPracticeName, string versionName, BestPracticeData data, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
             Argument.AssertNotNull(data, nameof(data));
 
@@ -143,9 +148,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(Id.Name, versionName, BestPracticeVersionData.ToRequestContent(data), context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateCreateOrUpdateRequest(bestPracticeName, versionName, BestPracticeData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 TestsArmOperation<BestPracticeVersionResource> operation = new TestsArmOperation<BestPracticeVersionResource>(Response.FromValue(new BestPracticeVersionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
@@ -163,7 +168,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BestPracticeVersion
+        /// Get a BestPractice
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -179,12 +184,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<BestPracticeVersionResource>> GetAsync(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<BestPracticeVersionResource>> GetAsync(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionCollection.Get");
@@ -195,9 +202,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(bestPracticeName, versionName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -212,7 +219,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
-        /// Get a BestPracticeVersion
+        /// Get a BestPractice
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -228,12 +235,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<BestPracticeVersionResource> Get(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<BestPracticeVersionResource> Get(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionCollection.Get");
@@ -244,9 +253,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(bestPracticeName, versionName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<BestPracticeVersionData> response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                Response<BestPracticeData> response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -277,12 +286,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionCollection.Exists");
@@ -293,17 +304,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(bestPracticeName, versionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BestPracticeVersionData> response = default;
+                Response<BestPracticeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                        response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BestPracticeVersionData)null, result);
+                        response = Response.FromValue((BestPracticeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -334,12 +345,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionCollection.Exists");
@@ -350,17 +363,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(bestPracticeName, versionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BestPracticeVersionData> response = default;
+                Response<BestPracticeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                        response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BestPracticeVersionData)null, result);
+                        response = Response.FromValue((BestPracticeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -391,12 +404,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<BestPracticeVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<BestPracticeVersionResource>> GetIfExistsAsync(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionCollection.GetIfExists");
@@ -407,17 +422,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(bestPracticeName, versionName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<BestPracticeVersionData> response = default;
+                Response<BestPracticeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                        response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BestPracticeVersionData)null, result);
+                        response = Response.FromValue((BestPracticeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -452,12 +467,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
         /// <param name="versionName"> The name of the version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<BestPracticeVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> or <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<BestPracticeVersionResource> GetIfExists(string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
             Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
 
             using DiagnosticScope scope = _bestPracticeVersionsClientDiagnostics.CreateScope("BestPracticeVersionCollection.GetIfExists");
@@ -468,17 +485,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(Id.Name, versionName, context);
+                HttpMessage message = _bestPracticeVersionsRestClient.CreateGetRequest(bestPracticeName, versionName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<BestPracticeVersionData> response = default;
+                Response<BestPracticeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(BestPracticeVersionData.FromResponse(result), result);
+                        response = Response.FromValue(BestPracticeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((BestPracticeVersionData)null, result);
+                        response = Response.FromValue((BestPracticeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

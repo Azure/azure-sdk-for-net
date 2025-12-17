@@ -1309,12 +1309,12 @@ interface ScheduledActionExtension {
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
   });
 
-  it("multiple resources sharing same properties model", async () => {
-    // This test validates the scenario where two separate resource models share the same properties
-    // and use LegacyOperations with proper parent-child hierarchy via @parentResource
+  it("multiple resources sharing same model", async () => {
+    // This test validates the scenario where the SAME model is used by two different
+    // resource interfaces operating at different paths using LegacyOperations (similar to the legacy-operations example)
     const program = await typeSpecCompile(
       `
-/** A best practice resource - parent resource */
+/** A best practice resource - used by both interfaces */
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
 @tenantResource
 model BestPractice is ProxyResource<BestPracticeProperties> {
@@ -1327,20 +1327,7 @@ model BestPractice is ProxyResource<BestPracticeProperties> {
   ...Azure.ResourceManager.Legacy.ExtendedLocationOptionalProperty;
 }
 
-/** A best practice version resource - child resource that shares the same properties */
-#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
-@parentResource(BestPractice)
-model BestPracticeVersion is ProxyResource<BestPracticeProperties> {
-  ...ResourceNameParameter<
-    Resource = BestPracticeVersion,
-    KeyName = "versionName",
-    SegmentName = "versions",
-    NamePattern = ""
-  >;
-  ...Azure.ResourceManager.Legacy.ExtendedLocationOptionalProperty;
-}
-
-/** Best practice properties - shared by both models */
+/** Best practice properties */
 model BestPracticeProperties {
   ...DefaultProvisioningStateProperty;
   description?: string;
@@ -1385,12 +1372,12 @@ interface BestPractices {
   delete is BestPracticeOps.DeleteSync<BestPractice>;
 }
 
-/** Best practice version operations - uses BestPracticeVersion model with @parentResource */
+/** Best practice version operations - uses the SAME BestPractice model */
 @armResourceOperations
 interface BestPracticeVersions {
-  get is BestPracticesVersionOps.Read<BestPracticeVersion>;
-  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPracticeVersion>;
-  delete is BestPracticesVersionOps.DeleteSync<BestPracticeVersion>;
+  get is BestPracticesVersionOps.Read<BestPractice>;
+  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPractice>;
+  delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
 }
 `,
       runner
@@ -1400,38 +1387,27 @@ interface BestPracticeVersions {
     const root = createModel(sdkContext);
     updateClients(root, sdkContext);
 
-    // Verify BestPractice parent model exists
+    // Verify BestPractice model exists
     const bestPracticeModel = root.models.find((m) => m.name === "BestPractice");
     ok(bestPracticeModel, "BestPractice model should exist");
 
-    // Verify BestPracticeVersion child model exists
-    const bestPracticeVersionModel = root.models.find((m) => m.name === "BestPracticeVersion");
-    ok(bestPracticeVersionModel, "BestPracticeVersion model should exist");
-
-    // Verify BestPractice model has ONE metadata decorator
-    const bestPracticeMetadataDecorators = bestPracticeModel.decorators?.filter(
+    // Verify BestPractice model has TWO metadata decorators (one for each interface)
+    const resourceMetadataDecorators = bestPracticeModel.decorators?.filter(
       (d) => d.name === resourceMetadata
     );
-    ok(bestPracticeMetadataDecorators, "BestPractice should have resource metadata decorators");
+    ok(resourceMetadataDecorators, "Should have resource metadata decorators");
     strictEqual(
-      bestPracticeMetadataDecorators.length,
-      1,
-      "BestPractice should have ONE resource metadata decorator"
+      resourceMetadataDecorators.length,
+      2,
+      "Should have TWO resource metadata decorators for the same model"
     );
 
-    // Verify BestPracticeVersion model has ONE metadata decorator
-    const bestPracticeVersionMetadataDecorators = bestPracticeVersionModel.decorators?.filter(
-      (d) => d.name === resourceMetadata
+    // Find metadata for BestPractices resource (parent-level)
+    const bestPracticesMetadata = resourceMetadataDecorators.find((d) =>
+      d.arguments?.resourceIdPattern?.includes("/bestPractices/{bestPracticeName}") &&
+      !d.arguments?.resourceIdPattern?.includes("/versions")
     );
-    ok(bestPracticeVersionMetadataDecorators, "BestPracticeVersion should have resource metadata decorators");
-    strictEqual(
-      bestPracticeVersionMetadataDecorators.length,
-      1,
-      "BestPracticeVersion should have ONE resource metadata decorator"
-    );
-
-    // Verify metadata for BestPractice resource (parent-level)
-    const bestPracticesMetadata = bestPracticeMetadataDecorators[0];
+    ok(bestPracticesMetadata, "Should have metadata for parent-level resource");
     strictEqual(
       bestPracticesMetadata.arguments.resourceName,
       "BestPractice",
@@ -1447,8 +1423,11 @@ interface BestPracticeVersions {
     );
     strictEqual(bestPracticesMetadata.arguments.methods.length, 3, "Should have 3 methods");
 
-    // Verify metadata for BestPracticeVersion resource (child-level)
-    const bestPracticeVersionsMetadata = bestPracticeVersionMetadataDecorators[0];
+    // Find metadata for BestPracticeVersions resource (child-level)
+    const bestPracticeVersionsMetadata = resourceMetadataDecorators.find((d) =>
+      d.arguments?.resourceIdPattern?.includes("/versions/{versionName}")
+    );
+    ok(bestPracticeVersionsMetadata, "Should have metadata for child-level resource");
     strictEqual(
       bestPracticeVersionsMetadata.arguments.resourceName,
       "BestPracticeVersion",
@@ -1463,6 +1442,7 @@ interface BestPracticeVersions {
       "Microsoft.ContosoProviderHub/bestPractices/versions"
     );
     strictEqual(bestPracticeVersionsMetadata.arguments.methods.length, 3, "Should have 3 methods");
-    // Note: With @parentResource decorator, the parent-child relationship is explicit
+    // Note: parentResourceId is not set for legacy operations as there's no explicit @parentResource decorator
+    // The parent-child relationship is inferred from the path structure in the generator
   });
 });

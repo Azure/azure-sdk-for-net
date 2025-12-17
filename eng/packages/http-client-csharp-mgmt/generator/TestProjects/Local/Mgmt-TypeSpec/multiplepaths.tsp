@@ -8,11 +8,12 @@ using TypeSpec.Http;
 
 namespace MgmtTypeSpec;
 
-// This file demonstrates the scenario where multiple resources share the same properties model
-// but operate at different paths with proper parent-child hierarchy using @parentResource.
-// This uses Azure.ResourceManager.Legacy.LegacyOperations to define different path patterns.
+// This file demonstrates the scenario where the SAME model is used by two different
+// resource interfaces operating at different paths, matching the legacy-operations pattern.
+// This uses Azure.ResourceManager.Legacy.LegacyOperations to define different path patterns
+// for the same resource model.
 
-/** A best practice resource - parent resource */
+/** A best practice resource - used by both parent and child operations */
 #suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
 @tenantResource
 model BestPractice is ProxyResource<BestPracticeProperties> {
@@ -25,20 +26,7 @@ model BestPractice is ProxyResource<BestPracticeProperties> {
   ...Legacy.ExtendedLocationOptionalProperty;
 }
 
-/** A best practice version resource - child resource that shares the same properties as BestPractice */
-#suppress "@azure-tools/typespec-azure-core/no-legacy-usage" "For sample purpose"
-@parentResource(BestPractice)
-model BestPracticeVersion is ProxyResource<BestPracticeProperties> {
-  ...ResourceNameParameter<
-    Resource = BestPracticeVersion,
-    KeyName = "versionName",
-    SegmentName = "versions",
-    NamePattern = ""
-  >;
-  ...Legacy.ExtendedLocationOptionalProperty;
-}
-
-/** Best practice properties - shared by both BestPractice and BestPracticeVersion */
+/** Best practice properties */
 model BestPracticeProperties {
   ...DefaultProvisioningStateProperty;
 
@@ -101,14 +89,14 @@ interface BestPractices {
 }
 
 /** Best practice version operations on /bestPractices/{bestPracticeName}/versions/{versionName} */
-/** NOTE: This interface uses BestPracticeVersion model which shares properties with BestPractice */
+/** NOTE: This interface uses the SAME BestPractice model but at a different path */
 @armResourceOperations
 interface BestPracticeVersions {
-  get is BestPracticesVersionOps.Read<BestPracticeVersion>;
-  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPracticeVersion>;
+  get is BestPracticesVersionOps.Read<BestPractice>;
+  createOrUpdate is BestPracticesVersionOps.CreateOrUpdateSync<BestPractice>;
   update is BestPracticesVersionOps.CustomPatchSync<
-    BestPracticeVersion,
-    Azure.ResourceManager.Foundations.ResourceUpdateModel<BestPracticeVersion, BestPracticeProperties>
+    BestPractice,
+    Azure.ResourceManager.Foundations.ResourceUpdateModel<BestPractice, BestPracticeProperties>
   >;
-  delete is BestPracticesVersionOps.DeleteSync<BestPracticeVersion>;
+  delete is BestPracticesVersionOps.DeleteSync<BestPractice>;
 }

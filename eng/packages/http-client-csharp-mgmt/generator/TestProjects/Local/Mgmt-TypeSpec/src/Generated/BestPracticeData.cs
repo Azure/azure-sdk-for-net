@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    /// <summary> A best practice resource - parent resource. </summary>
+    /// <summary> A best practice resource - used by both parent and child operations. </summary>
     public partial class BestPracticeData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

@@ -12,20 +12,20 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
     /// <summary> The type used for update operations of the BestPractice. </summary>
-    public partial class BestPracticePatch
+    public partial class BestPracticeUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticePatch"/>. </summary>
-        public BestPracticePatch()
+        /// <summary> Initializes a new instance of <see cref="BestPracticeUpdate"/>. </summary>
+        public BestPracticeUpdate()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="BestPracticePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BestPracticeUpdate"/>. </summary>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BestPracticePatch(BestPracticeUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BestPracticeUpdate(BestPracticeUpdateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

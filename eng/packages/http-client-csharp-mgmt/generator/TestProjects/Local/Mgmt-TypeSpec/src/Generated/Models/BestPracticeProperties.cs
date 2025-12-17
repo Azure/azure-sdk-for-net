@@ -11,7 +11,7 @@ using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Best practice properties - shared by both BestPractice and BestPracticeVersion. </summary>
+    /// <summary> Best practice properties. </summary>
     public partial class BestPracticeProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

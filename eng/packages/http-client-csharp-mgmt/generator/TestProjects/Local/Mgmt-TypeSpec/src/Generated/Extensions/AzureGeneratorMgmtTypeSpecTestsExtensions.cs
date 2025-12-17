@@ -1449,6 +1449,63 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// Gets a collection of BestPracticeVersions in the <see cref="TenantResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPracticeVersions()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        /// <returns> An object representing collection of BestPracticeVersions and their operations over a BestPracticeVersionResource. </returns>
+        public static BestPracticeVersionCollection GetBestPracticeVersions(this TenantResource tenantResource)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPracticeVersions();
+        }
+
+        /// <summary>
+        /// Get a BestPractice
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPracticeVersionAsync(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
+        /// <param name="versionName"> The name of the version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<BestPracticeVersionResource>> GetBestPracticeVersionAsync(this TenantResource tenantResource, string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPracticeVersionAsync(bestPracticeName, versionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a BestPractice
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsTenantResource.GetBestPracticeVersion(string, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
+        /// <param name="bestPracticeName"> The name of the best practice. </param>
+        /// <param name="versionName"> The name of the version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<BestPracticeVersionResource> GetBestPracticeVersion(this TenantResource tenantResource, string bestPracticeName, string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsTenantResource(tenantResource).GetBestPracticeVersion(bestPracticeName, versionName, cancellationToken);
+        }
+
+        /// <summary>
         /// Query network sibling set - a provider-level async action.
         /// This is a non-resource LRO operation that returns NetworkSiblingSet.
         /// <item>
