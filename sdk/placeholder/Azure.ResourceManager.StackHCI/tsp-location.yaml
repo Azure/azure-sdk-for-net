@@ -1,0 +1,6 @@
+directory: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI
+commit: 9564453c2af68fd5b29dd4bfc31d547f4e6e7cd1
+repo: Azure/azure-rest-api-specs
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/legacy-emitter-package.json
