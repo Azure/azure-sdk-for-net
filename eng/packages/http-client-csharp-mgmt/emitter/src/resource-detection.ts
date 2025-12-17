@@ -51,6 +51,7 @@ import {
 } from "./sdk-context-options.js";
 import { DecoratorApplication, Model, NoTarget } from "@typespec/compiler";
 import { AzureEmitterOptions } from "@azure-typespec/http-client-csharp";
+import { $lib } from "./lib/lib.js";
 
 export async function updateClients(
   codeModel: CodeModel,
@@ -228,12 +229,9 @@ function checkForDuplicateGetMethod(
       (m) => m.kind === ResourceOperationKind.Get
     );
     if (existingGetMethod) {
-      sdkContext.logger.reportDiagnostic({
-        code: "general-warning",
-        messageId: "default",
-        format: {
-          message: `Resource ${resourceMetadata.resourceName} has multiple Get methods defined. This may cause issues with resource detection.`
-        },
+      $lib.reportDiagnostic(sdkContext.program, {
+        code: "duplicate-get-method",
+        format: { resourceName: resourceMetadata.resourceName },
         target: NoTarget
       });
     }
