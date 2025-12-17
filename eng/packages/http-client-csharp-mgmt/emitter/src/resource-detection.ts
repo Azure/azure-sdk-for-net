@@ -105,22 +105,9 @@ export async function updateClients(
       if (modelId && kind) {
         const entry = resourceModelToMetadataMap.get(modelId);
         if (entry) {
-          // Check if we're adding a second Get method to the same resource
-          if (kind === ResourceOperationKind.Get) {
-            const existingGetMethod = entry.methods.find(
-              (m) => m.kind === ResourceOperationKind.Get
-            );
-            if (existingGetMethod) {
-              sdkContext.logger.reportDiagnostic({
-                code: "general-warning",
-                messageId: "default",
-                format: {
-                  message: `Resource ${entry.resourceName} has multiple Get methods defined. This may cause issues with resource detection.`
-                },
-                target: NoTarget
-              });
-            }
-          }
+          // Check for duplicate Get methods before adding
+          checkForDuplicateGetMethod(sdkContext, entry, kind);
+          
           entry.methods.push({
             methodId: method.crossLanguageDefinitionId,
             kind,
@@ -229,6 +216,28 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
     ResourceOperationKind.Update,
     ResourceOperationKind.Delete
   ].includes(kind);
+}
+
+function checkForDuplicateGetMethod(
+  sdkContext: CSharpEmitterContext,
+  resourceMetadata: ResourceMetadata,
+  kind: ResourceOperationKind
+): void {
+  if (kind === ResourceOperationKind.Get) {
+    const existingGetMethod = resourceMetadata.methods.find(
+      (m) => m.kind === ResourceOperationKind.Get
+    );
+    if (existingGetMethod) {
+      sdkContext.logger.reportDiagnostic({
+        code: "general-warning",
+        messageId: "default",
+        format: {
+          message: `Resource ${resourceMetadata.resourceName} has multiple Get methods defined. This may cause issues with resource detection.`
+        },
+        target: NoTarget
+      });
+    }
+  }
 }
 
 function parseResourceOperation(
