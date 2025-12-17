@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.CarbonOptimization;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
     public readonly partial struct CarbonEmissionAccessDecision : IEquatable<CarbonEmissionAccessDecision>
     {
         private readonly string _value;
+        /// <summary> Access allowed. </summary>
+        private const string AllowedValue = "Allowed";
+        /// <summary> Access denied. </summary>
+        private const string DeniedValue = "Denied";
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionAccessDecision"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public CarbonEmissionAccessDecision(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllowedValue = "Allowed";
-        private const string DeniedValue = "Denied";
+            _value = value;
+        }
 
         /// <summary> Access allowed. </summary>
         public static CarbonEmissionAccessDecision Allowed { get; } = new CarbonEmissionAccessDecision(AllowedValue);
+
         /// <summary> Access denied. </summary>
         public static CarbonEmissionAccessDecision Denied { get; } = new CarbonEmissionAccessDecision(DeniedValue);
+
         /// <summary> Determines if two <see cref="CarbonEmissionAccessDecision"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CarbonEmissionAccessDecision left, CarbonEmissionAccessDecision right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CarbonEmissionAccessDecision"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CarbonEmissionAccessDecision left, CarbonEmissionAccessDecision right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CarbonEmissionAccessDecision"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CarbonEmissionAccessDecision"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CarbonEmissionAccessDecision(string value) => new CarbonEmissionAccessDecision(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CarbonEmissionAccessDecision"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CarbonEmissionAccessDecision?(string value) => value == null ? null : new CarbonEmissionAccessDecision(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CarbonEmissionAccessDecision other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CarbonEmissionAccessDecision other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

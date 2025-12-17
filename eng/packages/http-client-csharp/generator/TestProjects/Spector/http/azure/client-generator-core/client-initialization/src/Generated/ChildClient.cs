@@ -5,17 +5,22 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 using Service;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient
 {
     public partial class ChildClient
     {
         protected ChildClient() => throw null;
+
+        public ChildClient(string blobName) : this(new Uri("http://localhost:3000"), blobName, new _Specs_AzureClientGeneratorCoreClientInitializationClientOptions()) => throw null;
+
+        public ChildClient(Uri endpoint, string blobName, _Specs_AzureClientGeneratorCoreClientInitializationClientOptions options) => throw null;
 
         public virtual HttpPipeline Pipeline => throw null;
 
