@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.HybridNetwork
     public partial class NetworkFunctionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridNetwork.NetworkFunctionData>
     {
         public NetworkFunctionData(Azure.Core.AzureLocation location) { }
-        public Azure.ETag? ETag { get { throw null; } }
+        public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HybridNetwork.Models.NetworkFunctionPropertiesFormat Properties { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.HybridNetwork
         /// A unique read-only string that changes whenever the resource is updated.
         /// Serialized Name: NetworkFunction.etag
         /// </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag { get; set; }
         /// <summary>
         /// The managed identity of the network function.
         /// Serialized Name: NetworkFunction.identity
