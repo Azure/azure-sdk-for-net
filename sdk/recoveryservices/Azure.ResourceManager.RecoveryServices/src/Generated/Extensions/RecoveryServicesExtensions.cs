@@ -91,6 +91,25 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="RecoveryServicesDeletedVaultResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoveryServicesDeletedVaultResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesDeletedVaultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesArmClient.GetRecoveryServicesDeletedVaultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RecoveryServicesDeletedVaultResource"/> object. </returns>
+        public static RecoveryServicesDeletedVaultResource GetRecoveryServicesDeletedVaultResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableRecoveryServicesArmClient(client).GetRecoveryServicesDeletedVaultResource(id);
+        }
+
+        /// <summary>
         /// Gets a collection of RecoveryServicesVaultResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
@@ -120,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,7 +217,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -233,7 +252,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -254,6 +273,101 @@ namespace Azure.ResourceManager.RecoveryServices
         }
 
         /// <summary>
+        /// Gets a collection of RecoveryServicesDeletedVaultResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesDeletedVaults()"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An object representing collection of RecoveryServicesDeletedVaultResources and their operations over a RecoveryServicesDeletedVaultResource. </returns>
+        public static RecoveryServicesDeletedVaultCollection GetRecoveryServicesDeletedVaults(this SubscriptionResource subscriptionResource)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesDeletedVaults();
+        }
+
+        /// <summary>
+        /// Get a specific deleted vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesDeletedVaultAsync(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<RecoveryServicesDeletedVaultResource>> GetRecoveryServicesDeletedVaultAsync(this SubscriptionResource subscriptionResource, string location, string deletedVaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesDeletedVaultAsync(location, deletedVaultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific deleted vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesDeletedVault(string,string,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The location name. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="location"/> or <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public static Response<RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVault(this SubscriptionResource subscriptionResource, string location, string deletedVaultName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesDeletedVault(location, deletedVaultName, cancellationToken);
+        }
+
+        /// <summary>
         /// Fetches all the resources of the specified type in the subscription.
         /// <list type="bullet">
         /// <item>
@@ -266,7 +380,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -302,7 +416,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,7 +452,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -371,7 +485,7 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -389,6 +503,80 @@ namespace Azure.ResourceManager.RecoveryServices
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServiceCapabilities(location, input, cancellationToken);
+        }
+
+        /// <summary>
+        /// List deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesDeletedVaults(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="RecoveryServicesDeletedVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaultsAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesDeletedVaultsAsync(location, cancellationToken);
+        }
+
+        /// <summary>
+        /// List deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesDeletedVaults(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RecoveryServicesDeletedVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaults(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableRecoveryServicesSubscriptionResource(subscriptionResource).GetRecoveryServicesDeletedVaults(location, cancellationToken);
         }
     }
 }

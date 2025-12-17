@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         private VaultsRestOperations _recoveryServicesVaultVaultsRestClient;
         private ClientDiagnostics _recoveryServicesOperationGroupClientDiagnostics;
         private RecoveryServicesOperationGroupRestOperations _recoveryServicesOperationGroupRestClient;
+        private ClientDiagnostics _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics;
+        private DeletedVaultsRestOperations _recoveryServicesDeletedVaultDeletedVaultsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableRecoveryServicesSubscriptionResource"/> class for mocking. </summary>
         protected MockableRecoveryServicesSubscriptionResource()
@@ -39,11 +41,84 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         private VaultsRestOperations RecoveryServicesVaultVaultsRestClient => _recoveryServicesVaultVaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RecoveryServicesVaultResource.ResourceType));
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private RecoveryServicesOperationGroupRestOperations RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroupRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics RecoveryServicesDeletedVaultDeletedVaultsClientDiagnostics => _recoveryServicesDeletedVaultDeletedVaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesDeletedVaultResource.ResourceType.Namespace, Diagnostics);
+        private DeletedVaultsRestOperations RecoveryServicesDeletedVaultDeletedVaultsRestClient => _recoveryServicesDeletedVaultDeletedVaultsRestClient ??= new DeletedVaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(RecoveryServicesDeletedVaultResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
+        }
+
+        /// <summary> Gets a collection of RecoveryServicesDeletedVaultResources in the SubscriptionResource. </summary>
+        /// <returns> An object representing collection of RecoveryServicesDeletedVaultResources and their operations over a RecoveryServicesDeletedVaultResource. </returns>
+        public virtual RecoveryServicesDeletedVaultCollection GetRecoveryServicesDeletedVaults()
+        {
+            return GetCachedClient(client => new RecoveryServicesDeletedVaultCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get a specific deleted vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<RecoveryServicesDeletedVaultResource>> GetRecoveryServicesDeletedVaultAsync(string location, string deletedVaultName, CancellationToken cancellationToken = default)
+        {
+            return await GetRecoveryServicesDeletedVaults().GetAsync(location, deletedVaultName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get a specific deleted vault.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults/{deletedVaultName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="deletedVaultName"> The name of the DeletedVault. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> or <paramref name="deletedVaultName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVault(string location, string deletedVaultName, CancellationToken cancellationToken = default)
+        {
+            return GetRecoveryServicesDeletedVaults().Get(location, deletedVaultName, cancellationToken);
         }
 
         /// <summary>
@@ -59,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -89,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -119,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,7 +233,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +257,68 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// List deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="RecoveryServicesDeletedVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaultsAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesDeletedVaultDeletedVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesDeletedVaultDeletedVaultsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesDeletedVaultResource(Client, RecoveryServicesDeletedVaultData.DeserializeRecoveryServicesDeletedVaultData(e)), RecoveryServicesDeletedVaultDeletedVaultsClientDiagnostics, Pipeline, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesDeletedVaults", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List deleted vaults in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.RecoveryServices/locations/{location}/deletedVaults</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DeletedVault_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesDeletedVaultResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="RecoveryServicesDeletedVaultResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<RecoveryServicesDeletedVaultResource> GetRecoveryServicesDeletedVaults(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => RecoveryServicesDeletedVaultDeletedVaultsRestClient.CreateListBySubscriptionIdRequest(Id.SubscriptionId, location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecoveryServicesDeletedVaultDeletedVaultsRestClient.CreateListBySubscriptionIdNextPageRequest(nextLink, Id.SubscriptionId, location);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new RecoveryServicesDeletedVaultResource(Client, RecoveryServicesDeletedVaultData.DeserializeRecoveryServicesDeletedVaultData(e)), RecoveryServicesDeletedVaultDeletedVaultsClientDiagnostics, Pipeline, "MockableRecoveryServicesSubscriptionResource.GetRecoveryServicesDeletedVaults", "value", "nextLink", cancellationToken);
         }
     }
 }

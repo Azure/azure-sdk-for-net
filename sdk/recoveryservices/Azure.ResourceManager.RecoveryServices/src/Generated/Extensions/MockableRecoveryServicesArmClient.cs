@@ -69,5 +69,17 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             RecoveryServicesVaultExtendedInfoResource.ValidateResourceId(id);
             return new RecoveryServicesVaultExtendedInfoResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="RecoveryServicesDeletedVaultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="RecoveryServicesDeletedVaultResource.CreateResourceIdentifier" /> to create a <see cref="RecoveryServicesDeletedVaultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="RecoveryServicesDeletedVaultResource"/> object. </returns>
+        public virtual RecoveryServicesDeletedVaultResource GetRecoveryServicesDeletedVaultResource(ResourceIdentifier id)
+        {
+            RecoveryServicesDeletedVaultResource.ValidateResourceId(id);
+            return new RecoveryServicesDeletedVaultResource(Client, id);
+        }
     }
 }

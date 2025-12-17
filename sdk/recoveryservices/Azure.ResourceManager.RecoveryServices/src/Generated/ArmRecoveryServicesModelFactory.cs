@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -281,6 +280,34 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             return new RecoveryServicesNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="RecoveryServices.RecoveryServicesDeletedVaultData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="RecoveryServices.RecoveryServicesDeletedVaultData"/> instance for mocking. </returns>
+        public static RecoveryServicesDeletedVaultData RecoveryServicesDeletedVaultData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DeletedVaultProperties properties = null)
+        {
+            return new RecoveryServicesDeletedVaultData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeletedVaultProperties"/>. </summary>
+        /// <param name="vaultId"> ARM Id of the Vault which was deleted. </param>
+        /// <param name="vaultDeletionOn"> Time in UTC at which the Vault was deleted. </param>
+        /// <param name="purgeOn"> Time in UTC at which the DeletedVault will be purged. </param>
+        /// <returns> A new <see cref="Models.DeletedVaultProperties"/> instance for mocking. </returns>
+        public static DeletedVaultProperties DeletedVaultProperties(string vaultId = null, DateTimeOffset? vaultDeletionOn = null, DateTimeOffset? purgeOn = null)
+        {
+            return new DeletedVaultProperties(vaultId, vaultDeletionOn, purgeOn, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.VaultCertificateResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -476,40 +503,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static VaultUsageNameInfo VaultUsageNameInfo(string value = null, string localizedValue = null)
         {
             return new VaultUsageNameInfo(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties" />. </summary>
-        /// <param name="provisioningState"> Provisioning State. </param>
-        /// <param name="upgradeDetails"> Details for upgrading vault. </param>
-        /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>
-        /// <param name="privateEndpointStateForBackup"> Private endpoint state for backup. </param>
-        /// <param name="privateEndpointStateForSiteRecovery"> Private endpoint state for site recovery. </param>
-        /// <param name="encryption"> Customer Managed Key details of the resource. </param>
-        /// <param name="moveDetails"> The details of the latest move operation performed on the Azure Resource. </param>
-        /// <param name="moveState"> The State of the Resource after the move operation. </param>
-        /// <param name="backupStorageVersion"> Backup storage version. </param>
-        /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
-        /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
-        /// <param name="crossSubscriptionRestoreState"> Restore Settings of the vault. </param>
-        /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
-        /// <param name="securitySettings"> Security Settings of the vault. </param>
-        /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesVaultProperties" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, CrossSubscriptionRestoreState? crossSubscriptionRestoreState, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore)
-        {
-            return RecoveryServicesVaultProperties(provisioningState: provisioningState, upgradeDetails: upgradeDetails, privateEndpointConnections: privateEndpointConnections, privateEndpointStateForBackup: privateEndpointStateForBackup, privateEndpointStateForSiteRecovery: privateEndpointStateForSiteRecovery, encryption: encryption, moveDetails: moveDetails, moveState: moveState, backupStorageVersion: backupStorageVersion, publicNetworkAccess: publicNetworkAccess, monitoringSettings: monitoringSettings, crossSubscriptionRestoreState: crossSubscriptionRestoreState, redundancySettings: redundancySettings, securitySettings: securitySettings, secureScore: secureScore, bcdrSecurityLevel: default, resourceGuardOperationRequests: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings" />. </summary>
-        /// <param name="immutabilityState"> Immutability Settings of a vault. </param>
-        /// <param name="softDeleteSettings"> Soft delete Settings of a vault. </param>
-        /// <param name="multiUserAuthorization"> MUA Settings of a vault. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.RecoveryServices.Models.RecoveryServicesSecuritySettings" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static RecoveryServicesSecuritySettings RecoveryServicesSecuritySettings(ImmutabilityState? immutabilityState, RecoveryServicesSoftDeleteSettings softDeleteSettings, MultiUserAuthorization? multiUserAuthorization)
-        {
-            return RecoveryServicesSecuritySettings(immutabilityState: immutabilityState, softDeleteSettings: softDeleteSettings, multiUserAuthorization: multiUserAuthorization, sourceScanConfiguration: default);
         }
     }
 }
