@@ -45,7 +45,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     ReturnDetails = true
                 }
             };
-            analyzer.Models.Add("completion", "gpt-4.1");
+            analyzer.Models["completion"] = "gpt-4.1";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,

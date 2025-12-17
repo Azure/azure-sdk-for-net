@@ -99,16 +99,16 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 FieldSchema = fieldSchema
             };
 
-            // Add model mappings (required for custom analyzers)
-            customAnalyzer.Models.Add("completion", "gpt-4.1");
-            customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+            // Add model mappings for supported large language models (required for custom analyzers)
+            // Maps model roles (completion, embedding) to specific model names
+            customAnalyzer.Models["completion"] = "gpt-4.1";
+            customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
             // Create the analyzer
             var operation = await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
                 analyzerId,
-                customAnalyzer,
-                allowReplace: true);
+                customAnalyzer);
 
             ContentAnalyzer result = operation.Value;
             Console.WriteLine($"Analyzer '{analyzerId}' created successfully!");
@@ -299,8 +299,8 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 FieldSchema = fieldSchema
             };
 
-            customAnalyzer.Models.Add("completion", "gpt-4.1");
-            customAnalyzer.Models.Add("embedding", "text-embedding-3-large");
+            customAnalyzer.Models["completion"] = "gpt-4.1";
+            customAnalyzer.Models["embedding"] = "text-embedding-3-large";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -338,15 +338,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     {
                         var companyName = companyNameField is StringField sf ? sf.ValueString : null;
                         Console.WriteLine($"Company Name (extract): {companyName ?? "(not found)"}");
-                        if (companyNameField != null)
+                        Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
+                        Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
+                        if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
                         {
-                            Console.WriteLine($"  Confidence: {companyNameField.Confidence?.ToString("F2") ?? "N/A"}");
-                            Console.WriteLine($"  Source: {companyNameField.Source ?? "N/A"}");
-                            if (companyNameField.Spans != null && companyNameField.Spans.Count > 0)
-                            {
-                                var span = companyNameField.Spans[0];
-                                Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-                            }
+                            var span = companyNameField.Spans[0];
+                            Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
                         }
                     }
 
@@ -355,15 +352,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     {
                         var totalAmount = totalAmountField is NumberField nf ? nf.ValueNumber : null;
                         Console.WriteLine($"Total Amount (extract): {totalAmount?.ToString("F2") ?? "(not found)"}");
-                        if (totalAmountField != null)
+                        Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
+                        Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
+                        if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
                         {
-                            Console.WriteLine($"  Confidence: {totalAmountField.Confidence?.ToString("F2") ?? "N/A"}");
-                            Console.WriteLine($"  Source: {totalAmountField.Source ?? "N/A"}");
-                            if (totalAmountField.Spans != null && totalAmountField.Spans.Count > 0)
-                            {
-                                var span = totalAmountField.Spans[0];
-                                Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
-                            }
+                            var span = totalAmountField.Spans[0];
+                            Console.WriteLine($"  Position in markdown: offset={span.Offset}, length={span.Length}");
                         }
                     }
 
@@ -372,14 +366,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     {
                         var summary = summaryField is StringField sf ? sf.ValueString : null;
                         Console.WriteLine($"Document Summary (generate): {summary ?? "(not found)"}");
-                        if (summaryField != null)
+                        Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
+                        // Note: Generated fields may not have source information
+                        if (!string.IsNullOrEmpty(summaryField.Source))
                         {
-                            Console.WriteLine($"  Confidence: {summaryField.Confidence?.ToString("F2") ?? "N/A"}");
-                            // Note: Generated fields may not have source information
-                            if (!string.IsNullOrEmpty(summaryField.Source))
-                            {
-                                Console.WriteLine($"  Source: {summaryField.Source}");
-                            }
+                            Console.WriteLine($"  Source: {summaryField.Source}");
                         }
                     }
 
@@ -388,14 +379,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     {
                         var documentType = documentTypeField is StringField sf ? sf.ValueString : null;
                         Console.WriteLine($"Document Type (classify): {documentType ?? "(not found)"}");
-                        if (documentTypeField != null)
+                        Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
+                        // Note: Classified fields may not have source information
+                        if (!string.IsNullOrEmpty(documentTypeField.Source))
                         {
-                            Console.WriteLine($"  Confidence: {documentTypeField.Confidence?.ToString("F2") ?? "N/A"}");
-                            // Note: Classified fields may not have source information
-                            if (!string.IsNullOrEmpty(documentTypeField.Source))
-                            {
-                                Console.WriteLine($"  Source: {documentTypeField.Source}");
-                            }
+                            Console.WriteLine($"  Source: {documentTypeField.Source}");
                         }
                     }
                 }

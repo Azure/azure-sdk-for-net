@@ -21,16 +21,17 @@ namespace Azure.AI.ContentUnderstanding
         /// Gets a field from the array by index.
         /// </summary>
         /// <param name="index">The zero-based index of the field to retrieve.</param>
-        /// <returns>The field at the specified index, or null if the index is out of range.</returns>
+        /// <returns>The field at the specified index.</returns>
+        /// <exception cref="System.ArgumentOutOfRangeException">Thrown when <paramref name="index"/> is out of range.</exception>
         public ContentField this[int index]
         {
             get
             {
-                if (ValueArray != null && index >= 0 && index < ValueArray.Count)
+                if (ValueArray == null || index < 0 || index >= ValueArray.Count)
                 {
-                    return ValueArray[index];
+                    throw new System.ArgumentOutOfRangeException(nameof(index), $"Index {index} is out of range. Array has {ValueArray?.Count ?? 0} elements.");
                 }
-                return null;
+                return ValueArray[index];
             }
         }
     }

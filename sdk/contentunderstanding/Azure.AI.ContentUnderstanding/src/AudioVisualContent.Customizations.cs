@@ -7,87 +7,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
     /// Partial class for AudioVisualContent to customize serialization/deserialization.
     /// </summary>
-    // SDK-FIX: Suppress DeserializeAudioVisualContent to fix KeyFrameTimesMs property name casing inconsistency (service returns "KeyFrameTimesMs" instead of "keyFrameTimesMs")
+    // SERVICE-FIX: Suppress DeserializeAudioVisualContent to fix KeyFrameTimesMs property name casing inconsistency (service returns "KeyFrameTimesMs" instead of "keyFrameTimesMs")
     [CodeGenSuppress("DeserializeAudioVisualContent", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
     public partial class AudioVisualContent
     {
-        /// <summary>
-        /// SDK-FIX: Override serialization to use "KeyFrameTimesMs" (capital K) to match service response format instead of "keyFrameTimesMs"
-        /// </summary>
-        /// <param name="writer">The JSON writer.</param>
-        /// <param name="options">The client options for reading and writing models.</param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            string format = options.Format == "W" ? ((IPersistableModel<AudioVisualContent>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(AudioVisualContent)} does not support writing '{format}' format.");
-            }
-            base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("startTimeMs"u8);
-            writer.WriteNumberValue(StartTimeMs);
-            writer.WritePropertyName("endTimeMs"u8);
-            writer.WriteNumberValue(EndTimeMs);
-            if (Optional.IsDefined(Width))
-            {
-                writer.WritePropertyName("width"u8);
-                writer.WriteNumberValue(Width.Value);
-            }
-            if (Optional.IsDefined(Height))
-            {
-                writer.WritePropertyName("height"u8);
-                writer.WriteNumberValue(Height.Value);
-            }
-            if (Optional.IsCollectionDefined(CameraShotTimesMs))
-            {
-                writer.WritePropertyName("cameraShotTimesMs"u8);
-                writer.WriteStartArray();
-                foreach (long item in CameraShotTimesMs)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(KeyFrameTimesMs))
-            {
-                // SDK-FIX: Serialize as "KeyFrameTimesMs" (capital K) to match service response format instead of "keyFrameTimesMs"
-                writer.WritePropertyName("KeyFrameTimesMs"u8);
-                writer.WriteStartArray();
-                foreach (long item in KeyFrameTimesMs)
-                {
-                    writer.WriteNumberValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TranscriptPhrases))
-            {
-                writer.WritePropertyName("transcriptPhrases"u8);
-                writer.WriteStartArray();
-                foreach (TranscriptPhrase item in TranscriptPhrases)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Segments))
-            {
-                writer.WritePropertyName("segments"u8);
-                writer.WriteStartArray();
-                foreach (AudioVisualContentSegment item in Segments)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-        }
-
-        // SDK-FIX: Reimplement deserialization to handle both "keyFrameTimesMs" (TypeSpec definition) and "KeyFrameTimesMs" (service response format)
         internal static AudioVisualContent DeserializeAudioVisualContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -198,7 +128,7 @@ namespace Azure.AI.ContentUnderstanding
                     cameraShotTimesMs = array;
                     continue;
                 }
-                // SDK-FIX: Handle both "keyFrameTimesMs" (TypeSpec definition) and "KeyFrameTimesMs" (service response format - capital K)
+                // SERVICE-FIX: Handle both "keyFrameTimesMs" (TypeSpec definition) and "KeyFrameTimesMs" (service response format - capital K)
                 if (prop.NameEquals("keyFrameTimesMs"u8) || prop.NameEquals("KeyFrameTimesMs"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)

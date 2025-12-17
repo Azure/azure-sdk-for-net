@@ -173,7 +173,7 @@ namespace Azure.Generator.Management.Providers
             // In C# XML docs, method references look like: MethodName(TypeName1, TypeName2)
 
             // Build parameter type list as a simple string since XML doc cref attributes use simple type names
-            var parameterTypeNames = string.Join(", ", targetSignature.Parameters.Select(p => p.Type.Name));
+            var parameterTypeNames = string.Join(", ", targetSignature.Parameters.Select(p => p.Type.GetXmlDocTypeName()));
             var methodRef = $"{mockableType.Name}.{targetSignature.Name}({parameterTypeNames})";
 
             // Return a FormattableString that will be converted to: To mock this method, please mock <see cref="..."/> instead.

@@ -15,11 +15,6 @@ namespace Azure.AI.ContentUnderstanding
     /// <summary> Chat completion and embedding models supported by the analyzer. </summary>
     public partial class SupportedModels : IJsonModel<SupportedModels>
     {
-        /// <summary> Initializes a new instance of <see cref="SupportedModels"/> for deserialization. </summary>
-        internal SupportedModels()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SupportedModels>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -38,30 +33,36 @@ namespace Azure.AI.ContentUnderstanding
             {
                 throw new FormatException($"The model {nameof(SupportedModels)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("completion"u8);
-            writer.WriteStartArray();
-            foreach (string item in Completion)
+            if (Optional.IsCollectionDefined(Completion))
             {
-                if (item == null)
+                writer.WritePropertyName("completion"u8);
+                writer.WriteStartArray();
+                foreach (string item in Completion)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteStringValue(item);
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("embedding"u8);
-            writer.WriteStartArray();
-            foreach (string item in Embedding)
+            if (Optional.IsCollectionDefined(Embedding))
             {
-                if (item == null)
+                writer.WritePropertyName("embedding"u8);
+                writer.WriteStartArray();
+                foreach (string item in Embedding)
                 {
-                    writer.WriteNullValue();
-                    continue;
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
                 }
-                writer.WriteStringValue(item);
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,6 +112,10 @@ namespace Azure.AI.ContentUnderstanding
             {
                 if (prop.NameEquals("completion"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -128,6 +133,10 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 if (prop.NameEquals("embedding"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<string> array = new List<string>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -148,7 +157,7 @@ namespace Azure.AI.ContentUnderstanding
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SupportedModels(completion, embedding, additionalBinaryDataProperties);
+            return new SupportedModels(completion ?? new ChangeTrackingList<string>(), embedding ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

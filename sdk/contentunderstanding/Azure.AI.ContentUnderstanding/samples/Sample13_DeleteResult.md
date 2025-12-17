@@ -2,75 +2,68 @@
 
 This sample demonstrates how to delete analysis results using the `DeleteResult` API. This is useful for removing temporary or sensitive analysis results immediately, rather than waiting for automatic deletion after 24 hours.
 
-## Before you begin
-
-This sample builds on concepts introduced in previous samples:
-- [Sample 01: Analyze a document from binary data][sample01] - Basic analysis concepts
-- [Sample 12: Get result files][sample12] - Understanding operation IDs
-
 ## About deleting results
 
-Analysis results are stored temporarily and can be deleted using the `DeleteResult` API:
+Analysis results from `AnalyzeAsync` or `AnalyzeBinaryAsync` are automatically deleted after 24 hours. However, you may want to delete results earlier in certain cases:
 
-- **Immediate deletion**: Results are marked for deletion and permanently removed
-- **Automatic deletion**: Results are automatically deleted after 24 hours if not manually deleted
-- **Operation ID required**: You need the operation ID from the analysis operation to delete the resulthttps://learn.microsoft.com/azure/ai-services/content-understanding/concepts/operations
+- **Remove sensitive data immediately**: Ensure sensitive information is not retained longer than necessary
+- **Comply with data retention policies**: Meet requirements for data deletion
+
+To delete results earlier than the 24-hour automatic deletion, use `ContentUnderstandingClient.DeleteResultAsync`. This method requires the operation ID from the analysis operation (obtained using `Operation<T>.Id`).
 
 **Important**: Once deleted, results cannot be recovered. Make sure you have saved any data you need before deleting.
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
 
 ## Analyze and delete result
 
-Analyze a document and then delete the result:
+This sample uses the `prebuilt-invoice` analyzer to analyze an invoice document and extract structured data. After retrieving the analysis result, it uses `DeleteResultAsync` to immediately delete the result to prevent further access. To use `DeleteResultAsync`, you need the operation ID from the analysis operation, which is obtained using `Operation<T>.Id`.
 
 ```C# Snippet:ContentUnderstandingAnalyzeAndDeleteResult
-Uri documentUrl = new Uri("<documentUrl>");
+// You can replace this URL with your own invoice file URL
+Uri documentUrl = new Uri("https://raw.githubusercontent.com/Azure-Samples/azure-ai-content-understanding-dotnet/main/ContentUnderstanding.Common/data/invoice.pdf");
 
-// Step 1: Start the analysis operation
+// Step 1: Analyze and wait for completion
 var analyzeOperation = await client.AnalyzeAsync(
-    WaitUntil.Started,
+    WaitUntil.Completed,
     "prebuilt-invoice",
     inputs: new[] { new AnalyzeInput { Url = documentUrl } });
-// Get the operation ID from the operation (available after Started)
+
+// Get the operation ID - this is needed to delete the result later
 string operationId = analyzeOperation.Id;
 Console.WriteLine($"Operation ID: {operationId}");
-
-// Wait for completion
-await analyzeOperation.WaitForCompletionAsync();
 AnalyzeResult result = analyzeOperation.Value;
 Console.WriteLine("Analysis completed successfully!");
 
 // Display some sample results
-if (result.Contents?.FirstOrDefault() is DocumentContent docContent && docContent.Fields != null)
-{
-    Console.WriteLine($"Total fields extracted: {docContent.Fields.Count}");
-    if (docContent.Fields.TryGetValue("CustomerName", out var customerNameField) && customerNameField is StringField sf)
-    {
-        Console.WriteLine($"Customer Name: {sf.ValueString ?? "(not found)"}");
-    }
-}
+DocumentContent documentContent = (DocumentContent)result.Contents!.First();
+Console.WriteLine($"Total fields extracted: {documentContent.Fields?.Count ?? 0}");
 
 // Step 2: Delete the analysis result
 Console.WriteLine($"Deleting analysis result (Operation ID: {operationId})...");
 await client.DeleteResultAsync(operationId);
 Console.WriteLine("Analysis result deleted successfully!");
 ```
-
-## When to delete results
-
-Delete results when you need to:
-- **Remove sensitive data immediately**: Ensure sensitive information is not retained longer than necessary
-- **Free up storage**: Remove results that are no longer needed
-- **Comply with data retention policies**: Meet requirements for data deletion
-
-**Note**: Results are automatically deleted after 24 hours if not manually deleted. Manual deletion is only needed if you want to remove results immediately.
 
 ## Next steps
 
@@ -79,9 +72,9 @@ Delete results when you need to:
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
+- [Content Understanding documentation][cu-docs]
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample12]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample12_GetResultFile.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/

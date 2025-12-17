@@ -92,18 +92,26 @@ namespace Azure.AI.OpenAI
         public override OpenAI.Audio.AudioClient GetAudioClient(string deploymentName) { throw null; }
         public override OpenAI.Batch.BatchClient GetBatchClient() { throw null; }
         public override OpenAI.Chat.ChatClient GetChatClient(string deploymentName) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Containers.ContainerClient GetContainerClient() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Conversations.ConversationClient GetConversationClient() { throw null; }
         public override OpenAI.Embeddings.EmbeddingClient GetEmbeddingClient(string deploymentName) { throw null; }
         public override OpenAI.Evals.EvaluationClient GetEvaluationClient() { throw null; }
         public override OpenAI.FineTuning.FineTuningClient GetFineTuningClient() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Graders.GraderClient GetGraderClient() { throw null; }
         public override OpenAI.Images.ImageClient GetImageClient(string deploymentName) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Moderations.ModerationClient GetModerationClient(string _) { throw null; }
         public override OpenAI.Files.OpenAIFileClient GetOpenAIFileClient() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override OpenAI.Models.OpenAIModelClient GetOpenAIModelClient() { throw null; }
-        public override OpenAI.Responses.OpenAIResponseClient GetOpenAIResponseClient(string deploymentName) { throw null; }
         public override OpenAI.Realtime.RealtimeClient GetRealtimeClient() { throw null; }
+        public override OpenAI.Responses.ResponsesClient GetResponsesClient(string deploymentName) { throw null; }
         public override OpenAI.VectorStores.VectorStoreClient GetVectorStoreClient() { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override OpenAI.Videos.VideoClient GetVideoClient() { throw null; }
     }
     public partial class AzureOpenAIClientOptions : System.ClientModel.Primitives.ClientPipelineOptions
     {

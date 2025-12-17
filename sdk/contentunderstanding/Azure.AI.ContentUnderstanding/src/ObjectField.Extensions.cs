@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System.Collections.Generic;
+
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary>
@@ -16,18 +18,37 @@ namespace Azure.AI.ContentUnderstanding
         /// Gets a field from the object by name.
         /// </summary>
         /// <param name="fieldName">The name of the field to retrieve.</param>
-        /// <returns>The field if found, or null if not found.</returns>
+        /// <returns>The field if found.</returns>
+        /// <exception cref="System.ArgumentNullException">Thrown when <paramref name="fieldName"/> is null.</exception>
+        /// <exception cref="System.ArgumentException">Thrown when <paramref name="fieldName"/> is an empty string.</exception>
+        /// <exception cref="KeyNotFoundException">Thrown when the specified field name is not found in the object.</exception>
+        /// <example>
+        /// <code>
+        /// try
+        /// {
+        ///     // Assume Amount field is known to exist in the sample code below
+        ///     var amount = totalAmountObj["Amount"].Value?.ToString();
+        /// }
+        /// catch (KeyNotFoundException)
+        /// {
+        ///     // Handle the issue as needed
+        /// }
+        /// </code>
+        /// </example>
         public ContentField this[string fieldName]
         {
             get
             {
+                Argument.AssertNotNullOrEmpty(fieldName, nameof(fieldName));
+
                 if (ValueObject != null && ValueObject.TryGetValue(fieldName, out var field))
                 {
                     return field;
                 }
-                return null;
+                throw new KeyNotFoundException($"Field '{fieldName}' was not found in the object.");
             }
         }
+
     }
 }
 

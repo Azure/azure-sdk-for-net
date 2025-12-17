@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,10 +37,9 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
             // These configs enable extraction of charts, annotations, hyperlinks, and formulas
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             AnalyzeResult result = operation.Value;
@@ -77,28 +77,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingExtractCharts
-            // Extract charts from document content
-            if (result.Contents?.FirstOrDefault() is DocumentContent documentContent)
+            // Extract charts from document content (enabled by EnableFigureAnalysis config)
+            DocumentContent documentContent = (DocumentContent)result.Contents!.First();
+            if (documentContent.Figures != null)
             {
-                if (documentContent.Figures != null && documentContent.Figures.Count > 0)
+                foreach (DocumentFigure figure in documentContent.Figures)
                 {
-                    var chartFigures = documentContent.Figures
-                        .Where(f => f is DocumentChartFigure)
-                        .Cast<DocumentChartFigure>()
-                        .ToList();
-
-                    Console.WriteLine($"Found {chartFigures.Count} chart(s)");
-                    foreach (var chart in chartFigures)
+                    if (figure is DocumentChartFigure chart)
                     {
                         Console.WriteLine($"  Chart ID: {chart.Id}");
-                        if (!string.IsNullOrEmpty(chart.Description))
-                        {
-                            Console.WriteLine($"    Description: {chart.Description}");
-                        }
-                        if (chart.Caption != null && !string.IsNullOrEmpty(chart.Caption.Content))
-                        {
-                            Console.WriteLine($"    Caption: {chart.Caption.Content}");
-                        }
+                        Console.WriteLine($"    Description: {chart.Description ?? "(not available)"}");
+                        Console.WriteLine($"    Caption: {chart.Caption?.Content ?? "(not available)"}");
                     }
                 }
             }
@@ -184,18 +173,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingExtractHyperlinks
-            // Extract hyperlinks from document content
-            if (result.Contents?.FirstOrDefault() is DocumentContent docContent)
+            // Extract hyperlinks from document content (enabled by EnableLayout config)
+            DocumentContent docContent = (DocumentContent)result.Contents!.First();
+            Console.WriteLine($"Found {docContent.Hyperlinks?.Count ?? 0} hyperlink(s)");
+            foreach (var hyperlink in docContent.Hyperlinks ?? Enumerable.Empty<DocumentHyperlink>())
             {
-                if (docContent.Hyperlinks != null && docContent.Hyperlinks.Count > 0)
-                {
-                    Console.WriteLine($"Found {docContent.Hyperlinks.Count} hyperlink(s)");
-                    foreach (var hyperlink in docContent.Hyperlinks)
-                    {
-                        Console.WriteLine($"  URL: {hyperlink.Url ?? "(not available)"}");
-                        Console.WriteLine($"    Content: {hyperlink.Content ?? "(not available)"}");
-                    }
-                }
+                Console.WriteLine($"  URL: {hyperlink.Url ?? "(not available)"}");
+                Console.WriteLine($"    Content: {hyperlink.Content ?? "(not available)"}");
             }
             #endregion
 
@@ -271,34 +255,20 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingExtractFormulas
-            // Extract formulas from document pages
-            if (result.Contents?.FirstOrDefault() is DocumentContent content)
+            // Extract formulas from document pages (enabled by EnableFormula config)
+            DocumentContent content = (DocumentContent)result.Contents!.First();
+            var allFormulas = new List<DocumentFormula>();
+            foreach (var page in content.Pages ?? Enumerable.Empty<DocumentPage>())
             {
-                var allFormulas = new System.Collections.Generic.List<DocumentFormula>();
-                if (content.Pages != null)
-                {
-                    foreach (var page in content.Pages)
-                    {
-                        if (page.Formulas != null)
-                        {
-                            allFormulas.AddRange(page.Formulas);
-                        }
-                    }
-                }
+                allFormulas.AddRange(page.Formulas ?? Enumerable.Empty<DocumentFormula>());
+            }
 
-                if (allFormulas.Count > 0)
-                {
-                    Console.WriteLine($"Found {allFormulas.Count} formula(s)");
-                    foreach (var formula in allFormulas)
-                    {
-                        Console.WriteLine($"  Formula Kind: {formula.Kind}");
-                        Console.WriteLine($"    LaTeX: {formula.Value ?? "(not available)"}");
-                        if (formula.Confidence.HasValue)
-                        {
-                            Console.WriteLine($"    Confidence: {formula.Confidence.Value:F2}");
-                        }
-                    }
-                }
+            Console.WriteLine($"Found {allFormulas.Count} formula(s)");
+            foreach (var formula in allFormulas)
+            {
+                Console.WriteLine($"  Formula Kind: {formula.Kind}");
+                Console.WriteLine($"    LaTeX: {formula.Value ?? "(not available)"}");
+                Console.WriteLine($"    Confidence: {formula.Confidence?.ToString("F2") ?? "N/A"}");
             }
             #endregion
 
@@ -387,29 +357,18 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #endregion
 
             #region Snippet:ContentUnderstandingExtractAnnotations
-            // Extract annotations from document content
-            if (result.Contents?.FirstOrDefault() is DocumentContent document)
+            // Extract annotations from document content (enabled by EnableLayout config)
+            DocumentContent document = (DocumentContent)result.Contents!.First();
+            Console.WriteLine($"Found {document.Annotations?.Count ?? 0} annotation(s)");
+            foreach (var annotation in document.Annotations ?? Enumerable.Empty<DocumentAnnotation>())
             {
-                if (document.Annotations != null && document.Annotations.Count > 0)
+                Console.WriteLine($"  Annotation ID: {annotation.Id}");
+                Console.WriteLine($"    Kind: {annotation.Kind}");
+                Console.WriteLine($"    Author: {annotation.Author ?? "(not available)"}");
+                Console.WriteLine($"    Comments: {annotation.Comments?.Count ?? 0}");
+                foreach (var comment in annotation.Comments ?? Enumerable.Empty<DocumentAnnotationComment>())
                 {
-                    Console.WriteLine($"Found {document.Annotations.Count} annotation(s)");
-                    foreach (var annotation in document.Annotations)
-                    {
-                        Console.WriteLine($"  Annotation ID: {annotation.Id}");
-                        Console.WriteLine($"    Kind: {annotation.Kind}");
-                        if (!string.IsNullOrEmpty(annotation.Author))
-                        {
-                            Console.WriteLine($"    Author: {annotation.Author}");
-                        }
-                        if (annotation.Comments != null && annotation.Comments.Count > 0)
-                        {
-                            Console.WriteLine($"    Comments: {annotation.Comments.Count}");
-                            foreach (var comment in annotation.Comments)
-                            {
-                                Console.WriteLine($"      - {comment.Message}");
-                            }
-                        }
-                    }
+                    Console.WriteLine($"      - {comment.Message}");
                 }
             }
             #endregion

@@ -183,7 +183,7 @@ namespace Azure.AI.ContentUnderstanding
             AnnotationFormat? annotationFormat = default;
             bool? disableFaceBlurring = default;
             bool? estimateFieldSourceAndConfidence = default;
-            IDictionary<string, ContentCategory> contentCategories = default;
+            IDictionary<string, ContentCategoryDefinition> contentCategories = default;
             bool? enableSegment = default;
             bool? segmentPerPage = default;
             bool? omitContent = default;
@@ -316,10 +316,10 @@ namespace Azure.AI.ContentUnderstanding
                     {
                         continue;
                     }
-                    Dictionary<string, ContentCategory> dictionary = new Dictionary<string, ContentCategory>();
+                    Dictionary<string, ContentCategoryDefinition> dictionary = new Dictionary<string, ContentCategoryDefinition>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, ContentCategory.DeserializeContentCategory(prop0.Value, options));
+                        dictionary.Add(prop0.Name, ContentCategoryDefinition.DeserializeContentCategoryDefinition(prop0.Value, options));
                     }
                     contentCategories = dictionary;
                     continue;
@@ -369,7 +369,7 @@ namespace Azure.AI.ContentUnderstanding
                 annotationFormat,
                 disableFaceBlurring,
                 estimateFieldSourceAndConfidence,
-                contentCategories ?? new ChangeTrackingDictionary<string, ContentCategory>(),
+                contentCategories ?? new ChangeTrackingDictionary<string, ContentCategoryDefinition>(),
                 enableSegment,
                 segmentPerPage,
                 omitContent,

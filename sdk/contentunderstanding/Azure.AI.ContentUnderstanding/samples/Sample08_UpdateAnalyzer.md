@@ -2,27 +2,33 @@
 
 This sample demonstrates how to update an existing custom analyzer, including updating its description and tags.
 
-## Before you begin
-
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
-- [Sample 06: Get analyzer information][sample06] - Understanding analyzer details
-
 ## About updating analyzers
 
-The `UpdateAnalyzerAsync` method allows you to modify certain properties of an existing analyzer:
+The `UpdateAnalyzerAsync` method allows you to modify certain properties of an existing analyzer. The following properties can be updated:
 - **Description**: Update the analyzer's description
-- **Tags**: Add, update, or remove tags (set tag value to empty string to remove)
-
-**Note**: Not all analyzer properties can be updated. Field schemas, models, and configuration typically cannot be changed after creation. To change these, you may need to delete and recreate the analyzer.
+- **Tags**: Add or update tags
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
 
 ## Update an analyzer
 
@@ -44,9 +50,8 @@ var updatedAnalyzer = new ContentAnalyzer
     Description = "Updated description"
 };
 
-// Update tags (empty string removes a tag)
+// Update tags
 updatedAnalyzer.Tags["tag1"] = "tag1_updated_value";
-updatedAnalyzer.Tags["tag2"] = "";  // Remove tag2
 updatedAnalyzer.Tags["tag3"] = "tag3_value";  // Add tag3
 
 // Update the analyzer
@@ -64,9 +69,9 @@ Console.WriteLine($"Tags: {string.Join(", ", updated.Value.Tags.Select(kvp => $"
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
+- [Content Understanding documentation][cu-docs]
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
 [sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md

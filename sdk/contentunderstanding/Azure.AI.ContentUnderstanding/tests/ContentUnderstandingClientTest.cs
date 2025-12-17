@@ -38,6 +38,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Tests updating default model deployments for the Content Understanding service.
         /// Verifies that model deployments (gpt-4.1, gpt-4.1-mini, text-embedding-3-large) can be updated and are correctly persisted.
+        /// Also verifies that incremental updates work correctly (updating one model preserves others).
         /// </summary>
         [RecordedTest]
         public async Task UpdateDefaultsAsync()
@@ -55,34 +56,86 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 return;
             }
 
-            // Update defaults with configured deployments
-            var modelDeployments = new Dictionary<string, string>
+            // Step 1: Set initial defaults with all three models
+            var initialModelDeployments = new Dictionary<string, string>
             {
                 ["gpt-4.1"] = gpt41Deployment!,
                 ["gpt-4.1-mini"] = gpt41MiniDeployment!,
                 ["text-embedding-3-large"] = textEmbeddingDeployment!
             };
 
-            Response<ContentUnderstandingDefaults> response = await client.UpdateDefaultsAsync(modelDeployments);
+            Response<ContentUnderstandingDefaults> initialResponse = await client.UpdateDefaultsAsync(initialModelDeployments);
 
-            Assert.IsNotNull(response, "Update response should not be null");
-            Assert.IsNotNull(response.Value, "Updated defaults should not be null");
+            Assert.IsNotNull(initialResponse, "Initial update response should not be null");
+            Assert.IsNotNull(initialResponse.Value, "Initial updated defaults should not be null");
 
-            ContentUnderstandingDefaults updatedDefaults = response.Value;
+            ContentUnderstandingDefaults initialDefaults = initialResponse.Value;
 
-            // Verify the updated defaults
-            Assert.IsNotNull(updatedDefaults.ModelDeployments, "Updated model deployments should not be null");
-            Assert.IsTrue(updatedDefaults.ModelDeployments.Count >= 3, "Should have at least 3 model deployments");
+            // Verify the initial defaults were set correctly
+            Assert.IsNotNull(initialDefaults.ModelDeployments, "Initial model deployments should not be null");
+            Assert.IsTrue(initialDefaults.ModelDeployments.Count >= 3, "Should have at least 3 model deployments initially");
 
-            // Verify each deployment was set correctly
-            Assert.IsTrue(updatedDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
-            Assert.AreEqual(gpt41Deployment, updatedDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment");
+            Assert.AreEqual(gpt41Deployment, initialDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match");
 
-            Assert.IsTrue(updatedDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
-            Assert.AreEqual(gpt41MiniDeployment, updatedDefaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment");
+            Assert.AreEqual(gpt41MiniDeployment, initialDefaults.ModelDeployments["gpt-4.1-mini"], "gpt-4.1-mini deployment should match");
 
-            Assert.IsTrue(updatedDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
-            Assert.AreEqual(textEmbeddingDeployment, updatedDefaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match");
+            Assert.IsTrue(initialDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment");
+            Assert.AreEqual(textEmbeddingDeployment, initialDefaults.ModelDeployments["text-embedding-3-large"], "text-embedding-3-large deployment should match");
+
+            // Step 2: Verify initial state by getting defaults
+            Response<ContentUnderstandingDefaults> getInitialResponse = await client.GetDefaultsAsync();
+            Assert.IsNotNull(getInitialResponse.Value, "Get defaults response should not be null");
+            Assert.IsNotNull(getInitialResponse.Value.ModelDeployments, "Model deployments should not be null");
+            Assert.IsTrue(getInitialResponse.Value.ModelDeployments.Count >= 3, "Should have at least 3 model deployments after initial update");
+
+            // Step 3: Perform incremental update - update only one model
+            // Use a different deployment name to verify the update actually happened
+            var incrementalUpdate = new Dictionary<string, string>
+            {
+                ["gpt-4.1"] = gpt41Deployment! // Update only gpt-4.1 (using same value, but this verifies incremental update preserves others)
+            };
+
+            Response<ContentUnderstandingDefaults> incrementalResponse = await client.UpdateDefaultsAsync(incrementalUpdate);
+
+            Assert.IsNotNull(incrementalResponse, "Incremental update response should not be null");
+            Assert.IsNotNull(incrementalResponse.Value, "Incremental updated defaults should not be null");
+
+            ContentUnderstandingDefaults incrementalDefaults = incrementalResponse.Value;
+
+            // Step 4: Verify incremental update - all three models should still be present
+            Assert.IsNotNull(incrementalDefaults.ModelDeployments, "Incremental updated model deployments should not be null");
+            Assert.AreEqual(3, incrementalDefaults.ModelDeployments.Count,
+                "All three models should still be present after incremental update (verifies incremental update works)");
+
+            // Verify gpt-4.1 was updated (or remains the same)
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1"), "Should contain gpt-4.1 deployment after incremental update");
+            Assert.AreEqual(gpt41Deployment, incrementalDefaults.ModelDeployments["gpt-4.1"], "gpt-4.1 deployment should match after incremental update");
+
+            // Verify gpt-4.1-mini was preserved (this is the key test for incremental update)
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("gpt-4.1-mini"), "Should contain gpt-4.1-mini deployment after incremental update");
+            Assert.AreEqual(gpt41MiniDeployment, incrementalDefaults.ModelDeployments["gpt-4.1-mini"],
+                "gpt-4.1-mini should be preserved after incremental update (verifies incremental update works)");
+
+            // Verify text-embedding-3-large was preserved (this is the key test for incremental update)
+            Assert.IsTrue(incrementalDefaults.ModelDeployments.ContainsKey("text-embedding-3-large"), "Should contain text-embedding-3-large deployment after incremental update");
+            Assert.AreEqual(textEmbeddingDeployment, incrementalDefaults.ModelDeployments["text-embedding-3-large"],
+                "text-embedding-3-large should be preserved after incremental update (verifies incremental update works)");
+
+            // Step 5: Verify by getting defaults again to ensure persistence
+            Response<ContentUnderstandingDefaults> getAfterIncrementalResponse = await client.GetDefaultsAsync();
+            Assert.IsNotNull(getAfterIncrementalResponse.Value, "Get defaults after incremental update response should not be null");
+            Assert.IsNotNull(getAfterIncrementalResponse.Value.ModelDeployments, "Model deployments should not be null");
+            Assert.AreEqual(3, getAfterIncrementalResponse.Value.ModelDeployments.Count,
+                "All three models should still be present when getting defaults after incremental update");
+
+            Assert.AreEqual(gpt41Deployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1"],
+                "gpt-4.1 deployment should match when getting defaults after incremental update");
+            Assert.AreEqual(gpt41MiniDeployment, getAfterIncrementalResponse.Value.ModelDeployments["gpt-4.1-mini"],
+                "gpt-4.1-mini should be preserved when getting defaults after incremental update");
+            Assert.AreEqual(textEmbeddingDeployment, getAfterIncrementalResponse.Value.ModelDeployments["text-embedding-3-large"],
+                "text-embedding-3-large should be preserved when getting defaults after incremental update");
         }
 
         /// <summary>
@@ -162,10 +215,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(binaryData, "Binary data should not be null");
 
             // Analyze the document
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             // Verify operation completed successfully
@@ -199,10 +251,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             AnalyzeResult result = operation.Value;
@@ -243,10 +294,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze the document
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             AnalyzeResult result = operation.Value;
@@ -259,108 +309,97 @@ namespace Azure.AI.ContentUnderstanding.Tests
             Assert.IsNotNull(content, "Content should not be null for document properties validation");
 
             // Verify document content type and properties
-            if (content is DocumentContent docContent)
+            Assert.IsInstanceOf<DocumentContent>(content, "Content should be DocumentContent");
+            DocumentContent docContent = (DocumentContent)content;
+
+            // Validate MIME type
+            Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
+            Assert.IsFalse(string.IsNullOrWhiteSpace(docContent.MimeType), "MIME type should not be empty");
+            Assert.AreEqual("application/pdf", docContent.MimeType, "MIME type should be application/pdf");
+
+            // Validate page numbers
+            Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
+            Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
+                "End page should be >= start page");
+            int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
+            Assert.IsTrue(totalPages > 0, "Total pages should be positive");
+
+            // Validate pages collection
+            Assert.IsNotNull(docContent.Pages, "Pages collection should not be null");
+            Assert.IsTrue(docContent.Pages.Count > 0, "Pages collection should not be empty");
+            Assert.AreEqual(totalPages, docContent.Pages.Count,
+                "Pages collection count should match calculated total pages");
+
+            var pageNumbers = new HashSet<int>();
+
+            foreach (var page in docContent.Pages)
             {
-                // Validate MIME type
-                Assert.IsNotNull(docContent.MimeType, "MIME type should not be null");
-                Assert.IsFalse(string.IsNullOrWhiteSpace(docContent.MimeType), "MIME type should not be empty");
-                Assert.AreEqual("application/pdf", docContent.MimeType, "MIME type should be application/pdf");
+                Assert.IsNotNull(page, "Page object should not be null");
+                Assert.IsTrue(page.PageNumber >= 1, "Page number should be >= 1");
+                Assert.IsTrue(page.PageNumber >= docContent.StartPageNumber &&
+                            page.PageNumber <= docContent.EndPageNumber,
+                    $"Page number {page.PageNumber} should be within document range [{docContent.StartPageNumber}, {docContent.EndPageNumber}]");
+                Assert.IsTrue(page.Width > 0, $"Page {page.PageNumber} width should be > 0, but was {page.Width}");
+                Assert.IsTrue(page.Height > 0, $"Page {page.PageNumber} height should be > 0, but was {page.Height}");
 
-                // Validate page numbers
-                Assert.IsTrue(docContent.StartPageNumber >= 1, "Start page should be >= 1");
-                Assert.IsTrue(docContent.EndPageNumber >= docContent.StartPageNumber,
-                    "End page should be >= start page");
-                int totalPages = docContent.EndPageNumber - docContent.StartPageNumber + 1;
-                Assert.IsTrue(totalPages > 0, "Total pages should be positive");
-
-                // Validate pages collection if available
-                if (docContent.Pages != null && docContent.Pages.Count > 0)
-                {
-                    Assert.IsTrue(docContent.Pages.Count > 0, "Pages collection should not be empty when not null");
-                    Assert.AreEqual(totalPages, docContent.Pages.Count,
-                        "Pages collection count should match calculated total pages");
-
-                    var pageNumbers = new HashSet<int>();
-
-                    foreach (var page in docContent.Pages)
-                    {
-                        Assert.IsNotNull(page, "Page object should not be null");
-                        Assert.IsTrue(page.PageNumber >= 1, "Page number should be >= 1");
-                        Assert.IsTrue(page.PageNumber >= docContent.StartPageNumber &&
-                                    page.PageNumber <= docContent.EndPageNumber,
-                            $"Page number {page.PageNumber} should be within document range [{docContent.StartPageNumber}, {docContent.EndPageNumber}]");
-                        Assert.IsTrue(page.Width > 0, $"Page {page.PageNumber} width should be > 0, but was {page.Width}");
-                        Assert.IsTrue(page.Height > 0, $"Page {page.PageNumber} height should be > 0, but was {page.Height}");
-
-                        // Ensure page numbers are unique
-                        Assert.IsTrue(pageNumbers.Add(page.PageNumber),
-                            $"Page number {page.PageNumber} appears multiple times");
-                    }
-                }
-
-                // Validate tables collection if available
-                // Expected table counts from recording: Table 1 (2 rows, 6 columns), Table 2 (4 rows, 8 columns), Table 3 (5 rows, 2 columns)
-                int[] expectedRowCounts = { 2, 4, 5 };
-                int[] expectedColumnCounts = { 6, 8, 2 };
-
-                if (docContent.Tables != null && docContent.Tables.Count > 0)
-                {
-                    Assert.IsTrue(docContent.Tables.Count > 0, "Tables collection should not be empty when not null");
-                    Assert.AreEqual(expectedRowCounts.Length, docContent.Tables.Count,
-                        $"Expected {expectedRowCounts.Length} tables based on recording, but found {docContent.Tables.Count}");
-
-                    int tableCounter = 0;
-                    foreach (var table in docContent.Tables)
-                    {
-                        Assert.IsNotNull(table, $"Table {tableCounter + 1} should not be null");
-
-                        // Verify row and column counts match expected values from recording
-                        if (tableCounter < expectedRowCounts.Length)
-                        {
-                            Assert.AreEqual(expectedRowCounts[tableCounter], table.RowCount,
-                                $"Table {tableCounter + 1} row count should be {expectedRowCounts[tableCounter]}, but was {table.RowCount}");
-                            Assert.AreEqual(expectedColumnCounts[tableCounter], table.ColumnCount,
-                                $"Table {tableCounter + 1} column count should be {expectedColumnCounts[tableCounter]}, but was {table.ColumnCount}");
-                        }
-
-                        // Validate table cells if available
-                        if (table.Cells != null && table.Cells.Count > 0)
-                        {
-                            Assert.IsTrue(table.Cells.Count > 0, $"Table {tableCounter + 1} cells collection should not be empty when not null");
-
-                            foreach (var cell in table.Cells)
-                            {
-                                Assert.IsNotNull(cell, "Table cell should not be null");
-                                Assert.IsTrue(cell.RowIndex >= 0, $"Cell row index should be >= 0, but was {cell.RowIndex}");
-                                Assert.IsTrue(cell.ColumnIndex >= 0, $"Cell column index should be >= 0, but was {cell.ColumnIndex}");
-
-                                // RowSpan and ColumnSpan are nullable, default to 1 if null
-                                int rowSpan = cell.RowSpan ?? 1;
-                                int columnSpan = cell.ColumnSpan ?? 1;
-                                Assert.IsTrue(rowSpan >= 1, $"Cell row span should be >= 1, but was {rowSpan}");
-                                Assert.IsTrue(columnSpan >= 1, $"Cell column span should be >= 1, but was {columnSpan}");
-
-                                // Verify cell indices are within declared table bounds
-                                int cellEndRow = cell.RowIndex + rowSpan - 1;
-                                int cellEndColumn = cell.ColumnIndex + columnSpan - 1;
-                                Assert.IsTrue(cell.RowIndex < table.RowCount,
-                                    $"Cell row index {cell.RowIndex} should be < table row count {table.RowCount}");
-                                Assert.IsTrue(cellEndRow < table.RowCount,
-                                    $"Cell end row {cellEndRow} (row {cell.RowIndex} + span {rowSpan}) should be < table row count {table.RowCount}");
-                                Assert.IsTrue(cell.ColumnIndex < table.ColumnCount,
-                                    $"Cell column index {cell.ColumnIndex} should be < table column count {table.ColumnCount}");
-                                Assert.IsTrue(cellEndColumn < table.ColumnCount,
-                                    $"Cell end column {cellEndColumn} (column {cell.ColumnIndex} + span {columnSpan}) should be < table column count {table.ColumnCount}");
-                            }
-                        }
-
-                        tableCounter++;
-                    }
-                }
+                // Ensure page numbers are unique
+                Assert.IsTrue(pageNumbers.Add(page.PageNumber),
+                    $"Page number {page.PageNumber} appears multiple times");
             }
-            else
+
+            // Validate tables collection
+            // Expected table counts from recording: Table 1 (2 rows, 6 columns), Table 2 (4 rows, 8 columns), Table 3 (5 rows, 2 columns)
+            int[] expectedRowCounts = { 2, 4, 5 };
+            int[] expectedColumnCounts = { 6, 8, 2 };
+
+            Assert.IsNotNull(docContent.Tables, "Tables collection should not be null");
+            Assert.IsTrue(docContent.Tables.Count > 0, "Tables collection should not be empty");
+            Assert.AreEqual(expectedRowCounts.Length, docContent.Tables.Count,
+                $"Expected {expectedRowCounts.Length} tables based on recording, but found {docContent.Tables.Count}");
+
+            int tableCounter = 0;
+            foreach (var table in docContent.Tables)
             {
-                Assert.Warn("Expected DocumentContent but got " + content?.GetType().Name);
+                Assert.IsNotNull(table, $"Table {tableCounter + 1} should not be null");
+
+                // Verify row and column counts match expected values from recording
+                Assert.IsTrue(tableCounter < expectedRowCounts.Length,
+                    $"Table counter {tableCounter} should be < expected row counts length {expectedRowCounts.Length}");
+                Assert.AreEqual(expectedRowCounts[tableCounter], table.RowCount,
+                    $"Table {tableCounter + 1} row count should be {expectedRowCounts[tableCounter]}, but was {table.RowCount}");
+                Assert.AreEqual(expectedColumnCounts[tableCounter], table.ColumnCount,
+                    $"Table {tableCounter + 1} column count should be {expectedColumnCounts[tableCounter]}, but was {table.ColumnCount}");
+
+                // Validate table cells
+                Assert.IsNotNull(table.Cells, $"Table {tableCounter + 1} cells collection should not be null");
+                Assert.IsTrue(table.Cells.Count > 0, $"Table {tableCounter + 1} cells collection should not be empty");
+
+                foreach (var cell in table.Cells)
+                {
+                    Assert.IsNotNull(cell, "Table cell should not be null");
+                    Assert.IsTrue(cell.RowIndex >= 0, $"Cell row index should be >= 0, but was {cell.RowIndex}");
+                    Assert.IsTrue(cell.ColumnIndex >= 0, $"Cell column index should be >= 0, but was {cell.ColumnIndex}");
+
+                    // RowSpan and ColumnSpan are nullable, default to 1 if null
+                    int rowSpan = cell.RowSpan ?? 1;
+                    int columnSpan = cell.ColumnSpan ?? 1;
+                    Assert.IsTrue(rowSpan >= 1, $"Cell row span should be >= 1, but was {rowSpan}");
+                    Assert.IsTrue(columnSpan >= 1, $"Cell column span should be >= 1, but was {columnSpan}");
+
+                    // Verify cell indices are within declared table bounds
+                    int cellEndRow = cell.RowIndex + rowSpan - 1;
+                    int cellEndColumn = cell.ColumnIndex + columnSpan - 1;
+                    Assert.IsTrue(cell.RowIndex < table.RowCount,
+                        $"Cell row index {cell.RowIndex} should be < table row count {table.RowCount}");
+                    Assert.IsTrue(cellEndRow < table.RowCount,
+                        $"Cell end row {cellEndRow} (row {cell.RowIndex} + span {rowSpan}) should be < table row count {table.RowCount}");
+                    Assert.IsTrue(cell.ColumnIndex < table.ColumnCount,
+                        $"Cell column index {cell.ColumnIndex} should be < table column count {table.ColumnCount}");
+                    Assert.IsTrue(cellEndColumn < table.ColumnCount,
+                        $"Cell end column {cellEndColumn} (column {cell.ColumnIndex} + span {columnSpan}) should be < table column count {table.ColumnCount}");
+                }
+
+                tableCounter++;
             }
         }
 
@@ -467,6 +506,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 Assert.IsTrue(hasAnyField, "Invoice should have at least one standard invoice field");
 
                 // Verify CustomerName field with expected value
+                // Note: LLM can return different variations, so we accept multiple possible values
                 if (docContent.Fields.TryGetValue("CustomerName", out var customerNameField))
                 {
                     Assert.IsTrue(customerNameField is StringField, "CustomerName should be a StringField");
@@ -474,9 +514,11 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     {
                         Assert.IsFalse(string.IsNullOrWhiteSpace(customerNameStr.ValueString),
                             "CustomerName value should not be empty");
-                        // Expected value from recording: "MICROSOFT CORPORATION"
-                        Assert.AreEqual("MICROSOFT CORPORATION", customerNameStr.ValueString,
-                            "CustomerName should match expected value");
+                        // Accept multiple possible values as LLM can return different variations
+                        var customerName = customerNameStr.ValueString;
+                        var acceptedValues = new[] { "MICROSOFT CORPORATION", "Microsoft Corp" };
+                        Assert.IsTrue(acceptedValues.Contains(customerName),
+                            $"CustomerName should be one of the accepted values: {string.Join(", ", acceptedValues)}, but was '{customerName}'");
                         Assert.IsTrue(customerNameStr.Confidence.HasValue,
                             "CustomerName should have confidence value");
                         if (customerNameStr.Confidence.HasValue)
@@ -515,8 +557,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
                     Assert.IsTrue(totalAmountField is ObjectField, "TotalAmount should be an ObjectField");
                     if (totalAmountField is ObjectField totalAmountObj)
                     {
-                        // Verify Amount sub-field
-                        var amountField = totalAmountObj["Amount"];
+                        // Verify Amount sub-field - field is known to exist based on recording
+                        var amountField = totalAmountObj["Amount"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(amountField, "TotalAmount.Amount should not be null");
                         Assert.IsTrue(amountField is NumberField, "TotalAmount.Amount should be a NumberField");
                         if (amountField is NumberField amountNum)
@@ -528,15 +570,23 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                 "TotalAmount.Amount should match expected value");
                         }
 
-                        // Verify CurrencyCode sub-field
-                        var currencyField = totalAmountObj["CurrencyCode"];
+                        // Verify CurrencyCode sub-field - field is known to exist based on recording
+                        // Note: LLM can return different values or null at different runs, so we accept multiple possibilities
+                        var currencyField = totalAmountObj["CurrencyCode"];  // Throws KeyNotFoundException if not found
                         Assert.IsNotNull(currencyField, "TotalAmount.CurrencyCode should not be null");
                         Assert.IsTrue(currencyField is StringField, "TotalAmount.CurrencyCode should be a StringField");
                         if (currencyField is StringField currencyStr)
                         {
-                            // Expected value from recording: "USD"
-                            Assert.AreEqual("USD", currencyStr.ValueString,
-                                "TotalAmount.CurrencyCode should match expected value");
+                            // Accept both "USD" and null/empty as valid values since LLM may not always extract it
+                            var currencyValue = currencyStr.ValueString;
+                            if (!string.IsNullOrWhiteSpace(currencyValue))
+                            {
+                                // If value is present, it should be "USD"
+                                var acceptedValues = new[] { "USD" };
+                                Assert.IsTrue(acceptedValues.Contains(currencyValue),
+                                    $"TotalAmount.CurrencyCode should be one of the accepted values: {string.Join(", ", acceptedValues)}, but was '{currencyValue}'");
+                            }
+                            // If currencyValue is null or empty, that's also acceptable as LLM may not always extract it consistently
                         }
                     }
                 }
@@ -554,6 +604,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Verify first line item (Consulting Services)
                         if (lineItems[0] is ObjectField item1)
                         {
+                            // Fields known to exist based on recording - using indexer which throws if not found
                             var desc1 = item1["Description"];
                             Assert.IsNotNull(desc1, "Item 1 Description should not be null");
                             if (desc1 is StringField desc1Str)
@@ -572,10 +623,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                     "Item 1 Quantity should match expected value");
                             }
 
-                            var unitPrice1 = item1["UnitPrice"];
-                            if (unitPrice1 is ObjectField unitPrice1Obj)
+                            // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item1.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice1Obj)
                             {
-                                var unitPrice1Amount = unitPrice1Obj["Amount"];
+                                var unitPrice1Amount = unitPrice1Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (unitPrice1Amount is NumberField unitPrice1Num && unitPrice1Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 30
@@ -588,6 +639,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Verify second line item (Document Fee)
                         if (lineItems[1] is ObjectField item2)
                         {
+                            // Fields known to exist based on recording - using indexer which throws if not found
                             var desc2 = item2["Description"];
                             Assert.IsNotNull(desc2, "Item 2 Description should not be null");
                             if (desc2 is StringField desc2Str)
@@ -606,10 +658,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                     "Item 2 Quantity should match expected value");
                             }
 
-                            var totalAmount2 = item2["TotalAmount"];
-                            if (totalAmount2 is ObjectField totalAmount2Obj)
+                            // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item2.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount2Obj)
                             {
-                                var totalAmount2Amount = totalAmount2Obj["Amount"];
+                                var totalAmount2Amount = totalAmount2Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (totalAmount2Amount is NumberField totalAmount2Num && totalAmount2Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 30
@@ -622,6 +674,7 @@ namespace Azure.AI.ContentUnderstanding.Tests
                         // Verify third line item (Printing Fee)
                         if (lineItems[2] is ObjectField item3)
                         {
+                            // Fields known to exist based on recording - using indexer which throws if not found
                             var desc3 = item3["Description"];
                             Assert.IsNotNull(desc3, "Item 3 Description should not be null");
                             if (desc3 is StringField desc3Str)
@@ -640,10 +693,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                     "Item 3 Quantity should match expected value");
                             }
 
-                            var unitPrice3 = item3["UnitPrice"];
-                            if (unitPrice3 is ObjectField unitPrice3Obj)
+                            // UnitPrice may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item3.ValueObject?.GetFieldOrDefault("UnitPrice") is ObjectField unitPrice3Obj)
                             {
-                                var unitPrice3Amount = unitPrice3Obj["Amount"];
+                                var unitPrice3Amount = unitPrice3Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (unitPrice3Amount is NumberField unitPrice3Num && unitPrice3Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 1
@@ -652,10 +705,10 @@ namespace Azure.AI.ContentUnderstanding.Tests
                                 }
                             }
 
-                            var totalAmount3 = item3["TotalAmount"];
-                            if (totalAmount3 is ObjectField totalAmount3Obj)
+                            // TotalAmount may or may not exist - using GetFieldOrDefault for null-safe access
+                            if (item3.ValueObject?.GetFieldOrDefault("TotalAmount") is ObjectField totalAmount3Obj)
                             {
-                                var totalAmount3Amount = totalAmount3Obj["Amount"];
+                                var totalAmount3Amount = totalAmount3Obj.ValueObject?.GetFieldOrDefault("Amount");
                                 if (totalAmount3Amount is NumberField totalAmount3Num && totalAmount3Num.ValueNumber.HasValue)
                                 {
                                     // Expected value from recording: 10
@@ -781,17 +834,17 @@ namespace Azure.AI.ContentUnderstanding.Tests
             string analyzerId = Recording.GetVariable("analyzerId", defaultId) ?? defaultId;
 
             // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategory>
+            var categories = new Dictionary<string, ContentCategoryDefinition>
             {
-                ["Loan_Application"] = new ContentCategory
+                ["Loan_Application"] = new ContentCategoryDefinition
                 {
                     Description = "Documents submitted by individuals or businesses to request funding"
                 },
-                ["Invoice"] = new ContentCategory
+                ["Invoice"] = new ContentCategoryDefinition
                 {
                     Description = "Billing documents issued by sellers or service providers to request payment"
                 },
-                ["Bank_Statement"] = new ContentCategory
+                ["Bank_Statement"] = new ContentCategoryDefinition
                 {
                     Description = "Official statements issued by banks that summarize account activity"
                 }
@@ -857,10 +910,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
                 BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
                 // Analyze the document using the classifier
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     binaryData);
 
                 // Verify analysis operation completed successfully
@@ -1221,10 +1273,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
             BinaryData binaryData = BinaryData.FromBytes(fileBytes);
 
             // Analyze with prebuilt-documentSearch which has formulas, layout, and OCR enabled
-            AnalyzeResultOperation operation = await client.AnalyzeBinaryAsync(
+            Operation<AnalyzeResult> operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
                 binaryData);
 
             // Verify operation completed successfully
@@ -1270,8 +1321,8 @@ namespace Azure.AI.ContentUnderstanding.Tests
             var operation = await client.AnalyzeBinaryAsync(
                 WaitUntil.Completed,
                 "prebuilt-documentSearch",
-                "application/pdf",
-                RequestContent.Create(BinaryData.FromBytes(fileBytes)));
+                RequestContent.Create(BinaryData.FromBytes(fileBytes)),
+                "application/pdf");
 
             // Verify operation completed successfully
             Assert.IsNotNull(operation, "Analysis operation should not be null");

@@ -1,10 +1,21 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.2.0 (2025-11-27)
 
 ### Features Added
 
-- - Upgraded api-version tag to 'package-2024-04-24'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/7eb817d513e6b2364a823d1f56db45d25fdca7b7/specification/dynatrace/resource-manager/readme.md.
+- Upgraded api-version to '2024-04-24'.
+- Make `Azure.ResourceManager.Dynatrace` AOT-compatible.
 
 ## 1.1.1 (2025-03-11)
 

@@ -69,7 +69,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Config = sourceConfig,
                 FieldSchema = sourceFieldSchema
             };
-            sourceAnalyzer.Models.Add("completion", "gpt-4.1");
+            sourceAnalyzer.Models["completion"] = "gpt-4.1";
             sourceAnalyzer.Tags.Add("modelType", "in_development");
 
             var createOperation = await client.CreateAnalyzerAsync(

@@ -29,17 +29,17 @@ namespace Azure.AI.ContentUnderstanding.Samples
             #region Snippet:ContentUnderstandingCreateClassifier
 #if SNIPPET
             // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategory>
+            var categories = new Dictionary<string, ContentCategoryDefinition>
             {
-                ["Loan_Application"] = new ContentCategory
+                ["Loan_Application"] = new ContentCategoryDefinition
                 {
                     Description = "Documents submitted by individuals or businesses to request funding, typically including personal or business details, financial history, loan amount, purpose, and supporting documentation."
                 },
-                ["Invoice"] = new ContentCategory
+                ["Invoice"] = new ContentCategoryDefinition
                 {
                     Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
                 },
-                ["Bank_Statement"] = new ContentCategory
+                ["Bank_Statement"] = new ContentCategoryDefinition
                 {
                     Description = "Official statements issued by banks that summarize account activity over a period, including deposits, withdrawals, fees, and balances."
                 }
@@ -65,23 +65,23 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             // Create the classifier
             string analyzerId = $"my_classifier_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #else
             // Define content categories for classification
-            var categories = new Dictionary<string, ContentCategory>
+            var categories = new Dictionary<string, ContentCategoryDefinition>
             {
-                ["Loan_Application"] = new ContentCategory
+                ["Loan_Application"] = new ContentCategoryDefinition
                 {
                     Description = "Documents submitted by individuals or businesses to request funding, typically including personal or business details, financial history, loan amount, purpose, and supporting documentation."
                 },
-                ["Invoice"] = new ContentCategory
+                ["Invoice"] = new ContentCategoryDefinition
                 {
                     Description = "Billing documents issued by sellers or service providers to request payment for goods or services, detailing items, prices, taxes, totals, and payment terms."
                 },
-                ["Bank_Statement"] = new ContentCategory
+                ["Bank_Statement"] = new ContentCategoryDefinition
                 {
                     Description = "Official statements issued by banks that summarize account activity over a period, including deposits, withdrawals, fees, and balances."
                 }
@@ -107,7 +107,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             // Generate a unique analyzer ID and record it for playback
             string defaultId = $"test_classifier_{Recording.Random.NewGuid().ToString("N")}";
@@ -242,7 +242,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ReturnDetails = true,
                 EnableSegment = false // No automatic segmentation
             };
-            config.ContentCategories.Add("Invoice", new ContentCategory
+            config.ContentCategories.Add("Invoice", new ContentCategoryDefinition
             {
                 Description = "Billing documents issued by sellers or service providers to request payment for goods or services."
             });
@@ -253,7 +253,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization without segmentation",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -262,45 +262,36 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             try
             {
-                #region Snippet:ContentUnderstandingAnalyzeCategory
-#if SNIPPET
+                #if SNIPPET
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #else
                 // Analyze a document (EnableSegment=false means entire document is one category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
                 var fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #endif
 
                 var analyzeResult = analyzeOperation.Value;
 
                 // Display classification results
-                if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
-                {
-                    Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
+                DocumentContent docContent = (DocumentContent)analyzeResult.Contents!.First();
+                Console.WriteLine($"Pages: {docContent.StartPageNumber}-{docContent.EndPageNumber}");
 
-                    // With EnableSegment=false, the document is classified as a single unit
-                    if (docContent.Segments != null && docContent.Segments.Count > 0)
-                    {
-                        foreach (var segment in docContent.Segments)
-                        {
-                            Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
-                            Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
-                        }
-                    }
+                // With EnableSegment=false, the document is classified as a single unit
+                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentContentSegment>())
+                {
+                    Console.WriteLine($"Category: {segment.Category ?? "(unknown)"}");
+                    Console.WriteLine($"Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
                 }
-                #endregion
 
                 #region Assertion:ContentUnderstandingAnalyzeCategory
                 Assert.IsTrue(File.Exists(filePath), $"Sample file not found at {filePath}");
@@ -448,7 +439,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 ReturnDetails = true,
                 EnableSegment = true // Enable automatic segmentation
             };
-            config.ContentCategories.Add("Invoice", new ContentCategory
+            config.ContentCategories.Add("Invoice", new ContentCategoryDefinition
             {
                 Description = "Billing documents issued by sellers or service providers to request payment for goods or services."
             });
@@ -459,7 +450,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Description = "Custom classifier for financial document categorization with automatic segmentation",
                 Config = config
             };
-            classifier.Models.Add("completion", "gpt-4.1");
+            classifier.Models["completion"] = "gpt-4.1";
 
             await client.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -473,37 +464,30 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 string filePath = "<file_path>";
                 byte[] fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #else
                 // Analyze a document (EnableSegment=true automatically segments by category)
                 var filePath = ContentUnderstandingClientTestEnvironment.CreatePath("mixed_financial_docs.pdf");
                 var fileBytes = File.ReadAllBytes(filePath);
-                AnalyzeResultOperation analyzeOperation = await client.AnalyzeBinaryAsync(
+                Operation<AnalyzeResult> analyzeOperation = await client.AnalyzeBinaryAsync(
                     WaitUntil.Completed,
                     analyzerId,
-                    "application/pdf",
                     BinaryData.FromBytes(fileBytes));
 #endif
 
                 var analyzeResult = analyzeOperation.Value;
 
                 // Display classification results with automatic segmentation
-                if (analyzeResult.Contents?.FirstOrDefault() is DocumentContent docContent)
+                DocumentContent docContent = (DocumentContent)analyzeResult.Contents!.First();
+                Console.WriteLine($"Found {docContent.Segments?.Count ?? 0} segment(s):");
+                foreach (var segment in docContent.Segments ?? Enumerable.Empty<DocumentContentSegment>())
                 {
-                    if (docContent.Segments != null && docContent.Segments.Count > 0)
-                    {
-                        Console.WriteLine($"Found {docContent.Segments.Count} segment(s):");
-                        foreach (var segment in docContent.Segments)
-                        {
-                            Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
-                            Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
-                            Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
-                        }
-                    }
+                    Console.WriteLine($"  Category: {segment.Category ?? "(unknown)"}");
+                    Console.WriteLine($"  Pages: {segment.StartPageNumber}-{segment.EndPageNumber}");
+                    Console.WriteLine($"  Segment ID: {segment.SegmentId ?? "(not available)"}");
                 }
                 #endregion
 

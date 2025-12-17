@@ -2,28 +2,34 @@
 
 This sample demonstrates how to delete a custom analyzer.
 
-## Before you begin
-
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
-- [Sample 08: Update analyzer][sample08] - Understanding analyzer management
-
 ## About deleting analyzers
 
 The `DeleteAnalyzerAsync` method permanently removes a custom analyzer from your resource. This operation cannot be undone.
 
 **Important notes**:
 - Only custom analyzers can be deleted. Prebuilt analyzers cannot be deleted.
-- Deleting an analyzer does not delete analysis results that were created using that analyzer.
-- Once deleted, the analyzer ID cannot be reused immediately.
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
 
 ## Create a simple analyzer
 
@@ -44,7 +50,7 @@ var analyzer = new ContentAnalyzer
         ReturnDetails = true
     }
 };
-analyzer.Models.Add("completion", "gpt-4.1");
+analyzer.Models["completion"] = "gpt-4.1";
 
 await client.CreateAnalyzerAsync(
     WaitUntil.Completed,
@@ -74,9 +80,9 @@ You've completed the analyzer management samples! Consider exploring:
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
+- [Content Understanding documentation][cu-docs]
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample02]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
 [sample03]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample03_AnalyzeInvoice.md

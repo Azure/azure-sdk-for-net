@@ -2,12 +2,6 @@
 
 This sample demonstrates how to list all available analyzers in your Microsoft Foundry resource, including both prebuilt and custom analyzers.
 
-## Before you begin
-
-This sample builds on concepts introduced in previous samples:
-- [Sample 04: Create a custom analyzer][sample04] - Understanding custom analyzers
-- [Sample 06: Get analyzer information][sample06] - Understanding analyzer details
-
 ## About listing analyzers
 
 The `GetAnalyzersAsync` method returns an async enumerable of all analyzers in your resource, including:
@@ -21,11 +15,25 @@ This is useful for:
 
 ## Prerequisites
 
-To get started you'll need a **Microsoft Foundry resource** with model deployments configured. See [Sample 00][sample00] for setup instructions.
+To get started you'll need a **Microsoft Foundry resource**. See [Sample 00: Configure model deployment defaults][sample00] for setup guidance.
 
 ## Creating a `ContentUnderstandingClient`
 
-See [Sample 01][sample01] for authentication examples using `DefaultAzureCredential` or API key.
+For full client setup details, see [Sample 00: Configure model deployment defaults][sample00]. Quick reference snippets are below—pick the one that matches the authentication method you plan to use.
+
+```C# Snippet:CreateContentUnderstandingClient
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+var credential = new DefaultAzureCredential();
+var client = new ContentUnderstandingClient(new Uri(endpoint), credential);
+```
+
+```C# Snippet:CreateContentUnderstandingClientApiKey
+// Example: https://your-foundry.services.ai.azure.com/
+string endpoint = "<endpoint>";
+string apiKey = "<apiKey>";
+var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+```
 
 ## List all analyzers
 
@@ -72,10 +80,10 @@ foreach (var analyzer in analyzers)
 
 ## Learn more
 
-- [Content Understanding Documentation][cu-docs]
-- [Prebuilt Analyzers Documentation][prebuilt-docs]
+- [Content Understanding documentation][cu-docs]
+- [Prebuilt analyzers documentation][prebuilt-docs]
 
-[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_ConfigureDefaults.md
+[sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample04]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample04_CreateAnalyzer.md
 [sample06]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample06_GetAnalyzer.md

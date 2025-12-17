@@ -85,6 +85,29 @@ namespace Azure.AI.ContentUnderstanding
             return message;
         }
 
+        internal HttpMessage CreateCopyAnalyzerRequest(string analyzerId, RequestContent content, bool? allowReplace, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/contentunderstanding", false);
+            uri.AppendPath("/analyzers/", false);
+            uri.AppendPath(analyzerId, true);
+            uri.AppendPath(":copy", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (allowReplace != null)
+            {
+                uri.AppendQuery("allowReplace", TypeFormatters.ConvertToString(allowReplace), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateCreateAnalyzerRequest(string analyzerId, RequestContent content, bool? allowReplace, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

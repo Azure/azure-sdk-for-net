@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable enable
@@ -29,9 +29,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <remarks>
         /// This value is read from the environment variable: CONTENTUNDERSTANDING_ENDPOINT
         /// In Playback mode, a fake endpoint is used: https://fake_contentunderstanding_endpoint.services.ai.azure.com/
-        /// The endpoint is sanitized in recordings to prevent exposing real service endpoints.
+        /// The endpoint is sanitized in recordings via URI sanitizers to prevent exposing real service endpoints.
         /// </remarks>
-        public string Endpoint => GetRecordedVariable("CONTENTUNDERSTANDING_ENDPOINT", options => options.IsSecret("https://sanitized.services.ai.azure.com/"));
+        public string Endpoint => GetRecordedVariable("CONTENTUNDERSTANDING_ENDPOINT");
 
         /// <summary>
         /// Gets the API key for authenticating with the Content Understanding service.
@@ -42,12 +42,12 @@ namespace Azure.AI.ContentUnderstanding.Tests
         public string ApiKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_KEY", options => options.IsSecret());
 
         /// <summary>
-        /// Gets the GPT-4.1 deployment name (optional).
+        /// Gets the gpt-4.1 deployment name (optional).
         /// </summary>
         public string? Gpt41Deployment => GetRecordedOptionalVariable("GPT_4_1_DEPLOYMENT");
 
         /// <summary>
-        /// Gets the GPT-4.1-mini deployment name (optional).
+        /// Gets the gpt-4.1-mini deployment name (optional).
         /// </summary>
         public string? Gpt41MiniDeployment => GetRecordedOptionalVariable("GPT_4_1_MINI_DEPLOYMENT");
 
@@ -59,32 +59,32 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// <summary>
         /// Gets the source resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? SourceResourceId => GetRecordedOptionalVariable("SOURCE_RESOURCE_ID", options => options.IsSecret());
+        public string? SourceResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the source region for cross-resource copying (optional).
         /// </summary>
-        public string? SourceRegion => GetRecordedOptionalVariable("SOURCE_REGION", options => options.IsSecret());
+        public string? SourceRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target endpoint for cross-resource copying (optional).
         /// </summary>
-        public string TargetEndpoint => GetRecordedVariable("TARGET_ENDPOINT", options => options.IsSecret("https://sanitized.services.ai.azure.com/"));
+        public string TargetEndpoint => GetRecordedVariable("CONTENTUNDERSTANDING_TARGET_ENDPOINT");
 
         /// <summary>
         /// Gets the target resource ID for cross-resource copying (optional).
         /// </summary>
-        public string? TargetResourceId => GetRecordedOptionalVariable("TARGET_RESOURCE_ID", options => options.IsSecret());
+        public string? TargetResourceId => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target region for cross-resource copying (optional).
         /// </summary>
-        public string? TargetRegion => GetRecordedOptionalVariable("TARGET_REGION", options => options.IsSecret());
+        public string? TargetRegion => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_REGION", options => options.IsSecret());
 
         /// <summary>
         /// Gets the target API key for cross-resource copying (optional).
         /// </summary>
-        public string? TargetKey => GetRecordedOptionalVariable("TARGET_KEY", options => options.IsSecret());
+        public string? TargetKey => GetRecordedOptionalVariable("AZURE_CONTENT_UNDERSTANDING_TARGET_KEY", options => options.IsSecret());
 
         /// <summary>
         /// Gets the training data SAS URL for analyzer training with labeled data (optional).

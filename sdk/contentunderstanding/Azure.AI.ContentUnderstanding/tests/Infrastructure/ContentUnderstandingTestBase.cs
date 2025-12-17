@@ -113,6 +113,15 @@ namespace Azure.AI.ContentUnderstanding.Tests
             // Sanitize sensitive headers
             testBase.SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
             testBase.SanitizedHeaders.Add("Authorization");
+
+            // Sanitize containerUrl in response bodies (e.g., in knowledgeSources)
+            // This ensures containerUrl is always replaced with a valid URI, not just "Sanitized"
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"""containerUrl""\s*:\s*""[^""]*"""
+            )
+            {
+                Value = @"""containerUrl"":""https://sanitized.blob.core.windows.net/container"""
+            });
         }
 
         /// <summary>
@@ -167,7 +176,9 @@ namespace Azure.AI.ContentUnderstanding.Tests
         /// </remarks>
         public static void ConfigureCopyOperationSanitizers(RecordedTestBase<ContentUnderstandingClientTestEnvironment> testBase)
         {
-            // Sanitize resource IDs and regions in request bodies (for GrantCopyAuthorization and CopyAnalyzer)
+            // Sanitize resource IDs and regions in request/response bodies (for GrantCopyAuthorization and CopyAnalyzer)
+            // Note: Resource IDs contain resource group names (e.g., /subscriptions/{id}/resourceGroups/{rgName}/providers/...)
+            // These sanitizers ensure resource group names don't appear in recordings
             testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
                 regex: @"""targetAzureResourceId""\s*:\s*""[^""]*"""
             )
@@ -194,6 +205,15 @@ namespace Azure.AI.ContentUnderstanding.Tests
             )
             {
                 Value = @"""sourceRegion"":""Sanitized"""
+            });
+
+            // Additional sanitizer for resource group names in resource IDs (extra safety)
+            // This sanitizes any resource ID pattern that might appear in request/response bodies
+            testBase.BodyRegexSanitizers.Add(new BodyRegexSanitizer(
+                regex: @"/resourceGroups/[^/""]+"
+            )
+            {
+                Value = @"/resourceGroups/Sanitized"
             });
         }
 

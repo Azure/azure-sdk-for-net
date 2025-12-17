@@ -37,15 +37,24 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #endif
             ContentAnalyzer analyzer = response.Value;
 
-            // Display full analyzer JSON
-            var jsonOptions = new JsonSerializerOptions
+            // Print a few properties from ContentAnalyzer
+            Console.WriteLine($"Analyzer ID: {analyzer.AnalyzerId}");
+            Console.WriteLine($"Base Analyzer ID: {analyzer.BaseAnalyzerId}");
+            Console.WriteLine($"Description: {analyzer.Description}");
+            Console.WriteLine($"Enable OCR: {analyzer.Config.EnableOcr}");
+            Console.WriteLine($"Enable Layout: {analyzer.Config.EnableLayout}");
+            Console.WriteLine($"Models: {string.Join(", ", analyzer.Models.Select(m => $"{m.Key}={m.Value}"))}");
+
+            // Get raw response JSON and format it for nice printing
+            var rawResponseForJson = response.GetRawResponse();
+            string rawJson = rawResponseForJson.Content.ToString();
+            using (JsonDocument doc = JsonDocument.Parse(rawJson))
             {
-                WriteIndented = true,
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-            };
-            string analyzerJson = JsonSerializer.Serialize(analyzer, jsonOptions);
-            Console.WriteLine("Prebuilt-documentSearch Analyzer:");
-            Console.WriteLine(analyzerJson);
+                var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+                string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
+                Console.WriteLine("\nPrebuilt-documentSearch Analyzer (Raw JSON):");
+                Console.WriteLine(formattedJson);
+            }
             #endregion
 
             #region Assertion:ContentUnderstandingGetPrebuiltAnalyzer
@@ -61,12 +70,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(rawResponse.Content, "Response content should not be null");
             Console.WriteLine($"Raw response status: {rawResponse.Status}");
 
-            // Verify analyzer can be serialized to JSON
-            Assert.IsNotNull(analyzerJson, "Analyzer JSON should not be null");
-            Assert.IsTrue(analyzerJson.Length > 0, "Analyzer JSON should not be empty");
-            Assert.IsTrue(analyzerJson.Contains("prebuilt-documentSearch") || analyzerJson.Contains("documentSearch"),
-                "Analyzer JSON should contain analyzer identifier");
-            Console.WriteLine($"Analyzer JSON length: {analyzerJson.Length} characters");
+            // Verify raw JSON response
+            Assert.IsNotNull(rawJson, "Raw JSON should not be null");
+            Assert.IsTrue(rawJson.Length > 0, "Raw JSON should not be empty");
+            Assert.IsTrue(rawJson.Contains("prebuilt-documentSearch") || rawJson.Contains("documentSearch"),
+                "Raw JSON should contain analyzer identifier");
+            Console.WriteLine($"Raw JSON length: {rawJson.Length} characters");
 
             // Verify basic analyzer properties for prebuilt-documentSearch
             if (!string.IsNullOrWhiteSpace(analyzer.BaseAnalyzerId))
@@ -124,15 +133,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
 #endif
             ContentAnalyzer invoiceAnalyzer = invoiceResponse.Value;
 
-            // Display full analyzer JSON
-            var jsonOptions = new JsonSerializerOptions
+            // Get raw response JSON and format it for nice printing
+            var rawResponseForJson = invoiceResponse.GetRawResponse();
+            string rawJson = rawResponseForJson.Content.ToString();
+            using (JsonDocument doc = JsonDocument.Parse(rawJson))
             {
-                WriteIndented = true,
-                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-            };
-            string invoiceAnalyzerJson = JsonSerializer.Serialize(invoiceAnalyzer, jsonOptions);
-            Console.WriteLine("Prebuilt-invoice Analyzer:");
-            Console.WriteLine(invoiceAnalyzerJson);
+                var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+                string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
+                Console.WriteLine(formattedJson);
+            }
             #endregion
 
             #region Assertion:ContentUnderstandingGetPrebuiltInvoice
@@ -148,12 +157,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.IsNotNull(rawResponse.Content, "Response content should not be null");
             Console.WriteLine($"Raw response status: {rawResponse.Status}");
 
-            // Verify analyzer can be serialized to JSON
-            Assert.IsNotNull(invoiceAnalyzerJson, "Invoice analyzer JSON should not be null");
-            Assert.IsTrue(invoiceAnalyzerJson.Length > 0, "Invoice analyzer JSON should not be empty");
-            Assert.IsTrue(invoiceAnalyzerJson.Contains("invoice") || invoiceAnalyzerJson.Contains("Invoice"),
-                "Invoice analyzer JSON should contain 'invoice'");
-            Console.WriteLine($"Invoice analyzer JSON length: {invoiceAnalyzerJson.Length} characters");
+            // Verify raw JSON response
+            Assert.IsNotNull(rawJson, "Raw JSON should not be null");
+            Assert.IsTrue(rawJson.Length > 0, "Raw JSON should not be empty");
+            Assert.IsTrue(rawJson.Contains("invoice") || rawJson.Contains("Invoice"),
+                "Raw JSON should contain 'invoice'");
+            Console.WriteLine($"Raw JSON length: {rawJson.Length} characters");
 
             // Verify invoice analyzer has field schema (prebuilt-invoice should have predefined fields)
             Assert.IsNotNull(invoiceAnalyzer.FieldSchema, "Invoice analyzer should have field schema");
@@ -245,20 +254,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
         [RecordedTest]
         public async Task GetCustomAnalyzerAsync()
         {
+            ContentUnderstandingClient client = default!;
             #region Snippet:ContentUnderstandingGetCustomAnalyzer
 #if SNIPPET
-            string endpoint = "<endpoint>";
-            string apiKey = "<apiKey>"; // Set to null to use DefaultAzureCredential
-            var client = !string.IsNullOrEmpty(apiKey)
-                ? new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCredential(apiKey))
-                : new ContentUnderstandingClient(new Uri(endpoint), new DefaultAzureCredential());
-
-            // Generate a unique analyzer ID
             string analyzerId = $"my_custom_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
 #else
             string endpoint = TestEnvironment.Endpoint;
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
-            var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
+            client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
             // First, create a custom analyzer
             string defaultId = $"test_custom_analyzer_{Recording.Random.NewGuid().ToString("N")}";
@@ -295,7 +298,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Config = config,
                 FieldSchema = fieldSchema
             };
-            analyzer.Models.Add("completion", "gpt-4.1");
+            analyzer.Models["completion"] = "gpt-4.1";
 
             // Create the analyzer
             await client.CreateAnalyzerAsync(
@@ -309,15 +312,15 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 var response = await client.GetAnalyzerAsync(analyzerId);
                 ContentAnalyzer retrievedAnalyzer = response.Value;
 
-                // Display full analyzer JSON
-                var jsonOptions = new JsonSerializerOptions
+                // Get raw response JSON and format it for nice printing
+                var rawResponseForJson = response.GetRawResponse();
+                string rawJson = rawResponseForJson.Content.ToString();
+                using (JsonDocument doc = JsonDocument.Parse(rawJson))
                 {
-                    WriteIndented = true,
-                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-                };
-                string analyzerJson = JsonSerializer.Serialize(retrievedAnalyzer, jsonOptions);
-                Console.WriteLine("Custom Analyzer:");
-                Console.WriteLine(analyzerJson);
+                    var jsonOptions = new JsonSerializerOptions { WriteIndented = true };
+                    string formattedJson = JsonSerializer.Serialize(doc, jsonOptions);
+                    Console.WriteLine(formattedJson);
+                }
                 #endregion
 
                 #region Assertion:ContentUnderstandingGetCustomAnalyzer
@@ -333,10 +336,10 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Assert.IsNotNull(rawResponse.Content, "Response content should not be null");
                 Console.WriteLine($"Raw response status: {rawResponse.Status}");
 
-                // Verify analyzer can be serialized to JSON
-                Assert.IsNotNull(analyzerJson, "Analyzer JSON should not be null");
-                Assert.IsTrue(analyzerJson.Length > 0, "Analyzer JSON should not be empty");
-                Console.WriteLine($"Analyzer JSON length: {analyzerJson.Length} characters");
+                // Verify raw JSON response
+                Assert.IsNotNull(rawJson, "Raw JSON should not be null");
+                Assert.IsTrue(rawJson.Length > 0, "Raw JSON should not be empty");
+                Console.WriteLine($"Raw JSON length: {rawJson.Length} characters");
 
                 // Verify the analyzer properties match what we created
                 Assert.IsNotNull(retrievedAnalyzer.BaseAnalyzerId, "Base analyzer ID should not be null");

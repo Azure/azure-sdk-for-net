@@ -25,7 +25,7 @@ namespace Azure.AI.ContentUnderstanding
     [ModelReaderWriterBuildable(typeof(ContentAnalyzerAnalyzeOperationStatus))]
     [ModelReaderWriterBuildable(typeof(ContentAnalyzerConfig))]
     [ModelReaderWriterBuildable(typeof(ContentAnalyzerOperationStatus))]
-    [ModelReaderWriterBuildable(typeof(ContentCategory))]
+    [ModelReaderWriterBuildable(typeof(ContentCategoryDefinition))]
     [ModelReaderWriterBuildable(typeof(ContentField))]
     [ModelReaderWriterBuildable(typeof(ContentFieldDefinition))]
     [ModelReaderWriterBuildable(typeof(ContentFieldSchema))]
