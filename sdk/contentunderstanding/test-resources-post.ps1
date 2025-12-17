@@ -41,7 +41,7 @@ $modelConfigs = @(
         Format = 'OpenAI'
         Version = '2025-04-14'  # Verified: correct version for gpt-4.1
         SkuName = 'Standard'
-        SkuCapacity = 1
+        SkuCapacity = 150  # Rate limit: 150,000 tokens per minute
     },
     @{
         Name = 'gpt-4.1-mini'
@@ -49,7 +49,7 @@ $modelConfigs = @(
         Format = 'OpenAI'
         Version = '2025-04-14'  # Verified: correct version for gpt-4.1-mini
         SkuName = 'Standard'
-        SkuCapacity = 1
+        SkuCapacity = 150  # Rate limit: 150,000 tokens per minute
     },
     @{
         Name = 'text-embedding-3-large'
@@ -57,7 +57,7 @@ $modelConfigs = @(
         Format = 'OpenAI'
         Version = '1'
         SkuName = 'GlobalStandard'  # Verified: embedding models require GlobalStandard SKU, not Standard
-        SkuCapacity = 120  # Verified: default capacity for GlobalStandard embedding models
+        SkuCapacity = 150  # Rate limit: 120,000 tokens per minute
     }
 )
 
