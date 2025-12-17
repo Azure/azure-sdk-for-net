@@ -28,9 +28,9 @@ namespace Azure.Generator.Management.Models
         /// Deserializes the ArmProviderSchema from decorator arguments.
         /// </summary>
         /// <param name="arguments">The decorator arguments containing resources and nonResourceMethods data</param>
-        /// <param name="inputNamespace">The input namespace containing models and clients</param>
+        /// <param name="library">The management input library containing models cache</param>
         /// <returns>A new ArmProviderSchema instance</returns>
-        public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, InputNamespace inputNamespace)
+        public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library)
         {
             var resourceMetadata = new List<ResourceMetadata>();
             var resourceChildren = new Dictionary<string, List<string>>();
@@ -42,14 +42,24 @@ namespace Azure.Generator.Management.Models
                 foreach (var item in document.RootElement.EnumerateArray())
                 {
                     var resourceModelId = item.GetProperty("resourceModelId").GetString();
-                    var model = inputNamespace.Models.FirstOrDefault(m => m.CrossLanguageDefinitionId == resourceModelId);
-                    if (model != null)
+                    if (string.IsNullOrEmpty(resourceModelId))
                     {
-                        var children = new List<string>();
-                        var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
-                        resourceMetadata.Add(metadata);
-                        resourceChildren.Add(metadata.ResourceIdPattern, children);
+                        continue;
                     }
+
+                    if (!library.ModelsByCrossLanguageDefinitionId.TryGetValue(resourceModelId, out var model))
+                    {
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                            "general-warning",
+                            $"Model with cross-language definition ID '{resourceModelId}' not found in namespace. This resource will be skipped.",
+                            targetCrossLanguageDefinitionId: resourceModelId);
+                        continue;
+                    }
+
+                    var children = new List<string>();
+                    var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
+                    resourceMetadata.Add(metadata);
+                    resourceChildren.Add(metadata.ResourceIdPattern, children);
                 }
             }
 

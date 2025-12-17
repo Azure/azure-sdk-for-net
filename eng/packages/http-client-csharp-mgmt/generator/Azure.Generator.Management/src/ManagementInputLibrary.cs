@@ -21,8 +21,35 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<InputServiceMethod, InputClient>? _intMethodClientMap;
         private HashSet<InputModelType>? _resourceModels;
         private ArmProviderSchema? _providerSchema;
+        private IReadOnlyDictionary<string, InputModelType>? _modelsByCrossLanguageDefinitionId;
 
         private IReadOnlyDictionary<InputModelType, string>? _resourceUpdateModelToResourceNameMap;
+
+        internal IReadOnlyDictionary<string, InputModelType> ModelsByCrossLanguageDefinitionId => _modelsByCrossLanguageDefinitionId ??= BuildModelsByCrossLanguageDefinitionId();
+
+        private IReadOnlyDictionary<string, InputModelType> BuildModelsByCrossLanguageDefinitionId()
+        {
+            var result = new Dictionary<string, InputModelType>();
+            foreach (var model in InputNamespace.Models)
+            {
+                if (string.IsNullOrEmpty(model.CrossLanguageDefinitionId))
+                {
+                    continue;
+                }
+
+                if (result.ContainsKey(model.CrossLanguageDefinitionId))
+                {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Duplicate cross-language definition ID found: '{model.CrossLanguageDefinitionId}' for model '{model.Name}'. This model will be skipped in the cache.",
+                        targetCrossLanguageDefinitionId: model.CrossLanguageDefinitionId);
+                    continue;
+                }
+
+                result[model.CrossLanguageDefinitionId] = model;
+            }
+            return result;
+        }
 
         private IReadOnlyDictionary<InputModelType, IList<InputModelProperty>>? _flattenPropertyMap;
         internal IReadOnlyDictionary<InputModelType, IList<InputModelProperty>> FlattenPropertyMap => _flattenPropertyMap ??= BuildFlattenPropertyMap();
@@ -177,7 +204,7 @@ namespace Azure.Generator.Management
 
             if (armProviderDecorator?.Arguments != null)
             {
-                var schema = ArmProviderSchema.Deserialize(armProviderDecorator.Arguments, InputNamespace);
+                var schema = ArmProviderSchema.Deserialize(armProviderDecorator.Arguments, this);
 
                 // Filter out methods that should be omitted
                 var filteredMethods = schema.NonResourceMethods
