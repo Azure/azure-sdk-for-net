@@ -198,7 +198,7 @@ namespace Azure.Generator.Management
                     if (model != null)
                     {
                         var children = new List<string>();
-                        var metadata = ResourceMetadata.DeserializeResourceMetadataFromArmProviderSchema(item, model, children);
+                        var metadata = ResourceMetadata.DeserializeResourceMetadata(item, model, children);
                         resourceMetadata.Add(metadata);
                         resourceChildren.Add(metadata.ResourceIdPattern, children);
                     }
