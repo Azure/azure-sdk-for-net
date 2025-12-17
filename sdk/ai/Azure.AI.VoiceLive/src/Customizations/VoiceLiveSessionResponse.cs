@@ -7,6 +7,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.AI.VoiceLive
 {

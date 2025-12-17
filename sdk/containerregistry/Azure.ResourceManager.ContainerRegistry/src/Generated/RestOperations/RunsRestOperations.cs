@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2019-06-01-preview";
+            _apiVersion = apiVersion ?? "2025-03-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Gets all the runs for a registry. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Gets all the runs for a registry. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -190,8 +190,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Gets the detailed information for a given run. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="runId"> The run ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
@@ -223,8 +223,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Gets the detailed information for a given run. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="runId"> The run ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
@@ -298,14 +298,14 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Patch the run properties. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="runId"> The run ID. </param>
         /// <param name="patch"> The run update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="runId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string runId, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response<ContainerRegistryRunData>> UpdateAsync(string subscriptionId, string resourceGroupName, string registryName, string runId, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -314,110 +314,14 @@ namespace Azure.ResourceManager.ContainerRegistry
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, runId, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Patch the run properties. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
-        /// <param name="runId"> The run ID. </param>
-        /// <param name="patch"> The run update properties. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="runId"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string registryName, string runId, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, runId, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetLogSasUrlRequestUri(string subscriptionId, string resourceGroupName, string registryName, string runId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
-            uri.AppendPath(registryName, true);
-            uri.AppendPath("/runs/", false);
-            uri.AppendPath(runId, true);
-            uri.AppendPath("/listLogSasUrl", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetLogSasUrlRequest(string subscriptionId, string resourceGroupName, string registryName, string runId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
-            uri.AppendPath(registryName, true);
-            uri.AppendPath("/runs/", false);
-            uri.AppendPath(runId, true);
-            uri.AppendPath("/listLogSasUrl", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Gets a link to download the run logs. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
-        /// <param name="runId"> The run ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ContainerRegistryRunGetLogResult>> GetLogSasUrlAsync(string subscriptionId, string resourceGroupName, string registryName, string runId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
-            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-
-            using var message = CreateGetLogSasUrlRequest(subscriptionId, resourceGroupName, registryName, runId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ContainerRegistryRunGetLogResult value = default;
+                        ContainerRegistryRunData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ContainerRegistryRunGetLogResult.DeserializeContainerRegistryRunGetLogResult(document.RootElement);
+                        value = ContainerRegistryRunData.DeserializeContainerRegistryRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -425,30 +329,32 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
         }
 
-        /// <summary> Gets a link to download the run logs. </summary>
+        /// <summary> Patch the run properties. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="runId"> The run ID. </param>
+        /// <param name="patch"> The run update properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/>, <paramref name="runId"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ContainerRegistryRunGetLogResult> GetLogSasUrl(string subscriptionId, string resourceGroupName, string registryName, string runId, CancellationToken cancellationToken = default)
+        public Response<ContainerRegistryRunData> Update(string subscriptionId, string resourceGroupName, string registryName, string runId, ContainerRegistryRunPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateGetLogSasUrlRequest(subscriptionId, resourceGroupName, registryName, runId);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, registryName, runId, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ContainerRegistryRunGetLogResult value = default;
+                        ContainerRegistryRunData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ContainerRegistryRunGetLogResult.DeserializeContainerRegistryRunGetLogResult(document.RootElement);
+                        value = ContainerRegistryRunData.DeserializeContainerRegistryRunData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -498,8 +404,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Cancel an existing run. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="runId"> The run ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
@@ -516,7 +422,6 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -525,8 +430,8 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         /// <summary> Cancel an existing run. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="runId"> The run ID. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
@@ -543,8 +448,109 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (message.Response.Status)
             {
                 case 200:
-                case 202:
                     return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal RequestUriBuilder CreateGetLogSasUrlRequestUri(string subscriptionId, string resourceGroupName, string registryName, string runId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/listLogSasUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
+        internal HttpMessage CreateGetLogSasUrlRequest(string subscriptionId, string resourceGroupName, string registryName, string runId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerRegistry/registries/", false);
+            uri.AppendPath(registryName, true);
+            uri.AppendPath("/runs/", false);
+            uri.AppendPath(runId, true);
+            uri.AppendPath("/listLogSasUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets a link to download the run logs. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
+        /// <param name="runId"> The run ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ContainerRegistryRunGetLogResult>> GetLogSasUrlAsync(string subscriptionId, string resourceGroupName, string registryName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var message = CreateGetLogSasUrlRequest(subscriptionId, resourceGroupName, registryName, runId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerRegistryRunGetLogResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = ContainerRegistryRunGetLogResult.DeserializeContainerRegistryRunGetLogResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets a link to download the run logs. </summary>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
+        /// <param name="runId"> The run ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="registryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ContainerRegistryRunGetLogResult> GetLogSasUrl(string subscriptionId, string resourceGroupName, string registryName, string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(registryName, nameof(registryName));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var message = CreateGetLogSasUrlRequest(subscriptionId, resourceGroupName, registryName, runId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        ContainerRegistryRunGetLogResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = ContainerRegistryRunGetLogResult.DeserializeContainerRegistryRunGetLogResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -575,8 +581,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Gets all the runs for a registry. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -608,8 +614,8 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <summary> Gets all the runs for a registry. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group to which the container registry belongs. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
+        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="registryName"> The name of the Registry. </param>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

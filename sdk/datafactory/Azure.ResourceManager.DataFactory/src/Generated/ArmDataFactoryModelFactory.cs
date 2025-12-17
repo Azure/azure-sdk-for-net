@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -1049,8 +1050,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
         /// <param name="customerVirtualNetworkSubnetId"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
+        /// <param name="interactiveQuery"> Interactive authoring capability reference. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
-        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = null, IDictionary<string, BinaryData> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null, ResourceIdentifier customerVirtualNetworkSubnetId = null)
+        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description = null, IDictionary<string, BinaryData> additionalProperties = null, IntegrationRuntimeState? state = null, ManagedVirtualNetworkReference managedVirtualNetwork = null, IntegrationRuntimeComputeProperties computeProperties = null, IntegrationRuntimeSsisProperties ssisProperties = null, ResourceIdentifier customerVirtualNetworkSubnetId = null, InteractiveQueryProperties interactiveQuery = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -1062,7 +1064,17 @@ namespace Azure.ResourceManager.DataFactory.Models
                 managedVirtualNetwork,
                 computeProperties,
                 ssisProperties,
-                customerVirtualNetworkSubnetId != null ? new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, serializedAdditionalRawData: null) : null);
+                customerVirtualNetworkSubnetId != null ? new IntegrationRuntimeCustomerVirtualNetwork(customerVirtualNetworkSubnetId, serializedAdditionalRawData: null) : null,
+                interactiveQuery);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InteractiveQueryProperties"/>. </summary>
+        /// <param name="status"> The interactive authoring capability status. Must be one of InteractiveCapabilityStatus. The default value is 'Enabling'. </param>
+        /// <param name="autoTerminationMinutes"> The allowed idle time for interactive authoring. </param>
+        /// <returns> A new <see cref="Models.InteractiveQueryProperties"/> instance for mocking. </returns>
+        public static InteractiveQueryProperties InteractiveQueryProperties(InteractiveCapabilityStatus? status = null, int? autoTerminationMinutes = null)
+        {
+            return new InteractiveQueryProperties(status, autoTerminationMinutes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntimeStatus"/>. </summary>
@@ -1594,6 +1606,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 pipeline,
                 dependsOn?.ToList(),
                 runDimension);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntime" />. </summary>
+        /// <param name="description"> Integration runtime description. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
+        /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
+        /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
+        /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
+        /// <param name="customerVirtualNetworkSubnetId"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.DataFactory.Models.ManagedIntegrationRuntime" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, ResourceIdentifier customerVirtualNetworkSubnetId)
+        {
+            return ManagedIntegrationRuntime(description: description, additionalProperties: additionalProperties, state: state, managedVirtualNetwork: managedVirtualNetwork, computeProperties: computeProperties, ssisProperties: ssisProperties, customerVirtualNetworkSubnetId: customerVirtualNetworkSubnetId, interactiveQuery: default);
         }
     }
 }

@@ -56,13 +56,15 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="replication"> Replication properties. </param>
         /// <param name="snapshot"> Snapshot properties. </param>
         /// <param name="volumeRelocation"> VolumeRelocation properties. </param>
+        /// <param name="ransomwareProtection"> Advanced Ransomware Protection settings. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetAppVolumeDataProtection(NetAppVolumeBackupConfiguration backup, NetAppReplicationObject replication, VolumeSnapshotProperties snapshot, NetAppVolumeRelocationProperties volumeRelocation, RansomwareProtectionSettings ransomwareProtection, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Backup = backup;
             Replication = replication;
             Snapshot = snapshot;
             VolumeRelocation = volumeRelocation;
+            RansomwareProtection = ransomwareProtection;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -86,5 +88,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> VolumeRelocation properties. </summary>
         public NetAppVolumeRelocationProperties VolumeRelocation { get; set; }
+        /// <summary> Advanced Ransomware Protection settings. </summary>
+        public RansomwareProtectionSettings RansomwareProtection { get; set; }
     }
 }

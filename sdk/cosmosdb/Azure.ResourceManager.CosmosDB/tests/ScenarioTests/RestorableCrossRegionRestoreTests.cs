@@ -217,6 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     }, null),
                         },
                         new List<CosmosDBVectorIndex>(),
+                        new List< FullTextIndexPath>(),
                         serializedAdditionalRawData: new Dictionary<string, BinaryData>())
                 })
             {
