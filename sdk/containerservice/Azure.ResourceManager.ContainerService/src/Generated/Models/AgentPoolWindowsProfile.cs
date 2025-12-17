@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> OS option property. </summary>
-    public partial class ContainerServiceOSOptionProperty
+    /// <summary>
+    /// The Windows agent pool's specific profile.
+    /// Serialized Name: AgentPoolWindowsProfile
+    /// </summary>
+    internal partial class AgentPoolWindowsProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,39 +48,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/>. </summary>
-        /// <param name="osType"> The OS type. </param>
-        /// <param name="enableFipsImage"> Whether the image is FIPS-enabled. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="osType"/> is null. </exception>
-        internal ContainerServiceOSOptionProperty(string osType, bool enableFipsImage)
+        /// <summary> Initializes a new instance of <see cref="AgentPoolWindowsProfile"/>. </summary>
+        public AgentPoolWindowsProfile()
         {
-            Argument.AssertNotNull(osType, nameof(osType));
-
-            OSType = osType;
-            EnableFipsImage = enableFipsImage;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/>. </summary>
-        /// <param name="osType"> The OS type. </param>
-        /// <param name="enableFipsImage"> Whether the image is FIPS-enabled. </param>
+        /// <summary> Initializes a new instance of <see cref="AgentPoolWindowsProfile"/>. </summary>
+        /// <param name="isOutboundNatDisabled">
+        /// Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled.
+        /// Serialized Name: AgentPoolWindowsProfile.disableOutboundNat
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceOSOptionProperty(string osType, bool enableFipsImage, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AgentPoolWindowsProfile(bool? isOutboundNatDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            OSType = osType;
-            EnableFipsImage = enableFipsImage;
+            IsOutboundNatDisabled = isOutboundNatDisabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceOSOptionProperty"/> for deserialization. </summary>
-        internal ContainerServiceOSOptionProperty()
-        {
-        }
-
-        /// <summary> The OS type. </summary>
-        [WirePath("os-type")]
-        public string OSType { get; }
-        /// <summary> Whether the image is FIPS-enabled. </summary>
-        [WirePath("enable-fips-image")]
-        public bool EnableFipsImage { get; }
+        /// <summary>
+        /// Whether to disable OutboundNAT in windows nodes. The default value is false. Outbound NAT can only be disabled if the cluster outboundType is NAT Gateway and the Windows agent pool does not have node public IP enabled.
+        /// Serialized Name: AgentPoolWindowsProfile.disableOutboundNat
+        /// </summary>
+        [WirePath("disableOutboundNat")]
+        public bool? IsOutboundNatDisabled { get; set; }
     }
 }
