@@ -46,6 +46,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly PostgreSQLServerManagementRestOperations _defaultRestClient;
         private readonly ClientDiagnostics _logFilesClientDiagnostics;
         private readonly LogFilesRestOperations _logFilesRestClient;
+        private readonly ClientDiagnostics _ltrV2ClientDiagnostics;
+        private readonly LtrV2RestOperations _ltrV2RestClient;
         private readonly PostgreSqlFlexibleServerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -81,6 +83,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _defaultRestClient = new PostgreSQLServerManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _logFilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _logFilesRestClient = new LogFilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _ltrV2ClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _ltrV2RestClient = new LtrV2RestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -1710,6 +1714,250 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logFilesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(e), _logFilesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetPostgreSqlFlexibleServerLogFiles", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Initiates a Long Term Retention Backup Pre-check operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrBackupPreCheck</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LtrV2_BackupPreCheck</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Ltr Backup Pre-check request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrV2BackupPreCheckResult>> BackupPreCheckLtrV2Async(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrV2BackupPreCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _ltrV2ClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.BackupPreCheckLtrV2");
+            scope.Start();
+            try
+            {
+                var response = await _ltrV2RestClient.BackupPreCheckAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrV2BackupPreCheckResult>(new PostgreSqlFlexibleServerLtrV2BackupPreCheckResultOperationSource(), _ltrV2ClientDiagnostics, Pipeline, _ltrV2RestClient.CreateBackupPreCheckRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a Long Term Retention Backup Pre-check operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrBackupPreCheck</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LtrV2_BackupPreCheck</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Ltr Backup Pre-check request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<PostgreSqlFlexibleServerLtrV2BackupPreCheckResult> BackupPreCheckLtrV2(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrV2BackupPreCheckContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _ltrV2ClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.BackupPreCheckLtrV2");
+            scope.Start();
+            try
+            {
+                var response = _ltrV2RestClient.BackupPreCheck(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrV2BackupPreCheckResult>(new PostgreSqlFlexibleServerLtrV2BackupPreCheckResultOperationSource(), _ltrV2ClientDiagnostics, Pipeline, _ltrV2RestClient.CreateBackupPreCheckRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a Long Term Retention Backup operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrBackup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LtrV2_BackupStart</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Ltr Backup request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrV2BackupResult>> BackupStartLtrV2Async(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrV2BackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _ltrV2ClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.BackupStartLtrV2");
+            scope.Start();
+            try
+            {
+                var response = await _ltrV2RestClient.BackupStartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrV2BackupResult>(new PostgreSqlFlexibleServerLtrV2BackupResultOperationSource(), _ltrV2ClientDiagnostics, Pipeline, _ltrV2RestClient.CreateBackupStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a Long Term Retention Backup operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrBackup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LtrV2_BackupStart</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Ltr Backup request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<PostgreSqlFlexibleServerLtrV2BackupResult> BackupStartLtrV2(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrV2BackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _ltrV2ClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.BackupStartLtrV2");
+            scope.Start();
+            try
+            {
+                var response = _ltrV2RestClient.BackupStart(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrV2BackupResult>(new PostgreSqlFlexibleServerLtrV2BackupResultOperationSource(), _ltrV2ClientDiagnostics, Pipeline, _ltrV2RestClient.CreateBackupStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletion(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Long Term Retention Backup Access operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrBackupAccess</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LtrV2_BackupGetAccess</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Ltr Backup Access request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PostgreSqlFlexibleServerLtrV2BackupAccessResult>> BackupGetAccessLtrV2Async(PostgreSqlFlexibleServerLtrV2BackupAccessContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _ltrV2ClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.BackupGetAccessLtrV2");
+            scope.Start();
+            try
+            {
+                var response = await _ltrV2RestClient.BackupGetAccessAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Long Term Retention Backup Access operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrBackupAccess</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LtrV2_BackupGetAccess</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2026-01-01-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Ltr Backup Access request payload. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PostgreSqlFlexibleServerLtrV2BackupAccessResult> BackupGetAccessLtrV2(PostgreSqlFlexibleServerLtrV2BackupAccessContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _ltrV2ClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.BackupGetAccessLtrV2");
+            scope.Start();
+            try
+            {
+                var response = _ltrV2RestClient.BackupGetAccess(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

@@ -947,5 +947,68 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
             return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, serializedAdditionalRawData: null);
         }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupPreCheckResult"/>. </summary>
+        /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
+        /// <param name="startOn"> Date and time in UTC (ISO8601 format) of the operation start. </param>
+        /// <param name="endOn"> Date and time in UTC (ISO8601 format) of the operation end. </param>
+        /// <param name="diskList"> List of managed disks. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupPreCheckResult"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerLtrV2BackupPreCheckResult PostgreSqlFlexibleServerLtrV2BackupPreCheckResult(PostgreSqlExecutionStatus? status = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<ManagedDiskDetail> diskList = null)
+        {
+            diskList ??= new List<ManagedDiskDetail>();
+
+            return new PostgreSqlFlexibleServerLtrV2BackupPreCheckResult(status, startOn, endOn, diskList?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupContent"/>. </summary>
+        /// <param name="clientOperationId"> Client operation identifier. </param>
+        /// <param name="backupType"> The Backup settings for the request. </param>
+        /// <param name="previousRecoveryPoints"> List of previous snapshot-based recovery points. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupContent"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerLtrV2BackupContent PostgreSqlFlexibleServerLtrV2BackupContent(Guid? clientOperationId = null, string backupType = null, IEnumerable<SnapshotBasedRecoveryPoint> previousRecoveryPoints = null)
+        {
+            previousRecoveryPoints ??= new List<SnapshotBasedRecoveryPoint>();
+
+            return new PostgreSqlFlexibleServerLtrV2BackupContent(clientOperationId, backupType != null ? new BackupSettingsDetails(backupType, serializedAdditionalRawData: null) : null, previousRecoveryPoints?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupResult"/>. </summary>
+        /// <param name="status"> Service-set extensible enum indicating the status of operation. </param>
+        /// <param name="backupTimestamp"> Date and time in UTC (ISO8601 format) of the backup. </param>
+        /// <param name="backupMetadata"> A customer-visible JSON string that stores metadata about the backed-up PostgreSQL instance. The value MUST be a JSON object serialized as a string. Expected keys include, but are not limited to: Postgres version,  sku, etc. </param>
+        /// <param name="startOn"> Date and time in UTC (ISO8601 format) of the operation start. </param>
+        /// <param name="endOn"> Date and time in UTC (ISO8601 format) of the operation end. </param>
+        /// <param name="percentComplete"> The percent complete of operation. </param>
+        /// <param name="errorCode"> The error code. </param>
+        /// <param name="errorMessage"> The error message. </param>
+        /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
+        /// <param name="snapshotList"> List of managed disks. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupResult"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerLtrV2BackupResult PostgreSqlFlexibleServerLtrV2BackupResult(PostgreSqlExecutionStatus? status = null, DateTimeOffset? backupTimestamp = null, string backupMetadata = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, double? percentComplete = null, string errorCode = null, string errorMessage = null, long? datasourceSizeInBytes = null, IEnumerable<ManagedDiskDetail> snapshotList = null)
+        {
+            snapshotList ??= new List<ManagedDiskDetail>();
+
+            return new PostgreSqlFlexibleServerLtrV2BackupResult(
+                status,
+                backupTimestamp,
+                backupMetadata,
+                startOn,
+                endOn,
+                percentComplete,
+                errorCode,
+                errorMessage,
+                datasourceSizeInBytes,
+                snapshotList?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupAccessResult"/>. </summary>
+        /// <param name="resourceProperties"> Managed Disk Snapshot properties associated with the backup access response. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrV2BackupAccessResult"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerLtrV2BackupAccessResult PostgreSqlFlexibleServerLtrV2BackupAccessResult(ManagedDiskSnapshotProperties resourceProperties = null)
+        {
+            return new PostgreSqlFlexibleServerLtrV2BackupAccessResult(resourceProperties, serializedAdditionalRawData: null);
+        }
     }
 }

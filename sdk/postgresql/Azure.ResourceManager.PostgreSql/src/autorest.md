@@ -1,33 +1,26 @@
 # Generated code configuration
-
 Run `dotnet build /t:GenerateCode` to generate code.
-
 ```yaml
 azure-arm: true
 csharp: true
 clear-output-folder: true
 skip-csproj: true
 library-name: PostgreSql
-
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-
 batch:
   - tag: package-2020-01-01
-  - tag: package-flexibleserver-2024-08-01
+  - tag: package-flexibleserver-2024-08-01-with-ltrv2
 enable-bicep-serialization: true
 ```
-
 ``` yaml $(tag) == 'package-2020-01-01'
-
 namespace: Azure.ResourceManager.PostgreSql
 require: https://github.com/Azure/azure-rest-api-specs/blob/eca38ee0caf445cb1e79c8e7bbaf9e1dca36479a/specification/postgresql/resource-manager/readme.md
 output-folder: $(this-folder)/PostgreSql/Generated
 sample-gen:
   output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -40,7 +33,6 @@ format-by-name-rules:
   '*SubnetId': 'arm-id'
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
-
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
@@ -67,7 +59,6 @@ acronym-mapping:
   Nine6: NinePointSix
   Ten0: TenPointZero
   Ten2: TenPointTwo
-
 
 prepend-rp-prefix:
   - Configuration
@@ -155,16 +146,44 @@ directive:
       $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
       $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
 ```
-
-``` yaml $(tag) == 'package-flexibleserver-2024-08-01'
-
+``` yaml $(tag) == 'package-flexibleserver-2024-08-01-with-ltrv2'
 namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/postgresql/resource-manager/readme.md
+# Pull settings from both stable and preview readmes
+require:
+  - https://github.com/Azure/azure-rest-api-specs/blob/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/postgresql/resource-manager/readme.md
+  - https://github.com/Azure/azure-rest-api-specs-pr/blob/bdc4b706cf623989c75a599102e8113d70216557/specification/internal-contracts/resource-manager/Microsoft.DBforPostgreSQL/implementedbyowningteam/2026-01-01-preview/readme.md
+# Pin roots for reproducible builds
+postgresql-2024-08-01-root: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01
+ltrv2-2026-preview-root:  https://raw.githubusercontent.com/Azure/azure-rest-api-specs-pr/bdc4b706cf623989c75a599102e8113d70216557/specification/internal-contracts/resource-manager/Microsoft.DBforPostgreSQL/implementedbyowningteam/2026-01-01-preview
+common-types-v5: https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/common-types/resource-management/v5/types.json
+# Union of inputs: all stable + preview LTR v2
+input-file:
+  - $(postgresql-2024-08-01-root)/Administrators.json
+  - $(postgresql-2024-08-01-root)/Backups.json
+  - $(postgresql-2024-08-01-root)/Capabilities.json
+  - $(postgresql-2024-08-01-root)/CheckNameAvailability.json
+  - $(postgresql-2024-08-01-root)/Configuration.json
+  - $(postgresql-2024-08-01-root)/Databases.json
+  - $(postgresql-2024-08-01-root)/FirewallRules.json
+  - $(postgresql-2024-08-01-root)/FlexibleServers.json
+  - $(postgresql-2024-08-01-root)/LongTermRetentionOperation.json
+  - $(postgresql-2024-08-01-root)/Migrations.json
+  - $(postgresql-2024-08-01-root)/Operations.json
+  - $(postgresql-2024-08-01-root)/PrivateDnsZone.json
+  - $(postgresql-2024-08-01-root)/PrivateEndpointConnections.json
+  - $(postgresql-2024-08-01-root)/PrivateLinkResources.json
+  - $(postgresql-2024-08-01-root)/Replicas.json
+  - $(postgresql-2024-08-01-root)/ServerLogs.json
+  - $(postgresql-2024-08-01-root)/ServerStartStopRestart.json
+  - $(postgresql-2024-08-01-root)/ThreatProtection.json
+  - $(postgresql-2024-08-01-root)/VirtualEndpoints.json
+  - $(postgresql-2024-08-01-root)/VirtualNetwork.json
+  - $(ltrv2-2026-preview-root)/LongTermRetention.json   # LTR V2 preview added on top
+
 output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
 sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: false
-
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -175,7 +194,6 @@ format-by-name-rules:
   '*ResourceId': 'arm-id'
   'ResourceType': 'resource-type'
   '*IPAddress': 'ip-address'
-
 acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
@@ -201,7 +219,6 @@ acronym-mapping:
   Vcore: VCore
   Vcores: VCores
   UTC: Utc
-
 rename-mapping:
   Configuration: PostgreSqlFlexibleServerConfiguration
   ConfigurationDataType: PostgreSqlFlexibleServerConfigurationDataType
@@ -311,12 +328,33 @@ rename-mapping:
   LtrBackupRequest: PostgreSqlFlexibleServerLtrBackupContent
   LtrPreBackupRequest: PostgreSqlFlexibleServerLtrPreBackupContent
   MigrationResource: PostgreSqlMigration
+  LtrV2BackupRequest: PostgreSqlFlexibleServerLtrV2BackupContent
+  LtrV2BackupResponse: PostgreSqlFlexibleServerLtrV2BackupResult
+  LtrV2BackupPreCheckRequest: PostgreSqlFlexibleServerLtrV2BackupPreCheckContent
+  LtrV2BackupPreCheckResponse: PostgreSqlFlexibleServerLtrV2BackupPreCheckResult
+  LtrV2BackupAccessRequest: PostgreSqlFlexibleServerLtrV2BackupAccessContent
+  LtrV2BackupAccessResponse: PostgreSqlFlexibleServerLtrV2BackupAccessResult
 override-operation-name:
   CheckNameAvailability_Execute: CheckPostgreSqlFlexibleServerNameAvailability
   CheckNameAvailabilityWithLocation_Execute: CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation
   CheckMigrationNameAvailability: CheckPostgreSqlMigrationNameAvailability
   LogFiles_ListByServer: GetPostgreSqlFlexibleServerLogFiles
+# Deduplicate errors across sources by forcing common-types
 directive:
+# Force preview LTR errors to common-types v5. Unfortunately we are unable to replace with common-types-v5 var, so directly updating the value from that.
+  - from: LongTermRetention.json
+    where: $.paths..responses.default.schema
+    transform: >
+      if ($ && $["$ref"]) {
+        $["$ref"] = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/7e2cb423d45186cd1bff123f35e7d43bc4c0f268/specification/common-types/resource-management/v5/types.json#/definitions/ErrorResponse";
+      }
+  # Remove local error models in the LTR preview spec to avoid duplicates
+  - from: LongTermRetention.json
+    where: $.definitions
+    transform: >
+      if ($.ErrorResponse) { delete $.ErrorResponse; }
+      if ($.ErrorDetail)   { delete $.ErrorDetail; }
+  # Repeat the original blocks
   - from: Administrators.json
     where: $.definitions
     transform: >
