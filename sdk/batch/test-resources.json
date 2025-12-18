@@ -10,7 +10,10 @@
             "defaultValue": "[concat('netsdkkeyv', uniquestring(resourceGroup().id, deployment().name))]",
             "type": "string"
         },
-
+        "batchAccounts_usersubscription_name": {
+            "defaultValue": "[concat('netsdkbaus', uniquestring(resourceGroup().id, deployment().name))]",
+            "type": "String"
+        },
         "batchAccounts_poolallocation_name": {
             "defaultValue": "[concat('netsdkba', uniquestring(resourceGroup().id, deployment().name))]",
             "type": "String"
@@ -22,7 +25,7 @@
         "diskEncryptionSets_name": {
             "defaultValue": "[concat('netsdkde', uniquestring(resourceGroup().id, deployment().name))]",
             "type": "String"
-        }
+        },
     },
     "variables": {
         "batchServiceObjectId": "f520d84c-3fd3-4cc8-88d4-2ed25b00d27a"
@@ -277,6 +280,47 @@
                     "corsRules": []
                 }
             }
+        },
+        {
+            "type": "Microsoft.Batch/batchAccounts",
+            "apiVersion": "2024-07-01",
+            "name": "[parameters('batchAccounts_usersubscription_name')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]",
+                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]"
+            ],
+            "identity": {
+                "type": "SystemAssigned"
+            },
+            "properties": {
+                "autoStorage": {
+                    "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccounts_name'))]",
+                    "authenticationMode": "BatchAccountManagedIdentity"
+                },
+                "poolAllocationMode": "UserSubscription",
+                "keyVaultReference": {
+                    "id": "[resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))]",
+                    "url": "[reference(resourceId('Microsoft.KeyVault/vaults', parameters('vaults_keyvalut_name'))).vaultUri]"
+                },
+                "publicNetworkAccess": "Enabled",
+                "networkProfile": {
+                    "accountAccess": {
+                        "defaultAction": "Allow",
+                        "ipRules": []
+                    },
+                    "nodeManagementAccess": {
+                        "defaultAction": "Allow",
+                        "ipRules": []
+                    }
+                },
+                "encryption": {
+                    "keySource": "Microsoft.Batch"
+                },
+                "allowedAuthenticationModes": [
+                    "AAD"
+                ]
+            }
         }
     ],
   "outputs": {
@@ -291,6 +335,14 @@
     "batch_account_uri": {
       "type": "string",
       "value": "[reference(parameters('batchAccounts_poolallocation_name')).accountEndpoint]"
+    },
+	"batch_usersub_account_name": {
+      "type": "string",
+      "value": "[parameters('batchAccounts_usersubscription_name')]"
+    },
+    "batch_usersub_account_uri": {
+      "type": "string",
+      "value": "[reference(parameters('batchAccounts_usersubscription_name')).accountEndpoint]"
     },
     "diskencryptionset_id": {
       "type": "string",
