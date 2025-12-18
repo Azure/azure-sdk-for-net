@@ -15,7 +15,7 @@ const diags: { [code: string]: DiagnosticDefinition<DiagnosticMessages> } = {
     severity: "error",
     messages: {
       default:
-        "Resource {resourceName} has multiple Get methods defined. Please ensure only one Get operation is defined per resource to avoid resource detection issues."
+        "Resource {resourceName} has multiple Get methods defined: {operations}. Please ensure only one Get operation is defined per resource to avoid resource detection issues."
     }
   }
 };

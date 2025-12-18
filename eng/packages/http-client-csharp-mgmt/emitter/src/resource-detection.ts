@@ -193,7 +193,7 @@ export async function updateClients(
 
   // validate that each resource has exactly one Get method
   for (const metadata of resourceModelToMetadataMap.values()) {
-    validateResourceGetMethods(sdkContext, metadata);
+    validateResourceGetMethods(sdkContext, metadata, serviceMethods);
   }
 
   // the last step, add the decorator to the resource model
@@ -223,17 +223,30 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
 
 function validateResourceGetMethods(
   sdkContext: CSharpEmitterContext,
-  resourceMetadata: ResourceMetadata
+  resourceMetadata: ResourceMetadata,
+  serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>
 ): void {
   const getMethods = resourceMetadata.methods.filter(
     (m) => m.kind === ResourceOperationKind.Get
   );
   
   if (getMethods.length > 1) {
+    // Get the operation identifiers for all duplicate Get methods
+    const operationIds = getMethods
+      .map((m) => m.methodId)
+      .join(", ");
+    
+    // Use the first Get method's operation as the target
+    const firstGetMethod = serviceMethods.get(getMethods[0].methodId);
+    const target = firstGetMethod?.__raw ?? NoTarget;
+    
     $lib.reportDiagnostic(sdkContext.program, {
       code: "duplicate-get-method",
-      format: { resourceName: resourceMetadata.resourceName },
-      target: NoTarget
+      format: { 
+        resourceName: resourceMetadata.resourceName,
+        operations: operationIds
+      },
+      target: target
     });
   }
 }
