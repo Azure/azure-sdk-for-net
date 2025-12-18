@@ -136,6 +136,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(UnknownLimitJsonObject))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     [ModelReaderWriterBuildable(typeof(UserDetails))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(ZooAddressListListResult))]
     [ModelReaderWriterBuildable(typeof(ZooData))]
     [ModelReaderWriterBuildable(typeof(ZooListResult))]
