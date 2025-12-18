@@ -11,15 +11,11 @@ namespace Azure.AI.AgentServer.Core.Tools.Models;
 public record UserInfo(string ObjectId, string TenantId)
 {
     /// <summary>
-    /// Converts the user information to a dictionary.
+    /// Gets the user properties as a read-only dictionary.
     /// </summary>
-    /// <returns>A dictionary containing the user information.</returns>
-    public IDictionary<string, object?> ToDictionary()
+    public IReadOnlyDictionary<string, string> Properties { get; } = new Dictionary<string, string>
     {
-        return new Dictionary<string, object?>
-        {
-            ["objectId"] = ObjectId,
-            ["tenantId"] = TenantId
-        };
-    }
+        ["objectId"] = ObjectId,
+        ["tenantId"] = TenantId
+    };
 }
