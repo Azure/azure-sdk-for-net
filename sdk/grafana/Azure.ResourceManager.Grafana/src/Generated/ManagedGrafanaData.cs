@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Grafana
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        internal ManagedGrafanaData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedGrafanaProperties properties, ManagedGrafanaSku sku, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
+        internal ManagedGrafanaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedGrafanaProperties properties, ManagedGrafanaSku sku, IDictionary<string, string> tags, string location, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;

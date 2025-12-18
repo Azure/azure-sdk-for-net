@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Grafana.ManagedGrafanaData"/> instance for mocking. </returns>
-        public static ManagedGrafanaData ManagedGrafanaData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedGrafanaProperties properties = default, ManagedGrafanaSku sku = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
+        public static ManagedGrafanaData ManagedGrafanaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedGrafanaProperties properties = default, ManagedGrafanaSku sku = default, IDictionary<string, string> tags = default, string location = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Grafana.GrafanaPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GrafanaPrivateLinkServiceConnectionState connectionState = default, IEnumerable<string> groupIds = default, GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = default, string privateEndpointId = default)
+        public static GrafanaPrivateEndpointConnectionData GrafanaPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GrafanaPrivateLinkServiceConnectionState connectionState = default, IEnumerable<string> groupIds = default, GrafanaPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new GrafanaPrivateEndpointConnectionData(
                 id,
@@ -201,17 +201,6 @@ namespace Azure.ResourceManager.Grafana.Models
             return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartOn, trialEndOn, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The GrafanaAvailablePluginListResponse. </summary>
-        /// <param name="value"></param>
-        /// <param name="nextLink"></param>
-        /// <returns> A new <see cref="Models.GrafanaAvailablePluginListResponse"/> instance for mocking. </returns>
-        public static GrafanaAvailablePluginListResponse GrafanaAvailablePluginListResponse(IEnumerable<GrafanaAvailablePlugin> value = default, string nextLink = default)
-        {
-            value ??= new ChangeTrackingList<GrafanaAvailablePlugin>();
-
-            return new GrafanaAvailablePluginListResponse(value.ToList(), nextLink, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Available plugins of grafana. </summary>
         /// <param name="pluginId"> Grafana plugin id. </param>
         /// <param name="name"> Grafana plugin display name. </param>
@@ -232,7 +221,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
         /// <returns> A new <see cref="Grafana.GrafanaPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static GrafanaPrivateLinkResourceData GrafanaPrivateLinkResourceData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GrafanaProvisioningState? provisioningState = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
+        public static GrafanaPrivateLinkResourceData GrafanaPrivateLinkResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, GrafanaProvisioningState? provisioningState = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default)
         {
             return new GrafanaPrivateLinkResourceData(
                 id,
@@ -258,7 +247,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="privateLinkServiceUri"> The URL of the data store behind the private link service. It would be the URL in the Grafana data source configuration page without the protocol and port. </param>
         /// <param name="privateLinkServicePrivateIP"> The private IP of private endpoint after approval. This property is empty before connection is approved. </param>
         /// <returns> A new <see cref="Grafana.ManagedPrivateEndpointModelData"/> instance for mocking. </returns>
-        public static ManagedPrivateEndpointModelData ManagedPrivateEndpointModelData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GrafanaProvisioningState? provisioningState = default, ResourceIdentifier privateLinkResourceId = default, string privateLinkResourceRegion = default, IEnumerable<string> groupIds = default, string requestMessage = default, ManagedPrivateEndpointConnectionState connectionState = default, Uri privateLinkServiceUri = default, string privateLinkServicePrivateIP = default)
+        public static ManagedPrivateEndpointModelData ManagedPrivateEndpointModelData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GrafanaProvisioningState? provisioningState = default, ResourceIdentifier privateLinkResourceId = default, string privateLinkResourceRegion = default, IEnumerable<string> groupIds = default, string requestMessage = default, ManagedPrivateEndpointConnectionState connectionState = default, Uri privateLinkServiceUri = default, string privateLinkServicePrivateIP = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -310,7 +299,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="Grafana.GrafanaIntegrationFabricData"/> instance for mocking. </returns>
-        public static GrafanaIntegrationFabricData GrafanaIntegrationFabricData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GrafanaIntegrationFabricProperties properties = default)
+        public static GrafanaIntegrationFabricData GrafanaIntegrationFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GrafanaIntegrationFabricProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -356,7 +345,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Grafana.ManagedDashboardData"/> instance for mocking. </returns>
-        public static ManagedDashboardData ManagedDashboardData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GrafanaProvisioningState? provisioningState = default)
+        public static ManagedDashboardData ManagedDashboardData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, GrafanaProvisioningState? provisioningState = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -388,7 +377,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Properties specific to the dashboard definition resource. </param>
         /// <returns> A new <see cref="Grafana.DashboardDefinitionData"/> instance for mocking. </returns>
-        public static DashboardDefinitionData DashboardDefinitionData(string id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DashboardDefinitionProperties properties = default)
+        public static DashboardDefinitionData DashboardDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DashboardDefinitionProperties properties = default)
         {
             return new DashboardDefinitionData(
                 id,

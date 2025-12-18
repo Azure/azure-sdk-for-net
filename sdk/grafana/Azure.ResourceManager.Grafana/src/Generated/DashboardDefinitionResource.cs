@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
-        /// Create a dashboard definition to update dashboard resource.
+        /// Update a DashboardDefinition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
-        /// Create a dashboard definition to update dashboard resource.
+        /// Update a DashboardDefinition.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

@@ -274,48 +274,6 @@ namespace Azure.ResourceManager.Grafana
         }
 
         /// <summary>
-        /// Manual approve private endpoint connection
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.ApproveAsync(WaitUntil, string, string, GrafanaPrivateEndpointConnectionData, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
-        /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
-        /// <param name="data"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<ArmOperation<GrafanaPrivateEndpointConnectionResource>> ApproveAsync(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string workspaceName, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableGrafanaResourceGroupResource(resourceGroupResource).ApproveAsync(waitUntil, workspaceName, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Manual approve private endpoint connection
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableGrafanaResourceGroupResource.Approve(WaitUntil, string, string, GrafanaPrivateEndpointConnectionData, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="workspaceName"> The workspace name of Azure Managed Grafana. </param>
-        /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
-        /// <param name="data"></param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static ArmOperation<GrafanaPrivateEndpointConnectionResource> Approve(this ResourceGroupResource resourceGroupResource, WaitUntil waitUntil, string workspaceName, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableGrafanaResourceGroupResource(resourceGroupResource).Approve(waitUntil, workspaceName, privateEndpointConnectionName, data, cancellationToken);
-        }
-
-        /// <summary>
         /// List all resources of workspaces for Grafana under the specified subscription.
         /// <item>
         /// <term> Mocking. </term>

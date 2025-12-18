@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Grafana;
 
 namespace Azure.ResourceManager.Grafana.Models
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.Grafana.Models
         public GrafanaPrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
 
         /// <summary> The resource identifier of the private endpoint. </summary>
-        public string PrivateEndpointId
+        public ResourceIdentifier PrivateEndpointId
         {
             get
             {
