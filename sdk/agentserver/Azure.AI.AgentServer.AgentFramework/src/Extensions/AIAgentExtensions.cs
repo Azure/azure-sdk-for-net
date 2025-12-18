@@ -81,21 +81,39 @@ public static class AIAgentExtensions
     /// </summary>
     /// <param name="agent">The AI agent to run.</param>
     /// <param name="telemetrySourceName">The name of the telemetry source.</param>
-    /// <param name="endpoint">Azure AI endpoint.</param>
     /// <param name="credential">Optional Azure credential for authentication. If null, uses DefaultAzureCredential when tools are provided.</param>
-    /// <param name="tools">Optional list of tool definitions to enable. If null or empty, runs without tool support.</param>
+    /// <param name="tools">Optional list of tool definitions to enable. If null, runs without tool support.</param>
     /// <param name="loggerFactory">Optional logger factory.</param>
     /// <returns>A task that represents the asynchronous operation.</returns>
+    /// <exception cref="InvalidOperationException">Thrown when AZURE_AI_PROJECT_ENDPOINT environment variable is not set.</exception>
     public static async Task RunAIAgentAsync(
         this AIAgent agent,
-        string telemetrySourceName,
-        Uri endpoint,
+        IList<ToolDefinition>? tools,
+        string telemetrySourceName = "Agents",
         TokenCredential? credential = null,
-        IList<ToolDefinition>? tools = null,
         ILoggerFactory? loggerFactory = null)
     {
         ArgumentNullException.ThrowIfNull(agent);
-        ArgumentNullException.ThrowIfNull(endpoint);
+
+        // Read endpoint from environment variable
+        var endpointString = Environment.GetEnvironmentVariable("AZURE_AI_PROJECT_ENDPOINT");
+        if (string.IsNullOrWhiteSpace(endpointString))
+        {
+            throw new InvalidOperationException(
+                "AZURE_AI_PROJECT_ENDPOINT environment variable is not set. " +
+                "Please set this environment variable to your Azure AI project endpoint URL.");
+        }
+
+        Uri endpoint;
+        try
+        {
+            endpoint = new Uri(endpointString);
+        }
+        catch (UriFormatException ex)
+        {
+            throw new InvalidOperationException(
+                $"AZURE_AI_PROJECT_ENDPOINT environment variable contains an invalid URL: '{endpointString}'", ex);
+        }
 
         // If tools is null or empty, fall back to basic agent run mode without tools
         if (tools == null || tools.Count == 0)
