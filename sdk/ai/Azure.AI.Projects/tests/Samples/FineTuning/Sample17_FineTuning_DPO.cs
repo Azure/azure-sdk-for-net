@@ -8,15 +8,14 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using NUnit.Framework;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 
-namespace Azure.AI.Projects.Tests.Samples.FineTuning;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnvironment>
+public partial class Sample17_FineTuning_DPO : SamplesBase
 {
     [Test]
     public async Task DpoFineTuningAsync()
@@ -145,4 +144,7 @@ public partial class Sample17_FineTuning_DPO : SamplesBase<AIProjectsTestEnviron
         Console.WriteLine($"Status: {fineTuningJob.Status}");
         #endregion
     }
+
+    public Sample17_FineTuning_DPO(bool isAsync) : base(isAsync)
+    { }
 }

@@ -10,7 +10,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.CognitiveServices;
@@ -20,9 +19,9 @@ using OpenAI.Files;
 using OpenAI.FineTuning;
 using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Tests.Samples.FineTuning;
+namespace Azure.AI.Projects.Tests.Samples;
 
-public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTestEnvironment>
+public partial class Sample16_FineTuning_Supervised : SamplesBase
 {
     [Test]
     public async Task SupervisedFineTuningAsync()
@@ -461,4 +460,6 @@ public partial class Sample16_FineTuning_Supervised : SamplesBase<AIProjectsTest
         Console.WriteLine($"Response: {messageItem.Content[0].Text}");
         #endregion
     }
+
+    public Sample16_FineTuning_Supervised(bool isAsync) : base(isAsync) { }
 }

@@ -4,32 +4,36 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Agents.Persistent;
-using Azure.Identity;
-using Azure.Core.TestFramework;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
-using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests;
 
 public class AIAgentsTest : ProjectsClientTestBase
 {
-    public AIAgentsTest(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
+    public AIAgentsTest(bool isAsync) : base(isAsync)
     {
     }
 
-    [TestCase]
     [RecordedTest]
-    [Ignore("Agents API calls are not recorded")]
+    public async Task AgentsGetPersistentClient()
+    {
+        AIProjectClient projectClient = new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), new MockTokenCredential());
+        PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
+        Assert.That(agentsClient, Is.Not.Null);
+    }
+
+    [TestCase]
+    // We cannot instrument PersistentAgentsClient as it is created through AIProjectClient connection and
+    // it is not using SCM pipeline. We also do not have an options exposed to inject custom interceptor.
+    [LiveOnly]
     public async Task AgentsTest()
     {
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 
-        AIProjectClient projectClient = GetTestClient();
+        AIProjectClient projectClient = GetTestProjectClient();
         PersistentAgentsClient agentsClient = projectClient.GetPersistentAgentsClient();
 
         Console.WriteLine("Create an agent with a model deployment");
