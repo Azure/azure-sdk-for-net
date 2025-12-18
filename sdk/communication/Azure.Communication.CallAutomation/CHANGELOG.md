@@ -24,7 +24,12 @@
 - Added Incomingcall event to support incoming call notification for Teams multipersona users
 - Added StartRecordingFailed event to indicate when the start recording API is unable to initiate the recording.
 - DTMF broadcast functionality is now supported in the Create Call, Answer Call, and Create Group Call APIs.
-- Added marker audio for streaming data.
+- Added marker audio for Media Streaming.
+- Enhanced Media Streaming configuration to support empty/null stream URLs
+  - `TransportUrl` in `MediaStreamingOptions` can now be null or empty
+  - Enables server-side stream URL determination for dynamic scenarios
+- Added support for Post-Dial Tones in outbound call scenarios
+  - `PostDialTones` property now available in `CreateCallOptions` and `CreateGroupCallOptions`
 
 ### Breaking Changes
 
