@@ -4,6 +4,8 @@ using Azure.AI.OpenAI;
 using Azure.Identity;
 using Microsoft.Agents.AI;
 using Microsoft.Extensions.AI;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 // Get configuration from environment variables
 var openAiEndpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
@@ -60,3 +62,46 @@ await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
 
 // Run agent without tool support
 // await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
+
+// ============================================================================
+// Alternative: Using IServiceProvider with Dependency Injection
+// ============================================================================
+// This approach is useful when you want to use dependency injection to manage
+// your agent and other services.
+//
+// var services = new ServiceCollection();
+
+// services.AddSingleton<IChatClient>(chatClient);
+// services.AddSingleton<AIAgent>(agent);
+// services.AddLogging(builder =>
+// {
+//     builder.AddConsole();
+//     builder.SetMinimumLevel(LogLevel.Information);
+// });
+
+// var serviceProvider = services.BuildServiceProvider();
+//
+// Option 1: Run with tools using IServiceProvider extension
+// await serviceProvider.RunAIAgentAsync(
+//     agent: null,  // Will retrieve agent from service provider
+//     tools: new List<ToolDefinition>
+//     {
+//         new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
+//     },
+//     telemetrySourceName: "Agents",
+//     credential: credential);
+//
+// Option 2: Run without tools using IServiceProvider extension
+// await serviceProvider.RunAIAgentAsync(
+//     agent: null,
+//     telemetrySourceName: "Agents");
+//
+// Option 3: Run with explicit agent instance and tools
+// await serviceProvider.RunAIAgentAsync(
+//     agent: agent,
+//     tools: new List<ToolDefinition>
+//     {
+//         new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
+//     },
+//     telemetrySourceName: "Agents",
+//     credential: credential);
