@@ -8,7 +8,7 @@ using System;
 using System.ClientModel;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
+using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Files;
 

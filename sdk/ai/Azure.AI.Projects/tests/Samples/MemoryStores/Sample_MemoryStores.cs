@@ -4,13 +4,14 @@
 using System;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using Azure.Core.TestFramework;
+using Microsoft.ClientModel.TestFramework;
 using OpenAI.Responses;
+using Azure.Identity;
 
 namespace Azure.AI.Projects.Tests.Samples;
 #pragma warning disable OPENAI001
 
-public class Sample_MemoryStore : SamplesBase<AIProjectsTestEnvironment>
+public class Sample_MemoryStore : SamplesBase
 {
     [Test]
     [AsyncOnly]
@@ -22,9 +23,9 @@ public class Sample_MemoryStore : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var embeddingDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var embeddingDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         #endregion
@@ -113,9 +114,9 @@ public class Sample_MemoryStore : SamplesBase<AIProjectsTestEnvironment>
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
         var embeddingDeploymentName = System.Environment.GetEnvironmentVariable("EMBEDDING_MODEL_DEPLOYMENT_NAME");
 #else
-        var projectEndpoint = TestEnvironment.PROJECTENDPOINT;
+        var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        var embeddingDeploymentName = TestEnvironment.EMBEDDINGSMODELDEPLOYMENTNAME;
+        var embeddingDeploymentName = TestEnvironment.EMBEDDINGMODELDEPLOYMENTNAME;
 #endif
         AIProjectClient projectClient = new(new Uri(projectEndpoint), new DefaultAzureCredential());
         try
@@ -193,4 +194,6 @@ public class Sample_MemoryStore : SamplesBase<AIProjectsTestEnvironment>
         Console.WriteLine($"The memory store {deleteResponse.Name} was{status} deleted.");
         #endregion
     }
+    public Sample_MemoryStore(bool isAsync) : base(isAsync)
+    { }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 
-namespace Azure.AI.Projects.Tests.Samples.FineTuning;
+namespace Azure.AI.Projects.Tests.Samples;
 
 /// <summary>
 /// Helper methods for fine-tuning operations.

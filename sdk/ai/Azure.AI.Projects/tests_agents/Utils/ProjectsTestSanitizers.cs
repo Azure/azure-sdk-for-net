@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ComponentModel;
 using Microsoft.ClientModel.TestFramework;
 using Microsoft.ClientModel.TestFramework.TestProxy.Admin;
 
