@@ -8,7 +8,7 @@ using TypeSpec.Http;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Foundations;
 
-namespace Azure.Generator.MgmtTypeSpec.Tests;
+namespace MgmtTypeSpec;
 
 @doc("Test Action Response")
 model TestActionResponse {
