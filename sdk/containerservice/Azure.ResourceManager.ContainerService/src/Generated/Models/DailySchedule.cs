@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For schedules like: 'recur every day' or 'recur every 3 days'. </summary>
+    /// <summary>
+    /// For schedules like: 'recur every day' or 'recur every 3 days'.
+    /// Serialized Name: DailySchedule
+    /// </summary>
     internal partial class DailySchedule
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DailySchedule"/>. </summary>
-        /// <param name="intervalDays"> Specifies the number of days between each set of occurrences. </param>
+        /// <param name="intervalDays">
+        /// Specifies the number of days between each set of occurrences.
+        /// Serialized Name: DailySchedule.intervalDays
+        /// </param>
         public DailySchedule(int intervalDays)
         {
             IntervalDays = intervalDays;
         }
 
         /// <summary> Initializes a new instance of <see cref="DailySchedule"/>. </summary>
-        /// <param name="intervalDays"> Specifies the number of days between each set of occurrences. </param>
+        /// <param name="intervalDays">
+        /// Specifies the number of days between each set of occurrences.
+        /// Serialized Name: DailySchedule.intervalDays
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DailySchedule(int intervalDays, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Specifies the number of days between each set of occurrences. </summary>
+        /// <summary>
+        /// Specifies the number of days between each set of occurrences.
+        /// Serialized Name: DailySchedule.intervalDays
+        /// </summary>
         [WirePath("intervalDays")]
         public int IntervalDays { get; set; }
     }
