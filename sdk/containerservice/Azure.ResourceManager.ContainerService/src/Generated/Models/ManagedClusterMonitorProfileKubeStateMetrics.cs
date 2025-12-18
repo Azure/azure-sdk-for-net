@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details. </summary>
+    /// <summary>
+    /// Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details.
+    /// Serialized Name: ManagedClusterAzureMonitorProfileKubeStateMetrics
+    /// </summary>
     public partial class ManagedClusterMonitorProfileKubeStateMetrics
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterMonitorProfileKubeStateMetrics"/>. </summary>
-        /// <param name="metricLabelsAllowlist"> Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric (Example: 'namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...'). By default the metric contains only resource name and namespace labels. </param>
-        /// <param name="metricAnnotationsAllowList"> Comma-separated list of Kubernetes annotation keys that will be used in the resource's labels metric (Example: 'namespaces=[kubernetes.io/team,...],pods=[kubernetes.io/team],...'). By default the metric contains only resource name and namespace labels. </param>
+        /// <param name="metricLabelsAllowlist">
+        /// Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric (Example: 'namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...'). By default the metric contains only resource name and namespace labels.
+        /// Serialized Name: ManagedClusterAzureMonitorProfileKubeStateMetrics.metricLabelsAllowlist
+        /// </param>
+        /// <param name="metricAnnotationsAllowList">
+        /// Comma-separated list of Kubernetes annotation keys that will be used in the resource's labels metric (Example: 'namespaces=[kubernetes.io/team,...],pods=[kubernetes.io/team],...'). By default the metric contains only resource name and namespace labels.
+        /// Serialized Name: ManagedClusterAzureMonitorProfileKubeStateMetrics.metricAnnotationsAllowList
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterMonitorProfileKubeStateMetrics(string metricLabelsAllowlist, string metricAnnotationsAllowList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric (Example: 'namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...'). By default the metric contains only resource name and namespace labels. </summary>
+        /// <summary>
+        /// Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric (Example: 'namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...'). By default the metric contains only resource name and namespace labels.
+        /// Serialized Name: ManagedClusterAzureMonitorProfileKubeStateMetrics.metricLabelsAllowlist
+        /// </summary>
         [WirePath("metricLabelsAllowlist")]
         public string MetricLabelsAllowlist { get; set; }
-        /// <summary> Comma-separated list of Kubernetes annotation keys that will be used in the resource's labels metric (Example: 'namespaces=[kubernetes.io/team,...],pods=[kubernetes.io/team],...'). By default the metric contains only resource name and namespace labels. </summary>
+        /// <summary>
+        /// Comma-separated list of Kubernetes annotation keys that will be used in the resource's labels metric (Example: 'namespaces=[kubernetes.io/team,...],pods=[kubernetes.io/team],...'). By default the metric contains only resource name and namespace labels.
+        /// Serialized Name: ManagedClusterAzureMonitorProfileKubeStateMetrics.metricAnnotationsAllowList
+        /// </summary>
         [WirePath("metricAnnotationsAllowList")]
         public string MetricAnnotationsAllowList { get; set; }
     }

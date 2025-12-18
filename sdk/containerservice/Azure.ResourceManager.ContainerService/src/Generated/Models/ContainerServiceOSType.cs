@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The operating system type. The default is Linux. </summary>
+    /// <summary>
+    /// The operating system type. The default is Linux.
+    /// Serialized Name: OSType
+    /// </summary>
     public readonly partial struct ContainerServiceOSType : IEquatable<ContainerServiceOSType>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string LinuxValue = "Linux";
         private const string WindowsValue = "Windows";
 
-        /// <summary> Use Linux. </summary>
+        /// <summary>
+        /// Use Linux.
+        /// Serialized Name: OSType.Linux
+        /// </summary>
         public static ContainerServiceOSType Linux { get; } = new ContainerServiceOSType(LinuxValue);
-        /// <summary> Use Windows. </summary>
+        /// <summary>
+        /// Use Windows.
+        /// Serialized Name: OSType.Windows
+        /// </summary>
         public static ContainerServiceOSType Windows { get; } = new ContainerServiceOSType(WindowsValue);
         /// <summary> Determines if two <see cref="ContainerServiceOSType"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceOSType left, ContainerServiceOSType right) => left.Equals(right);

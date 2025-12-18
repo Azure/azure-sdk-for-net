@@ -124,10 +124,14 @@ namespace Azure.Analytics.OnlineExperimentation
             return message;
         }
 
-        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateNextGetMetricsRequest(Uri nextPage, int? maxpagesize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize), true);
+            }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Uri = uri;

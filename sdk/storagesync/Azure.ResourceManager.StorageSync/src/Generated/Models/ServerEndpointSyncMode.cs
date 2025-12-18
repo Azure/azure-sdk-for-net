@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
@@ -14,47 +15,67 @@ namespace Azure.ResourceManager.StorageSync.Models
     public readonly partial struct ServerEndpointSyncMode : IEquatable<ServerEndpointSyncMode>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncMode"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public ServerEndpointSyncMode(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RegularValue = "Regular";
         private const string NamespaceDownloadValue = "NamespaceDownload";
         private const string InitialUploadValue = "InitialUpload";
         private const string SnapshotUploadValue = "SnapshotUpload";
         private const string InitialFullDownloadValue = "InitialFullDownload";
 
-        /// <summary> Regular. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public ServerEndpointSyncMode(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the Regular. </summary>
         public static ServerEndpointSyncMode Regular { get; } = new ServerEndpointSyncMode(RegularValue);
-        /// <summary> NamespaceDownload. </summary>
+
+        /// <summary> Gets the NamespaceDownload. </summary>
         public static ServerEndpointSyncMode NamespaceDownload { get; } = new ServerEndpointSyncMode(NamespaceDownloadValue);
-        /// <summary> InitialUpload. </summary>
+
+        /// <summary> Gets the InitialUpload. </summary>
         public static ServerEndpointSyncMode InitialUpload { get; } = new ServerEndpointSyncMode(InitialUploadValue);
-        /// <summary> SnapshotUpload. </summary>
+
+        /// <summary> Gets the SnapshotUpload. </summary>
         public static ServerEndpointSyncMode SnapshotUpload { get; } = new ServerEndpointSyncMode(SnapshotUploadValue);
-        /// <summary> InitialFullDownload. </summary>
+
+        /// <summary> Gets the InitialFullDownload. </summary>
         public static ServerEndpointSyncMode InitialFullDownload { get; } = new ServerEndpointSyncMode(InitialFullDownloadValue);
+
         /// <summary> Determines if two <see cref="ServerEndpointSyncMode"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServerEndpointSyncMode left, ServerEndpointSyncMode right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServerEndpointSyncMode"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServerEndpointSyncMode left, ServerEndpointSyncMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServerEndpointSyncMode"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServerEndpointSyncMode"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServerEndpointSyncMode(string value) => new ServerEndpointSyncMode(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServerEndpointSyncMode"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServerEndpointSyncMode?(string value) => value == null ? null : new ServerEndpointSyncMode(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServerEndpointSyncMode other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServerEndpointSyncMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

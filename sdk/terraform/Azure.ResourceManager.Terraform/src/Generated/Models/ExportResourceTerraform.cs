@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Terraform;
 
 namespace Azure.ResourceManager.Terraform.Models
 {
@@ -18,12 +19,11 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/>. </summary>
         /// <param name="resourceIds"> The id(s) of the resource to be exported. Example: `["/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/my-rg"]. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceIds"/> is null. </exception>
-        public ExportResourceTerraform(IEnumerable<ResourceIdentifier> resourceIds)
+        public ExportResourceTerraform(IEnumerable<ResourceIdentifier> resourceIds) : base(CommonExportType.ExportResource)
         {
             Argument.AssertNotNull(resourceIds, nameof(resourceIds));
 
             ResourceIds = resourceIds.ToList();
-            Type = CommonExportType.ExportResource;
         }
 
         /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/>. </summary>
@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceIds"> The id(s) of the resource to be exported. Example: `["/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/my-rg"]. </param>
         /// <param name="resourceName"> The Terraform id of the exported resource. Only effective when `resourceIds` contains only one item. Defaults to `res-0`. </param>
         /// <param name="resourceType"> The Terraform resource type to map to. Only effective when `resourceIds` has one item. Example: `azurerm_virtual_network`. Automatic type mapping will be performed if not provided. </param>
         /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
         /// <param name="recursive"> Recursively includes child resources. Defaults to `false`. </param>
         /// <param name="includeResourceGroup"> Includes the resource group in the exported Terraform resources. Defaults to `false`. </param>
-        internal ExportResourceTerraform(CommonExportType type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern, bool? recursive, bool? includeResourceGroup) : base(type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, serializedAdditionalRawData)
+        internal ExportResourceTerraform(CommonExportType @type, TargetTerraformProvider? targetProvider, bool? isOutputFullPropertiesEnabled, bool? isMaskSensitiveEnabled, bool? includeRoleAssignment, bool? includeManagedResource, IList<string> azureResourcesToExclude, IList<string> terraformResourcesToExclude, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<ResourceIdentifier> resourceIds, string resourceName, string resourceType, string namePattern, bool? recursive, bool? includeResourceGroup) : base(@type, targetProvider, isOutputFullPropertiesEnabled, isMaskSensitiveEnabled, includeRoleAssignment, includeManagedResource, azureResourcesToExclude, terraformResourcesToExclude, additionalBinaryDataProperties)
         {
             ResourceIds = resourceIds;
             ResourceName = resourceName;
@@ -50,24 +50,23 @@ namespace Azure.ResourceManager.Terraform.Models
             NamePattern = namePattern;
             Recursive = recursive;
             IncludeResourceGroup = includeResourceGroup;
-            Type = type;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ExportResourceTerraform"/> for deserialization. </summary>
-        internal ExportResourceTerraform()
-        {
         }
 
         /// <summary> The id(s) of the resource to be exported. Example: `["/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/my-rg"]. </summary>
         public IList<ResourceIdentifier> ResourceIds { get; }
+
         /// <summary> The Terraform id of the exported resource. Only effective when `resourceIds` contains only one item. Defaults to `res-0`. </summary>
         public string ResourceName { get; set; }
+
         /// <summary> The Terraform resource type to map to. Only effective when `resourceIds` has one item. Example: `azurerm_virtual_network`. Automatic type mapping will be performed if not provided. </summary>
         public string ResourceType { get; set; }
+
         /// <summary> The id prefix for the exported Terraform resources. Defaults to `res-`. </summary>
         public string NamePattern { get; set; }
+
         /// <summary> Recursively includes child resources. Defaults to `false`. </summary>
         public bool? Recursive { get; set; }
+
         /// <summary> Includes the resource group in the exported Terraform resources. Defaults to `false`. </summary>
         public bool? IncludeResourceGroup { get; set; }
     }
