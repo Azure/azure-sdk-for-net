@@ -126,9 +126,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 if (enclosingType is ResourceCollectionClientProvider collectionProvider)
                 {
                     // Check if the collection's resource data type matches the response body type
-                    if (collectionProvider.GetResourceDataType() == originalBodyType)
+                    if (collectionProvider.ResourceData.Type == originalBodyType)
                     {
-                        wrappedResourceClient = collectionProvider.GetResource();
+                        wrappedResourceClient = collectionProvider.Resource;
                         returnBodyType = wrappedResourceClient.Type;
                         return;
                     }
