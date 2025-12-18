@@ -96,6 +96,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("optionalProperty"u8);
                 writer.WriteObjectValue(OptionalProperty, options);
             }
+            if (Optional.IsDefined(OptionalCollectionProperty))
+            {
+                writer.WritePropertyName("optionalCollectionProperty"u8);
+                writer.WriteObjectValue(OptionalCollectionProperty, options);
+            }
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -157,6 +162,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             IList<int> prop2 = default;
             NestedFooModel nestedProperty = default;
             SafeFlattenModel optionalProperty = default;
+            SafeFlattenCollectionModel optionalCollectionProperty = default;
             ETag? eTag = default;
             WritableSubResource writableSubResourceProp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -248,6 +254,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     optionalProperty = SafeFlattenModel.DeserializeSafeFlattenModel(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("optionalCollectionProperty"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    optionalCollectionProperty = SafeFlattenCollectionModel.DeserializeSafeFlattenCollectionModel(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("etag"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -281,6 +296,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 prop2 ?? new ChangeTrackingList<int>(),
                 nestedProperty,
                 optionalProperty,
+                optionalCollectionProperty,
                 eTag,
                 writableSubResourceProp,
                 additionalBinaryDataProperties);

@@ -45,6 +45,9 @@ model FooProperties {
 
   optionalProperty?: SafeFlattenModel;
 
+  // Test safe-flatten with collection property
+  optionalCollectionProperty?: SafeFlattenCollectionModel;
+
   /** ETag property for testing etag parameter name generation */
   etag?: Azure.Core.eTag;
 
@@ -61,6 +64,11 @@ model NestedFooModel {
 
 model SafeFlattenModel {
   flattenedProperty: string;
+}
+
+// Test safe-flatten with collection property (reproduces the AgentUpdateParameters issue)
+model SafeFlattenCollectionModel {
+  collectionItems?: string[];
 }
 
 @armResourceOperations

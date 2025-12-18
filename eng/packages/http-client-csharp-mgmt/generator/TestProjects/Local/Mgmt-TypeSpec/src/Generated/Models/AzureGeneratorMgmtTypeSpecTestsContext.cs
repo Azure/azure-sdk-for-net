@@ -109,6 +109,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
     [ModelReaderWriterBuildable(typeof(ResourceTypeTestResource))]
     [ModelReaderWriterBuildable(typeof(ResourceTypeTestResourceData))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SafeFlattenCollectionModel))]
     [ModelReaderWriterBuildable(typeof(SafeFlattenModel))]
     [ModelReaderWriterBuildable(typeof(SampleData))]
     [ModelReaderWriterBuildable(typeof(SampleDataListResult))]

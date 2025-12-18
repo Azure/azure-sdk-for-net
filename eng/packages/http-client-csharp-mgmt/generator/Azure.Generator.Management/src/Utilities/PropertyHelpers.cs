@@ -85,7 +85,8 @@ namespace Azure.Generator.Management.Utilities
         {
             var checkNullExpression = This.Property(internalProperty.Name).Is(Null);
             // For collection types, we initialize the internal property if it's null and return the inner property.
-            if (innerProperty.Type.IsCollection && internalProperty.WireInfo?.IsRequired == true)
+            // This applies to both required and optional properties to ensure proper serialization.
+            if (innerProperty.Type.IsCollection)
             {
                 if (!internalProperty.Body.HasSetter)
                 {

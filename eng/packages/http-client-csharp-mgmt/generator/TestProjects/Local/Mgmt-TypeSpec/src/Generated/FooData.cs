@@ -256,5 +256,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 Properties.FlattenedProperty = value;
             }
         }
+
+        /// <summary> Gets the CollectionItems. </summary>
+        [WirePath("properties.optionalCollectionProperty.collectionItems")]
+        public IList<string> OptionalCollectionItems
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FooProperties();
+                }
+                return Properties.OptionalCollectionItems;
+            }
+        }
     }
 }
