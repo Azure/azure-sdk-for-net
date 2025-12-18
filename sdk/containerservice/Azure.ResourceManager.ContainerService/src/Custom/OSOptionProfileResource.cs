@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace Azure.ResourceManager.ContainerService
     /// from an instance of <see cref="ArmClient"/> using the GetOSOptionProfileResource method.
     /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetOSOptionProfile method.
     /// </summary>
+    [Obsolete("This class is obsolete and will be removed in a future release", false)]
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class OSOptionProfileResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OSOptionProfileResource"/> instance. </summary>
@@ -100,7 +103,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,22 +113,9 @@ namespace Azure.ResourceManager.ContainerService
         /// </summary>
         /// <param name="resourceType"> The resource type for which the OS options needs to be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<OSOptionProfileResource>> GetAsync(ResourceType? resourceType = null, CancellationToken cancellationToken = default)
+        public virtual Task<Response<OSOptionProfileResource>> GetAsync(ResourceType? resourceType = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileResource.Get");
-            scope.Start();
-            try
-            {
-                var response = await _osOptionProfileManagedClustersRestClient.GetOSOptionsAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), resourceType, cancellationToken).ConfigureAwait(false);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSOptionProfileResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This operation is no longer supported starting with API version 2024-05-01 and has been removed in this release. If you still require this operation, please use an older SDK version (earlier than 1.3.0).");
         }
 
         /// <summary>
@@ -141,7 +131,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,20 +143,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OSOptionProfileResource> Get(ResourceType? resourceType = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _osOptionProfileManagedClustersClientDiagnostics.CreateScope("OSOptionProfileResource.Get");
-            scope.Start();
-            try
-            {
-                var response = _osOptionProfileManagedClustersRestClient.GetOSOptions(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), resourceType, cancellationToken);
-                if (response.Value == null)
-                    throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new OSOptionProfileResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            throw new NotSupportedException("This operation is no longer supported starting with API version 2024-05-01 and has been removed in this release. If you still require this operation, please use an older SDK version (earlier than 1.3.0).");
         }
     }
 }
