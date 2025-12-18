@@ -29,10 +29,6 @@ namespace Azure.AI.ContentUnderstanding.Samples
             var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
             var client = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 
-            // Generate SAS URL if not provided
-            string trainingDataSasUrl = await GetOrGenerateTrainingDataSasUrlAsync();
-            string trainingDataPath = TestEnvironment.TrainingDataPath ?? "training_data/";
-
             #region Snippet:ContentUnderstandingCreateAnalyzerWithLabels
 #if SNIPPET
             // Generate a unique analyzer ID
@@ -49,7 +45,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             string trainingDataSasUrl;
             string? storageAccount = Environment.GetEnvironmentVariable("TRAINING_DATA_STORAGE_ACCOUNT");
             string? containerName = Environment.GetEnvironmentVariable("TRAINING_DATA_CONTAINER_NAME");
-            
+
             // If SAS URL is provided, use it directly
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")))
             {
@@ -62,12 +58,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 var blobServiceClient = new Azure.Storage.Blobs.BlobServiceClient(
                     new Uri($"https://{storageAccount}.blob.core.windows.net"),
                     new DefaultAzureCredential());
-                
+
                 var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
-                
+
                 // Ensure container exists
                 await containerClient.CreateIfNotExistsAsync();
-                
+
                 // Generate SAS token valid for 24 hours
                 var sasBuilder = new BlobSasBuilder
                 {
@@ -76,12 +72,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     ExpiresOn = DateTimeOffset.UtcNow.AddHours(24)
                 };
                 sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.List);
-                
+
                 // Get user delegation key for SAS token
                 var userDelegationKey = await blobServiceClient.GetUserDelegationKeyAsync(
                     startsOn: DateTimeOffset.UtcNow,
                     expiresOn: DateTimeOffset.UtcNow.AddHours(24));
-                
+
                 var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccount).ToString();
                 trainingDataSasUrl = $"https://{storageAccount}.blob.core.windows.net/{containerName}?{sasToken}";
             }
@@ -90,8 +86,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 throw new InvalidOperationException(
                     "Either TRAINING_DATA_SAS_URL or both TRAINING_DATA_STORAGE_ACCOUNT and TRAINING_DATA_CONTAINER_NAME must be provided");
             }
-            
+
             string trainingDataPath = Environment.GetEnvironmentVariable("TRAINING_DATA_PATH") ?? "training_data/";
+#else
+            // Generate SAS URL if not provided
+            string trainingDataSasUrl = await GetOrGenerateTrainingDataSasUrlAsync();
+            string trainingDataPath = TestEnvironment.TrainingDataPath ?? "training_data/";
 #endif
 
             // Ensure path ends with /
