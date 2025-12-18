@@ -334,16 +334,8 @@ namespace Azure.AI.Agents.Persistent
                             }
                         }
                     }
-                    else if (runStep.StepDetails is RunStepActivityDetails activityDetails)
-                    {
-                        // Handle MCP activity details (mcp_list_tools events)
-                        foreach (RunStepDetailsActivity activity in activityDetails.Activities)
-                        {
-                            // These activities represent MCP tool discovery events
-                            // They are primarily informational and represent the tools available from the MCP server
-                            // We can expose them as raw representation on a generic content if needed
-                        }
-                    }
+                    // Note: RunStepActivityDetails (e.g., mcp_list_tools events) are informational-only
+                    // and do not need to be converted to ChatMessage content
                 }
 
                 // Fetch messages from the thread
