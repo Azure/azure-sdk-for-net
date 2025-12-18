@@ -110,8 +110,51 @@ string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds(
 
 // Step 1: Upload training data to Azure Blob Storage
 // Get training data configuration from environment
-string trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")
-    ?? throw new InvalidOperationException("TRAINING_DATA_SAS_URL environment variable is required");
+string trainingDataSasUrl;
+string? storageAccount = Environment.GetEnvironmentVariable("TRAINING_DATA_STORAGE_ACCOUNT");
+string? containerName = Environment.GetEnvironmentVariable("TRAINING_DATA_CONTAINER_NAME");
+
+// If SAS URL is provided, use it directly
+if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")))
+{
+    trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")!;
+}
+// Otherwise, generate SAS URL from storage account and container name
+else if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(containerName))
+{
+    // Use DefaultAzureCredential to authenticate and generate SAS token
+    var blobServiceClient = new Azure.Storage.Blobs.BlobServiceClient(
+        new Uri($"https://{storageAccount}.blob.core.windows.net"),
+        new DefaultAzureCredential());
+
+    var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+    // Ensure container exists
+    await containerClient.CreateIfNotExistsAsync();
+
+    // Generate SAS token valid for 24 hours
+    var sasBuilder = new BlobSasBuilder
+    {
+        BlobContainerName = containerName,
+        Resource = "c", // Container
+        ExpiresOn = DateTimeOffset.UtcNow.AddHours(24)
+    };
+    sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.List);
+
+    // Get user delegation key for SAS token
+    var userDelegationKey = await blobServiceClient.GetUserDelegationKeyAsync(
+        startsOn: DateTimeOffset.UtcNow,
+        expiresOn: DateTimeOffset.UtcNow.AddHours(24));
+
+    var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccount).ToString();
+    trainingDataSasUrl = $"https://{storageAccount}.blob.core.windows.net/{containerName}?{sasToken}";
+}
+else
+{
+    throw new InvalidOperationException(
+        "Either TRAINING_DATA_SAS_URL or both TRAINING_DATA_STORAGE_ACCOUNT and TRAINING_DATA_CONTAINER_NAME must be provided");
+}
+
 string trainingDataPath = Environment.GetEnvironmentVariable("TRAINING_DATA_PATH") ?? "training_data/";
 
 // Ensure path ends with /
@@ -231,7 +274,7 @@ var fieldSchema = new ContentFieldSchema(
 };
 
 // Step 3: Configure knowledge sources with labeled data
-var knowledgeSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl), string.Empty)
+var knowledgeSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl))
 {
     Prefix = trainingDataPath
 };
