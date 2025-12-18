@@ -42,9 +42,9 @@ Set the following environment variables, and the SDK will automatically generate
 
 ```bash
 # Storage account and container (SAS token will be auto-generated)
-export TRAINING_DATA_STORAGE_ACCOUNT="mmigithubsamplesstorage"
-export TRAINING_DATA_CONTAINER_NAME="mmi-github-samples-blob-container"
-export TRAINING_DATA_PATH="document_training/"  # Optional, defaults to "training_data/"
+export TRAINING_DATA_STORAGE_ACCOUNT="<your-storage-account-name>"
+export TRAINING_DATA_CONTAINER_NAME="<your-container-name>"
+export TRAINING_DATA_PATH="training_data/"  # Optional, defaults to "training_data/"
 ```
 
 This approach requires you to be authenticated with Azure (e.g., via `az login` or DefaultAzureCredential), and you must have appropriate permissions on the storage account.
