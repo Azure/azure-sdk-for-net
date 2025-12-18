@@ -125,7 +125,7 @@ internal class RemoteToolsOperations
 
         if (_options.User != null)
         {
-            content["user"] = _options.User.ToDictionary();
+            content["user"] = _options.User.Properties;
         }
 
         var agentName = string.IsNullOrWhiteSpace(_options.AgentName) ? "$default" : _options.AgentName;
@@ -155,7 +155,7 @@ internal class RemoteToolsOperations
 
         if (_options.User != null)
         {
-            content["user"] = _options.User.ToDictionary();
+            content["user"] = _options.User.Properties;
         }
 
         var agentName = string.IsNullOrWhiteSpace(_options.AgentName) ? "$default" : _options.AgentName;
