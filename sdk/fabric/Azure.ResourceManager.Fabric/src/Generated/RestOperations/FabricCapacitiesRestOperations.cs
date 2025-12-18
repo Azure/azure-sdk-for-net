@@ -296,14 +296,14 @@ namespace Azure.ResourceManager.Fabric
             return message;
         }
 
-        internal HttpMessage CreateGetUsagesRequest(Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateGetUsagesRequest(Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
             uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Fabric/locations/", false);
-            uri.AppendPath(location, true);
+            uri.AppendPath(location.ToString(), true);
             uri.AppendPath("/usages", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.Fabric
             return message;
         }
 
-        internal HttpMessage CreateNextGetUsagesRequest(Uri nextPage, Guid subscriptionId, string location, RequestContext context)
+        internal HttpMessage CreateNextGetUsagesRequest(Uri nextPage, Guid subscriptionId, AzureLocation location, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(nextPage);

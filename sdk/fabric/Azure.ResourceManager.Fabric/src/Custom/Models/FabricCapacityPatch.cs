@@ -4,14 +4,15 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
-    // Temporarily add it back with custom code.
-    // If the new code generation solves the flatten issue, this custom code can be removed.
+    // Add the property back for backward compatibility
     public partial class FabricCapacityPatch
     {
         /// <summary> An array of administrator user identities. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public IList<string> AdministrationMembers
         {
             get
