@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> List of trusted access role bindings. </summary>
+    /// <summary>
+    /// List of trusted access role bindings
+    /// Serialized Name: TrustedAccessRoleBindingListResult
+    /// </summary>
     internal partial class TrustedAccessRoleBindingListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TrustedAccessRoleBindingListResult"/>. </summary>
-        /// <param name="value"> Role binding list. </param>
-        /// <param name="nextLink"> Link to next page of resources. </param>
+        /// <param name="value">
+        /// Role binding list
+        /// Serialized Name: TrustedAccessRoleBindingListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to next page of resources.
+        /// Serialized Name: TrustedAccessRoleBindingListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal TrustedAccessRoleBindingListResult(IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Role binding list. </summary>
+        /// <summary>
+        /// Role binding list
+        /// Serialized Name: TrustedAccessRoleBindingListResult.value
+        /// </summary>
         public IReadOnlyList<ContainerServiceTrustedAccessRoleBindingData> Value { get; }
-        /// <summary> Link to next page of resources. </summary>
+        /// <summary>
+        /// Link to next page of resources.
+        /// Serialized Name: TrustedAccessRoleBindingListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

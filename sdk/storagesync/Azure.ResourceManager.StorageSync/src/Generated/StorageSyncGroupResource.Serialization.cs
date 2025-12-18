@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.StorageSync
 {
+    /// <summary></summary>
     public partial class StorageSyncGroupResource : IJsonModel<StorageSyncGroupData>
     {
-        private static StorageSyncGroupData s_dataDeserializationInstance;
-        private static StorageSyncGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<StorageSyncGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<StorageSyncGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new StorageSyncGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<StorageSyncGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncGroupData>)Data).Write(writer, options);
 
-        StorageSyncGroupData IJsonModel<StorageSyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        StorageSyncGroupData IJsonModel<StorageSyncGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<StorageSyncGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageSyncGroupData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         StorageSyncGroupData IPersistableModel<StorageSyncGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncGroupData>(data, options, AzureResourceManagerStorageSyncContext.Default);
 
-        string IPersistableModel<StorageSyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<StorageSyncGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

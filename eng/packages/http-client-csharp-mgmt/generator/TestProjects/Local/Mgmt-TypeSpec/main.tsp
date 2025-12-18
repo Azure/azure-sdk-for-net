@@ -15,6 +15,7 @@ import "./quota.tsp";
 import "./networkaction.tsp";
 import "./joo.tsp";
 import "./workload.tsp";
+import "./multiplepaths.tsp";
 import "./testresourcetype.tsp";
 import "./resourcedata.tsp";
 import "./scheduledaction.tsp";
