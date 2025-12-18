@@ -4,7 +4,7 @@
     <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>
     <RepoSrcPath>$(RepoRoot)src</RepoSrcPath>
     <RepoSdkPath>$(RepoRoot)src/SDKs</RepoSdkPath>
-    <IsLegacyMgmtProject Condition="'$(IsLegacyMgmtProject)' == '' and $(MSBuildProjectName.Contains('.Management.'))">true</IsLegacyMgmtProject>
+    <IsLegacyMgmtProject Condition="'$(IsLegacyMgmtProject)' == '' and !$(MSBuildProjectName.StartsWith('Azure.')) and $(MSBuildProjectDirectory.Contains('$(RepoRoot)sdk')) and $(MSBuildProjectName.Contains('.Management.'))">true</IsLegacyMgmtProject>
     <ProjectStartsWithStandardName Condition="$(MSBuildProjectName.StartsWith('Azure.')) or $(MSBuildProjectName.StartsWith('Microsoft.'))">true</ProjectStartsWithStandardName>
     <ImportRepoCommonSettings Condition="'$(ImportRepoCommonSettings)' == '' and '$(ProjectStartsWithStandardName)' == 'true' and '$(IsLegacyMgmtProject)' != 'true'">true</ImportRepoCommonSettings>
   </PropertyGroup>

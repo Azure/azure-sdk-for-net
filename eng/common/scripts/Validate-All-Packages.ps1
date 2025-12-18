@@ -111,13 +111,13 @@ function VerifyAPIReview($packageName, $packageVersion, $language)
 }
 
 
-function IsVersionShipped($packageName, $packageVersion)
+function IsVersionShipped($packageName, $packageVersion, $groupId = $null)
 {
     # This function will decide if a package version is already shipped or not
     Write-Host "Checking if a version is already shipped for package $packageName with version $packageVersion."
     $parsedNewVersion = [AzureEngSemanticVersion]::new($packageVersion)
     $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
-    $workItem = FindPackageWorkItem -lang $LanguageDisplayName -packageName $packageName -version $versionMajorMinor -includeClosed $true -outputCommand $false
+    $workItem = FindPackageWorkItem -lang $LanguageDisplayName -packageName $packageName -groupId $groupId -version $versionMajorMinor -includeClosed $true -outputCommand $false
     if ($workItem)
     {
         # Check if the package version is already shipped
@@ -127,7 +127,7 @@ function IsVersionShipped($packageName, $packageVersion)
         }
     }
     else {
-        Write-Host "No work item found for package [$packageName]. Creating new work item for package."
+        Write-Host "No work item found for package [$packageName], group [$groupId]. Creating new work item for package."
     }
     return $false
 }
@@ -148,6 +148,7 @@ function CreateUpdatePackageWorkItem($pkgInfo)
     # Create or update package work item
     $result = Update-DevOpsReleaseWorkItem -language $LanguageDisplayName `
         -packageName $packageName `
+        -groupId $pkgInfo.Group `
         -version $versionString `
         -plannedDate $plannedDate `
         -packageRepoPath $pkgInfo.serviceDirectory `
@@ -175,14 +176,13 @@ function ProcessPackage($packageInfo)
     $pkgName = $packageInfo.Name
     $changeLogPath = $packageInfo.ChangeLogPath
     $versionString = $packageInfo.Version
-    Write-Host "Checking if we need to create or update work item for package $pkgName with version $versionString."
-    $isShipped = IsVersionShipped $pkgName $versionString
+    Write-Host "Checking if we need to create or update work item for package $pkgName and groupId $packageInfo.Group with version $versionString."
+    Write-Host "Package name before checking groupId: $pkgName"
+    $isShipped = IsVersionShipped $pkgName $versionString $packageInfo.Group
     if ($isShipped) {
         Write-Host "Package work item already exists for version [$versionString] that is marked as shipped. Skipping the update of package work item."
         return
     }
-
-    Write-Host "Validating package $pkgName with version $versionString."
 
     # Change log validation
     $changeLogStatus = [PSCustomObject]@{
@@ -197,19 +197,16 @@ function ProcessPackage($packageInfo)
 
     # If there's a groupId that means this is Java and pkgName = GroupId+ArtifactName
     # but the VerifyAPIReview requires GroupId:ArtifactName
-    Write-Host "Package name before checking groupId: $fullPackageName"
-    if ($packageInfo.PSObject.Members.Name -contains "Group") {
-        $groupId = $packageInfo.Group
-        if ($groupId){
-            $fullPackageName = "${groupId}:$($packageInfo.ArtifactName)"
-        }
-    }
-
+    # Technically we can use groupId+artifactName format in api view,
+    # however it will need to migrate the existing data and Java parser also needs the change.
+    $fullPackageName = Get-FullPackageName -PackageInfo $packageInfo -UseColonSeparator
     Write-Host "Checking API review status for package $fullPackageName"
     $apireviewDetails = VerifyAPIReview $fullPackageName $packageInfo.Version $Language
 
+    # The following object will be used to update package work item, the name should be package name only without groupId
     $pkgValidationDetails= [PSCustomObject]@{
         Name = $pkgName
+        GroupId = $packageInfo.Group
         Version = $packageInfo.Version
         ChangeLogValidation = $changeLogStatus
         APIReviewValidation = $apireviewDetails.ApiviewApproval
@@ -220,6 +217,7 @@ function ProcessPackage($packageInfo)
     Write-Host "Output: $($output)"
 
     # Create json token file in artifact path
+    # Does the following validation file name also need to use full package name with groupId?
     $tokenFile = Join-Path $ArtifactPath "$($packageInfo.ArtifactName)-Validation.json"
     $output | Out-File -FilePath $tokenFile -Encoding utf8
 

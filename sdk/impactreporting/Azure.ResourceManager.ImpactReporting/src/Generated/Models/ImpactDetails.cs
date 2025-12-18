@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ImpactReporting;
 
 namespace Azure.ResourceManager.ImpactReporting.Models
 {
     /// <summary> details of of the impact for which insight has been generated. </summary>
     public partial class ImpactDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ImpactDetails"/>. </summary>
         /// <param name="impactedResourceId"> List of impacted Azure resources. </param>
@@ -66,27 +38,25 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="startOn"> Time at which impact was started according to reported impact. </param>
         /// <param name="endOn"> Time at which impact was ended according to reported impact. </param>
         /// <param name="impactId"> Azure Id of the impact. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ImpactDetails(ResourceIdentifier impactedResourceId, DateTimeOffset startOn, DateTimeOffset? endOn, ResourceIdentifier impactId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ImpactedResourceId = impactedResourceId;
             StartOn = startOn;
             EndOn = endOn;
             ImpactId = impactId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ImpactDetails"/> for deserialization. </summary>
-        internal ImpactDetails()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> List of impacted Azure resources. </summary>
         public ResourceIdentifier ImpactedResourceId { get; set; }
+
         /// <summary> Time at which impact was started according to reported impact. </summary>
         public DateTimeOffset StartOn { get; set; }
+
         /// <summary> Time at which impact was ended according to reported impact. </summary>
         public DateTimeOffset? EndOn { get; set; }
+
         /// <summary> Azure Id of the impact. </summary>
         public ResourceIdentifier ImpactId { get; set; }
     }

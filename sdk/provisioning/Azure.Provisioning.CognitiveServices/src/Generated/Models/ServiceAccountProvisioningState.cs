@@ -48,4 +48,9 @@ public enum ServiceAccountProvisioningState
     /// </summary>
     [DataMember(Name = "ResolvingDNS")]
     ResolvingDns,
+
+    /// <summary>
+    /// Canceled.
+    /// </summary>
+    Canceled,
 }
