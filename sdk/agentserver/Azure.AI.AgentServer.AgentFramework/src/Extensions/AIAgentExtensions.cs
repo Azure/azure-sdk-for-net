@@ -5,10 +5,10 @@ using Azure.AI.AgentServer.Core.Context;
 using Azure.AI.AgentServer.Core.Tools;
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Responses.Invocation;
+using Azure.AI.AgentServer.AgentFramework;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Agents.AI;
-using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -120,23 +120,20 @@ public static class AIAgentExtensions
         AzureAIToolClient azureToolClient = new AzureAIToolClient(endpoint, effectiveCredential, toolClientOptions);
         await using (azureToolClient.ConfigureAwait(false))
         {
-            ToolClient toolClient = new ToolClient(azureToolClient);
-            await using (toolClient.ConfigureAwait(false))
-            {
-                // Get tools as AIFunctions
-                IReadOnlyList<AIFunction> aiFunctions = await toolClient.ListToolsAsync().ConfigureAwait(false);
-
-                // Run agent with tools
-                await AgentServerApplication.RunAsync(new ApplicationOptions(
-                    ConfigureServices: services => services
-                        .AddSingleton(agent)
-                        .AddSingleton<IAgentInvocation, AIAgentInvocation>()
-                        .AddSingleton<IReadOnlyList<AIFunction>>(aiFunctions),
-                    LoggerFactory: loggerFactory == null ? null : () => loggerFactory,
-                    TelemetrySourceName: telemetrySourceName)).ConfigureAwait(false);
+                ToolClient toolClient = new ToolClient(azureToolClient);
+                await using (toolClient.ConfigureAwait(false))
+                {
+                    // Run agent with tools
+                    await AgentServerApplication.RunAsync(new ApplicationOptions(
+                        ConfigureServices: services => services
+                            .AddSingleton(agent)
+                            .AddSingleton<IAgentInvocation, AIAgentInvocation>()
+                            .AddSingleton<IAIFunctionProvider>(_ => toolClient),
+                        LoggerFactory: loggerFactory == null ? null : () => loggerFactory,
+                        TelemetrySourceName: telemetrySourceName)).ConfigureAwait(false);
+                }
             }
         }
-    }
 
     /// <summary>
     /// Runs an AI agent asynchronously using the service provider's dependencies with optional tool support.
@@ -193,35 +190,32 @@ public static class AIAgentExtensions
         AzureAIToolClient azureToolClient = new AzureAIToolClient(endpoint, effectiveCredential, toolClientOptions);
         await using (azureToolClient.ConfigureAwait(false))
         {
-            ToolClient toolClient = new ToolClient(azureToolClient);
-            await using (toolClient.ConfigureAwait(false))
-            {
-                // Get tools as AIFunctions
-                IReadOnlyList<AIFunction> aiFunctions = await toolClient.ListToolsAsync().ConfigureAwait(false);
-
-                // Run agent with tools
-                await AgentServerApplication.RunAsync(new ApplicationOptions(
-                    ConfigureServices: services =>
-                    {
-                        if (sp.GetService<IAgentInvocation>() == null)
+                ToolClient toolClient = new ToolClient(azureToolClient);
+                await using (toolClient.ConfigureAwait(false))
+                {
+                    // Run agent with tools
+                    await AgentServerApplication.RunAsync(new ApplicationOptions(
+                        ConfigureServices: services =>
                         {
-                            services
-                                .AddSingleton(effectiveAgent)
-                                .AddSingleton<IAgentInvocation, AIAgentInvocation>()
-                                .AddSingleton<IReadOnlyList<AIFunction>>(aiFunctions);
-                        }
-                        else
-                        {
-                            services
-                                .AddSingleton(sp.GetRequiredService<IAgentInvocation>())
-                                .AddSingleton<IReadOnlyList<AIFunction>>(aiFunctions);
-                        }
-                    },
-                    LoggerFactory: GetLoggerFactory(sp),
-                    TelemetrySourceName: telemetrySourceName)).ConfigureAwait(false);
+                            if (sp.GetService<IAgentInvocation>() == null)
+                            {
+                                services
+                                    .AddSingleton(effectiveAgent)
+                                    .AddSingleton<IAgentInvocation, AIAgentInvocation>()
+                                    .AddSingleton<IAIFunctionProvider>(_ => toolClient);
+                            }
+                            else
+                            {
+                                services
+                                    .AddSingleton(sp.GetRequiredService<IAgentInvocation>())
+                                    .AddSingleton<IAIFunctionProvider>(_ => toolClient);
+                            }
+                        },
+                        LoggerFactory: GetLoggerFactory(sp),
+                        TelemetrySourceName: telemetrySourceName)).ConfigureAwait(false);
+                }
             }
         }
-    }
 
     private static Func<ILoggerFactory>? GetLoggerFactory(IServiceProvider sp)
     {

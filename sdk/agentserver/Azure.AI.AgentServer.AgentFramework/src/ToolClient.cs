@@ -11,10 +11,9 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// <summary>
 /// Client that integrates AzureAIToolClient with Agent Framework.
 /// </summary>
-internal sealed class ToolClient : IAsyncDisposable
+internal sealed class ToolClient : IAIFunctionProvider, IAsyncDisposable
 {
     private readonly AzureAIToolClient _toolClient;
-    private IReadOnlyList<AIFunction>? _aiFunctionCache;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ToolClient"/> class.
@@ -32,14 +31,8 @@ internal sealed class ToolClient : IAsyncDisposable
     /// <returns>List of AIFunction tools.</returns>
     public async Task<IReadOnlyList<AIFunction>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
-        if (_aiFunctionCache != null)
-        {
-            // Console.WriteLine($"[ToolClient] Returning {_aiFunctionCache.Count} cached AIFunctions (cache hit)");
-            return _aiFunctionCache;
-        }
-
         var azureTools = await _toolClient.ListToolsAsync(cancellationToken).ConfigureAwait(false);
-        // Console.WriteLine($"[ToolClient] Cache miss - converting {azureTools.Count} Azure tools to Agent Framework AIFunctions");
+        // Console.WriteLine($"[ToolClient] Converting {azureTools.Count} Azure tools to Agent Framework AIFunctions");
 
         var aiFunctions = new List<AIFunction>();
 
@@ -49,8 +42,7 @@ internal sealed class ToolClient : IAsyncDisposable
             aiFunctions.Add(aiFunction);
         }
 
-        _aiFunctionCache = aiFunctions;
-        return _aiFunctionCache;
+        return aiFunctions;
     }
 
     private AIFunction ConvertToAgentFrameworkTool(FoundryTool azureTool)
