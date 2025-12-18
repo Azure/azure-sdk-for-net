@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Azure.AI.AgentServer.AgentFramework.Converters;
 using Azure.AI.AgentServer.Contracts.Generated.OpenAI;
 using Azure.AI.AgentServer.Contracts.Generated.Responses;
@@ -17,11 +18,13 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// Provides an implementation of agent invocation using the Microsoft Agents AI framework.
 /// </summary>
 /// <param name="agent">The AI agent to invoke.</param>
-/// <param name="aiFunctions">Optional tools to surface to the agent for tool-calling.</param>
-public class AIAgentInvocation(AIAgent agent, IReadOnlyList<AIFunction>? aiFunctions = null) : AgentInvocationBase
+/// <param name="aiFunctionProvider">Optional tool provider that will be queried at invocation time.</param>
+public class AIAgentInvocation(
+    AIAgent agent,
+    IAIFunctionProvider? aiFunctionProvider = null) : AgentInvocationBase
 {
     private readonly AIAgent _agent = agent ?? throw new ArgumentNullException(nameof(agent));
-    private readonly AgentRunOptions? _runOptions = BuildRunOptions(aiFunctions);
+    private readonly IAIFunctionProvider? _aiFunctionProvider = aiFunctionProvider;
 
     /// <summary>
     /// Invokes the agent asynchronously and returns a complete response.
@@ -37,9 +40,10 @@ public class AIAgentInvocation(AIAgent agent, IReadOnlyList<AIFunction>? aiFunct
         Activity.Current?.SetServiceNamespace("agentframework");
 
         var messages = request.GetInputMessages();
+        var runOptions = await GetRunOptionsAsync(cancellationToken).ConfigureAwait(false);
         var response = await _agent.RunAsync(
             messages,
-            options: _runOptions,
+            options: runOptions,
             cancellationToken: cancellationToken).ConfigureAwait(false);
         return response.ToResponse(request, context);
     }
@@ -59,10 +63,7 @@ public class AIAgentInvocation(AIAgent agent, IReadOnlyList<AIFunction>? aiFunct
         Activity.Current?.SetServiceNamespace("agentframework");
 
         var messages = request.GetInputMessages();
-        var updates = _agent.RunStreamingAsync(
-            messages,
-            options: _runOptions,
-            cancellationToken: cancellationToken);
+        var updates = RunStreamingWithLatestTools(messages, cancellationToken);
         // TODO refine to multicast event
         IList<Action<ResponseUsage>> usageUpdaters = [];
 
@@ -89,6 +90,29 @@ public class AIAgentInvocation(AIAgent agent, IReadOnlyList<AIFunction>? aiFunct
                 CancellationToken = cancellationToken,
             }
         };
+    }
+
+    private async Task<AgentRunOptions?> GetRunOptionsAsync(CancellationToken cancellationToken)
+    {
+        IReadOnlyList<AIFunction>? aiFunctions = null;
+        if (_aiFunctionProvider is not null)
+        {
+            aiFunctions = await _aiFunctionProvider.ListToolsAsync(cancellationToken).ConfigureAwait(false);
+        }
+
+        return BuildRunOptions(aiFunctions);
+    }
+
+    private async IAsyncEnumerable<AgentRunResponseUpdate> RunStreamingWithLatestTools(
+        IEnumerable<ChatMessage> messages,
+        [EnumeratorCancellation] CancellationToken cancellationToken)
+    {
+        var runOptions = await GetRunOptionsAsync(cancellationToken).ConfigureAwait(false);
+        var updates = _agent.RunStreamingAsync(messages, options: runOptions, cancellationToken: cancellationToken);
+        await foreach (var update in updates.WithCancellation(cancellationToken).ConfigureAwait(false))
+        {
+            yield return update;
+        }
     }
 
     private static AgentRunOptions? BuildRunOptions(IReadOnlyList<AIFunction>? aiFunctions)
