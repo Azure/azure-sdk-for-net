@@ -236,18 +236,20 @@ function validateResourceGetMethods(
       .map((m) => m.methodId)
       .join(", ");
     
-    // Use the first Get method's operation as the target
-    const firstGetMethod = serviceMethods.get(getMethods[0].methodId);
-    const target = firstGetMethod?.__raw ?? NoTarget;
-    
-    $lib.reportDiagnostic(sdkContext.program, {
-      code: "duplicate-get-method",
-      format: { 
-        resourceName: resourceMetadata.resourceName,
-        operations: operationIds
-      },
-      target: target
-    });
+    // Report the diagnostic for each duplicate Get method
+    for (const method of getMethods) {
+      const serviceMethod = serviceMethods.get(method.methodId);
+      const target = serviceMethod?.__raw ?? NoTarget;
+      
+      $lib.reportDiagnostic(sdkContext.program, {
+        code: "duplicate-get-method",
+        format: { 
+          resourceName: resourceMetadata.resourceName,
+          operations: operationIds
+        },
+        target: target
+      });
+    }
   }
 }
 
