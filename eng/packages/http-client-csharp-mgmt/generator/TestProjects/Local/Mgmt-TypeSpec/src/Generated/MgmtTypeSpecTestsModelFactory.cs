@@ -822,6 +822,35 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             return new SAPAvailabilityZoneDetailsResult(recommendedAvailabilityZonePair, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> A best practice resource - used by both parent and child operations. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="extendedLocation"></param>
+        /// <returns> A new <see cref="Tests.BestPracticeData"/> instance for mocking. </returns>
+        public static BestPracticeData BestPracticeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, BestPracticeProperties properties = default, ExtendedLocation1 extendedLocation = default)
+        {
+            return new BestPracticeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties,
+                extendedLocation);
+        }
+
+        /// <summary> Best practice properties. </summary>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
+        /// <param name="description"> The description of the best practice. </param>
+        /// <returns> A new <see cref="Models.BestPracticeProperties"/> instance for mocking. </returns>
+        public static BestPracticeProperties BestPracticeProperties(ResourceProvisioningState? provisioningState = default, string description = default)
+        {
+            return new BestPracticeProperties(provisioningState, description, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Test resource with nullable ResourceType properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
