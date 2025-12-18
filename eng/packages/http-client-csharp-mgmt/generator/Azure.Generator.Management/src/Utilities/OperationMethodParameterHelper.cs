@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers;
@@ -48,6 +49,16 @@ namespace Azure.Generator.Management.Utilities
                     collectionProvider.TryGetPrivateFieldParameter(outputParameter, out _))
                 {
                     continue;
+                }
+
+                // For extension-scoped operations in MockableArmClient, transform resourceUri string parameter to ResourceIdentifier scope
+                if (enclosingTypeProvider is MockableArmClientProvider &&
+                    parameter.Name.Equals("resourceUri", StringComparison.OrdinalIgnoreCase) &&
+                    parameter.Type is InputPrimitiveType primitiveType &&
+                    primitiveType.Kind == InputPrimitiveTypeKind.String)
+                {
+                    // Update the parameter to use ResourceIdentifier type and "scope" name while preserving wire info
+                    outputParameter.Update(name: "scope", description: $"The scope that the resource will apply against.", type: typeof(ResourceIdentifier));
                 }
 
                 if (parameter.Type is InputModelType modelType && ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(modelType))

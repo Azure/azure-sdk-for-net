@@ -325,20 +325,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceUri"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ScheduledActionResources> GetByVmsAsync(string resourceUri, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ScheduledActionResources> GetByVmsAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, resourceUri, context);
+            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
         }
 
         /// <summary>
@@ -358,20 +358,20 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="resourceUri"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ScheduledActionResources> GetByVms(string resourceUri, CancellationToken cancellationToken = default)
+        public virtual Pageable<ScheduledActionResources> GetByVms(ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
 
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, resourceUri, context);
+            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, scope.ToString(), context);
         }
     }
 }

@@ -567,38 +567,38 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// List ScheduledActionResources resources by parent
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVmsAsync(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVmsAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ScheduledActionResources> GetByVmsAsync(this ArmClient client, string resourceUri, CancellationToken cancellationToken = default)
+        public static AsyncPageable<ScheduledActionResources> GetByVmsAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVmsAsync(resourceUri, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVmsAsync(scope, cancellationToken);
         }
 
         /// <summary>
         /// List ScheduledActionResources resources by parent
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms(string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms(ResourceIdentifier, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
-        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ScheduledActionResources> GetByVms(this ArmClient client, string resourceUri, CancellationToken cancellationToken = default)
+        public static Pageable<ScheduledActionResources> GetByVms(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVms(resourceUri, cancellationToken);
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVms(scope, cancellationToken);
         }
 
         /// <summary>
