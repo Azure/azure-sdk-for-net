@@ -14,6 +14,7 @@ using System.Text.Json.Serialization;
 using Azure;
 using Azure.Generator.MgmtTypeSpec.Tests;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
@@ -100,6 +101,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (Optional.IsDefined(WritableSubResourceProp))
+            {
+                writer.WritePropertyName("writableSubResourceProp"u8);
+                ((IJsonModel<WritableSubResource>)WritableSubResourceProp).Write(writer, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +158,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             NestedFooModel nestedProperty = default;
             SafeFlattenModel optionalProperty = default;
             ETag? eTag = default;
+            WritableSubResource writableSubResourceProp = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -250,6 +257,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("writableSubResourceProp"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writableSubResourceProp = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -266,6 +282,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 nestedProperty,
                 optionalProperty,
                 eTag,
+                writableSubResourceProp,
                 additionalBinaryDataProperties);
         }
 

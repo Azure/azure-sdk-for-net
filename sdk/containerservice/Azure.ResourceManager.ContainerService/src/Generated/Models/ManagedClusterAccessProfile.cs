@@ -12,7 +12,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Managed cluster Access Profile. </summary>
+    /// <summary>
+    /// Managed cluster Access Profile.
+    /// Serialized Name: ManagedClusterAccessProfile
+    /// </summary>
     public partial class ManagedClusterAccessProfile : TrackedResourceData
     {
         /// <summary>
@@ -60,7 +63,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="kubeConfig"> Base64-encoded Kubernetes configuration file. </param>
+        /// <param name="kubeConfig">
+        /// Base64-encoded Kubernetes configuration file.
+        /// Serialized Name: ManagedClusterAccessProfile.properties.kubeConfig
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterAccessProfile(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, byte[] kubeConfig, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -73,7 +79,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Base64-encoded Kubernetes configuration file. </summary>
+        /// <summary>
+        /// Base64-encoded Kubernetes configuration file.
+        /// Serialized Name: ManagedClusterAccessProfile.properties.kubeConfig
+        /// </summary>
         [WirePath("properties.kubeConfig")]
         public byte[] KubeConfig { get; set; }
     }

@@ -47,6 +47,12 @@ model FooProperties {
 
   /** ETag property for testing etag parameter name generation */
   etag?: Azure.Core.eTag;
+
+  /** WritableSubResource property for testing WritableSubResource type replacement */
+  writableSubResourceProp?: WritableSubResourceProp;
+}
+
+model WritableSubResourceProp {
 }
 
 model NestedFooModel {
