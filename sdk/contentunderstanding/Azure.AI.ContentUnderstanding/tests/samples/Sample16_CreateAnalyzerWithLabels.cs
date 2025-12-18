@@ -23,7 +23,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
     public partial class ContentUnderstandingSamples
     {
         [RecordedTest]
-        [TestCategory("Live")]
+        [Ignore("This test requires recorded session files. Run in Live mode to record.")]
         public async Task CreateAnalyzerWithLabelsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
