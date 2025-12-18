@@ -23,6 +23,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
     public partial class ContentUnderstandingSamples
     {
         [RecordedTest]
+        [TestCategory("Live")]
         public async Task CreateAnalyzerWithLabelsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
