@@ -187,6 +187,11 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("dnsZoneType"u8);
                 writer.WriteStringValue(DnsZoneType.Value.ToString());
             }
+            if (Optional.IsDefined(VcfLicense))
+            {
+                writer.WritePropertyName("vcfLicense"u8);
+                writer.WriteObjectValue(VcfLicense, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -241,6 +246,7 @@ namespace Azure.ResourceManager.Avs
             NsxPublicIPQuotaRaisedEnum? nsxPublicIPQuotaRaised = default;
             ResourceIdentifier virtualNetworkId = default;
             AvsDnsZoneType? dnsZoneType = default;
+            VcfLicense vcfLicense = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -513,6 +519,15 @@ namespace Azure.ResourceManager.Avs
                             dnsZoneType = new AvsDnsZoneType(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("vcfLicense"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vcfLicense = VcfLicense.DeserializeVcfLicense(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -551,6 +566,7 @@ namespace Azure.ResourceManager.Avs
                 nsxPublicIPQuotaRaised,
                 virtualNetworkId,
                 dnsZoneType,
+                vcfLicense,
                 sku,
                 identity,
                 zones ?? new ChangeTrackingList<string>(),
