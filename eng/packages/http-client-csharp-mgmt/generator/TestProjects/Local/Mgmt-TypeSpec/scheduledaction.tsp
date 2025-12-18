@@ -6,30 +6,29 @@ import "@azure-tools/typespec-azure-resource-manager";
 using TypeSpec.Rest;
 using TypeSpec.Http;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Foundations;
 
 namespace MgmtTypeSpec;
 
-@doc("Test Action Response")
-model TestActionResponse {
-  @doc("The action result")
-  result?: string;
+@doc("Scheduled action properties")
+model ScheduledActionsExtensionProperties {
+  @doc("The scheduled action identifier")
+  actionId?: string;
 
-  @doc("The action status")
+  @doc("The scheduled action status")
   status?: string;
 }
 
-/**
- * Performs a test action at subscription scope
- */
-@autoRoute
-op performTestAction is ArmProviderActionSync<
-  Request = TestActionResponse,
-  Response = TestActionResponse,
-  Scope = SubscriptionActionScope,
-  Parameters = {
-    @path
-    @segment("locations")
-    location: Azure.Core.azureLocation;
-  }
->;
+@doc("The scheduled action extension")
+model ScheduledActionResources
+  is Azure.ResourceManager.ExtensionResource<ScheduledActionsExtensionProperties> {
+  ...ResourceNameParameter<
+    ScheduledActionResources,
+    SegmentName = "associatedScheduledActions"
+  >;
+}
+
+// Scheduled action extension routes
+@armResourceOperations
+interface ScheduledActionExtension {
+  listByVms is ArmResourceListByParent<ScheduledActionResources>;
+}

@@ -10,7 +10,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Generator.MgmtTypeSpec.Tests;
+using Azure.Generator.MgmtTypeSpec.Tests.Models;
 using Azure.ResourceManager;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
@@ -18,6 +20,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableAzureGeneratorMgmtTypeSpecTestsArmClient : ArmResource
     {
+        private ClientDiagnostics _scheduledActionExtensionClientDiagnostics;
+        private ScheduledActionExtension _scheduledActionExtensionRestClient;
+
         /// <summary> Initializes a new instance of MockableAzureGeneratorMgmtTypeSpecTestsArmClient for mocking. </summary>
         protected MockableAzureGeneratorMgmtTypeSpecTestsArmClient()
         {
@@ -29,6 +34,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         internal MockableAzureGeneratorMgmtTypeSpecTestsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
+
+        private ClientDiagnostics ScheduledActionExtensionClientDiagnostics => _scheduledActionExtensionClientDiagnostics ??= new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ScheduledActionExtension ScheduledActionExtensionRestClient => _scheduledActionExtensionRestClient ??= new ScheduledActionExtension(ScheduledActionExtensionClientDiagnostics, Pipeline, Endpoint, "2024-05-01");
 
         /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -297,6 +306,72 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             SampleDataResource.ValidateResourceId(id);
             return new SampleDataResource(Client, id);
+        }
+
+        /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/associatedScheduledActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionExtension_ListByVms. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceUri"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ScheduledActionResources> GetByVmsAsync(string resourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceUri, nameof(resourceUri));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ScheduledActionExtensionGetByVmsAsyncCollectionResultOfT(ScheduledActionExtensionRestClient, resourceUri, context);
+        }
+
+        /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/MgmtTypeSpec/associatedScheduledActions. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ScheduledActionExtension_ListByVms. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-05-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="resourceUri"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ScheduledActionResources> GetByVms(string resourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceUri, nameof(resourceUri));
+
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new ScheduledActionExtensionGetByVmsCollectionResultOfT(ScheduledActionExtensionRestClient, resourceUri, context);
         }
     }
 }

@@ -870,6 +870,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 properties);
         }
 
+        /// <summary> The scheduled action extension. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionResources"/> instance for mocking. </returns>
+        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionsExtensionProperties properties = default)
+        {
+            return new ScheduledActionResources(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Scheduled action properties. </summary>
+        /// <param name="actionId"> The scheduled action identifier. </param>
+        /// <param name="status"> The scheduled action status. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
+        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(string actionId = default, string status = default)
+        {
+            return new ScheduledActionsExtensionProperties(actionId, status, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The ZooRecommendation. </summary>
         /// <param name="recommendedValue"> The recommended value. </param>
         /// <param name="reason"> The reason for the recommendation. </param>

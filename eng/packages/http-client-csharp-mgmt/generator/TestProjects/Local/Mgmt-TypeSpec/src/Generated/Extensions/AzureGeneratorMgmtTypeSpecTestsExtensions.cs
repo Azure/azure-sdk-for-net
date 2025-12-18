@@ -564,6 +564,44 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         }
 
         /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVmsAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ScheduledActionResources> GetByVmsAsync(this ArmClient client, string resourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVmsAsync(resourceUri, cancellationToken);
+        }
+
+        /// <summary>
+        /// List ScheduledActionResources resources by parent
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsArmClient.GetByVms(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="resourceUri"> The fully qualified Azure Resource manager identifier of the resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> A collection of <see cref="ScheduledActionResources"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ScheduledActionResources> GetByVms(this ArmClient client, string resourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableAzureGeneratorMgmtTypeSpecTestsArmClient(client).GetByVms(resourceUri, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of StorageSyncServices in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -1317,44 +1355,6 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PreviewActions(location, body, cancellationToken);
-        }
-
-        /// <summary>
-        /// Performs a test action at subscription scope
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.PerformTestActionAsync(AzureLocation, TestActionResponse, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<TestActionResponse>> PerformTestActionAsync(this SubscriptionResource subscriptionResource, AzureLocation location, TestActionResponse body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return await GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PerformTestActionAsync(location, body, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Performs a test action at subscription scope
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource.PerformTestAction(AzureLocation, TestActionResponse, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="location"></param>
-        /// <param name="body"> The request body. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<TestActionResponse> PerformTestAction(this SubscriptionResource subscriptionResource, AzureLocation location, TestActionResponse body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableAzureGeneratorMgmtTypeSpecTestsSubscriptionResource(subscriptionResource).PerformTestAction(location, body, cancellationToken);
         }
 
         /// <summary>

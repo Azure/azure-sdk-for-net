@@ -12,16 +12,22 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class MgmtTypeSpecClient
+    internal partial class ScheduledActionExtension
     {
-        private readonly string _apiVersion;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
+        /// <summary> Initializes a new instance of ScheduledActionExtension for mocking. </summary>
+        protected ScheduledActionExtension()
+        {
+        }
+
+        /// <summary> Initializes a new instance of ScheduledActionExtension. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="apiVersion"> The API version to use for this client. </param>
-        public MgmtTypeSpecClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
+        /// <param name="apiVersion"></param>
+        internal ScheduledActionExtension(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
@@ -29,34 +35,37 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Initializes a new instance of MgmtTypeSpecClient for mocking. </summary>
-        protected MgmtTypeSpecClient()
-        {
-        }
-
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline { get; }
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreatePreviewActionsRequest(Guid subscriptionId, AzureLocation location, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetByVmsRequest(string resourceUri, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId.ToString(), true);
-            uri.AppendPath("/providers/MgmtTypeSpec/locations/", false);
-            uri.AppendPath(location.ToString(), true);
-            uri.AppendPath("/previewActions", false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/MgmtTypeSpec/associatedScheduledActions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Content-Type", "application/json");
+            request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
-            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateNextGetByVmsRequest(Uri nextPage, string resourceUri, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(nextPage);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

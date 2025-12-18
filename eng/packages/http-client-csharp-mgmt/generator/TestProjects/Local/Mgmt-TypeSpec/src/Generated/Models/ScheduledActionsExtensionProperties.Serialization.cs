@@ -9,18 +9,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
-    /// <summary> Test Action Response. </summary>
-    public partial class TestActionResponse : IJsonModel<TestActionResponse>
+    /// <summary> Scheduled action properties. </summary>
+    public partial class ScheduledActionsExtensionProperties : IJsonModel<ScheduledActionsExtensionProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<TestActionResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionsExtensionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,15 +29,15 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestActionResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionsExtensionProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Result))
+            if (Optional.IsDefined(ActionId))
             {
-                writer.WritePropertyName("result"u8);
-                writer.WriteStringValue(Result);
+                writer.WritePropertyName("actionId"u8);
+                writer.WriteStringValue(ActionId);
             }
             if (Optional.IsDefined(Status))
             {
@@ -65,37 +63,37 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestActionResponse IJsonModel<TestActionResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduledActionsExtensionProperties IJsonModel<ScheduledActionsExtensionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TestActionResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionsExtensionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TestActionResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionsExtensionProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTestActionResponse(document.RootElement, options);
+            return DeserializeScheduledActionsExtensionProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static TestActionResponse DeserializeTestActionResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionsExtensionProperties DeserializeScheduledActionsExtensionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string result = default;
+            string actionId = default;
             string status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("result"u8))
+                if (prop.NameEquals("actionId"u8))
                 {
-                    result = prop.Value.GetString();
+                    actionId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -108,66 +106,47 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new TestActionResponse(result, status, additionalBinaryDataProperties);
+            return new ScheduledActionsExtensionProperties(actionId, status, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<TestActionResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduledActionsExtensionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureGeneratorMgmtTypeSpecTestsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(TestActionResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionsExtensionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        TestActionResponse IPersistableModel<TestActionResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduledActionsExtensionProperties IPersistableModel<ScheduledActionsExtensionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual TestActionResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionsExtensionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<TestActionResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsExtensionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeTestActionResponse(document.RootElement, options);
+                        return DeserializeScheduledActionsExtensionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TestActionResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionsExtensionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<TestActionResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="testActionResponse"> The <see cref="TestActionResponse"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(TestActionResponse testActionResponse)
-        {
-            if (testActionResponse == null)
-            {
-                return null;
-            }
-            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(testActionResponse, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="TestActionResponse"/> from. </param>
-        internal static TestActionResponse FromResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeTestActionResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ScheduledActionsExtensionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
