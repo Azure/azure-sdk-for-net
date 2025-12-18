@@ -43,14 +43,14 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Step 1: Upload training data to Azure Blob Storage
             // Get training data configuration from environment
 #if SNIPPET
-            string trainingDataSasUrl;
+            string trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL") ?? string.Empty;
             string? storageAccount = Environment.GetEnvironmentVariable("TRAINING_DATA_STORAGE_ACCOUNT");
             string? containerName = Environment.GetEnvironmentVariable("TRAINING_DATA_CONTAINER_NAME");
 
             // If SAS URL is provided, use it directly
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")))
+            if (!string.IsNullOrEmpty(trainingDataSasUrl))
             {
-                trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")!;
+                // trainingDataSasUrl already contains the value from TRAINING_DATA_SAS_URL
             }
             // Otherwise, generate SAS URL from storage account and container name
             else if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(containerName))
@@ -72,7 +72,13 @@ namespace Azure.AI.ContentUnderstanding.Samples
                     Resource = "c", // Container
                     ExpiresOn = DateTimeOffset.UtcNow.AddHours(24)
                 };
-                sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.List);
+                sasBuilder.SetPermissions(
+                    BlobContainerSasPermissions.Read
+                    | BlobContainerSasPermissions.Write
+                    | BlobContainerSasPermissions.List
+                    | BlobContainerSasPermissions.Add
+                    | BlobContainerSasPermissions.Create
+                    | BlobContainerSasPermissions.Delete);
 
                 // Get user delegation key for SAS token
                 var userDelegationKey = await blobServiceClient.GetUserDelegationKeyAsync(
@@ -90,7 +96,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
 
             string trainingDataPath = Environment.GetEnvironmentVariable("TRAINING_DATA_PATH") ?? "training_data/";
 #else
-            // Generate SAS URL if not provided
+            // Get training data SAS URL (from configuration or by generating)
             string trainingDataSasUrl = await GetOrGenerateTrainingDataSasUrlAsync();
             string trainingDataPath = TestEnvironment.TrainingDataPath ?? "training_data/";
 #endif
@@ -116,7 +122,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 {
                     string fileName = Path.GetFileName(file);
 
-                    // Upload document, labels.json, and result.json files
+                    // Process each main document (filter out .labels.json and .result.json metadata files)
                     if (!fileName.EndsWith(".labels.json") && !fileName.EndsWith(".result.json"))
                     {
                         // Upload the main document

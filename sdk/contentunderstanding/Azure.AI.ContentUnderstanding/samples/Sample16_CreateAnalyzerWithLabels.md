@@ -55,7 +55,7 @@ Alternatively, you can provide a pre-generated SAS URL:
 
 ```bash
 # Pre-generated SAS URL
-export TRAINING_DATA_SAS_URL="https://mystorageaccount.blob.core.windows.net/mycontainer?sv=2023-01-03&ss=b&srt=co&sp=racwdl&se=..."
+export TRAINING_DATA_SAS_URL="https://mystorageaccount.blob.core.windows.net/mycontainer?<your-sas-token>"
 export TRAINING_DATA_PATH="document_training/"  # Optional
 ```
 
@@ -95,7 +95,7 @@ Each training document requires three files:
      }
      ```
 
-3. **OCR Results File**: Contains the OCR analysis results from `prebuilt-documentSearch`
+3. **OCR Results File**: Contains the OCR analysis results from `prebuilt-document`
    - Example: `receipt.jpg.result.json`
 
 ## Creating a `ContentUnderstandingClient`
@@ -110,14 +110,14 @@ string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds(
 
 // Step 1: Upload training data to Azure Blob Storage
 // Get training data configuration from environment
-string trainingDataSasUrl;
+string trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL") ?? string.Empty;
 string? storageAccount = Environment.GetEnvironmentVariable("TRAINING_DATA_STORAGE_ACCOUNT");
 string? containerName = Environment.GetEnvironmentVariable("TRAINING_DATA_CONTAINER_NAME");
 
 // If SAS URL is provided, use it directly
-if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")))
+if (!string.IsNullOrEmpty(trainingDataSasUrl))
 {
-    trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL")!;
+    // trainingDataSasUrl already contains the value from TRAINING_DATA_SAS_URL
 }
 // Otherwise, generate SAS URL from storage account and container name
 else if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(containerName))
@@ -139,7 +139,13 @@ else if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(containe
         Resource = "c", // Container
         ExpiresOn = DateTimeOffset.UtcNow.AddHours(24)
     };
-    sasBuilder.SetPermissions(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Write | BlobContainerSasPermissions.List);
+    sasBuilder.SetPermissions(
+        BlobContainerSasPermissions.Read
+        | BlobContainerSasPermissions.Write
+        | BlobContainerSasPermissions.List
+        | BlobContainerSasPermissions.Add
+        | BlobContainerSasPermissions.Create
+        | BlobContainerSasPermissions.Delete);
 
     // Get user delegation key for SAS token
     var userDelegationKey = await blobServiceClient.GetUserDelegationKeyAsync(
@@ -178,7 +184,7 @@ if (Directory.Exists(trainingDocsFolder))
     {
         string fileName = Path.GetFileName(file);
 
-        // Upload document, labels.json, and result.json files
+        // Process each main document (filter out .labels.json and .result.json metadata files)
         if (!fileName.EndsWith(".labels.json") && !fileName.EndsWith(".result.json"))
         {
             // Upload the main document
