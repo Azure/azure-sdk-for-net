@@ -252,9 +252,101 @@ namespace Azure.AI.Agents.Persistent
                 };
             }
 
-            // For completed runs, fetch messages from the thread
+            // For completed runs, fetch run steps for CodeInterpreter and MCP results, then fetch messages
             if (run.Status == RunStatus.Completed)
             {
+                // Fetch run steps to extract CodeInterpreter and MCP tool call results
+                await foreach (RunStep runStep in _client!.Runs.GetRunStepsAsync(
+                    threadId: threadId,
+                    runId: run.Id,
+                    limit: null,
+                    order: ListSortOrder.Ascending,
+                    after: null,
+                    before: null,
+                    include: null,
+                    cancellationToken: cancellationToken).ConfigureAwait(false))
+                {
+                    if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+                    {
+                        foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+                        {
+                            switch (toolCall)
+                            {
+                                case RunStepCodeInterpreterToolCall codeInterpreterToolCall:
+                                    // Add CodeInterpreter input as a tool call content
+                                    if (!string.IsNullOrEmpty(codeInterpreterToolCall.Input))
+                                    {
+                                        CodeInterpreterToolCallContent citcc = new()
+                                        {
+                                            CallId = codeInterpreterToolCall.Id,
+                                            Inputs = [new DataContent(Encoding.UTF8.GetBytes(codeInterpreterToolCall.Input), "text/x-python")],
+                                            RawRepresentation = codeInterpreterToolCall,
+                                        };
+
+                                        responseMessages.Add(new ChatMessage(ChatRole.Assistant, [citcc]));
+                                    }
+
+                                    // Add CodeInterpreter outputs as a tool result content
+                                    if (codeInterpreterToolCall.Outputs is { Count: > 0 })
+                                    {
+                                        CodeInterpreterToolResultContent citrc = new()
+                                        {
+                                            CallId = codeInterpreterToolCall.Id,
+                                            RawRepresentation = codeInterpreterToolCall,
+                                        };
+
+                                        foreach (var output in codeInterpreterToolCall.Outputs)
+                                        {
+                                            switch (output)
+                                            {
+                                                case RunStepCodeInterpreterImageOutput imageOutput when imageOutput.Image?.FileId is string imageFileId && !string.IsNullOrWhiteSpace(imageFileId):
+                                                    (citrc.Outputs ??= []).Add(new HostedFileContent(imageFileId) { MediaType = "image/*" });
+                                                    break;
+
+                                                case RunStepCodeInterpreterLogOutput logOutput when logOutput.Logs is string logs && !string.IsNullOrEmpty(logs):
+                                                    (citrc.Outputs ??= []).Add(new TextContent(logs));
+                                                    break;
+                                            }
+                                        }
+
+                                        if (citrc.Outputs?.Count > 0)
+                                        {
+                                            responseMessages.Add(new ChatMessage(ChatRole.Assistant, [citrc]));
+                                        }
+                                    }
+                                    break;
+
+                                case RunStepMcpToolCall mcpToolCall:
+                                    // Add MCP tool call result content
+                                    McpServerToolResultContent mcpResultContent = new(mcpToolCall.Id)
+                                    {
+                                        RawRepresentation = mcpToolCall,
+                                    };
+
+                                    // Add output if present
+                                    if (!string.IsNullOrEmpty(mcpToolCall.Output))
+                                    {
+                                        mcpResultContent.Output = [new TextContent(mcpToolCall.Output)];
+                                    }
+
+                                    responseMessages.Add(new ChatMessage(ChatRole.Assistant, [mcpResultContent]));
+                                    break;
+                            }
+                        }
+                    }
+                    else if (runStep.StepDetails is RunStepActivityDetails activityDetails)
+                    {
+                        // Handle MCP activity details (mcp_list_tools events)
+                        foreach (RunStepDetailsActivity activity in activityDetails.Activities)
+                        {
+                            // These activities represent MCP tool discovery events
+                            // They are primarily informational and represent the tools available from the MCP server
+                            // We can expose them as raw representation on a generic content if needed
+                        }
+                    }
+                }
+
+                // Fetch messages from the thread
                 await foreach (PersistentThreadMessage threadMessage in _client!.Messages.GetMessagesAsync(
                     threadId: threadId,
                     runId: run.Id,
