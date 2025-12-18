@@ -4,10 +4,11 @@
 #nullable disable
 
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    /// <summary> Resource information with extended details. </summary>
+    [CodeGenType("KeyVault")]
     public partial class KeyVaultData : TrackedResourceData
     {}
 }
