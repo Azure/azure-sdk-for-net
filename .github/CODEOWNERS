@@ -744,6 +744,12 @@
 # ServiceLabel: %OpenAI
 # ServiceOwners:                                                   @jpalvarezl @trrwilson
 
+# PRLabel: %Planetary Computer
+/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
+
+# ServiceLabel: %Planetary Computer
+# ServiceOwners:                                                   @chahibi @mandarinamdar
+
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
 
@@ -752,12 +758,6 @@
 
 # ServiceLabel: %PostgreSQL
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
-
-# PRLabel: %Planetary Computer
-/sdk/planetarycomputer/Azure.Analytics.PlanetaryComputer/          @chahibi @mandarinamdar
-
-# ServiceLabel: %Planetary Computer
-# ServiceOwners:                                                   @chahibi @mandarinamdar
 
 # PRLabel: %Provisioning
 /sdk/provisioning/                                                 @ArthurMa1978 @m-nash @ArcturusZhang
