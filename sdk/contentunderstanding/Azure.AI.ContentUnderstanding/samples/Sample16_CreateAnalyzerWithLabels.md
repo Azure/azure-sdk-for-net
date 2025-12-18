@@ -314,8 +314,6 @@ When using knowledge sources with labeled data:
 
 - [Content Understanding Documentation][cu-docs]
 - [Analyzer Reference Documentation][analyzer-reference-docs] - Complete reference for analyzer configuration
-- [Analyzer Training Concepts][analyzer-training-docs] - Learn about training analyzers with labeled data
-- [How to Label Training Data][labeling-docs] - Guide for creating labeled training data
 
 [sample00]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample00_UpdateDefaults.md
 [sample01]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
@@ -325,5 +323,3 @@ When using knowledge sources with labeled data:
 [sample09]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample09_DeleteAnalyzer.md
 [cu-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/
 [analyzer-reference-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-reference
-[analyzer-training-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/analyzer-training
-[labeling-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/how-to/training-data
