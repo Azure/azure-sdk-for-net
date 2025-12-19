@@ -492,19 +492,12 @@ function applyArmProviderSchemaDecorator(
 }
 
 /**
- * Export buildArmProviderSchema for testing purposes.
- * This function builds the ARM provider schema from the code model.
- * 
- * @param sdkContext - The emitter context
- * @param codeModel - The code model to process
- * @returns The unified ARM provider schema
- */
-/**
  * Builds the ARM provider schema by detecting all resources and non-resource methods.
  * This is the main function that gathers all ARM-related information from the code model
  * and consolidates it into a unified ArmProviderSchema structure.
  * 
- * This function can be called directly from tests to validate the schema structure.
+ * This function is exported for testing purposes and can be called directly from tests
+ * to validate the schema structure.
  * 
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
