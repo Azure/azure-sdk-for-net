@@ -1,5 +1,17 @@
 # Release History
 
+## 1.3.0 (2025-12-20)
+
+### Features Added
+
+- Added support for Email Suppression List and SMTP Usernames.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
