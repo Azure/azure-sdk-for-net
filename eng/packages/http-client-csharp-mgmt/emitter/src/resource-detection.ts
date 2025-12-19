@@ -9,8 +9,6 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
-  convertMethodMetadataToArguments,
-  convertResourceMetadataToArguments,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,
@@ -45,11 +43,9 @@ import {
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName,
-  nonResourceMethodMetadata,
   parentResourceName,
   readsResourceName,
   resourceGroupResource,
-  resourceMetadata,
   singleton,
   subscriptionResource,
   tenantResource
@@ -776,17 +772,6 @@ function getOperationScope(path: string): ResourceScope {
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 
-function addNonResourceMethodDecorators(
-  codeModel: CodeModel,
-  metadata: NonResourceMethod[]
-) {
-  codeModel.clients[0].decorators ??= [];
-  codeModel.clients[0].decorators.push({
-    name: nonResourceMethodMetadata,
-    arguments: convertMethodMetadataToArguments(metadata)
-  });
-}
-
 /**
  * Applies the ARM provider schema as a decorator to the root client.
  * @param codeModel - The code model to update
@@ -1131,31 +1116,4 @@ function buildArmProviderSchemaFromDetectedResources(
   };
 }
 
-function addResourceMetadata(
-  sdkContext: CSharpEmitterContext,
-  model: InputModelType,
-  metadata: ResourceMetadata
-) {
-  if (metadata.resourceIdPattern === "") {
-    sdkContext.logger.reportDiagnostic({
-      code: "general-warning", // TODO -- later maybe we could define a specific code for resource hierarchy issues
-      messageId: "default",
-      format: {
-        message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-      },
-      target: NoTarget // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
-    });
-    return;
-  }
 
-  const resourceMetadataDecorator: DecoratorInfo = {
-    name: resourceMetadata,
-    arguments: convertResourceMetadataToArguments(metadata)
-  };
-
-  if (!model.decorators) {
-    model.decorators = [];
-  }
-
-  model.decorators.push(resourceMetadataDecorator);
-}
