@@ -9,6 +9,7 @@ import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
+import { armProviderSchema } from "../src/sdk-context-options.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
