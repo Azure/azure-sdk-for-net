@@ -11,8 +11,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <summary> Initializes a new instance of <see cref="LabeledDataKnowledgeSource"/> with the specified container URL. The <c>FileListPath</c> is initialized to an empty string. </summary>
         /// <param name="containerUrl"> The URL of the blob container containing labeled data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerUrl"/> is null. </exception>
-        public LabeledDataKnowledgeSource(Uri containerUrl) : this(containerUrl, string.Empty)
-        {
-        }
+        public LabeledDataKnowledgeSource(Uri containerUrl)
+            : this(containerUrl, string.Empty) { }
     }
 }
