@@ -73,7 +73,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         {
             get
             {
-                return MetaData is null ? default : MetaData.MetaDatas;
+                return MetaData.MetaDatas;
             }
         }
     }
