@@ -99,7 +99,7 @@ namespace Azure.Generator.Management
 
             if (KnownManagementTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression))
             {
-                return serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
+                return serializationExpression(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
             }
 
             return base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);

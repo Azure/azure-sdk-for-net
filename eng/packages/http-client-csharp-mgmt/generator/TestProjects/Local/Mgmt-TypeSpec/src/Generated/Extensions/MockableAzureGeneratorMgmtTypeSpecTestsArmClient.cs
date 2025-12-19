@@ -280,5 +280,23 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
             SAPVirtualInstanceResource.ValidateResourceId(id);
             return new SAPVirtualInstanceResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="ResourceTypeTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceTypeTestResource"/> object. </returns>
+        public virtual ResourceTypeTestResource GetResourceTypeTestResource(ResourceIdentifier id)
+        {
+            ResourceTypeTestResource.ValidateResourceId(id);
+            return new ResourceTypeTestResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SampleDataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SampleDataResource"/> object. </returns>
+        public virtual SampleDataResource GetSampleDataResource(ResourceIdentifier id)
+        {
+            SampleDataResource.ValidateResourceId(id);
+            return new SampleDataResource(Client, id);
+        }
     }
 }

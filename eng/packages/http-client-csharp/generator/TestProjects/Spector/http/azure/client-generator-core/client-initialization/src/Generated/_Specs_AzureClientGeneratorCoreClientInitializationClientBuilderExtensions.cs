@@ -8,8 +8,8 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
-using Specs.Azure.ClientGeneratorCore.ClientInitialization;
-using Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization;
+using Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient;
 
 namespace Microsoft.Extensions.Azure
 {

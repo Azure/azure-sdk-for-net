@@ -13,7 +13,8 @@ import {
   resourceMetadata,
   tenantResource,
   subscriptionResource,
-  resourceGroupResource
+  resourceGroupResource,
+  nonResourceMethodMetadata
 } from "../src/sdk-context-options.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
@@ -1219,5 +1220,92 @@ interface Employees {
       employeeResourceMetadataDecorator.arguments.resourceScope,
       "ManagementGroup"
     );
+  });
+
+  it("interface with only action operations (no get)", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A ScheduledAction resource model */
+model ScheduledAction is TrackedResource<ScheduledActionProperties> {
+  ...ResourceNameParameter<ScheduledAction>;
+}
+
+/** ScheduledAction properties */
+model ScheduledActionProperties {
+  /** Action type */
+  actionType?: string;
+}
+
+/** Request model for GetAssociatedScheduledActions */
+model GetAssociatedScheduledActionsRequest {
+  /** Resource IDs to query */
+  resourceIds: string[];
+}
+
+/** Response model for GetAssociatedScheduledActions */
+model GetAssociatedScheduledActionsResponse {
+  /** List of scheduled actions */
+  scheduledActions: ScheduledAction[];
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface ScheduledActionExtension {
+  @post
+  @segment("getAssociatedScheduledActions")
+  getAssociatedScheduledActions is ArmResourceActionSync<
+    ScheduledAction,
+    GetAssociatedScheduledActionsRequest,
+    GetAssociatedScheduledActionsResponse
+  >;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    updateClients(root, sdkContext);
+
+    const scheduledActionExtensionClient = getAllClients(root).find(
+      (c) => c.name === "ScheduledActionExtension"
+    );
+    ok(scheduledActionExtensionClient, "ScheduledActionExtension client should exist");
+
+    const scheduledActionModel = root.models.find((m) => m.name === "ScheduledAction");
+    ok(scheduledActionModel, "ScheduledAction model should exist");
+
+    const getAssociatedMethod = scheduledActionExtensionClient.methods.find(
+      (m) => m.name === "getAssociatedScheduledActions"
+    );
+    ok(getAssociatedMethod, "getAssociatedScheduledActions method should exist");
+
+    // Check if resource metadata exists for ScheduledAction
+    const resourceMetadataDecorator = scheduledActionModel.decorators?.find(
+      (d) => d.name === resourceMetadata
+    );
+    
+    // The resource should NOT have metadata since it has no CRUD operations
+    strictEqual(
+      resourceMetadataDecorator,
+      undefined,
+      "ScheduledAction should not have resource metadata decorator without CRUD operations"
+    );
+    
+    // Check that the method is treated as a non-resource method
+    const firstClient = root.clients[0];
+    const nonResourceMethodDecorator = firstClient.decorators?.find(
+      (d) => d.name === nonResourceMethodMetadata
+    );
+    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
+    
+    const nonResourceMethods =
+      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    const methodEntry = nonResourceMethods.find(
+      (m: any) => m.methodId === getAssociatedMethod.crossLanguageDefinitionId
+    );
+    ok(methodEntry, "getAssociatedScheduledActions should be in non-resource methods");
+    strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
   });
 });
