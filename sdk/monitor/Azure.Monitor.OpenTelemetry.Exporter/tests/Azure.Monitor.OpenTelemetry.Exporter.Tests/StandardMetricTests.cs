@@ -555,6 +555,80 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             }
         }
 
+        [Fact]
+        public void ValidatePerfCounterMetricsWithResourceAttributes()
+        {
+            // This test validates that perf counter metrics inherit resource attributes from the TracerProvider.
+            // This addresses the bug where performance counters showed "unknown_service:azmo" instead of the configured service name.
+            var activitySource = new ActivitySource(nameof(StandardMetricTests.ValidatePerfCounterMetricsWithResourceAttributes));
+            var traceTelemetryItems = new List<TelemetryItem>();
+            var metricTelemetryItems = new List<TelemetryItem>();
+
+            var standardMetricCustomProcessor = new StandardMetricsExtractionProcessor(new AzureMonitorMetricExporter(new MockTransmitter(metricTelemetryItems)));
+
+            var traceServiceName = new KeyValuePair<string, object>("service.name", "test.perfcounter.service");
+            var traceServiceInstance = new KeyValuePair<string, object>("service.instance.id", "test-instance-123");
+            var resourceAttributes = new KeyValuePair<string, object>[] { traceServiceName, traceServiceInstance };
+
+            using var tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .SetSampler(new AlwaysOnSampler())
+                .SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(resourceAttributes))
+                .AddSource(nameof(StandardMetricTests.ValidatePerfCounterMetricsWithResourceAttributes))
+                .AddProcessor(standardMetricCustomProcessor)
+                .AddProcessor(new BatchActivityExportProcessor(new AzureMonitorTraceExporter(new AzureMonitorExporterOptions(), new MockTransmitter(traceTelemetryItems))))
+                .Build();
+
+            // Generate a request activity to trigger request rate counter
+            using (var a = activitySource.StartActivity("Req", ActivityKind.Server))
+            {
+                a?.SetTag(SemanticConventions.AttributeHttpStatusCode, 200);
+            }
+
+            tracerProvider?.ForceFlush();
+            WaitForActivityExport(traceTelemetryItems);
+
+            // Wait for performance counter collection cycle to complete
+            var perfCountersCollected = SpinWait.SpinUntil(
+                condition: () =>
+                {
+                    standardMetricCustomProcessor._meterProvider?.ForceFlush();
+                    Thread.Sleep(100);
+                    return metricTelemetryItems.Count > 0;
+                },
+                timeout: TimeSpan.FromSeconds(5));
+
+            Assert.True(perfCountersCollected, "Performance counter metrics were not collected within the timeout period.");
+
+            // Find any performance counter metric to validate resource attributes
+            var perfCounterMetricItem = metricTelemetryItems
+                .FirstOrDefault(ti =>
+                {
+                    if (ti.Data.BaseType == "MetricData")
+                    {
+                        var data = (MetricsData)ti.Data.BaseData;
+                        return data.Metrics.Count > 0 &&
+                               (data.Metrics[0].Name == PerfCounterConstants.RequestRateMetricIdValue ||
+                                data.Metrics[0].Name == PerfCounterConstants.ProcessPrivateBytesMetricIdValue ||
+                                data.Metrics[0].Name == PerfCounterConstants.ProcessCpuMetricIdValue ||
+                                data.Metrics[0].Name == PerfCounterConstants.ProcessCpuNormalizedMetricIdValue);
+                    }
+                    return false;
+                });
+
+            Assert.NotNull(perfCounterMetricItem);
+
+            // Validate that the performance counter metric has the correct cloud role name
+            Assert.NotNull(perfCounterMetricItem!.Tags);
+            Assert.True(perfCounterMetricItem.Tags.TryGetValue(ContextTagKeys.AiCloudRole.ToString(), out var cloudRoleName),
+                "Performance counter metric should have cloud.role tag");
+            Assert.Equal("test.perfcounter.service", cloudRoleName);
+
+            // Validate that the performance counter metric has the correct cloud role instance
+            Assert.True(perfCounterMetricItem.Tags.TryGetValue(ContextTagKeys.AiCloudRoleInstance.ToString(), out var cloudRoleInstance),
+                "Performance counter metric should have cloud.roleInstance tag");
+            Assert.Equal("test-instance-123", cloudRoleInstance);
+        }
+
         private void WaitForActivityExport(List<TelemetryItem> traceTelemetryItems)
         {
             var result = SpinWait.SpinUntil(

@@ -69,12 +69,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal StandardMetricsExtractionProcessor(AzureMonitorMetricExporter metricExporter)
         {
+            // Create a custom exporter that uses this processor's resource instead of the MeterProvider's resource
+            var customExporter = new StandardMetricsMetricExporter(
+                metricExporter.Transmitter,
+                () => StandardMetricResource);
+
             _meterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StandardMetricConstants.StandardMetricMeterName)
                 .AddMeter(PerfCounterConstants.PerfCounterMeterName)
-                .SetResourceBuilder(ResourceBuilder.CreateDefault()
-                    .AddDetector(new ParentProviderResourceDetector(() => ParentProvider?.GetResource())))
-                .AddReader(new PeriodicExportingMetricReader(metricExporter)
+                .AddReader(new PeriodicExportingMetricReader(customExporter)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
 
