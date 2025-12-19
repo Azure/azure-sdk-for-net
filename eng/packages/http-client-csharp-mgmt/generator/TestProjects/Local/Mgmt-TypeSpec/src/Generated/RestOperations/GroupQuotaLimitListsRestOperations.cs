@@ -62,6 +62,32 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             return message;
         }
 
+        internal HttpMessage CreateCreateOrUpdateRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/managementGroups/", false);
+            uri.AppendPath(managementGroupId, true);
+            uri.AppendPath("/groupQuotas/", false);
+            uri.AppendPath(groupQuotaName, true);
+            uri.AppendPath("/resourceProviders/", false);
+            uri.AppendPath(resourceProviderName, true);
+            uri.AppendPath("/groupQuotaLimits/", false);
+            uri.AppendPath(location.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            if ("application/json" != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateUpdateRequest(string managementGroupId, string groupQuotaName, string resourceProviderName, AzureLocation location, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();

@@ -53,10 +53,10 @@ namespace Azure.Identity
             }
         }
 
+        // X509Certificate2.X509Certificate2 was made obsolete in .NET 10.0 and replaced by X509CertificateLoader.
+        // However, the loader is not available in earlier versions.
         private async ValueTask<X509Certificate2> LoadCertificateFromPfxFileAsync(bool async, string clientCertificatePath, string certificatePassword, CancellationToken cancellationToken)
         {
-            const int BufferSize = 4 * 1024;
-
             if (!(Certificate is null))
             {
                 return Certificate;
@@ -66,31 +66,20 @@ namespace Azure.Identity
             {
                 if (!async)
                 {
+#if NET10_0_OR_GREATER
+                    Certificate = X509CertificateLoader.LoadPkcs12FromFile(clientCertificatePath, certificatePassword);
+#else
                     Certificate = new X509Certificate2(clientCertificatePath, certificatePassword);
+#endif
                 }
                 else
                 {
-                    List<byte> certContents = new List<byte>();
-                    byte[] buf = new byte[BufferSize];
-                    int offset = 0;
-                    using (Stream s = File.OpenRead(clientCertificatePath))
-                    {
-                        while (true)
-                        {
-                            int read = await s.ReadAsync(buf, offset, buf.Length, cancellationToken).ConfigureAwait(false);
-                            for (int i = 0; i < read; i++)
-                            {
-                                certContents.Add(buf[i]);
-                            }
-
-                            if (read == 0)
-                            {
-                                break;
-                            }
-                        }
-                    }
-
-                    Certificate = new X509Certificate2(certContents.ToArray(), certificatePassword);
+                    byte[] certContents = await ReadAllCertificateBytesAsync(clientCertificatePath, cancellationToken).ConfigureAwait(false);
+#if NET10_0_OR_GREATER
+                    Certificate = X509CertificateLoader.LoadPkcs12(certContents, certificatePassword);
+#else
+                    Certificate = new X509Certificate2(certContents, certificatePassword);
+#endif
                 }
 
                 return Certificate;
@@ -134,6 +123,20 @@ namespace Azure.Identity
             {
                 throw new CredentialUnavailableException("Could not load certificate file", e);
             }
+        }
+
+        private async Task<byte[]> ReadAllCertificateBytesAsync(string path, CancellationToken cancellationToken)
+        {
+#if !NETSTANDARD2_0
+            return await File.ReadAllBytesAsync(path, cancellationToken).ConfigureAwait(false);
+#else
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
+            using (MemoryStream ms = new MemoryStream())
+            {
+                await fs.CopyToAsync(ms, 81920, cancellationToken).ConfigureAwait(false);
+                return ms.ToArray();
+            }
+#endif
         }
 
         private delegate void ImportPkcs8PrivateKeyDelegate(ReadOnlySpan<byte> blob, out int bytesRead);

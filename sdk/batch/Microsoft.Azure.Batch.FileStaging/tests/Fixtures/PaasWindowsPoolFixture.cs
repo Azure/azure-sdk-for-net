@@ -15,6 +15,7 @@
 namespace Batch.FileStaging.Tests.Fixtures
 {
     using System.Collections.Generic;
+    using System.Linq;
     using IntegrationTestUtilities;
     using Microsoft.Azure.Batch;
     using Xunit;
@@ -27,6 +28,18 @@ namespace Batch.FileStaging.Tests.Fixtures
             this.Pool = this.CreatePool();
         }
 
+        private static ImageInformation GetWindowsImageDetails(BatchClient client)
+        {
+            List<ImageInformation> imageInformation = client.PoolOperations.ListSupportedImages().ToList();
+
+            ImageInformation windowsImage = imageInformation.First(imageInfo =>
+                imageInfo.ImageReference.Publisher == "microsoftwindowsserver" &&
+                imageInfo.ImageReference.Offer.Contains("windowsserver") &&
+                imageInfo.ImageReference.Sku.Contains("2022-datacenter"));
+
+            return windowsImage;
+        }
+
         protected CloudPool CreatePool()
         {
             CloudPool currentPool = this.FindPoolIfExists();
@@ -34,12 +47,16 @@ namespace Batch.FileStaging.Tests.Fixtures
             if (currentPool == null)
             {
                 // gotta create a new pool
-                CloudServiceConfiguration passConfiguration = new CloudServiceConfiguration(OSFamily);
+                var windowsImageDetails = GetWindowsImageDetails(this.client);
+
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(
+                    windowsImageDetails.ImageReference,
+                    nodeAgentSkuId: windowsImageDetails.NodeAgentSkuId);
 
                 currentPool = this.client.PoolOperations.CreatePool(
                     this.PoolId,
                     VMSize,
-                    passConfiguration,
+                    virtualMachineConfiguration,
                     targetDedicatedComputeNodes: 1);
 
                 StartTask st = new StartTask("cmd /c hostname");

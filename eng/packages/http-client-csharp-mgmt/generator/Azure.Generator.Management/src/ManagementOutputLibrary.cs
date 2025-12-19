@@ -138,7 +138,13 @@ namespace Azure.Generator.Management
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources);
+
+            // Extract extension non-resource methods for MockableArmClientProvider
+            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
+                ? extensionScope.NonResourceMethods
+                : [];
+
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -245,10 +251,11 @@ namespace Azure.Generator.Management
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is not null)
                 {
-                    allModelTypes.Add(model.Type);
+                    var eraseNullableType = model.Type.WithNullable(false);
+                    allModelTypes.Add(eraseNullableType);
                     if (IsModelFactoryModel(model))
                     {
-                        modelFactoryModels.Add(model.Type);
+                        modelFactoryModels.Add(eraseNullableType);
                     }
                 }
             }
@@ -287,9 +294,9 @@ namespace Azure.Generator.Management
             }
         }
 
-        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
+        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type.WithNullable(false));
 
-        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type);
+        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type.WithNullable(false));
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
@@ -385,7 +392,20 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<CSharpType, ResourceClientProvider>? _resourceDataTypes;
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
-            _resourceDataTypes ??= ResourceProviders.ToDictionary(r => r.ResourceData.Type, r => r);
+            if (_resourceDataTypes == null)
+            {
+                // Build dictionary, handling cases where multiple resources share the same data type
+                var dict = new Dictionary<CSharpType, ResourceClientProvider>();
+                foreach (var provider in ResourceProviders)
+                {
+                    // If the key already exists (multiple resources sharing same model), keep the first one
+                    if (!dict.ContainsKey(provider.ResourceData.Type))
+                    {
+                        dict[provider.ResourceData.Type] = provider;
+                    }
+                }
+                _resourceDataTypes = dict;
+            }
             return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
         }
 

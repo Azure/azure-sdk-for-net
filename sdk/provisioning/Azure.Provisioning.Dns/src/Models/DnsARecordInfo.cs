@@ -13,12 +13,12 @@ namespace Azure.Provisioning.Dns;
 /// </summary>
 public partial class DnsARecordInfo : ProvisionableConstruct
 {
-    public BicepValue<IPAddress> Ipv4Addresses
+    public BicepValue<IPAddress> Ipv4Address
     {
-        get { Initialize(); return _ipv4Addresses!; }
-        set { Initialize(); _ipv4Addresses!.Assign(value); }
+        get { Initialize(); return _ipv4Address!; }
+        set { Initialize(); _ipv4Address!.Assign(value); }
     }
-    private BicepValue<IPAddress>? _ipv4Addresses;
+    private BicepValue<IPAddress>? _ipv4Address;
 
     /// <summary>
     /// Creates a new DnsARecordInfo.
@@ -33,6 +33,6 @@ public partial class DnsARecordInfo : ProvisionableConstruct
     protected override void DefineProvisionableProperties()
     {
         base.DefineProvisionableProperties();
-        _ipv4Addresses = DefineProperty<IPAddress>("IPv4Addresses", ["ipv4Addresses"], isRequired: true);
+        _ipv4Address = DefineProperty<IPAddress>(nameof(Ipv4Address), ["ipv4Address"], isRequired: true);
     }
 }
