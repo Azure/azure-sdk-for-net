@@ -113,7 +113,9 @@ namespace Azure.AI.VoiceLive.Samples
 
         await RunVoiceAssistantAsync(apiKey, endpoint, model, voice, instructions, useTokenCredential, verbose).ConfigureAwait(false);
         return 0;
-    }        private static async Task RunVoiceAssistantAsync(
+    }
+
+    private static async Task RunVoiceAssistantAsync(
             string? apiKey,
             string endpoint,
             string model,
