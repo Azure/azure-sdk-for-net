@@ -426,9 +426,9 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> Post Action to retrieve the PostgreSQL versions. </param>
+        /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PgVersionsResult>> GetPostgresVersionsAsync(PgVersion parameters = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PgVersionsResult>> GetPostgresVersionsAsync(PgVersion pgVersion = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NeonOrganizationResource.GetPostgresVersions");
             scope.Start();
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.NeonPostgres
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetPostgresVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, PgVersion.ToRequestContent(parameters), context);
+                HttpMessage message = _organizationsRestClient.CreateGetPostgresVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, PgVersion.ToRequestContent(pgVersion), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PgVersionsResult> response = Response.FromValue(PgVersionsResult.FromResponse(result), result);
                 if (response.Value == null)
@@ -475,9 +475,9 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> Post Action to retrieve the PostgreSQL versions. </param>
+        /// <param name="pgVersion"> Post Action to retrieve the PostgreSQL versions. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PgVersionsResult> GetPostgresVersions(PgVersion parameters = default, CancellationToken cancellationToken = default)
+        public virtual Response<PgVersionsResult> GetPostgresVersions(PgVersion pgVersion = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _organizationsClientDiagnostics.CreateScope("NeonOrganizationResource.GetPostgresVersions");
             scope.Start();
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.NeonPostgres
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _organizationsRestClient.CreateGetPostgresVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, PgVersion.ToRequestContent(parameters), context);
+                HttpMessage message = _organizationsRestClient.CreateGetPostgresVersionsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, PgVersion.ToRequestContent(pgVersion), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PgVersionsResult> response = Response.FromValue(PgVersionsResult.FromResponse(result), result);
                 if (response.Value == null)

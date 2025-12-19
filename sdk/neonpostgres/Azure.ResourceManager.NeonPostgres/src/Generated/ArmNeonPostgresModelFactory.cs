@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.NeonPostgres.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.NeonOrganizationPatch"/> instance for mocking. </returns>
-        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, NeonOrganizationPatchProperties properties = default)
+        public static NeonOrganizationPatch NeonOrganizationPatch(IDictionary<string, string> tags = default, OrganizationResourceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -304,6 +304,28 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 properties);
         }
 
+        /// <summary> Connection uri parameters for the associated database. </summary>
+        /// <param name="projectId"> Project Id associated with this connection. </param>
+        /// <param name="branchId"> Branch Id associated with this connection. </param>
+        /// <param name="databaseName"> Database name associated with this connection. </param>
+        /// <param name="roleName"> The role name used for authentication. </param>
+        /// <param name="endpointId"> the endpoint Id with this connection. </param>
+        /// <param name="isPooled"> Indicates if the connection is pooled. </param>
+        /// <param name="connectionStringUri"> connection uri returned for the database. </param>
+        /// <returns> A new <see cref="Models.ConnectionUriProperties"/> instance for mocking. </returns>
+        public static ConnectionUriProperties ConnectionUriProperties(string projectId = default, string branchId = default, string databaseName = default, string roleName = default, string endpointId = default, bool? isPooled = default, string connectionStringUri = default)
+        {
+            return new ConnectionUriProperties(
+                projectId,
+                branchId,
+                databaseName,
+                roleName,
+                endpointId,
+                isPooled,
+                connectionStringUri,
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The Branch resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -320,6 +342,46 @@ namespace Azure.ResourceManager.NeonPostgres.Models
                 systemData,
                 additionalBinaryDataProperties: null,
                 properties);
+        }
+
+        /// <summary>
+        /// Preflight check parameters for branch and child resources.
+        /// 
+        /// IMPORTANT: Only one of the property types (branchProperties, roleProperties, databaseProperties,
+        /// or endpointProperties) should be provided at a time, based on the entityType value:
+        /// - When entityType is "branch", provide only branchProperties
+        /// - When entityType is "role", provide only roleProperties
+        /// - When entityType is "database", provide only databaseProperties
+        /// - When entityType is "endpoint", provide only endpointProperties
+        /// </summary>
+        /// <param name="projectId"> Project Id associated with this connection. </param>
+        /// <param name="branchId"> Branch Id associated with this connection. </param>
+        /// <param name="entityType"> Entity type to be validated for deletion. </param>
+        /// <param name="branchProperties"> The branch properties - ONLY provided when entityType is 'branch'. </param>
+        /// <param name="roleProperties"> The role properties - ONLY provided when entityType is 'role'. </param>
+        /// <param name="databaseProperties"> The database properties - ONLY provided when entityType is 'database'. </param>
+        /// <param name="endpointProperties"> The endpoint properties - ONLY provided when entityType is 'endpoint'. </param>
+        /// <returns> A new <see cref="Models.PreflightCheckParameters"/> instance for mocking. </returns>
+        public static PreflightCheckParameters PreflightCheckParameters(string projectId = default, string branchId = default, PreflightCheckEntityType entityType = default, NeonBranchProperties branchProperties = default, NeonRoleProperties roleProperties = default, NeonDatabaseProperties databaseProperties = default, NeonEndpointProperties endpointProperties = default)
+        {
+            return new PreflightCheckParameters(
+                projectId,
+                branchId,
+                entityType,
+                branchProperties,
+                roleProperties,
+                databaseProperties,
+                endpointProperties,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Result of the pre-deletion validation operation. </summary>
+        /// <param name="isValid"> Indicates whether action is allowed. </param>
+        /// <param name="reason"> Optional message in case action is not allowed. </param>
+        /// <returns> A new <see cref="Models.PreflightCheckResult"/> instance for mocking. </returns>
+        public static PreflightCheckResult PreflightCheckResult(bool isValid = default, string reason = default)
+        {
+            return new PreflightCheckResult(isValid, reason, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The Compute resource type. </summary>

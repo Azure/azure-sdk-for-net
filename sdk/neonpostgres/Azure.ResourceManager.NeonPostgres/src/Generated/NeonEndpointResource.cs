@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
-        /// Create a Endpoint
+        /// Update a NeonEndpoint.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.NeonPostgres
         }
 
         /// <summary>
-        /// Create a Endpoint
+        /// Update a NeonEndpoint.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
