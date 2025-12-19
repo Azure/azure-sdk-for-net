@@ -17,10 +17,10 @@ By default tests are run in playback mode. To change the mode, use the `SYSTEM_C
 
 The foundation of recorded testing is the `RecordedTestBase<T>` class and a custom `TestEnvironment` class:
 
-```C# Snippet:BasicRecordedTestSetup
+```C# Snippet:TestEnvironmentSetup
 public class MapsTestEnvironment : TestEnvironment
 {
-    // Environment variables for connecting to the Azure Maps service
+    // Environment variables for connecting to the demonstrative Azure Maps service (disclaimer: not a real service)
     public string Endpoint => GetRecordedVariable("MAPS_ENDPOINT");
 
     // Secret values should be marked as such for sanitization
@@ -28,7 +28,7 @@ public class MapsTestEnvironment : TestEnvironment
 
     public override Dictionary<string, string> ParseEnvironmentFile()
     {
-        // Read environment variables or parse from a .env file as needed
+        // Read environment variables or parse and decrypt from an encrypted .env file as needed
         return new Dictionary<string, string>
         {
             { "MAPS_ENDPOINT", Environment.GetEnvironmentVariable("MAPS_ENDPOINT") },
@@ -42,7 +42,9 @@ public class MapsTestEnvironment : TestEnvironment
         return Task.CompletedTask;
     }
 }
+```
 
+```C# Snippet:BasicRecordedTest
 public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
 {
     public MapsRecordedTests(bool isAsync) : base(isAsync)
@@ -53,15 +55,16 @@ public class MapsRecordedTests : RecordedTestBase<MapsTestEnvironment>
     public async Task CanGetCountryCode()
     {
         // Create a client with instrumented options for recording
-        var options = InstrumentClientOptions(new Maps.MapsClientOptions());
-        var client = CreateProxyFromClient(new Maps.MapsClient(
+        MapsClientOptions options = InstrumentClientOptions(new MapsClientOptions());
+
+        // Proxy the client to enable auto sync forwarding from async calls
+        MapsClient client = CreateProxyFromClient(new MapsClient(
             new Uri(TestEnvironment.Endpoint),
             new ApiKeyCredential(TestEnvironment.SubscriptionKey),
             options));
 
-        // Get country code for a known IP address
-        var ipAddress = System.Net.IPAddress.Parse("8.8.8.8");
-        var result = await client.GetCountryCodeAsync(ipAddress);
+        // Call async client method
+        IPAddressCountryPair result = await client.GetCountryCodeAsync(IPAddress.Parse("8.8.8.8"));
     }
 }
 ```
@@ -81,12 +84,8 @@ Error Message:
 ```
 
 ```C# Snippet:TestModeExample
-public class TestModeExamples : RecordedTestBase<MapsTestEnvironment>
+public TestModeExamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
 {
-    // Can explicitly specify a mode in the constructor
-    public TestModeExamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
-    {
-    }
 }
 ```
 
@@ -99,15 +98,9 @@ Secrets that are part of requests, responses, headers, or connections strings sh
 ### Standard custom sanitization
 
 ```C# Snippet:StandardSanitization
-public class StandardSanitizedTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public StandardSanitizedTests(bool isAsync) : base(isAsync)
-    {
-        // Sanitize specific headers by name
-        SanitizedHeaders.Add("x-client-secret");
-        SanitizedQueryParameters.Add("client_secret");
-    }
-}
+// Sanitize specific headers by name
+SanitizedHeaders.Add("x-client-secret");
+SanitizedQueryParameters.Add("client_secret");
 ```
 
 ### JSON path sanitizers
@@ -115,16 +108,10 @@ public class StandardSanitizedTests : RecordedTestBase<MapsTestEnvironment>
 Another sanitization feature that is available involves sanitizing Json payloads. By adding a Json Path formatted string to the JsonPathSanitizers property, you can sanitize the value for a specific JSON property in request/response bodies.
 
 ```C# Snippet:JsonPathSanitization
-public class JsonSanitizedTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public JsonSanitizedTests(bool isAsync) : base(isAsync)
-    {
-        // Sanitize specific JSON paths
-        JsonPathSanitizers.Add("$.subscriptionKey");
-        JsonPathSanitizers.Add("$.ipAddress");
-        JsonPathSanitizers.Add("$.countryRegion.isoCode");
-    }
-}
+// Sanitize specific JSON paths
+JsonPathSanitizers.Add("$.subscriptionKey");
+JsonPathSanitizers.Add("$.ipAddress");
+JsonPathSanitizers.Add("$.countryRegion.isoCode");
 ```
 
 ### Advanced sanitizers
@@ -134,23 +121,17 @@ If more advanced sanitization is needed, you can use any of the regex-based sani
 _Note that when using any of the regex sanitizers, you must take care to ensure that the regex is specific enough to not match unintended values. When a regex is too broad and matches unintended values, this can result in the request or response being corrupted which may manifest in a JsonReaderException._
 
 ```C# Snippet:CustomSanitization
-public class CustomSanitizedTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public CustomSanitizedTests(bool isAsync) : base(isAsync)
-    {
-        // Sanitize subscription key headers
-        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("subscription-key") { Value = "SANITIZED" }));
+// Sanitize subscription key headers
+HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("subscription-key") { Value = "SANITIZED" }));
 
-        // Sanitize parts of URIs containing account info
-        UriRegexSanitizers.Add(new UriRegexSanitizer(new UriRegexSanitizerBody("atlas.microsoft.com", @"[^.]+\.microsoft\.com", null, null, null)));
+// Sanitize parts of URIs containing account info
+UriRegexSanitizers.Add(new UriRegexSanitizer(new UriRegexSanitizerBody("atlas.microsoft.com", @"[^.]+\.microsoft\.com", null, null, null)));
 
-        // Sanitize IP addresses in request/response bodies
-        BodyRegexSanitizers.Add(new BodyRegexSanitizer(new BodyRegexSanitizerBody(@"""ipAddress"": ""127.0.0.1""", @"""ipAddress""\s*:\s*""[^""]+""", null, null, null)));
+// Sanitize IP addresses in request/response bodies
+BodyRegexSanitizers.Add(new BodyRegexSanitizer(new BodyRegexSanitizerBody(@"""ipAddress"": ""127.0.0.1""", @"""ipAddress""\s*:\s*""[^""]+""", null, null, null)));
 
-        // Sanitize specific keys in request/response bodies
-        BodyKeySanitizers.Add(new BodyKeySanitizer(new BodyKeySanitizerBody("subscriptionKey") { Value = "SANITIZED" }));
-    }
-}
+// Sanitize specific keys in request/response bodies
+BodyKeySanitizers.Add(new BodyKeySanitizer(new BodyKeySanitizerBody("subscriptionKey") { Value = "SANITIZED" }));
 ```
 
 ## Request matching
@@ -158,20 +139,14 @@ public class CustomSanitizedTests : RecordedTestBase<MapsTestEnvironment>
 Customize how recorded requests are matched during playback:
 
 ```C# Snippet:RequestMatching
-public class CustomMatchingTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public CustomMatchingTests(bool isAsync) : base(isAsync)
-    {
-        // Ignore headers that vary between requests
-        IgnoredHeaders.Add("x-ms-client-request-id");
-        IgnoredHeaders.Add("User-Agent");
-        IgnoredHeaders.Add("x-request-timestamp");
+// Ignore headers that vary between requests
+IgnoredHeaders.Add("x-ms-client-request-id");
+IgnoredHeaders.Add("User-Agent");
+IgnoredHeaders.Add("x-request-timestamp");
 
-        // Ignore query parameters that shouldn't affect matching
-        IgnoredQueryParameters.Add("timestamp");
-        IgnoredQueryParameters.Add("nonce");
-    }
-}
+// Ignore query parameters that shouldn't affect matching
+IgnoredQueryParameters.Add("timestamp");
+IgnoredQueryParameters.Add("nonce");
 ```
 
 ## Working with Test Proxy
@@ -181,13 +156,10 @@ public class CustomMatchingTests : RecordedTestBase<MapsTestEnvironment>
 Enable debug logging for troubleshooting recording issues:
 
 ```C# Snippet:DebugMode
-public class DebuggingTests : RecordedTestBase<MapsTestEnvironment>
+public DebuggingTests(bool isAsync) : base(isAsync)
 {
-    public DebuggingTests(bool isAsync) : base(isAsync)
-    {
-        // Enable debug mode for detailed proxy logging
-        UseLocalDebugProxy = true;
-    }
+    // Enable debug mode for detailed proxy logging
+    UseLocalDebugProxy = true;
 }
 ```
 
@@ -208,116 +180,9 @@ TestProxy.cs - This class is responsible for starting and stopping the Test Prox
 Including Test Proxy Debug Logs
 In order to enable Test Proxy debug logs, you can either set the AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS environment variable or the EnableTestProxyDebugLogs runsetting parameter to true.
 
-### Custom recording session names
-
-Control how recording sessions are named:
-
-```C# Snippet:CustomSessionNames
-[TestFixture]
-public class CustomSessionTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public CustomSessionTests(bool isAsync) : base(isAsync)
-    {
-    }
-
-    [Test]
-    public async Task CustomNamedTest()
-    {
-        // The recording will be saved with the default test name
-        await StartTestRecordingAsync();
-        // Note: Custom session naming not directly supported in Microsoft.ClientModel.TestFramework
-        // Recording names are derived from test method names automatically
-
-        var client = CreateInstrumentedClient();
-        var result = await client.GetCountryCodeAsync("8.8.8.8");
-        Assert.That(result, Is.Not.Null);
-    }
-
-    private MapsClient CreateInstrumentedClient()
-    {
-        var options = InstrumentClientOptions(new MapsClientOptions());
-        return CreateProxyFromClient(new MapsClient(
-            new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
-            options));
-    }
-}
-```
-
 ## Live-Only tests
 
-Some tests should never be recorded (e.g., due to size or content):
-
-```C# Snippet:LiveOnlyTests
-[LiveOnly]
-public class LargeDataTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public LargeDataTests(bool isAsync) : base(isAsync)
-    {
-    }
-
-    [Test]
-    public async Task TestManyIpAddresses()
-    {
-        // This test will only run in Live mode due to the volume of requests
-        var client = CreateInstrumentedClient();
-
-        // Test multiple IP addresses (this would generate too many recordings)
-        var ipAddresses = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222" };
-
-        foreach (var ip in ipAddresses)
-        {
-            var result = await client.GetCountryCodeAsync(ip);
-            Assert.That(result, Is.Not.Null);
-        }
-    }
-
-    private MapsClient CreateInstrumentedClient()
-    {
-        var options = InstrumentClientOptions(new MapsClientOptions());
-        return CreateProxyFromClient(new MapsClient(
-            new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
-            options));
-    }
-}
-
-// Or mark individual tests as live-only
-public class MixedTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public MixedTests(bool isAsync) : base(isAsync)
-    {
-    }
-
-    [Test]
-    public async Task NormalTest()
-    {
-        // This test can be recorded
-        var client = CreateInstrumentedClient();
-        var result = await client.GetCountryCodeAsync("8.8.8.8");
-        Assert.That(result, Is.Not.Null);
-    }
-
-    [Test]
-    [LiveOnly]
-    public async Task LiveOnlyTest()
-    {
-        // This test will only run live - perhaps testing rate limits
-        var client = CreateInstrumentedClient();
-        var result = await client.GetCountryCodeAsync("127.0.0.1");
-        Assert.That(result, Is.Not.Null);
-    }
-
-    private MapsClient CreateInstrumentedClient()
-    {
-        var options = InstrumentClientOptions(new MapsClientOptions());
-        return CreateProxyFromClient(new MapsClient(
-            new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
-            options));
-    }
-}
-```
+Some tests should never be recorded (e.g., due to size or content). The test framework provides a `[LiveOnly]` attribute that can be applied to entire test classes or to individual tests.
 
 ## Troubleshooting
 
@@ -326,43 +191,3 @@ public class MixedTests : RecordedTestBase<MapsTestEnvironment>
 1. **Recording Mismatches**: Ensure sanitizers don't over-sanitize and break request matching
 2. **Credential Issues**: Use `TestEnvironment.Credential` for consistent authentication
 3. **Timing Issues**: Use `TestRandom` for deterministic values instead of `Random`
-
-### Debug Techniques
-
-```C# Snippet:DebuggingTechniques
-public class DebuggingTechniquesTests : RecordedTestBase<MapsTestEnvironment>
-{
-    public DebuggingTechniquesTests(bool isAsync) : base(isAsync)
-    {
-    }
-
-    [Test]
-    public async Task DiagnosticTest()
-    {
-        // Enable detailed logging
-        UseLocalDebugProxy = true;
-
-        // Add custom diagnostics - sanitizers are configured through properties
-        HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new HeaderRegexSanitizerBody("x-debug-info") { Value = "DEBUG" }));
-
-        var client = CreateInstrumentedClient();
-
-        // Use recording's random for deterministic values
-        var testIps = new[] { "8.8.8.8", "1.1.1.1", "208.67.222.222" };
-        var randomIndex = Recording?.Random?.Next(0, testIps.Length) ?? 0;
-        var selectedIp = testIps[randomIndex];
-
-        var result = await client.GetCountryCodeAsync(selectedIp);
-        Assert.That(result, Is.Not.Null);
-    }
-
-    private MapsClient CreateInstrumentedClient()
-    {
-        var options = InstrumentClientOptions(new MapsClientOptions());
-        return CreateProxyFromClient(new MapsClient(
-            new Uri(TestEnvironment.Endpoint),
-            new ApiKeyCredential(TestEnvironment.SubscriptionKey),
-            options));
-    }
-}
-```

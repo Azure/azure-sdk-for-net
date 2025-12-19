@@ -14,7 +14,6 @@ namespace Microsoft.ClientModel.TestFramework.Tests;
 public class SyncAsyncSamples
 {
     #region Snippet:BasicSyncAsyncSetup
-    [ClientTestFixture]
     public class MapsClientTests : ClientTestBase
     {
         public MapsClientTests(bool isAsync) : base(isAsync)
@@ -39,7 +38,6 @@ public class SyncAsyncSamples
     }
     #endregion
 
-    [ClientTestFixture]
     public class SpecializedTests : ClientTestBase
     {
         public SpecializedTests(bool isAsync) : base(isAsync)
@@ -66,7 +64,7 @@ public class SyncAsyncSamples
         #region Snippet:SyncOnlyTests
         [Test]
         [SyncOnly]
-        public async Task SyncOnlyFeature()
+        public void SyncOnlyFeature()
         {
             // No need to proxy since this is sync-only, but also works the same way if proxied,
             // so existing helper methods can be used as needed
@@ -75,13 +73,26 @@ public class SyncAsyncSamples
                 new ApiKeyCredential("test-key")));
 
             // Test sync-specific behavior
-            IPAddressCountryPair result = await client.GetCountryCodeAsync(IPAddress.Parse("8.8.8.8"));
+            IPAddressCountryPair result = client.GetCountryCode(IPAddress.Parse("8.8.8.8"));
         }
         #endregion
+
+        [Test]
+        public async Task ErrorScenariorioTest()
+        {
+            #region Snippet:ErrorScenario
+            var client = CreateProxyFromClient(new MapsClient(
+            new Uri("https://atlas.microsoft.com"),
+            new ApiKeyCredential("invalid-key")));
+
+            // Test error handling in both sync and async modes
+            ClientResultException exception = Assert.ThrowsAsync<ClientResultException>(
+                async () => await client.GetCountryCodeAsync("8.8.8.8"));
+            #endregion
+        }
     }
 
     #region Snippet:SyncAsyncWithRecording
-    [ClientTestFixture]
     public class RecordedSyncAsyncTests : RecordedTestBase<MapsTestEnvironment>
     {
         public RecordedSyncAsyncTests(bool isAsync) : base(isAsync)
@@ -105,7 +116,6 @@ public class SyncAsyncSamples
     #endregion
 
     #region Snippet:TimeoutConfiguration
-    [ClientTestFixture]
     public class TimeoutTests : ClientTestBase
     {
         public TimeoutTests(bool isAsync) : base(isAsync)
