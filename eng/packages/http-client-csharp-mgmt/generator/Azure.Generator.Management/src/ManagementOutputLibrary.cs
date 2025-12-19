@@ -138,7 +138,13 @@ namespace Azure.Generator.Management
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources);
+
+            // Extract extension non-resource methods for MockableArmClientProvider
+            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
+                ? extensionScope.NonResourceMethods
+                : [];
+
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
