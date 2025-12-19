@@ -617,6 +617,53 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ResourceResultSummary(code, count, errorDetails, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> The scheduled action extension. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionResources"/> instance for mocking. </returns>
+        public static ScheduledActionResources ScheduledActionResources(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ScheduledActionsExtensionProperties properties = default)
+        {
+            return new ScheduledActionResources(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> Scheduled action extension properties. </summary>
+        /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
+        /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
+        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
+        /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
+        /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
+        /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
+        /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
+        /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
+        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(ScheduledActionResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationSettings> notificationSettings = default, bool? disabled = default, ScheduledActionResourceProvisioningState? provisioningState = default, IEnumerable<NotificationSettings> resourceNotificationSettings = default)
+        {
+            notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
+            resourceNotificationSettings ??= new ChangeTrackingList<NotificationSettings>();
+
+            return new ScheduledActionsExtensionProperties(
+                resourceType,
+                actionType,
+                startOn,
+                endOn,
+                schedule,
+                notificationSettings.ToList(),
+                disabled,
+                provisioningState,
+                resourceNotificationSettings.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
         /// <summary> Represents an scheduled action resource metadata. </summary>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="id"> The compute RP resource id of the resource in the scheduled actions scope. . </param>
@@ -655,6 +702,49 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
 
             return new OccurrenceDelayContent(delay, resourceIds.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The scheduled action extension. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.OccurrenceExtensionResourceData"/> instance for mocking. </returns>
+        public static OccurrenceExtensionResourceData OccurrenceExtensionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, OccurrenceExtensionProperties properties = default)
+        {
+            return new OccurrenceExtensionResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                properties);
+        }
+
+        /// <summary> The properties of the occurrence extension. </summary>
+        /// <param name="resourceId">
+        /// The ARM Id of the resource.
+        /// "subscriptions/{subId}/resourceGroups/{rgName}/providers/Microsoft.Compute/virtualMachines/{vmName}"
+        /// </param>
+        /// <param name="notificationSettings"> The desired notification settings for the specified resource. </param>
+        /// <param name="scheduledOn"> The time the occurrence is scheduled for the resource. Specified in UTC. </param>
+        /// <param name="provisioningState"> The current state of the resource. </param>
+        /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
+        /// <param name="scheduledActionId"> The arm identifier of the scheduled action the occurrence belongs to. </param>
+        /// <returns> A new <see cref="Models.OccurrenceExtensionProperties"/> instance for mocking. </returns>
+        public static OccurrenceExtensionProperties OccurrenceExtensionProperties(ResourceIdentifier resourceId = default, IEnumerable<NotificationSettings> notificationSettings = default, DateTimeOffset scheduledOn = default, OccurrenceResourceProvisioningState? provisioningState = default, ResponseError errorDetails = default, ResourceIdentifier scheduledActionId = default)
+        {
+            notificationSettings ??= new ChangeTrackingList<NotificationSettings>();
+
+            return new OccurrenceExtensionProperties(
+                resourceId,
+                notificationSettings.ToList(),
+                scheduledOn,
+                provisioningState,
+                errorDetails,
+                scheduledActionId,
+                additionalBinaryDataProperties: null);
         }
     }
 }
