@@ -62,6 +62,275 @@ export async function updateClients(
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
 
+/**
+ * Builds the ARM provider schema by detecting all resources and non-resource methods.
+ * This is the main function that gathers all ARM-related information from the code model
+ * and consolidates it into a unified ArmProviderSchema structure.
+ * 
+ * This function is exported for testing purposes and can be called directly from tests
+ * to validate the schema structure.
+ * 
+ * @param sdkContext - The emitter context
+ * @param codeModel - The code model to analyze
+ * @returns The unified ARM provider schema containing all resources and non-resource methods
+ */
+export function buildArmProviderSchema(
+  sdkContext: CSharpEmitterContext,
+  codeModel: CodeModel
+): ArmProviderSchema {
+  const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
+    getAllSdkClients(sdkContext)
+      .flatMap((c) => c.methods)
+      .map((obj) => [obj.crossLanguageDefinitionId, obj])
+  );
+  const models = new Map<string, SdkModelType>(
+    sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
+  );
+  const resourceModels = getAllResourceModels(codeModel);
+  const resourceModelMap = new Map<string, InputModelType>(
+    resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
+  );
+
+  const resourcePathToMetadataMap = new Map<string, ResourceMetadata>();
+  const resourceModelIds = new Set<string>(resourceModels.map(m => m.crossLanguageDefinitionId));
+  const resourcePathToClientName = new Map<string, string>();
+  const resourcePathToExplicitName = new Map<string, string>();
+  const nonResourceMethods: Map<string, NonResourceMethod> = new Map();
+
+  const clients = getAllClients(codeModel);
+
+  // Detect resources and methods (same logic as in updateClients)
+  for (const client of clients) {
+    for (const method of client.methods) {
+      const serviceMethod = serviceMethods.get(
+        method.crossLanguageDefinitionId
+      );
+      const [kind, modelId, explicitResourceName] =
+        parseResourceOperation(serviceMethod, sdkContext) ?? [];
+     
+      if (modelId && kind && resourceModelIds.has(modelId)) {
+        let resourcePath = "";
+        if (isCRUDKind(kind)) {
+          resourcePath = method.operation.path;
+        } else {
+          const operationPath = method.operation.path;
+          for (const [existingKey] of resourcePathToMetadataMap) {
+            const [existingModelId, existingPath] = existingKey.split('|');
+            if (existingModelId === modelId && existingPath) {
+              const existingResourceType = calculateResourceTypeFromPath(existingPath);
+              let operationResourceType = "";
+              try {
+                operationResourceType = calculateResourceTypeFromPath(operationPath);
+              } catch {
+                // If we can't calculate resource type, try string matching
+              }
+              
+              if (existingResourceType && operationResourceType === existingResourceType) {
+                resourcePath = existingPath;
+                break;
+              }
+              
+              const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
+              if (operationPath.startsWith(existingParentPath)) {
+                resourcePath = existingPath;
+                break;
+              }
+            }
+          }
+          if (!resourcePath) {
+            resourcePath = operationPath;
+          }
+        }
+        
+        const metadataKey = `${modelId}|${resourcePath}`;
+        
+        if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
+          resourcePathToExplicitName.set(metadataKey, explicitResourceName);
+        }
+        
+        let entry = resourcePathToMetadataMap.get(metadataKey);
+        if (!entry) {
+          const model = resourceModelMap.get(modelId);
+          if (!resourcePathToClientName.has(metadataKey)) {
+            resourcePathToClientName.set(metadataKey, client.name);
+          }
+          
+          entry = {
+            resourceIdPattern: "",
+            resourceType: "",
+            singletonResourceName: getSingletonResource(
+              model?.decorators?.find((d) => d.name == singleton)
+            ),
+            resourceScope: ResourceScope.Tenant,
+            methods: [],
+            parentResourceId: undefined,
+            parentResourceModelId: undefined,
+            resourceName: model?.name ?? "Unknown"
+          } as ResourceMetadata;
+          resourcePathToMetadataMap.set(metadataKey, entry);
+        }
+        
+        entry.methods.push({
+          methodId: method.crossLanguageDefinitionId,
+          kind,
+          operationPath: method.operation.path,
+          operationScope: getOperationScope(method.operation.path)
+        });
+        if (!entry.resourceType) {
+          entry.resourceType = calculateResourceTypeFromPath(
+            method.operation.path
+          );
+        }
+        if (!entry.resourceIdPattern && isCRUDKind(kind)) {
+          entry.resourceIdPattern = method.operation.path;
+        }
+      } else if (modelId && kind) {
+        nonResourceMethods.set(method.crossLanguageDefinitionId, {
+          methodId: method.crossLanguageDefinitionId,
+          operationPath: method.operation.path,
+          operationScope: getOperationScope(method.operation.path)
+        });
+      } else {
+        nonResourceMethods.set(method.crossLanguageDefinitionId, {
+          methodId: method.crossLanguageDefinitionId,
+          operationPath: method.operation.path,
+          operationScope: getOperationScope(method.operation.path)
+        });
+      }
+    }
+  }
+
+  // Set parent and scope information
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+    const modelId = metadataKey.split('|')[0];
+    
+    const parentResourceModelId = getParentResourceModelId(
+      sdkContext,
+      models.get(modelId)
+    );
+    if (parentResourceModelId) {
+      for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
+        const parentModelId = parentKey.split('|')[0];
+        if (parentModelId === parentResourceModelId && parentMetadata.resourceIdPattern) {
+          metadata.parentResourceId = parentMetadata.resourceIdPattern;
+          metadata.parentResourceModelId = parentResourceModelId;
+          break;
+        }
+      }
+    }
+    
+    if (!metadata.parentResourceId && metadata.resourceIdPattern) {
+      for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
+        if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
+          const thisPath = metadata.resourceIdPattern;
+          const potentialParentPath = otherMetadata.resourceIdPattern;
+          
+          if (thisPath.startsWith(potentialParentPath + "/") && thisPath.length > potentialParentPath.length + 1) {
+            metadata.parentResourceId = potentialParentPath;
+            break;
+          }
+        }
+      }
+    }
+
+    for (const method of metadata.methods) {
+      method.resourceScope = getResourceScopeOfMethod(
+        method.operationPath,
+        resourcePathToMetadataMap.values()
+      );
+    }
+
+    const model = resourceModelMap.get(modelId);
+    if (model) {
+      metadata.resourceScope = getResourceScope(model, metadata.methods);
+    }
+  }
+
+  // Clean up entries without resourceIdPattern
+  const metadataKeysToDelete: string[] = [];
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+    const modelId = metadataKey.split('|')[0];
+    
+    if (metadata.resourceIdPattern === "") {
+      let merged = false;
+      
+      if (metadata.parentResourceModelId) {
+        for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
+          const parentModelId = parentKey.split('|')[0];
+          if (parentModelId === metadata.parentResourceModelId && parentMetadata.resourceIdPattern) {
+            parentMetadata.methods.push(...metadata.methods);
+            metadataKeysToDelete.push(metadataKey);
+            merged = true;
+            break;
+          }
+        }
+      } else {
+        for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
+          const otherModelId = otherKey.split('|')[0];
+          if (otherKey !== metadataKey && otherModelId === modelId && otherMetadata.resourceIdPattern) {
+            otherMetadata.methods.push(...metadata.methods);
+            metadataKeysToDelete.push(metadataKey);
+            merged = true;
+            break;
+          }
+        }
+        
+        if (!merged) {
+          for (const method of metadata.methods) {
+            nonResourceMethods.set(method.methodId, {
+              methodId: method.methodId,
+              operationPath: method.operationPath,
+              operationScope: method.operationScope
+            });
+          }
+          metadataKeysToDelete.push(metadataKey);
+        }
+      }
+    }
+  }
+  
+  for (const key of metadataKeysToDelete) {
+    resourcePathToMetadataMap.delete(key);
+  }
+
+  // Update resource names
+  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+    const modelId = metadataKey.split('|')[0];
+    if (!modelIdToMetadataList.has(modelId)) {
+      modelIdToMetadataList.set(modelId, []);
+    }
+    modelIdToMetadataList.get(modelId)!.push(metadata);
+  }
+  
+  for (const [modelId, metadataList] of modelIdToMetadataList) {
+    if (metadataList.length > 1) {
+      for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+        const keyModelId = metadataKey.split('|')[0];
+        if (keyModelId === modelId) {
+          const explicitName = resourcePathToExplicitName.get(metadataKey);
+          if (explicitName) {
+            metadata.resourceName = explicitName;
+          } else {
+            const clientName = resourcePathToClientName.get(metadataKey);
+            if (clientName) {
+              metadata.resourceName = pluralize.singular(clientName);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  return buildArmProviderSchemaFromDetectedResources(
+    sdkContext,
+    resourceModels,
+    resourcePathToMetadataMap,
+    nonResourceMethods
+  );
+}
+
+
 function isCRUDKind(kind: ResourceOperationKind): boolean {
   return [
     ResourceOperationKind.Get,
@@ -491,273 +760,6 @@ function applyArmProviderSchemaDecorator(
   });
 }
 
-/**
- * Builds the ARM provider schema by detecting all resources and non-resource methods.
- * This is the main function that gathers all ARM-related information from the code model
- * and consolidates it into a unified ArmProviderSchema structure.
- * 
- * This function is exported for testing purposes and can be called directly from tests
- * to validate the schema structure.
- * 
- * @param sdkContext - The emitter context
- * @param codeModel - The code model to analyze
- * @returns The unified ARM provider schema containing all resources and non-resource methods
- */
-export function buildArmProviderSchema(
-  sdkContext: CSharpEmitterContext,
-  codeModel: CodeModel
-): ArmProviderSchema {
-  const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
-    getAllSdkClients(sdkContext)
-      .flatMap((c) => c.methods)
-      .map((obj) => [obj.crossLanguageDefinitionId, obj])
-  );
-  const models = new Map<string, SdkModelType>(
-    sdkContext.sdkPackage.models.map((m) => [m.crossLanguageDefinitionId, m])
-  );
-  const resourceModels = getAllResourceModels(codeModel);
-  const resourceModelMap = new Map<string, InputModelType>(
-    resourceModels.map((m) => [m.crossLanguageDefinitionId, m])
-  );
-
-  const resourcePathToMetadataMap = new Map<string, ResourceMetadata>();
-  const resourceModelIds = new Set<string>(resourceModels.map(m => m.crossLanguageDefinitionId));
-  const resourcePathToClientName = new Map<string, string>();
-  const resourcePathToExplicitName = new Map<string, string>();
-  const nonResourceMethods: Map<string, NonResourceMethod> = new Map();
-
-  const clients = getAllClients(codeModel);
-
-  // Detect resources and methods (same logic as in updateClients)
-  for (const client of clients) {
-    for (const method of client.methods) {
-      const serviceMethod = serviceMethods.get(
-        method.crossLanguageDefinitionId
-      );
-      const [kind, modelId, explicitResourceName] =
-        parseResourceOperation(serviceMethod, sdkContext) ?? [];
-     
-      if (modelId && kind && resourceModelIds.has(modelId)) {
-        let resourcePath = "";
-        if (isCRUDKind(kind)) {
-          resourcePath = method.operation.path;
-        } else {
-          const operationPath = method.operation.path;
-          for (const [existingKey] of resourcePathToMetadataMap) {
-            const [existingModelId, existingPath] = existingKey.split('|');
-            if (existingModelId === modelId && existingPath) {
-              const existingResourceType = calculateResourceTypeFromPath(existingPath);
-              let operationResourceType = "";
-              try {
-                operationResourceType = calculateResourceTypeFromPath(operationPath);
-              } catch {
-                // If we can't calculate resource type, try string matching
-              }
-              
-              if (existingResourceType && operationResourceType === existingResourceType) {
-                resourcePath = existingPath;
-                break;
-              }
-              
-              const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
-              if (operationPath.startsWith(existingParentPath)) {
-                resourcePath = existingPath;
-                break;
-              }
-            }
-          }
-          if (!resourcePath) {
-            resourcePath = operationPath;
-          }
-        }
-        
-        const metadataKey = `${modelId}|${resourcePath}`;
-        
-        if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
-          resourcePathToExplicitName.set(metadataKey, explicitResourceName);
-        }
-        
-        let entry = resourcePathToMetadataMap.get(metadataKey);
-        if (!entry) {
-          const model = resourceModelMap.get(modelId);
-          if (!resourcePathToClientName.has(metadataKey)) {
-            resourcePathToClientName.set(metadataKey, client.name);
-          }
-          
-          entry = {
-            resourceIdPattern: "",
-            resourceType: "",
-            singletonResourceName: getSingletonResource(
-              model?.decorators?.find((d) => d.name == singleton)
-            ),
-            resourceScope: ResourceScope.Tenant,
-            methods: [],
-            parentResourceId: undefined,
-            parentResourceModelId: undefined,
-            resourceName: model?.name ?? "Unknown"
-          } as ResourceMetadata;
-          resourcePathToMetadataMap.set(metadataKey, entry);
-        }
-        
-        entry.methods.push({
-          methodId: method.crossLanguageDefinitionId,
-          kind,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-        if (!entry.resourceType) {
-          entry.resourceType = calculateResourceTypeFromPath(
-            method.operation.path
-          );
-        }
-        if (!entry.resourceIdPattern && isCRUDKind(kind)) {
-          entry.resourceIdPattern = method.operation.path;
-        }
-      } else if (modelId && kind) {
-        nonResourceMethods.set(method.crossLanguageDefinitionId, {
-          methodId: method.crossLanguageDefinitionId,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-      } else {
-        nonResourceMethods.set(method.crossLanguageDefinitionId, {
-          methodId: method.crossLanguageDefinitionId,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-      }
-    }
-  }
-
-  // Set parent and scope information
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split('|')[0];
-    
-    const parentResourceModelId = getParentResourceModelId(
-      sdkContext,
-      models.get(modelId)
-    );
-    if (parentResourceModelId) {
-      for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
-        const parentModelId = parentKey.split('|')[0];
-        if (parentModelId === parentResourceModelId && parentMetadata.resourceIdPattern) {
-          metadata.parentResourceId = parentMetadata.resourceIdPattern;
-          metadata.parentResourceModelId = parentResourceModelId;
-          break;
-        }
-      }
-    }
-    
-    if (!metadata.parentResourceId && metadata.resourceIdPattern) {
-      for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
-        if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
-          const thisPath = metadata.resourceIdPattern;
-          const potentialParentPath = otherMetadata.resourceIdPattern;
-          
-          if (thisPath.startsWith(potentialParentPath + "/") && thisPath.length > potentialParentPath.length + 1) {
-            metadata.parentResourceId = potentialParentPath;
-            break;
-          }
-        }
-      }
-    }
-
-    for (const method of metadata.methods) {
-      method.resourceScope = getResourceScopeOfMethod(
-        method.operationPath,
-        resourcePathToMetadataMap.values()
-      );
-    }
-
-    const model = resourceModelMap.get(modelId);
-    if (model) {
-      metadata.resourceScope = getResourceScope(model, metadata.methods);
-    }
-  }
-
-  // Clean up entries without resourceIdPattern
-  const metadataKeysToDelete: string[] = [];
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split('|')[0];
-    
-    if (metadata.resourceIdPattern === "") {
-      let merged = false;
-      
-      if (metadata.parentResourceModelId) {
-        for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
-          const parentModelId = parentKey.split('|')[0];
-          if (parentModelId === metadata.parentResourceModelId && parentMetadata.resourceIdPattern) {
-            parentMetadata.methods.push(...metadata.methods);
-            metadataKeysToDelete.push(metadataKey);
-            merged = true;
-            break;
-          }
-        }
-      } else {
-        for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
-          const otherModelId = otherKey.split('|')[0];
-          if (otherKey !== metadataKey && otherModelId === modelId && otherMetadata.resourceIdPattern) {
-            otherMetadata.methods.push(...metadata.methods);
-            metadataKeysToDelete.push(metadataKey);
-            merged = true;
-            break;
-          }
-        }
-        
-        if (!merged) {
-          for (const method of metadata.methods) {
-            nonResourceMethods.set(method.methodId, {
-              methodId: method.methodId,
-              operationPath: method.operationPath,
-              operationScope: method.operationScope
-            });
-          }
-          metadataKeysToDelete.push(metadataKey);
-        }
-      }
-    }
-  }
-  
-  for (const key of metadataKeysToDelete) {
-    resourcePathToMetadataMap.delete(key);
-  }
-
-  // Update resource names
-  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split('|')[0];
-    if (!modelIdToMetadataList.has(modelId)) {
-      modelIdToMetadataList.set(modelId, []);
-    }
-    modelIdToMetadataList.get(modelId)!.push(metadata);
-  }
-  
-  for (const [modelId, metadataList] of modelIdToMetadataList) {
-    if (metadataList.length > 1) {
-      for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-        const keyModelId = metadataKey.split('|')[0];
-        if (keyModelId === modelId) {
-          const explicitName = resourcePathToExplicitName.get(metadataKey);
-          if (explicitName) {
-            metadata.resourceName = explicitName;
-          } else {
-            const clientName = resourcePathToClientName.get(metadataKey);
-            if (clientName) {
-              metadata.resourceName = pluralize.singular(clientName);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  return buildArmProviderSchemaFromDetectedResources(
-    sdkContext,
-    resourceModels,
-    resourcePathToMetadataMap,
-    nonResourceMethods
-  );
-}
 
 /**
  * Builds the ARM provider schema from detected resources and non-resource methods.
