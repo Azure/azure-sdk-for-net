@@ -9,13 +9,14 @@ import {
 } from "@typespec/http-client-csharp";
 import {
   calculateResourceTypeFromPath,
-  convertMethodMetadataToArguments,
-  convertResourceMetadataToArguments,
   NonResourceMethod,
   ResourceMetadata,
   ResourceMethod,
   ResourceOperationKind,
-  ResourceScope
+  ResourceScope,
+  ArmProviderSchema,
+  ArmResourceSchema,
+  convertArmProviderSchemaToArguments
 } from "./resource-metadata.js";
 import {
   DecoratorInfo,
@@ -29,6 +30,7 @@ import {
 } from "@azure-tools/typespec-client-generator-core";
 import pluralize from "pluralize";
 import {
+  armProviderSchema,
   armResourceActionName,
   armResourceCreateOrUpdateName,
   armResourceDeleteName,
@@ -41,11 +43,9 @@ import {
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName,
-  nonResourceMethodMetadata,
   parentResourceName,
   readsResourceName,
   resourceGroupResource,
-  resourceMetadata,
   singleton,
   subscriptionResource,
   tenantResource
@@ -57,6 +57,27 @@ export async function updateClients(
   codeModel: CodeModel,
   sdkContext: CSharpEmitterContext
 ) {
+  // Build the unified ARM provider schema and apply it to the root client
+  const armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
+  applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
+}
+
+/**
+ * Builds the ARM provider schema by detecting all resources and non-resource methods.
+ * This is the main function that gathers all ARM-related information from the code model
+ * and consolidates it into a unified ArmProviderSchema structure.
+ * 
+ * This function is exported for testing purposes and can be called directly from tests
+ * to validate the schema structure.
+ * 
+ * @param sdkContext - The emitter context
+ * @param codeModel - The code model to analyze
+ * @returns The unified ARM provider schema containing all resources and non-resource methods
+ */
+export function buildArmProviderSchema(
+  sdkContext: CSharpEmitterContext,
+  codeModel: CodeModel
+): ArmProviderSchema {
   const serviceMethods = new Map<string, SdkMethod<SdkHttpOperation>>(
     getAllSdkClients(sdkContext)
       .flatMap((c) => c.methods)
@@ -354,20 +375,12 @@ export async function updateClients(
     }
     // If there's only one metadata entry for this model, keep using the model name (already set)
   }
-  
-  // Add decorators to models
-  for (const model of resourceModels) {
-    const metadataList = modelIdToMetadataList.get(model.crossLanguageDefinitionId);
-    if (metadataList) {
-      for (const metadata of metadataList) {
-        addResourceMetadata(sdkContext, model, metadata);
-      }
-    }
-  }
-  // and add the methodMetadata decorator to the non-resource methods
-  addNonResourceMethodDecorators(
-    codeModel,
-    Array.from(nonResourceMethods.values())
+
+  return buildArmProviderSchemaFromDetectedResources(
+    sdkContext,
+    resourceModels,
+    resourcePathToMetadataMap,
+    nonResourceMethods
   );
 }
 
@@ -783,42 +796,85 @@ function getOperationScope(path: string): ResourceScope {
   return ResourceScope.Tenant; // all the templates work as if there is a tenant decorator when there is no such decorator
 }
 
-function addNonResourceMethodDecorators(
+/**
+ * Applies the ARM provider schema as a decorator to the root client.
+ * @param codeModel - The code model to update
+ * @param schema - The ARM provider schema to apply
+ */
+function applyArmProviderSchemaDecorator(
   codeModel: CodeModel,
-  metadata: NonResourceMethod[]
-) {
-  codeModel.clients[0].decorators ??= [];
-  codeModel.clients[0].decorators.push({
-    name: nonResourceMethodMetadata,
-    arguments: convertMethodMetadataToArguments(metadata)
+  schema: ArmProviderSchema
+): void {
+  // It's technically allowed to have no clients, so we just return early in that case
+  if (!codeModel.clients || codeModel.clients.length === 0) {
+    return;
+  }
+  const rootClient = codeModel.clients[0];
+  rootClient.decorators ??= [];
+  rootClient.decorators.push({
+    name: armProviderSchema,
+    arguments: convertArmProviderSchemaToArguments(schema)
   });
 }
 
-function addResourceMetadata(
+
+/**
+ * Builds the ARM provider schema from detected resources and non-resource methods.
+ * This consolidates all ARM resource information into a single unified structure.
+ * This is a helper function called by buildArmProviderSchema.
+ * 
+ * @param sdkContext - The emitter context
+ * @param resourceModels - All resource models detected in the code model
+ * @param resourcePathToMetadataMap - Map of resource paths to their metadata
+ * @param nonResourceMethods - Map of non-resource methods
+ * @returns The unified ARM provider schema
+ */
+function buildArmProviderSchemaFromDetectedResources(
   sdkContext: CSharpEmitterContext,
-  model: InputModelType,
-  metadata: ResourceMetadata
-) {
-  if (metadata.resourceIdPattern === "") {
-    sdkContext.logger.reportDiagnostic({
-      code: "general-warning", // TODO -- later maybe we could define a specific code for resource hierarchy issues
-      messageId: "default",
-      format: {
-        message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-      },
-      target: NoTarget // TODO -- we need a method to find the raw target from the crossLanguageDefinitionId of this model
-    });
-    return;
+  resourceModels: InputModelType[],
+  resourcePathToMetadataMap: Map<string, ResourceMetadata>,
+  nonResourceMethods: Map<string, NonResourceMethod>
+): ArmProviderSchema {
+  const resources: ArmResourceSchema[] = [];
+
+  // Build resource schemas from the metadata map
+  // Group by model ID since multiple paths can share the same model
+  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+    const modelId = metadataKey.split('|')[0];
+    if (!modelIdToMetadataList.has(modelId)) {
+      modelIdToMetadataList.set(modelId, []);
+    }
+    modelIdToMetadataList.get(modelId)!.push(metadata);
   }
 
-  const resourceMetadataDecorator: DecoratorInfo = {
-    name: resourceMetadata,
-    arguments: convertResourceMetadataToArguments(metadata)
+  // Create resource schemas
+  for (const model of resourceModels) {
+    const metadataList = modelIdToMetadataList.get(model.crossLanguageDefinitionId);
+    if (metadataList) {
+      for (const metadata of metadataList) {
+        if (metadata.resourceIdPattern === "") {
+          sdkContext.logger.reportDiagnostic({
+            code: "general-warning",
+            messageId: "default",
+            format: {
+              message: `Cannot figure out resourceIdPattern from model ${model.name}.`
+            },
+            target: NoTarget
+          });
+          continue;
+        }
+
+        resources.push({
+          resourceModelId: model.crossLanguageDefinitionId,
+          metadata: metadata
+        });
+      }
+    }
+  }
+
+  return {
+    resources: resources,
+    nonResourceMethods: Array.from(nonResourceMethods.values())
   };
-
-  if (!model.decorators) {
-    model.decorators = [];
-  }
-
-  model.decorators.push(resourceMetadataDecorator);
 }
