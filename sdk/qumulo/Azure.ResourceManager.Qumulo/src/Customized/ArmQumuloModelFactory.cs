@@ -56,6 +56,46 @@ namespace Azure.ResourceManager.Qumulo.Models
                 initialCapacity);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="marketplaceDetails"> Marketplace details. </param>
+        /// <param name="armProvisioningState"> Provisioning State of the resource. </param>
+        /// <param name="storageSkuName"> Storage Sku. </param>
+        /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="clusterLoginUri"> File system Id of the resource. </param>
+        /// <param name="privateIPs"> Private IPs of the resource. </param>
+        /// <param name="adminPassword"> Initial administrator password of the resource. </param>
+        /// <param name="availabilityZone"> Availability zone. </param>
+        /// <param name="userDetailsEmail"> User Email. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <param name="initialCapacity"></param>
+        /// <returns> A new <see cref="Qumulo.QumuloFileSystemResourceData"/> instance for mocking. </returns>
+        public static QumuloFileSystemResourceData QumuloFileSystemResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, MarketplaceDetails marketplaceDetails = default, QumuloArmProvisioningState? armProvisioningState = default, string storageSkuName = default, string userDetailsEmail = default, string delegatedSubnetId = default, Uri clusterLoginUri = default, IEnumerable<IPAddress> privateIPs = default, string adminPassword = default, string availabilityZone = default, ManagedServiceIdentity identity = default, int initialCapacity = default)
+        {
+            return QumuloFileSystemResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                marketplaceDetails,
+                armProvisioningState,
+                storageSkuName,
+                delegatedSubnetId,
+                clusterLoginUri,
+                privateIPs,
+                adminPassword,
+                availabilityZone,
+                userDetailsEmail,
+                identity,
+                initialCapacity);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MarketplaceDetails"/>. </summary>
         /// <param name="marketplaceSubscriptionId"> Marketplace Subscription Id. </param>
         /// <param name="planId"> Plan Id. </param>

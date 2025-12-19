@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Qumulo
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="initialCapacity"></param>
-        internal QumuloFileSystemResourceData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FileSystemResourceProperties properties, ManagedServiceIdentity identity, int initialCapacity) : base(id, name, resourceType, systemData, tags, location)
+        internal QumuloFileSystemResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, FileSystemResourceProperties properties, ManagedServiceIdentity identity, int initialCapacity) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
