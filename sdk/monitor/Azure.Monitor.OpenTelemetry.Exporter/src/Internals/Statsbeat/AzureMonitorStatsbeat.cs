@@ -124,6 +124,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         SdkVersionType.ShimAspNetCore => "dotnet-core",
                         SdkVersionType.ShimWorkerService => "dotnet-worker",
                         SdkVersionType.ShimWeb => "dotnet-web",
+                        SdkVersionType.ShimNLog => "dotnet-nlog",
                         _ => "dotnet-exp"
                     };
                 }
