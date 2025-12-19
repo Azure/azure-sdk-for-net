@@ -110,9 +110,14 @@ string analyzerId = $"receipt_analyzer_{DateTimeOffset.UtcNow.ToUnixTimeSeconds(
 
 // Step 1: Upload training data to Azure Blob Storage
 // Get training data configuration from environment
-string trainingDataSasUrl = Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL") ?? string.Empty;
-string? storageAccount = Environment.GetEnvironmentVariable("TRAINING_DATA_STORAGE_ACCOUNT");
-string? containerName = Environment.GetEnvironmentVariable("TRAINING_DATA_CONTAINER_NAME");
+string trainingDataSasUrl =
+    Environment.GetEnvironmentVariable("TRAINING_DATA_SAS_URL") ?? string.Empty;
+string? storageAccount = Environment.GetEnvironmentVariable(
+    "TRAINING_DATA_STORAGE_ACCOUNT"
+);
+string? containerName = Environment.GetEnvironmentVariable(
+    "TRAINING_DATA_CONTAINER_NAME"
+);
 
 // If SAS URL is provided, use it directly
 if (!string.IsNullOrEmpty(trainingDataSasUrl))
@@ -125,7 +130,8 @@ else if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(containe
     // Use DefaultAzureCredential to authenticate and generate SAS token
     var blobServiceClient = new Azure.Storage.Blobs.BlobServiceClient(
         new Uri($"https://{storageAccount}.blob.core.windows.net"),
-        new DefaultAzureCredential());
+        new DefaultAzureCredential()
+    );
 
     var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
 
@@ -137,31 +143,38 @@ else if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(containe
     {
         BlobContainerName = containerName,
         Resource = "c", // Container
-        ExpiresOn = DateTimeOffset.UtcNow.AddHours(24)
+        ExpiresOn = DateTimeOffset.UtcNow.AddHours(24),
     };
     sasBuilder.SetPermissions(
         BlobContainerSasPermissions.Read
-        | BlobContainerSasPermissions.Write
-        | BlobContainerSasPermissions.List
-        | BlobContainerSasPermissions.Add
-        | BlobContainerSasPermissions.Create
-        | BlobContainerSasPermissions.Delete);
+            | BlobContainerSasPermissions.Write
+            | BlobContainerSasPermissions.List
+            | BlobContainerSasPermissions.Add
+            | BlobContainerSasPermissions.Create
+            | BlobContainerSasPermissions.Delete
+    );
 
     // Get user delegation key for SAS token
     var userDelegationKey = await blobServiceClient.GetUserDelegationKeyAsync(
         startsOn: DateTimeOffset.UtcNow,
-        expiresOn: DateTimeOffset.UtcNow.AddHours(24));
+        expiresOn: DateTimeOffset.UtcNow.AddHours(24)
+    );
 
-    var sasToken = sasBuilder.ToSasQueryParameters(userDelegationKey, storageAccount).ToString();
-    trainingDataSasUrl = $"https://{storageAccount}.blob.core.windows.net/{containerName}?{sasToken}";
+    var sasToken = sasBuilder
+        .ToSasQueryParameters(userDelegationKey, storageAccount)
+        .ToString();
+    trainingDataSasUrl =
+        $"https://{storageAccount}.blob.core.windows.net/{containerName}?{sasToken}";
 }
 else
 {
     throw new InvalidOperationException(
-        "Either TRAINING_DATA_SAS_URL or both TRAINING_DATA_STORAGE_ACCOUNT and TRAINING_DATA_CONTAINER_NAME must be provided");
+        "Either TRAINING_DATA_SAS_URL or both TRAINING_DATA_STORAGE_ACCOUNT and TRAINING_DATA_CONTAINER_NAME must be provided"
+    );
 }
 
-string trainingDataPath = Environment.GetEnvironmentVariable("TRAINING_DATA_PATH") ?? "training_data/";
+string trainingDataPath =
+    Environment.GetEnvironmentVariable("TRAINING_DATA_PATH") ?? "training_data/";
 
 // Ensure path ends with /
 if (!string.IsNullOrEmpty(trainingDataPath) && !trainingDataPath.EndsWith("/"))
@@ -171,9 +184,11 @@ if (!string.IsNullOrEmpty(trainingDataPath) && !trainingDataPath.EndsWith("/"))
 
 // Upload training documents with labels and OCR results
 string trainingDocsFolder = Path.Combine(
-    Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ?? string.Empty,
+    Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)
+        ?? string.Empty,
     "TestData",
-    "document_training");
+    "document_training"
+);
 
 if (Directory.Exists(trainingDocsFolder))
 {
@@ -230,26 +245,35 @@ var itemDefinition = new ContentFieldDefinition
 {
     Type = ContentFieldType.Object,
     Method = GenerationMethod.Extract,
-    Description = "Individual item details"
+    Description = "Individual item details",
 };
-itemDefinition.Properties.Add("Quantity", new ContentFieldDefinition
-{
-    Type = ContentFieldType.String,
-    Method = GenerationMethod.Extract,
-    Description = "Quantity of the item"
-});
-itemDefinition.Properties.Add("Name", new ContentFieldDefinition
-{
-    Type = ContentFieldType.String,
-    Method = GenerationMethod.Extract,
-    Description = "Name of the item"
-});
-itemDefinition.Properties.Add("Price", new ContentFieldDefinition
-{
-    Type = ContentFieldType.String,
-    Method = GenerationMethod.Extract,
-    Description = "Price of the item"
-});
+itemDefinition.Properties.Add(
+    "Quantity",
+    new ContentFieldDefinition
+    {
+        Type = ContentFieldType.String,
+        Method = GenerationMethod.Extract,
+        Description = "Quantity of the item",
+    }
+);
+itemDefinition.Properties.Add(
+    "Name",
+    new ContentFieldDefinition
+    {
+        Type = ContentFieldType.String,
+        Method = GenerationMethod.Extract,
+        Description = "Name of the item",
+    }
+);
+itemDefinition.Properties.Add(
+    "Price",
+    new ContentFieldDefinition
+    {
+        Type = ContentFieldType.String,
+        Method = GenerationMethod.Extract,
+        Description = "Price of the item",
+    }
+);
 
 var fieldSchema = new ContentFieldSchema(
     new Dictionary<string, ContentFieldDefinition>
@@ -258,31 +282,32 @@ var fieldSchema = new ContentFieldSchema(
         {
             Type = ContentFieldType.String,
             Method = GenerationMethod.Extract,
-            Description = "Name of the merchant"
+            Description = "Name of the merchant",
         },
         ["Items"] = new ContentFieldDefinition
         {
             Type = ContentFieldType.Array,
             Method = GenerationMethod.Generate,
             Description = "List of items purchased",
-            ItemDefinition = itemDefinition
+            ItemDefinition = itemDefinition,
         },
         ["TotalPrice"] = new ContentFieldDefinition
         {
             Type = ContentFieldType.String,
             Method = GenerationMethod.Extract,
-            Description = "Total price on the receipt"
-        }
-    })
+            Description = "Total price on the receipt",
+        },
+    }
+)
 {
     Name = "receipt_schema",
-    Description = "Schema for receipt extraction with labeled training data"
+    Description = "Schema for receipt extraction with labeled training data",
 };
 
 // Step 3: Configure knowledge sources with labeled data
 var knowledgeSource = new LabeledDataKnowledgeSource(new Uri(trainingDataSasUrl))
 {
-    Prefix = trainingDataPath
+    Prefix = trainingDataPath,
 };
 
 // Step 4: Create analyzer configuration
@@ -292,7 +317,7 @@ var config = new ContentAnalyzerConfig
     EnableLayout = true,
     EnableOcr = true,
     EstimateFieldSourceAndConfidence = true,
-    ReturnDetails = true
+    ReturnDetails = true,
 };
 
 // Step 5: Create the custom analyzer with knowledge sources
@@ -301,7 +326,7 @@ var customAnalyzer = new ContentAnalyzer
     BaseAnalyzerId = "prebuilt-document",
     Description = "Receipt analyzer trained with labeled data",
     Config = config,
-    FieldSchema = fieldSchema
+    FieldSchema = fieldSchema,
 };
 
 // Add knowledge source
@@ -316,10 +341,13 @@ var operation = await client.CreateAnalyzerAsync(
     WaitUntil.Completed,
     analyzerId,
     customAnalyzer,
-    allowReplace: true);
+    allowReplace: true
+);
 
 ContentAnalyzer result = operation.Value;
-Console.WriteLine($"Analyzer '{analyzerId}' created successfully with labeled training data!");
+Console.WriteLine(
+    $"Analyzer '{analyzerId}' created successfully with labeled training data!"
+);
 ```
 
 ## Delete the analyzer (optional)
