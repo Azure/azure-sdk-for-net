@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using NUnit.Framework;
 
-namespace Azure.AI.Projects.Tests.Utilities
+namespace Azure.AI.Projects.Tests.Utils
 {
     public class GenAiTraceVerifier
     {

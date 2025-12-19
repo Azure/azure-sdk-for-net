@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
 using Microsoft.ClientModel.TestFramework;
+using Azure.AI.Projects.Tests.Utils;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Files;
@@ -1016,16 +1017,16 @@ public class AgentsTests : AgentsTestBase
     {
         OpenAIFileClient fileClient = openAIClient.GetOpenAIFileClient();
         Dictionary<string, string> screenshots = new() {
-            { "browser_search", (await fileClient.UploadFileAsync(GetTestFile("cua_browser_search.png"), FileUploadPurpose.Assistants)).Value.Id },
-            { "search_typed", (await fileClient.UploadFileAsync(GetTestFile("cua_search_typed.png"), FileUploadPurpose.Assistants)).Value.Id },
-            { "search_results", (await fileClient.UploadFileAsync(GetTestFile("cua_search_results.png"), FileUploadPurpose.Assistants)).Value.Id },
+            { "browser_search", (await fileClient.UploadFileAsync(GetAgentTestFile("cua_browser_search.png"), FileUploadPurpose.Assistants)).Value.Id },
+            { "search_typed", (await fileClient.UploadFileAsync(GetAgentTestFile("cua_search_typed.png"), FileUploadPurpose.Assistants)).Value.Id },
+            { "search_results", (await fileClient.UploadFileAsync(GetAgentTestFile("cua_search_results.png"), FileUploadPurpose.Assistants)).Value.Id },
         };
         return JsonSerializer.Serialize(screenshots);
     }
 
     private static BinaryData UrlGetBase64Image(string name)
     {
-        string imagePath = GetTestFile(name);
+        string imagePath = GetAgentTestFile(name);
         return new BinaryData(File.ReadAllBytes(imagePath));
     }
 

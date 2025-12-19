@@ -6,10 +6,8 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using Azure.AI.Projects;
@@ -20,12 +18,11 @@ using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
 using OpenAI.VectorStores;
-using Azure.AI.Projects.Tests.Utils;
 
 namespace Azure.AI.Projects.Tests;
 #pragma warning disable OPENAICUA001
 
-public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
+public class AgentsTestBase : ProjectsClientTestBase
 {
     #region Enumerations
     public enum ToolType
@@ -181,81 +178,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
     private AIProjectMemoryStoresOperations _stores = null;
     protected readonly string MEMORY_STORE_SCOPE = "user_123";
 
-    private static RecordedTestMode? GetRecordedTestMode() => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
-        {
-            "Playback" => RecordedTestMode.Playback,
-            "Live" => RecordedTestMode.Live,
-            "Record" => RecordedTestMode.Record,
-            _ => null
-        };
-
-    public AgentsTestBase(bool isAsync) : this(isAsync: isAsync, testMode: GetRecordedTestMode()) { }
-
     public AgentsTestBase(bool isAsync, RecordedTestMode? testMode = null) : base(isAsync, testMode)
     {
-        ProjectsTestSanitizers.ApplySanitizers(this);
-        // Icrease Test timeout because ComputerUse tool test can take a little
-        // more then 10 sec (default).
-        TestTimeoutInSeconds = 20;
-    }
-
-    protected AIProjectClientOptions CreateTestProjectClientOptions(bool instrument = true, Dictionary<string, string> headers = null)
-        => GetConfiguredOptions(new AIProjectClientOptions(), instrument, headers);
-
-    protected ProjectOpenAIClientOptions CreateTestProjectOpenAIClientOptions(Uri endpoint = null, string apiVersion = null, bool instrument = true)
-    => GetConfiguredOptions(
-        new ProjectOpenAIClientOptions()
-        {
-            Endpoint = endpoint,
-            ApiVersion = apiVersion,
-        },
-        instrument);
-
-    private T GetConfiguredOptions<T>(T options, bool instrument, Dictionary<string, string> headers = null)
-        where T : ClientPipelineOptions
-    {
-        options.AddPolicy(GetDumpPolicy(), PipelinePosition.BeforeTransport);
-        options.NetworkTimeout = TimeSpan.FromMinutes(5);
-        if (headers is not null && headers.Count > 0)
-        {
-            options.AddPolicy(new HeaderTestPolicy(headers), PipelinePosition.PerCall);
-        }
-        options.AddPolicy(
-            new TestPipelinePolicy(message =>
-            {
-                if (Mode == RecordedTestMode.Playback)
-                {
-                    // TODO: ...why!?
-                    message.Request.Headers.Set("Authorization", "Sanitized");
-                }
-                else
-                {
-                    message.NetworkTimeout = TimeSpan.FromMinutes(5);
-                }
-            }),
-            PipelinePosition.PerCall);
-
-        return instrument ? InstrumentClientOptions(options) : options;
-    }
-
-    private AuthenticationTokenProvider GetTestTokenProvider()
-    {
-        // For local testing if you are using non default account
-        // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
-        // also provide the PATH variable.
-        // This path should allow launching az command.
-        if (Mode != RecordedTestMode.Playback && bool.TryParse(Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL"), out bool cliValue) && cliValue)
-        {
-            return new AzureCliCredential();
-        }
-        return TestEnvironment.Credential;
-    }
-
-    protected AIProjectClient GetTestProjectClient(Dictionary<string, string> headers=default)
-    {
-        AIProjectClientOptions projectClientOptions = CreateTestProjectClientOptions(headers: headers);
-        AuthenticationTokenProvider provider = TestEnvironment.Credential;
-        return CreateProxyFromClient(new AIProjectClient(new(TestEnvironment.PROJECT_ENDPOINT), GetTestTokenProvider(), projectClientOptions));
     }
 
     protected async Task<ResponseResult> WaitForRun(ResponsesClient responses, ResponseResult response, int waitTime=500)
@@ -280,6 +204,8 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         }
     }
 
+    protected static string GetAgentTestFile(string name) => GetTestFile(Path.Combine("Agents", name));
+
     private static string ToPritableString(IEnumerable<string> data)
     {
         StringBuilder sb = new();
@@ -294,20 +220,6 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             sb.Remove(sb.Length - 2, 2);
         }
         return sb.ToString();
-    }
-
-    protected void IgnoreSampleMayBe()
-    {
-        if (Mode != RecordedTestMode.Live)
-        {
-            Assert.Ignore("Samples represented as tests only for validation of compilation.");
-        }
-    }
-
-    protected static string GetTestFile(string fileName, [CallerFilePath] string pth = "")
-    {
-        var dirName = Path.GetDirectoryName(pth) ?? "";
-        return Path.Combine(new string[] { dirName, "TestData", fileName });
     }
 
     protected static string GetModelType<T>(IJsonModel<T> model)
@@ -406,12 +318,12 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
             auth = new OpenAPIProjectConnectionAuthenticationDetails(new OpenAPIProjectConnectionSecurityScheme(
                 projectConnectionId: TestEnvironment.OPENAPI_PROJECT_CONNECTION_ID
             ));
-            filePath = GetTestFile(fileName: "tripadvisor_openapi.json");
+            filePath = GetAgentTestFile(name: "tripadvisor_openapi.json");
         }
         else
         {
             auth = new OpenAPIAnonymousAuthenticationDetails();
-            filePath = GetTestFile(fileName: "weather_openapi.json");
+            filePath = GetAgentTestFile(name: "weather_openapi.json");
         }
         OpenAPIFunctionDefinition functionDefinition = new OpenAPIFunctionDefinition(
             name: withConnection ? "tripadvisor" : "get_weather",
@@ -598,61 +510,6 @@ public class AgentsTestBase : RecordedTestBase<AIAgentsTestEnvironment>
         {
             projectClient.Agents.DeleteAgentVersion(agentName: ag.Name, agentVersion: ag.Version);
         }
-    }
-    #endregion
-    #region Debug Method
-    internal static PipelinePolicy GetDumpPolicy()
-    {
-        return new TestPipelinePolicy((message) =>
-        {
-            if (message.Request is not null && message.Response is null)
-            {
-                Console.WriteLine($"--- New request ---");
-                IEnumerable<string> headerPairs = message?.Request?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                string headers = string.Join(",", headerPairs);
-                Console.WriteLine($"Headers: {headers}");
-                Console.WriteLine($"{message?.Request?.Method} URI: {message?.Request?.Uri}");
-                if (message.Request?.Content != null)
-                {
-                    string contentType = "Unknown Content Type";
-                    if (message.Request.Headers?.TryGetValue("Content-Type", out contentType) == true
-                        && contentType == "application/json")
-                    {
-                        using MemoryStream stream = new();
-                        message.Request.Content.WriteTo(stream, default);
-                        stream.Position = 0;
-                        using StreamReader reader = new(stream);
-                        string requestDump = reader.ReadToEnd();
-                        stream.Position = 0;
-                        requestDump = Regex.Replace(requestDump, @"""data"":[\\w\\r\\n]*""[^""]*""", @"""data"":""...""");
-                        Console.WriteLine(requestDump);
-                    }
-                    else
-                    {
-                        string length = message.Request.Content.TryComputeLength(out long numberLength)
-                            ? $"{numberLength} bytes"
-                            : "unknown length";
-                        Console.WriteLine($"<< Non-JSON content: {contentType} >> {length}");
-                    }
-                }
-            }
-            if (message.Response != null)
-            {
-                IEnumerable<string> headerPairs = message?.Response?.Headers?.Select(header => $"{header.Key}={(header.Key.ToLower().Contains("auth") ? "***" : header.Value)}");
-                string headers = string.Join(",", headerPairs);
-                Console.WriteLine($"Response headers: {headers}");
-                if (message.BufferResponse)
-                {
-                    Console.WriteLine("--- Begin response content ---");
-                    Console.WriteLine(message.Response.Content?.ToString());
-                    Console.WriteLine("--- End of response content ---");
-                }
-                else
-                {
-                    Console.WriteLine("--- Response (unbuffered, content not rendered) ---");
-                }
-            }
-        });
     }
     #endregion
 }

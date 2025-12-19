@@ -258,13 +258,6 @@ namespace Azure.AI.Projects.Tests.Utils
                 Regex = UUID_PATTERN,
                 Value = "00000000-0000-0000-0000-000000000000"
             }));
-
-            // Handle multipart form data boundaries
-            testBase.HeaderRegexSanitizers.Add(new HeaderRegexSanitizer(new("Content-Type")
-            {
-                Regex = @"multipart/form-data; boundary=[^\s]+",
-                Value = "multipart/form-data; boundary=***"
-            }));
         }
 
         private static UriRegexSanitizerBody BodySanitizer(string regex, string value)

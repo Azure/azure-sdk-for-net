@@ -5,7 +5,6 @@ using System.ClientModel.Primitives;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
 using Azure.AI.Projects.OpenAI;
-using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenAI.Responses;
