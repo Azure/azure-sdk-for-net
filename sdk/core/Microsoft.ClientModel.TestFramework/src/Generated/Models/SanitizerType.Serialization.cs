@@ -17,6 +17,7 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             SanitizerType.BodyKeySanitizer => "BodyKeySanitizer",
             SanitizerType.BodyRegexSanitizer => "BodyRegexSanitizer",
             SanitizerType.BodyStringSanitizer => "BodyStringSanitizer",
+            SanitizerType.ContentDispositionFilePathSanitizer => "ContentDispositionFilePathSanitizer",
             SanitizerType.GeneralRegexSanitizer => "GeneralRegexSanitizer",
             SanitizerType.GeneralStringSanitizer => "GeneralStringSanitizer",
             SanitizerType.HeaderRegexSanitizer => "HeaderRegexSanitizer",
@@ -44,6 +45,10 @@ namespace Microsoft.ClientModel.TestFramework.TestProxy.Admin
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "BodyStringSanitizer"))
             {
                 return SanitizerType.BodyStringSanitizer;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ContentDispositionFilePathSanitizer"))
+            {
+                return SanitizerType.ContentDispositionFilePathSanitizer;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "GeneralRegexSanitizer"))
             {

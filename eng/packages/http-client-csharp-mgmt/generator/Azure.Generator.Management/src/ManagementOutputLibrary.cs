@@ -138,7 +138,13 @@ namespace Azure.Generator.Management
                 resourceDict,
                 resourceMethodCategories,
                 ManagementClientGenerator.Instance.InputLibrary.NonResourceMethods);
-            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources);
+
+            // Extract extension non-resource methods for MockableArmClientProvider
+            var extensionNonResourceMethods = resourcesAndMethodsPerScope.TryGetValue(ResourceScope.Extension, out var extensionScope)
+                ? extensionScope.NonResourceMethods
+                : [];
+
+            var mockableArmClientResource = MockableArmClientProvider.TryCreate(_resources, extensionNonResourceMethods);
             var mockableResources = new Dictionary<ResourceScope, MockableResourceProvider>(resourcesAndMethodsPerScope.Count);
             foreach (var (scope, (resourcesInScope, resourceMethods, nonResourceMethods)) in resourcesAndMethodsPerScope)
             {
@@ -386,7 +392,20 @@ namespace Azure.Generator.Management
         private IReadOnlyDictionary<CSharpType, ResourceClientProvider>? _resourceDataTypes;
         internal bool TryGetResourceClientProvider(CSharpType resourceDataType, [MaybeNullWhen(false)] out ResourceClientProvider resourceClientProvider)
         {
-            _resourceDataTypes ??= ResourceProviders.ToDictionary(r => r.ResourceData.Type, r => r);
+            if (_resourceDataTypes == null)
+            {
+                // Build dictionary, handling cases where multiple resources share the same data type
+                var dict = new Dictionary<CSharpType, ResourceClientProvider>();
+                foreach (var provider in ResourceProviders)
+                {
+                    // If the key already exists (multiple resources sharing same model), keep the first one
+                    if (!dict.ContainsKey(provider.ResourceData.Type))
+                    {
+                        dict[provider.ResourceData.Type] = provider;
+                    }
+                }
+                _resourceDataTypes = dict;
+            }
             return _resourceDataTypes.TryGetValue(resourceDataType, out resourceClientProvider);
         }
 

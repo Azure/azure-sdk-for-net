@@ -161,13 +161,17 @@ namespace Azure.Generator.Management
             // we build the resource metadata instances first to ensure that we already have everything before we figure out the children
             foreach (var model in InputNamespace.Models)
             {
-                var decorator = model.Decorators.FirstOrDefault(d => d.Name == ResourceMetadataDecoratorName);
-                if (decorator?.Arguments != null)
+                // Process ALL decorators with ResourceMetadataDecoratorName to support multiple resources sharing the same model
+                var decorators = model.Decorators.Where(d => d.Name == ResourceMetadataDecoratorName);
+                foreach (var decorator in decorators)
                 {
-                    var children = new List<string>();
-                    var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model, children);
-                    resourceMetadata.Add(metadata);
-                    resourceChildren.Add(metadata.ResourceIdPattern, children);
+                    if (decorator?.Arguments != null)
+                    {
+                        var children = new List<string>();
+                        var metadata = ResourceMetadata.DeserializeResourceMetadata(decorator.Arguments, model, children);
+                        resourceMetadata.Add(metadata);
+                        resourceChildren.Add(metadata.ResourceIdPattern, children);
+                    }
                 }
             }
             // we go a second pass to fulfill the children list
