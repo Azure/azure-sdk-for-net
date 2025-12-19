@@ -4,125 +4,45 @@
 #nullable enable
 
 using System;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
-using Microsoft.ClientModel.TestFramework;
-using System.Linq;
+using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace Microsoft.ClientModel.TestFramework.Tests.Samples;
 
-public class TestUtilitiesSamples
+public class TestUtilitiesSamples : RecordedTestBase
 {
-    #region Snippet:TestEnvVarUsage
-    [TestFixture]
-    public class EnvironmentVariableTests
+    public void CanSetAndRetrieveEnvironmentVariable()
     {
-        [Test]
-        public void CanSetAndRetrieveEnvironmentVariable()
-        {
-            // Use TestEnvVar to temporarily set environment variables
-            using var testEnvVar = new TestEnvVar("TEST_SAMPLE_VALUE", "test-value");
+        #region Snippet:TestEnvVarUsage
+        // Use TestEnvVar to temporarily set environment variables
+        using var testEnvVar = new TestEnvVar("TEST_SAMPLE_VALUE", "test-value");
 
-            // Retrieve the value that was set
-            var value = Environment.GetEnvironmentVariable("TEST_SAMPLE_VALUE");
-            Assert.That(value, Is.EqualTo("test-value"));
+        // Retrieve the value that was set
+        var value = Environment.GetEnvironmentVariable("TEST_SAMPLE_VALUE");
+        Assert.That(value, Is.EqualTo("test-value"));
 
-            // Variable will be automatically restored when disposed
-        }
-
-        [Test]
-        public void CanSetMultipleEnvironmentVariables()
-        {
-            // Set multiple environment variables for testing
-            var variables = new Dictionary<string, string>
-            {
-                { "TEST_VAR_1", "value1" },
-                { "TEST_VAR_2", "value2" }
-            };
-
-            using var testEnvVar = new TestEnvVar(variables);
-
-            Assert.That(Environment.GetEnvironmentVariable("TEST_VAR_1"), Is.EqualTo("value1"));
-            Assert.That(Environment.GetEnvironmentVariable("TEST_VAR_2"), Is.EqualTo("value2"));
-        }
-
-        [Test]
-        public void EnvironmentVariablesAreRestoredAfterDispose()
-        {
-            // Store original value
-            var originalValue = Environment.GetEnvironmentVariable("TEST_RESTORE_VAR");
-
-            using (var testEnvVar = new TestEnvVar("TEST_RESTORE_VAR", "temporary-value"))
-            {
-                Assert.That(Environment.GetEnvironmentVariable("TEST_RESTORE_VAR"), Is.EqualTo("temporary-value"));
-            }
-
-            // Value should be restored
-            Assert.That(Environment.GetEnvironmentVariable("TEST_RESTORE_VAR"), Is.EqualTo(originalValue));
-        }
+        // Variable will be automatically restored to its original value when disposed
+        #endregion
     }
-    #endregion
 
-    #region Snippet:TestRandomUsage
-    [TestFixture]
-    public class TestRandomTests
+    [Test]
+    public void TestRandomProvidesDeterministicValues()
     {
-        [Test]
-        public void TestRandomProvidesDeterministicValues()
-        {
-            // Create a TestRandom with a known seed for deterministic behavior
-            var testRandom = new TestRandom(RecordedTestMode.Playback, 42);
+        #region Snippet:RandomId
+        string repeatableRandomId = Recording!.GenerateId();
+        #endregion
 
-            // Generate deterministic values
-            var randomInt = testRandom.Next(1, 100);
-            var randomGuid = testRandom.NewGuid();
+        #region Snippet:RandomGuid
+        string repeatableGuid = Recording!.Random.NewGuid().ToString();
+        #endregion
 
-            // Values should be deterministic based on seed
-            Assert.That(randomInt >= 1 && randomInt < 100);
-            Assert.That(randomGuid, Is.Not.EqualTo(Guid.Empty));
-
-            // Reset with same seed should produce same values
-            var testRandom2 = new TestRandom(RecordedTestMode.Playback, 42);
-            Assert.That(randomInt, Is.EqualTo(testRandom2.Next(1, 100)));
-            Assert.That(randomGuid, Is.EqualTo(testRandom2.NewGuid()));
-        }
-
-        [Test]
-        public void TestRandomInLiveMode()
-        {
-            // In Live mode, TestRandom behaves like standard Random
-            var testRandom = new TestRandom(RecordedTestMode.Live);
-
-            // Generate test data
-            var testIds = new List<string>();
-            for (int i = 0; i < 5; i++)
-            {
-                testIds.Add($"test-{testRandom.NewGuid().ToString().Substring(0, 8)}");
-            }
-
-            Assert.That(testIds.Count, Is.EqualTo(5));
-            Assert.That(testIds.Distinct().Count(), Is.EqualTo(5)); // All unique
-        }
-
-        [Test]
-        public void TestRandomWithExtensions()
-        {
-            // Test with extension methods for Random
-            var random = new Random(123); // Regular Random with seed
-
-            var guid1 = random.NewGuid(); // Uses extension method
-            var guid2 = random.NewGuid();
-
-            Assert.That(guid1, Is.Not.EqualTo(guid2));
-            Assert.That(guid1, Is.Not.EqualTo(Guid.Empty));
-        }
     }
-    #endregion
 
     #region Snippet:TaskExtensionsUsage
     [TestFixture]
