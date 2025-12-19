@@ -27,7 +27,7 @@ namespace Azure.AI.Projects.Tests;
 /// <summary>
 /// Recorded asynchronous tests for fine-tuning operations using test-proxy.
 /// </summary>
-public class FineTuningTests : FineTuningTestsBase
+public class FineTuningTests : ProjectsClientTestBase
 {
     public FineTuningTests(bool isAsync) : base(isAsync)
     {
@@ -35,11 +35,10 @@ public class FineTuningTests : FineTuningTestsBase
 
     private async Task<(OpenAIFile TrainFile, OpenAIFile ValidationFile)> UploadTestFilesAsync(OpenAIFileClient fileClient, string jobType = "sft")
     {
-        var dataDirectory = GetDataDirectory();
         string trainingFileName = $"{jobType}_training_set.jsonl";
         string validationFileName = $"{jobType}_validation_set.jsonl";
-        var trainingFilePath = Path.Combine(dataDirectory, trainingFileName);
-        var validationFilePath = Path.Combine(dataDirectory, validationFileName);
+        var trainingFilePath = GetTestFineTuningFile(trainingFileName);
+        var validationFilePath = GetTestFineTuningFile(validationFileName);
 
         Console.WriteLine($"Uploading training file: {trainingFileName}...");
         OpenAIFile trainFile = await fileClient.UploadFileAsync(
@@ -629,25 +628,37 @@ public class FineTuningTests : FineTuningTestsBase
         // Note: This test uses a running fine-tuning job ID to test pause functionality.
         // Pause is only valid for jobs that are currently running (not queued, completed, or cancelled).
         // When re-recording this test, ensure the job is in a running state.
-        string runningJobId = "ftjob-7ee8bc9638cf491eaf19146a1900acaf";
-
-        var (_, fineTuningClient) = GetClients();
-
-        // Retrieve the job first
-        FineTuningJob job = await fineTuningClient.GetJobAsync(runningJobId);
-        Console.WriteLine($"Retrieved job: {job.JobId}, Status: {job.Status}");
+        var (fileClient, fineTuningClient) = GetClients();
+        //var (trainFile, validationFile) = await UploadTestFilesAsync(fileClient, "dpo");
+        //FineTuningJob job = await CreateDpoFineTuningJobAsync(
+        //        fineTuningClient,
+        //        "gpt-4.1",
+        //        trainFile.Id,
+        //        validationFile.Id);
+        //// Retrieve the job in running state
+        //while (job.Status != FineTuningStatus.Running && job.Status != FineTuningStatus.Failed)
+        //{
+        //    if (Mode != RecordedTestMode.Playback)
+        //    {
+        //        System.Threading.Thread.Sleep(1);
+        //    }
+        //    job = await fineTuningClient.GetJobAsync(job.JobId);
+        //}
+        // We cannot check that the job status is FineTuningStatus.Running instead we need to
+        // check the event logs and retry pause once Training started event is emitted.
+        FineTuningJob job = await fineTuningClient.GetJobAsync("ftjob-5b45a9d50470481fa8f6d91f0b07da0c");
+        Assert.That(job.Status, Is.EqualTo(FineTuningStatus.Running), $"The job status is {job.Status}");
 
         // Pause the job
-        Console.WriteLine($"Pausing fine-tuning job with ID: {runningJobId}");
-        await fineTuningClient.PauseFineTuningJobAsync(runningJobId, options: null);
+        await fineTuningClient.PauseFineTuningJobAsync(job.JobId, options: null);
 
         // Retrieve the job again to verify status
-        FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(runningJobId);
-        Console.WriteLine($"Paused job: {pausedJob.JobId}, Status: {pausedJob.Status}");
-
+        FineTuningJob pausedJob = await fineTuningClient.GetJobAsync(job.JobId);
         // Verify the job is paused (status should be "paused" or similar)
         Assert.That(pausedJob, Is.Not.Null);
-        Assert.That(pausedJob.JobId, Is.EqualTo(runningJobId));
+        HashSet<string> validStatuses = ["paused", "pausing"];
+        Assert.That(validStatuses.Contains(pausedJob.Status.ToString().ToLowerInvariant()), $"The job status is {pausedJob.Status}");
+        Assert.That(pausedJob.JobId, Is.EqualTo(job.JobId));
     }
 
     [RecordedTest]
@@ -656,13 +667,13 @@ public class FineTuningTests : FineTuningTestsBase
         // Note: This test uses a paused fine-tuning job ID to test resume functionality.
         // Resume is only valid for jobs that are currently paused.
         // When re-recording this test, ensure the job is in a paused state.
-        string pausedJobId = "ftjob-5053b0f026604ac59b4a0ef2dbece2fc";
+        string pausedJobId = "ftjob-ed1d6ce69401454da5eeae9002ca8166";
 
         var (_, fineTuningClient) = GetClients();
 
         // Retrieve the job first
         FineTuningJob job = await fineTuningClient.GetJobAsync(pausedJobId);
-        Console.WriteLine($"Retrieved job: {job.JobId}, Status: {job.Status}");
+        Assert.That(job.Status, Is.EqualTo("paused"), $"The job status is {job.Status}", $"Retrieved job: {job.JobId}, Status: {job.Status}");
 
         // Resume the job
         Console.WriteLine($"Resuming fine-tuning job with ID: {pausedJobId}");
@@ -670,7 +681,7 @@ public class FineTuningTests : FineTuningTestsBase
 
         // Retrieve the job again to verify status
         FineTuningJob resumedJob = await fineTuningClient.GetJobAsync(pausedJobId);
-        var validStatuses = new[] { "running", "queued", "resuming" }; // Using string comparison directly since resuming status is not available in FineTuningStatus enum
+        HashSet<string> validStatuses = ["running", "queued", "resuming"]; // Using string comparison directly since resuming status is not available in FineTuningStatus enum
         Assert.That(validStatuses.Contains(resumedJob.Status.ToString().ToLowerInvariant()), $"The job has wrong status {resumedJob.Status}");
 
         // Verify the job is resumed (status should be "running", "queued", or "resuming")
@@ -718,7 +729,7 @@ public class FineTuningTests : FineTuningTestsBase
         // are only available for jobs in terminal state and completing a job takes signicant
         // time and the test can't be halted that long. When re-recording this test, ensure the
         // job used is in terminal state.
-        string preCompletedJobId = "ftjob-28b93663ef504bf280a7d96b6a1d69f7";
+        string preCompletedJobId = TestEnvironment.FINE_TUNING_COMPLETED_JOB;
 
         var (_, fineTuningClient) = GetClients();
 
@@ -744,10 +755,13 @@ public class FineTuningTests : FineTuningTestsBase
     public async Task Test_FineTuning_Inference_With_Existing_Deployment()
     {
         // Test inference with an existing fine-tuned model deployment, update this when re-recording
-        string deploymentName = "ft-deployment-gpt-4.1-mini-2025-04-14-2025-11-25";
+        // Please run the Test_FineTuning_Deploy_Model() test in the Live mode to deploy a model.
+        // Deployment should look like ft-deployment-gpt-4.1-mini-2025-04-14-2025-11-25 and can be
+        // found in the output of the mentioned test.
+        string deploymentName = TestEnvironment.FINE_TUNING_DEPLOYMENT_ID;
 
         // Get project client and responses client
-        AIProjectClient projectClient = GetTestClient();
+        AIProjectClient projectClient = GetTestProjectClient();
         // Get responses client for the specific deployment (model)
         var responsesClient = projectClient.OpenAI.GetProjectResponsesClientForModel(deploymentName);
 
@@ -773,28 +787,18 @@ public class FineTuningTests : FineTuningTestsBase
         Console.WriteLine($"Response: {messageItem.Content[0].Text}");
     }
 
-    [RecordedTest]
+    [Test]
+    // Skip recording since ARM operations are not recorded via the test proxy.
+    [LiveOnly]
     public async Task Test_FineTuning_Deploy_Model()
     {
         // This test demonstrates deploying a fine-tuned model using Azure Resource Manager.
         // It requires a completed fine-tuning job and takes approximately 30 minutes to complete.
-        // Skip in playback mode since ARM operations are not recorded via the test proxy.
-        if (Mode == Microsoft.ClientModel.TestFramework.RecordedTestMode.Playback)
-        {
-            Assert.Ignore("Skipping Test_FineTuning_Deploy_Model in playback mode - ARM operations not supported.");
-        }
-
         // Override the default 10 second timeout for this long-running deployment test
         TestTimeoutInSeconds = 300; // 5 minutes for deployment operations in playback mode
 
         // Pre-completed job ID - update this when re-recording
-        string completedJobId = "ftjob-4cb599f9e32d411dba27960ef42cea09";
-
-        // Azure Resource Manager configuration - update these values for your environment
-        // Using valid GUID format for dummy subscription ID to pass ARM validation in playback mode
-        string subscriptionId = Environment.GetEnvironmentVariable("AZURE_SUBSCRIPTION_ID") ?? "00000000-0000-0000-0000-000000000000";
-        string resourceGroupName = Environment.GetEnvironmentVariable("AZURE_RESOURCE_GROUP") ?? "test-resource-group";
-        string accountName = Environment.GetEnvironmentVariable("AZURE_ACCOUNT_NAME") ?? "test-account-name";
+        string completedJobId = TestEnvironment.FINE_TUNING_COMPLETED_JOB;
 
         var (_, fineTuningClient) = GetClients();
 
@@ -816,9 +820,9 @@ public class FineTuningTests : FineTuningTestsBase
 
         // Get Cognitive Services account
         var resourceId = CognitiveServicesAccountResource.CreateResourceIdentifier(
-            subscriptionId,
-            resourceGroupName,
-            accountName);
+            TestEnvironment.FINE_TUNING_AZURE_SUBSCRIPTION_ID,
+            TestEnvironment.FINE_TUNING_AZURE_RESOURCE_GROUP,
+            TestEnvironment.FINE_TUNING_AZURE_FOUNDRY_NAME);
         var accountResource = armClient.GetCognitiveServicesAccountResource(resourceId);
 
         // Deploy the model
@@ -844,4 +848,67 @@ public class FineTuningTests : FineTuningTestsBase
         Assert.That(deploymentOperation.Value, Is.Not.Null);
         Assert.That(deploymentOperation.Value.Data.Name, Is.EqualTo(deploymentName));
     }
+    #region Helpers
+    private static string GetTestFineTuningFile(string name) => GetTestFile(Path.Combine("FineTuning", name));
+
+    private (OpenAIFileClient FileClient, FineTuningClient FineTuningClient) GetClients()
+    {
+        AIProjectClient projectClient = GetTestProjectClient();
+        return (projectClient.OpenAI.GetOpenAIFileClient(), projectClient.OpenAI.GetFineTuningClient());
+    }
+
+    protected void ValidateFineTuningJob(FineTuningJob job, string expectedJobId = null, string expectedStatus = null)
+    {
+        Assert.That(job, Is.Not.Null);
+        Assert.That(job.JobId, Is.Not.Null);
+        Assert.That(job.Status, Is.Not.Null);
+
+        if (expectedJobId != null)
+        {
+            Assert.That(expectedJobId, Is.EqualTo(job.JobId));
+        }
+
+        if (expectedStatus != null)
+        {
+            Assert.That(job.Status.ToString().ToLowerInvariant(), Is.EqualTo(expectedStatus));
+        }
+    }
+
+    /// <summary>
+    /// Waits for a file to finish processing by polling its status.
+    /// </summary>
+    /// <param name="fileClient">The OpenAI file client.</param>
+    /// <param name="fileId">The ID of the file to wait for.</param>
+    /// <param name="pollIntervalSeconds">Polling interval in seconds (default: 5).</param>
+    /// <param name="maxWaitSeconds">Maximum wait time in seconds (default: 1800 = 30 minutes).</param>
+    /// <returns>The processed file.</returns>
+#pragma warning disable CS0618 // Type or member is obsolete
+    protected async Task<OpenAIFile> WaitForFileProcessingAsync(
+        OpenAIFileClient fileClient,
+        string fileId,
+        int pollIntervalSeconds = 5,
+        int maxWaitSeconds = 1800)
+    {
+        var start = DateTimeOffset.Now;
+        var pollInterval = TimeSpan.FromSeconds(pollIntervalSeconds);
+        var timeout = TimeSpan.FromSeconds(maxWaitSeconds);
+
+        OpenAIFile file;
+        do
+        {
+            file = await fileClient.GetFileAsync(fileId);
+            Assert.That(DateTimeOffset.Now - start, Is.LessThan(timeout), $"File {fileId} did not finish processing after {maxWaitSeconds} seconds. Current status: {file.Status}");
+            // Skip delay in Playback mode since responses are pre-recorded
+            if (Mode != RecordedTestMode.Playback)
+            {
+                System.Threading.Thread.Sleep(pollInterval);
+            }
+        }
+        while (file.Status != FileStatus.Processed && file.Status != FileStatus.Error);
+
+        Assert.That(file.Status, Is.EqualTo(FileStatus.Processed), $"File {fileId} processing failed: {file.StatusDetails}");
+        return file;
+    }
+#pragma warning restore CS0618 // Type or member is obsolete
+    #endregion
 }

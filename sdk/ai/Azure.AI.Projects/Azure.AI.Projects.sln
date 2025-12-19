@@ -1,12 +1,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.1.11304.174 d18.0
+VisualStudioVersion = 18.1.11304.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects", "src\Azure.AI.Projects.csproj", "{28FF4005-4467-4E36-92E7-DEA27DEB1519}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Tests", "tests\Azure.AI.Projects.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.Agents.Tests", "tests_agents\Azure.AI.Projects.Agents.Tests.csproj", "{9FA7297A-688F-54A7-CB3B-B218D605BD39}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Projects.OpenAI", "..\Azure.AI.Projects.OpenAI\src\Azure.AI.Projects.OpenAI.csproj", "{455D4CEC-1BB6-92B9-BB23-F52A9E409337}"
 EndProject
@@ -26,10 +24,6 @@ Global
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9FA7297A-688F-54A7-CB3B-B218D605BD39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FA7297A-688F-54A7-CB3B-B218D605BD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FA7297A-688F-54A7-CB3B-B218D605BD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FA7297A-688F-54A7-CB3B-B218D605BD39}.Release|Any CPU.Build.0 = Release|Any CPU
 		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{455D4CEC-1BB6-92B9-BB23-F52A9E409337}.Release|Any CPU.ActiveCfg = Release|Any CPU

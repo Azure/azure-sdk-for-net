@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Azure.AI.Projects.OpenAI;
 using Azure.AI.Projects.Tests.Utils;
@@ -81,7 +82,7 @@ namespace Azure.AI.Projects.Tests
         }
         #endregion
 
-        private static RecordedTestMode? GetRecordedTestMode(string variable = "AZURE_TEST_MODE") => Environment.GetEnvironmentVariable("AZURE_TEST_MODE") switch
+        private static RecordedTestMode? GetRecordedTestMode(string variable = "AZURE_TEST_MODE") => Environment.GetEnvironmentVariable(variable) switch
         {
             "Playback" => RecordedTestMode.Playback,
             "Live" => RecordedTestMode.Live,
@@ -95,6 +96,9 @@ namespace Azure.AI.Projects.Tests
         {
             // Apply sanitizers to protect sensitive information in recordings
             ProjectsTestSanitizers.ApplySanitizers(this);
+            // Icrease Test timeout because ComputerUse tool test can take a little
+            // more then 10 sec (default).
+            TestTimeoutInSeconds = 20;
         }
 
         /// <summary>
@@ -404,12 +408,10 @@ namespace Azure.AI.Projects.Tests
                    RegexAppInsightsConnectionString.IsMatch(connectionString);
         }
 
-        protected void IgnoreSampleMayBe()
+        protected static string GetTestFile(string fileName, [CallerFilePath] string pth = "")
         {
-            if (Mode != RecordedTestMode.Live)
-            {
-                Assert.Ignore("Samples represented as tests only for validation of compilation.");
-            }
+            var dirName = Path.GetDirectoryName(pth) ?? "";
+            return Path.Combine([ dirName, "TestData", fileName ]);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 
-namespace Azure.AI.Projects.Tests
+namespace Azure.AI.Projects.Tests.Utils
 {
     internal class MockTokenCredential : TokenCredential
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using OpenTelemetry;
 using System.Diagnostics;
 
-namespace Azure.AI.Projects.Tests.Utilities
+namespace Azure.AI.Projects.Tests.Utils
 {
     public class MemoryTraceExporter : BaseExporter<Activity>
     {

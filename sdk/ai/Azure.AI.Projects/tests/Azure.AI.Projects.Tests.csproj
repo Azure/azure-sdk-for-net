@@ -3,6 +3,8 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Acknowledge experimental OpenAI features -->
+    <NoWarn>$(NoWarn);OPENAI001;SCME0001</NoWarn>
   </PropertyGroup>
 
   <!-- Reference Foundry libraries via project -->
@@ -15,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.AI.OpenAI"/>
+    <PackageReference Include="Azure.AI.OpenAI" />
     <PackageReference Include="NUnit" VersionOverride="4.4.0" />
     <PackageReference Include="NUnit3TestAdapter" VersionOverride="5.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />

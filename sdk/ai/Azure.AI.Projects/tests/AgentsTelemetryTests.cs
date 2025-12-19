@@ -12,7 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Azure.AI.Projects.OpenAI;
-using Azure.AI.Projects.Tests.Utilities;
+using Azure.AI.Projects.Tests.Utils;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
 using OpenTelemetry;
