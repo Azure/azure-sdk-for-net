@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchCertificateStoreLocationExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchCertificateStoreLocation value) => value switch
         {
             BatchCertificateStoreLocation.CurrentUser => "CurrentUser",
@@ -18,10 +19,17 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchCertificateStoreLocation value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchCertificateStoreLocation ToBatchCertificateStoreLocation(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CurrentUser")) return BatchCertificateStoreLocation.CurrentUser;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalMachine")) return BatchCertificateStoreLocation.LocalMachine;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "CurrentUser"))
+            {
+                return BatchCertificateStoreLocation.CurrentUser;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "LocalMachine"))
+            {
+                return BatchCertificateStoreLocation.LocalMachine;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchCertificateStoreLocation value.");
         }
     }

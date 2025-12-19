@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.Batch.Models
 {
     internal static partial class BatchIPAddressProvisioningTypeExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this BatchIPAddressProvisioningType value) => value switch
         {
             BatchIPAddressProvisioningType.BatchManaged => "BatchManaged",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.Batch.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchIPAddressProvisioningType value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static BatchIPAddressProvisioningType ToBatchIPAddressProvisioningType(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchManaged")) return BatchIPAddressProvisioningType.BatchManaged;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserManaged")) return BatchIPAddressProvisioningType.UserManaged;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoPublicIPAddresses")) return BatchIPAddressProvisioningType.NoPublicIPAddresses;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BatchManaged"))
+            {
+                return BatchIPAddressProvisioningType.BatchManaged;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "UserManaged"))
+            {
+                return BatchIPAddressProvisioningType.UserManaged;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "NoPublicIPAddresses"))
+            {
+                return BatchIPAddressProvisioningType.NoPublicIPAddresses;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown BatchIPAddressProvisioningType value.");
         }
     }

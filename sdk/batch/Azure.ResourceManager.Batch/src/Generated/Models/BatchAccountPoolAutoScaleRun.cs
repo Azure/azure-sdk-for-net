@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The results and errors from an execution of a pool autoscale formula. </summary>
     public partial class BatchAccountPoolAutoScaleRun
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BatchAccountPoolAutoScaleRun"/>. </summary>
         /// <param name="evaluationOn"> The time at which the autoscale formula was last evaluated. </param>
@@ -56,25 +27,22 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="evaluationOn"> The time at which the autoscale formula was last evaluated. </param>
         /// <param name="results"> Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </param>
         /// <param name="error"> An error that occurred when autoscaling a pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BatchAccountPoolAutoScaleRun(DateTimeOffset evaluationOn, string results, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BatchAccountPoolAutoScaleRun(DateTimeOffset evaluationOn, string results, AutoScaleRunError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EvaluationOn = evaluationOn;
             Results = results;
             Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="BatchAccountPoolAutoScaleRun"/> for deserialization. </summary>
-        internal BatchAccountPoolAutoScaleRun()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time at which the autoscale formula was last evaluated. </summary>
         public DateTimeOffset EvaluationOn { get; }
+
         /// <summary> Each variable value is returned in the form $variable=value, and variables are separated by semicolons. </summary>
         public string Results { get; }
+
         /// <summary> An error that occurred when autoscaling a pool. </summary>
-        public ResponseError Error { get; }
+        public AutoScaleRunError Error { get; }
     }
 }
