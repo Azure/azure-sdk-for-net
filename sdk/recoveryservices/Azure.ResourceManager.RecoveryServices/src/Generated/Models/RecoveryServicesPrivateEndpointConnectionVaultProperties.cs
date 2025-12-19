@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
@@ -23,33 +24,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesPrivateEndpointConnectionVaultProperties"/>. </summary>
-        /// <param name="id"> Format of id subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.[Service]/{resource}/{resourceName}/privateEndpointConnections/{connectionName}. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Private Endpoint Connection Response Properties. </param>
         /// <param name="name"> The name of the private Endpoint Connection. </param>
-        /// <param name="type"> The type, which will be of the format, Microsoft.RecoveryServices/vaults/privateEndpointConnections. </param>
         /// <param name="location"> The location of the private Endpoint connection. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryServicesPrivateEndpointConnectionVaultProperties(string id, RecoveryServicesPrivateEndpointConnection properties, string name, string @type, AzureLocation? location, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryServicesPrivateEndpointConnectionVaultProperties(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, RecoveryServicesPrivateEndpointConnection properties, string name, AzureLocation? location) : base(id, name, resourceType, systemData)
         {
-            Id = id;
-            Properties = properties;
-            Name = name;
-            Type = @type;
-            Location = location;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
+            Location = location;
         }
-
-        /// <summary> Format of id subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.[Service]/{resource}/{resourceName}/privateEndpointConnections/{connectionName}. </summary>
-        public string Id { get; }
 
         /// <summary> Private Endpoint Connection Response Properties. </summary>
         public RecoveryServicesPrivateEndpointConnection Properties { get; }
-
-        /// <summary> The name of the private Endpoint Connection. </summary>
-        public string Name { get; }
-
-        /// <summary> The type, which will be of the format, Microsoft.RecoveryServices/vaults/privateEndpointConnections. </summary>
-        public string Type { get; }
 
         /// <summary> The location of the private Endpoint connection. </summary>
         public AzureLocation? Location { get; }

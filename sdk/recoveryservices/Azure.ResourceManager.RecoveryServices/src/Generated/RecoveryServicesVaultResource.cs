@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.RecoveryServices
     {
         private readonly ClientDiagnostics _vaultsClientDiagnostics;
         private readonly Vaults _vaultsRestClient;
-        private readonly ClientDiagnostics _registeredIdentitiesClientDiagnostics;
-        private readonly RegisteredIdentities _registeredIdentitiesRestClient;
-        private readonly ClientDiagnostics _replicationUsagesClientDiagnostics;
-        private readonly ReplicationUsages _replicationUsagesRestClient;
-        private readonly ClientDiagnostics _usagesClientDiagnostics;
-        private readonly Usages _usagesRestClient;
         private readonly RecoveryServicesVaultData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults";
@@ -60,12 +54,6 @@ namespace Azure.ResourceManager.RecoveryServices
             TryGetApiVersion(ResourceType, out string recoveryServicesVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
             _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
-            _registeredIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            _registeredIdentitiesRestClient = new RegisteredIdentities(_registeredIdentitiesClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
-            _replicationUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            _replicationUsagesRestClient = new ReplicationUsages(_replicationUsagesClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
-            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", ResourceType.Namespace, Diagnostics);
-            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -449,7 +437,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
 
-            using DiagnosticScope scope = _registeredIdentitiesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
             scope.Start();
             try
             {
@@ -457,7 +445,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredIdentitiesRestClient.CreateDeleteRegisteredIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, context);
+                HttpMessage message = _vaultsRestClient.CreateDeleteRegisteredIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -505,7 +493,7 @@ namespace Azure.ResourceManager.RecoveryServices
         {
             Argument.AssertNotNullOrEmpty(identityName, nameof(identityName));
 
-            using DiagnosticScope scope = _registeredIdentitiesClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
+            using DiagnosticScope scope = _vaultsClientDiagnostics.CreateScope("RecoveryServicesVaultResource.DeleteRegisteredIdentity");
             scope.Start();
             try
             {
@@ -513,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServices
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _registeredIdentitiesRestClient.CreateDeleteRegisteredIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, context);
+                HttpMessage message = _vaultsRestClient.CreateDeleteRegisteredIdentityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, identityName, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -554,13 +542,13 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReplicationUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReplicationUsage> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ReplicationUsage> GetReplicationUsagesAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicationUsagesGetAllAsyncCollectionResultOfT(_replicationUsagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetReplicationUsagesAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -586,13 +574,13 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ReplicationUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReplicationUsage> GetAll(CancellationToken cancellationToken = default)
+        public virtual Pageable<ReplicationUsage> GetReplicationUsages(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new ReplicationUsagesGetAllCollectionResultOfT(_replicationUsagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetReplicationUsagesCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -618,13 +606,13 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VaultUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<VaultUsage> GetByVaultsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<VaultUsage> GetUsagesByVaultsAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetByVaultsAsyncCollectionResultOfT(_usagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetUsagesByVaultsAsyncCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -650,13 +638,13 @@ namespace Azure.ResourceManager.RecoveryServices
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="VaultUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<VaultUsage> GetByVaults(CancellationToken cancellationToken = default)
+        public virtual Pageable<VaultUsage> GetUsagesByVaults(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new UsagesGetByVaultsCollectionResultOfT(_usagesRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
+            return new VaultsGetUsagesByVaultsCollectionResultOfT(_vaultsRestClient, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary> Add a tag to the current resource. </summary>

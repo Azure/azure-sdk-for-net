@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServices
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServices
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             RecoveryServicesVaultProperties properties = default;
-            IdentityData identity = default;
+            ManagedServiceIdentity identity = default;
             RecoveryServicesSku sku = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServices
                     {
                         continue;
                     }
-                    identity = IdentityData.DeserializeIdentityData(prop.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("sku"u8))

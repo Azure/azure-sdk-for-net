@@ -24,5 +24,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 SecuritySettings.ImmutabilityState = value;
             }
         }
+
+        /// <summary> Gets or sets the cross subscription restore state. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        {
+            get => RestoreSettings is null ? default : RestoreSettings.CrossSubscriptionRestoreState;
+            set
+            {
+                if (RestoreSettings is null)
+                    RestoreSettings = new RestoreSettings();
+                RestoreSettings.CrossSubscriptionRestoreState = value;
+            }
+        }
     }
 }

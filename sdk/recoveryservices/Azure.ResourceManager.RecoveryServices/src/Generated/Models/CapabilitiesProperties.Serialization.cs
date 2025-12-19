@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 writer.WritePropertyName("dnsZones"u8);
                 writer.WriteStartArray();
-                foreach (DNSZone item in DnsZones)
+                foreach (DnsZone item in DnsZones)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            IList<DNSZone> dnsZones = default;
+            IList<DnsZone> dnsZones = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    List<DNSZone> array = new List<DNSZone>();
+                    List<DnsZone> array = new List<DnsZone>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(DNSZone.DeserializeDNSZone(item, options));
+                        array.Add(DnsZone.DeserializeDnsZone(item, options));
                     }
                     dnsZones = array;
                     continue;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CapabilitiesProperties(dnsZones ?? new ChangeTrackingList<DNSZone>(), additionalBinaryDataProperties);
+            return new CapabilitiesProperties(dnsZones ?? new ChangeTrackingList<DnsZone>(), additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

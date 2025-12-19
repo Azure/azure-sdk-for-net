@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <summary> Initializes a new instance of <see cref="CapabilitiesProperties"/>. </summary>
         public CapabilitiesProperties()
         {
-            DnsZones = new ChangeTrackingList<DNSZone>();
+            DnsZones = new ChangeTrackingList<DnsZone>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilitiesProperties"/>. </summary>
         /// <param name="dnsZones"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapabilitiesProperties(IList<DNSZone> dnsZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapabilitiesProperties(IList<DnsZone> dnsZones, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsZones = dnsZones;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets the DnsZones. </summary>
-        public IList<DNSZone> DnsZones { get; }
+        public IList<DnsZone> DnsZones { get; }
     }
 }

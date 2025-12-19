@@ -28,12 +28,6 @@ namespace Azure.ResourceManager.RecoveryServices
     {
         private readonly ClientDiagnostics _vaultsClientDiagnostics;
         private readonly Vaults _vaultsRestClient;
-        private readonly ClientDiagnostics _registeredIdentitiesClientDiagnostics;
-        private readonly RegisteredIdentities _registeredIdentitiesRestClient;
-        private readonly ClientDiagnostics _replicationUsagesClientDiagnostics;
-        private readonly ReplicationUsages _replicationUsagesRestClient;
-        private readonly ClientDiagnostics _usagesClientDiagnostics;
-        private readonly Usages _usagesRestClient;
 
         /// <summary> Initializes a new instance of RecoveryServicesVaultCollection for mocking. </summary>
         protected RecoveryServicesVaultCollection()
@@ -48,12 +42,6 @@ namespace Azure.ResourceManager.RecoveryServices
             TryGetApiVersion(RecoveryServicesVaultResource.ResourceType, out string recoveryServicesVaultApiVersion);
             _vaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesVaultResource.ResourceType.Namespace, Diagnostics);
             _vaultsRestClient = new Vaults(_vaultsClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
-            _registeredIdentitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesVaultResource.ResourceType.Namespace, Diagnostics);
-            _registeredIdentitiesRestClient = new RegisteredIdentities(_registeredIdentitiesClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
-            _replicationUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesVaultResource.ResourceType.Namespace, Diagnostics);
-            _replicationUsagesRestClient = new ReplicationUsages(_replicationUsagesClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
-            _usagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.RecoveryServices", RecoveryServicesVaultResource.ResourceType.Namespace, Diagnostics);
-            _usagesRestClient = new Usages(_usagesClientDiagnostics, Pipeline, Endpoint, recoveryServicesVaultApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

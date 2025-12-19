@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             string authType = "AccessControlService";
-            BinaryData certificate = default;
+            byte[] certificate = default;
             string friendlyName = default;
             string issuer = default;
             long? resourceId = default;
@@ -99,7 +99,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    certificate = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    List<byte> array = new List<byte>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetByte());
+                    }
+                    certificate = array.ToArray();
                     continue;
                 }
                 if (prop.NameEquals("friendlyName"u8))

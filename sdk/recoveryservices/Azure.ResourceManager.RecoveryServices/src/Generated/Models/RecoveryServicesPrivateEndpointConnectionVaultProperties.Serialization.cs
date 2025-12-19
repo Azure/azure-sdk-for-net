@@ -8,14 +8,16 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServices;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Information to be stored in Vault properties as an element of privateEndpointConnections List. </summary>
-    public partial class RecoveryServicesPrivateEndpointConnectionVaultProperties : IJsonModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>
+    public partial class RecoveryServicesPrivateEndpointConnectionVaultProperties : ResourceData, IJsonModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -28,18 +30,14 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(RecoveryServicesPrivateEndpointConnectionVaultProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
@@ -50,40 +48,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
-            }
             if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryServicesPrivateEndpointConnectionVaultProperties IJsonModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        RecoveryServicesPrivateEndpointConnectionVaultProperties IJsonModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (RecoveryServicesPrivateEndpointConnectionVaultProperties)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecoveryServicesPrivateEndpointConnectionVaultProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -102,17 +80,40 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
+            ResourceType resourceType = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             RecoveryServicesPrivateEndpointConnection properties = default;
             string name = default;
-            string @type = default;
             AzureLocation? location = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
                 {
-                    id = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -127,11 +128,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 if (prop.NameEquals("name"u8))
                 {
                     name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("location"u8))
@@ -150,11 +146,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             }
             return new RecoveryServicesPrivateEndpointConnectionVaultProperties(
                 id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties,
                 properties,
                 name,
-                @type,
-                location,
-                additionalBinaryDataProperties);
+                location);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -175,11 +172,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecoveryServicesPrivateEndpointConnectionVaultProperties IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        RecoveryServicesPrivateEndpointConnectionVaultProperties IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (RecoveryServicesPrivateEndpointConnectionVaultProperties)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecoveryServicesPrivateEndpointConnectionVaultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesPrivateEndpointConnectionVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)

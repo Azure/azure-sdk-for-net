@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="properties"> Properties of the vault. </param>
         /// <param name="sku"> Identifies the unique system identifier for each Azure resource. </param>
         /// <param name="identity"> Identity for the resource. </param>
-        internal RecoveryServicesVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, ETag? eTag, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, IdentityData identity) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, tags, eTag)
+        internal RecoveryServicesVaultPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, string location, IDictionary<string, string> tags, ETag? eTag, RecoveryServicesVaultProperties properties, RecoveryServicesSku sku, ManagedServiceIdentity identity) : base(id, name, resourceType, systemData, additionalBinaryDataProperties, location, tags, eTag)
         {
             Properties = properties;
             Sku = sku;
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public RecoveryServicesSku Sku { get; set; }
 
         /// <summary> Identity for the resource. </summary>
-        public IdentityData Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

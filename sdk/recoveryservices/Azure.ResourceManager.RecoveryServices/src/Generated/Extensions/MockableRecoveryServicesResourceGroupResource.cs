@@ -21,10 +21,10 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
     /// <summary> A class to add extension methods to <see cref="ResourceGroupResource"/>. </summary>
     public partial class MockableRecoveryServicesResourceGroupResource : ArmResource
     {
+        private ClientDiagnostics _vaultsClientDiagnostics;
+        private Vaults _vaultsRestClient;
         private ClientDiagnostics _recoveryServicesOperationGroupClientDiagnostics;
         private RecoveryServicesOperationGroup _recoveryServicesOperationGroupRestClient;
-        private ClientDiagnostics _vaultCertificatesClientDiagnostics;
-        private VaultCertificates _vaultCertificatesRestClient;
 
         /// <summary> Initializes a new instance of MockableRecoveryServicesResourceGroupResource for mocking. </summary>
         protected MockableRecoveryServicesResourceGroupResource()
@@ -38,13 +38,13 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         {
         }
 
+        private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Vaults VaultsRestClient => _vaultsRestClient ??= new Vaults(VaultsClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
+
         private ClientDiagnostics RecoveryServicesOperationGroupClientDiagnostics => _recoveryServicesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private RecoveryServicesOperationGroup RecoveryServicesOperationGroupRestClient => _recoveryServicesOperationGroupRestClient ??= new RecoveryServicesOperationGroup(RecoveryServicesOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
-
-        private ClientDiagnostics VaultCertificatesClientDiagnostics => _vaultCertificatesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.RecoveryServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private VaultCertificates VaultCertificatesRestClient => _vaultCertificatesRestClient ??= new VaultCertificates(VaultCertificatesClientDiagnostics, Pipeline, Endpoint, "2025-08-01");
 
         /// <summary> Gets a collection of RecoveryServicesVaults in the <see cref="ResourceGroupResource"/>. </summary>
         /// <returns> An object representing collection of RecoveryServicesVaults and their operations over a RecoveryServicesVaultResource. </returns>
@@ -111,6 +111,80 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
             return GetRecoveryServicesVaults().Get(vaultName, cancellationToken);
         }
 
+        /// <summary> Uploads a certificate for a resource. </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="certificateName"> Certificate friendly name. </param>
+        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<VaultCertificateResult>> CreateVaultCertificateAsync(string vaultName, string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VaultsClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CreateVaultCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VaultsRestClient.CreateCreateVaultCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, certificateName, RecoveryServicesCertificateContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<VaultCertificateResult> response = Response.FromValue(VaultCertificateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Uploads a certificate for a resource. </summary>
+        /// <param name="vaultName"> The name of the recovery services vault. </param>
+        /// <param name="certificateName"> Certificate friendly name. </param>
+        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<VaultCertificateResult> CreateVaultCertificate(string vaultName, string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = VaultsClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CreateVaultCertificate");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = VaultsRestClient.CreateCreateVaultCertificateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, certificateName, RecoveryServicesCertificateContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<VaultCertificateResult> response = Response.FromValue(VaultCertificateResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary>
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same SubscriptionId, Resource Name and Type
@@ -172,80 +246,6 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
                 HttpMessage message = RecoveryServicesOperationGroupRestClient.CreateCheckRecoveryServicesNameAvailabilityRequest(Id.SubscriptionId, Id.ResourceGroupName, location, RecoveryServicesNameAvailabilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<RecoveryServicesNameAvailabilityResult> response = Response.FromValue(RecoveryServicesNameAvailabilityResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Uploads a certificate for a resource. </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VaultCertificateResult>> CreateAsync(string vaultName, string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = VaultCertificatesClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.Create");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = VaultCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, certificateName, RecoveryServicesCertificateContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<VaultCertificateResult> response = Response.FromValue(VaultCertificateResult.FromResponse(result), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Uploads a certificate for a resource. </summary>
-        /// <param name="vaultName"> The name of the recovery services vault. </param>
-        /// <param name="certificateName"> Certificate friendly name. </param>
-        /// <param name="content"> Input parameters for uploading the vault certificate. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/>, <paramref name="certificateName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="vaultName"/> or <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VaultCertificateResult> Create(string vaultName, string certificateName, RecoveryServicesCertificateContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
-            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using DiagnosticScope scope = VaultCertificatesClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.Create");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = VaultCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, vaultName, certificateName, RecoveryServicesCertificateContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<VaultCertificateResult> response = Response.FromValue(VaultCertificateResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

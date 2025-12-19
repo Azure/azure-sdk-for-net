@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="azureManagementEndpointAudience"> Azure Management Endpoint Audience. </param>
         /// <param name="serviceResourceId"> Service Resource Id. </param>
         /// <param name="aadAudience"> AAD audience for the resource. </param>
-        internal ResourceCertificateAndAadDetails(string authType, BinaryData certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string aadAuthority, Guid aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, ResourceIdentifier serviceResourceId, string aadAudience) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, additionalBinaryDataProperties)
+        internal ResourceCertificateAndAadDetails(string authType, byte[] certificate, string friendlyName, string issuer, long? resourceId, string subject, BinaryData thumbprint, DateTimeOffset? validStartOn, DateTimeOffset? validEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, string aadAuthority, Guid aadTenantId, string servicePrincipalClientId, string servicePrincipalObjectId, string azureManagementEndpointAudience, ResourceIdentifier serviceResourceId, string aadAudience) : base(authType, certificate, friendlyName, issuer, resourceId, subject, thumbprint, validStartOn, validEndOn, additionalBinaryDataProperties)
         {
             AadAuthority = aadAuthority;
             AadTenantId = aadTenantId;
