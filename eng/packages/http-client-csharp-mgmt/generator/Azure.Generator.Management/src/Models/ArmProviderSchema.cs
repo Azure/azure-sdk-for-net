@@ -29,8 +29,9 @@ namespace Azure.Generator.Management.Models
         /// </summary>
         /// <param name="arguments">The decorator arguments containing resources and nonResourceMethods data</param>
         /// <param name="library">The management input library containing models cache</param>
+        /// <param name="methodFilter">Optional predicate to filter non-resource methods</param>
         /// <returns>A new ArmProviderSchema instance</returns>
-        public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library)
+        public static ArmProviderSchema Deserialize(IReadOnlyDictionary<string, BinaryData> arguments, ManagementInputLibrary library, Func<NonResourceMethod, bool>? methodFilter = null)
         {
             var resourceMetadata = new List<ResourceMetadata>();
             var resourceChildren = new Dictionary<string, List<string>>();
@@ -80,7 +81,12 @@ namespace Azure.Generator.Management.Models
                 foreach (var item in document.RootElement.EnumerateArray())
                 {
                     var nonResourceMethod = NonResourceMethod.DeserializeNonResourceMethod(item);
-                    nonResourceMethods.Add(nonResourceMethod);
+                    
+                    // Apply filter if provided
+                    if (methodFilter == null || methodFilter(nonResourceMethod))
+                    {
+                        nonResourceMethods.Add(nonResourceMethod);
+                    }
                 }
             }
 

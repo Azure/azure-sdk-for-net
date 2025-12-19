@@ -34,6 +34,10 @@ namespace Azure.Generator.Management
             {
                 if (string.IsNullOrEmpty(model.CrossLanguageDefinitionId))
                 {
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        "general-warning",
+                        $"Model '{model.Name}' has empty or null cross-language definition ID. This model will be skipped in the cache.",
+                        targetCrossLanguageDefinitionId: model.Name);
                     continue;
                 }
 
@@ -114,22 +118,13 @@ namespace Azure.Generator.Management
 
         private HashSet<InputModelType> BuildResourceModels()
         {
+            // Get resource models from ArmProviderSchema
             var resourceModels = new HashSet<InputModelType>();
-
-            var rootClient = InputNamespace.RootClients.First();
-            var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
-
-            if (armProviderDecorator?.Arguments != null && armProviderDecorator.Arguments.TryGetValue("resources", out var resourcesData))
+            foreach (var resource in ArmProviderSchema.Resources)
             {
-                using var document = JsonDocument.Parse(resourcesData);
-                foreach (var item in document.RootElement.EnumerateArray())
+                if (resource.InputModel != null)
                 {
-                    var resourceModelId = item.GetProperty("resourceModelId").GetString();
-                    var model = InputNamespace.Models.FirstOrDefault(m => m.CrossLanguageDefinitionId == resourceModelId);
-                    if (model != null)
-                    {
-                        resourceModels.Add(model);
-                    }
+                    resourceModels.Add(resource.InputModel);
                 }
             }
 
@@ -199,19 +194,22 @@ namespace Azure.Generator.Management
 
         private ArmProviderSchema BuildArmProviderSchema()
         {
-            var rootClient = InputNamespace.RootClients.First();
+            var rootClient = InputNamespace.RootClients.FirstOrDefault();
+            if (rootClient == null)
+            {
+                // Fallback to empty schema if no root client is available
+                return new ArmProviderSchema(Array.Empty<ResourceMetadata>(), Array.Empty<NonResourceMethod>());
+            }
+
             var armProviderDecorator = rootClient.Decorators.FirstOrDefault(d => d.Name == ArmProviderSchemaDecoratorName);
 
             if (armProviderDecorator?.Arguments != null)
             {
-                var schema = ArmProviderSchema.Deserialize(armProviderDecorator.Arguments, this);
-
-                // Filter out methods that should be omitted
-                var filteredMethods = schema.NonResourceMethods
-                    .Where(m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId))
-                    .ToList();
-
-                return new ArmProviderSchema(schema.Resources, filteredMethods);
+                // Filter out methods that should be omitted during deserialization
+                return ArmProviderSchema.Deserialize(
+                    armProviderDecorator.Arguments,
+                    this,
+                    methodFilter: m => !_methodsToOmit.Contains(m.InputMethod.CrossLanguageDefinitionId));
             }
 
             // Fallback to empty schema if decorator not found
