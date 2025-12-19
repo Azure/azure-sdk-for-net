@@ -485,6 +485,13 @@ namespace Azure.Generator.Management.Visitors
         {
             if (innerProperty.Type.IsCollection)
             {
+                // Skip updating the body if the inner property is a flattened property from safe-flatten
+                // These properties need a custom getter that wires to the backing object, not initialization
+                if (innerProperty is FlattenedPropertyProvider)
+                {
+                    return;
+                }
+
                 // add initialization for collection type property
                 if (innerProperty.Type.IsList)
                 {
