@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OnlineExperimentation.Models;
 
@@ -13,11 +14,17 @@ namespace Azure.ResourceManager.OnlineExperimentation
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspacePatch))]
@@ -25,6 +32,10 @@ namespace Azure.ResourceManager.OnlineExperimentation
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceSku))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(PrivateLinkResource))]
     [ModelReaderWriterBuildable(typeof(ResourceEncryptionConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
