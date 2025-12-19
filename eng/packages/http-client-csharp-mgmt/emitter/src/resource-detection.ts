@@ -249,20 +249,29 @@ export function buildArmProviderSchema(
       }
     }
     
+    // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
+    // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
     if (!metadata.parentResourceId && metadata.resourceIdPattern) {
+      // Check if this resource's path is a child of another resource's path
       for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
         if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
+          // Check if this resource's path starts with the other resource's path
+          // e.g., "/providers/MgmtTypeSpec/bestPractices/{name}/versions/{versionName}" 
+          // is a child of "/providers/MgmtTypeSpec/bestPractices/{name}"
           const thisPath = metadata.resourceIdPattern;
           const potentialParentPath = otherMetadata.resourceIdPattern;
           
+          // The child path should start with the parent path followed by a "/"
           if (thisPath.startsWith(potentialParentPath + "/") && thisPath.length > potentialParentPath.length + 1) {
             metadata.parentResourceId = potentialParentPath;
+            // Note: we don't set parentResourceModelId here since they share the same model
             break;
           }
         }
       }
     }
 
+    // figure out the resourceScope of all resource methods
     for (const method of metadata.methods) {
       method.resourceScope = getResourceScopeOfMethod(
         method.operationPath,
@@ -270,20 +279,23 @@ export function buildArmProviderSchema(
       );
     }
 
+    // update the model's resourceScope based on resource scope decorator if it exists or based on the Get method's scope. If neither exist, it will be set to ResourceGroup by default
     const model = resourceModelMap.get(modelId);
     if (model) {
       metadata.resourceScope = getResourceScope(model, metadata.methods);
     }
   }
 
-  // Clean up entries without resourceIdPattern
+  // after the parentResourceId and resource scopes are populated, we can reorganize the metadata that is missing resourceIdPattern
   const metadataKeysToDelete: string[] = [];
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     const modelId = metadataKey.split('|')[0];
     
+    // If this entry has no resourceIdPattern, try to merge it with another entry for the same model that does
     if (metadata.resourceIdPattern === "") {
       let merged = false;
       
+      // First try to merge with parent if it exists
       if (metadata.parentResourceModelId) {
         for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
           const parentModelId = parentKey.split('|')[0];
@@ -295,9 +307,11 @@ export function buildArmProviderSchema(
           }
         }
       } else {
+        // No parent - try to find another entry for the same model with a resourceIdPattern
         for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
           const otherModelId = otherKey.split('|')[0];
           if (otherKey !== metadataKey && otherModelId === modelId && otherMetadata.resourceIdPattern) {
+            // Merge this metadata into the other one
             otherMetadata.methods.push(...metadata.methods);
             metadataKeysToDelete.push(metadataKey);
             merged = true;
@@ -305,6 +319,7 @@ export function buildArmProviderSchema(
           }
         }
         
+        // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
         if (!merged) {
           for (const method of metadata.methods) {
             nonResourceMethods.set(method.methodId, {
@@ -319,11 +334,13 @@ export function buildArmProviderSchema(
     }
   }
   
+  // Remove entries that were merged or converted to non-resource methods
   for (const key of metadataKeysToDelete) {
     resourcePathToMetadataMap.delete(key);
   }
 
-  // Update resource names
+  // the last step, add the decorator to the resource model
+  // Group metadata by model ID to add all metadata entries to their respective models
   const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     const modelId = metadataKey.split('|')[0];
@@ -333,15 +350,21 @@ export function buildArmProviderSchema(
     modelIdToMetadataList.get(modelId)!.push(metadata);
   }
   
+  // Update resource names: prioritize explicit ResourceName from TypeSpec, fallback to deriving from client names
+  // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
+  // TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
   for (const [modelId, metadataList] of modelIdToMetadataList) {
     if (metadataList.length > 1) {
+      // Multiple resource paths for the same model - use explicit names or derive from client names
       for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
         const keyModelId = metadataKey.split('|')[0];
         if (keyModelId === modelId) {
+          // Prioritize explicit resource name from TypeSpec (e.g., LegacyOperations ResourceName parameter)
           const explicitName = resourcePathToExplicitName.get(metadataKey);
           if (explicitName) {
             metadata.resourceName = explicitName;
           } else {
+            // Fallback: derive from client name using pluralize.singular
             const clientName = resourcePathToClientName.get(metadataKey);
             if (clientName) {
               metadata.resourceName = pluralize.singular(clientName);
@@ -350,6 +373,7 @@ export function buildArmProviderSchema(
         }
       }
     }
+    // If there's only one metadata entry for this model, keep using the model name (already set)
   }
 
   return buildArmProviderSchemaFromDetectedResources(
@@ -359,7 +383,6 @@ export function buildArmProviderSchema(
     nonResourceMethods
   );
 }
-
 
 function isCRUDKind(kind: ResourceOperationKind): boolean {
   return [
@@ -851,5 +874,3 @@ function buildArmProviderSchemaFromDetectedResources(
     nonResourceMethods: Array.from(nonResourceMethods.values())
   };
 }
-
-
