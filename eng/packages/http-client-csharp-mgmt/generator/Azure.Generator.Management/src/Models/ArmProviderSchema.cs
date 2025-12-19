@@ -81,7 +81,7 @@ namespace Azure.Generator.Management.Models
                 foreach (var item in document.RootElement.EnumerateArray())
                 {
                     var nonResourceMethod = NonResourceMethod.DeserializeNonResourceMethod(item);
-                    
+
                     // Apply filter if provided
                     if (methodFilter == null || methodFilter(nonResourceMethod))
                     {

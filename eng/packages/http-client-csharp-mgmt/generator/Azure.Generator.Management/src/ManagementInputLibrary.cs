@@ -122,9 +122,9 @@ namespace Azure.Generator.Management
             var resourceModels = new HashSet<InputModelType>();
             foreach (var resource in ArmProviderSchema.Resources)
             {
-                if (resource.InputModel != null)
+                if (resource.ResourceModel != null)
                 {
-                    resourceModels.Add(resource.InputModel);
+                    resourceModels.Add(resource.ResourceModel);
                 }
             }
 

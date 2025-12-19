@@ -805,10 +805,9 @@ function applyArmProviderSchemaDecorator(
   codeModel: CodeModel,
   schema: ArmProviderSchema
 ): void {
+  // It's technically allowed to have no clients, so we just return early in that case
   if (!codeModel.clients || codeModel.clients.length === 0) {
-    throw new Error(
-      "ARM provider schema decorator cannot be applied because no clients are defined in the code model."
-    );
+    return;
   }
   const rootClient = codeModel.clients[0];
   rootClient.decorators ??= [];
