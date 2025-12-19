@@ -239,27 +239,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        /// <summary> Gets the FlattenedProperty. </summary>
         [WirePath("properties.optionalProperty.flattenedProperty")]
-        public string FlattenedProperty
-        {
-            get
-            {
-                return Properties is null ? default : Properties.FlattenedProperty;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FooProperties();
-                }
-                Properties.FlattenedProperty = value;
-            }
-        }
-
-        /// <summary> Gets the CollectionItems. </summary>
-        [WirePath("properties.optionalCollectionProperty.collectionItems")]
-        public IList<string> OptionalCollectionItems
+        public IList<string> FlattenedProperty
         {
             get
             {
@@ -267,7 +249,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 {
                     Properties = new FooProperties();
                 }
-                return Properties.OptionalCollectionItems;
+                return Properties.FlattenedProperty;
             }
         }
     }
