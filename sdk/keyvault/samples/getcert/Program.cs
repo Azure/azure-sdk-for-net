@@ -158,7 +158,7 @@ internal static class Program
         {
             Options =
             {
-                new Option<Uri>("valtUri", ["--vault-name"])
+                new Option<Uri>("vaultUri", ["--vault-name"])
                 {
                     Description = "Key Vault name or URI, e.g. my-vault or https://my-vault-vault.azure.net",
                     Required = true,
@@ -215,7 +215,7 @@ internal static class Program
         }
 
         await RunAsync(
-            parseResult.GetValue<Uri>("valueUri"),
+            parseResult.GetValue<Uri>("vaultUri"),
             parseResult.GetValue<string>("certificateName"),
             parseResult.GetValue<string>("message") ?? "Hello, World!");
 
