@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance.Tests
 
         [TestCase]
         [RecordedTest]
-        // [LiveOnly(Reason = "Test regularly times out in playback.")]
+        [LiveOnly(Reason = "Test regularly times out in playback.")]
         public async Task TestVisOperations()
         {
             _rgName ??= Recording.GenerateAssetName("netSdkTest-");
