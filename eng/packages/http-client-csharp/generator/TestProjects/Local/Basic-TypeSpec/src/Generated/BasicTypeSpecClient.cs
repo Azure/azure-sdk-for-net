@@ -2096,7 +2096,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual Response ConditionalRequestDate(RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions.IfUnmodifiedSince != null)
+            if (requestConditions?.IfUnmodifiedSince != null)
             {
                 throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
             }
@@ -2129,7 +2129,7 @@ namespace BasicTypeSpec
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> ConditionalRequestDateAsync(RequestConditions requestConditions, RequestContext context)
         {
-            if (requestConditions.IfUnmodifiedSince != null)
+            if (requestConditions?.IfUnmodifiedSince != null)
             {
                 throw new ArgumentException("Service does not support the If-Unmodified-Since header for this operation.");
             }

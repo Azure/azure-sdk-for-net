@@ -40,10 +40,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
             }
+            if (Optional.IsDefined(MaxUnavailable))
+            {
+                writer.WritePropertyName("maxUnavailable"u8);
+                writer.WriteStringValue(MaxUnavailable);
+            }
             if (Optional.IsDefined(DrainTimeoutInMinutes))
             {
                 writer.WritePropertyName("drainTimeoutInMinutes"u8);
                 writer.WriteNumberValue(DrainTimeoutInMinutes.Value);
+            }
+            if (Optional.IsDefined(NodeSoakDurationInMinutes))
+            {
+                writer.WritePropertyName("nodeSoakDurationInMinutes"u8);
+                writer.WriteNumberValue(NodeSoakDurationInMinutes.Value);
+            }
+            if (Optional.IsDefined(UndrainableNodeBehavior))
+            {
+                writer.WritePropertyName("undrainableNodeBehavior"u8);
+                writer.WriteStringValue(UndrainableNodeBehavior.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -83,7 +98,10 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string maxSurge = default;
+            string maxUnavailable = default;
             int? drainTimeoutInMinutes = default;
+            int? nodeSoakDurationInMinutes = default;
+            UndrainableNodeBehavior? undrainableNodeBehavior = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,6 +109,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 if (property.NameEquals("maxSurge"u8))
                 {
                     maxSurge = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxUnavailable"u8))
+                {
+                    maxUnavailable = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("drainTimeoutInMinutes"u8))
@@ -102,13 +125,37 @@ namespace Azure.ResourceManager.ContainerService.Models
                     drainTimeoutInMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("nodeSoakDurationInMinutes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nodeSoakDurationInMinutes = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("undrainableNodeBehavior"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    undrainableNodeBehavior = new UndrainableNodeBehavior(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AgentPoolUpgradeSettings(maxSurge, drainTimeoutInMinutes, serializedAdditionalRawData);
+            return new AgentPoolUpgradeSettings(
+                maxSurge,
+                maxUnavailable,
+                drainTimeoutInMinutes,
+                nodeSoakDurationInMinutes,
+                undrainableNodeBehavior,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -145,6 +192,29 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxUnavailable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  maxUnavailable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxUnavailable))
+                {
+                    builder.Append("  maxUnavailable: ");
+                    if (MaxUnavailable.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MaxUnavailable}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MaxUnavailable}'");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DrainTimeoutInMinutes), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -157,6 +227,36 @@ namespace Azure.ResourceManager.ContainerService.Models
                 {
                     builder.Append("  drainTimeoutInMinutes: ");
                     builder.AppendLine($"{DrainTimeoutInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NodeSoakDurationInMinutes), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  nodeSoakDurationInMinutes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NodeSoakDurationInMinutes))
+                {
+                    builder.Append("  nodeSoakDurationInMinutes: ");
+                    builder.AppendLine($"{NodeSoakDurationInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UndrainableNodeBehavior), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  undrainableNodeBehavior: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(UndrainableNodeBehavior))
+                {
+                    builder.Append("  undrainableNodeBehavior: ");
+                    builder.AppendLine($"'{UndrainableNodeBehavior.Value.ToString()}'");
                 }
             }
 

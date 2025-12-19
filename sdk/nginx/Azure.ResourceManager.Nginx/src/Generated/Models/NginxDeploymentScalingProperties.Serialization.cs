@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Nginx;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    public partial class NginxDeploymentScalingProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentScalingProperties>
+    /// <summary> Information on how the deployment will be scaled. </summary>
+    public partial class NginxDeploymentScalingProperties : IJsonModel<NginxDeploymentScalingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentScalingProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NginxDeploymentScalingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,39 +29,30 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            writer.WritePropertyName("autoScaleSettings"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Profiles))
+            if (Optional.IsDefined(AutoScaleSettings))
             {
-                writer.WritePropertyName("profiles"u8);
-                writer.WriteStartArray();
-                foreach (var item in Profiles)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("autoScaleSettings"u8);
+                writer.WriteObjectValue(AutoScaleSettings, options);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -69,80 +61,69 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
-        NginxDeploymentScalingProperties IJsonModel<NginxDeploymentScalingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NginxDeploymentScalingProperties IJsonModel<NginxDeploymentScalingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NginxDeploymentScalingProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NginxDeploymentScalingProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNginxDeploymentScalingProperties(document.RootElement, options);
         }
 
-        internal static NginxDeploymentScalingProperties DeserializeNginxDeploymentScalingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NginxDeploymentScalingProperties DeserializeNginxDeploymentScalingProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int? capacity = default;
-            IList<NginxScaleProfile> profiles = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            NginxDeploymentAutoScaleSettings autoScaleSettings = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("capacity"u8))
+                if (prop.NameEquals("capacity"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    capacity = property.Value.GetInt32();
+                    capacity = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("autoScaleSettings"u8))
+                if (prop.NameEquals("autoScaleSettings"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("profiles"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<NginxScaleProfile> array = new List<NginxScaleProfile>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(NginxScaleProfile.DeserializeNginxScaleProfile(item, options));
-                            }
-                            profiles = array;
-                            continue;
-                        }
-                    }
+                    autoScaleSettings = NginxDeploymentAutoScaleSettings.DeserializeNginxDeploymentAutoScaleSettings(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new NginxDeploymentScalingProperties(capacity, profiles ?? new ChangeTrackingList<NginxScaleProfile>(), serializedAdditionalRawData);
+            return new NginxDeploymentScalingProperties(capacity, autoScaleSettings, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<NginxDeploymentScalingProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NginxDeploymentScalingProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -152,15 +133,20 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
-        NginxDeploymentScalingProperties IPersistableModel<NginxDeploymentScalingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NginxDeploymentScalingProperties IPersistableModel<NginxDeploymentScalingProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual NginxDeploymentScalingProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentScalingProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNginxDeploymentScalingProperties(document.RootElement, options);
                     }
                 default:
@@ -168,6 +154,7 @@ namespace Azure.ResourceManager.Nginx.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<NginxDeploymentScalingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-10-01";
+            _apiVersion = apiVersion ?? "2025-10-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="data"> The maintenance configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="data"> The maintenance configuration to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="configName"/> or <paramref name="data"/> is null. </exception>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="resourceName"> The name of the managed cluster resource. </param>
-        /// <param name="configName"> The name of the maintenance configuration. </param>
+        /// <param name="configName"> The name of the maintenance configuration. Supported values are 'default', 'aksManagedAutoUpgradeSchedule', or 'aksManagedNodeOSUpgradeSchedule'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configName"/> is an empty string, and was expected to be non-empty. </exception>
