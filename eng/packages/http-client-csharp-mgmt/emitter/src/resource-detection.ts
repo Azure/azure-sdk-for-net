@@ -359,15 +359,8 @@ export async function updateClients(
     // If there's only one metadata entry for this model, keep using the model name (already set)
   }
   
-  // Build the unified ARM provider schema from detected resources
-  const armProviderSchema = buildArmProviderSchemaFromDetectedResources(
-    sdkContext,
-    resourceModels,
-    resourcePathToMetadataMap,
-    nonResourceMethods
-  );
-
-  // Apply the unified decorator to the root client
+  // Build the unified ARM provider schema and apply it to the root client
+  const armProviderSchema = buildArmProviderSchema(sdkContext, codeModel);
   applyArmProviderSchemaDecorator(codeModel, armProviderSchema);
 }
 
@@ -795,66 +788,6 @@ function addNonResourceMethodDecorators(
 }
 
 /**
- * Builds the ARM provider schema from detected resources and non-resource methods.
- * This consolidates all ARM resource information into a single unified structure.
- * 
- * @param sdkContext - The emitter context
- * @param resourceModels - All resource models detected in the code model
- * @param resourcePathToMetadataMap - Map of resource paths to their metadata
- * @param nonResourceMethods - Map of non-resource methods
- * @returns The unified ARM provider schema
- */
-function buildArmProviderSchemaFromDetectedResources(
-  sdkContext: CSharpEmitterContext,
-  resourceModels: InputModelType[],
-  resourcePathToMetadataMap: Map<string, ResourceMetadata>,
-  nonResourceMethods: Map<string, NonResourceMethod>
-): ArmProviderSchema {
-  const resources: ArmResourceSchema[] = [];
-
-  // Build resource schemas from the metadata map
-  // Group by model ID since multiple paths can share the same model
-  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
-  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
-    const modelId = metadataKey.split('|')[0];
-    if (!modelIdToMetadataList.has(modelId)) {
-      modelIdToMetadataList.set(modelId, []);
-    }
-    modelIdToMetadataList.get(modelId)!.push(metadata);
-  }
-
-  // Create resource schemas
-  for (const model of resourceModels) {
-    const metadataList = modelIdToMetadataList.get(model.crossLanguageDefinitionId);
-    if (metadataList) {
-      for (const metadata of metadataList) {
-        if (metadata.resourceIdPattern === "") {
-          sdkContext.logger.reportDiagnostic({
-            code: "general-warning",
-            messageId: "default",
-            format: {
-              message: `Cannot figure out resourceIdPattern from model ${model.name}.`
-            },
-            target: NoTarget
-          });
-          continue;
-        }
-
-        resources.push({
-          resourceModelId: model.crossLanguageDefinitionId,
-          metadata: metadata
-        });
-      }
-    }
-  }
-
-  return {
-    resources: resources,
-    nonResourceMethods: Array.from(nonResourceMethods.values())
-  };
-}
-
-/**
  * Applies the ARM provider schema as a decorator to the root client.
  * @param codeModel - The code model to update
  * @param schema - The ARM provider schema to apply
@@ -1135,6 +1068,67 @@ export function buildArmProviderSchema(
     resourcePathToMetadataMap,
     nonResourceMethods
   );
+}
+
+/**
+ * Builds the ARM provider schema from detected resources and non-resource methods.
+ * This consolidates all ARM resource information into a single unified structure.
+ * This is a helper function called by buildArmProviderSchema.
+ * 
+ * @param sdkContext - The emitter context
+ * @param resourceModels - All resource models detected in the code model
+ * @param resourcePathToMetadataMap - Map of resource paths to their metadata
+ * @param nonResourceMethods - Map of non-resource methods
+ * @returns The unified ARM provider schema
+ */
+function buildArmProviderSchemaFromDetectedResources(
+  sdkContext: CSharpEmitterContext,
+  resourceModels: InputModelType[],
+  resourcePathToMetadataMap: Map<string, ResourceMetadata>,
+  nonResourceMethods: Map<string, NonResourceMethod>
+): ArmProviderSchema {
+  const resources: ArmResourceSchema[] = [];
+
+  // Build resource schemas from the metadata map
+  // Group by model ID since multiple paths can share the same model
+  const modelIdToMetadataList = new Map<string, ResourceMetadata[]>();
+  for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
+    const modelId = metadataKey.split('|')[0];
+    if (!modelIdToMetadataList.has(modelId)) {
+      modelIdToMetadataList.set(modelId, []);
+    }
+    modelIdToMetadataList.get(modelId)!.push(metadata);
+  }
+
+  // Create resource schemas
+  for (const model of resourceModels) {
+    const metadataList = modelIdToMetadataList.get(model.crossLanguageDefinitionId);
+    if (metadataList) {
+      for (const metadata of metadataList) {
+        if (metadata.resourceIdPattern === "") {
+          sdkContext.logger.reportDiagnostic({
+            code: "general-warning",
+            messageId: "default",
+            format: {
+              message: `Cannot figure out resourceIdPattern from model ${model.name}.`
+            },
+            target: NoTarget
+          });
+          continue;
+        }
+
+        resources.push({
+          resourceModelId: model.crossLanguageDefinitionId,
+          metadata: metadata
+        });
+      }
+    }
+  }
+
+  return {
+    resources: resources,
+    nonResourceMethods: Array.from(nonResourceMethods.values())
+  };
 }
 
 function addResourceMetadata(
