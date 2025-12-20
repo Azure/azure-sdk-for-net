@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile. </summary>
+    /// <summary>
+    /// KEDA (Kubernetes Event-driven Autoscaling) settings for the workload auto-scaler profile.
+    /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileKeda
+    /// </summary>
     internal partial class ManagedClusterWorkloadAutoScalerProfileKeda
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/>. </summary>
-        /// <param name="isKedaEnabled"> Whether to enable KEDA. </param>
+        /// <param name="isKedaEnabled">
+        /// Whether to enable KEDA.
+        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileKeda.enabled
+        /// </param>
         public ManagedClusterWorkloadAutoScalerProfileKeda(bool isKedaEnabled)
         {
             IsKedaEnabled = isKedaEnabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterWorkloadAutoScalerProfileKeda"/>. </summary>
-        /// <param name="isKedaEnabled"> Whether to enable KEDA. </param>
+        /// <param name="isKedaEnabled">
+        /// Whether to enable KEDA.
+        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileKeda.enabled
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterWorkloadAutoScalerProfileKeda(bool isKedaEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Whether to enable KEDA. </summary>
+        /// <summary>
+        /// Whether to enable KEDA.
+        /// Serialized Name: ManagedClusterWorkloadAutoScalerProfileKeda.enabled
+        /// </summary>
         [WirePath("enabled")]
         public bool IsKedaEnabled { get; set; }
     }

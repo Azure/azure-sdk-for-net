@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Invocation;
+using System.CommandLine.Parsing;
 using System.Threading.Tasks;
 using Azure.Identity;
 using Azure.Messaging.ServiceBus;
@@ -28,12 +28,16 @@ namespace TopicSubscriptionWithRuleOperationsSample
         public static async Task Main(string[] args)
         {
             var fullyQualifiedNamespaceOption = new Option<string>(
-                aliases: new[] { "--namespace" },
-                description: "Fully qualified Service Bus Queue namespace to use");
+                name: "--namespace")
+            {
+                Description = "Fully qualified Service Bus Queue namespace to use"
+            };
 
             var connectionOption = new Option<string>(
-                aliases: new[] { "--connection-variable" },
-                description: "The name of an environment variable containing the connection string to use.");
+                name: "--connection-variable")
+            {
+                Description = "The name of an environment variable containing the connection string to use."
+            };
 
             var command = new RootCommand("Demonstrates the Topic Filters feature of Azure Service Bus.")
             {
@@ -41,8 +45,20 @@ namespace TopicSubscriptionWithRuleOperationsSample
                 connectionOption
             };
 
-            command.SetHandler(RunAsync, fullyQualifiedNamespaceOption, connectionOption);
-            await command.InvokeAsync(args);
+            ParseResult parseResult = command.Parse(args);
+
+            if (parseResult.Errors.Count > 0)
+            {
+                foreach (var error in parseResult.Errors)
+                {
+                    Console.Error.WriteLine(error.Message);
+                }
+                return;
+            }
+
+            await RunAsync(
+                parseResult.GetValue<string>(fullyQualifiedNamespaceOption),
+                parseResult.GetValue<string>(connectionOption));
         }
 
 

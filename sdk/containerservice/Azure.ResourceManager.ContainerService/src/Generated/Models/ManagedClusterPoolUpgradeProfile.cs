@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> The list of available upgrade versions. </summary>
+    /// <summary>
+    /// The list of available upgrade versions.
+    /// Serialized Name: ManagedClusterPoolUpgradeProfile
+    /// </summary>
     public partial class ManagedClusterPoolUpgradeProfile
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/>. </summary>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
+        /// <param name="kubernetesVersion">
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.kubernetesVersion
+        /// </param>
+        /// <param name="osType">
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.osType
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
         internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, ContainerServiceOSType osType)
         {
@@ -59,10 +68,22 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterPoolUpgradeProfile"/>. </summary>
-        /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
-        /// <param name="name"> The Agent Pool name. </param>
-        /// <param name="osType"> The operating system type. The default is Linux. </param>
-        /// <param name="upgrades"> List of orchestrator types and versions available for upgrade. </param>
+        /// <param name="kubernetesVersion">
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.kubernetesVersion
+        /// </param>
+        /// <param name="name">
+        /// The Agent Pool name.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.name
+        /// </param>
+        /// <param name="osType">
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.osType
+        /// </param>
+        /// <param name="upgrades">
+        /// List of orchestrator types and versions available for upgrade.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.upgrades
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string name, ContainerServiceOSType osType, IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -78,16 +99,28 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> The Kubernetes version (major.minor.patch). </summary>
+        /// <summary>
+        /// The Kubernetes version (major.minor.patch).
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.kubernetesVersion
+        /// </summary>
         [WirePath("kubernetesVersion")]
         public string KubernetesVersion { get; }
-        /// <summary> The Agent Pool name. </summary>
+        /// <summary>
+        /// The Agent Pool name.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The operating system type. The default is Linux. </summary>
+        /// <summary>
+        /// The operating system type. The default is Linux.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.osType
+        /// </summary>
         [WirePath("osType")]
         public ContainerServiceOSType OSType { get; }
-        /// <summary> List of orchestrator types and versions available for upgrade. </summary>
+        /// <summary>
+        /// List of orchestrator types and versions available for upgrade.
+        /// Serialized Name: ManagedClusterPoolUpgradeProfile.upgrades
+        /// </summary>
         [WirePath("upgrades")]
         public IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> Upgrades { get; }
     }
