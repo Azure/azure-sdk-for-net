@@ -76,11 +76,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary> The IPv4 address associated with the public load balancer of the cluster. </summary>
-        public IPAddress Ipv4Address
+        public IPAddress IPv4Address
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv4Address;
+                return Properties is null ? default : Properties.IPv4Address;
             }
         }
 
@@ -387,20 +387,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary> The list of IP tags associated with the default public IP address of the cluster. </summary>
-        public IList<ManagedClusterIPTag> IpTags
+        public IList<ManagedClusterIPTag> IPTags
         {
             get
             {
-                return Properties is null ? default : Properties.IpTags;
+                return Properties is null ? default : Properties.IPTags;
             }
         }
 
         /// <summary> IPv6 address for the cluster if IPv6 is enabled. </summary>
-        public IPAddress Ipv6Address
+        public IPAddress IPv6Address
         {
             get
             {
-                return Properties is null ? default : Properties.Ipv6Address;
+                return Properties is null ? default : Properties.IPv6Address;
             }
         }
 
@@ -610,11 +610,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary> The VM image the node types are configured with. This property controls the Service Fabric component packages to be used for the cluster. Allowed values are: 'Windows'. The default value is 'Windows'. </summary>
-        public string VMImage
+        public string VmImage
         {
             get
             {
-                return Properties is null ? default : Properties.VMImage;
+                return Properties is null ? default : Properties.VmImage;
             }
             set
             {
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new ManagedClusterProperties();
                 }
-                Properties.VMImage = value;
+                Properties.VmImage = value;
             }
         }
 

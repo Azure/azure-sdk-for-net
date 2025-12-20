@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary></summary>
-    public partial class ServiceFabricManagedClusterResource : IJsonModel<ServiceFabricManagedClusterData>
+    public partial class ServiceFabricManagedClusterResource : ArmResource, IJsonModel<ServiceFabricManagedClusterData>
     {
         private static IJsonModel<ServiceFabricManagedClusterData> s_dataDeserializationInstance;
 

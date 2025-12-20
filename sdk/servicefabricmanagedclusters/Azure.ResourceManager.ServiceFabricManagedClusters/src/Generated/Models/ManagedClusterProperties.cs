@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Clients = new ChangeTrackingList<ManagedClusterClientCertificate>();
             FabricSettings = new ChangeTrackingList<ClusterFabricSettingsSection>();
             AddOnFeatures = new ChangeTrackingList<ManagedClusterAddOnFeature>();
-            IpTags = new ChangeTrackingList<ManagedClusterIPTag>();
+            IPTags = new ChangeTrackingList<ManagedClusterIPTag>();
             AuxiliarySubnets = new ChangeTrackingList<ManagedClusterSubnet>();
             ServiceEndpoints = new ChangeTrackingList<ManagedClusterServiceEndpoint>();
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="ManagedClusterProperties"/>. </summary>
         /// <param name="dnsName"> The cluster dns name. </param>
         /// <param name="fqdn"> The fully qualified domain name associated with the public load balancer of the cluster. </param>
-        /// <param name="ipv4Address"> The IPv4 address associated with the public load balancer of the cluster. </param>
+        /// <param name="iPv4Address"> The IPv4 address associated with the public load balancer of the cluster. </param>
         /// <param name="clusterId"> A service generated unique identifier for the cluster resource. </param>
         /// <param name="clusterState"> The current state of the cluster. </param>
         /// <param name="clusterCertificateThumbprints"> List of thumbprints of the cluster certificates. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
         /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The **networkSecurityRules** specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
         /// <param name="ipTags"> The list of IP tags associated with the default public IP address of the cluster. </param>
-        /// <param name="ipv6Address"> IPv6 address for the cluster if IPv6 is enabled. </param>
+        /// <param name="iPv6Address"> IPv6 address for the cluster if IPv6 is enabled. </param>
         /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
         /// <param name="auxiliarySubnets"> Auxiliary subnets for the cluster. </param>
         /// <param name="serviceEndpoints"> Service endpoints for subnets in the cluster. </param>
@@ -87,11 +87,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="vmImage"> The VM image the node types are configured with. This property controls the Service Fabric component packages to be used for the cluster. Allowed values are: 'Windows'. The default value is 'Windows'. </param>
         /// <param name="enableOutboundOnlyNodeTypes"> Enable the creation of node types with only outbound traffic enabled. If set, a separate load balancer backend pool will be created for node types with inbound traffic enabled. Can only be set at the time of cluster creation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterProperties(string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, int? allocatedOutboundPorts, string vmImage, bool? enableOutboundOnlyNodeTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterProperties(string dnsName, string fqdn, IPAddress iPv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IReadOnlyList<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IList<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IList<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IList<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, ApplicationTypeVersionsCleanupPolicy applicationTypeVersionsCleanupPolicy, bool? isIPv6Enabled, string subnetId, IList<ManagedClusterIPTag> ipTags, IPAddress iPv6Address, bool? isServicePublicIPEnabled, IList<ManagedClusterSubnet> auxiliarySubnets, IList<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope, int? allocatedOutboundPorts, string vmImage, bool? enableOutboundOnlyNodeTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DnsName = dnsName;
             Fqdn = fqdn;
-            Ipv4Address = ipv4Address;
+            IPv4Address = iPv4Address;
             ClusterId = clusterId;
             ClusterState = clusterState;
             ClusterCertificateThumbprints = clusterCertificateThumbprints;
@@ -115,8 +115,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             ApplicationTypeVersionsCleanupPolicy = applicationTypeVersionsCleanupPolicy;
             IsIPv6Enabled = isIPv6Enabled;
             SubnetId = subnetId;
-            IpTags = ipTags;
-            Ipv6Address = ipv6Address;
+            IPTags = ipTags;
+            IPv6Address = iPv6Address;
             IsServicePublicIPEnabled = isServicePublicIPEnabled;
             AuxiliarySubnets = auxiliarySubnets;
             ServiceEndpoints = serviceEndpoints;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             IsHttpGatewayExclusiveAuthModeEnabled = isHttpGatewayExclusiveAuthModeEnabled;
             AutoGeneratedDomainNameLabelScope = autoGeneratedDomainNameLabelScope;
             AllocatedOutboundPorts = allocatedOutboundPorts;
-            VMImage = vmImage;
+            VmImage = vmImage;
             EnableOutboundOnlyNodeTypes = enableOutboundOnlyNodeTypes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string Fqdn { get; }
 
         /// <summary> The IPv4 address associated with the public load balancer of the cluster. </summary>
-        public IPAddress Ipv4Address { get; }
+        public IPAddress IPv4Address { get; }
 
         /// <summary> A service generated unique identifier for the cluster resource. </summary>
         public Guid? ClusterId { get; }
@@ -239,10 +239,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string SubnetId { get; set; }
 
         /// <summary> The list of IP tags associated with the default public IP address of the cluster. </summary>
-        public IList<ManagedClusterIPTag> IpTags { get; } = new ChangeTrackingList<ManagedClusterIPTag>();
+        public IList<ManagedClusterIPTag> IPTags { get; } = new ChangeTrackingList<ManagedClusterIPTag>();
 
         /// <summary> IPv6 address for the cluster if IPv6 is enabled. </summary>
-        public IPAddress Ipv6Address { get; }
+        public IPAddress IPv6Address { get; }
 
         /// <summary> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </summary>
         public bool? IsServicePublicIPEnabled { get; set; }
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public int? AllocatedOutboundPorts { get; set; }
 
         /// <summary> The VM image the node types are configured with. This property controls the Service Fabric component packages to be used for the cluster. Allowed values are: 'Windows'. The default value is 'Windows'. </summary>
-        public string VMImage { get; set; }
+        public string VmImage { get; set; }
 
         /// <summary> Enable the creation of node types with only outbound traffic enabled. If set, a separate load balancer backend pool will be created for node types with inbound traffic enabled. Can only be set at the time of cluster creation. </summary>
         public bool? EnableOutboundOnlyNodeTypes { get; set; }

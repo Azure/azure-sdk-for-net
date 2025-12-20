@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv4Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
-                writer.WriteStringValue(Ipv4Address.ToString());
+                writer.WriteStringValue(IPv4Address.ToString());
             }
             if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
@@ -207,20 +207,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (ManagedClusterIPTag item in IpTags)
+                foreach (ManagedClusterIPTag item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(Ipv6Address))
+            if (options.Format != "W" && Optional.IsDefined(IPv6Address))
             {
                 writer.WritePropertyName("ipv6Address"u8);
-                writer.WriteStringValue(Ipv6Address.ToString());
+                writer.WriteStringValue(IPv6Address.ToString());
             }
             if (Optional.IsDefined(IsServicePublicIPEnabled))
             {
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("allocatedOutboundPorts"u8);
                 writer.WriteNumberValue(AllocatedOutboundPorts.Value);
             }
-            if (Optional.IsDefined(VMImage))
+            if (Optional.IsDefined(VmImage))
             {
                 writer.WritePropertyName("VMImage"u8);
-                writer.WriteStringValue(VMImage);
+                writer.WriteStringValue(VmImage);
             }
             if (Optional.IsDefined(EnableOutboundOnlyNodeTypes))
             {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             string dnsName = default;
             string fqdn = default;
-            IPAddress ipv4Address = default;
+            IPAddress iPv4Address = default;
             Guid? clusterId = default;
             ServiceFabricManagedClusterState? clusterState = default;
             IReadOnlyList<BinaryData> clusterCertificateThumbprints = default;
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             bool? isIPv6Enabled = default;
             string subnetId = default;
             IList<ManagedClusterIPTag> ipTags = default;
-            IPAddress ipv6Address = default;
+            IPAddress iPv6Address = default;
             bool? isServicePublicIPEnabled = default;
             IList<ManagedClusterSubnet> auxiliarySubnets = default;
             IList<ManagedClusterServiceEndpoint> serviceEndpoints = default;
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    ipv4Address = IPAddress.Parse(prop.Value.GetString());
+                    iPv4Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("clusterId"u8))
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    ipv6Address = IPAddress.Parse(prop.Value.GetString());
+                    iPv6Address = IPAddress.Parse(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("enableServicePublicIP"u8))
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterProperties(
                 dnsName,
                 fqdn,
-                ipv4Address,
+                iPv4Address,
                 clusterId,
                 clusterState,
                 clusterCertificateThumbprints ?? new ChangeTrackingList<BinaryData>(),
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 isIPv6Enabled,
                 subnetId,
                 ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>(),
-                ipv6Address,
+                iPv6Address,
                 isServicePublicIPEnabled,
                 auxiliarySubnets ?? new ChangeTrackingList<ManagedClusterSubnet>(),
                 serviceEndpoints ?? new ChangeTrackingList<ManagedClusterServiceEndpoint>(),

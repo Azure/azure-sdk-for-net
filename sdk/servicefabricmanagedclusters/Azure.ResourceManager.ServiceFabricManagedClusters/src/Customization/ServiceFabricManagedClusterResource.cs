@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
-/*
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
@@ -24,17 +24,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>managedMaintenanceWindowStatus_Get</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ManagedMaintenanceWindowStatus>> GetManagedMaintenanceWindowStatusAsync(CancellationToken cancellationToken = default)
-        {
-            return await GetManagedMaintenanceWindowStatuAsync(cancellationToken).ConfigureAwait(false);
-        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<Models.ManagedMaintenanceWindowStatus>> GetManagedMaintenanceWindowStatuAsync(CancellationToken cancellationToken)
+            => await GetManagedMaintenanceWindowStatusAsync(cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// Action to get Maintenance Window Status of the Service Fabric Managed Clusters.
@@ -47,17 +42,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>managedMaintenanceWindowStatus_Get</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-06-01-preview</description>
-        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ManagedMaintenanceWindowStatus> GetManagedMaintenanceWindowStatus(CancellationToken cancellationToken = default)
-        {
-            return GetManagedMaintenanceWindowStatu(cancellationToken);
-        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<Models.ManagedMaintenanceWindowStatus> GetManagedMaintenanceWindowStatu(CancellationToken cancellationToken)
+            => GetManagedMaintenanceWindowStatus(cancellationToken);
 
         /// <summary>
         /// Update the tags of of a Service Fabric managed cluster resource with the specified name.
@@ -111,4 +101,3 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
     }
 }
-*/
