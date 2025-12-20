@@ -239,21 +239,17 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             }
         }
 
-        /// <summary> Gets or sets the FlattenedProperty. </summary>
+        /// <summary> Gets the FlattenedProperty. </summary>
         [WirePath("properties.optionalProperty.flattenedProperty")]
-        public string FlattenedProperty
+        public IList<string> FlattenedProperty
         {
             get
-            {
-                return Properties is null ? default : Properties.FlattenedProperty;
-            }
-            set
             {
                 if (Properties is null)
                 {
                     Properties = new FooProperties();
                 }
-                Properties.FlattenedProperty = value;
+                return Properties.FlattenedProperty;
             }
         }
     }
