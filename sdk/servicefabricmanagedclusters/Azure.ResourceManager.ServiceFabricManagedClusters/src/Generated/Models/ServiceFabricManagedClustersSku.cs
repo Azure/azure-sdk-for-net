@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Service Fabric managed cluster Sku definition. </summary>
-    internal partial class ServiceFabricManagedClustersSku
+    public partial class ServiceFabricManagedClustersSku
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

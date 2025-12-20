@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serviceFabricManagedApplicationPatch"> The application resource updated tags. </param>
+        /// <param name="patch"> The application resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceFabricManagedApplicationPatch"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServiceFabricManagedApplicationResource>> UpdateAsync(WaitUntil waitUntil, ServiceFabricManagedApplicationPatch serviceFabricManagedApplicationPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<ArmOperation<ServiceFabricManagedApplicationResource>> UpdateAsync(WaitUntil waitUntil, ServiceFabricManagedApplicationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serviceFabricManagedApplicationPatch, nameof(serviceFabricManagedApplicationPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.Update");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationPatch.ToRequestContent(serviceFabricManagedApplicationPatch), context);
+                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationResource>(
                     new ServiceFabricManagedApplicationOperationSource(Client),
@@ -271,12 +271,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="serviceFabricManagedApplicationPatch"> The application resource updated tags. </param>
+        /// <param name="patch"> The application resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceFabricManagedApplicationPatch"/> is null. </exception>
-        public virtual ArmOperation<ServiceFabricManagedApplicationResource> Update(WaitUntil waitUntil, ServiceFabricManagedApplicationPatch serviceFabricManagedApplicationPatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual ArmOperation<ServiceFabricManagedApplicationResource> Update(WaitUntil waitUntil, ServiceFabricManagedApplicationPatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serviceFabricManagedApplicationPatch, nameof(serviceFabricManagedApplicationPatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.Update");
             scope.Start();
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationPatch.ToRequestContent(serviceFabricManagedApplicationPatch), context);
+                HttpMessage message = _applicationsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationResource> operation = new ServiceFabricManagedClustersArmOperation<ServiceFabricManagedApplicationResource>(
                     new ServiceFabricManagedApplicationOperationSource(Client),
@@ -730,12 +730,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="runtimeUpdateApplicationUpgradeContent"> The parameters for updating an application upgrade. </param>
+        /// <param name="content"> The parameters for updating an application upgrade. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runtimeUpdateApplicationUpgradeContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateUpgradeAsync(WaitUntil waitUntil, RuntimeUpdateApplicationUpgradeContent runtimeUpdateApplicationUpgradeContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> UpdateUpgradeAsync(WaitUntil waitUntil, RuntimeUpdateApplicationUpgradeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(runtimeUpdateApplicationUpgradeContent, nameof(runtimeUpdateApplicationUpgradeContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.UpdateUpgrade");
             scope.Start();
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RuntimeUpdateApplicationUpgradeContent.ToRequestContent(runtimeUpdateApplicationUpgradeContent), context);
+                HttpMessage message = _applicationsRestClient.CreateUpdateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RuntimeUpdateApplicationUpgradeContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -783,12 +783,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="runtimeUpdateApplicationUpgradeContent"> The parameters for updating an application upgrade. </param>
+        /// <param name="content"> The parameters for updating an application upgrade. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="runtimeUpdateApplicationUpgradeContent"/> is null. </exception>
-        public virtual ArmOperation UpdateUpgrade(WaitUntil waitUntil, RuntimeUpdateApplicationUpgradeContent runtimeUpdateApplicationUpgradeContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation UpdateUpgrade(WaitUntil waitUntil, RuntimeUpdateApplicationUpgradeContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(runtimeUpdateApplicationUpgradeContent, nameof(runtimeUpdateApplicationUpgradeContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.UpdateUpgrade");
             scope.Start();
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateUpdateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RuntimeUpdateApplicationUpgradeContent.ToRequestContent(runtimeUpdateApplicationUpgradeContent), context);
+                HttpMessage message = _applicationsRestClient.CreateUpdateUpgradeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RuntimeUpdateApplicationUpgradeContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -836,12 +836,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="applicationFetchHealthContent"> The parameters for fetching the health of a deployed application. </param>
+        /// <param name="content"> The parameters for fetching the health of a deployed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationFetchHealthContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> FetchHealthAsync(WaitUntil waitUntil, ApplicationFetchHealthContent applicationFetchHealthContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> FetchHealthAsync(WaitUntil waitUntil, ApplicationFetchHealthContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(applicationFetchHealthContent, nameof(applicationFetchHealthContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.FetchHealth");
             scope.Start();
@@ -851,7 +851,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateFetchHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApplicationFetchHealthContent.ToRequestContent(applicationFetchHealthContent), context);
+                HttpMessage message = _applicationsRestClient.CreateFetchHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApplicationFetchHealthContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -889,12 +889,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="applicationFetchHealthContent"> The parameters for fetching the health of a deployed application. </param>
+        /// <param name="content"> The parameters for fetching the health of a deployed application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="applicationFetchHealthContent"/> is null. </exception>
-        public virtual ArmOperation FetchHealth(WaitUntil waitUntil, ApplicationFetchHealthContent applicationFetchHealthContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation FetchHealth(WaitUntil waitUntil, ApplicationFetchHealthContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(applicationFetchHealthContent, nameof(applicationFetchHealthContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.FetchHealth");
             scope.Start();
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateFetchHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApplicationFetchHealthContent.ToRequestContent(applicationFetchHealthContent), context);
+                HttpMessage message = _applicationsRestClient.CreateFetchHealthRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ApplicationFetchHealthContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -942,12 +942,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="restartDeployedCodePackageContent"> The parameters for restarting a deployed code package. </param>
+        /// <param name="content"> The parameters for restarting a deployed code package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restartDeployedCodePackageContent"/> is null. </exception>
-        public virtual async Task<ArmOperation> RestartDeployedCodePackageAsync(WaitUntil waitUntil, RestartDeployedCodePackageContent restartDeployedCodePackageContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> RestartDeployedCodePackageAsync(WaitUntil waitUntil, RestartDeployedCodePackageContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(restartDeployedCodePackageContent, nameof(restartDeployedCodePackageContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.RestartDeployedCodePackage");
             scope.Start();
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateRestartDeployedCodePackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestartDeployedCodePackageContent.ToRequestContent(restartDeployedCodePackageContent), context);
+                HttpMessage message = _applicationsRestClient.CreateRestartDeployedCodePackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestartDeployedCodePackageContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -995,12 +995,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="restartDeployedCodePackageContent"> The parameters for restarting a deployed code package. </param>
+        /// <param name="content"> The parameters for restarting a deployed code package. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="restartDeployedCodePackageContent"/> is null. </exception>
-        public virtual ArmOperation RestartDeployedCodePackage(WaitUntil waitUntil, RestartDeployedCodePackageContent restartDeployedCodePackageContent, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation RestartDeployedCodePackage(WaitUntil waitUntil, RestartDeployedCodePackageContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(restartDeployedCodePackageContent, nameof(restartDeployedCodePackageContent));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _applicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationResource.RestartDeployedCodePackage");
             scope.Start();
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationsRestClient.CreateRestartDeployedCodePackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestartDeployedCodePackageContent.ToRequestContent(restartDeployedCodePackageContent), context);
+                HttpMessage message = _applicationsRestClient.CreateRestartDeployedCodePackageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, RestartDeployedCodePackageContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ServiceFabricManagedClustersArmOperation operation = new ServiceFabricManagedClustersArmOperation(_applicationsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)

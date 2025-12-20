@@ -211,12 +211,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceFabricManagedApplicationTypePatch"> The application type resource updated tags. </param>
+        /// <param name="patch"> The application type resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceFabricManagedApplicationTypePatch"/> is null. </exception>
-        public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> UpdateAsync(ServiceFabricManagedApplicationTypePatch serviceFabricManagedApplicationTypePatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceFabricManagedApplicationTypeResource>> UpdateAsync(ServiceFabricManagedApplicationTypePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serviceFabricManagedApplicationTypePatch, nameof(serviceFabricManagedApplicationTypePatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _applicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.Update");
             scope.Start();
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypePatch.ToRequestContent(serviceFabricManagedApplicationTypePatch), context);
+                HttpMessage message = _applicationTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedApplicationTypeData> response = Response.FromValue(ServiceFabricManagedApplicationTypeData.FromResponse(result), result);
                 if (response.Value == null)
@@ -263,12 +263,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceFabricManagedApplicationTypePatch"> The application type resource updated tags. </param>
+        /// <param name="patch"> The application type resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceFabricManagedApplicationTypePatch"/> is null. </exception>
-        public virtual Response<ServiceFabricManagedApplicationTypeResource> Update(ServiceFabricManagedApplicationTypePatch serviceFabricManagedApplicationTypePatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceFabricManagedApplicationTypeResource> Update(ServiceFabricManagedApplicationTypePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serviceFabricManagedApplicationTypePatch, nameof(serviceFabricManagedApplicationTypePatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _applicationTypesClientDiagnostics.CreateScope("ServiceFabricManagedApplicationTypeResource.Update");
             scope.Start();
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _applicationTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypePatch.ToRequestContent(serviceFabricManagedApplicationTypePatch), context);
+                HttpMessage message = _applicationTypesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, ServiceFabricManagedApplicationTypePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedApplicationTypeData> response = Response.FromValue(ServiceFabricManagedApplicationTypeData.FromResponse(result), result);
                 if (response.Value == null)

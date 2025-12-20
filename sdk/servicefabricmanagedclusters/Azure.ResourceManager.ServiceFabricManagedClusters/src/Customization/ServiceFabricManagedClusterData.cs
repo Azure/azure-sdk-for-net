@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
-/*
+
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
@@ -21,19 +21,17 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     {
         /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
         /// <param name="location"> The location. </param>
-        public ServiceFabricManagedClusterData(AzureLocation location) : base(location)
+        public ServiceFabricManagedClusterData(AzureLocation location) : this(location, new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic))
         {
-            Sku = new ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName.Basic);
-            ClusterCertificateThumbprints = new ChangeTrackingList<BinaryData>();
-            LoadBalancingRules = new ChangeTrackingList<ManagedClusterLoadBalancingRule>();
-            NetworkSecurityRules = new ChangeTrackingList<ServiceFabricManagedNetworkSecurityRule>();
-            Clients = new ChangeTrackingList<ManagedClusterClientCertificate>();
-            FabricSettings = new ChangeTrackingList<ClusterFabricSettingsSection>();
-            AddOnFeatures = new ChangeTrackingList<ManagedClusterAddOnFeature>();
-            IPTags = new ChangeTrackingList<ManagedClusterIPTag>();
-            AuxiliarySubnets = new ChangeTrackingList<ManagedClusterSubnet>();
-            ServiceEndpoints = new ChangeTrackingList<ManagedClusterServiceEndpoint>();
+        }
+
+        /// <summary> Initializes a new instance of ServiceFabricManagedClusterData. </summary>
+        /// <param name="location"> The location. </param>
+        /// <param name="sku"> The SKU. </param>
+        public ServiceFabricManagedClusterData(AzureLocation location, ServiceFabricManagedClustersSku sku) : base(location)
+        {
+            Properties = new ManagedClusterProperties();
+            Sku = sku;
         }
     }
 }
-*/

@@ -14,7 +14,7 @@ using Azure.ResourceManager.ServiceFabricManagedClusters;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Service Fabric managed cluster Sku definition. </summary>
-    internal partial class ServiceFabricManagedClustersSku : IJsonModel<ServiceFabricManagedClustersSku>
+    public partial class ServiceFabricManagedClustersSku : IJsonModel<ServiceFabricManagedClustersSku>
     {
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClustersSku"/> for deserialization. </summary>
         internal ServiceFabricManagedClustersSku()
