@@ -4,15 +4,9 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.ServiceFabricManagedClusters;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
@@ -109,4 +103,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         {
             throw new NotImplementedException();
         }
+    }
 }
