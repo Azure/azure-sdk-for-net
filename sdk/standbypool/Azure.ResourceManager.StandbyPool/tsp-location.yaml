@@ -1,4 +1,4 @@
 directory: specification\standbypool\StandbyPool.Management
-commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
+commit: acb7f2e4043853bde6c3a99266db6a9377bb9173
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

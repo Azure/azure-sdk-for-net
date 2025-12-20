@@ -6,17 +6,18 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StandbyPool.Models;
 
 namespace Azure.ResourceManager.StandbyPool
 {
     /// <summary>
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information see 'https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md'
+    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ContainerGroupInstanceCountSummary))]
+    [ModelReaderWriterBuildable(typeof(DynamicSizing))]
     [ModelReaderWriterBuildable(typeof(PoolContainerGroupStateCount))]
     [ModelReaderWriterBuildable(typeof(PoolVirtualMachineStateCount))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
@@ -55,7 +56,6 @@ namespace Azure.ResourceManager.StandbyPool
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineResource))]
     [ModelReaderWriterBuildable(typeof(StandbyVirtualMachineResourceListResult))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
-    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerStandbyPoolContext : ModelReaderWriterContext
     {
     }
