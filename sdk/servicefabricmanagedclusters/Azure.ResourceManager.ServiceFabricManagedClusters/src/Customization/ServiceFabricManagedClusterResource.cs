@@ -5,7 +5,7 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
-
+/*
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
@@ -111,3 +111,4 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
     }
 }
+*/

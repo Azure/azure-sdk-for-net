@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes a VM Sizes. </summary>
-    public partial class ServiceFabricManagedUnsupportedVmSize : ResourceData
+    public partial class ServiceFabricManagedUnsupportedVmSize
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedUnsupportedVmSize"/>. </summary>
         internal ServiceFabricManagedUnsupportedVmSize()
@@ -53,24 +22,39 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedUnsupportedVmSize"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> VM Size properties. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, VmSize properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> VM Size id. </param>
+        /// <param name="name"> VM Size name. </param>
+        /// <param name="type"> VM Size type. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedUnsupportedVmSize(VMSize properties, string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Id = id;
+            Name = name;
+            Type = @type;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> VM Size properties. </summary>
-        internal VmSize Properties { get; }
+        internal VMSize Properties { get; }
+
+        /// <summary> VM Size id. </summary>
+        public string Id { get; }
+
         /// <summary> VM Size name. </summary>
-        public string VmSize
+        public string Name { get; }
+
+        /// <summary> VM Size type. </summary>
+        public string Type { get; }
+
+        /// <summary> VM Size name. </summary>
+        public string VMSize
         {
-            get => Properties?.Size;
+            get
+            {
+                return Properties.Size;
+            }
         }
     }
 }

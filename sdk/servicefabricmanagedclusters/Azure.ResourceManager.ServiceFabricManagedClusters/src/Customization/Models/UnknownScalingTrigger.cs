@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [CodeGenModel("UnknownManagedServiceScalingTrigger")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownManagedServiceScalingTrigger")]
     internal partial class UnknownScalingTrigger
     {
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ManagedClusterVersionEnvironment : IEquatable<ManagedClusterVersionEnvironment>
     {
         private readonly string _value;
+        /// <summary> Indicates os is Windows. </summary>
+        private const string WindowsValue = "Windows";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterVersionEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ManagedClusterVersionEnvironment(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string WindowsValue = "Windows";
+            _value = value;
+        }
 
         /// <summary> Indicates os is Windows. </summary>
         public static ManagedClusterVersionEnvironment Windows { get; } = new ManagedClusterVersionEnvironment(WindowsValue);
+
         /// <summary> Determines if two <see cref="ManagedClusterVersionEnvironment"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ManagedClusterVersionEnvironment left, ManagedClusterVersionEnvironment right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ManagedClusterVersionEnvironment"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ManagedClusterVersionEnvironment left, ManagedClusterVersionEnvironment right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ManagedClusterVersionEnvironment"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ManagedClusterVersionEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ManagedClusterVersionEnvironment(string value) => new ManagedClusterVersionEnvironment(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ManagedClusterVersionEnvironment"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ManagedClusterVersionEnvironment?(string value) => value == null ? null : new ManagedClusterVersionEnvironment(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ManagedClusterVersionEnvironment other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ManagedClusterVersionEnvironment other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

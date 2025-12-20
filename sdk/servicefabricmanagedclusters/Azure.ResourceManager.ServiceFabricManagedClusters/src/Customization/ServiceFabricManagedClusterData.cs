@@ -10,7 +10,7 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
-
+/*
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
@@ -36,3 +36,4 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
     }
 }
+*/

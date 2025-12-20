@@ -6,7 +6,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [CodeGenModel("UnknownManagedServicePartitionScheme")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownManagedServicePartitionScheme")]
     internal partial class UnknownPartition
     {
     }

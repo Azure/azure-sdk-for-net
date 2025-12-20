@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     public readonly partial struct ServiceFabricManagedNetworkSecurityRuleDirection : IEquatable<ServiceFabricManagedNetworkSecurityRuleDirection>
     {
         private readonly string _value;
+        /// <summary> Inbound direction. </summary>
+        private const string InboundValue = "inbound";
+        /// <summary> Outbound direction. </summary>
+        private const string OutboundValue = "outbound";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceFabricManagedNetworkSecurityRuleDirection(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InboundValue = "inbound";
-        private const string OutboundValue = "outbound";
+            _value = value;
+        }
 
         /// <summary> Inbound direction. </summary>
         public static ServiceFabricManagedNetworkSecurityRuleDirection Inbound { get; } = new ServiceFabricManagedNetworkSecurityRuleDirection(InboundValue);
+
         /// <summary> Outbound direction. </summary>
         public static ServiceFabricManagedNetworkSecurityRuleDirection Outbound { get; } = new ServiceFabricManagedNetworkSecurityRuleDirection(OutboundValue);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceFabricManagedNetworkSecurityRuleDirection left, ServiceFabricManagedNetworkSecurityRuleDirection right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceFabricManagedNetworkSecurityRuleDirection left, ServiceFabricManagedNetworkSecurityRuleDirection right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceFabricManagedNetworkSecurityRuleDirection(string value) => new ServiceFabricManagedNetworkSecurityRuleDirection(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceFabricManagedNetworkSecurityRuleDirection"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceFabricManagedNetworkSecurityRuleDirection?(string value) => value == null ? null : new ServiceFabricManagedNetworkSecurityRuleDirection(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceFabricManagedNetworkSecurityRuleDirection other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceFabricManagedNetworkSecurityRuleDirection other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

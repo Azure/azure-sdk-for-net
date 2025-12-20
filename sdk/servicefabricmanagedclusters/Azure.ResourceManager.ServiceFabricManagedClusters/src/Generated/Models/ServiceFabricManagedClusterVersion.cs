@@ -7,45 +7,14 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> The result of the Service Fabric runtime versions. </summary>
-    public partial class ServiceFabricManagedClusterVersion : ResourceData
+    public partial class ServiceFabricManagedClusterVersion
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterVersion"/>. </summary>
         internal ServiceFabricManagedClusterVersion()
@@ -53,27 +22,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterVersion"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. </param>
-        /// <param name="versionSupportExpireOn"> The date of expiry of support of the version. </param>
-        /// <param name="osType"> Cluster operating system, the default will be Windows. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedClusterVersion(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string clusterCodeVersion, DateTimeOffset? versionSupportExpireOn, ServiceFabricManagedClusterOSType? osType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> The identification of the result. </param>
+        /// <param name="name"> The name of the result. </param>
+        /// <param name="type"> The result resource type. </param>
+        /// <param name="properties"> The detail of the Service Fabric runtime version result. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceFabricManagedClusterVersion(string id, string name, string @type, ManagedClusterVersionDetails properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ClusterCodeVersion = clusterCodeVersion;
-            VersionSupportExpireOn = versionSupportExpireOn;
-            OSType = osType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Id = id;
+            Name = name;
+            Type = @type;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The identification of the result. </summary>
+        public string Id { get; }
+
+        /// <summary> The name of the result. </summary>
+        public string Name { get; }
+
+        /// <summary> The result resource type. </summary>
+        public string Type { get; }
+
+        /// <summary> The detail of the Service Fabric runtime version result. </summary>
+        internal ManagedClusterVersionDetails Properties { get; }
+
         /// <summary> The Service Fabric runtime version of the cluster. </summary>
-        public string ClusterCodeVersion { get; }
+        public string ClusterCodeVersion
+        {
+            get
+            {
+                return Properties.ClusterCodeVersion;
+            }
+        }
+
         /// <summary> The date of expiry of support of the version. </summary>
-        public DateTimeOffset? VersionSupportExpireOn { get; }
+        public DateTimeOffset? VersionSupportExpireOn
+        {
+            get
+            {
+                return Properties.VersionSupportExpireOn;
+            }
+        }
+
         /// <summary> Cluster operating system, the default will be Windows. </summary>
-        public ServiceFabricManagedClusterOSType? OSType { get; }
+        public ServiceFabricManagedClusterOSType? OsType
+        {
+            get
+            {
+                return Properties.OsType;
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [CodeGenModel("UnknownManagedServiceScalingMechanism")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownManagedServiceScalingMechanism")]
     internal partial class UnknownScalingMechanism
     {
     }

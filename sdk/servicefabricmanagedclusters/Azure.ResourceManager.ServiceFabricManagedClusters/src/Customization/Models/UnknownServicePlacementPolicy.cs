@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    [CodeGenModel("UnknownManagedServicePlacementPolicy")]
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenType("UnknownManagedServicePlacementPolicy")]
     internal partial class UnknownServicePlacementPolicy
     {
     }
