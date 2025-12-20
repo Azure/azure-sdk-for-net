@@ -11,10 +11,13 @@ public class ResourceStatement(string name, BicepExpression type, BicepExpressio
     public BicepExpression Type { get; } = type;
     public BicepExpression Body { get; } = body;
     public bool Existing { get; set; }
+    public BicepExpression? Condition { get; set; }
     public IList<DecoratorExpression> Decorators { get; } = [];
     internal override BicepWriter Write(BicepWriter writer) =>
         writer.AppendAll(Decorators, (w, d) => w.Append(d).AppendLine())
             .Append("resource ").Append(Name).Append(' ').Append(Type)
-            .AppendIf(Existing, w => w.Append(" existing")).Append(" = ")
+            .AppendIf(Existing, w => w.Append(" existing"))
+            .AppendIf(Condition is not null, w => w.Append(" = if (").Append(Condition!).Append(")"))
+            .AppendIf(Condition is null, w => w.Append(" = "))
             .Append(Body).AppendLine();
 }

@@ -773,6 +773,7 @@ namespace Azure.Provisioning.Expressions
     {
         public ResourceStatement(string name, Azure.Provisioning.Expressions.BicepExpression type, Azure.Provisioning.Expressions.BicepExpression body) { }
         public Azure.Provisioning.Expressions.BicepExpression Body { get { throw null; } }
+        public Azure.Provisioning.Expressions.BicepExpression? Condition { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.DecoratorExpression> Decorators { get { throw null; } }
         public bool Existing { get { throw null; } set { } }
         public string Name { get { throw null; } }
@@ -832,6 +833,14 @@ namespace Azure.Provisioning.Primitives
         public BicepLiteral(params Azure.Provisioning.Expressions.BicepStatement[] statements) { }
         public System.Collections.Generic.IList<Azure.Provisioning.Expressions.BicepStatement> Statements { get { throw null; } }
         protected internal override System.Collections.Generic.IEnumerable<Azure.Provisioning.Expressions.BicepStatement> Compile() { throw null; }
+    }
+    public partial class BicepMetadata
+    {
+        public BicepMetadata() { }
+        public uint? BatchSize { get { throw null; } set { } }
+        public string? Condition { get { throw null; } set { } }
+        public string? Description { get { throw null; } set { } }
+        public bool OnlyIfNotExists { get { throw null; } set { } }
     }
     public partial class BicepValueReference
     {
@@ -935,6 +944,7 @@ namespace Azure.Provisioning.Primitives
     public abstract partial class ProvisionableResource : Azure.Provisioning.Primitives.NamedProvisionableConstruct
     {
         protected ProvisionableResource(string bicepIdentifier, Azure.Core.ResourceType resourceType, string? resourceVersion = null) : base (default(string)) { }
+        public Azure.Provisioning.Primitives.BicepMetadata BicepMetadata { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Provisioning.Primitives.ProvisionableResource> DependsOn { get { throw null; } }
         public bool IsExistingResource { get { throw null; } protected set { } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
