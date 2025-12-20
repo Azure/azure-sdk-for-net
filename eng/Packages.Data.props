@@ -229,7 +229,6 @@
     <PackageReference Update="OpenAI" Version="[2.8.0,3.0)" />
     <!-- Foundry libs depend on OpenAI; float SCM with upstream version -->
     <PackageReference Update="System.ClientModel" Version="*" />
-    <PackageReference Update="System.Text.Json" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.AI.AgentServer'))">
