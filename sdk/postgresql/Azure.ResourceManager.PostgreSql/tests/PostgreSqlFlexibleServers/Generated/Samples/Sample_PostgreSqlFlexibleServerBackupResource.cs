@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetABackupForAServer()
+        public async Task Get_GetAnOnDemandBackupGivenItsName()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/BackupGet.json
-            // this example is just showing the usage of "Backups_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/BackupsAutomaticAndOnDemandGet.json
+            // this example is just showing the usage of "BackupsAutomaticAndOnDemand_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerBackupResource created on azure
             // for more information of creating PostgreSqlFlexibleServerBackupResource, please refer to the document of PostgreSqlFlexibleServerBackupResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "postgresqltestserver";
-            string backupName = "daily_20210615T160516";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            string backupName = "backup_638830782181266873";
             ResourceIdentifier postgreSqlFlexibleServerBackupResourceId = PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
             PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = client.GetPostgreSqlFlexibleServerBackupResource(postgreSqlFlexibleServerBackupResourceId);
 
@@ -48,10 +48,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteASpecificBackup()
+        public async Task Delete_DeleteAnOnDemandBackupGivenItsName()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/BackupDelete.json
-            // this example is just showing the usage of "Backups_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/BackupsAutomaticAndOnDemandDelete.json
+            // this example is just showing the usage of "BackupsAutomaticAndOnDemand_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -61,9 +61,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerBackupResource created on azure
             // for more information of creating PostgreSqlFlexibleServerBackupResource, please refer to the document of PostgreSqlFlexibleServerBackupResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "testserver";
-            string backupName = "backup_20210615T160516";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            string backupName = "ondemandbackup-20250601T183022";
             ResourceIdentifier postgreSqlFlexibleServerBackupResourceId = PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
             PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = client.GetPostgreSqlFlexibleServerBackupResource(postgreSqlFlexibleServerBackupResourceId);
 
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateANewBackupForAFlexibleServer()
+        public async Task Update_CreateAnOnDemandBackupOfAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/BackupCreate.json
-            // this example is just showing the usage of "Backups_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/BackupsAutomaticAndOnDemandCreate.json
+            // this example is just showing the usage of "BackupsAutomaticAndOnDemand_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,21 +88,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServerBackupResource created on azure
             // for more information of creating PostgreSqlFlexibleServerBackupResource, please refer to the document of PostgreSqlFlexibleServerBackupResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            string serverName = "postgresqltestserver";
-            string backupName = "backup_20210615T160516";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            string backupName = "ondemandbackup-20250601T183022";
             ResourceIdentifier postgreSqlFlexibleServerBackupResourceId = PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, backupName);
             PostgreSqlFlexibleServerBackupResource postgreSqlFlexibleServerBackup = client.GetPostgreSqlFlexibleServerBackupResource(postgreSqlFlexibleServerBackupResourceId);
 
             // invoke the operation
-            ArmOperation<PostgreSqlFlexibleServerBackupResource> lro = await postgreSqlFlexibleServerBackup.UpdateAsync(WaitUntil.Completed);
-            PostgreSqlFlexibleServerBackupResource result = lro.Value;
+            await postgreSqlFlexibleServerBackup.UpdateAsync(WaitUntil.Completed);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServerBackupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Validation summary object. </summary>
+    /// <summary>
+    /// Validation summary object.
+    /// Serialized Name: ValidationSummaryItem
+    /// </summary>
     public partial class ValidationSummaryItem
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidationSummaryItem"/>. </summary>
-        /// <param name="validationSummaryItemType"> Validation type. </param>
-        /// <param name="state"> Validation status for migration. </param>
-        /// <param name="messages"> Validation messages. </param>
+        /// <param name="validationSummaryItemType">
+        /// Validation type.
+        /// Serialized Name: ValidationSummaryItem.type
+        /// </param>
+        /// <param name="state">
+        /// Validation status for migration.
+        /// Serialized Name: ValidationSummaryItem.state
+        /// </param>
+        /// <param name="messages">
+        /// Validation messages.
+        /// Serialized Name: ValidationSummaryItem.messages
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidationSummaryItem(string validationSummaryItemType, PostgreSqlFlexibleServersValidationState? state, IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> messages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,13 +76,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Validation type. </summary>
+        /// <summary>
+        /// Validation type.
+        /// Serialized Name: ValidationSummaryItem.type
+        /// </summary>
         [WirePath("type")]
         public string ValidationSummaryItemType { get; }
-        /// <summary> Validation status for migration. </summary>
+        /// <summary>
+        /// Validation status for migration.
+        /// Serialized Name: ValidationSummaryItem.state
+        /// </summary>
         [WirePath("state")]
         public PostgreSqlFlexibleServersValidationState? State { get; }
-        /// <summary> Validation messages. </summary>
+        /// <summary>
+        /// Validation messages.
+        /// Serialized Name: ValidationSummaryItem.messages
+        /// </summary>
         [WirePath("messages")]
         public IReadOnlyList<PostgreSqlFlexibleServersValidationMessage> Messages { get; }
     }

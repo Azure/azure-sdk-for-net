@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_UpdateAServerSThreatProtectionSettings()
+        public async Task CreateOrUpdate_UpdateTheAdvancedThreatProtectionSettingsOfAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerThreatProtectionSettingsCreateOrUpdate.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdvancedThreatProtectionSettingsCreateOrUpdate.json
             // this example is just showing the usage of "ServerThreatProtectionSettings_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-4799";
-            string serverName = "threatprotection-6440";
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -45,22 +45,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 State = ThreatProtectionState.Enabled,
             };
-            ArmOperation<ServerThreatProtectionSettingsModelResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, threatProtectionName, data);
-            ServerThreatProtectionSettingsModelResource result = lro.Value;
+            await collection.CreateOrUpdateAsync(WaitUntil.Completed, threatProtectionName, data);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ServerThreatProtectionSettingsModelData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetAServerSThreatProtectionSettings()
+        public async Task Get_GetStateOfAdvancedThreatProtectionSettingsForAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerThreatProtectionSettingsGet.json
-            // this example is just showing the usage of "ServerThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdvancedThreatProtectionSettingsGet.json
+            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,9 +64,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-6852";
-            string serverName = "threatprotection-2080";
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -91,10 +86,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GetAServerSAdvancedThreatProtectionSettings()
+        public async Task GetAll_ListStateOfAdvancedThreatProtectionSettingsForAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerThreatProtectionSettingsListByServer.json
-            // this example is just showing the usage of "ServerThreatProtectionSettings_ListByServer" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdvancedThreatProtectionSettingsListByServer.json
+            // this example is just showing the usage of "AdvancedThreatProtectionSettings_ListByServer" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -103,9 +98,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-6852";
-            string serverName = "threatprotection-2080";
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -127,10 +122,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAServerSThreatProtectionSettings()
+        public async Task Exists_GetStateOfAdvancedThreatProtectionSettingsForAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerThreatProtectionSettingsGet.json
-            // this example is just showing the usage of "ServerThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdvancedThreatProtectionSettingsGet.json
+            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -139,9 +134,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-6852";
-            string serverName = "threatprotection-2080";
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 
@@ -157,10 +152,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAServerSThreatProtectionSettings()
+        public async Task GetIfExists_GetStateOfAdvancedThreatProtectionSettingsForAServer()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/ServerThreatProtectionSettingsGet.json
-            // this example is just showing the usage of "ServerThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/AdvancedThreatProtectionSettingsGet.json
+            // this example is just showing the usage of "AdvancedThreatProtectionSettings_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -169,9 +164,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
             // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "threatprotection-6852";
-            string serverName = "threatprotection-2080";
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
             PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
 

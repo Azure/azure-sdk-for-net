@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -161,6 +161,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Cluster))
+            {
+                writer.WritePropertyName("cluster"u8);
+                writer.WriteObjectValue(Cluster, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -184,8 +189,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            PostgreSqlFlexibleServerSku sku = default;
-            PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
+            PostgreSqlFlexibleServersSku sku = default;
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -201,7 +206,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlFlexibleServerStorage storage = default;
             PostgreSqlFlexibleServerAuthConfig authConfig = default;
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
-            PostgreSqlFlexibleServerBackupProperties backup = default;
+            Backup backup = default;
             PostgreSqlFlexibleServerNetwork network = default;
             PostgreSqlFlexibleServerHighAvailability highAvailability = default;
             PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
@@ -213,6 +218,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlFlexibleServersReplica replica = default;
             PostgreSqlFlexibleServerCreateMode? createMode = default;
             IReadOnlyList<PostgreSqlFlexibleServersPrivateEndpointConnectionData> privateEndpointConnections = default;
+            Cluster cluster = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -223,7 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value, options);
+                    sku = PostgreSqlFlexibleServersSku.DeserializePostgreSqlFlexibleServersSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -232,7 +238,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    identity = PostgreSqlFlexibleServerUserAssignedIdentity.DeserializePostgreSqlFlexibleServerUserAssignedIdentity(property.Value, options);
+                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerPostgreSqlContext.Default);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -358,7 +364,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value, options);
+                            backup = Backup.DeserializeBackup(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("network"u8))
@@ -461,6 +467,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             privateEndpointConnections = array;
                             continue;
                         }
+                        if (property0.NameEquals("cluster"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            cluster = Cluster.DeserializeCluster(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -500,6 +515,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 replica,
                 createMode,
                 privateEndpointConnections ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(),
+                cluster,
                 serializedAdditionalRawData);
         }
 
@@ -1009,6 +1025,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                         }
                         builder.AppendLine("    ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cluster), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    cluster: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Cluster))
+                {
+                    builder.Append("    cluster: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cluster, options, 4, false, "    cluster: ");
                 }
             }
 

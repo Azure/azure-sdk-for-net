@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Enforce a minimal Tls version for the server. </summary>
+    /// <summary>
+    /// Enforce a minimal Tls version for the server.
+    /// Serialized Name: MinimalTlsVersionEnum
+    /// </summary>
     public readonly partial struct PostgreSqlMinimalTlsVersionEnum : IEquatable<PostgreSqlMinimalTlsVersionEnum>
     {
         private readonly string _value;
@@ -26,7 +29,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string Tls1_1Value = "TLS1_1";
         private const string Tls1_2Value = "TLS1_2";
         private const string TLSEnforcementDisabledValue = "TLSEnforcementDisabled";
-        /// <summary> TLSEnforcementDisabled. </summary>
+        /// <summary>
+        /// TLSEnforcementDisabled
+        /// Serialized Name: MinimalTlsVersionEnum.TLSEnforcementDisabled
+        /// </summary>
         public static PostgreSqlMinimalTlsVersionEnum TLSEnforcementDisabled { get; } = new PostgreSqlMinimalTlsVersionEnum(TLSEnforcementDisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlMinimalTlsVersionEnum"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlMinimalTlsVersionEnum left, PostgreSqlMinimalTlsVersionEnum right) => left.Equals(right);

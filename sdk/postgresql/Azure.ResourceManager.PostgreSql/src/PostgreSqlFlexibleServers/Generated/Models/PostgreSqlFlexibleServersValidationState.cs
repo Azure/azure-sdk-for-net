@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Validation status for migration. </summary>
+    /// <summary>
+    /// Validation status for migration.
+    /// Serialized Name: ValidationState
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServersValidationState : IEquatable<PostgreSqlFlexibleServersValidationState>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string SucceededValue = "Succeeded";
         private const string WarningValue = "Warning";
 
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ValidationState.Failed
+        /// </summary>
         public static PostgreSqlFlexibleServersValidationState Failed { get; } = new PostgreSqlFlexibleServersValidationState(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ValidationState.Succeeded
+        /// </summary>
         public static PostgreSqlFlexibleServersValidationState Succeeded { get; } = new PostgreSqlFlexibleServersValidationState(SucceededValue);
-        /// <summary> Warning. </summary>
+        /// <summary>
+        /// Warning
+        /// Serialized Name: ValidationState.Warning
+        /// </summary>
         public static PostgreSqlFlexibleServersValidationState Warning { get; } = new PostgreSqlFlexibleServersValidationState(WarningValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersValidationState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersValidationState left, PostgreSqlFlexibleServersValidationState right) => left.Equals(right);

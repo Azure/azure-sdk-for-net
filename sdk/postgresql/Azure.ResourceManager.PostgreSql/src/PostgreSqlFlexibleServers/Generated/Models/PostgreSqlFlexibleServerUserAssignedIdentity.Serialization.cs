@@ -48,6 +48,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IdentityType.ToString());
             if (options.Format != "W" && Optional.IsDefined(TenantId))
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 return null;
             }
             IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default;
+            string principalId = default;
             PostgreSqlFlexibleServerIdentityType type = default;
             Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -111,6 +117,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         dictionary.Add(property0.Name, ModelReaderWriter.Read<UserAssignedIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerPostgreSqlContext.Default));
                     }
                     userAssignedIdentities = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("principalId"u8))
+                {
+                    principalId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -133,7 +144,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), type, tenantId, serializedAdditionalRawData);
+            return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities ?? new ChangeTrackingDictionary<string, UserAssignedIdentity>(), principalId, type, tenantId, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -167,6 +178,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                             BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  userAssignedIdentities: ");
                         }
                         builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  principalId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrincipalId))
+                {
+                    builder.Append("  principalId: ");
+                    if (PrincipalId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrincipalId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrincipalId}'");
                     }
                 }
             }

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Service-set extensible enum indicating the status of operation. </summary>
+    /// <summary>
+    /// Service-set extensible enum indicating the status of operation
+    /// Serialized Name: ExecutionStatus
+    /// </summary>
     public readonly partial struct PostgreSqlExecutionStatus : IEquatable<PostgreSqlExecutionStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string FailedValue = "Failed";
         private const string SucceededValue = "Succeeded";
 
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: ExecutionStatus.Running
+        /// </summary>
         public static PostgreSqlExecutionStatus Running { get; } = new PostgreSqlExecutionStatus(RunningValue);
-        /// <summary> Cancelled. </summary>
+        /// <summary>
+        /// Cancelled
+        /// Serialized Name: ExecutionStatus.Cancelled
+        /// </summary>
         public static PostgreSqlExecutionStatus Cancelled { get; } = new PostgreSqlExecutionStatus(CancelledValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: ExecutionStatus.Failed
+        /// </summary>
         public static PostgreSqlExecutionStatus Failed { get; } = new PostgreSqlExecutionStatus(FailedValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: ExecutionStatus.Succeeded
+        /// </summary>
         public static PostgreSqlExecutionStatus Succeeded { get; } = new PostgreSqlExecutionStatus(SucceededValue);
         /// <summary> Determines if two <see cref="PostgreSqlExecutionStatus"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlExecutionStatus left, PostgreSqlExecutionStatus right) => left.Equals(right);

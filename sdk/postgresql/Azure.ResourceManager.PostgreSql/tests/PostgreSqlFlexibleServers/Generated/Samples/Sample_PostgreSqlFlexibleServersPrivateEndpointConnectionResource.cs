@@ -18,9 +18,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetsPrivateEndpointConnection()
+        public async Task Get_GetAPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PrivateEndpointConnectionGet.json
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/PrivateEndpointConnectionsGet.json
             // this example is just showing the usage of "PrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServersPrivateEndpointConnectionResource created on azure
             // for more information of creating PostgreSqlFlexibleServersPrivateEndpointConnectionResource, please refer to the document of PostgreSqlFlexibleServersPrivateEndpointConnectionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "Default";
-            string serverName = "test-svr";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             string privateEndpointConnectionName = "private-endpoint-connection-name.1fa229cd-bf3f-47f0-8c49-afb36723997e";
             ResourceIdentifier postgreSqlFlexibleServersPrivateEndpointConnectionResourceId = PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, privateEndpointConnectionName);
             PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = client.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeletesAPrivateEndpointConnectionWithAGivenName()
+        public async Task Delete_DeleteAPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PrivateEndpointConnectionDelete.json
-            // this example is just showing the usage of "PrivateEndpointConnection_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/PrivateEndpointConnectionsDelete.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServersPrivateEndpointConnectionResource created on azure
             // for more information of creating PostgreSqlFlexibleServersPrivateEndpointConnectionResource, please refer to the document of PostgreSqlFlexibleServersPrivateEndpointConnectionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "Default";
-            string serverName = "test-svr";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             string privateEndpointConnectionName = "private-endpoint-connection-name.1fa229cd-bf3f-47f0-8c49-afb36723997e";
             ResourceIdentifier postgreSqlFlexibleServersPrivateEndpointConnectionResourceId = PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, privateEndpointConnectionName);
             PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = client.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ApproveOrRejectAPrivateEndpointConnectionWithAGivenName()
+        public async Task Update_ApproveOrRejectAPrivateEndpointConnection()
         {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/PrivateEndpointConnectionUpdate.json
-            // this example is just showing the usage of "PrivateEndpointConnection_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/PrivateEndpointConnectionsUpdate.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // this example assumes you already have this PostgreSqlFlexibleServersPrivateEndpointConnectionResource created on azure
             // for more information of creating PostgreSqlFlexibleServersPrivateEndpointConnectionResource, please refer to the document of PostgreSqlFlexibleServersPrivateEndpointConnectionResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "Default";
-            string serverName = "test-svr";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
             string privateEndpointConnectionName = "private-endpoint-connection-name.1fa229cd-bf3f-47f0-8c49-afb36723997e";
             ResourceIdentifier postgreSqlFlexibleServersPrivateEndpointConnectionResourceId = PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, privateEndpointConnectionName);
             PostgreSqlFlexibleServersPrivateEndpointConnectionResource postgreSqlFlexibleServersPrivateEndpointConnection = client.GetPostgreSqlFlexibleServersPrivateEndpointConnectionResource(postgreSqlFlexibleServersPrivateEndpointConnectionResourceId);
@@ -104,14 +104,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     Description = "Approved by johndoe@contoso.com",
                 },
             };
-            ArmOperation<PostgreSqlFlexibleServersPrivateEndpointConnectionResource> lro = await postgreSqlFlexibleServersPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            PostgreSqlFlexibleServersPrivateEndpointConnectionResource result = lro.Value;
+            await postgreSqlFlexibleServersPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
 
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlFlexibleServersPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

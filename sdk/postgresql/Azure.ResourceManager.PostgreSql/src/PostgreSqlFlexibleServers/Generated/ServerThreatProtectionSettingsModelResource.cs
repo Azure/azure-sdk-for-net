@@ -34,6 +34,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return new ResourceIdentifier(resourceId);
         }
 
+        private readonly ClientDiagnostics _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics;
+        private readonly AdvancedThreatProtectionSettingsRestOperations _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient;
         private readonly ClientDiagnostics _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics;
         private readonly ServerThreatProtectionSettingsRestOperations _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient;
         private readonly ServerThreatProtectionSettingsModelData _data;
@@ -60,6 +62,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ServerThreatProtectionSettingsModelResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
+            _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsApiVersion);
+            _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsApiVersion);
             _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string serverThreatProtectionSettingsModelServerThreatProtectionSettingsApiVersion);
             _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient = new ServerThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverThreatProtectionSettingsModelServerThreatProtectionSettingsApiVersion);
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get a server's Advanced Threat Protection settings.
+        /// Gets state of advanced threat protection settings for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -98,11 +103,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -113,11 +118,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServerThreatProtectionSettingsModelResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelResource.Get");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelResource.Get");
             scope.Start();
             try
             {
-                var response = await _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerThreatProtectionSettingsModelResource(Client, response.Value), response.GetRawResponse());
@@ -130,7 +135,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get a server's Advanced Threat Protection settings.
+        /// Gets state of advanced threat protection settings for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -138,11 +143,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -153,11 +158,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerThreatProtectionSettingsModelResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelResource.Get");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelResource.Get");
             scope.Start();
             try
             {
-                var response = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerThreatProtectionSettingsModelResource(Client, response.Value), response.GetRawResponse());
@@ -182,7 +187,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -191,10 +196,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The Advanced Threat Protection state for the flexible server. </param>
+        /// <param name="data"> The Advanced Threat Protection state for the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerThreatProtectionSettingsModelResource>> UpdateAsync(WaitUntil waitUntil, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -203,9 +208,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(new ServerThreatProtectionSettingsModelOperationSource(Client), _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -228,7 +233,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -237,10 +242,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The Advanced Threat Protection state for the flexible server. </param>
+        /// <param name="data"> The Advanced Threat Protection state for the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServerThreatProtectionSettingsModelResource> Update(WaitUntil waitUntil, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -249,9 +254,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(new ServerThreatProtectionSettingsModelOperationSource(Client), _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)

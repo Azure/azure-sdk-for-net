@@ -62,6 +62,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFeatures))
+            {
+                writer.WritePropertyName("supportedFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFeatures)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(SupportFastProvisioning))
             {
                 writer.WritePropertyName("fastProvisioningSupported"u8);
@@ -132,6 +142,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string name = default;
             IReadOnlyList<PostgreSqlFlexibleServerEditionCapability> supportedServerEditions = default;
             IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = default;
+            IReadOnlyList<SupportedFeature> supportedFeatures = default;
             PostgreSqlFlexibleServerFastProvisioningSupported? fastProvisioningSupported = default;
             IReadOnlyList<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = default;
             PostgreSqlFlexibleServerGeoBackupSupported? geoBackupSupported = default;
@@ -177,6 +188,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         array.Add(PostgreSqlFlexibleServerServerVersionCapability.DeserializePostgreSqlFlexibleServerServerVersionCapability(item, options));
                     }
                     supportedServerVersions = array;
+                    continue;
+                }
+                if (property.NameEquals("supportedFeatures"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SupportedFeature> array = new List<SupportedFeature>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SupportedFeature.DeserializeSupportedFeature(item, options));
+                    }
+                    supportedFeatures = array;
                     continue;
                 }
                 if (property.NameEquals("fastProvisioningSupported"u8))
@@ -283,6 +308,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 supportedServerEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerEditionCapability>(),
                 supportedServerVersions ?? new ChangeTrackingList<PostgreSqlFlexibleServerServerVersionCapability>(),
+                supportedFeatures ?? new ChangeTrackingList<SupportedFeature>(),
                 fastProvisioningSupported,
                 supportedFastProvisioningEditions ?? new ChangeTrackingList<PostgreSqlFlexibleServerFastProvisioningEditionCapability>(),
                 geoBackupSupported,
@@ -367,6 +393,29 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         foreach (var item in SupportedServerVersions)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedServerVersions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFeatures), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedFeatures))
+                {
+                    if (SupportedFeatures.Any())
+                    {
+                        builder.Append("  supportedFeatures: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedFeatures)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedFeatures: ");
                         }
                         builder.AppendLine("  ]");
                     }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A list of private endpoint connections. </summary>
+    /// <summary>
+    /// A list of private endpoint connections.
+    /// Serialized Name: PrivateEndpointConnectionListResult
+    /// </summary>
     internal partial class PostgreSqlPrivateEndpointConnectionListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateEndpointConnectionListResult"/>. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPrivateEndpointConnectionListResult(IReadOnlyList<PostgreSqlPrivateEndpointConnectionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: PrivateEndpointConnectionListResult.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlPrivateEndpointConnectionData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: PrivateEndpointConnectionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

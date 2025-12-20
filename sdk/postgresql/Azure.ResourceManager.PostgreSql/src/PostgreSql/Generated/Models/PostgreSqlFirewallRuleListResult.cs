@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A list of firewall rules. </summary>
+    /// <summary>
+    /// A list of firewall rules.
+    /// Serialized Name: FirewallRuleListResult
+    /// </summary>
     internal partial class PostgreSqlFirewallRuleListResult
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFirewallRuleListResult"/>. </summary>
-        /// <param name="value"> The list of firewall rules in a server. </param>
+        /// <param name="value">
+        /// The list of firewall rules in a server.
+        /// Serialized Name: FirewallRuleListResult.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFirewallRuleListResult(IReadOnlyList<PostgreSqlFirewallRuleData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of firewall rules in a server. </summary>
+        /// <summary>
+        /// The list of firewall rules in a server.
+        /// Serialized Name: FirewallRuleListResult.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFirewallRuleData> Value { get; }
     }
 }

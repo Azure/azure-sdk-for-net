@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> BackupRequestBase is the base for all backup request. </summary>
+    /// <summary>
+    /// BackupRequestBase is the base for all backup request.
+    /// Serialized Name: BackupRequestBase
+    /// </summary>
     public partial class PostgreSqlBackupContent
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/>. </summary>
-        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="backupSettings">
+        /// Backup Settings
+        /// Serialized Name: BackupRequestBase.backupSettings
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public PostgreSqlBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlBackupContent"/>. </summary>
-        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="backupSettings">
+        /// Backup Settings
+        /// Serialized Name: BackupRequestBase.backupSettings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,9 +78,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         {
         }
 
-        /// <summary> Backup Settings. </summary>
+        /// <summary>
+        /// Backup Settings
+        /// Serialized Name: BackupRequestBase.backupSettings
+        /// </summary>
         internal PostgreSqlFlexibleServerBackupSettings BackupSettings { get; }
-        /// <summary> Backup Name for the current backup. </summary>
+        /// <summary>
+        /// Backup Name for the current backup
+        /// Serialized Name: BackupSettings.backupName
+        /// </summary>
         [WirePath("backupSettings.backupName")]
         public string BackupName
         {

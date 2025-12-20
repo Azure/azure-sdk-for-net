@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> The type of administrator. </summary>
+    /// <summary>
+    /// The type of administrator.
+    /// Serialized Name: AdministratorType
+    /// </summary>
     public readonly partial struct PostgreSqlAdministratorType : IEquatable<PostgreSqlAdministratorType>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         private const string ActiveDirectoryValue = "ActiveDirectory";
 
-        /// <summary> ActiveDirectory. </summary>
+        /// <summary>
+        /// ActiveDirectory
+        /// Serialized Name: AdministratorType.ActiveDirectory
+        /// </summary>
         public static PostgreSqlAdministratorType ActiveDirectory { get; } = new PostgreSqlAdministratorType(ActiveDirectoryValue);
         /// <summary> Determines if two <see cref="PostgreSqlAdministratorType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlAdministratorType left, PostgreSqlAdministratorType right) => left.Equals(right);

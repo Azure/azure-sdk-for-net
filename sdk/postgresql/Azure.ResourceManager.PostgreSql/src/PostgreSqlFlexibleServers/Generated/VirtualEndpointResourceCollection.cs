@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Creates a new virtual endpoint for PostgreSQL flexible server.
+        /// Creates a pair of virtual endpoints for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -73,12 +73,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
-        /// <param name="data"> The required parameters for creating or updating virtual endpoints. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
+        /// <param name="data"> Parameters required to create or update a pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<VirtualEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
             Argument.AssertNotNull(data, nameof(data));
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _virtualEndpointResourceVirtualEndpointsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<VirtualEndpointResource>(new VirtualEndpointResourceOperationSource(Client), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Creates a new virtual endpoint for PostgreSQL flexible server.
+        /// Creates a pair of virtual endpoints for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
-        /// <param name="data"> The required parameters for creating or updating virtual endpoints. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
+        /// <param name="data"> Parameters required to create or update a pair of virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<VirtualEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string virtualEndpointName, VirtualEndpointResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(virtualEndpointName, nameof(virtualEndpointName));
             Argument.AssertNotNull(data, nameof(data));
@@ -137,9 +137,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _virtualEndpointResourceVirtualEndpointsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<VirtualEndpointResource>(new VirtualEndpointResourceOperationSource(Client), _virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_virtualEndpointResourceVirtualEndpointsClientDiagnostics, Pipeline, _virtualEndpointResourceVirtualEndpointsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualEndpointName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a virtual endpoint.
+        /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a virtual endpoint.
+        /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// List all the servers in a given resource group.
+        /// Lists pair of virtual endpoints associated to a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// List all the servers in a given resource group.
+        /// Lists pair of virtual endpoints associated to a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>

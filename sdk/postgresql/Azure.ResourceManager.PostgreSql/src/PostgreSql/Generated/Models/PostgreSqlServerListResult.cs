@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A list of servers. </summary>
+    /// <summary>
+    /// A list of servers.
+    /// Serialized Name: ServerListResult
+    /// </summary>
     internal partial class PostgreSqlServerListResult
     {
         /// <summary>
@@ -52,7 +55,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerListResult"/>. </summary>
-        /// <param name="value"> The list of servers. </param>
+        /// <param name="value">
+        /// The list of servers
+        /// Serialized Name: ServerListResult.value
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlServerListResult(IReadOnlyList<PostgreSqlServerData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -60,7 +66,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of servers. </summary>
+        /// <summary>
+        /// The list of servers
+        /// Serialized Name: ServerListResult.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlServerData> Value { get; }
     }
 }

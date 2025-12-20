@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Virtual Network Rule State. </summary>
+    /// <summary>
+    /// Virtual Network Rule State
+    /// Serialized Name: VirtualNetworkRuleState
+    /// </summary>
     public readonly partial struct PostgreSqlVirtualNetworkRuleState : IEquatable<PostgreSqlVirtualNetworkRuleState>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private const string DeletingValue = "Deleting";
         private const string UnknownValue = "Unknown";
 
-        /// <summary> Initializing. </summary>
+        /// <summary>
+        /// Initializing
+        /// Serialized Name: VirtualNetworkRuleState.Initializing
+        /// </summary>
         public static PostgreSqlVirtualNetworkRuleState Initializing { get; } = new PostgreSqlVirtualNetworkRuleState(InitializingValue);
-        /// <summary> InProgress. </summary>
+        /// <summary>
+        /// InProgress
+        /// Serialized Name: VirtualNetworkRuleState.InProgress
+        /// </summary>
         public static PostgreSqlVirtualNetworkRuleState InProgress { get; } = new PostgreSqlVirtualNetworkRuleState(InProgressValue);
-        /// <summary> Ready. </summary>
+        /// <summary>
+        /// Ready
+        /// Serialized Name: VirtualNetworkRuleState.Ready
+        /// </summary>
         public static PostgreSqlVirtualNetworkRuleState Ready { get; } = new PostgreSqlVirtualNetworkRuleState(ReadyValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: VirtualNetworkRuleState.Deleting
+        /// </summary>
         public static PostgreSqlVirtualNetworkRuleState Deleting { get; } = new PostgreSqlVirtualNetworkRuleState(DeletingValue);
-        /// <summary> Unknown. </summary>
+        /// <summary>
+        /// Unknown
+        /// Serialized Name: VirtualNetworkRuleState.Unknown
+        /// </summary>
         public static PostgreSqlVirtualNetworkRuleState Unknown { get; } = new PostgreSqlVirtualNetworkRuleState(UnknownValue);
         /// <summary> Determines if two <see cref="PostgreSqlVirtualNetworkRuleState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlVirtualNetworkRuleState left, PostgreSqlVirtualNetworkRuleState right) => left.Equals(right);

@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> The actions required for private link service connection. </summary>
+    /// <summary>
+    /// The actions required for private link service connection.
+    /// Serialized Name: PrivateLinkServiceConnectionStateActionsRequire
+    /// </summary>
     public readonly partial struct PostgreSqlPrivateLinkServiceConnectionStateRequiredAction : IEquatable<PostgreSqlPrivateLinkServiceConnectionStateRequiredAction>
     {
         private readonly string _value;
@@ -24,7 +27,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         private const string NoneValue = "None";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: PrivateLinkServiceConnectionStateActionsRequire.None
+        /// </summary>
         public static PostgreSqlPrivateLinkServiceConnectionStateRequiredAction None { get; } = new PostgreSqlPrivateLinkServiceConnectionStateRequiredAction(NoneValue);
         /// <summary> Determines if two <see cref="PostgreSqlPrivateLinkServiceConnectionStateRequiredAction"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlPrivateLinkServiceConnectionStateRequiredAction left, PostgreSqlPrivateLinkServiceConnectionStateRequiredAction right) => left.Equals(right);

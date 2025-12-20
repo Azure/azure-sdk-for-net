@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Delegated subnet usage data. </summary>
+    /// <summary>
+    /// Delegated subnet usage data.
+    /// Serialized Name: DelegatedSubnetUsage
+    /// </summary>
     public partial class PostgreSqlFlexibleServerDelegatedSubnetUsage
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
-        /// <param name="subnetName"> Name of the delegated subnet for which IP addresses are in use. </param>
-        /// <param name="usage"> Number of IP addresses used by the delegated subnet. </param>
+        /// <param name="subnetName">
+        /// Name of the delegated subnet for which IP addresses are in use
+        /// Serialized Name: DelegatedSubnetUsage.subnetName
+        /// </param>
+        /// <param name="usage">
+        /// Number of IP addresses used by the delegated subnet
+        /// Serialized Name: DelegatedSubnetUsage.usage
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerDelegatedSubnetUsage(string subnetName, long? usage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name of the delegated subnet for which IP addresses are in use. </summary>
+        /// <summary>
+        /// Name of the delegated subnet for which IP addresses are in use
+        /// Serialized Name: DelegatedSubnetUsage.subnetName
+        /// </summary>
         [WirePath("subnetName")]
         public string SubnetName { get; }
-        /// <summary> Number of IP addresses used by the delegated subnet. </summary>
+        /// <summary>
+        /// Number of IP addresses used by the delegated subnet
+        /// Serialized Name: DelegatedSubnetUsage.usage
+        /// </summary>
         [WirePath("usage")]
         public long? Usage { get; }
     }

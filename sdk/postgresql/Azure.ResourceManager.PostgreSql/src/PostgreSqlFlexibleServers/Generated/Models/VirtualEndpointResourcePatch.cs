@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Represents a virtual endpoint for a server. </summary>
+    /// <summary>
+    /// Pair of virtual endpoints for a server.
+    /// Serialized Name: VirtualEndpointResourceForPatch
+    /// </summary>
     public partial class VirtualEndpointResourcePatch
     {
         /// <summary>
@@ -43,7 +46,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourcePatch"/>. </summary>
         public VirtualEndpointResourcePatch()
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualEndpointResourcePatch"/>. </summary>
-        /// <param name="endpointType"> The endpoint type for the virtual endpoint. </param>
-        /// <param name="members"> List of members for a virtual endpoint. </param>
-        /// <param name="virtualEndpoints"> List of virtual endpoints for a server. </param>
+        /// <param name="endpointType">
+        /// Type of endpoint for the virtual endpoints.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.endpointType
+        /// </param>
+        /// <param name="members">
+        /// List of servers that one of the virtual endpoints can refer to.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.members
+        /// </param>
+        /// <param name="virtualEndpoints">
+        /// List of virtual endpoints for a server.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.virtualEndpoints
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal VirtualEndpointResourcePatch(VirtualEndpointType? endpointType, IList<string> members, IReadOnlyList<string> virtualEndpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,13 +77,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The endpoint type for the virtual endpoint. </summary>
+        /// <summary>
+        /// Type of endpoint for the virtual endpoints.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.endpointType
+        /// </summary>
         [WirePath("properties.endpointType")]
         public VirtualEndpointType? EndpointType { get; set; }
-        /// <summary> List of members for a virtual endpoint. </summary>
+        /// <summary>
+        /// List of servers that one of the virtual endpoints can refer to.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.members
+        /// </summary>
         [WirePath("properties.members")]
         public IList<string> Members { get; }
-        /// <summary> List of virtual endpoints for a server. </summary>
+        /// <summary>
+        /// List of virtual endpoints for a server.
+        /// Serialized Name: VirtualEndpointResourceForPatch.properties.virtualEndpoints
+        /// </summary>
         [WirePath("properties.virtualEndpoints")]
         public IReadOnlyList<string> VirtualEndpoints { get; }
     }

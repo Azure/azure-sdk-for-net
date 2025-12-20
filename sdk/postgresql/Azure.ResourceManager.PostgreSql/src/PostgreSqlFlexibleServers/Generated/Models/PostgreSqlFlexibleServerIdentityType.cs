@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </summary>
+    /// <summary>
+    /// Types of identities associated with a server.
+    /// Serialized Name: IdentityType
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerIdentityType : IEquatable<PostgreSqlFlexibleServerIdentityType>
     {
         private readonly string _value;
@@ -24,11 +27,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         private const string NoneValue = "None";
         private const string UserAssignedValue = "UserAssigned";
+        private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: IdentityType.None
+        /// </summary>
         public static PostgreSqlFlexibleServerIdentityType None { get; } = new PostgreSqlFlexibleServerIdentityType(NoneValue);
-        /// <summary> UserAssigned. </summary>
+        /// <summary>
+        /// UserAssigned
+        /// Serialized Name: IdentityType.UserAssigned
+        /// </summary>
         public static PostgreSqlFlexibleServerIdentityType UserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(UserAssignedValue);
+        /// <summary>
+        /// SystemAssigned,UserAssigned
+        /// Serialized Name: IdentityType.SystemAssigned,UserAssigned
+        /// </summary>
+        public static PostgreSqlFlexibleServerIdentityType SystemAssignedUserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerIdentityType left, PostgreSqlFlexibleServerIdentityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are not the same. </summary>

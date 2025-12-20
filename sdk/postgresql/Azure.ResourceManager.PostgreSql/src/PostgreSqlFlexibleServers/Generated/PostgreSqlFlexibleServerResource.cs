@@ -38,14 +38,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         private readonly ClientDiagnostics _postgreSqlFlexibleServerServersClientDiagnostics;
         private readonly ServersRestOperations _postgreSqlFlexibleServerServersRestClient;
-        private readonly ClientDiagnostics _serverCapabilitiesClientDiagnostics;
-        private readonly ServerCapabilitiesRestOperations _serverCapabilitiesRestClient;
-        private readonly ClientDiagnostics _flexibleServerClientDiagnostics;
-        private readonly FlexibleServerRestOperations _flexibleServerRestClient;
-        private readonly ClientDiagnostics _defaultClientDiagnostics;
-        private readonly PostgreSQLServerManagementRestOperations _defaultRestClient;
-        private readonly ClientDiagnostics _logFilesClientDiagnostics;
-        private readonly LogFilesRestOperations _logFilesRestClient;
+        private readonly ClientDiagnostics _capabilitiesByServerClientDiagnostics;
+        private readonly CapabilitiesByServerRestOperations _capabilitiesByServerRestClient;
+        private readonly ClientDiagnostics _postgreSqlMigrationMigrationsClientDiagnostics;
+        private readonly MigrationsRestOperations _postgreSqlMigrationMigrationsRestClient;
+        private readonly ClientDiagnostics _capturedLogsClientDiagnostics;
+        private readonly CapturedLogsRestOperations _capturedLogsRestClient;
+        private readonly ClientDiagnostics _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics;
+        private readonly BackupsLongTermRetentionRestOperations _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient;
         private readonly PostgreSqlFlexibleServerData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -73,14 +73,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _postgreSqlFlexibleServerServersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string postgreSqlFlexibleServerServersApiVersion);
             _postgreSqlFlexibleServerServersRestClient = new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlFlexibleServerServersApiVersion);
-            _serverCapabilitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _serverCapabilitiesRestClient = new ServerCapabilitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _flexibleServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _flexibleServerRestClient = new FlexibleServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _defaultRestClient = new PostgreSQLServerManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _logFilesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _logFilesRestClient = new LogFilesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _capabilitiesByServerClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _capabilitiesByServerRestClient = new CapabilitiesByServerRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _postgreSqlMigrationMigrationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlMigrationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PostgreSqlMigrationResource.ResourceType, out string postgreSqlMigrationMigrationsApiVersion);
+            _postgreSqlMigrationMigrationsRestClient = new MigrationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlMigrationMigrationsApiVersion);
+            _capturedLogsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _capturedLogsRestClient = new CapturedLogsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+            _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlLtrServerBackupOperationResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(PostgreSqlLtrServerBackupOperationResource.ResourceType, out string postgreSqlLtrServerBackupOperationBackupsLongTermRetentionApiVersion);
+            _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient = new BackupsLongTermRetentionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, postgreSqlLtrServerBackupOperationBackupsLongTermRetentionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -115,7 +117,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about a server administrator associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -123,11 +125,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Administrators_Get</description>
+        /// <description>AdministratorsMicrosoftEntra_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -135,7 +137,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="objectId"> Guid of the objectId for the administrator. </param>
+        /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -146,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about a server administrator associated to a Microsoft Entra principal.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -154,11 +156,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Administrators_Get</description>
+        /// <description>AdministratorsMicrosoftEntra_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -166,7 +168,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="objectId"> Guid of the objectId for the administrator. </param>
+        /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="objectId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -174,6 +176,71 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public virtual Response<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource> GetPostgreSqlFlexibleServerActiveDirectoryAdministrator(string objectId, CancellationToken cancellationToken = default)
         {
             return GetPostgreSqlFlexibleServerActiveDirectoryAdministrators().Get(objectId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ServerThreatProtectionSettingsModelResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of ServerThreatProtectionSettingsModelResources and their operations over a ServerThreatProtectionSettingsModelResource. </returns>
+        public virtual ServerThreatProtectionSettingsModelCollection GetServerThreatProtectionSettingsModels()
+        {
+            return GetCachedClient(client => new ServerThreatProtectionSettingsModelCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets state of advanced threat protection settings for a server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{threatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServerThreatProtectionSettingsModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ServerThreatProtectionSettingsModelResource>> GetServerThreatProtectionSettingsModelAsync(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return await GetServerThreatProtectionSettingsModels().GetAsync(threatProtectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets state of advanced threat protection settings for a server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{threatProtectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServerThreatProtectionSettingsModelResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<ServerThreatProtectionSettingsModelResource> GetServerThreatProtectionSettingsModel(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
+        {
+            return GetServerThreatProtectionSettingsModels().Get(threatProtectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PostgreSqlFlexibleServerBackupResources in the PostgreSqlFlexibleServer. </summary>
@@ -184,7 +251,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get specific backup for a given server.
+        /// Gets information of an on demand backup, given its name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -192,11 +259,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Backups_Get</description>
+        /// <description>BackupsAutomaticAndOnDemand_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -204,7 +271,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupName"> The name of the backup. </param>
+        /// <param name="backupName"> Name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -215,7 +282,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get specific backup for a given server.
+        /// Gets information of an on demand backup, given its name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -223,11 +290,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Backups_Get</description>
+        /// <description>BackupsAutomaticAndOnDemand_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -235,7 +302,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="backupName"> The name of the backup. </param>
+        /// <param name="backupName"> Name of the backup. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="backupName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -243,6 +310,75 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public virtual Response<PostgreSqlFlexibleServerBackupResource> GetPostgreSqlFlexibleServerBackup(string backupName, CancellationToken cancellationToken = default)
         {
             return GetPostgreSqlFlexibleServerBackups().Get(backupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of PostgreSqlMigrationResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of PostgreSqlMigrationResources and their operations over a PostgreSqlMigrationResource. </returns>
+        public virtual PostgreSqlMigrationCollection GetPostgreSqlMigrations()
+        {
+            return GetCachedClient(client => new PostgreSqlMigrationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets information about a migration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/migrations/{migrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Migrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PostgreSqlMigrationResource>> GetPostgreSqlMigrationAsync(string migrationName, CancellationToken cancellationToken = default)
+        {
+            return await GetPostgreSqlMigrations().GetAsync(migrationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets information about a migration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/migrations/{migrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Migrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="migrationName"> Name of migration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PostgreSqlMigrationResource> GetPostgreSqlMigration(string migrationName, CancellationToken cancellationToken = default)
+        {
+            return GetPostgreSqlMigrations().Get(migrationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PostgreSqlFlexibleServerConfigurationResources in the PostgreSqlFlexibleServer. </summary>
@@ -253,7 +389,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a configuration of server.
+        /// Gets information about a specific configuration (also known as server parameter) of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -265,7 +401,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -273,7 +409,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of the server configuration. </param>
+        /// <param name="configurationName"> Name of the configuration (also known as server parameter). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -284,7 +420,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a configuration of server.
+        /// Gets information about a specific configuration (also known as server parameter) of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -296,7 +432,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -304,7 +440,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of the server configuration. </param>
+        /// <param name="configurationName"> Name of the configuration (also known as server parameter). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -322,7 +458,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a database.
+        /// Gets information about an existing database.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -334,7 +470,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -342,7 +478,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="databaseName"> Name of the database (case-sensitive). Exact database names can be retrieved by getting the list of all existing databases in a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -353,7 +489,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a database.
+        /// Gets information about an existing database.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -365,7 +501,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -373,7 +509,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="databaseName"> Name of the database (case-sensitive). Exact database names can be retrieved by getting the list of all existing databases in a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -391,7 +527,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// List all the firewall rules in a given server.
+        /// Gets information about a firewall rule in a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -403,7 +539,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -411,7 +547,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
+        /// <param name="firewallRuleName"> Name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -422,7 +558,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// List all the firewall rules in a given server.
+        /// Gets information about a firewall rule in a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -434,7 +570,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -442,7 +578,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="firewallRuleName"> The name of the server firewall rule. </param>
+        /// <param name="firewallRuleName"> Name of the firewall rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="firewallRuleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="firewallRuleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -460,7 +596,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets the result of the give long term retention backup operation for the flexible server.
+        /// Gets the results of a long retention backup operation for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -468,11 +604,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ltrBackupOperations_Get</description>
+        /// <description>BackupsLongTermRetention_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -491,7 +627,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets the result of the give long term retention backup operation for the flexible server.
+        /// Gets the results of a long retention backup operation for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -499,11 +635,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ltrBackupOperations_Get</description>
+        /// <description>BackupsLongTermRetention_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -519,75 +655,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         public virtual Response<PostgreSqlLtrServerBackupOperationResource> GetPostgreSqlLtrServerBackupOperation(string backupName, CancellationToken cancellationToken = default)
         {
             return GetPostgreSqlLtrServerBackupOperations().Get(backupName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PostgreSqlMigrationResources in the PostgreSqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of PostgreSqlMigrationResources and their operations over a PostgreSqlMigrationResource. </returns>
-        public virtual PostgreSqlMigrationCollection GetPostgreSqlMigrations()
-        {
-            return GetCachedClient(client => new PostgreSqlMigrationCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets details of a migration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{targetDbServerName}/migrations/{migrationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Migrations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlMigrationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PostgreSqlMigrationResource>> GetPostgreSqlMigrationAsync(string migrationName, CancellationToken cancellationToken = default)
-        {
-            return await GetPostgreSqlMigrations().GetAsync(migrationName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets details of a migration.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{targetDbServerName}/migrations/{migrationName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Migrations_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PostgreSqlMigrationResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="migrationName"> The name of the migration. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="migrationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PostgreSqlMigrationResource> GetPostgreSqlMigration(string migrationName, CancellationToken cancellationToken = default)
-        {
-            return GetPostgreSqlMigrations().Get(migrationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of PostgreSqlFlexibleServersPrivateEndpointConnectionResources in the PostgreSqlFlexibleServer. </summary>
@@ -610,7 +677,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -618,7 +685,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -641,7 +708,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -649,7 +716,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -679,7 +746,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -710,7 +777,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,69 +795,69 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             return GetPostgreSqlFlexibleServersPrivateLinkResources().Get(groupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ServerThreatProtectionSettingsModelResources in the PostgreSqlFlexibleServer. </summary>
-        /// <returns> An object representing collection of ServerThreatProtectionSettingsModelResources and their operations over a ServerThreatProtectionSettingsModelResource. </returns>
-        public virtual ServerThreatProtectionSettingsModelCollection GetServerThreatProtectionSettingsModels()
+        /// <summary> Gets a collection of TuningOptionResources in the PostgreSqlFlexibleServer. </summary>
+        /// <returns> An object representing collection of TuningOptionResources and their operations over a TuningOptionResource. </returns>
+        public virtual TuningOptionCollection GetTuningOptions()
         {
-            return GetCachedClient(client => new ServerThreatProtectionSettingsModelCollection(client, Id));
+            return GetCachedClient(client => new TuningOptionCollection(client, Id));
         }
 
         /// <summary>
-        /// Get a server's Advanced Threat Protection settings.
+        /// Gets the tuning options of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{threatProtectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>TuningOptions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerThreatProtectionSettingsModelResource"/></description>
+        /// <description><see cref="TuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="tuningOption"> The name of the tuning option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServerThreatProtectionSettingsModelResource>> GetServerThreatProtectionSettingsModelAsync(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TuningOptionResource>> GetTuningOptionAsync(FooTuningOption tuningOption, CancellationToken cancellationToken = default)
         {
-            return await GetServerThreatProtectionSettingsModels().GetAsync(threatProtectionName, cancellationToken).ConfigureAwait(false);
+            return await GetTuningOptions().GetAsync(tuningOption, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Get a server's Advanced Threat Protection settings.
+        /// Gets the tuning options of a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/advancedThreatProtectionSettings/{threatProtectionName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/tuningOptions/{tuningOption}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>TuningOptions_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServerThreatProtectionSettingsModelResource"/></description>
+        /// <description><see cref="TuningOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="tuningOption"> The name of the tuning option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         [ForwardsClientCalls]
-        public virtual Response<ServerThreatProtectionSettingsModelResource> GetServerThreatProtectionSettingsModel(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
+        public virtual Response<TuningOptionResource> GetTuningOption(FooTuningOption tuningOption, CancellationToken cancellationToken = default)
         {
-            return GetServerThreatProtectionSettingsModels().Get(threatProtectionName, cancellationToken);
+            return GetTuningOptions().Get(tuningOption, cancellationToken);
         }
 
         /// <summary> Gets a collection of VirtualEndpointResources in the PostgreSqlFlexibleServer. </summary>
@@ -801,7 +868,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a virtual endpoint.
+        /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -813,7 +880,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -821,7 +888,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -832,7 +899,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a virtual endpoint.
+        /// Gets information about a pair of virtual endpoints.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -844,7 +911,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -852,7 +919,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="virtualEndpointName"> The name of the virtual endpoint. </param>
+        /// <param name="virtualEndpointName"> Base name of the virtual endpoints. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="virtualEndpointName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="virtualEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -863,7 +930,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -875,7 +942,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -903,7 +970,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Gets information about a server.
+        /// Gets information about an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -915,7 +982,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -943,7 +1010,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Deletes a server.
+        /// Deletes or drops an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -955,7 +1022,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -985,7 +1052,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Deletes a server.
+        /// Deletes or drops an existing server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -997,7 +1064,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1027,7 +1094,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Updates an existing server. The request body can contain one to many of the properties present in the normal server definition.
+        /// Updates an existing server. The request body can contain one or multiple of the properties present in the normal server definition.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1039,7 +1106,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1048,10 +1115,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The required parameters for updating a server. </param>
+        /// <param name="patch"> Parameters required to update a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerResource>> UpdateAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -1060,9 +1127,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _postgreSqlFlexibleServerServersRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -1073,7 +1140,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Updates an existing server. The request body can contain one to many of the properties present in the normal server definition.
+        /// Updates an existing server. The request body can contain one or multiple of the properties present in the normal server definition.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1085,7 +1152,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1094,10 +1161,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> The required parameters for updating a server. </param>
+        /// <param name="patch"> Parameters required to update a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServerResource> Update(WaitUntil waitUntil, PostgreSqlFlexibleServerPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Update(WaitUntil waitUntil, PostgreSqlFlexibleServerPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
@@ -1106,9 +1173,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _postgreSqlFlexibleServerServersRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerResource>(new PostgreSqlFlexibleServerOperationSource(Client), _postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_postgreSqlFlexibleServerServersClientDiagnostics, Pipeline, _postgreSqlFlexibleServerServersRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -1119,59 +1186,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get capabilities for a flexible server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerCapabilities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetServerCapabilitiesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), _serverCapabilitiesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetServerCapabilities", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get capabilities for a flexible server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ServerCapabilities_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetServerCapabilities(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverCapabilitiesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverCapabilitiesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), _serverCapabilitiesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetServerCapabilities", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Restarts a server.
+        /// Restarts PostgreSQL database engine in a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1183,7 +1198,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1192,7 +1207,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="postgreSqlFlexibleServerRestartParameter"> The parameters for restarting a server. </param>
+        /// <param name="postgreSqlFlexibleServerRestartParameter"> Parameters to restart a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> RestartAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerRestartParameter postgreSqlFlexibleServerRestartParameter = null, CancellationToken cancellationToken = default)
         {
@@ -1214,7 +1229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Restarts a server.
+        /// Restarts PostgreSQL database engine in a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1226,7 +1241,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1235,7 +1250,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="postgreSqlFlexibleServerRestartParameter"> The parameters for restarting a server. </param>
+        /// <param name="postgreSqlFlexibleServerRestartParameter"> Parameters to restart a server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Restart(WaitUntil waitUntil, PostgreSqlFlexibleServerRestartParameter postgreSqlFlexibleServerRestartParameter = null, CancellationToken cancellationToken = default)
         {
@@ -1257,7 +1272,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Starts a server.
+        /// Starts a stopped server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1269,7 +1284,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1299,7 +1314,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Starts a server.
+        /// Starts a stopped server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1311,7 +1326,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1353,7 +1368,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1395,7 +1410,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1425,34 +1440,90 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// PreBackup operation performs all the checks that are needed for the subsequent long term retention backup operation to succeed.
+        /// Lists the capabilities available for a given server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrPreBackup</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/capabilities</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FlexibleServer_TriggerLtrPreBackup</description>
+        /// <description>CapabilitiesByServer_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByServersAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilitiesByServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilitiesByServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), _capabilitiesByServerClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapabilitiesByServers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the capabilities available for a given server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapabilitiesByServer_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByServers(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capabilitiesByServerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capabilitiesByServerRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), _capabilitiesByServerClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapabilitiesByServers", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Checks if a proposed migration name is valid and available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/checkMigrationNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Migrations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Parameters required to check if a migration name is valid and available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerLtrPreBackupResult>> TriggerLtrPreBackupFlexibleServerAsync(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckNameAvailabilityMigrationAsync(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _flexibleServerClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.TriggerLtrPreBackupFlexibleServer");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckNameAvailabilityMigration");
             scope.Start();
             try
             {
-                var response = await _flexibleServerRestClient.TriggerLtrPreBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var response = await _postgreSqlMigrationMigrationsRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -1463,34 +1534,38 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// PreBackup operation performs all the checks that are needed for the subsequent long term retention backup operation to succeed.
+        /// Checks if a proposed migration name is valid and available.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrPreBackup</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/checkMigrationNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FlexibleServer_TriggerLtrPreBackup</description>
+        /// <description>Migrations_CheckNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlMigrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Request body for operation. </param>
+        /// <param name="content"> Parameters required to check if a migration name is valid and available. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlFlexibleServerLtrPreBackupResult> TriggerLtrPreBackupFlexibleServer(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckNameAvailabilityMigration(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _flexibleServerClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.TriggerLtrPreBackupFlexibleServer");
+            using var scope = _postgreSqlMigrationMigrationsClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckNameAvailabilityMigration");
             scope.Start();
             try
             {
-                var response = _flexibleServerRestClient.TriggerLtrPreBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var response = _postgreSqlMigrationMigrationsRestClient.CheckNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -1501,7 +1576,143 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Start the Long Term Retention Backup operation
+        /// Lists all captured logs for download in a server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/logFiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapturedLogs_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerLogFile> GetCapturedLogsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capturedLogsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capturedLogsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(e), _capturedLogsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapturedLogs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists all captured logs for download in a server.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/logFiles</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapturedLogs_ListByServer</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerLogFile> GetCapturedLogs(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _capturedLogsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _capturedLogsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(e), _capturedLogsClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetCapturedLogs", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Performs all checks required for a long term retention backup operation to succeed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrPreBackup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupsLongTermRetention_CheckPrerequisites</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<PostgreSqlFlexibleServerLtrPreBackupResult>> CheckPrerequisitesBackupsLongTermRetentionAsync(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPrerequisitesBackupsLongTermRetention");
+            scope.Start();
+            try
+            {
+                var response = await _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.CheckPrerequisitesAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Performs all checks required for a long term retention backup operation to succeed.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/ltrPreBackup</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BackupsLongTermRetention_CheckPrerequisites</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Request body for operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<PostgreSqlFlexibleServerLtrPreBackupResult> CheckPrerequisitesBackupsLongTermRetention(PostgreSqlFlexibleServerLtrPreBackupContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPrerequisitesBackupsLongTermRetention");
+            scope.Start();
+            try
+            {
+                var response = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.CheckPrerequisites(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Initiates a long term retention backup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1509,11 +1720,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FlexibleServer_StartLtrBackup</description>
+        /// <description>BackupsLongTermRetention_Start</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1521,16 +1736,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrBackupResult>> StartLtrBackupFlexibleServerAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PostgreSqlFlexibleServerLtrBackupResult>> StartBackupsLongTermRetentionAsync(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _flexibleServerClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.StartLtrBackupFlexibleServer");
+            using var scope = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.StartBackupsLongTermRetention");
             scope.Start();
             try
             {
-                var response = await _flexibleServerRestClient.StartLtrBackupAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _flexibleServerClientDiagnostics, Pipeline, _flexibleServerRestClient.CreateStartLtrBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = await _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.StartAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics, Pipeline, _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -1543,7 +1758,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Start the Long Term Retention Backup operation
+        /// Initiates a long term retention backup.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -1551,11 +1766,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FlexibleServer_StartLtrBackup</description>
+        /// <description>BackupsLongTermRetention_Start</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlLtrServerBackupOperationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1563,16 +1782,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="content"> Request body for operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> StartLtrBackupFlexibleServer(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> StartBackupsLongTermRetention(WaitUntil waitUntil, PostgreSqlFlexibleServerLtrBackupContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = _flexibleServerClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.StartLtrBackupFlexibleServer");
+            using var scope = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.StartBackupsLongTermRetention");
             scope.Start();
             try
             {
-                var response = _flexibleServerRestClient.StartLtrBackup(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _flexibleServerClientDiagnostics, Pipeline, _flexibleServerRestClient.CreateStartLtrBackupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
+                var response = _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.Start(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
+                var operation = new FlexibleServersArmOperation<PostgreSqlFlexibleServerLtrBackupResult>(new PostgreSqlFlexibleServerLtrBackupResultOperationSource(), _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionClientDiagnostics, Pipeline, _postgreSqlLtrServerBackupOperationBackupsLongTermRetentionRestClient.CreateStartRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -1582,134 +1801,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// This method checks whether a proposed migration name is valid and available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{targetDbServerName}/checkMigrationNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckMigrationNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The required parameters for checking if a migration name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlCheckMigrationNameAvailabilityContent>> CheckPostgreSqlMigrationNameAvailabilityAsync(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPostgreSqlMigrationNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = await _defaultRestClient.CheckMigrationNameAvailabilityAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This method checks whether a proposed migration name is valid and available.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{targetDbServerName}/checkMigrationNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckMigrationNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The required parameters for checking if a migration name is available. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlCheckMigrationNameAvailabilityContent> CheckPostgreSqlMigrationNameAvailability(PostgreSqlCheckMigrationNameAvailabilityContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _defaultClientDiagnostics.CreateScope("PostgreSqlFlexibleServerResource.CheckPostgreSqlMigrationNameAvailability");
-            scope.Start();
-            try
-            {
-                var response = _defaultRestClient.CheckMigrationNameAvailability(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// List all the server log files in a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/logFiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogFiles_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerLogFile> GetPostgreSqlFlexibleServerLogFilesAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logFilesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(e), _logFilesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetPostgreSqlFlexibleServerLogFiles", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List all the server log files in a given server.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/logFiles</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>LogFiles_ListByServer</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerLogFile"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerLogFile> GetPostgreSqlFlexibleServerLogFiles(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _logFilesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _logFilesRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerLogFile.DeserializePostgreSqlFlexibleServerLogFile(e), _logFilesClientDiagnostics, Pipeline, "PostgreSqlFlexibleServerResource.GetPostgreSqlFlexibleServerLogFiles", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1725,7 +1816,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1764,7 +1855,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     patch.Tags[key] = value;
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1787,7 +1878,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1826,7 +1917,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     patch.Tags[key] = value;
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Get(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -1849,7 +1940,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1883,7 +1974,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     var patch = new PostgreSqlFlexibleServerPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -1906,7 +1997,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1940,7 +2031,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     var patch = new PostgreSqlFlexibleServerPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Get(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)
@@ -1963,7 +2054,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2000,7 +2091,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     patch.Tags.Remove(key);
                     var result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
@@ -2023,7 +2114,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2060,7 +2151,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     }
                     patch.Tags.Remove(key);
                     var result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
-                    return Response.FromValue(result.Value, result.GetRawResponse());
+                    return Get(cancellationToken: cancellationToken);
                 }
             }
             catch (Exception e)

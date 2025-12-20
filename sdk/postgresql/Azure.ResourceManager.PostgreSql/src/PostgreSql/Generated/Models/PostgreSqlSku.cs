@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> Billing information related properties of a server. </summary>
+    /// <summary>
+    /// Billing information related properties of a server.
+    /// Serialized Name: Sku
+    /// </summary>
     public partial class PostgreSqlSku
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlSku"/>. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
+        /// <param name="name">
+        /// The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.
+        /// Serialized Name: Sku.name
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PostgreSqlSku(string name)
         {
@@ -56,11 +62,26 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlSku"/>. </summary>
-        /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </param>
-        /// <param name="tier"> The tier of the particular SKU, e.g. Basic. </param>
-        /// <param name="capacity"> The scale up/out capacity, representing server's compute units. </param>
-        /// <param name="size"> The size code, to be interpreted by resource as appropriate. </param>
-        /// <param name="family"> The family of hardware. </param>
+        /// <param name="name">
+        /// The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.
+        /// Serialized Name: Sku.name
+        /// </param>
+        /// <param name="tier">
+        /// The tier of the particular SKU, e.g. Basic.
+        /// Serialized Name: Sku.tier
+        /// </param>
+        /// <param name="capacity">
+        /// The scale up/out capacity, representing server's compute units.
+        /// Serialized Name: Sku.capacity
+        /// </param>
+        /// <param name="size">
+        /// The size code, to be interpreted by resource as appropriate.
+        /// Serialized Name: Sku.size
+        /// </param>
+        /// <param name="family">
+        /// The family of hardware.
+        /// Serialized Name: Sku.family
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlSku(string name, PostgreSqlSkuTier? tier, int? capacity, string size, string family, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,19 +98,34 @@ namespace Azure.ResourceManager.PostgreSql.Models
         {
         }
 
-        /// <summary> The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8. </summary>
+        /// <summary>
+        /// The name of the sku, typically, tier + family + cores, e.g. B_Gen4_1, GP_Gen5_8.
+        /// Serialized Name: Sku.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary> The tier of the particular SKU, e.g. Basic. </summary>
+        /// <summary>
+        /// The tier of the particular SKU, e.g. Basic.
+        /// Serialized Name: Sku.tier
+        /// </summary>
         [WirePath("tier")]
         public PostgreSqlSkuTier? Tier { get; set; }
-        /// <summary> The scale up/out capacity, representing server's compute units. </summary>
+        /// <summary>
+        /// The scale up/out capacity, representing server's compute units.
+        /// Serialized Name: Sku.capacity
+        /// </summary>
         [WirePath("capacity")]
         public int? Capacity { get; set; }
-        /// <summary> The size code, to be interpreted by resource as appropriate. </summary>
+        /// <summary>
+        /// The size code, to be interpreted by resource as appropriate.
+        /// Serialized Name: Sku.size
+        /// </summary>
         [WirePath("size")]
         public string Size { get; set; }
-        /// <summary> The family of hardware. </summary>
+        /// <summary>
+        /// The family of hardware.
+        /// Serialized Name: Sku.family
+        /// </summary>
         [WirePath("family")]
         public string Family { get; set; }
     }

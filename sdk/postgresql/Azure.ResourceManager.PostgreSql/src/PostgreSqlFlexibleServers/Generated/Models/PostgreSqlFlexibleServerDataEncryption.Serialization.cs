@@ -60,12 +60,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(KeyType.Value.ToString());
             }
-            if (Optional.IsDefined(PrimaryEncryptionKeyStatus))
+            if (options.Format != "W" && Optional.IsDefined(PrimaryEncryptionKeyStatus))
             {
                 writer.WritePropertyName("primaryEncryptionKeyStatus"u8);
                 writer.WriteStringValue(PrimaryEncryptionKeyStatus.Value.ToString());
             }
-            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus))
+            if (options.Format != "W" && Optional.IsDefined(GeoBackupEncryptionKeyStatus))
             {
                 writer.WritePropertyName("geoBackupEncryptionKeyStatus"u8);
                 writer.WriteStringValue(GeoBackupEncryptionKeyStatus.Value.ToString());

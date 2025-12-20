@@ -27,6 +27,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     {
         private readonly ClientDiagnostics _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics;
         private readonly ServerThreatProtectionSettingsRestOperations _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient;
+        private readonly ClientDiagnostics _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics;
+        private readonly AdvancedThreatProtectionSettingsRestOperations _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ServerThreatProtectionSettingsModelCollection"/> class for mocking. </summary>
         protected ServerThreatProtectionSettingsModelCollection()
@@ -41,6 +43,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ServerThreatProtectionSettingsModelResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ServerThreatProtectionSettingsModelResource.ResourceType, out string serverThreatProtectionSettingsModelServerThreatProtectionSettingsApiVersion);
             _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient = new ServerThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverThreatProtectionSettingsModelServerThreatProtectionSettingsApiVersion);
+            _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ServerThreatProtectionSettingsModelResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ServerThreatProtectionSettingsModelResource.ResourceType, out string serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsApiVersion);
+            _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient = new AdvancedThreatProtectionSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,7 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -74,11 +79,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
-        /// <param name="data"> The Advanced Threat Protection state for the flexible server. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
+        /// <param name="data"> The Advanced Threat Protection state for the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ServerThreatProtectionSettingsModelResource>> CreateOrUpdateAsync(WaitUntil waitUntil, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -87,9 +92,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = await _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(new ServerThreatProtectionSettingsModelOperationSource(Client), _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
             }
             catch (Exception e)
@@ -112,7 +117,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -121,11 +126,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
-        /// <param name="data"> The Advanced Threat Protection state for the flexible server. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
+        /// <param name="data"> The Advanced Threat Protection state for the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ServerThreatProtectionSettingsModelResource> CreateOrUpdate(WaitUntil waitUntil, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, ThreatProtectionName threatProtectionName, ServerThreatProtectionSettingsModelData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -134,9 +139,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             try
             {
                 var response = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, data, cancellationToken);
-                var operation = new FlexibleServersArmOperation<ServerThreatProtectionSettingsModelResource>(new ServerThreatProtectionSettingsModelOperationSource(Client), _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var operation = new FlexibleServersArmOperation(_serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
+                    operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
             }
             catch (Exception e)
@@ -147,7 +152,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get a server's Advanced Threat Protection settings.
+        /// Gets state of advanced threat protection settings for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -155,11 +160,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,15 +172,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<ServerThreatProtectionSettingsModelResource>> GetAsync(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Get");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Get");
             scope.Start();
             try
             {
-                var response = await _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken).ConfigureAwait(false);
+                var response = await _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerThreatProtectionSettingsModelResource(Client, response.Value), response.GetRawResponse());
@@ -188,7 +193,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get a server's Advanced Threat Protection settings.
+        /// Gets state of advanced threat protection settings for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -196,11 +201,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,15 +213,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<ServerThreatProtectionSettingsModelResource> Get(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Get");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Get");
             scope.Start();
             try
             {
-                var response = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken);
+                var response = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new ServerThreatProtectionSettingsModelResource(Client, response.Value), response.GetRawResponse());
@@ -229,7 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         }
 
         /// <summary>
-        /// Get a list of server's Threat Protection state.
+        /// Lists state of advanced threat protection settings for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -237,11 +242,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_ListByServer</description>
+        /// <description>AdvancedThreatProtectionSettings_ListByServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,13 +258,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> An async collection of <see cref="ServerThreatProtectionSettingsModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServerThreatProtectionSettingsModelResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerThreatProtectionSettingsModelResource(Client, ServerThreatProtectionSettingsModelData.DeserializeServerThreatProtectionSettingsModelData(e)), _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerThreatProtectionSettingsModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServerThreatProtectionSettingsModelResource(Client, ServerThreatProtectionSettingsModelData.DeserializeServerThreatProtectionSettingsModelData(e)), _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerThreatProtectionSettingsModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// Get a list of server's Threat Protection state.
+        /// Lists state of advanced threat protection settings for a server.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -267,11 +272,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_ListByServer</description>
+        /// <description>AdvancedThreatProtectionSettings_ListByServer</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -283,9 +288,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <returns> A collection of <see cref="ServerThreatProtectionSettingsModelResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServerThreatProtectionSettingsModelResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerThreatProtectionSettingsModelResource(Client, ServerThreatProtectionSettingsModelData.DeserializeServerThreatProtectionSettingsModelData(e)), _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerThreatProtectionSettingsModelCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServerThreatProtectionSettingsModelResource(Client, ServerThreatProtectionSettingsModelData.DeserializeServerThreatProtectionSettingsModelData(e)), _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics, Pipeline, "ServerThreatProtectionSettingsModelCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -297,11 +302,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -309,15 +314,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<bool>> ExistsAsync(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Exists");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,11 +341,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,15 +353,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<bool> Exists(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Exists");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.Exists");
             scope.Start();
             try
             {
-                var response = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken);
+                var response = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -375,11 +380,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,15 +392,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<NullableResponse<ServerThreatProtectionSettingsModelResource>> GetIfExistsAsync(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.GetIfExists");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<ServerThreatProtectionSettingsModelResource>(response.GetRawResponse());
                 return Response.FromValue(new ServerThreatProtectionSettingsModelResource(Client, response.Value), response.GetRawResponse());
@@ -416,11 +421,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServerThreatProtectionSettings_Get</description>
+        /// <description>AdvancedThreatProtectionSettings_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01</description>
+        /// <description>2025-08-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -428,15 +433,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="threatProtectionName"> The name of the Threat Protection state. </param>
+        /// <param name="threatProtectionName"> Name of the advanced threat protection settings. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual NullableResponse<ServerThreatProtectionSettingsModelResource> GetIfExists(ThreatProtectionName threatProtectionName, CancellationToken cancellationToken = default)
         {
-            using var scope = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.GetIfExists");
+            using var scope = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsClientDiagnostics.CreateScope("ServerThreatProtectionSettingsModelCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _serverThreatProtectionSettingsModelServerThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken);
+                var response = _serverThreatProtectionSettingsModelAdvancedThreatProtectionSettingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, threatProtectionName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<ServerThreatProtectionSettingsModelResource>(response.GetRawResponse());
                 return Response.FromValue(new ServerThreatProtectionSettingsModelResource(Client, response.Value), response.GetRawResponse());

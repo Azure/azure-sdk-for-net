@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServerResource GetPostgreSqlFlexibleServerResource(ResourceIdentifier id)
+        {
+            PostgreSqlFlexibleServerResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServerResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -47,6 +59,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ServerThreatProtectionSettingsModelResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ServerThreatProtectionSettingsModelResource.CreateResourceIdentifier" /> to create a <see cref="ServerThreatProtectionSettingsModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ServerThreatProtectionSettingsModelResource"/> object. </returns>
+        public virtual ServerThreatProtectionSettingsModelResource GetServerThreatProtectionSettingsModelResource(ResourceIdentifier id)
+        {
+            ServerThreatProtectionSettingsModelResource.ValidateResourceId(id);
+            return new ServerThreatProtectionSettingsModelResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlFlexibleServerBackupResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PostgreSqlFlexibleServerBackupResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerBackupResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -56,6 +80,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         {
             PostgreSqlFlexibleServerBackupResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerBackupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlMigrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
+        public virtual PostgreSqlMigrationResource GetPostgreSqlMigrationResource(ResourceIdentifier id)
+        {
+            PostgreSqlMigrationResource.ValidateResourceId(id);
+            return new PostgreSqlMigrationResource(Client, id);
         }
 
         /// <summary>
@@ -95,18 +131,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerResource"/> object. </returns>
-        public virtual PostgreSqlFlexibleServerResource GetPostgreSqlFlexibleServerResource(ResourceIdentifier id)
-        {
-            PostgreSqlFlexibleServerResource.ValidateResourceId(id);
-            return new PostgreSqlFlexibleServerResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlLtrServerBackupOperationResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PostgreSqlLtrServerBackupOperationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlLtrServerBackupOperationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -116,18 +140,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         {
             PostgreSqlLtrServerBackupOperationResource.ValidateResourceId(id);
             return new PostgreSqlLtrServerBackupOperationResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlMigrationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
-        public virtual PostgreSqlMigrationResource GetPostgreSqlMigrationResource(ResourceIdentifier id)
-        {
-            PostgreSqlMigrationResource.ValidateResourceId(id);
-            return new PostgreSqlMigrationResource(Client, id);
         }
 
         /// <summary>
@@ -155,15 +167,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServerThreatProtectionSettingsModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServerThreatProtectionSettingsModelResource.CreateResourceIdentifier" /> to create a <see cref="ServerThreatProtectionSettingsModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="TuningOptionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="TuningOptionResource.CreateResourceIdentifier" /> to create a <see cref="TuningOptionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ServerThreatProtectionSettingsModelResource"/> object. </returns>
-        public virtual ServerThreatProtectionSettingsModelResource GetServerThreatProtectionSettingsModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="TuningOptionResource"/> object. </returns>
+        public virtual TuningOptionResource GetTuningOptionResource(ResourceIdentifier id)
         {
-            ServerThreatProtectionSettingsModelResource.ValidateResourceId(id);
-            return new ServerThreatProtectionSettingsModelResource(Client, id);
+            TuningOptionResource.ValidateResourceId(id);
+            return new TuningOptionResource(Client, id);
         }
 
         /// <summary>

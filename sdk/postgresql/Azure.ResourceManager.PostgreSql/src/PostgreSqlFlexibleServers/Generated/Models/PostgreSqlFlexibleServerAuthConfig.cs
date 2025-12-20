@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Authentication configuration properties of a server. </summary>
+    /// <summary>
+    /// Authentication configuration properties of a server.
+    /// Serialized Name: AuthConfig
+    /// </summary>
     public partial class PostgreSqlFlexibleServerAuthConfig
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerAuthConfig"/>. </summary>
-        /// <param name="activeDirectoryAuth"> If Enabled, Azure Active Directory authentication is enabled. </param>
-        /// <param name="passwordAuth"> If Enabled, Password authentication is enabled. </param>
-        /// <param name="tenantId"> Tenant id of the server. </param>
+        /// <param name="activeDirectoryAuth">
+        /// Indicates if the server supports Microsoft Entra authentication.
+        /// Serialized Name: AuthConfig.activeDirectoryAuth
+        /// </param>
+        /// <param name="passwordAuth">
+        /// Indicates if the server supports password based authentication.
+        /// Serialized Name: AuthConfig.passwordAuth
+        /// </param>
+        /// <param name="tenantId">
+        /// Identifier of the tenant of the delegated resource.
+        /// Serialized Name: AuthConfig.tenantId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerAuthConfig(PostgreSqlFlexibleServerActiveDirectoryAuthEnum? activeDirectoryAuth, PostgreSqlFlexibleServerPasswordAuthEnum? passwordAuth, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> If Enabled, Azure Active Directory authentication is enabled. </summary>
+        /// <summary>
+        /// Indicates if the server supports Microsoft Entra authentication.
+        /// Serialized Name: AuthConfig.activeDirectoryAuth
+        /// </summary>
         [WirePath("activeDirectoryAuth")]
         public PostgreSqlFlexibleServerActiveDirectoryAuthEnum? ActiveDirectoryAuth { get; set; }
-        /// <summary> If Enabled, Password authentication is enabled. </summary>
+        /// <summary>
+        /// Indicates if the server supports password based authentication.
+        /// Serialized Name: AuthConfig.passwordAuth
+        /// </summary>
         [WirePath("passwordAuth")]
         public PostgreSqlFlexibleServerPasswordAuthEnum? PasswordAuth { get; set; }
-        /// <summary> Tenant id of the server. </summary>
+        /// <summary>
+        /// Identifier of the tenant of the delegated resource.
+        /// Serialized Name: AuthConfig.tenantId
+        /// </summary>
         [WirePath("tenantId")]
         public Guid? TenantId { get; set; }
     }

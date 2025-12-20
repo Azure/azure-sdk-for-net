@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> The PostgreSqlPrivateLinkServiceConnectionStateProperty. </summary>
+    /// <summary>
+    /// The PostgreSqlPrivateLinkServiceConnectionStateProperty.
+    /// Serialized Name: PrivateLinkServiceConnectionStateProperty
+    /// </summary>
     public partial class PostgreSqlPrivateLinkServiceConnectionStateProperty
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
-        /// <param name="status"> The private link service connection status. </param>
-        /// <param name="description"> The private link service connection description. </param>
+        /// <param name="status">
+        /// The private link service connection status.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.status
+        /// </param>
+        /// <param name="description">
+        /// The private link service connection description.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.description
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="status"/> or <paramref name="description"/> is null. </exception>
         public PostgreSqlPrivateLinkServiceConnectionStateProperty(string status, string description)
         {
@@ -59,9 +68,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlPrivateLinkServiceConnectionStateProperty"/>. </summary>
-        /// <param name="status"> The private link service connection status. </param>
-        /// <param name="description"> The private link service connection description. </param>
-        /// <param name="actionsRequired"> The actions required for private link service connection. </param>
+        /// <param name="status">
+        /// The private link service connection status.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.status
+        /// </param>
+        /// <param name="description">
+        /// The private link service connection description.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.description
+        /// </param>
+        /// <param name="actionsRequired">
+        /// The actions required for private link service connection.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.actionsRequired
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlPrivateLinkServiceConnectionStateProperty(string status, string description, string actionsRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -76,13 +94,22 @@ namespace Azure.ResourceManager.PostgreSql.Models
         {
         }
 
-        /// <summary> The private link service connection status. </summary>
+        /// <summary>
+        /// The private link service connection status.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.status
+        /// </summary>
         [WirePath("status")]
         public string Status { get; set; }
-        /// <summary> The private link service connection description. </summary>
+        /// <summary>
+        /// The private link service connection description.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.description
+        /// </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> The actions required for private link service connection. </summary>
+        /// <summary>
+        /// The actions required for private link service connection.
+        /// Serialized Name: PrivateLinkServiceConnectionStateProperty.actionsRequired
+        /// </summary>
         [WirePath("actionsRequired")]
         public string ActionsRequired { get; }
     }

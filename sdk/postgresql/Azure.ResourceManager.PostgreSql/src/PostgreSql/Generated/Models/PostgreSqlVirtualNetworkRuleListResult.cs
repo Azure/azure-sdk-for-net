@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
-    /// <summary> A list of virtual network rules. </summary>
+    /// <summary>
+    /// A list of virtual network rules.
+    /// Serialized Name: VirtualNetworkRuleListResult
+    /// </summary>
     internal partial class PostgreSqlVirtualNetworkRuleListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlVirtualNetworkRuleListResult"/>. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// Array of results.
+        /// Serialized Name: VirtualNetworkRuleListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// Link to retrieve next page of results.
+        /// Serialized Name: VirtualNetworkRuleListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlVirtualNetworkRuleListResult(IReadOnlyList<PostgreSqlVirtualNetworkRuleData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.PostgreSql.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of results. </summary>
+        /// <summary>
+        /// Array of results.
+        /// Serialized Name: VirtualNetworkRuleListResult.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlVirtualNetworkRuleData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// Link to retrieve next page of results.
+        /// Serialized Name: VirtualNetworkRuleListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }
