@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.MongoCluster;
 using Azure.ResourceManager.Resources.Models;
@@ -140,11 +139,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 if (prop.NameEquals("privateEndpoint"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    privateEndpoint = ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerMongoClusterContext.Default);
+                    DeserializeSubResource(prop, ref privateEndpoint);
                     continue;
                 }
                 if (prop.NameEquals("privateLinkServiceConnectionState"u8))

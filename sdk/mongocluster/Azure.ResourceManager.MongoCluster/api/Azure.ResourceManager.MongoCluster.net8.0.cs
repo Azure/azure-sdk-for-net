@@ -283,6 +283,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterNameAvailabilityResult MongoClusterNameAvailabilityResult(bool? isNameAvailable = default(bool?), Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason? reason = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPatch MongoClusterPatch(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterUpdateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnection MongoClusterPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties MongoClusterPrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties MongoClusterPrivateEndpointConnectionProperties(System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.Resources.Models.SubResource privateEndpoint = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MongoCluster.MongoClusterPrivateEndpointConnectionResourceData MongoClusterPrivateEndpointConnectionResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceData MongoClusterPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkResourceProperties properties = null) { throw null; }
@@ -336,6 +337,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MongoClusterAuthenticationMode(string value) { throw null; }
+        public static Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode MicrosoftEntraId { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode MicrosoftEntraID { get { throw null; } }
         public static Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode NativeAuth { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MongoCluster.Models.MongoClusterAuthenticationMode other) { throw null; }
@@ -514,7 +516,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
     }
     public abstract partial class MongoClusterIdentityProvider : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider>
     {
-        internal MongoClusterIdentityProvider() { }
+        protected MongoClusterIdentityProvider() { }
         protected virtual Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.MongoCluster.Models.MongoClusterIdentityProvider PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -660,7 +662,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
     {
         public MongoClusterPrivateEndpointConnectionProperties(Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkServiceConnectionState privateLinkServiceConnectionState) { }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
-        public Azure.ResourceManager.Resources.Models.SubResource PrivateEndpoint { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.MongoCluster.Models.MongoClusterPrivateEndpointConnectionProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

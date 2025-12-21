@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
     [PersistableModelProxy(typeof(UnknownMongoClusterIdentityProvider))]
     public abstract partial class MongoClusterIdentityProvider : IJsonModel<MongoClusterIdentityProvider>
     {
-        /// <summary> Initializes a new instance of <see cref="MongoClusterIdentityProvider"/> for deserialization. </summary>
-        internal MongoClusterIdentityProvider()
-        {
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MongoClusterIdentityProvider>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)

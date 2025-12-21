@@ -47,9 +47,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <summary> The group ids for the private endpoint resource. </summary>
         public IReadOnlyList<string> GroupIds { get; }
 
-        /// <summary> The private endpoint resource. </summary>
-        public SubResource PrivateEndpoint { get; set; }
-
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         public MongoClusterPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get; set; }
 
