@@ -1103,4 +1103,113 @@ interface ScheduledActionExtension {
     ok(methodEntry, "getAssociatedScheduledActions should be in non-resource methods");
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
   });
+
+  it("list operation as first operation in interface", async () => {
+    const program = await typeSpecCompile(
+      `
+/** A parent resource */
+model ParentResource is TrackedResource<ParentResourceProperties> {
+  ...ResourceNameParameter<ParentResource>;
+}
+
+/** Parent properties */
+model ParentResourceProperties {
+  /** Name of parent */
+  name?: string;
+}
+
+/** A child resource */
+@parentResource(ParentResource)
+model ChildResource is TrackedResource<ChildResourceProperties> {
+  ...ResourceNameParameter<ChildResource>;
+}
+
+/** Child properties */
+model ChildResourceProperties {
+  /** Value of child */
+  value?: string;
+}
+
+@armResourceOperations
+interface ParentResources {
+  get is ArmResourceRead<ParentResource>;
+}
+
+@armResourceOperations
+interface ChildResources {
+  // List operation is intentionally placed first to test the fix
+  list is ArmResourceListByParent<ChildResource>;
+  
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<ChildResource>;
+  
+  get is ArmResourceRead<ChildResource>;
+  
+  delete is ArmResourceDeleteWithoutOkAsync<ChildResource>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    
+    // Build ARM provider schema and verify its structure
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+    strictEqual(armProviderSchema.resources.length, 2); // ParentResource and ChildResource
+    
+    // Find the ChildResource in the schema
+    const childResource = armProviderSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/parentResources/childResources"
+    );
+    ok(childResource, "ChildResource should be found");
+    const metadata = childResource.metadata;
+    ok(metadata);
+    
+    // Validate resource metadata
+    strictEqual(
+      metadata.resourceIdPattern,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/parentResources/{parentResourceName}/childResources/{childResourceName}"
+    );
+    strictEqual(
+      metadata.resourceType,
+      "Microsoft.ContosoProviderHub/parentResources/childResources"
+    );
+    strictEqual(metadata.resourceScope, "ResourceGroup");
+    strictEqual(
+      metadata.parentResourceId,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/parentResources/{parentResourceName}"
+    );
+    strictEqual(metadata.resourceName, "ChildResource");
+    strictEqual(metadata.methods.length, 4); // List, Create, Get, Delete
+    
+    // Validate all method kinds are present
+    const methodKinds = metadata.methods.map((m: any) => m.kind);
+    ok(methodKinds.includes("List"), "List operation should be present");
+    ok(methodKinds.includes("Create"), "Create operation should be present");
+    ok(methodKinds.includes("Get"), "Get operation should be present");
+    ok(methodKinds.includes("Delete"), "Delete operation should be present");
+    
+    // Validate List method details - this is the critical test
+    const listMethod = metadata.methods.find((m: any) => m.kind === "List");
+    ok(listMethod, "List method should be found");
+    strictEqual(
+      listMethod.operationPath,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/parentResources/{parentResourceName}/childResources"
+    );
+    strictEqual(listMethod.operationScope, ResourceScope.ResourceGroup);
+    strictEqual(
+      listMethod.resourceScope,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/parentResources/{parentResourceName}"
+    );
+    
+    // Validate Get method details
+    const getMethod = metadata.methods.find((m: any) => m.kind === "Get");
+    ok(getMethod, "Get method should be found");
+    strictEqual(
+      getMethod.operationPath,
+      "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/parentResources/{parentResourceName}/childResources/{childResourceName}"
+    );
+  });
 });
