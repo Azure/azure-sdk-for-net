@@ -86,11 +86,13 @@ namespace Azure.ResourceManager.MongoCluster
         /// <returns> A collection of <see cref="MongoClusterPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MongoClusterPrivateEndpointConnectionResource> GetByMongoClusterAsync(CancellationToken cancellationToken = default)
         {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
+            throw new NotImplementedException();
+
+            // RequestContext context = new RequestContext
+            // {
+            //     CancellationToken = cancellationToken
+            // };
+            // return new AsyncPageableWrapper<MongoClusterPrivateEndpointConnectionResourceData, MongoClusterPrivateEndpointConnectionResource>(new PrivateEndpointConnectionsGetByMongoClusterAsyncCollectionResultOfT(_privateEndpointConnectionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context), data => new MongoClusterPrivateEndpointConnectionResource(Client, data));
         }
     }
 }

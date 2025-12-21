@@ -1918,7 +1918,7 @@
     {
       "$id": "170",
       "kind": "constant",
-      "name": "listByMongoClusterContentType1",
+      "name": "getContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1934,7 +1934,7 @@
     {
       "$id": "172",
       "kind": "constant",
-      "name": "getContentType2",
+      "name": "createContentType",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1950,7 +1950,7 @@
     {
       "$id": "174",
       "kind": "constant",
-      "name": "createContentType",
+      "name": "createContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1966,7 +1966,7 @@
     {
       "$id": "176",
       "kind": "constant",
-      "name": "createContentType1",
+      "name": "createContentType2",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1982,7 +1982,7 @@
     {
       "$id": "178",
       "kind": "constant",
-      "name": "createContentType2",
+      "name": "createContentType3",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -1998,7 +1998,7 @@
     {
       "$id": "180",
       "kind": "constant",
-      "name": "createContentType3",
+      "name": "listByMongoClusterContentType1",
       "namespace": "",
       "usage": "None",
       "valueType": {
@@ -6392,6 +6392,82 @@
     {
       "$id": "478",
       "kind": "model",
+      "name": "MongoClusterPrivateEndpointConnectionResource",
+      "namespace": "Azure.ResourceManager.MongoCluster",
+      "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnectionResource",
+      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+      "doc": "Concrete proxy resource types can be created by aliasing this type using a specific property type.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ResourceManager.Private.@armResourceInternal",
+          "arguments": {}
+        },
+        {
+          "name": "TypeSpec.Rest.@parentResource",
+          "arguments": {}
+        }
+      ],
+      "baseModel": {
+        "$ref": "462"
+      },
+      "properties": [
+        {
+          "$id": "479",
+          "kind": "property",
+          "name": "properties",
+          "serializedName": "properties",
+          "doc": "The resource-specific properties for this resource.",
+          "type": {
+            "$ref": "332"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnectionResource.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false
+        },
+        {
+          "$id": "480",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "doc": "The name of the private endpoint connection associated with the Azure resource.",
+          "type": {
+            "$id": "481",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnectionResource.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true
+        }
+      ]
+    },
+    {
+      "$id": "482",
+      "kind": "model",
       "name": "PrivateEndpointConnectionResourceListResult",
       "namespace": "Azure.ResourceManager.MongoCluster",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
@@ -6405,90 +6481,17 @@
       ],
       "properties": [
         {
-          "$id": "479",
+          "$id": "483",
           "kind": "property",
           "name": "value",
           "serializedName": "value",
           "doc": "The PrivateEndpointConnectionResource items on this page",
           "type": {
-            "$id": "480",
+            "$id": "484",
             "kind": "array",
             "name": "ArrayPrivateEndpointConnectionResource",
             "valueType": {
-              "$id": "481",
-              "kind": "model",
-              "name": "MongoClusterPrivateEndpointConnectionResource",
-              "namespace": "Azure.ResourceManager.MongoCluster",
-              "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnectionResource",
-              "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-              "doc": "Concrete proxy resource types can be created by aliasing this type using a specific property type.",
-              "decorators": [
-                {
-                  "name": "Azure.ResourceManager.@armProviderNamespace",
-                  "arguments": {}
-                },
-                {
-                  "name": "Azure.ResourceManager.Private.@armResourceInternal",
-                  "arguments": {}
-                },
-                {
-                  "name": "TypeSpec.Rest.@parentResource",
-                  "arguments": {}
-                }
-              ],
-              "baseModel": {
-                "$ref": "462"
-              },
-              "properties": [
-                {
-                  "$id": "482",
-                  "kind": "property",
-                  "name": "properties",
-                  "serializedName": "properties",
-                  "doc": "The resource-specific properties for this resource.",
-                  "type": {
-                    "$ref": "332"
-                  },
-                  "optional": true,
-                  "readOnly": false,
-                  "discriminator": false,
-                  "flatten": false,
-                  "decorators": [],
-                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnectionResource.properties",
-                  "serializationOptions": {
-                    "json": {
-                      "name": "properties"
-                    }
-                  },
-                  "isHttpMetadata": false
-                },
-                {
-                  "$id": "483",
-                  "kind": "property",
-                  "name": "name",
-                  "serializedName": "name",
-                  "doc": "The name of the private endpoint connection associated with the Azure resource.",
-                  "type": {
-                    "$id": "484",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "optional": false,
-                  "readOnly": true,
-                  "discriminator": false,
-                  "flatten": false,
-                  "decorators": [],
-                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnectionResource.name",
-                  "serializationOptions": {
-                    "json": {
-                      "name": "name"
-                    }
-                  },
-                  "isHttpMetadata": true
-                }
-              ]
+              "$ref": "478"
             },
             "crossLanguageDefinitionId": "TypeSpec.Array",
             "decorators": []
@@ -6540,9 +6543,6 @@
           "isHttpMetadata": false
         }
       ]
-    },
-    {
-      "$ref": "481"
     },
     {
       "$id": "488",
@@ -7636,14 +7636,6 @@
                   },
                   {
                     "$id": "561",
-                    "methodId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster",
-                    "kind": "List",
-                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections",
-                    "operationScope": "ResourceGroup",
-                    "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}"
-                  },
-                  {
-                    "$id": "562",
                     "methodId": "Microsoft.DocumentDB.PrivateLinks.listByMongoCluster",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateLinkResources",
@@ -7651,7 +7643,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}"
                   },
                   {
-                    "$id": "563",
+                    "$id": "562",
                     "methodId": "Microsoft.DocumentDB.Replicas.listByParent",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/replicas",
@@ -7668,7 +7660,7 @@
                 "resourceType": "Microsoft.DocumentDB/mongoClusters/firewallRules",
                 "methods": [
                   {
-                    "$id": "564",
+                    "$id": "563",
                     "methodId": "Microsoft.DocumentDB.FirewallRules.get",
                     "kind": "Get",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules/{firewallRuleName}",
@@ -7676,7 +7668,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules/{firewallRuleName}"
                   },
                   {
-                    "$id": "565",
+                    "$id": "564",
                     "methodId": "Microsoft.DocumentDB.FirewallRules.createOrUpdate",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules/{firewallRuleName}",
@@ -7684,7 +7676,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules/{firewallRuleName}"
                   },
                   {
-                    "$id": "566",
+                    "$id": "565",
                     "methodId": "Microsoft.DocumentDB.FirewallRules.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules/{firewallRuleName}",
@@ -7692,7 +7684,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules/{firewallRuleName}"
                   },
                   {
-                    "$id": "567",
+                    "$id": "566",
                     "methodId": "Microsoft.DocumentDB.FirewallRules.listByMongoCluster",
                     "kind": "List",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/firewallRules",
@@ -7710,7 +7702,7 @@
                 "resourceType": "Microsoft.DocumentDB/mongoClusters/privateEndpointConnections",
                 "methods": [
                   {
-                    "$id": "568",
+                    "$id": "567",
                     "methodId": "Microsoft.DocumentDB.PrivateEndpointConnections.get",
                     "kind": "Get",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
@@ -7718,7 +7710,7 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}"
                   },
                   {
-                    "$id": "569",
+                    "$id": "568",
                     "methodId": "Microsoft.DocumentDB.PrivateEndpointConnections.create",
                     "kind": "Create",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
@@ -7726,12 +7718,20 @@
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}"
                   },
                   {
-                    "$id": "570",
+                    "$id": "569",
                     "methodId": "Microsoft.DocumentDB.PrivateEndpointConnections.delete",
                     "kind": "Delete",
                     "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
                     "operationScope": "ResourceGroup",
                     "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}"
+                  },
+                  {
+                    "$id": "570",
+                    "methodId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster",
+                    "kind": "List",
+                    "operationPath": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections",
+                    "operationScope": "ResourceGroup",
+                    "resourceScope": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}"
                   }
                 ],
                 "resourceScope": "ResourceGroup",
@@ -28557,8 +28557,8 @@
           "methods": [
             {
               "$id": "2629",
-              "kind": "paging",
-              "name": "listByMongoCluster",
+              "kind": "basic",
+              "name": "get",
               "accessibility": "public",
               "apiVersions": [
                 "2024-03-01-preview",
@@ -28570,12 +28570,12 @@
                 "2025-08-01-preview",
                 "2025-09-01"
               ],
-              "doc": "List existing private connections",
+              "doc": "Get a specific private connection",
               "operation": {
                 "$id": "2630",
-                "name": "listByMongoCluster",
+                "name": "get",
                 "resourceName": "PrivateEndpointConnectionResource",
-                "doc": "List existing private connections",
+                "doc": "Get a specific private connection",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -28605,7 +28605,7 @@
                     "optional": false,
                     "scope": "Client",
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.apiVersion",
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.apiVersion",
                     "readOnly": false
                   },
                   {
@@ -28637,7 +28637,7 @@
                     "scope": "Client",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.subscriptionId"
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.subscriptionId"
                   },
                   {
                     "$id": "2637",
@@ -28661,7 +28661,7 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.resourceGroupName"
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.resourceGroupName"
                   },
                   {
                     "$id": "2639",
@@ -28685,10 +28685,34 @@
                     "scope": "Method",
                     "decorators": [],
                     "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.mongoClusterName"
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.mongoClusterName"
                   },
                   {
                     "$id": "2641",
+                    "kind": "path",
+                    "name": "privateEndpointConnectionName",
+                    "serializedName": "privateEndpointConnectionName",
+                    "doc": "The name of the private endpoint connection associated with the Azure resource.",
+                    "type": {
+                      "$id": "2642",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.privateEndpointConnectionName"
+                  },
+                  {
+                    "$id": "2643",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
@@ -28701,7 +28725,7 @@
                     "scope": "Constant",
                     "readOnly": false,
                     "decorators": [],
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.accept"
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.accept"
                   }
                 ],
                 "responses": [
@@ -28721,31 +28745,31 @@
                 ],
                 "httpMethod": "GET",
                 "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
                 "bufferResponse": true,
                 "generateProtocolMethod": true,
                 "generateConvenienceMethod": true,
-                "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster",
+                "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get",
                 "decorators": [
                   {
-                    "name": "Azure.ResourceManager.@armResourceList",
+                    "name": "Azure.ResourceManager.@armResourceRead",
                     "arguments": {}
                   }
                 ],
                 "examples": [
                   {
-                    "$id": "2642",
+                    "$id": "2644",
                     "kind": "http",
-                    "name": "Lists the private endpoint connection resources on a Mongo Cluster resource.",
-                    "description": "Lists the private endpoint connection resources on a Mongo Cluster resource.",
-                    "filePath": "2025-09-01/MongoClusters_PrivateEndpointConnectionList.json",
+                    "name": "Get a private endpoint connection on a Mongo Cluster resource.",
+                    "description": "Get a private endpoint connection on a Mongo Cluster resource.",
+                    "filePath": "2025-09-01/MongoClusters_PrivateEndpointConnectionGet.json",
                     "parameters": [
                       {
                         "parameter": {
                           "$ref": "2634"
                         },
                         "value": {
-                          "$id": "2643",
+                          "$id": "2645",
                           "kind": "string",
                           "type": {
                             "$ref": "2635"
@@ -28758,7 +28782,7 @@
                           "$ref": "2637"
                         },
                         "value": {
-                          "$id": "2644",
+                          "$id": "2646",
                           "kind": "string",
                           "type": {
                             "$ref": "2638"
@@ -28771,7 +28795,7 @@
                           "$ref": "2639"
                         },
                         "value": {
-                          "$id": "2645",
+                          "$id": "2647",
                           "kind": "string",
                           "type": {
                             "$ref": "2640"
@@ -28781,10 +28805,23 @@
                       },
                       {
                         "parameter": {
+                          "$ref": "2641"
+                        },
+                        "value": {
+                          "$id": "2648",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "2642"
+                          },
+                          "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
+                        }
+                      },
+                      {
+                        "parameter": {
                           "$ref": "2631"
                         },
                         "value": {
-                          "$id": "2646",
+                          "$id": "2649",
                           "kind": "string",
                           "type": {
                             "$ref": "2632"
@@ -28810,598 +28847,22 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "2647",
+                          "$id": "2650",
                           "kind": "model",
                           "type": {
                             "$ref": "478"
                           },
                           "value": {
-                            "value": {
-                              "$id": "2648",
-                              "kind": "array",
-                              "type": {
-                                "$ref": "480"
-                              },
-                              "value": [
-                                {
-                                  "$id": "2649",
-                                  "kind": "model",
-                                  "type": {
-                                    "$ref": "481"
-                                  },
-                                  "value": {
-                                    "name": {
-                                      "$id": "2650",
-                                      "kind": "string",
-                                      "type": {
-                                        "$ref": "484"
-                                      },
-                                      "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
-                                    },
-                                    "id": {
-                                      "$id": "2651",
-                                      "kind": "string",
-                                      "type": {
-                                        "$ref": "243"
-                                      },
-                                      "value": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/privateEndpointConnections/pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
-                                    },
-                                    "type": {
-                                      "$id": "2652",
-                                      "kind": "string",
-                                      "type": {
-                                        "$ref": "248"
-                                      },
-                                      "value": "Microsoft.DocumentDB/mongoClusters/privateEndpointConnections"
-                                    },
-                                    "systemData": {
-                                      "$id": "2653",
-                                      "kind": "model",
-                                      "type": {
-                                        "$ref": "251"
-                                      },
-                                      "value": {
-                                        "createdAt": {
-                                          "$id": "2654",
-                                          "kind": "string",
-                                          "type": {
-                                            "$ref": "256"
-                                          },
-                                          "value": "2024-02-09T05:51:31.1386869Z"
-                                        },
-                                        "createdBy": {
-                                          "$id": "2655",
-                                          "kind": "string",
-                                          "type": {
-                                            "$ref": "253"
-                                          },
-                                          "value": "2df9eb86-36b5-49dc-86ae-9a63135bfa8c"
-                                        },
-                                        "createdByType": {
-                                          "$id": "2656",
-                                          "kind": "string",
-                                          "type": {
-                                            "$ref": "60"
-                                          },
-                                          "value": "Application"
-                                        },
-                                        "lastModifiedAt": {
-                                          "$id": "2657",
-                                          "kind": "string",
-                                          "type": {
-                                            "$ref": "262"
-                                          },
-                                          "value": "2024-02-09T05:51:31.1386869Z"
-                                        },
-                                        "lastModifiedBy": {
-                                          "$id": "2658",
-                                          "kind": "string",
-                                          "type": {
-                                            "$ref": "259"
-                                          },
-                                          "value": "2ff9eb86-36b5-49dc-86ae-9a63135bfa8c"
-                                        },
-                                        "lastModifiedByType": {
-                                          "$id": "2659",
-                                          "kind": "string",
-                                          "type": {
-                                            "$ref": "60"
-                                          },
-                                          "value": "Application"
-                                        }
-                                      }
-                                    },
-                                    "properties": {
-                                      "$id": "2660",
-                                      "kind": "model",
-                                      "type": {
-                                        "$ref": "332"
-                                      },
-                                      "value": {
-                                        "provisioningState": {
-                                          "$id": "2661",
-                                          "kind": "string",
-                                          "type": {
-                                            "$ref": "54"
-                                          },
-                                          "value": "Succeeded"
-                                        },
-                                        "privateEndpoint": {
-                                          "$id": "2662",
-                                          "kind": "model",
-                                          "type": {
-                                            "$ref": "337"
-                                          },
-                                          "value": {
-                                            "id": {
-                                              "$id": "2663",
-                                              "kind": "string",
-                                              "type": {
-                                                "$ref": "339"
-                                              },
-                                              "value": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.Network/privateEndpoints/pecTest"
-                                            }
-                                          }
-                                        },
-                                        "groupIds": {
-                                          "$id": "2664",
-                                          "kind": "array",
-                                          "type": {
-                                            "$ref": "334"
-                                          },
-                                          "value": [
-                                            {
-                                              "$id": "2665",
-                                              "kind": "string",
-                                              "type": {
-                                                "$ref": "335"
-                                              },
-                                              "value": "MongoCluster"
-                                            }
-                                          ]
-                                        },
-                                        "privateLinkServiceConnectionState": {
-                                          "$id": "2666",
-                                          "kind": "model",
-                                          "type": {
-                                            "$ref": "342"
-                                          },
-                                          "value": {
-                                            "status": {
-                                              "$id": "2667",
-                                              "kind": "string",
-                                              "type": {
-                                                "$ref": "49"
-                                              },
-                                              "value": "Approved"
-                                            },
-                                            "description": {
-                                              "$id": "2668",
-                                              "kind": "string",
-                                              "type": {
-                                                "$ref": "345"
-                                              },
-                                              "value": "Auto-approved"
-                                            },
-                                            "actionsRequired": {
-                                              "$id": "2669",
-                                              "kind": "string",
-                                              "type": {
-                                                "$ref": "347"
-                                              },
-                                              "value": "None"
-                                            }
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              "parameters": [
-                {
-                  "$id": "2670",
-                  "kind": "method",
-                  "name": "resourceGroupName",
-                  "serializedName": "resourceGroupName",
-                  "doc": "The name of the resource group. The name is case insensitive.",
-                  "type": {
-                    "$id": "2671",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.resourceGroupName",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
-                },
-                {
-                  "$id": "2672",
-                  "kind": "method",
-                  "name": "mongoClusterName",
-                  "serializedName": "mongoClusterName",
-                  "doc": "The name of the mongo cluster.",
-                  "type": {
-                    "$id": "2673",
-                    "kind": "string",
-                    "name": "string",
-                    "crossLanguageDefinitionId": "TypeSpec.string",
-                    "decorators": []
-                  },
-                  "location": "Path",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Method",
-                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.mongoClusterName",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
-                },
-                {
-                  "$id": "2674",
-                  "kind": "method",
-                  "name": "accept",
-                  "serializedName": "Accept",
-                  "type": {
-                    "$ref": "170"
-                  },
-                  "location": "Header",
-                  "isApiVersion": false,
-                  "optional": false,
-                  "scope": "Constant",
-                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.accept",
-                  "readOnly": false,
-                  "access": "public",
-                  "decorators": []
-                }
-              ],
-              "response": {
-                "type": {
-                  "$ref": "480"
-                },
-                "resultSegments": [
-                  "value"
-                ]
-              },
-              "isOverride": false,
-              "generateConvenient": true,
-              "generateProtocol": true,
-              "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster",
-              "pagingMetadata": {
-                "itemPropertySegments": [
-                  "value"
-                ],
-                "nextLink": {
-                  "responseSegments": [
-                    "nextLink"
-                  ],
-                  "responseLocation": "Body"
-                },
-                "pageSizeParameterSegments": []
-              }
-            },
-            {
-              "$id": "2675",
-              "kind": "basic",
-              "name": "get",
-              "accessibility": "public",
-              "apiVersions": [
-                "2024-03-01-preview",
-                "2024-06-01-preview",
-                "2024-07-01",
-                "2024-10-01-preview",
-                "2025-04-01-preview",
-                "2025-07-01-preview",
-                "2025-08-01-preview",
-                "2025-09-01"
-              ],
-              "doc": "Get a specific private connection",
-              "operation": {
-                "$id": "2676",
-                "name": "get",
-                "resourceName": "PrivateEndpointConnectionResource",
-                "doc": "Get a specific private connection",
-                "accessibility": "public",
-                "parameters": [
-                  {
-                    "$id": "2677",
-                    "kind": "query",
-                    "name": "apiVersion",
-                    "serializedName": "api-version",
-                    "doc": "The API version to use for this operation.",
-                    "type": {
-                      "$id": "2678",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": true,
-                    "explode": false,
-                    "defaultValue": {
-                      "type": {
-                        "$id": "2679",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string"
-                      },
-                      "value": "2025-09-01"
-                    },
-                    "optional": false,
-                    "scope": "Client",
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.apiVersion",
-                    "readOnly": false
-                  },
-                  {
-                    "$id": "2680",
-                    "kind": "path",
-                    "name": "subscriptionId",
-                    "serializedName": "subscriptionId",
-                    "doc": "The ID of the target subscription. The value must be an UUID.",
-                    "type": {
-                      "$id": "2681",
-                      "kind": "string",
-                      "name": "uuid",
-                      "crossLanguageDefinitionId": "Azure.Core.uuid",
-                      "baseType": {
-                        "$id": "2682",
-                        "kind": "string",
-                        "name": "string",
-                        "crossLanguageDefinitionId": "TypeSpec.string",
-                        "decorators": []
-                      },
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Client",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.subscriptionId"
-                  },
-                  {
-                    "$id": "2683",
-                    "kind": "path",
-                    "name": "resourceGroupName",
-                    "serializedName": "resourceGroupName",
-                    "doc": "The name of the resource group. The name is case insensitive.",
-                    "type": {
-                      "$id": "2684",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.resourceGroupName"
-                  },
-                  {
-                    "$id": "2685",
-                    "kind": "path",
-                    "name": "mongoClusterName",
-                    "serializedName": "mongoClusterName",
-                    "doc": "The name of the mongo cluster.",
-                    "type": {
-                      "$id": "2686",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.mongoClusterName"
-                  },
-                  {
-                    "$id": "2687",
-                    "kind": "path",
-                    "name": "privateEndpointConnectionName",
-                    "serializedName": "privateEndpointConnectionName",
-                    "doc": "The name of the private endpoint connection associated with the Azure resource.",
-                    "type": {
-                      "$id": "2688",
-                      "kind": "string",
-                      "name": "string",
-                      "crossLanguageDefinitionId": "TypeSpec.string",
-                      "decorators": []
-                    },
-                    "isApiVersion": false,
-                    "explode": false,
-                    "style": "simple",
-                    "allowReserved": false,
-                    "skipUrlEncoding": false,
-                    "optional": false,
-                    "scope": "Method",
-                    "decorators": [],
-                    "readOnly": false,
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.privateEndpointConnectionName"
-                  },
-                  {
-                    "$id": "2689",
-                    "kind": "header",
-                    "name": "accept",
-                    "serializedName": "Accept",
-                    "type": {
-                      "$ref": "172"
-                    },
-                    "isApiVersion": false,
-                    "optional": false,
-                    "isContentType": false,
-                    "scope": "Constant",
-                    "readOnly": false,
-                    "decorators": [],
-                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.accept"
-                  }
-                ],
-                "responses": [
-                  {
-                    "statusCodes": [
-                      200
-                    ],
-                    "bodyType": {
-                      "$ref": "481"
-                    },
-                    "headers": [],
-                    "isErrorResponse": false,
-                    "contentTypes": [
-                      "application/json"
-                    ]
-                  }
-                ],
-                "httpMethod": "GET",
-                "uri": "{endpoint}",
-                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections/{privateEndpointConnectionName}",
-                "bufferResponse": true,
-                "generateProtocolMethod": true,
-                "generateConvenienceMethod": true,
-                "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get",
-                "decorators": [
-                  {
-                    "name": "Azure.ResourceManager.@armResourceRead",
-                    "arguments": {}
-                  }
-                ],
-                "examples": [
-                  {
-                    "$id": "2690",
-                    "kind": "http",
-                    "name": "Get a private endpoint connection on a Mongo Cluster resource.",
-                    "description": "Get a private endpoint connection on a Mongo Cluster resource.",
-                    "filePath": "2025-09-01/MongoClusters_PrivateEndpointConnectionGet.json",
-                    "parameters": [
-                      {
-                        "parameter": {
-                          "$ref": "2680"
-                        },
-                        "value": {
-                          "$id": "2691",
-                          "kind": "string",
-                          "type": {
-                            "$ref": "2681"
-                          },
-                          "value": "ffffffff-ffff-ffff-ffff-ffffffffffff"
-                        }
-                      },
-                      {
-                        "parameter": {
-                          "$ref": "2683"
-                        },
-                        "value": {
-                          "$id": "2692",
-                          "kind": "string",
-                          "type": {
-                            "$ref": "2684"
-                          },
-                          "value": "TestGroup"
-                        }
-                      },
-                      {
-                        "parameter": {
-                          "$ref": "2685"
-                        },
-                        "value": {
-                          "$id": "2693",
-                          "kind": "string",
-                          "type": {
-                            "$ref": "2686"
-                          },
-                          "value": "myMongoCluster"
-                        }
-                      },
-                      {
-                        "parameter": {
-                          "$ref": "2687"
-                        },
-                        "value": {
-                          "$id": "2694",
-                          "kind": "string",
-                          "type": {
-                            "$ref": "2688"
-                          },
-                          "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
-                        }
-                      },
-                      {
-                        "parameter": {
-                          "$ref": "2677"
-                        },
-                        "value": {
-                          "$id": "2695",
-                          "kind": "string",
-                          "type": {
-                            "$ref": "2678"
-                          },
-                          "value": "2025-09-01"
-                        }
-                      }
-                    ],
-                    "responses": [
-                      {
-                        "response": {
-                          "statusCodes": [
-                            200
-                          ],
-                          "bodyType": {
-                            "$ref": "481"
-                          },
-                          "headers": [],
-                          "isErrorResponse": false,
-                          "contentTypes": [
-                            "application/json"
-                          ]
-                        },
-                        "statusCode": 200,
-                        "bodyValue": {
-                          "$id": "2696",
-                          "kind": "model",
-                          "type": {
-                            "$ref": "481"
-                          },
-                          "value": {
                             "name": {
-                              "$id": "2697",
+                              "$id": "2651",
                               "kind": "string",
                               "type": {
-                                "$ref": "484"
+                                "$ref": "481"
                               },
                               "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
                             },
                             "id": {
-                              "$id": "2698",
+                              "$id": "2652",
                               "kind": "string",
                               "type": {
                                 "$ref": "243"
@@ -29409,7 +28870,7 @@
                               "value": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/privateEndpointConnections/pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
                             },
                             "type": {
-                              "$id": "2699",
+                              "$id": "2653",
                               "kind": "string",
                               "type": {
                                 "$ref": "248"
@@ -29417,14 +28878,14 @@
                               "value": "Microsoft.DocumentDB/mongoClusters/privateEndpointConnections"
                             },
                             "systemData": {
-                              "$id": "2700",
+                              "$id": "2654",
                               "kind": "model",
                               "type": {
                                 "$ref": "251"
                               },
                               "value": {
                                 "createdAt": {
-                                  "$id": "2701",
+                                  "$id": "2655",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "256"
@@ -29432,7 +28893,7 @@
                                   "value": "2024-02-09T05:51:31.1386869Z"
                                 },
                                 "createdBy": {
-                                  "$id": "2702",
+                                  "$id": "2656",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "253"
@@ -29440,7 +28901,7 @@
                                   "value": "2df9eb86-36b5-49dc-86ae-9a63135bfa8c"
                                 },
                                 "createdByType": {
-                                  "$id": "2703",
+                                  "$id": "2657",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "60"
@@ -29448,7 +28909,7 @@
                                   "value": "Application"
                                 },
                                 "lastModifiedAt": {
-                                  "$id": "2704",
+                                  "$id": "2658",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "262"
@@ -29456,7 +28917,7 @@
                                   "value": "2024-02-09T05:51:31.1386869Z"
                                 },
                                 "lastModifiedBy": {
-                                  "$id": "2705",
+                                  "$id": "2659",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "259"
@@ -29464,7 +28925,7 @@
                                   "value": "2ff9eb86-36b5-49dc-86ae-9a63135bfa8c"
                                 },
                                 "lastModifiedByType": {
-                                  "$id": "2706",
+                                  "$id": "2660",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "60"
@@ -29474,14 +28935,14 @@
                               }
                             },
                             "properties": {
-                              "$id": "2707",
+                              "$id": "2661",
                               "kind": "model",
                               "type": {
                                 "$ref": "332"
                               },
                               "value": {
                                 "provisioningState": {
-                                  "$id": "2708",
+                                  "$id": "2662",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "54"
@@ -29489,14 +28950,14 @@
                                   "value": "Succeeded"
                                 },
                                 "privateEndpoint": {
-                                  "$id": "2709",
+                                  "$id": "2663",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "337"
                                   },
                                   "value": {
                                     "id": {
-                                      "$id": "2710",
+                                      "$id": "2664",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "339"
@@ -29506,14 +28967,14 @@
                                   }
                                 },
                                 "groupIds": {
-                                  "$id": "2711",
+                                  "$id": "2665",
                                   "kind": "array",
                                   "type": {
                                     "$ref": "334"
                                   },
                                   "value": [
                                     {
-                                      "$id": "2712",
+                                      "$id": "2666",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "335"
@@ -29523,14 +28984,14 @@
                                   ]
                                 },
                                 "privateLinkServiceConnectionState": {
-                                  "$id": "2713",
+                                  "$id": "2667",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "342"
                                   },
                                   "value": {
                                     "status": {
-                                      "$id": "2714",
+                                      "$id": "2668",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "49"
@@ -29538,7 +28999,7 @@
                                       "value": "Approved"
                                     },
                                     "description": {
-                                      "$id": "2715",
+                                      "$id": "2669",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "345"
@@ -29546,7 +29007,7 @@
                                       "value": "Auto-approved"
                                     },
                                     "actionsRequired": {
-                                      "$id": "2716",
+                                      "$id": "2670",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "347"
@@ -29566,13 +29027,13 @@
               },
               "parameters": [
                 {
-                  "$id": "2717",
+                  "$id": "2671",
                   "kind": "method",
                   "name": "resourceGroupName",
                   "serializedName": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "2718",
+                    "$id": "2672",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29588,13 +29049,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2719",
+                  "$id": "2673",
                   "kind": "method",
                   "name": "mongoClusterName",
                   "serializedName": "mongoClusterName",
                   "doc": "The name of the mongo cluster.",
                   "type": {
-                    "$id": "2720",
+                    "$id": "2674",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29610,13 +29071,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2721",
+                  "$id": "2675",
                   "kind": "method",
                   "name": "privateEndpointConnectionName",
                   "serializedName": "privateEndpointConnectionName",
                   "doc": "The name of the private endpoint connection associated with the Azure resource.",
                   "type": {
-                    "$id": "2722",
+                    "$id": "2676",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29632,12 +29093,12 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2723",
+                  "$id": "2677",
                   "kind": "method",
                   "name": "accept",
                   "serializedName": "Accept",
                   "type": {
-                    "$ref": "172"
+                    "$ref": "170"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -29651,7 +29112,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "481"
+                  "$ref": "478"
                 }
               },
               "isOverride": false,
@@ -29660,7 +29121,7 @@
               "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get"
             },
             {
-              "$id": "2724",
+              "$id": "2678",
               "kind": "lro",
               "name": "create",
               "accessibility": "public",
@@ -29676,20 +29137,20 @@
               ],
               "doc": "Create a Private endpoint connection",
               "operation": {
-                "$id": "2725",
+                "$id": "2679",
                 "name": "create",
                 "resourceName": "PrivateEndpointConnectionResource",
                 "doc": "Create a Private endpoint connection",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "2726",
+                    "$id": "2680",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "2727",
+                      "$id": "2681",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29699,7 +29160,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "2728",
+                        "$id": "2682",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -29713,18 +29174,18 @@
                     "readOnly": false
                   },
                   {
-                    "$id": "2729",
+                    "$id": "2683",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "2730",
+                      "$id": "2684",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "2731",
+                        "$id": "2685",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29744,13 +29205,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.create.subscriptionId"
                   },
                   {
-                    "$id": "2732",
+                    "$id": "2686",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "2733",
+                      "$id": "2687",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29768,13 +29229,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.create.resourceGroupName"
                   },
                   {
-                    "$id": "2734",
+                    "$id": "2688",
                     "kind": "path",
                     "name": "mongoClusterName",
                     "serializedName": "mongoClusterName",
                     "doc": "The name of the mongo cluster.",
                     "type": {
-                      "$id": "2735",
+                      "$id": "2689",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29792,13 +29253,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.create.mongoClusterName"
                   },
                   {
-                    "$id": "2736",
+                    "$id": "2690",
                     "kind": "path",
                     "name": "privateEndpointConnectionName",
                     "serializedName": "privateEndpointConnectionName",
                     "doc": "The name of the private endpoint connection associated with the Azure resource.",
                     "type": {
-                      "$id": "2737",
+                      "$id": "2691",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29816,13 +29277,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.create.privateEndpointConnectionName"
                   },
                   {
-                    "$id": "2738",
+                    "$id": "2692",
                     "kind": "header",
                     "name": "contentType",
                     "serializedName": "Content-Type",
                     "doc": "Body parameter's content type. Known values are application/json",
                     "type": {
-                      "$ref": "174"
+                      "$ref": "172"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -29833,12 +29294,12 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.create.contentType"
                   },
                   {
-                    "$id": "2739",
+                    "$id": "2693",
                     "kind": "header",
                     "name": "accept",
                     "serializedName": "Accept",
                     "type": {
-                      "$ref": "176"
+                      "$ref": "174"
                     },
                     "isApiVersion": false,
                     "optional": false,
@@ -29849,13 +29310,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.create.accept"
                   },
                   {
-                    "$id": "2740",
+                    "$id": "2694",
                     "kind": "body",
                     "name": "resource",
                     "serializedName": "resource",
                     "doc": "Resource create parameters.",
                     "type": {
-                      "$ref": "481"
+                      "$ref": "478"
                     },
                     "isApiVersion": false,
                     "contentTypes": [
@@ -29880,7 +29341,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "2741",
+                          "$id": "2695",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -29892,7 +29353,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "2742",
+                          "$id": "2696",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -29907,7 +29368,7 @@
                       200
                     ],
                     "bodyType": {
-                      "$ref": "481"
+                      "$ref": "478"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -29920,7 +29381,7 @@
                       201
                     ],
                     "bodyType": {
-                      "$ref": "481"
+                      "$ref": "478"
                     },
                     "headers": [],
                     "isErrorResponse": false,
@@ -29953,7 +29414,7 @@
                 ],
                 "examples": [
                   {
-                    "$id": "2743",
+                    "$id": "2697",
                     "kind": "http",
                     "name": "Approves a private endpoint connection on a Mongo Cluster resource.",
                     "description": "Approves a private endpoint connection on a Mongo Cluster resource.",
@@ -29961,96 +29422,96 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "2729"
+                          "$ref": "2683"
                         },
                         "value": {
-                          "$id": "2744",
+                          "$id": "2698",
                           "kind": "string",
                           "type": {
-                            "$ref": "2730"
+                            "$ref": "2684"
                           },
                           "value": "ffffffff-ffff-ffff-ffff-ffffffffffff"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2732"
+                          "$ref": "2686"
                         },
                         "value": {
-                          "$id": "2745",
+                          "$id": "2699",
                           "kind": "string",
                           "type": {
-                            "$ref": "2733"
+                            "$ref": "2687"
                           },
                           "value": "TestGroup"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2734"
+                          "$ref": "2688"
                         },
                         "value": {
-                          "$id": "2746",
+                          "$id": "2700",
                           "kind": "string",
                           "type": {
-                            "$ref": "2735"
+                            "$ref": "2689"
                           },
                           "value": "myMongoCluster"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2726"
+                          "$ref": "2680"
                         },
                         "value": {
-                          "$id": "2747",
+                          "$id": "2701",
                           "kind": "string",
                           "type": {
-                            "$ref": "2727"
+                            "$ref": "2681"
                           },
                           "value": "2025-09-01"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2736"
+                          "$ref": "2690"
                         },
                         "value": {
-                          "$id": "2748",
+                          "$id": "2702",
                           "kind": "string",
                           "type": {
-                            "$ref": "2737"
+                            "$ref": "2691"
                           },
                           "value": "pecTest"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2740"
+                          "$ref": "2694"
                         },
                         "value": {
-                          "$id": "2749",
+                          "$id": "2703",
                           "kind": "model",
                           "type": {
-                            "$ref": "481"
+                            "$ref": "478"
                           },
                           "value": {
                             "properties": {
-                              "$id": "2750",
+                              "$id": "2704",
                               "kind": "model",
                               "type": {
                                 "$ref": "332"
                               },
                               "value": {
                                 "privateLinkServiceConnectionState": {
-                                  "$id": "2751",
+                                  "$id": "2705",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "342"
                                   },
                                   "value": {
                                     "status": {
-                                      "$id": "2752",
+                                      "$id": "2706",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "49"
@@ -30058,7 +29519,7 @@
                                       "value": "Approved"
                                     },
                                     "description": {
-                                      "$id": "2753",
+                                      "$id": "2707",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "345"
@@ -30080,7 +29541,7 @@
                             200
                           ],
                           "bodyType": {
-                            "$ref": "481"
+                            "$ref": "478"
                           },
                           "headers": [],
                           "isErrorResponse": false,
@@ -30090,22 +29551,22 @@
                         },
                         "statusCode": 200,
                         "bodyValue": {
-                          "$id": "2754",
+                          "$id": "2708",
                           "kind": "model",
                           "type": {
-                            "$ref": "481"
+                            "$ref": "478"
                           },
                           "value": {
                             "name": {
-                              "$id": "2755",
+                              "$id": "2709",
                               "kind": "string",
                               "type": {
-                                "$ref": "484"
+                                "$ref": "481"
                               },
                               "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
                             },
                             "id": {
-                              "$id": "2756",
+                              "$id": "2710",
                               "kind": "string",
                               "type": {
                                 "$ref": "243"
@@ -30113,7 +29574,7 @@
                               "value": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/privateEndpointConnections/pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
                             },
                             "type": {
-                              "$id": "2757",
+                              "$id": "2711",
                               "kind": "string",
                               "type": {
                                 "$ref": "248"
@@ -30121,14 +29582,14 @@
                               "value": "Microsoft.DocumentDB/mongoClusters/privateEndpointConnections"
                             },
                             "systemData": {
-                              "$id": "2758",
+                              "$id": "2712",
                               "kind": "model",
                               "type": {
                                 "$ref": "251"
                               },
                               "value": {
                                 "createdAt": {
-                                  "$id": "2759",
+                                  "$id": "2713",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "256"
@@ -30136,7 +29597,7 @@
                                   "value": "2024-02-09T05:51:31.1386869Z"
                                 },
                                 "createdBy": {
-                                  "$id": "2760",
+                                  "$id": "2714",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "253"
@@ -30144,7 +29605,7 @@
                                   "value": "2df9eb86-36b5-49dc-86ae-9a63135bfa8c"
                                 },
                                 "createdByType": {
-                                  "$id": "2761",
+                                  "$id": "2715",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "60"
@@ -30152,7 +29613,7 @@
                                   "value": "Application"
                                 },
                                 "lastModifiedAt": {
-                                  "$id": "2762",
+                                  "$id": "2716",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "262"
@@ -30160,7 +29621,7 @@
                                   "value": "2024-02-09T05:51:31.1386869Z"
                                 },
                                 "lastModifiedBy": {
-                                  "$id": "2763",
+                                  "$id": "2717",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "259"
@@ -30168,7 +29629,7 @@
                                   "value": "2ff9eb86-36b5-49dc-86ae-9a63135bfa8c"
                                 },
                                 "lastModifiedByType": {
-                                  "$id": "2764",
+                                  "$id": "2718",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "60"
@@ -30178,14 +29639,14 @@
                               }
                             },
                             "properties": {
-                              "$id": "2765",
+                              "$id": "2719",
                               "kind": "model",
                               "type": {
                                 "$ref": "332"
                               },
                               "value": {
                                 "provisioningState": {
-                                  "$id": "2766",
+                                  "$id": "2720",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "54"
@@ -30193,14 +29654,14 @@
                                   "value": "Succeeded"
                                 },
                                 "privateEndpoint": {
-                                  "$id": "2767",
+                                  "$id": "2721",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "337"
                                   },
                                   "value": {
                                     "id": {
-                                      "$id": "2768",
+                                      "$id": "2722",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "339"
@@ -30210,14 +29671,14 @@
                                   }
                                 },
                                 "groupIds": {
-                                  "$id": "2769",
+                                  "$id": "2723",
                                   "kind": "array",
                                   "type": {
                                     "$ref": "334"
                                   },
                                   "value": [
                                     {
-                                      "$id": "2770",
+                                      "$id": "2724",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "335"
@@ -30227,14 +29688,14 @@
                                   ]
                                 },
                                 "privateLinkServiceConnectionState": {
-                                  "$id": "2771",
+                                  "$id": "2725",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "342"
                                   },
                                   "value": {
                                     "status": {
-                                      "$id": "2772",
+                                      "$id": "2726",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "49"
@@ -30242,7 +29703,7 @@
                                       "value": "Approved"
                                     },
                                     "description": {
-                                      "$id": "2773",
+                                      "$id": "2727",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "345"
@@ -30250,7 +29711,7 @@
                                       "value": "Approved by admin"
                                     },
                                     "actionsRequired": {
-                                      "$id": "2774",
+                                      "$id": "2728",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "347"
@@ -30270,7 +29731,7 @@
                             201
                           ],
                           "bodyType": {
-                            "$ref": "481"
+                            "$ref": "478"
                           },
                           "headers": [],
                           "isErrorResponse": false,
@@ -30280,22 +29741,22 @@
                         },
                         "statusCode": 201,
                         "bodyValue": {
-                          "$id": "2775",
+                          "$id": "2729",
                           "kind": "model",
                           "type": {
-                            "$ref": "481"
+                            "$ref": "478"
                           },
                           "value": {
                             "name": {
-                              "$id": "2776",
+                              "$id": "2730",
                               "kind": "string",
                               "type": {
-                                "$ref": "484"
+                                "$ref": "481"
                               },
                               "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
                             },
                             "id": {
-                              "$id": "2777",
+                              "$id": "2731",
                               "kind": "string",
                               "type": {
                                 "$ref": "243"
@@ -30303,7 +29764,7 @@
                               "value": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/privateEndpointConnections/pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
                             },
                             "type": {
-                              "$id": "2778",
+                              "$id": "2732",
                               "kind": "string",
                               "type": {
                                 "$ref": "248"
@@ -30311,14 +29772,14 @@
                               "value": "Microsoft.DocumentDB/mongoClusters/privateEndpointConnections"
                             },
                             "systemData": {
-                              "$id": "2779",
+                              "$id": "2733",
                               "kind": "model",
                               "type": {
                                 "$ref": "251"
                               },
                               "value": {
                                 "createdAt": {
-                                  "$id": "2780",
+                                  "$id": "2734",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "256"
@@ -30326,7 +29787,7 @@
                                   "value": "2024-02-09T05:51:31.1386869Z"
                                 },
                                 "createdBy": {
-                                  "$id": "2781",
+                                  "$id": "2735",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "253"
@@ -30334,7 +29795,7 @@
                                   "value": "2df9eb86-36b5-49dc-86ae-9a63135bfa8c"
                                 },
                                 "createdByType": {
-                                  "$id": "2782",
+                                  "$id": "2736",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "60"
@@ -30342,7 +29803,7 @@
                                   "value": "Application"
                                 },
                                 "lastModifiedAt": {
-                                  "$id": "2783",
+                                  "$id": "2737",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "262"
@@ -30350,7 +29811,7 @@
                                   "value": "2024-02-09T05:51:31.1386869Z"
                                 },
                                 "lastModifiedBy": {
-                                  "$id": "2784",
+                                  "$id": "2738",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "259"
@@ -30358,7 +29819,7 @@
                                   "value": "2ff9eb86-36b5-49dc-86ae-9a63135bfa8c"
                                 },
                                 "lastModifiedByType": {
-                                  "$id": "2785",
+                                  "$id": "2739",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "60"
@@ -30368,14 +29829,14 @@
                               }
                             },
                             "properties": {
-                              "$id": "2786",
+                              "$id": "2740",
                               "kind": "model",
                               "type": {
                                 "$ref": "332"
                               },
                               "value": {
                                 "provisioningState": {
-                                  "$id": "2787",
+                                  "$id": "2741",
                                   "kind": "string",
                                   "type": {
                                     "$ref": "54"
@@ -30383,14 +29844,14 @@
                                   "value": "Succeeded"
                                 },
                                 "privateEndpoint": {
-                                  "$id": "2788",
+                                  "$id": "2742",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "337"
                                   },
                                   "value": {
                                     "id": {
-                                      "$id": "2789",
+                                      "$id": "2743",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "339"
@@ -30400,14 +29861,14 @@
                                   }
                                 },
                                 "groupIds": {
-                                  "$id": "2790",
+                                  "$id": "2744",
                                   "kind": "array",
                                   "type": {
                                     "$ref": "334"
                                   },
                                   "value": [
                                     {
-                                      "$id": "2791",
+                                      "$id": "2745",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "335"
@@ -30417,14 +29878,14 @@
                                   ]
                                 },
                                 "privateLinkServiceConnectionState": {
-                                  "$id": "2792",
+                                  "$id": "2746",
                                   "kind": "model",
                                   "type": {
                                     "$ref": "342"
                                   },
                                   "value": {
                                     "status": {
-                                      "$id": "2793",
+                                      "$id": "2747",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "49"
@@ -30432,7 +29893,7 @@
                                       "value": "Approved"
                                     },
                                     "description": {
-                                      "$id": "2794",
+                                      "$id": "2748",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "345"
@@ -30440,7 +29901,7 @@
                                       "value": "Approved by admin"
                                     },
                                     "actionsRequired": {
-                                      "$id": "2795",
+                                      "$id": "2749",
                                       "kind": "string",
                                       "type": {
                                         "$ref": "347"
@@ -30465,7 +29926,7 @@
                               "nameInResponse": "Location",
                               "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                               "type": {
-                                "$ref": "2741"
+                                "$ref": "2695"
                               }
                             },
                             {
@@ -30473,7 +29934,7 @@
                               "nameInResponse": "Retry-After",
                               "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                               "type": {
-                                "$ref": "2742"
+                                "$ref": "2696"
                               }
                             }
                           ],
@@ -30487,13 +29948,13 @@
               },
               "parameters": [
                 {
-                  "$id": "2796",
+                  "$id": "2750",
                   "kind": "method",
                   "name": "resourceGroupName",
                   "serializedName": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "2797",
+                    "$id": "2751",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30509,13 +29970,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2798",
+                  "$id": "2752",
                   "kind": "method",
                   "name": "mongoClusterName",
                   "serializedName": "mongoClusterName",
                   "doc": "The name of the mongo cluster.",
                   "type": {
-                    "$id": "2799",
+                    "$id": "2753",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30531,13 +29992,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2800",
+                  "$id": "2754",
                   "kind": "method",
                   "name": "privateEndpointConnectionName",
                   "serializedName": "privateEndpointConnectionName",
                   "doc": "The name of the private endpoint connection associated with the Azure resource.",
                   "type": {
-                    "$id": "2801",
+                    "$id": "2755",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30553,13 +30014,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2802",
+                  "$id": "2756",
                   "kind": "method",
                   "name": "resource",
                   "serializedName": "resource",
                   "doc": "Resource create parameters.",
                   "type": {
-                    "$ref": "481"
+                    "$ref": "478"
                   },
                   "location": "Body",
                   "isApiVersion": false,
@@ -30571,13 +30032,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2803",
+                  "$id": "2757",
                   "kind": "method",
                   "name": "contentType",
                   "serializedName": "Content-Type",
                   "doc": "Body parameter's content type. Known values are application/json",
                   "type": {
-                    "$ref": "178"
+                    "$ref": "176"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -30589,12 +30050,12 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2804",
+                  "$id": "2758",
                   "kind": "method",
                   "name": "accept",
                   "serializedName": "Accept",
                   "type": {
-                    "$ref": "180"
+                    "$ref": "178"
                   },
                   "location": "Header",
                   "isApiVersion": false,
@@ -30608,7 +30069,7 @@
               ],
               "response": {
                 "type": {
-                  "$ref": "481"
+                  "$ref": "478"
                 }
               },
               "isOverride": false,
@@ -30622,13 +30083,13 @@
                     200
                   ],
                   "bodyType": {
-                    "$ref": "481"
+                    "$ref": "478"
                   }
                 }
               }
             },
             {
-              "$id": "2805",
+              "$id": "2759",
               "kind": "lro",
               "name": "delete",
               "accessibility": "public",
@@ -30644,20 +30105,20 @@
               ],
               "doc": "Delete the private endpoint connection",
               "operation": {
-                "$id": "2806",
+                "$id": "2760",
                 "name": "delete",
                 "resourceName": "PrivateEndpointConnectionResource",
                 "doc": "Delete the private endpoint connection",
                 "accessibility": "public",
                 "parameters": [
                   {
-                    "$id": "2807",
+                    "$id": "2761",
                     "kind": "query",
                     "name": "apiVersion",
                     "serializedName": "api-version",
                     "doc": "The API version to use for this operation.",
                     "type": {
-                      "$id": "2808",
+                      "$id": "2762",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30667,7 +30128,7 @@
                     "explode": false,
                     "defaultValue": {
                       "type": {
-                        "$id": "2809",
+                        "$id": "2763",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string"
@@ -30681,18 +30142,18 @@
                     "readOnly": false
                   },
                   {
-                    "$id": "2810",
+                    "$id": "2764",
                     "kind": "path",
                     "name": "subscriptionId",
                     "serializedName": "subscriptionId",
                     "doc": "The ID of the target subscription. The value must be an UUID.",
                     "type": {
-                      "$id": "2811",
+                      "$id": "2765",
                       "kind": "string",
                       "name": "uuid",
                       "crossLanguageDefinitionId": "Azure.Core.uuid",
                       "baseType": {
-                        "$id": "2812",
+                        "$id": "2766",
                         "kind": "string",
                         "name": "string",
                         "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30712,13 +30173,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.delete.subscriptionId"
                   },
                   {
-                    "$id": "2813",
+                    "$id": "2767",
                     "kind": "path",
                     "name": "resourceGroupName",
                     "serializedName": "resourceGroupName",
                     "doc": "The name of the resource group. The name is case insensitive.",
                     "type": {
-                      "$id": "2814",
+                      "$id": "2768",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30736,13 +30197,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.delete.resourceGroupName"
                   },
                   {
-                    "$id": "2815",
+                    "$id": "2769",
                     "kind": "path",
                     "name": "mongoClusterName",
                     "serializedName": "mongoClusterName",
                     "doc": "The name of the mongo cluster.",
                     "type": {
-                      "$id": "2816",
+                      "$id": "2770",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30760,13 +30221,13 @@
                     "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.delete.mongoClusterName"
                   },
                   {
-                    "$id": "2817",
+                    "$id": "2771",
                     "kind": "path",
                     "name": "privateEndpointConnectionName",
                     "serializedName": "privateEndpointConnectionName",
                     "doc": "The name of the private endpoint connection associated with the Azure resource.",
                     "type": {
-                      "$id": "2818",
+                      "$id": "2772",
                       "kind": "string",
                       "name": "string",
                       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30795,7 +30256,7 @@
                         "nameInResponse": "Location",
                         "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                         "type": {
-                          "$id": "2819",
+                          "$id": "2773",
                           "kind": "string",
                           "name": "string",
                           "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30807,7 +30268,7 @@
                         "nameInResponse": "Retry-After",
                         "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                         "type": {
-                          "$id": "2820",
+                          "$id": "2774",
                           "kind": "int32",
                           "name": "int32",
                           "crossLanguageDefinitionId": "TypeSpec.int32",
@@ -30840,7 +30301,7 @@
                 ],
                 "examples": [
                   {
-                    "$id": "2821",
+                    "$id": "2775",
                     "kind": "http",
                     "name": "Delete a private endpoint connection on a Mongo Cluster resource.",
                     "description": "Delete a private endpoint connection on a Mongo Cluster resource.",
@@ -30848,65 +30309,65 @@
                     "parameters": [
                       {
                         "parameter": {
-                          "$ref": "2810"
+                          "$ref": "2764"
                         },
                         "value": {
-                          "$id": "2822",
+                          "$id": "2776",
                           "kind": "string",
                           "type": {
-                            "$ref": "2811"
+                            "$ref": "2765"
                           },
                           "value": "ffffffff-ffff-ffff-ffff-ffffffffffff"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2813"
+                          "$ref": "2767"
                         },
                         "value": {
-                          "$id": "2823",
+                          "$id": "2777",
                           "kind": "string",
                           "type": {
-                            "$ref": "2814"
+                            "$ref": "2768"
                           },
                           "value": "TestGroup"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2815"
+                          "$ref": "2769"
                         },
                         "value": {
-                          "$id": "2824",
+                          "$id": "2778",
                           "kind": "string",
                           "type": {
-                            "$ref": "2816"
+                            "$ref": "2770"
                           },
                           "value": "myMongoCluster"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2817"
+                          "$ref": "2771"
                         },
                         "value": {
-                          "$id": "2825",
+                          "$id": "2779",
                           "kind": "string",
                           "type": {
-                            "$ref": "2818"
+                            "$ref": "2772"
                           },
                           "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
                         }
                       },
                       {
                         "parameter": {
-                          "$ref": "2807"
+                          "$ref": "2761"
                         },
                         "value": {
-                          "$id": "2826",
+                          "$id": "2780",
                           "kind": "string",
                           "type": {
-                            "$ref": "2808"
+                            "$ref": "2762"
                           },
                           "value": "2025-09-01"
                         }
@@ -30924,7 +30385,7 @@
                               "nameInResponse": "Location",
                               "doc": "The Location header contains the URL where the status of the long running operation can be checked.",
                               "type": {
-                                "$ref": "2819"
+                                "$ref": "2773"
                               }
                             },
                             {
@@ -30932,7 +30393,7 @@
                               "nameInResponse": "Retry-After",
                               "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
                               "type": {
-                                "$ref": "2820"
+                                "$ref": "2774"
                               }
                             }
                           ],
@@ -30956,13 +30417,13 @@
               },
               "parameters": [
                 {
-                  "$id": "2827",
+                  "$id": "2781",
                   "kind": "method",
                   "name": "resourceGroupName",
                   "serializedName": "resourceGroupName",
                   "doc": "The name of the resource group. The name is case insensitive.",
                   "type": {
-                    "$id": "2828",
+                    "$id": "2782",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -30978,13 +30439,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2829",
+                  "$id": "2783",
                   "kind": "method",
                   "name": "mongoClusterName",
                   "serializedName": "mongoClusterName",
                   "doc": "The name of the mongo cluster.",
                   "type": {
-                    "$id": "2830",
+                    "$id": "2784",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -31000,13 +30461,13 @@
                   "decorators": []
                 },
                 {
-                  "$id": "2831",
+                  "$id": "2785",
                   "kind": "method",
                   "name": "privateEndpointConnectionName",
                   "serializedName": "privateEndpointConnectionName",
                   "doc": "The name of the private endpoint connection associated with the Azure resource.",
                   "type": {
-                    "$id": "2832",
+                    "$id": "2786",
                     "kind": "string",
                     "name": "string",
                     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -31034,6 +30495,545 @@
                     204
                   ]
                 }
+              }
+            },
+            {
+              "$id": "2787",
+              "kind": "paging",
+              "name": "listByMongoCluster",
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-03-01-preview",
+                "2024-06-01-preview",
+                "2024-07-01",
+                "2024-10-01-preview",
+                "2025-04-01-preview",
+                "2025-07-01-preview",
+                "2025-08-01-preview",
+                "2025-09-01"
+              ],
+              "doc": "List existing private connections",
+              "operation": {
+                "$id": "2788",
+                "name": "listByMongoCluster",
+                "resourceName": "PrivateEndpointConnectionResource",
+                "doc": "List existing private connections",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "2789",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "2790",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "2791",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2025-09-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.apiVersion",
+                    "readOnly": false
+                  },
+                  {
+                    "$id": "2792",
+                    "kind": "path",
+                    "name": "subscriptionId",
+                    "serializedName": "subscriptionId",
+                    "doc": "The ID of the target subscription. The value must be an UUID.",
+                    "type": {
+                      "$id": "2793",
+                      "kind": "string",
+                      "name": "uuid",
+                      "crossLanguageDefinitionId": "Azure.Core.uuid",
+                      "baseType": {
+                        "$id": "2794",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.subscriptionId"
+                  },
+                  {
+                    "$id": "2795",
+                    "kind": "path",
+                    "name": "resourceGroupName",
+                    "serializedName": "resourceGroupName",
+                    "doc": "The name of the resource group. The name is case insensitive.",
+                    "type": {
+                      "$id": "2796",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.resourceGroupName"
+                  },
+                  {
+                    "$id": "2797",
+                    "kind": "path",
+                    "name": "mongoClusterName",
+                    "serializedName": "mongoClusterName",
+                    "doc": "The name of the mongo cluster.",
+                    "type": {
+                      "$id": "2798",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.mongoClusterName"
+                  },
+                  {
+                    "$id": "2799",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "180"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.accept"
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "482"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ]
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/mongoClusters/{mongoClusterName}/privateEndpointConnections",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster",
+                "decorators": [
+                  {
+                    "name": "Azure.ResourceManager.@armResourceList",
+                    "arguments": {}
+                  }
+                ],
+                "examples": [
+                  {
+                    "$id": "2800",
+                    "kind": "http",
+                    "name": "Lists the private endpoint connection resources on a Mongo Cluster resource.",
+                    "description": "Lists the private endpoint connection resources on a Mongo Cluster resource.",
+                    "filePath": "2025-09-01/MongoClusters_PrivateEndpointConnectionList.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "2792"
+                        },
+                        "value": {
+                          "$id": "2801",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "2793"
+                          },
+                          "value": "ffffffff-ffff-ffff-ffff-ffffffffffff"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "2795"
+                        },
+                        "value": {
+                          "$id": "2802",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "2796"
+                          },
+                          "value": "TestGroup"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "2797"
+                        },
+                        "value": {
+                          "$id": "2803",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "2798"
+                          },
+                          "value": "myMongoCluster"
+                        }
+                      },
+                      {
+                        "parameter": {
+                          "$ref": "2789"
+                        },
+                        "value": {
+                          "$id": "2804",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "2790"
+                          },
+                          "value": "2025-09-01"
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "482"
+                          },
+                          "headers": [],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ]
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "2805",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "482"
+                          },
+                          "value": {
+                            "value": {
+                              "$id": "2806",
+                              "kind": "array",
+                              "type": {
+                                "$ref": "484"
+                              },
+                              "value": [
+                                {
+                                  "$id": "2807",
+                                  "kind": "model",
+                                  "type": {
+                                    "$ref": "478"
+                                  },
+                                  "value": {
+                                    "name": {
+                                      "$id": "2808",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "481"
+                                      },
+                                      "value": "pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
+                                    },
+                                    "id": {
+                                      "$id": "2809",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "243"
+                                      },
+                                      "value": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.DocumentDB/mongoClusters/myMongoCluster/privateEndpointConnections/pecTest.5d393f64-ef64-46d0-9959-308321c44ac0"
+                                    },
+                                    "type": {
+                                      "$id": "2810",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "248"
+                                      },
+                                      "value": "Microsoft.DocumentDB/mongoClusters/privateEndpointConnections"
+                                    },
+                                    "systemData": {
+                                      "$id": "2811",
+                                      "kind": "model",
+                                      "type": {
+                                        "$ref": "251"
+                                      },
+                                      "value": {
+                                        "createdAt": {
+                                          "$id": "2812",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "256"
+                                          },
+                                          "value": "2024-02-09T05:51:31.1386869Z"
+                                        },
+                                        "createdBy": {
+                                          "$id": "2813",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "253"
+                                          },
+                                          "value": "2df9eb86-36b5-49dc-86ae-9a63135bfa8c"
+                                        },
+                                        "createdByType": {
+                                          "$id": "2814",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "60"
+                                          },
+                                          "value": "Application"
+                                        },
+                                        "lastModifiedAt": {
+                                          "$id": "2815",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "262"
+                                          },
+                                          "value": "2024-02-09T05:51:31.1386869Z"
+                                        },
+                                        "lastModifiedBy": {
+                                          "$id": "2816",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "259"
+                                          },
+                                          "value": "2ff9eb86-36b5-49dc-86ae-9a63135bfa8c"
+                                        },
+                                        "lastModifiedByType": {
+                                          "$id": "2817",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "60"
+                                          },
+                                          "value": "Application"
+                                        }
+                                      }
+                                    },
+                                    "properties": {
+                                      "$id": "2818",
+                                      "kind": "model",
+                                      "type": {
+                                        "$ref": "332"
+                                      },
+                                      "value": {
+                                        "provisioningState": {
+                                          "$id": "2819",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "54"
+                                          },
+                                          "value": "Succeeded"
+                                        },
+                                        "privateEndpoint": {
+                                          "$id": "2820",
+                                          "kind": "model",
+                                          "type": {
+                                            "$ref": "337"
+                                          },
+                                          "value": {
+                                            "id": {
+                                              "$id": "2821",
+                                              "kind": "string",
+                                              "type": {
+                                                "$ref": "339"
+                                              },
+                                              "value": "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/TestGroup/providers/Microsoft.Network/privateEndpoints/pecTest"
+                                            }
+                                          }
+                                        },
+                                        "groupIds": {
+                                          "$id": "2822",
+                                          "kind": "array",
+                                          "type": {
+                                            "$ref": "334"
+                                          },
+                                          "value": [
+                                            {
+                                              "$id": "2823",
+                                              "kind": "string",
+                                              "type": {
+                                                "$ref": "335"
+                                              },
+                                              "value": "MongoCluster"
+                                            }
+                                          ]
+                                        },
+                                        "privateLinkServiceConnectionState": {
+                                          "$id": "2824",
+                                          "kind": "model",
+                                          "type": {
+                                            "$ref": "342"
+                                          },
+                                          "value": {
+                                            "status": {
+                                              "$id": "2825",
+                                              "kind": "string",
+                                              "type": {
+                                                "$ref": "49"
+                                              },
+                                              "value": "Approved"
+                                            },
+                                            "description": {
+                                              "$id": "2826",
+                                              "kind": "string",
+                                              "type": {
+                                                "$ref": "345"
+                                              },
+                                              "value": "Auto-approved"
+                                            },
+                                            "actionsRequired": {
+                                              "$id": "2827",
+                                              "kind": "string",
+                                              "type": {
+                                                "$ref": "347"
+                                              },
+                                              "value": "None"
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              },
+              "parameters": [
+                {
+                  "$id": "2828",
+                  "kind": "method",
+                  "name": "resourceGroupName",
+                  "serializedName": "resourceGroupName",
+                  "doc": "The name of the resource group. The name is case insensitive.",
+                  "type": {
+                    "$id": "2829",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.resourceGroupName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "2830",
+                  "kind": "method",
+                  "name": "mongoClusterName",
+                  "serializedName": "mongoClusterName",
+                  "doc": "The name of the mongo cluster.",
+                  "type": {
+                    "$id": "2831",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "location": "Path",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Method",
+                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.mongoClusterName",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                },
+                {
+                  "$id": "2832",
+                  "kind": "method",
+                  "name": "accept",
+                  "serializedName": "Accept",
+                  "type": {
+                    "$ref": "180"
+                  },
+                  "location": "Header",
+                  "isApiVersion": false,
+                  "optional": false,
+                  "scope": "Constant",
+                  "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.accept",
+                  "readOnly": false,
+                  "access": "public",
+                  "decorators": []
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "484"
+                },
+                "resultSegments": [
+                  "value"
+                ]
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster",
+              "pagingMetadata": {
+                "itemPropertySegments": [
+                  "value"
+                ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
+                "pageSizeParameterSegments": []
               }
             }
           ],
@@ -31094,7 +31094,7 @@
               },
               "optional": false,
               "scope": "Method",
-              "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.apiVersion",
+              "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.apiVersion",
               "readOnly": false,
               "access": "public",
               "decorators": []
@@ -31123,7 +31123,7 @@
               "isApiVersion": false,
               "optional": false,
               "scope": "Method",
-              "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.listByMongoCluster.subscriptionId",
+              "crossLanguageDefinitionId": "Microsoft.DocumentDB.PrivateEndpointConnections.get.subscriptionId",
               "readOnly": false,
               "access": "public",
               "decorators": []
