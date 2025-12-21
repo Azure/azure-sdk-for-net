@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("startIpAddress"u8);
-            writer.WriteStringValue(StartIpAddress);
+            writer.WriteStringValue(StartIPAddress);
             writer.WritePropertyName("endIpAddress"u8);
-            writer.WriteStringValue(EndIpAddress);
+            writer.WriteStringValue(EndIPAddress);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -91,8 +91,8 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 return null;
             }
             MongoClusterProvisioningState? provisioningState = default;
-            string startIpAddress = default;
-            string endIpAddress = default;
+            string startIPAddress = default;
+            string endIPAddress = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 }
                 if (prop.NameEquals("startIpAddress"u8))
                 {
-                    startIpAddress = prop.Value.GetString();
+                    startIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("endIpAddress"u8))
                 {
-                    endIpAddress = prop.Value.GetString();
+                    endIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MongoClusterFirewallRuleProperties(provisioningState, startIpAddress, endIpAddress, additionalBinaryDataProperties);
+            return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -17,7 +17,7 @@ using Azure.ResourceManager.MongoCluster;
 namespace Azure.ResourceManager.MongoCluster.Models
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    internal partial class MongoClusterPrivateLinkResourceData : ResourceData, IJsonModel<MongoClusterPrivateLinkResourceData>
+    public partial class MongoClusterPrivateLinkResourceData : ResourceData, IJsonModel<MongoClusterPrivateLinkResourceData>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

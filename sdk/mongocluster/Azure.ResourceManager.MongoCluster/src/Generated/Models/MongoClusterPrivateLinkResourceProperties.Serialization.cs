@@ -14,7 +14,7 @@ using Azure.ResourceManager.MongoCluster;
 namespace Azure.ResourceManager.MongoCluster.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    internal partial class MongoClusterPrivateLinkResourceProperties : IJsonModel<MongoClusterPrivateLinkResourceProperties>
+    public partial class MongoClusterPrivateLinkResourceProperties : IJsonModel<MongoClusterPrivateLinkResourceProperties>
     {
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

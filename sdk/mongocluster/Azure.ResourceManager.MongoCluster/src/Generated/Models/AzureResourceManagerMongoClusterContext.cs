@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.MongoCluster
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateEndpointConnectionResource))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateEndpointConnectionResourceData))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateLinkResourceData))]
+    [ModelReaderWriterBuildable(typeof(MongoClusterPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(MongoClusterPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(MongoClusterProperties))]

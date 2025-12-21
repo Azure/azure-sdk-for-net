@@ -12,7 +12,7 @@ using Azure.ResourceManager.MongoCluster;
 namespace Azure.ResourceManager.MongoCluster.Models
 {
     /// <summary> Properties of a private link resource. </summary>
-    internal partial class MongoClusterPrivateLinkResourceProperties
+    public partial class MongoClusterPrivateLinkResourceProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
