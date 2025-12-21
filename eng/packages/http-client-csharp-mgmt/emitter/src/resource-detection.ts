@@ -402,7 +402,7 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
  *   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}"
  * 
  * @param listOperationPath - The path of the list operation
- * @param model - The resource model
+ * @param model - The resource model. If undefined, the original path is returned since we cannot derive the resource name parameter.
  * @returns The derived resource path with the resource name parameter appended
  */
 function deriveResourcePathFromListOperation(
@@ -410,12 +410,19 @@ function deriveResourcePathFromListOperation(
   model: InputModelType | undefined
 ): string {
   if (!model) {
+    // Return the original path when model is undefined. This is a fallback case that should rarely occur,
+    // as the model should be available for all resource operations. The caller will handle this gracefully
+    // by either merging with an existing resource path or treating the operation as a non-resource method.
     return listOperationPath;
   }
   
   // Get the resource name from the model name (e.g., "Bar" -> "barName")
   // Convert first letter to lowercase and append "Name"
   const modelName = model.name;
+  
+  // Handle edge case: single character model names (e.g., "A" -> "aName")
+  // Handle edge case: model names already ending with "Name" (e.g., "FooName" -> "fooNameName")
+  // Note: The second case is intentional as Azure resource names follow the pattern "{resourceType}Name"
   const resourceNameParam = modelName.charAt(0).toLowerCase() + modelName.slice(1) + "Name";
   
   // Append the resource name parameter to the list operation path
