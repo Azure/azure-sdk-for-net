@@ -156,9 +156,10 @@ export function buildArmProviderSchema(
               }
             }
           }
-          // If no match found, use the operation path
+          // If no match found, derive the resource path from the list operation path
           if (!resourcePath) {
-            resourcePath = operationPath;
+            const model = resourceModelMap.get(modelId);
+            resourcePath = deriveResourcePathFromListOperation(operationPath, model);
           }
         }
         
@@ -391,6 +392,34 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
     ResourceOperationKind.Update,
     ResourceOperationKind.Delete
   ].includes(kind);
+}
+
+/**
+ * Derives the resource path from a list operation path by appending the resource name parameter.
+ * For example, converts:
+ *   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars"
+ * to:
+ *   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}"
+ * 
+ * @param listOperationPath - The path of the list operation
+ * @param model - The resource model
+ * @returns The derived resource path with the resource name parameter appended
+ */
+function deriveResourcePathFromListOperation(
+  listOperationPath: string,
+  model: InputModelType | undefined
+): string {
+  if (!model) {
+    return listOperationPath;
+  }
+  
+  // Get the resource name from the model name (e.g., "Bar" -> "barName")
+  // Convert first letter to lowercase and append "Name"
+  const modelName = model.name;
+  const resourceNameParam = modelName.charAt(0).toLowerCase() + modelName.slice(1) + "Name";
+  
+  // Append the resource name parameter to the list operation path
+  return `${listOperationPath}/{${resourceNameParam}}`;
 }
 
 function parseResourceOperation(
