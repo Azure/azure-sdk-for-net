@@ -109,121 +109,152 @@ export function buildArmProviderSchema(
   // first we flatten all possible clients in the code model
   const clients = getAllClients(codeModel);
 
-  // then we iterate over all the clients and their methods to find the resource operations
-  // and add them to the resource model metadata
-  // during the process we populate the resourceIdPattern and resourceType
+  // Process methods in two passes to ensure CRUD operations establish resource paths first
+  // This allows non-CRUD operations (like List) to find existing resource paths regardless of operation order
+  
+  // Helper function to process a method and add it to the resource metadata
+  const processMethod = (client: InputClient, method: any) => {
+    const serviceMethod = serviceMethods.get(
+      method.crossLanguageDefinitionId
+    );
+    const [kind, modelId, explicitResourceName] =
+      parseResourceOperation(serviceMethod, sdkContext) ?? [];
+   
+    if (modelId && kind && resourceModelIds.has(modelId)) {
+      // Determine the resource path from the CRUD operation
+      let resourcePath = "";
+      if (isCRUDKind(kind)) {
+        resourcePath = method.operation.path;
+      } else {
+        // For non-CRUD operations like List, try to match with existing resource paths for the same model
+        const operationPath = method.operation.path;
+        for (const [existingKey] of resourcePathToMetadataMap) {
+          const [existingModelId, existingPath] = existingKey.split('|');
+          // Check if this is for the same model
+          if (existingModelId === modelId && existingPath) {
+            // Try to match based on resource type segments
+            // Extract the resource type part (after "/providers/")
+            const existingResourceType = calculateResourceTypeFromPath(existingPath);
+            let operationResourceType = "";
+            try {
+              operationResourceType = calculateResourceTypeFromPath(operationPath);
+            } catch {
+              // If we can't calculate resource type, try string matching
+            }
+            
+            // If resource types match, this list operation belongs to this resource
+            if (existingResourceType && operationResourceType === existingResourceType) {
+              resourcePath = existingPath;
+              break;
+            }
+            
+            // Fallback: check if the operation path ends with a segment that matches the existing path
+            const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
+            if (operationPath.startsWith(existingParentPath)) {
+              resourcePath = existingPath;
+              break;
+            }
+          }
+        }
+        // If no match found, use the operation path
+        if (!resourcePath) {
+          resourcePath = operationPath;
+        }
+      }
+      
+      // Create a unique key combining model ID and resource path
+      const metadataKey = `${modelId}|${resourcePath}`;
+      
+      // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
+      if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
+        resourcePathToExplicitName.set(metadataKey, explicitResourceName);
+      }
+      
+      // Get or create metadata entry for this resource path
+      let entry = resourcePathToMetadataMap.get(metadataKey);
+      if (!entry) {
+        const model = resourceModelMap.get(modelId);
+        // Store the client name for this resource path for later use (fallback if no explicit name)
+        if (!resourcePathToClientName.has(metadataKey)) {
+          resourcePathToClientName.set(metadataKey, client.name);
+        }
+        
+        entry = {
+          resourceIdPattern: "", // this will be populated later
+          resourceType: "", // this will be populated later
+          singletonResourceName: getSingletonResource(
+            model?.decorators?.find((d) => d.name == singleton)
+          ),
+          resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
+          methods: [],
+          parentResourceId: undefined, // this will be populated later
+          parentResourceModelId: undefined,
+          // Use model name as default; will be updated later if multiple paths exist
+          resourceName: model?.name ?? "Unknown"
+        } as ResourceMetadata;
+        resourcePathToMetadataMap.set(metadataKey, entry);
+      }
+      
+      entry.methods.push({
+        methodId: method.crossLanguageDefinitionId,
+        kind,
+        operationPath: method.operation.path,
+        operationScope: getOperationScope(method.operation.path)
+      });
+      if (!entry.resourceType) {
+        entry.resourceType = calculateResourceTypeFromPath(
+          method.operation.path
+        );
+      }
+      if (!entry.resourceIdPattern && isCRUDKind(kind)) {
+        entry.resourceIdPattern = method.operation.path;
+      }
+    } else if (modelId && kind) {
+      // no resource model found for this modelId, treat as non-resource method
+      nonResourceMethods.set(method.crossLanguageDefinitionId, {
+        methodId: method.crossLanguageDefinitionId,
+        operationPath: method.operation.path,
+        operationScope: getOperationScope(method.operation.path)
+      });
+    } else {
+      // we add a methodMetadata decorator to this method
+      nonResourceMethods.set(method.crossLanguageDefinitionId, {
+        methodId: method.crossLanguageDefinitionId,
+        operationPath: method.operation.path,
+        operationScope: getOperationScope(method.operation.path)
+      });
+    }
+  };
+
+  // First pass: Process CRUD operations to establish resource paths
   for (const client of clients) {
     for (const method of client.methods) {
       const serviceMethod = serviceMethods.get(
         method.crossLanguageDefinitionId
       );
-      const [kind, modelId, explicitResourceName] =
-        parseResourceOperation(serviceMethod, sdkContext) ?? [];
-     
-      if (modelId && kind && resourceModelIds.has(modelId)) {
-        // Determine the resource path from the CRUD operation
-        let resourcePath = "";
-        if (isCRUDKind(kind)) {
-          resourcePath = method.operation.path;
-        } else {
-          // For non-CRUD operations like List, try to match with existing resource paths for the same model
-          const operationPath = method.operation.path;
-          for (const [existingKey] of resourcePathToMetadataMap) {
-            const [existingModelId, existingPath] = existingKey.split('|');
-            // Check if this is for the same model
-            if (existingModelId === modelId && existingPath) {
-              // Try to match based on resource type segments
-              // Extract the resource type part (after "/providers/")
-              const existingResourceType = calculateResourceTypeFromPath(existingPath);
-              let operationResourceType = "";
-              try {
-                operationResourceType = calculateResourceTypeFromPath(operationPath);
-              } catch {
-                // If we can't calculate resource type, try string matching
-              }
-              
-              // If resource types match, this list operation belongs to this resource
-              if (existingResourceType && operationResourceType === existingResourceType) {
-                resourcePath = existingPath;
-                break;
-              }
-              
-              // Fallback: check if the operation path ends with a segment that matches the existing path
-              const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
-              if (operationPath.startsWith(existingParentPath)) {
-                resourcePath = existingPath;
-                break;
-              }
-            }
-          }
-          // If no match found, derive the resource path from the list operation path
-          if (!resourcePath) {
-            const model = resourceModelMap.get(modelId);
-            resourcePath = deriveResourcePathFromListOperation(operationPath, model);
-          }
-        }
-        
-        // Create a unique key combining model ID and resource path
-        const metadataKey = `${modelId}|${resourcePath}`;
-        
-        // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
-        if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
-          resourcePathToExplicitName.set(metadataKey, explicitResourceName);
-        }
-        
-        // Get or create metadata entry for this resource path
-        let entry = resourcePathToMetadataMap.get(metadataKey);
-        if (!entry) {
-          const model = resourceModelMap.get(modelId);
-          // Store the client name for this resource path for later use (fallback if no explicit name)
-          if (!resourcePathToClientName.has(metadataKey)) {
-            resourcePathToClientName.set(metadataKey, client.name);
-          }
-          
-          entry = {
-            resourceIdPattern: "", // this will be populated later
-            resourceType: "", // this will be populated later
-            singletonResourceName: getSingletonResource(
-              model?.decorators?.find((d) => d.name == singleton)
-            ),
-            resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
-            methods: [],
-            parentResourceId: undefined, // this will be populated later
-            parentResourceModelId: undefined,
-            // Use model name as default; will be updated later if multiple paths exist
-            resourceName: model?.name ?? "Unknown"
-          } as ResourceMetadata;
-          resourcePathToMetadataMap.set(metadataKey, entry);
-        }
-        
-        entry.methods.push({
-          methodId: method.crossLanguageDefinitionId,
-          kind,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-        if (!entry.resourceType) {
-          entry.resourceType = calculateResourceTypeFromPath(
-            method.operation.path
-          );
-        }
-        if (!entry.resourceIdPattern && isCRUDKind(kind)) {
-          entry.resourceIdPattern = method.operation.path;
-        }
-      } else if (modelId && kind) {
-        // no resource model found for this modelId, treat as non-resource method
-        nonResourceMethods.set(method.crossLanguageDefinitionId, {
-          methodId: method.crossLanguageDefinitionId,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-      } else {
-        // we add a methodMetadata decorator to this method
-        nonResourceMethods.set(method.crossLanguageDefinitionId, {
-          methodId: method.crossLanguageDefinitionId,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
+      const [kind] = parseResourceOperation(serviceMethod, sdkContext) ?? [];
+      
+      // Only process CRUD operations in the first pass
+      if (kind && isCRUDKind(kind)) {
+        processMethod(client, method);
+      }
+    }
+  }
+
+  // Second pass: Process non-CRUD operations (like List) which can now find existing resource paths
+  for (const client of clients) {
+    for (const method of client.methods) {
+      const serviceMethod = serviceMethods.get(
+        method.crossLanguageDefinitionId
+      );
+      const [kind] = parseResourceOperation(serviceMethod, sdkContext) ?? [];
+      
+      // Only process non-CRUD operations in the second pass
+      if (kind && !isCRUDKind(kind)) {
+        processMethod(client, method);
+      } else if (!kind) {
+        // Process methods without a kind in the second pass
+        processMethod(client, method);
       }
     }
   }
@@ -392,41 +423,6 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
     ResourceOperationKind.Update,
     ResourceOperationKind.Delete
   ].includes(kind);
-}
-
-/**
- * Derives the resource path from a list operation path by appending the resource name parameter.
- * For example, converts:
- *   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars"
- * to:
- *   "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/MgmtTypeSpec/foos/{fooName}/bars/{barName}"
- * 
- * @param listOperationPath - The path of the list operation
- * @param model - The resource model. If undefined, the original path is returned since we cannot derive the resource name parameter.
- * @returns The derived resource path with the resource name parameter appended
- */
-function deriveResourcePathFromListOperation(
-  listOperationPath: string,
-  model: InputModelType | undefined
-): string {
-  if (!model) {
-    // Return the original path when model is undefined. This is a fallback case that should rarely occur,
-    // as the model should be available for all resource operations. The caller will handle this gracefully
-    // by either merging with an existing resource path or treating the operation as a non-resource method.
-    return listOperationPath;
-  }
-  
-  // Get the resource name from the model name (e.g., "Bar" -> "barName")
-  // Convert first letter to lowercase and append "Name"
-  const modelName = model.name;
-  
-  // Handle edge case: single character model names (e.g., "A" -> "aName")
-  // Handle edge case: model names already ending with "Name" (e.g., "FooName" -> "fooNameName")
-  // Note: The second case is intentional as Azure resource names follow the pattern "{resourceType}Name"
-  const resourceNameParam = modelName.charAt(0).toLowerCase() + modelName.slice(1) + "Name";
-  
-  // Append the resource name parameter to the list operation path
-  return `${listOperationPath}/{${resourceNameParam}}`;
 }
 
 function parseResourceOperation(
