@@ -29,3 +29,21 @@ model SelfHelpResourceProperties {
 interface SolutionResources {
   get is Extension.Read<Extension.ScopeParameter, SelfHelpResource>;
 }
+
+#suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-interface-requires-decorator" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+@autoRoute
+interface CheckNameAvailabilityOperationGroup {
+  #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-operation" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+  checkNameAvailability is ArmProviderActionSync<
+    CommonTypes.CheckNameAvailabilityRequest,
+    CheckNameAvailabilityResponse,
+    ExtensionActionScope,
+    OptionalRequestBody = true
+  >;
+}
+
+model CheckNameAvailabilityResponse {
+  nameAvailable: boolean;
+  reason?: string;
+  message?: string;
+}
