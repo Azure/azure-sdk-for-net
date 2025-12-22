@@ -7,9 +7,8 @@ import {
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { updateClients } from "../src/resource-detection.js";
+import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
-import { nonResourceMethodMetadata } from "../src/sdk-context-options.js";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("Non-Resource Methods Detection", () => {
@@ -55,25 +54,13 @@ model ValidationResponse {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    
+    // Build ARM provider schema and verify non-resource methods
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
 
-    // Check that the first client has non-resource method decorators
-    const firstClient = root.clients[0];
-    ok(firstClient, "First client should exist");
-    ok(firstClient.decorators, "Client should have decorators");
-
-    const nonResourceMethodDecorator = firstClient.decorators.find(
-      (d) => d.name === nonResourceMethodMetadata
-    );
-
-    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-    ok(
-      nonResourceMethodDecorator.arguments.nonResourceMethods,
-      "Should have non-resource methods array"
-    );
-
-    const nonResourceMethods =
-      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,
@@ -143,19 +130,11 @@ model GlobalSettings {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const firstClient = root.clients[0];
-    ok(firstClient, "First client should exist");
-
-    const nonResourceMethodDecorator = firstClient.decorators?.find(
-      (d) => d.name === nonResourceMethodMetadata
-    );
-
-    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-
-    const nonResourceMethods =
-      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       2,
@@ -224,25 +203,16 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const firstClient = root.clients[0];
-
-    // Check if there are any non-resource method decorators
-    const nonResourceMethodDecorator = firstClient.decorators?.find(
-      (d) => d.name === nonResourceMethodMetadata
+    // Should not have non-resource methods since all methods are standard ARM operations
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
+    strictEqual(
+      nonResourceMethods.length,
+      0,
+      "Should have no non-resource methods for standard ARM operations"
     );
-
-    // Should not have non-resource method decorator since all methods are standard ARM operations
-    if (nonResourceMethodDecorator) {
-      const nonResourceMethods =
-        nonResourceMethodDecorator.arguments.nonResourceMethods;
-      strictEqual(
-        nonResourceMethods.length,
-        0,
-        "Should have no non-resource methods for standard ARM operations"
-      );
-    }
   });
 
   it("should detect mixed resource and non-resource methods", async () => {
@@ -331,19 +301,11 @@ model MigrationResponse {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const firstClient = root.clients[0];
-    ok(firstClient, "First client should exist");
-
-    const nonResourceMethodDecorator = firstClient.decorators?.find(
-      (d) => d.name === nonResourceMethodMetadata
-    );
-
-    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-
-    const nonResourceMethods =
-      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       2,
@@ -410,19 +372,11 @@ model WorkspaceValidationResponse {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const firstClient = root.clients[0];
-    ok(firstClient, "First client should exist");
-
-    const nonResourceMethodDecorator = firstClient.decorators?.find(
-      (d) => d.name === nonResourceMethodMetadata
-    );
-
-    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-
-    const nonResourceMethods =
-      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,
@@ -491,19 +445,11 @@ model SearchResult {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const firstClient = root.clients[0];
-    ok(firstClient, "First client should exist");
-
-    const nonResourceMethodDecorator = firstClient.decorators?.find(
-      (d) => d.name === nonResourceMethodMetadata
-    );
-
-    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-
-    const nonResourceMethods =
-      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,
@@ -554,19 +500,11 @@ model FooPreviewAction {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    updateClients(root, sdkContext);
+    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
 
-    const firstClient = root.clients[0];
-    ok(firstClient, "First client should exist");
-
-    const nonResourceMethodDecorator = firstClient.decorators?.find(
-      (d) => d.name === nonResourceMethodMetadata
-    );
-
-    ok(nonResourceMethodDecorator, "Should have non-resource method decorator");
-
-    const nonResourceMethods =
-      nonResourceMethodDecorator.arguments.nonResourceMethods;
+    ok(armProviderSchemaResult, "Should have ARM provider schema");
+    ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods array");
+    const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     strictEqual(
       nonResourceMethods.length,
       1,

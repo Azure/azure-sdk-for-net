@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Istio service mesh configuration. </summary>
+    /// <summary>
+    /// Istio service mesh configuration.
+    /// Serialized Name: IstioServiceMesh
+    /// </summary>
     public partial class IstioServiceMesh
     {
         /// <summary>
@@ -52,9 +55,18 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IstioServiceMesh"/>. </summary>
-        /// <param name="components"> Istio components configuration. </param>
-        /// <param name="certificateAuthority"> Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca. </param>
-        /// <param name="revisions"> The list of revisions of the Istio control plane. When an upgrade is not in progress, this holds one value. When canary upgrade is in progress, this can only hold two consecutive values. For more information, see: https://learn.microsoft.com/en-us/azure/aks/istio-upgrade. </param>
+        /// <param name="components">
+        /// Istio components configuration.
+        /// Serialized Name: IstioServiceMesh.components
+        /// </param>
+        /// <param name="certificateAuthority">
+        /// Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca
+        /// Serialized Name: IstioServiceMesh.certificateAuthority
+        /// </param>
+        /// <param name="revisions">
+        /// The list of revisions of the Istio control plane. When an upgrade is not in progress, this holds one value. When canary upgrade is in progress, this can only hold two consecutive values. For more information, see: https://learn.microsoft.com/en-us/azure/aks/istio-upgrade
+        /// Serialized Name: IstioServiceMesh.revisions
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IstioServiceMesh(IstioComponents components, IstioCertificateAuthority certificateAuthority, IList<string> revisions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,12 +76,21 @@ namespace Azure.ResourceManager.ContainerService.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Istio components configuration. </summary>
+        /// <summary>
+        /// Istio components configuration.
+        /// Serialized Name: IstioServiceMesh.components
+        /// </summary>
         [WirePath("components")]
         public IstioComponents Components { get; set; }
-        /// <summary> Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca. </summary>
+        /// <summary>
+        /// Istio Service Mesh Certificate Authority (CA) configuration. For now, we only support plugin certificates as described here https://aka.ms/asm-plugin-ca
+        /// Serialized Name: IstioServiceMesh.certificateAuthority
+        /// </summary>
         internal IstioCertificateAuthority CertificateAuthority { get; set; }
-        /// <summary> Plugin certificates information for Service Mesh. </summary>
+        /// <summary>
+        /// Plugin certificates information for Service Mesh.
+        /// Serialized Name: IstioCertificateAuthority.plugin
+        /// </summary>
         [WirePath("certificateAuthority.plugin")]
         public IstioPluginCertificateAuthority CertificateAuthorityPlugin
         {
@@ -82,7 +103,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
-        /// <summary> The list of revisions of the Istio control plane. When an upgrade is not in progress, this holds one value. When canary upgrade is in progress, this can only hold two consecutive values. For more information, see: https://learn.microsoft.com/en-us/azure/aks/istio-upgrade. </summary>
+        /// <summary>
+        /// The list of revisions of the Istio control plane. When an upgrade is not in progress, this holds one value. When canary upgrade is in progress, this can only hold two consecutive values. For more information, see: https://learn.microsoft.com/en-us/azure/aks/istio-upgrade
+        /// Serialized Name: IstioServiceMesh.revisions
+        /// </summary>
         [WirePath("revisions")]
         public IList<string> Revisions { get; }
     }

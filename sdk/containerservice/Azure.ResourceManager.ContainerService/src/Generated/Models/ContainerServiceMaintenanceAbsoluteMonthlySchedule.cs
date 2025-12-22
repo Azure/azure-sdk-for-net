@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </summary>
+    /// <summary>
+    /// For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'.
+    /// Serialized Name: AbsoluteMonthlySchedule
+    /// </summary>
     public partial class ContainerServiceMaintenanceAbsoluteMonthlySchedule
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/>. </summary>
-        /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
-        /// <param name="dayOfMonth"> The date of the month. </param>
+        /// <param name="intervalMonths">
+        /// Specifies the number of months between each set of occurrences.
+        /// Serialized Name: AbsoluteMonthlySchedule.intervalMonths
+        /// </param>
+        /// <param name="dayOfMonth">
+        /// The date of the month.
+        /// Serialized Name: AbsoluteMonthlySchedule.dayOfMonth
+        /// </param>
         public ContainerServiceMaintenanceAbsoluteMonthlySchedule(int intervalMonths, int dayOfMonth)
         {
             IntervalMonths = intervalMonths;
@@ -55,8 +64,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/>. </summary>
-        /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
-        /// <param name="dayOfMonth"> The date of the month. </param>
+        /// <param name="intervalMonths">
+        /// Specifies the number of months between each set of occurrences.
+        /// Serialized Name: AbsoluteMonthlySchedule.intervalMonths
+        /// </param>
+        /// <param name="dayOfMonth">
+        /// The date of the month.
+        /// Serialized Name: AbsoluteMonthlySchedule.dayOfMonth
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceMaintenanceAbsoluteMonthlySchedule(int intervalMonths, int dayOfMonth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,10 +85,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         {
         }
 
-        /// <summary> Specifies the number of months between each set of occurrences. </summary>
+        /// <summary>
+        /// Specifies the number of months between each set of occurrences.
+        /// Serialized Name: AbsoluteMonthlySchedule.intervalMonths
+        /// </summary>
         [WirePath("intervalMonths")]
         public int IntervalMonths { get; set; }
-        /// <summary> The date of the month. </summary>
+        /// <summary>
+        /// The date of the month.
+        /// Serialized Name: AbsoluteMonthlySchedule.dayOfMonth
+        /// </summary>
         [WirePath("dayOfMonth")]
         public int DayOfMonth { get; set; }
     }
