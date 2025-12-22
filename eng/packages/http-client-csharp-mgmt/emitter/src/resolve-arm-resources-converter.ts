@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-import { Program } from "@typespec/compiler";
+import { Program, Model, Operation } from "@typespec/compiler";
 import {
   Provider,
   ResolvedResource,
@@ -18,7 +18,13 @@ import {
   ResourceScope
 } from "./resource-metadata.js";
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
-import { SdkModelType } from "@azure-tools/typespec-client-generator-core";
+import {
+  SdkModelType,
+  SdkMethod,
+  SdkHttpOperation,
+  getClientType
+} from "@azure-tools/typespec-client-generator-core";
+import { getAllSdkClients } from "./resource-detection.js";
 
 /**
  * Converts the result from resolveArmResources API to our ArmProviderSchema format.
@@ -34,6 +40,9 @@ export function convertProviderToArmProviderSchema(
   sdkContext: CSharpEmitterContext
 ): ArmProviderSchema {
   const provider = resolveArmResources(program);
+  
+  // Build maps for fast lookup
+  const operationMap = buildOperationMap(sdkContext);
   
   // Convert resources
   const resources: ArmResourceSchema[] = [];
@@ -55,7 +64,7 @@ export function convertProviderToArmProviderSchema(
       processedResources.add(resourceKey);
       
       // Convert to our resource schema format
-      const metadata = convertResolvedResourceToMetadata(resolvedResource, sdkContext);
+      const metadata = convertResolvedResourceToMetadata(resolvedResource, sdkContext, operationMap);
       
       resources.push({
         resourceModelId: model.crossLanguageDefinitionId,
@@ -69,7 +78,7 @@ export function convertProviderToArmProviderSchema(
   if (provider.providerOperations) {
     for (const operation of provider.providerOperations) {
       // Get method ID from the operation
-      const methodId = getMethodIdFromOperation(operation.operation, sdkContext);
+      const methodId = getMethodIdFromOperation(operation.operation, operationMap);
       if (!methodId) {
         continue;
       }
@@ -89,11 +98,30 @@ export function convertProviderToArmProviderSchema(
 }
 
 /**
+ * Build a map of TypeSpec operations to SDK methods for fast lookup
+ */
+function buildOperationMap(sdkContext: CSharpEmitterContext): Map<Operation, SdkMethod<SdkHttpOperation>> {
+  const operationMap = new Map<Operation, SdkMethod<SdkHttpOperation>>();
+  
+  for (const client of getAllSdkClients(sdkContext)) {
+    for (const method of client.methods) {
+      const operation = method.__raw;
+      if (operation) {
+        operationMap.set(operation, method);
+      }
+    }
+  }
+  
+  return operationMap;
+}
+
+/**
  * Converts a ResolvedResource to ResourceMetadata format
  */
 function convertResolvedResourceToMetadata(
   resolvedResource: ResolvedResource,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  operationMap: Map<Operation, SdkMethod<SdkHttpOperation>>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   
@@ -103,7 +131,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.read && lifecycle.read.length > 0) {
       for (const readOp of lifecycle.read) {
-        const methodId = getMethodIdFromOperation(readOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(readOp.operation, operationMap);
         if (methodId) {
           methods.push({
             methodId,
@@ -118,7 +146,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.createOrUpdate && lifecycle.createOrUpdate.length > 0) {
       for (const createOp of lifecycle.createOrUpdate) {
-        const methodId = getMethodIdFromOperation(createOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(createOp.operation, operationMap);
         if (methodId) {
           methods.push({
             methodId,
@@ -133,7 +161,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.update && lifecycle.update.length > 0) {
       for (const updateOp of lifecycle.update) {
-        const methodId = getMethodIdFromOperation(updateOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(updateOp.operation, operationMap);
         if (methodId) {
           methods.push({
             methodId,
@@ -148,7 +176,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.delete && lifecycle.delete.length > 0) {
       for (const deleteOp of lifecycle.delete) {
-        const methodId = getMethodIdFromOperation(deleteOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(deleteOp.operation, operationMap);
         if (methodId) {
           methods.push({
             methodId,
@@ -165,7 +193,7 @@ function convertResolvedResourceToMetadata(
   // Convert list operations
   if (resolvedResource.operations.lists) {
     for (const listOp of resolvedResource.operations.lists) {
-      const methodId = getMethodIdFromOperation(listOp.operation, sdkContext);
+      const methodId = getMethodIdFromOperation(listOp.operation, operationMap);
       if (methodId) {
         methods.push({
           methodId,
@@ -181,7 +209,7 @@ function convertResolvedResourceToMetadata(
   // Convert action operations
   if (resolvedResource.operations.actions) {
     for (const actionOp of resolvedResource.operations.actions) {
-      const methodId = getMethodIdFromOperation(actionOp.operation, sdkContext);
+      const methodId = getMethodIdFromOperation(actionOp.operation, operationMap);
       if (methodId) {
         methods.push({
           methodId,
@@ -222,25 +250,25 @@ function convertResolvedResourceToMetadata(
  */
 function getModelFromSdkContext(
   sdkContext: CSharpEmitterContext,
-  typespecType: any
+  typespecType: Model
 ): SdkModelType | undefined {
-  // Find the model in SDK context that matches this TypeSpec type
-  const crossLangId = typespecType.name; // This is simplified - may need better mapping
-  return sdkContext.sdkPackage.models.find(
-    m => m.name === typespecType.name || m.crossLanguageDefinitionId.includes(typespecType.name)
-  );
+  // Use getClientType to get the SDK model type from the TypeSpec model
+  const sdkModel = getClientType(sdkContext, typespecType);
+  if (sdkModel && sdkModel.kind === "model") {
+    return sdkModel as SdkModelType;
+  }
+  return undefined;
 }
 
 /**
- * Helper to get method ID from an operation
+ * Helper to get method ID from an operation using the operation map
  */
 function getMethodIdFromOperation(
-  operation: any,
-  sdkContext: CSharpEmitterContext
+  operation: Operation,
+  operationMap: Map<Operation, SdkMethod<SdkHttpOperation>>
 ): string | undefined {
-  // This is a simplified version - in reality we'd need to look up the operation
-  // in the SDK context to get its crossLanguageDefinitionId
-  return operation.name; // Placeholder
+  const method = operationMap.get(operation);
+  return method?.crossLanguageDefinitionId;
 }
 
 /**
