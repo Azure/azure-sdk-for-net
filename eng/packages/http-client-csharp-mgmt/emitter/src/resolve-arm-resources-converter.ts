@@ -1,6 +1,29 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+/**
+ * This module provides conversion functionality between the resolveArmResources API
+ * (from @azure-tools/typespec-azure-resource-manager) and our internal ArmProviderSchema format.
+ * 
+ * The resolveArmResources API is a standardized way to extract ARM resource information
+ * from TypeSpec definitions. This converter transforms its output to match our existing
+ * schema structure used throughout the codebase.
+ * 
+ * Key differences between the two formats:
+ * - resolveArmResources returns a Provider object with ResolvedResource entries
+ * - ArmProviderSchema uses ArmResourceSchema with ResourceMetadata
+ * - Operation categorization may differ between the two approaches
+ * 
+ * Usage:
+ * ```typescript
+ * const schema = convertProviderToArmProviderSchema(program, sdkContext);
+ * ```
+ * 
+ * Note: This is the first step towards migrating to use resolveArmResources.
+ * The converter is designed to maintain compatibility with existing code while
+ * allowing gradual migration to the standardized API.
+ */
+
 import { Program, Model, Operation } from "@typespec/compiler";
 import {
   Provider,
