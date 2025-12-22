@@ -232,111 +232,29 @@ export function buildArmProviderSchema(
       const serviceMethod = serviceMethods.get(
         method.crossLanguageDefinitionId
       );
-      const [kind, modelId, explicitResourceName] =
-        parseResourceOperation(serviceMethod, sdkContext) ?? [];
+      const [kind] = parseResourceOperation(serviceMethod, sdkContext) ?? [];
 
-      if (modelId && kind && resourceModelIds.has(modelId)) {
-        // Determine the resource path from the CRUD operation
-        let resourcePath = "";
-        if (isCRUDKind(kind)) {
-          resourcePath = method.operation.path;
-        } else {
-          // For non-CRUD operations like List, try to match with existing resource paths for the same model
-          const operationPath = method.operation.path;
-          for (const [existingKey] of resourcePathToMetadataMap) {
-            const [existingModelId, existingPath] = existingKey.split('|');
-            // Check if this is for the same model
-            if (existingModelId === modelId && existingPath) {
-              // Try to match based on resource type segments
-              // Extract the resource type part (after "/providers/")
-              const existingResourceType = calculateResourceTypeFromPath(existingPath);
-              let operationResourceType = "";
-              try {
-                operationResourceType = calculateResourceTypeFromPath(operationPath);
-              } catch {
-                // If we can't calculate resource type, try string matching
+      // Only process CRUD operations in the first pass
+      if (kind && isCRUDKind(kind)) {
+        processMethod(client, method);
+      }
+    }
               }
 
-              // If resource types match, this list operation belongs to this resource
-              if (existingResourceType && operationResourceType === existingResourceType) {
-                resourcePath = existingPath;
-                break;
-              }
+  // Second pass: Process non-CRUD operations (like List) which can now find existing resource paths
+  for (const client of clients) {
+    for (const method of client.methods) {
+      const serviceMethod = serviceMethods.get(
+        method.crossLanguageDefinitionId
+      );
+      const [kind] = parseResourceOperation(serviceMethod, sdkContext) ?? [];
 
-              // Fallback: check if the operation path ends with a segment that matches the existing path
-              const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
-              if (operationPath.startsWith(existingParentPath)) {
-                resourcePath = existingPath;
-                break;
-              }
-            }
-          }
-          // If no match found, use the operation path
-          if (!resourcePath) {
-            resourcePath = operationPath;
-          }
-        }
-
-        // Create a unique key combining model ID and resource path
-        const metadataKey = `${modelId}|${resourcePath}`;
-
-        // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
-        if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
-          resourcePathToExplicitName.set(metadataKey, explicitResourceName);
-        }
-
-        // Get or create metadata entry for this resource path
-        let entry = resourcePathToMetadataMap.get(metadataKey);
-        if (!entry) {
-          const model = resourceModelMap.get(modelId);
-          // Store the client name for this resource path for later use (fallback if no explicit name)
-          if (!resourcePathToClientName.has(metadataKey)) {
-            resourcePathToClientName.set(metadataKey, client.name);
-          }
-
-          entry = {
-            resourceIdPattern: "", // this will be populated later
-            resourceType: "", // this will be populated later
-            singletonResourceName: getSingletonResource(
-              model?.decorators?.find((d) => d.name == singleton)
-            ),
-            resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
-            methods: [],
-            parentResourceId: undefined, // this will be populated later
-            // Use model name as default; will be updated later if multiple paths exist
-            resourceName: model?.name ?? "Unknown"
-          } as ResourceMetadata;
-          resourcePathToMetadataMap.set(metadataKey, entry);
-        }
-
-        entry.methods.push({
-          methodId: method.crossLanguageDefinitionId,
-          kind,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-        if (!entry.resourceType) {
-          entry.resourceType = calculateResourceTypeFromPath(
-            method.operation.path
-          );
-        }
-        if (!entry.resourceIdPattern && isCRUDKind(kind)) {
-          entry.resourceIdPattern = method.operation.path;
-        }
-      } else if (modelId && kind) {
-        // no resource model found for this modelId, treat as non-resource method
-        nonResourceMethods.set(method.crossLanguageDefinitionId, {
-          methodId: method.crossLanguageDefinitionId,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
-      } else {
-        // we add a methodMetadata decorator to this method
-        nonResourceMethods.set(method.crossLanguageDefinitionId, {
-          methodId: method.crossLanguageDefinitionId,
-          operationPath: method.operation.path,
-          operationScope: getOperationScope(method.operation.path)
-        });
+      // Only process non-CRUD operations in the second pass
+      if (kind && !isCRUDKind(kind)) {
+        processMethod(client, method);
+      } else if (!kind) {
+        // Process methods without a kind in the second pass
+        processMethod(client, method);
       }
     }
   }
@@ -357,6 +275,7 @@ export function buildArmProviderSchema(
         const parentModelId = parentKey.split('|')[0];
         if (parentModelId === parentResourceModelId && parentMetadata.resourceIdPattern) {
           metadata.parentResourceId = parentMetadata.resourceIdPattern;
+          metadata.parentResourceModelId = parentResourceModelId;
           break;
         }
       }
@@ -409,14 +328,10 @@ export function buildArmProviderSchema(
       let merged = false;
 
       // First try to merge with parent if it exists
-      const parentResourceModelId = getParentResourceModelId(
-        sdkContext,
-        models.get(modelId)
-      );
-      if (parentResourceModelId) {
+      if (metadata.parentResourceModelId) {
         for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
           const parentModelId = parentKey.split('|')[0];
-          if (parentModelId === parentResourceModelId && parentMetadata.resourceIdPattern) {
+          if (parentModelId === metadata.parentResourceModelId && parentMetadata.resourceIdPattern) {
             parentMetadata.methods.push(...metadata.methods);
             metadataKeysToDelete.push(metadataKey);
             merged = true;
