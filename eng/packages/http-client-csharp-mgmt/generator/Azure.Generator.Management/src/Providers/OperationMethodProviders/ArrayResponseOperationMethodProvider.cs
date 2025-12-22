@@ -41,6 +41,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly string _methodName;
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
+        private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
@@ -75,7 +76,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
+            // Store the collection result for later retrieval
+            _collectionResult = _tempCollectionResult;
         }
+
+        private ArrayResponseCollectionResultDefinition? _tempCollectionResult;
 
         private static void InitializeTypeInfo(
             CSharpType itemType,
@@ -98,7 +103,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 singlePageListOperationMethodProvider._enclosingType,
                 ScmMethodKind.Convenience,
                 null,
-                null,
+                singlePageListOperationMethodProvider._collectionResult,
                 singlePageListOperationMethodProvider._serviceMethod);
 
             // Add enhanced XML documentation with structured tags
@@ -146,6 +151,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
             var collectionResult = CreateCollectionResultDefinition(scopeName);
 
+            // Store the collection result temporarily so it can be saved to the field after constructor completes
+            _tempCollectionResult = collectionResult;
+
             // Register the collection result with the output library
             ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, scopeName);
 
@@ -189,8 +197,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 constructorParams,
                 _methodName);  // Pass the actual method name for proper class naming
 
-            // Add to the output library so it gets generated
-            ManagementClientGenerator.Instance.OutputLibrary.ArrayResponseCollectionResults.Add(collectionResult);
+            // DO NOT add to output library here - it will be extracted from the method provider later
+            // ManagementClientGenerator.Instance.OutputLibrary.ArrayResponseCollectionResults.Add(collectionResult);
 
             return collectionResult;
         }

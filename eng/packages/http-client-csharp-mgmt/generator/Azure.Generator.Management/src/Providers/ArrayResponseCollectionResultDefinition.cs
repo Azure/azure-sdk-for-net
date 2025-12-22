@@ -64,11 +64,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildName()
         {
-            // Use the actual method name (e.g., "GetDependencies") not the operation name (e.g., "listDependencies")
-            var suffix = _isAsync ? "AsyncCollectionResultOfT" : "CollectionResultOfT";
-            // Remove "Async" suffix from method name if present for async version
-            var baseName = _isAsync && _methodName.EndsWith("Async") ? _methodName.Substring(0, _methodName.Length - 5) : _methodName;
-            return $"{_restClient.Name}{baseName}{suffix}";
+            // Use the actual method name (e.g., "GetDependencies" or "GetDependenciesAsync")
+            // The method name already contains "Async" suffix when it's async, so we don't need to add/remove it
+            return $"{_restClient.Name}{_methodName}CollectionResultOfT";
         }
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
