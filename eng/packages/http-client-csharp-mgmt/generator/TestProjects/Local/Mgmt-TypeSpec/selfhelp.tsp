@@ -5,6 +5,7 @@ import "@typespec/rest";
 
 using Azure.ResourceManager;
 using TypeSpec.Http;
+using TypeSpec.Rest;
 using TypeSpec.OpenAPI;
 
 namespace MgmtTypeSpec;
