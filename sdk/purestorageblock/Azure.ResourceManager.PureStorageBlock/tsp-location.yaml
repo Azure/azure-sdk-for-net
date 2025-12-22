@@ -1,5 +1,5 @@
 directory: specification/purestorage/PureStorage.Block.Management
-commit: 6267b64842af3d744c5b092a3f3beef49729ad6d
+commit: e22dcfdafa3316a9ae96c7fd02318ee87041b409
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 emitterPackageJsonPath: eng/legacy-emitter-package.json
