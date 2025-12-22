@@ -1390,7 +1390,12 @@ interface Employees {
 interface EmployeesSecondary {
   // Using @readsResource to create a second Get operation referencing the same model
   @readsResource(Employee)
-  getSecondary is Azure.Core.ResourceRead<Employee>;
+  getSecondary is ArmResourceRead<Employee, Parameters = {
+  @key
+  @path
+  @segment("something")
+  extra: string;
+  }>;
 }
 `,
       runner
