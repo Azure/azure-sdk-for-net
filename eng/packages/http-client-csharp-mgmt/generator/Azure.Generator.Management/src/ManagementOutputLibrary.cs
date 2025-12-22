@@ -245,10 +245,11 @@ namespace Azure.Generator.Management
                 var model = ManagementClientGenerator.Instance.TypeFactory.CreateModel(inputModel);
                 if (model is not null)
                 {
-                    allModelTypes.Add(model.Type);
+                    var eraseNullableType = model.Type.WithNullable(false);
+                    allModelTypes.Add(eraseNullableType);
                     if (IsModelFactoryModel(model))
                     {
-                        modelFactoryModels.Add(model.Type);
+                        modelFactoryModels.Add(eraseNullableType);
                     }
                 }
             }
@@ -287,9 +288,9 @@ namespace Azure.Generator.Management
             }
         }
 
-        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type);
+        internal bool IsModelFactoryModelType(CSharpType type) => ModelFactoryModels.Contains(type.WithNullable(false));
 
-        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type);
+        internal bool IsModelType(CSharpType type) => AllModelTypes.Contains(type.WithNullable(false));
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()

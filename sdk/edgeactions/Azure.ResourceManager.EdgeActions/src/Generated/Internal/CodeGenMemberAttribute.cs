@@ -7,7 +7,7 @@
 
 using System;
 
-namespace Azure.ResourceManager.EdgeActions
+namespace Microsoft.TypeSpec.Generator.Customizations
 {
     [AttributeUsage((AttributeTargets.Property | AttributeTargets.Field))]
     internal partial class CodeGenMemberAttribute : CodeGenTypeAttribute

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
@@ -14,56 +15,87 @@ namespace Azure.ResourceManager.Quota.Models
     public readonly partial struct QuotaRequestStatus : IEquatable<QuotaRequestStatus>
     {
         private readonly string _value;
+        /// <summary> The quota request has been accepted. </summary>
+        private const string AcceptedValue = "Accepted";
+        /// <summary> The quota request has been created. </summary>
+        private const string CreatedValue = "Created";
+        /// <summary> The quota request is invalid. </summary>
+        private const string InvalidValue = "Invalid";
+        /// <summary> The quota request has succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> The quota request has been escalated for further review. Please file a support ticket. A support engineer will follow up. </summary>
+        private const string EscalatedValue = "Escalated";
+        /// <summary> The quota request has failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> The quota request is currently being processed. </summary>
+        private const string InProgressValue = "InProgress";
+        /// <summary> The quota request has been canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="QuotaRequestStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public QuotaRequestStatus(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AcceptedValue = "Accepted";
-        private const string CreatedValue = "Created";
-        private const string InvalidValue = "Invalid";
-        private const string SucceededValue = "Succeeded";
-        private const string EscalatedValue = "Escalated";
-        private const string FailedValue = "Failed";
-        private const string InProgressValue = "InProgress";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> The quota request has been accepted. </summary>
         public static QuotaRequestStatus Accepted { get; } = new QuotaRequestStatus(AcceptedValue);
+
         /// <summary> The quota request has been created. </summary>
         public static QuotaRequestStatus Created { get; } = new QuotaRequestStatus(CreatedValue);
+
         /// <summary> The quota request is invalid. </summary>
         public static QuotaRequestStatus Invalid { get; } = new QuotaRequestStatus(InvalidValue);
+
         /// <summary> The quota request has succeeded. </summary>
         public static QuotaRequestStatus Succeeded { get; } = new QuotaRequestStatus(SucceededValue);
+
         /// <summary> The quota request has been escalated for further review. Please file a support ticket. A support engineer will follow up. </summary>
         public static QuotaRequestStatus Escalated { get; } = new QuotaRequestStatus(EscalatedValue);
+
         /// <summary> The quota request has failed. </summary>
         public static QuotaRequestStatus Failed { get; } = new QuotaRequestStatus(FailedValue);
+
         /// <summary> The quota request is currently being processed. </summary>
         public static QuotaRequestStatus InProgress { get; } = new QuotaRequestStatus(InProgressValue);
+
         /// <summary> The quota request has been canceled. </summary>
         public static QuotaRequestStatus Canceled { get; } = new QuotaRequestStatus(CanceledValue);
+
         /// <summary> Determines if two <see cref="QuotaRequestStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(QuotaRequestStatus left, QuotaRequestStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="QuotaRequestStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(QuotaRequestStatus left, QuotaRequestStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="QuotaRequestStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="QuotaRequestStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator QuotaRequestStatus(string value) => new QuotaRequestStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="QuotaRequestStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator QuotaRequestStatus?(string value) => value == null ? null : new QuotaRequestStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is QuotaRequestStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(QuotaRequestStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

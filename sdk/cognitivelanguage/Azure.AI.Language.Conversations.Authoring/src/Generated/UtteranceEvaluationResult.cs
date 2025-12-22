@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/>, <paramref name="entitiesResult"/> or <paramref name="intentsResult"/> is null. </exception>
-        internal UtteranceEvaluationResult(string language, UtteranceEntitiesEvaluationResult entitiesResult, UtteranceIntentsEvaluationResult intentsResult)
+        internal UtteranceEvaluationResult(string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult)
         {
             Argument.AssertNotNull(language, nameof(language));
             Argument.AssertNotNull(entitiesResult, nameof(entitiesResult));
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="entitiesResult"> Represents the entities results for the utterance. </param>
         /// <param name="intentsResult"> Represents the intents results for the utterance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UtteranceEvaluationResult(string text, string language, UtteranceEntitiesEvaluationResult entitiesResult, UtteranceIntentsEvaluationResult intentsResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UtteranceEvaluationResult(string text, string language, AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult entitiesResult, AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult intentsResult, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Language = language;
@@ -86,8 +86,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Represents the utterance language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </summary>
         public string Language { get; }
         /// <summary> Represents the entities results for the utterance. </summary>
-        public UtteranceEntitiesEvaluationResult EntitiesResult { get; }
+        public AnalyzeConversationAuthoringUtteranceEntitiesEvaluationResult EntitiesResult { get; }
         /// <summary> Represents the intents results for the utterance. </summary>
-        public UtteranceIntentsEvaluationResult IntentsResult { get; }
+        public AnalyzeConversationAuthoringUtteranceIntentsEvaluationResult IntentsResult { get; }
     }
 }

@@ -8,7 +8,7 @@
 using System;
 using Azure.Core.Pipeline;
 
-namespace Specs.Azure.ClientGeneratorCore.ClientInitialization._ParentClient
+namespace Specs.Azure.ClientGenerator.Core.ClientInitialization._ParentClient
 {
     public partial class ParentClient
     {
