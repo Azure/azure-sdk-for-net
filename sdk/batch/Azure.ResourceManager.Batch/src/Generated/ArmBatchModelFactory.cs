@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="etag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Batch.BatchAccountPoolData"/> instance for mocking. </returns>
-        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchCertificateReference> certificates = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, IEnumerable<string> applicationLicenses = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, NodeCommunicationMode? targetNodeCommunicationMode = default, NodeCommunicationMode? currentNodeCommunicationMode = default, UpgradePolicy upgradePolicy = default, IDictionary<string, string> resourceTags = default, BatchVmConfiguration deploymentVmConfiguration = default, BatchNodeFillType? taskSchedulingNodeFillType = default, BatchPoolIdentity identity = default, string etag = default, IDictionary<string, string> tags = default)
+        public static BatchAccountPoolData BatchAccountPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? lastModifiedOn = default, DateTimeOffset? createdOn = default, BatchAccountPoolProvisioningState? provisioningState = default, DateTimeOffset? provisioningStateTransitOn = default, BatchAccountPoolAllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionOn = default, string vmSize = default, int? currentDedicatedNodes = default, int? currentLowPriorityNodes = default, BatchAccountPoolScaleSettings scaleSettings = default, BatchAccountPoolAutoScaleRun autoScaleRun = default, InterNodeCommunicationState? interNodeCommunication = default, BatchNetworkConfiguration networkConfiguration = default, int? taskSlotsPerNode = default, IEnumerable<BatchUserAccount> userAccounts = default, IEnumerable<BatchAccountPoolMetadataItem> metadata = default, BatchAccountPoolStartTask startTask = default, IEnumerable<BatchCertificateReference> certificates = default, IEnumerable<BatchApplicationPackageReference> applicationPackages = default, IEnumerable<string> applicationLicenses = default, BatchResizeOperationStatus resizeOperationStatus = default, IEnumerable<BatchMountConfiguration> mountConfiguration = default, NodeCommunicationMode? targetNodeCommunicationMode = default, NodeCommunicationMode? currentNodeCommunicationMode = default, UpgradePolicy upgradePolicy = default, IDictionary<string, string> resourceTags = default, BatchVmConfiguration deploymentVmConfiguration = default, BatchNodeFillType? taskSchedulingNodeFillType = default, ManagedServiceIdentity identity = default, ETag? etag = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -796,17 +796,6 @@ namespace Azure.ResourceManager.Batch.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> The identity of the Batch pool, if configured. If the pool identity is updated during update an existing pool, only the new vms which are created after the pool shrinks to 0 will have the updated identities. </summary>
-        /// <param name="type"> The type of identity used for the Batch Pool. </param>
-        /// <param name="userAssignedIdentities"> The list of user identities associated with the Batch pool. </param>
-        /// <returns> A new <see cref="Models.BatchPoolIdentity"/> instance for mocking. </returns>
-        public static BatchPoolIdentity BatchPoolIdentity(PoolIdentityType @type = default, IDictionary<string, UserAssignedIdentities> userAssignedIdentities = default)
-        {
-            userAssignedIdentities ??= new ChangeTrackingDictionary<string, UserAssignedIdentities>();
-
-            return new BatchPoolIdentity(@type, userAssignedIdentities, additionalBinaryDataProperties: null);
-        }
-
         /// <summary> Network security perimeter (NSP) configuration resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -861,7 +850,7 @@ namespace Azure.ResourceManager.Batch.Models
         /// <param name="suggestedResourceIds"> Fully qualified resource IDs of suggested resources that can be associated to the network security perimeter (NSP) to remediate the issue. </param>
         /// <param name="suggestedAccessRules"> Access rules that can be added to the network security profile (NSP) to remediate the issue. </param>
         /// <returns> A new <see cref="Models.BatchProvisioningIssueProperties"/> instance for mocking. </returns>
-        public static BatchProvisioningIssueProperties BatchProvisioningIssueProperties(IssueType? issueType = default, Severity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<BatchAccessRule> suggestedAccessRules = default)
+        public static BatchProvisioningIssueProperties BatchProvisioningIssueProperties(BatchIssueType? issueType = default, BatchSeverity? severity = default, string description = default, IEnumerable<ResourceIdentifier> suggestedResourceIds = default, IEnumerable<BatchAccessRule> suggestedAccessRules = default)
         {
             suggestedResourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
             suggestedAccessRules ??= new ChangeTrackingList<BatchAccessRule>();

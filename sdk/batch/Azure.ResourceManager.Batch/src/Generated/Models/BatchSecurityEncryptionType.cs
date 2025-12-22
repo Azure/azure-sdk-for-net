@@ -12,16 +12,16 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and required when using Confidential VMs. </summary>
-    public readonly partial struct BatchSecurityEncryptionTypes : IEquatable<BatchSecurityEncryptionTypes>
+    public readonly partial struct BatchSecurityEncryptionType : IEquatable<BatchSecurityEncryptionType>
     {
         private readonly string _value;
         private const string NonPersistedTPMValue = "NonPersistedTPM";
         private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
 
-        /// <summary> Initializes a new instance of <see cref="BatchSecurityEncryptionTypes"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BatchSecurityEncryptionTypes(string value)
+        public BatchSecurityEncryptionType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,35 +29,35 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Gets the NonPersistedTPM. </summary>
-        public static BatchSecurityEncryptionTypes NonPersistedTPM { get; } = new BatchSecurityEncryptionTypes(NonPersistedTPMValue);
+        public static BatchSecurityEncryptionType NonPersistedTPM { get; } = new BatchSecurityEncryptionType(NonPersistedTPMValue);
 
         /// <summary> Gets the VMGuestStateOnly. </summary>
-        public static BatchSecurityEncryptionTypes VMGuestStateOnly { get; } = new BatchSecurityEncryptionTypes(VMGuestStateOnlyValue);
+        public static BatchSecurityEncryptionType VMGuestStateOnly { get; } = new BatchSecurityEncryptionType(VMGuestStateOnlyValue);
 
-        /// <summary> Determines if two <see cref="BatchSecurityEncryptionTypes"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BatchSecurityEncryptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(BatchSecurityEncryptionTypes left, BatchSecurityEncryptionTypes right) => left.Equals(right);
+        public static bool operator ==(BatchSecurityEncryptionType left, BatchSecurityEncryptionType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="BatchSecurityEncryptionTypes"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BatchSecurityEncryptionType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(BatchSecurityEncryptionTypes left, BatchSecurityEncryptionTypes right) => !left.Equals(right);
+        public static bool operator !=(BatchSecurityEncryptionType left, BatchSecurityEncryptionType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="BatchSecurityEncryptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BatchSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchSecurityEncryptionTypes(string value) => new BatchSecurityEncryptionTypes(value);
+        public static implicit operator BatchSecurityEncryptionType(string value) => new BatchSecurityEncryptionType(value);
 
-        /// <summary> Converts a string to a <see cref="BatchSecurityEncryptionTypes"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BatchSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator BatchSecurityEncryptionTypes?(string value) => value == null ? null : new BatchSecurityEncryptionTypes(value);
+        public static implicit operator BatchSecurityEncryptionType?(string value) => value == null ? null : new BatchSecurityEncryptionType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchSecurityEncryptionTypes other && Equals(other);
+        public override bool Equals(object obj) => obj is BatchSecurityEncryptionType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(BatchSecurityEncryptionTypes other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchSecurityEncryptionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

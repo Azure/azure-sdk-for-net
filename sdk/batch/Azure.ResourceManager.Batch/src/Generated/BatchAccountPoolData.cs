@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Batch.Models;
 using Azure.ResourceManager.Models;
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Batch
         /// <param name="identity"> The type of identity used for the Batch Pool. </param>
         /// <param name="eTag"> The ETag of the resource, used for concurrency statements. </param>
         /// <param name="tags"> The tags of the resource. </param>
-        internal BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PoolProperties properties, BatchPoolIdentity identity, string eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
+        internal BatchAccountPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, PoolProperties properties, ManagedServiceIdentity identity, ETag? eTag, IDictionary<string, string> tags) : base(id, name, resourceType, systemData)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -48,10 +49,10 @@ namespace Azure.ResourceManager.Batch
         internal PoolProperties Properties { get; set; }
 
         /// <summary> The type of identity used for the Batch Pool. </summary>
-        public BatchPoolIdentity Identity { get; set; }
+        public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The ETag of the resource, used for concurrency statements. </summary>
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The tags of the resource. </summary>
         public IDictionary<string, string> Tags { get; }

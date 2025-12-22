@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
         internal VMDiskSecurityProfile SecurityProfile { get; set; }
 
         /// <summary> Specifies the EncryptionType of the managed disk. It is set to VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob. **Note**: It can be set for only Confidential VMs and required when using Confidential VMs. </summary>
-        public BatchSecurityEncryptionTypes? SecurityEncryptionType
+        public BatchSecurityEncryptionType? SecurityEncryptionType
         {
             get
             {

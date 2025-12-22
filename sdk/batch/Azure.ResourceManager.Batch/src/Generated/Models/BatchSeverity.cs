@@ -12,16 +12,16 @@ using Azure.ResourceManager.Batch;
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Severity of the issue. </summary>
-    public readonly partial struct Severity : IEquatable<Severity>
+    public readonly partial struct BatchSeverity : IEquatable<BatchSeverity>
     {
         private readonly string _value;
         private const string WarningValue = "Warning";
         private const string ErrorValue = "Error";
 
-        /// <summary> Initializes a new instance of <see cref="Severity"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public Severity(string value)
+        public BatchSeverity(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -29,35 +29,35 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <summary> Gets the Warning. </summary>
-        public static Severity Warning { get; } = new Severity(WarningValue);
+        public static BatchSeverity Warning { get; } = new BatchSeverity(WarningValue);
 
         /// <summary> Gets the Error. </summary>
-        public static Severity Error { get; } = new Severity(ErrorValue);
+        public static BatchSeverity Error { get; } = new BatchSeverity(ErrorValue);
 
-        /// <summary> Determines if two <see cref="Severity"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="BatchSeverity"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(Severity left, Severity right) => left.Equals(right);
+        public static bool operator ==(BatchSeverity left, BatchSeverity right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="Severity"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="BatchSeverity"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(Severity left, Severity right) => !left.Equals(right);
+        public static bool operator !=(BatchSeverity left, BatchSeverity right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="Severity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BatchSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Severity(string value) => new Severity(value);
+        public static implicit operator BatchSeverity(string value) => new BatchSeverity(value);
 
-        /// <summary> Converts a string to a <see cref="Severity"/>. </summary>
+        /// <summary> Converts a string to a <see cref="BatchSeverity"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator Severity?(string value) => value == null ? null : new Severity(value);
+        public static implicit operator BatchSeverity?(string value) => value == null ? null : new BatchSeverity(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is Severity other && Equals(other);
+        public override bool Equals(object obj) => obj is BatchSeverity other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(Severity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(BatchSeverity other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
