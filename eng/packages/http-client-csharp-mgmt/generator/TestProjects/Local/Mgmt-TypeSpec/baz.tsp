@@ -8,7 +8,7 @@ using Azure.ClientGenerator.Core;
 
 namespace MgmtTypeSpec;
 
-// shows a way of fixing how to handle tracked resource with optional location
+// shows a way of mitigating breaking changes for tracked resource with optional location when migrated into new generator
 @Azure.ClientGenerator.Core.Legacy.hierarchyBuilding(Azure.ResourceManager.Foundations.TrackedResource, "csharp")
 @resource("bazs")
 model Baz is ProxyResource<BazProperties> {
