@@ -18,6 +18,7 @@ import "./workload.tsp";
 import "./multiplepaths.tsp";
 import "./testresourcetype.tsp";
 import "./resourcedata.tsp";
+import "./scheduledaction.tsp";
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.ResourceManager;
@@ -48,9 +49,11 @@ namespace MgmtTypeSpec {
   @@clientName(Employees.listByParent, "GetEmployees", "csharp");
   @@alternateType(ZooAddressListListResult.value, Azure.ResourceManager.Models.SubResource[], "csharp");
   @@alternateType(Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint, Azure.ResourceManager.Models.SubResource, "csharp");
+  @@alternateType(FooProperties.writableSubResourceProp, Azure.ResourceManager.Models.WritableSubResource, "csharp");
 }
 
-// We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource via alternateType
+// We define this model here to test if the generated code would be replaced by Azure.ResourceManager.Models.SubResource and WritableSubResource via alternateType
 namespace Azure.ResourceManager.Models {
   model SubResource { }
+  model WritableSubResource { }
 }

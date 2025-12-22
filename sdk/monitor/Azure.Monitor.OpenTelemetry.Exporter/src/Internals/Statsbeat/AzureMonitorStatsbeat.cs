@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
@@ -32,6 +33,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         private static bool s_hasSdkPrefix => SdkVersionUtils.SdkVersionPrefix != null;
 
         private static string? s_operatingSystem;
+
+        private string? _language;
 
         private readonly string? _customer_Ikey;
 
@@ -73,6 +76,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.AttachStatsbeatInterval)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+
+            // Flush after 1 minute to ensure we don't collect data from very short-lived apps that could spam the stats
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(TimeSpan.FromMinutes(1)).ConfigureAwait(false);
+                _attachStatsbeatMeterProvider?.ForceFlush();
+            });
         }
 
         internal static string? GetStatsbeatConnectionString(string ingestionEndpoint)
@@ -104,6 +114,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                     SetResourceProviderDetails(_platform);
                 }
 
+                // Lazy initialize language based on VersionType which gets set when customer's Resource is processed.
+                if (_language == null)
+                {
+                    _language = SdkVersionUtils.VersionType switch
+                    {
+                        SdkVersionType.Distro => "dotnet-distro",
+                        SdkVersionType.ShimBase => "dotnet-shim",
+                        SdkVersionType.ShimAspNetCore => "dotnet-core",
+                        SdkVersionType.ShimWorkerService => "dotnet-worker",
+                        SdkVersionType.ShimWeb => "dotnet-web",
+                        SdkVersionType.ShimNLog => "dotnet-nlog",
+                        _ => "dotnet-exp"
+                    };
+                }
+
                 return
                     new Measurement<int>(1,
                         new("rp", _resourceProvider),
@@ -111,7 +136,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                         new("attach", s_hasSdkPrefix ? "IntegratedAuto" : "Manual"),
                         new("cikey", _customer_Ikey),
                         new("runtimeVersion", s_runtimeVersion),
-                        new("language", "dotnet"),
+                        new("language", _language),
                         new("version", s_sdkVersion),
                         new("os", s_operatingSystem));
             }

@@ -17,6 +17,7 @@ public class CustomerSdkStatsDimensionsTests
     [InlineData(SdkVersionType.ShimAspNetCore, "dotnet-core")]
     [InlineData(SdkVersionType.ShimWorkerService, "dotnet-worker")]
     [InlineData(SdkVersionType.ShimWeb, "dotnet-web")]
+    [InlineData(SdkVersionType.ShimNLog, "dotnet-nlog")]
     internal void GetBaseTags_SetsCorrectLanguageDimensionForEachSdkVersionType(SdkVersionType versionType, string expectedLanguage)
     {
         // Arrange
