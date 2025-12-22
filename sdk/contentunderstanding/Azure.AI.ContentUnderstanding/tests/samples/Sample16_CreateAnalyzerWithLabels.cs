@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.ContentUnderstanding;
@@ -59,13 +58,12 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 "TRAINING_DATA_CONTAINER_NAME"
             );
 
-            // If SAS URL is provided, use it directly
-            if (!string.IsNullOrEmpty(trainingDataSasUrl))
-            {
-                // trainingDataSasUrl already contains the value from TRAINING_DATA_SAS_URL
-            }
-            // Otherwise, generate SAS URL from storage account and container name
-            else if (!string.IsNullOrEmpty(storageAccount) && !string.IsNullOrEmpty(containerName))
+            // If SAS URL is not provided, generate SAS URL from storage account and container name
+            if (
+                string.IsNullOrEmpty(trainingDataSasUrl)
+                && !string.IsNullOrEmpty(storageAccount)
+                && !string.IsNullOrEmpty(containerName)
+            )
             {
                 // Use DefaultAzureCredential to authenticate and generate SAS token
                 var blobServiceClient = new Azure.Storage.Blobs.BlobServiceClient(
