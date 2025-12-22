@@ -212,12 +212,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceFabricManagedServicePatch"> The service resource updated tags. </param>
+        /// <param name="patch"> The service resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceFabricManagedServicePatch"/> is null. </exception>
-        public virtual async Task<Response<ServiceFabricManagedServiceResource>> UpdateAsync(ServiceFabricManagedServicePatch serviceFabricManagedServicePatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual async Task<Response<ServiceFabricManagedServiceResource>> UpdateAsync(ServiceFabricManagedServicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serviceFabricManagedServicePatch, nameof(serviceFabricManagedServicePatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceResource.Update");
             scope.Start();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedServicePatch.ToRequestContent(serviceFabricManagedServicePatch), context);
+                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedServicePatch.ToRequestContent(patch), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedServiceData> response = Response.FromValue(ServiceFabricManagedServiceData.FromResponse(result), result);
                 if (response.Value == null)
@@ -264,12 +264,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="serviceFabricManagedServicePatch"> The service resource updated tags. </param>
+        /// <param name="patch"> The service resource updated tags. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serviceFabricManagedServicePatch"/> is null. </exception>
-        public virtual Response<ServiceFabricManagedServiceResource> Update(ServiceFabricManagedServicePatch serviceFabricManagedServicePatch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
+        public virtual Response<ServiceFabricManagedServiceResource> Update(ServiceFabricManagedServicePatch patch, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(serviceFabricManagedServicePatch, nameof(serviceFabricManagedServicePatch));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using DiagnosticScope scope = _servicesClientDiagnostics.CreateScope("ServiceFabricManagedServiceResource.Update");
             scope.Start();
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedServicePatch.ToRequestContent(serviceFabricManagedServicePatch), context);
+                HttpMessage message = _servicesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ServiceFabricManagedServicePatch.ToRequestContent(patch), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedServiceData> response = Response.FromValue(ServiceFabricManagedServiceData.FromResponse(result), result);
                 if (response.Value == null)

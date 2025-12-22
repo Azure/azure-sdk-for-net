@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("supportExpiryUtc"u8);
                 writer.WriteStringValue(VersionSupportExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(OsType))
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
-                writer.WriteStringValue(OsType.Value.ToString());
+                writer.WriteStringValue(OSType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

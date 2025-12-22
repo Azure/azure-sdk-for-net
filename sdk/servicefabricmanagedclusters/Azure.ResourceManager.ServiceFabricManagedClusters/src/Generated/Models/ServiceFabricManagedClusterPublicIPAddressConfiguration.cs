@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            IpTags = new ChangeTrackingList<ManagedClusterIPTag>();
+            IPTags = new ChangeTrackingList<ManagedClusterIPTag>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterPublicIPAddressConfiguration"/>. </summary>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         internal ServiceFabricManagedClusterPublicIPAddressConfiguration(string name, IList<ManagedClusterIPTag> ipTags, ServiceFabricManagedClusterPublicIPAddressVersion? publicIPAddressVersion, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            IpTags = ipTags;
+            IPTags = ipTags;
             PublicIPAddressVersion = publicIPAddressVersion;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public string Name { get; set; }
 
         /// <summary> Specifies the list of IP tags associated with the public IP address. </summary>
-        public IList<ManagedClusterIPTag> IpTags { get; }
+        public IList<ManagedClusterIPTag> IPTags { get; }
 
         /// <summary> Specifies whether the IP configuration's public IP is IPv4 or IPv6. Default is IPv4. </summary>
         public ServiceFabricManagedClusterPublicIPAddressVersion? PublicIPAddressVersion { get; set; }

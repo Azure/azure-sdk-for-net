@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Standard is the default security type for all machines. </summary>
         private const string StandardValue = "Standard";
         /// <summary> ConfidentialVM provides hardware-based encryption, trusted execution environment (TEE) and isolation of the VM memory &amp; CPU from host. </summary>
-        private const string ConfidentialVMValue = "ConfidentialVM";
+        private const string ConfidentialVmValue = "ConfidentialVM";
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusterSecurityType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public static ServiceFabricManagedClusterSecurityType Standard { get; } = new ServiceFabricManagedClusterSecurityType(StandardValue);
 
         /// <summary> ConfidentialVM provides hardware-based encryption, trusted execution environment (TEE) and isolation of the VM memory &amp; CPU from host. </summary>
-        public static ServiceFabricManagedClusterSecurityType ConfidentialVM { get; } = new ServiceFabricManagedClusterSecurityType(ConfidentialVMValue);
+        public static ServiceFabricManagedClusterSecurityType ConfidentialVm { get; } = new ServiceFabricManagedClusterSecurityType(ConfidentialVmValue);
 
         /// <summary> Determines if two <see cref="ServiceFabricManagedClusterSecurityType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

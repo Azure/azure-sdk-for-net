@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 throw new FormatException($"The model {nameof(ManagedClusterIPTag)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("ipTagType"u8);
-            writer.WriteStringValue(IpTagType);
+            writer.WriteStringValue(IPTagType);
             writer.WritePropertyName("tag"u8);
             writer.WriteStringValue(Tag);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)

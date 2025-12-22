@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Optional.IsCollectionDefined(IpTags))
+            if (Optional.IsCollectionDefined(IPTags))
             {
                 writer.WritePropertyName("ipTags"u8);
                 writer.WriteStartArray();
-                foreach (ManagedClusterIPTag item in IpTags)
+                foreach (ManagedClusterIPTag item in IPTags)
                 {
                     writer.WriteObjectValue(item, options);
                 }

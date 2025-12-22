@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 throw new FormatException($"The model {nameof(NodeTypeFrontendConfiguration)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddressType))
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
-                writer.WriteStringValue(IpAddressType.Value.ToString());
+                writer.WriteStringValue(IPAddressType.Value.ToString());
             }
             if (Optional.IsDefined(LoadBalancerBackendAddressPoolId))
             {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(ipTagType, nameof(ipTagType));
             Argument.AssertNotNull(tag, nameof(tag));
 
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
         }
 
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterIPTag(string ipTagType, string tag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpTagType = ipTagType;
+            IPTagType = ipTagType;
             Tag = tag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> IP tag type. Example: FirstPartyUsage. </summary>
-        public string IpTagType { get; set; }
+        public string IPTagType { get; set; }
 
         /// <summary> IP tag associated with the public IP. Example: SQL, Storage etc. </summary>
         public string Tag { get; set; }

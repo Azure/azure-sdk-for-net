@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             ClusterCodeVersion = clusterCodeVersion;
             VersionSupportExpireOn = versionSupportExpireOn;
-            OsType = osType;
+            OSType = osType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public DateTimeOffset? VersionSupportExpireOn { get; }
 
         /// <summary> Cluster operating system, the default will be Windows. </summary>
-        public ServiceFabricManagedClusterOSType? OsType { get; }
+        public ServiceFabricManagedClusterOSType? OSType { get; }
     }
 }

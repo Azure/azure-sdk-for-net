@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
-            foreach (ServiceFabricManagedClusterIPConfiguration item in IpConfigurations)
+            foreach (ServiceFabricManagedClusterIPConfiguration item in IPConfigurations)
             {
                 writer.WriteObjectValue(item, options);
             }

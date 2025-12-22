@@ -16,9 +16,9 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     {
         private readonly string _value;
         /// <summary> For encryption of the managed disk along with VMGuestState blob. </summary>
-        private const string DiskWithVMGuestStateValue = "DiskWithVMGuestState";
+        private const string DiskWithVmGuestStateValue = "DiskWithVMGuestState";
         /// <summary> For encryption of just the VMGuestState blob. </summary>
-        private const string VMGuestStateOnlyValue = "VMGuestStateOnly";
+        private const string VmGuestStateOnlyValue = "VMGuestStateOnly";
 
         /// <summary> Initializes a new instance of <see cref="NodeTypeSecurityEncryptionType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> For encryption of the managed disk along with VMGuestState blob. </summary>
-        public static NodeTypeSecurityEncryptionType DiskWithVMGuestState { get; } = new NodeTypeSecurityEncryptionType(DiskWithVMGuestStateValue);
+        public static NodeTypeSecurityEncryptionType DiskWithVmGuestState { get; } = new NodeTypeSecurityEncryptionType(DiskWithVmGuestStateValue);
 
         /// <summary> For encryption of just the VMGuestState blob. </summary>
-        public static NodeTypeSecurityEncryptionType VMGuestStateOnly { get; } = new NodeTypeSecurityEncryptionType(VMGuestStateOnlyValue);
+        public static NodeTypeSecurityEncryptionType VmGuestStateOnly { get; } = new NodeTypeSecurityEncryptionType(VmGuestStateOnlyValue);
 
         /// <summary> Determines if two <see cref="NodeTypeSecurityEncryptionType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

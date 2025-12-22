@@ -517,16 +517,23 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <param name="id"> The identification of the result. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="name"> The name of the result. </param>
-        /// <param name="type"> The result resource type. </param>
         /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. </param>
         /// <param name="versionSupportExpireOn"> The date of expiry of support of the version. </param>
         /// <param name="osType"> Cluster operating system, the default will be Windows. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedClusterVersion"/> instance for mocking. </returns>
-        public static ServiceFabricManagedClusterVersion ServiceFabricManagedClusterVersion(string id = default, string name = default, string @type = default, string clusterCodeVersion = default, DateTimeOffset? versionSupportExpireOn = default, ServiceFabricManagedClusterOSType? osType = default)
+        public static ServiceFabricManagedClusterVersion ServiceFabricManagedClusterVersion(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string name = default, string clusterCodeVersion = default, DateTimeOffset? versionSupportExpireOn = default, ServiceFabricManagedClusterOSType? osType = default)
         {
-            return new ServiceFabricManagedClusterVersion(id, name, @type, clusterCodeVersion is null && versionSupportExpireOn is null && osType is null ? default : new ManagedClusterVersionDetails(clusterCodeVersion, versionSupportExpireOn, osType, null), additionalBinaryDataProperties: null);
+            return new ServiceFabricManagedClusterVersion(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                name,
+                clusterCodeVersion is null && versionSupportExpireOn is null && osType is null ? default : new ManagedClusterVersionDetails(clusterCodeVersion, versionSupportExpireOn, osType, null));
         }
 
         /// <param name="vmSize"> VM Size name. </param>
@@ -971,7 +978,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="sourceVaultId"> Azure resource identifier. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <returns> A new <see cref="Models.NodeTypeVaultSecretGroup"/> instance for mocking. </returns>
-        public static NodeTypeVaultSecretGroup NodeTypeVaultSecretGroup(string sourceVaultId = default, IEnumerable<NodeTypeVaultCertificate> vaultCertificates = default)
+        public static NodeTypeVaultSecretGroup NodeTypeVaultSecretGroup(ResourceIdentifier sourceVaultId = default, IEnumerable<NodeTypeVaultCertificate> vaultCertificates = default)
         {
             vaultCertificates ??= new ChangeTrackingList<NodeTypeVaultCertificate>();
 
@@ -983,7 +990,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="dscpConfigurationId"> Azure resource identifier. </param>
         /// <param name="ipConfigurations"> Specifies the IP configurations of the network interface. </param>
         /// <returns> A new <see cref="Models.AdditionalNetworkInterfaceConfiguration"/> instance for mocking. </returns>
-        public static AdditionalNetworkInterfaceConfiguration AdditionalNetworkInterfaceConfiguration(string name = default, bool? enableAcceleratedNetworking = default, string dscpConfigurationId = default, IEnumerable<ServiceFabricManagedClusterIPConfiguration> ipConfigurations = default)
+        public static AdditionalNetworkInterfaceConfiguration AdditionalNetworkInterfaceConfiguration(string name = default, bool? enableAcceleratedNetworking = default, ResourceIdentifier dscpConfigurationId = default, IEnumerable<ServiceFabricManagedClusterIPConfiguration> ipConfigurations = default)
         {
             ipConfigurations ??= new ChangeTrackingList<ServiceFabricManagedClusterIPConfiguration>();
 
@@ -998,7 +1005,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="privateIPAddressVersion"> Specifies whether the IP configuration's private IP is IPv4 or IPv6. Default is IPv4. </param>
         /// <param name="publicIPAddressConfiguration"> The public IP address configuration of the network interface. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedClusterIPConfiguration"/> instance for mocking. </returns>
-        public static ServiceFabricManagedClusterIPConfiguration ServiceFabricManagedClusterIPConfiguration(string name = default, IEnumerable<WritableSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<WritableSubResource> loadBalancerBackendAddressPools = default, IEnumerable<WritableSubResource> loadBalancerInboundNatPools = default, string subnetId = default, ServiceFabricManagedClusterPrivateIPAddressVersion? privateIPAddressVersion = default, ServiceFabricManagedClusterPublicIPAddressConfiguration publicIPAddressConfiguration = default)
+        public static ServiceFabricManagedClusterIPConfiguration ServiceFabricManagedClusterIPConfiguration(string name = default, IEnumerable<WritableSubResource> applicationGatewayBackendAddressPools = default, IEnumerable<WritableSubResource> loadBalancerBackendAddressPools = default, IEnumerable<WritableSubResource> loadBalancerInboundNatPools = default, ResourceIdentifier subnetId = default, ServiceFabricManagedClusterPrivateIPAddressVersion? privateIPAddressVersion = default, ServiceFabricManagedClusterPublicIPAddressConfiguration publicIPAddressConfiguration = default)
         {
             applicationGatewayBackendAddressPools ??= new ChangeTrackingList<WritableSubResource>();
             loadBalancerBackendAddressPools ??= new ChangeTrackingList<WritableSubResource>();

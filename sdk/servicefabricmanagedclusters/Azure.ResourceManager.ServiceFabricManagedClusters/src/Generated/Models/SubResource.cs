@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <summary> Initializes a new instance of <see cref="SubResource"/>. </summary>
         /// <param name="id"> Azure resource identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubResource(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubResource(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Azure resource identifier. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

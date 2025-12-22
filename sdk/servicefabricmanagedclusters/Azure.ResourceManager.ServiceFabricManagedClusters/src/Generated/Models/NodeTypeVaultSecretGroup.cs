@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -49,7 +50,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         public IList<NodeTypeVaultCertificate> VaultCertificates { get; }
 
         /// <summary> Azure resource identifier. </summary>
-        public string SourceVaultId
+        public ResourceIdentifier SourceVaultId
         {
             get
             {

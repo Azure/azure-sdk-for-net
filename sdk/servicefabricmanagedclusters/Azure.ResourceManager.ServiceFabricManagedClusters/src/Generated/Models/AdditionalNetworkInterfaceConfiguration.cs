@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Argument.AssertNotNull(ipConfigurations, nameof(ipConfigurations));
 
             Name = name;
-            IpConfigurations = ipConfigurations.ToList();
+            IPConfigurations = ipConfigurations.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AdditionalNetworkInterfaceConfiguration"/>. </summary>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Name = name;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
             DscpConfiguration = dscpConfiguration;
-            IpConfigurations = ipConfigurations;
+            IPConfigurations = ipConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,10 +57,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         internal SubResource DscpConfiguration { get; set; }
 
         /// <summary> Specifies the IP configurations of the network interface. </summary>
-        public IList<ServiceFabricManagedClusterIPConfiguration> IpConfigurations { get; }
+        public IList<ServiceFabricManagedClusterIPConfiguration> IPConfigurations { get; }
 
         /// <summary> Azure resource identifier. </summary>
-        public string DscpConfigurationId
+        public ResourceIdentifier DscpConfigurationId
         {
             get
             {

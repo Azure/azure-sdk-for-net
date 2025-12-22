@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal NodeTypeFrontendConfiguration(NodeTypeFrontendConfigurationIPAddressType? ipAddressType, ResourceIdentifier loadBalancerBackendAddressPoolId, ResourceIdentifier loadBalancerInboundNatPoolId, ResourceIdentifier applicationGatewayBackendAddressPoolId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IpAddressType = ipAddressType;
+            IPAddressType = ipAddressType;
             LoadBalancerBackendAddressPoolId = loadBalancerBackendAddressPoolId;
             LoadBalancerInboundNatPoolId = loadBalancerInboundNatPoolId;
             ApplicationGatewayBackendAddressPoolId = applicationGatewayBackendAddressPoolId;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> The IP address type of this frontend configuration. If omitted the default value is IPv4. </summary>
-        public NodeTypeFrontendConfigurationIPAddressType? IpAddressType { get; set; }
+        public NodeTypeFrontendConfigurationIPAddressType? IPAddressType { get; set; }
 
         /// <summary> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}'. </summary>
         public ResourceIdentifier LoadBalancerBackendAddressPoolId { get; set; }
