@@ -4,14 +4,12 @@ This sample demonstrates how to use the Test Framework's recording capabilities 
 
 ## Overview
 
-Recorded tests are functional tests that can run in three different modes:
+Recorded tests can run in three different modes:
 - **Live** - The requests in the tests are run against live service resources.
 - **Record** - The requests in the tests are run against live resources and HTTP interactions are recorded for later playback.
 - **Playback** - The requests that your library generates when running a test are compared against the requests in the recording for that test. For each matched request, the corresponding response is extracted from the recording and "played back" as the response.
 
 Under the hood, when tests are run in `Playback` or `Record` mode, requests are forwarded to the [Test Proxy](https://github.com/Azure/azure-sdk-tools/blob/main/tools/test-proxy/Azure.Sdk.Tools.TestProxy/README.md). The test proxy is a proxy server that runs locally on your machine automatically when in `Record` or `Playback` mode.
-
-By default tests are run in playback mode. To change the mode, use the `SYSTEM_CLIENTMODEL_TEST_MODE` environment variable and set it to one of the following values: `Live`, `Playback`, `Record`.
 
 ## Basic recorded test setup
 
@@ -93,7 +91,7 @@ public TestModeExamples(bool isAsync) : base(isAsync, RecordedTestMode.Live)
 
 ### Built-in sanitizers
 
-Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. Do not check session records containing secrets in to repositories. Common headers like Authentication are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of RecordedTestBase can be used to customize the sanitization process.
+Secrets that are part of requests, responses, headers, or connections strings should be sanitized before saving the record. Do not check in session records containing secrets in. Common headers like Authentication are sanitized automatically, but if custom logic is required and/or if request or response body need to be sanitized, several properties of RecordedTestBase can be used to customize the sanitization process.
 
 ### Standard custom sanitization
 

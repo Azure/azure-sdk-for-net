@@ -10,6 +10,21 @@ The Test Framework's sync/async testing feature allows you to:
 - Test client libraries thoroughly with minimal code duplication
 - Ensure consistent behavior between sync and async overloads
 
+### Requirements
+
+For the sync/async interceptor to work, your client methods must follow these patterns:
+
+- **Method naming**: Async methods must end with `Async` suffix; sync methods must have the same name without the suffix (e.g., `GetData()` and `GetDataAsync()`)
+- **Method signatures**: Both versions must have identical parameters in the same order, including `CancellationToken`
+- **Return types**: Must follow supported patterns:
+  - `T` ↔ `Task<T>` or `ValueTask<T>` (for any type `T`)
+  - `ClientResult<T>` ↔ `Task<ClientResult<T>>` or `ValueTask<ClientResult<T>>`
+  - `CollectionResult<T>` ↔ `Task<AsyncCollectionResult<T>>`
+  - `CollectionResult` ↔ `Task<AsyncCollectionResult>`
+- **Virtual methods**: All intercepted methods must be marked as `virtual` to allow Castle DynamicProxy to intercept them
+
+
+
 ## Basic Sync/Async Test Setup
 
 The foundation is the `ClientTestBase` class with the `[ClientTestFixture]` attribute:
