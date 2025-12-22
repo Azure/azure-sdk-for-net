@@ -1360,4 +1360,65 @@ interface Employees {
     const getMethods = metadata.arguments.methods.filter((m: any) => m.kind === "Get");
     strictEqual(getMethods.length, 1, "Should have exactly one Get method");
   });
+
+  it("emits diagnostic when resource has duplicate Get methods", async () => {
+    // This test validates that diagnostics ARE emitted when duplicate Get methods exist.
+    // We use @readsResource decorator which allows us to define multiple read operations
+    // that reference the same model without TypeSpec's duplicate-operation error.
+    const program = await typeSpecCompile(
+      `
+/** An Employee resource */
+model Employee is TrackedResource<EmployeeProperties> {
+  ...ResourceNameParameter<Employee>;
+}
+
+/** Employee properties */
+model EmployeeProperties {
+  /** Age of employee */
+  age?: int32;
+}
+
+interface Operations extends Azure.ResourceManager.Operations {}
+
+@armResourceOperations
+interface Employees {
+  get is ArmResourceRead<Employee>;
+  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
+}
+
+@armResourceOperations
+interface EmployeesSecondary {
+  // Using @readsResource to create a second Get operation referencing the same model
+  @readsResource(Employee)
+  getSecondary is Azure.Core.ResourceRead<Employee>;
+}
+`,
+      runner
+    );
+    const context = createEmitterContext(program);
+    const sdkContext = await createCSharpSdkContext(context);
+    const root = createModel(sdkContext);
+    
+    updateClients(root, sdkContext);
+    
+    // Should have diagnostics for duplicate Get methods
+    const duplicateDiagnostics = program.diagnostics.filter(
+      (d) => d.code === "@azure-typespec/http-client-csharp-mgmt/duplicate-get-method"
+    );
+    
+    // Should emit 2 diagnostics (one for each duplicate Get method)
+    ok(duplicateDiagnostics.length >= 2, `Should emit at least 2 diagnostics, got ${duplicateDiagnostics.length}`);
+    
+    // Verify diagnostic messages include resource name and mention the issue
+    for (const diag of duplicateDiagnostics) {
+      // The diagnostic message should contain information about duplicate Get methods
+      ok(diag.message, "Diagnostic should have a message");
+      // Check that it mentions Employee or get methods
+      ok(
+        diag.message.toLowerCase().includes("employee") || 
+        diag.message.toLowerCase().includes("get"),
+        `Diagnostic message should be about Employee or Get methods. Got: ${diag.message}`
+      );
+    }
+  });
 });
