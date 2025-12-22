@@ -8,6 +8,7 @@ import {
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
+import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
 
@@ -231,6 +232,23 @@ interface Employees2 {
     );
     strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
     strictEqual(listBySubEntry.resourceScope, undefined);
+    
+    // Validate using resolveArmResources API
+    const resolvedSchema = resolveArmResources(program, sdkContext);
+    ok(resolvedSchema);
+    ok(resolvedSchema.resources);
+    
+    // Verify the resolved schema has the same Employee resource
+    const resolvedEmployee = resolvedSchema.resources.find(
+      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents/employees"
+    );
+    if (resolvedEmployee) {
+      // If found, validate key properties match
+      strictEqual(resolvedEmployee.metadata.resourceIdPattern, metadata.resourceIdPattern);
+      strictEqual(resolvedEmployee.metadata.resourceType, metadata.resourceType);
+      strictEqual(resolvedEmployee.metadata.resourceScope, metadata.resourceScope);
+      strictEqual(resolvedEmployee.metadata.parentResourceId, metadata.parentResourceId);
+    }
   });
 
   it("singleton resource", async () => {

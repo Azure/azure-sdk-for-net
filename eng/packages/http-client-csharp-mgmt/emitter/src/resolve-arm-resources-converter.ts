@@ -29,7 +29,7 @@ import {
   Provider,
   ResolvedResource,
   ResourceType,
-  resolveArmResources
+  resolveArmResources as resolveArmResourcesFromLibrary
 } from "@azure-tools/typespec-azure-resource-manager";
 import {
   ArmProviderSchema,
@@ -50,19 +50,21 @@ import {
 import { getAllSdkClients } from "./resource-detection.js";
 
 /**
- * Converts the result from resolveArmResources API to our ArmProviderSchema format.
- * This function acts as an adapter between the typespec-azure-resource-manager's
- * Provider format and our internal ArmProviderSchema format.
+ * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
+ * and returns them in our ArmProviderSchema format.
+ * 
+ * This function wraps the standard resolveArmResources API from typespec-azure-resource-manager
+ * and converts the result to our internal schema format for compatibility with existing code.
  * 
  * @param program - The TypeSpec program
  * @param sdkContext - The emitter context to map models
  * @returns The ARM provider schema in our expected format
  */
-export function convertProviderToArmProviderSchema(
+export function resolveArmResources(
   program: Program,
   sdkContext: CSharpEmitterContext
 ): ArmProviderSchema {
-  const provider = resolveArmResources(program);
+  const provider = resolveArmResourcesFromLibrary(program);
   
   // Build maps for fast lookup
   const operationMap = buildOperationMap(sdkContext);
@@ -147,6 +149,7 @@ function convertResolvedResourceToMetadata(
   operationMap: Map<Operation, SdkMethod<SdkHttpOperation>>
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
+  const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
   
   // Convert lifecycle operations
   if (resolvedResource.operations.lifecycle) {
@@ -160,7 +163,7 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Get,
             operationPath: readOp.path,
-            operationScope: getOperationScopeFromPath(readOp.path),
+            operationScope: resourceScope,
             resourceScope: resolvedResource.resourceInstancePath
           });
         }
@@ -175,7 +178,7 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Create,
             operationPath: createOp.path,
-            operationScope: getOperationScopeFromPath(createOp.path),
+            operationScope: resourceScope,
             resourceScope: resolvedResource.resourceInstancePath
           });
         }
@@ -190,7 +193,7 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Update,
             operationPath: updateOp.path,
-            operationScope: getOperationScopeFromPath(updateOp.path),
+            operationScope: resourceScope,
             resourceScope: resolvedResource.resourceInstancePath
           });
         }
@@ -205,7 +208,7 @@ function convertResolvedResourceToMetadata(
             methodId,
             kind: ResourceOperationKind.Delete,
             operationPath: deleteOp.path,
-            operationScope: getOperationScopeFromPath(deleteOp.path),
+            operationScope: resourceScope,
             resourceScope: resolvedResource.resourceInstancePath
           });
         }
@@ -222,7 +225,9 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: ResourceOperationKind.List,
           operationPath: listOp.path,
-          operationScope: getOperationScopeFromPath(listOp.path),
+          operationScope: resourceScope,
+          // TODO: This calculation may need refinement - the list operation's resource scope
+          // might be different from the resource's own scope
           resourceScope: getListResourceScope(listOp.path, resolvedResource.resourceInstancePath)
         });
       }
@@ -238,7 +243,7 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: ResourceOperationKind.Action,
           operationPath: actionOp.path,
-          operationScope: getOperationScopeFromPath(actionOp.path),
+          operationScope: resourceScope,
           resourceScope: resolvedResource.resourceInstancePath
         });
       }
@@ -246,12 +251,10 @@ function convertResolvedResourceToMetadata(
   }
   
   // Determine parent resource ID
-  const parentResourceId = resolvedResource.parent
-    ? resolvedResource.parent.resourceInstancePath
-    : undefined;
+  const parentResourceId = resolvedResource.parent?.resourceInstancePath;
   
   // Convert resource scope
-  const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
+  const resourceScopeValue = convertScopeToResourceScope(resolvedResource.scope);
   
   // Build resource type string
   const resourceType = formatResourceType(resolvedResource.resourceType);
@@ -260,9 +263,13 @@ function convertResolvedResourceToMetadata(
     resourceIdPattern: resolvedResource.resourceInstancePath,
     resourceType,
     methods,
-    resourceScope,
+    resourceScope: resourceScopeValue,
     parentResourceId,
+    // TODO: Feature request for resolveArmResources - include parentResourceModelId in the API
+    // Currently we need to calculate this ourselves by looking up the parent's model
     parentResourceModelId: undefined, // This might need to be calculated from parent
+    // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
+    // Once the API includes this, we can remove this extraction logic
     singletonResourceName: extractSingletonName(resolvedResource.resourceInstancePath),
     resourceName: resolvedResource.resourceName
   };
@@ -320,6 +327,8 @@ function convertScopeToResourceScope(scope: string | ResolvedResource | undefine
     }
   }
   
+  // TODO: Schema update needed - when scope is a ResolvedResource (extension resource),
+  // our schema needs to support representing the specific parent resource, not just "Extension"
   // If scope is a ResolvedResource, it's an extension resource
   return ResourceScope.Extension;
 }
