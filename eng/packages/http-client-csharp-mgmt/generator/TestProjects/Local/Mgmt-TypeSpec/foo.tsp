@@ -60,7 +60,7 @@ model NestedFooModel {
 }
 
 model SafeFlattenModel {
-  flattenedProperty: string;
+  flattenedProperty?: string[];
 }
 
 @armResourceOperations
