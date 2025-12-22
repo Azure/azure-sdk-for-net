@@ -1363,8 +1363,8 @@ interface Employees {
 
   it("emits diagnostic when resource has duplicate Get methods", async () => {
     // This test validates that diagnostics ARE emitted when duplicate Get methods exist.
-    // We use @readsResource decorator which allows us to define multiple read operations
-    // that reference the same model without TypeSpec's duplicate-operation error.
+    // We create a second Get operation with different parameters to avoid TypeSpec's
+    // duplicate-operation error while still referencing the same Employee model.
     const program = await typeSpecCompile(
       `
 /** An Employee resource */
@@ -1388,14 +1388,15 @@ interface Employees {
 
 @armResourceOperations
 interface EmployeesSecondary {
-  // Using @readsResource to create a second Get operation referencing the same model
-  @readsResource(Employee)
-  getSecondary is ArmResourceRead<Employee, Parameters = {
-  @key
-  @path
-  @segment("something")
-  extra: string;
-  }>;
+  getSecondary is ArmResourceRead<
+    Employee,
+    Parameters = {
+      @key
+      @path
+      @segment("something")
+      extra: string;
+    }
+  >;
 }
 `,
       runner
