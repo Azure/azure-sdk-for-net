@@ -368,8 +368,8 @@ namespace Azure.Generator.Management
         {
             foreach (var method in methods)
             {
-                // Check if this is an ScmMethodProvider with a CollectionDefinition
-                if (method is ScmMethodProvider scmMethod && scmMethod.CollectionDefinition is ArrayResponseCollectionResultDefinition arrayCollectionResult)
+                // Check if this is an ScmMethodProvider with an ArrayResponseCollectionResultDefinition
+                if (method is ScmMethodProvider { CollectionDefinition: ArrayResponseCollectionResultDefinition arrayCollectionResult })
                 {
                     collectionResults.Add(arrayCollectionResult);
                 }

@@ -16,6 +16,7 @@ using Microsoft.TypeSpec.Generator.Snippets;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.OperationMethodProviders
@@ -75,12 +76,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             _methodName = methodName ?? _convenienceMethod.Signature.Name;
             _signature = CreateSignature();
-            _bodyStatements = BuildBodyStatements();
-            // Store the collection result for later retrieval
-            _collectionResult = _tempCollectionResult;
+            var (bodyStatements, collectionResult) = BuildBodyStatements();
+            _bodyStatements = bodyStatements;
+            _collectionResult = collectionResult;
         }
-
-        private ArrayResponseCollectionResultDefinition? _tempCollectionResult;
 
         private static void InitializeTypeInfo(
             CSharpType itemType,
@@ -143,16 +142,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _convenienceMethod.Signature.NonDocumentComment);
         }
 
-        protected MethodBodyStatement[] BuildBodyStatements()
+        protected (MethodBodyStatement[] Statements, ArrayResponseCollectionResultDefinition CollectionResult) BuildBodyStatements()
         {
             var statements = new List<MethodBodyStatement>();
 
             // Create the collection result definition
             var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
             var collectionResult = CreateCollectionResultDefinition(scopeName);
-
-            // Store the collection result temporarily so it can be saved to the field after constructor completes
-            _tempCollectionResult = collectionResult;
 
             // Register the collection result with the output library
             ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, scopeName);
@@ -178,14 +174,19 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 statements.Add(Return(New.Instance(collectionResult.Type, arguments)));
             }
 
-            return statements.ToArray();
+            return (statements.ToArray(), collectionResult);
         }
 
         private ArrayResponseCollectionResultDefinition CreateCollectionResultDefinition(string scopeName)
         {
-            // Get the constructor parameters needed (same as the arguments we'll pass when instantiating)
+            // Get the request method to extract path parameters
             var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
-            var constructorParams = OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, false);
+
+            // Extract only the path parameters (not including CancellationToken or other optional parameters)
+            // These are the parameters needed by the contextual path for the request
+            var constructorParams = requestMethod.Signature.Parameters
+                .Where(p => p.Name != "context" && p.Name != "cancellationToken")  // Exclude context-related params
+                .ToArray();
 
             var collectionResult = new ArrayResponseCollectionResultDefinition(
                 _restClient,
@@ -196,9 +197,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 scopeName,
                 constructorParams,
                 _methodName);  // Pass the actual method name for proper class naming
-
-            // DO NOT add to output library here - it will be extracted from the method provider later
-            // ManagementClientGenerator.Instance.OutputLibrary.ArrayResponseCollectionResults.Add(collectionResult);
 
             return collectionResult;
         }

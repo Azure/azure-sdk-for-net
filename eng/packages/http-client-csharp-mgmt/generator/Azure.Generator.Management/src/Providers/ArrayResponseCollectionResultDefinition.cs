@@ -266,9 +266,34 @@ namespace Azure.Generator.Management.Providers
                 $"The parsed array.",
                 [responseParam]);
 
+            // Use JsonDocument to parse the response content as an array
+            // Parse response.Content as JSON array, then deserialize each element
             var bodyStatements = new List<MethodBodyStatement>
             {
-                Return(Static(_listType).Invoke("FromResponse", [responseParam]).CastTo(new CSharpType(typeof(IReadOnlyList<>), _itemType)))
+                // using var document = JsonDocument.Parse(response.Content);
+                UsingDeclare("document", typeof(System.Text.Json.JsonDocument),
+                    Static(typeof(System.Text.Json.JsonDocument)).Invoke("Parse", [responseParam.Property("Content")]),
+                    out var documentVariable),
+                    
+                // var array = document.RootElement;
+                Declare("array", typeof(System.Text.Json.JsonElement),
+                    documentVariable.Property("RootElement"),
+                    out var arrayVariable),
+                    
+                // var result = new List<T>();
+                Declare("result", new CSharpType(typeof(List<>), _itemType),
+                    New.Instance(new CSharpType(typeof(List<>), _itemType)),
+                    out var resultVariable),
+                    
+                // foreach (var element in array.EnumerateArray())
+                new ForeachStatement("element", arrayVariable.Invoke("EnumerateArray"), out var elementVariable, isAsync: false)
+                {
+                    // result.Add(T.DeserializeT(element));
+                    resultVariable.Invoke("Add", [Static(_itemType).Invoke($"Deserialize{_itemType.Name}", [elementVariable])]).Terminate()
+                },
+                
+                // return result;
+                Return(resultVariable)
             };
 
             return new MethodProvider(signature, bodyStatements.ToArray(), this);
