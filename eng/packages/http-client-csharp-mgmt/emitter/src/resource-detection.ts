@@ -66,10 +66,10 @@ export async function updateClients(
  * Builds the ARM provider schema by detecting all resources and non-resource methods.
  * This is the main function that gathers all ARM-related information from the code model
  * and consolidates it into a unified ArmProviderSchema structure.
- * 
+ *
  * This function is exported for testing purposes and can be called directly from tests
  * to validate the schema structure.
- * 
+ *
  * @param sdkContext - The emitter context
  * @param codeModel - The code model to analyze
  * @returns The unified ARM provider schema containing all resources and non-resource methods
@@ -94,24 +94,139 @@ export function buildArmProviderSchema(
   // Map to track resource metadata by unique key (modelId + resourcePath)
   // This allows multiple resources to share the same model but have different paths
   const resourcePathToMetadataMap = new Map<string, ResourceMetadata>();
-  
+
   // Map to track which resource models are used (for backward compatibility)
   const resourceModelIds = new Set<string>(resourceModels.map(m => m.crossLanguageDefinitionId));
-  
+
   // Track client names associated with each resource path for name derivation
   const resourcePathToClientName = new Map<string, string>();
-  
+
   // Track explicit resource names from TypeSpec (e.g., from LegacyOperations ResourceName parameter)
   const resourcePathToExplicitName = new Map<string, string>();
-  
+
   const nonResourceMethods: Map<string, NonResourceMethod> = new Map();
 
   // first we flatten all possible clients in the code model
   const clients = getAllClients(codeModel);
 
-  // then we iterate over all the clients and their methods to find the resource operations
-  // and add them to the resource model metadata
-  // during the process we populate the resourceIdPattern and resourceType
+  // Process methods in two passes to ensure CRUD operations establish resource paths first
+  // This allows non-CRUD operations (like List) to find existing resource paths regardless of operation order
+
+  // Helper function to process a method and add it to the resource metadata
+  const processMethod = (client: InputClient, method: any) => {
+    const serviceMethod = serviceMethods.get(
+      method.crossLanguageDefinitionId
+    );
+    const [kind, modelId, explicitResourceName] =
+      parseResourceOperation(serviceMethod, sdkContext) ?? [];
+
+    if (modelId && kind && resourceModelIds.has(modelId)) {
+      // Determine the resource path from the CRUD operation
+      let resourcePath = "";
+      if (isCRUDKind(kind)) {
+        resourcePath = method.operation.path;
+      } else {
+        // For non-CRUD operations like List, try to match with existing resource paths for the same model
+        const operationPath = method.operation.path;
+        for (const [existingKey] of resourcePathToMetadataMap) {
+          const [existingModelId, existingPath] = existingKey.split('|');
+          // Check if this is for the same model
+          if (existingModelId === modelId && existingPath) {
+            // Try to match based on resource type segments
+            // Extract the resource type part (after "/providers/")
+            const existingResourceType = calculateResourceTypeFromPath(existingPath);
+            let operationResourceType = "";
+            try {
+              operationResourceType = calculateResourceTypeFromPath(operationPath);
+            } catch {
+              // If we can't calculate resource type, try string matching
+            }
+
+            // If resource types match, this list operation belongs to this resource
+            if (existingResourceType && operationResourceType === existingResourceType) {
+              resourcePath = existingPath;
+              break;
+            }
+
+            // Fallback: check if the operation path ends with a segment that matches the existing path
+            const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
+            if (operationPath.startsWith(existingParentPath)) {
+              resourcePath = existingPath;
+              break;
+            }
+          }
+        }
+        // If no match found, use the operation path
+        if (!resourcePath) {
+          resourcePath = operationPath;
+        }
+      }
+
+      // Create a unique key combining model ID and resource path
+      const metadataKey = `${modelId}|${resourcePath}`;
+
+      // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
+      if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
+        resourcePathToExplicitName.set(metadataKey, explicitResourceName);
+      }
+
+      // Get or create metadata entry for this resource path
+      let entry = resourcePathToMetadataMap.get(metadataKey);
+      if (!entry) {
+        const model = resourceModelMap.get(modelId);
+        // Store the client name for this resource path for later use (fallback if no explicit name)
+        if (!resourcePathToClientName.has(metadataKey)) {
+          resourcePathToClientName.set(metadataKey, client.name);
+        }
+
+        entry = {
+          resourceIdPattern: "", // this will be populated later
+          resourceType: "", // this will be populated later
+          singletonResourceName: getSingletonResource(
+            model?.decorators?.find((d) => d.name == singleton)
+          ),
+          resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
+          methods: [],
+          parentResourceId: undefined, // this will be populated later
+          parentResourceModelId: undefined,
+          // Use model name as default; will be updated later if multiple paths exist
+          resourceName: model?.name ?? "Unknown"
+        } as ResourceMetadata;
+        resourcePathToMetadataMap.set(metadataKey, entry);
+      }
+
+      entry.methods.push({
+        methodId: method.crossLanguageDefinitionId,
+        kind,
+        operationPath: method.operation.path,
+        operationScope: getOperationScope(method.operation.path)
+      });
+      if (!entry.resourceType) {
+        entry.resourceType = calculateResourceTypeFromPath(
+          method.operation.path
+        );
+      }
+      if (!entry.resourceIdPattern && isCRUDKind(kind)) {
+        entry.resourceIdPattern = method.operation.path;
+      }
+    } else if (modelId && kind) {
+      // no resource model found for this modelId, treat as non-resource method
+      nonResourceMethods.set(method.crossLanguageDefinitionId, {
+        methodId: method.crossLanguageDefinitionId,
+        operationPath: method.operation.path,
+        operationScope: getOperationScope(method.operation.path)
+      });
+    } else {
+      // we add a methodMetadata decorator to this method
+      nonResourceMethods.set(method.crossLanguageDefinitionId, {
+        methodId: method.crossLanguageDefinitionId,
+        operationPath: method.operation.path,
+        operationScope: getOperationScope(method.operation.path)
+      });
+    }
+  };
+
+  // First pass: Process CRUD operations to establish resource paths
   for (const client of clients) {
     for (const method of client.methods) {
       const serviceMethod = serviceMethods.get(
@@ -119,7 +234,7 @@ export function buildArmProviderSchema(
       );
       const [kind, modelId, explicitResourceName] =
         parseResourceOperation(serviceMethod, sdkContext) ?? [];
-     
+
       if (modelId && kind && resourceModelIds.has(modelId)) {
         // Determine the resource path from the CRUD operation
         let resourcePath = "";
@@ -141,13 +256,13 @@ export function buildArmProviderSchema(
               } catch {
                 // If we can't calculate resource type, try string matching
               }
-              
+
               // If resource types match, this list operation belongs to this resource
               if (existingResourceType && operationResourceType === existingResourceType) {
                 resourcePath = existingPath;
                 break;
               }
-              
+
               // Fallback: check if the operation path ends with a segment that matches the existing path
               const existingParentPath = existingPath.substring(0, existingPath.lastIndexOf('/'));
               if (operationPath.startsWith(existingParentPath)) {
@@ -161,15 +276,15 @@ export function buildArmProviderSchema(
             resourcePath = operationPath;
           }
         }
-        
+
         // Create a unique key combining model ID and resource path
         const metadataKey = `${modelId}|${resourcePath}`;
-        
+
         // Store explicit resource name if provided (from LegacyOperations ResourceName parameter)
         if (explicitResourceName && !resourcePathToExplicitName.has(metadataKey)) {
           resourcePathToExplicitName.set(metadataKey, explicitResourceName);
         }
-        
+
         // Get or create metadata entry for this resource path
         let entry = resourcePathToMetadataMap.get(metadataKey);
         if (!entry) {
@@ -178,7 +293,7 @@ export function buildArmProviderSchema(
           if (!resourcePathToClientName.has(metadataKey)) {
             resourcePathToClientName.set(metadataKey, client.name);
           }
-          
+
           entry = {
             resourceIdPattern: "", // this will be populated later
             resourceType: "", // this will be populated later
@@ -193,7 +308,7 @@ export function buildArmProviderSchema(
           } as ResourceMetadata;
           resourcePathToMetadataMap.set(metadataKey, entry);
         }
-        
+
         entry.methods.push({
           methodId: method.crossLanguageDefinitionId,
           kind,
@@ -230,7 +345,7 @@ export function buildArmProviderSchema(
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     // Extract model ID from the key (format: "modelId|resourcePath")
     const modelId = metadataKey.split('|')[0];
-    
+
     // get parent resource model id
     const parentResourceModelId = getParentResourceModelId(
       sdkContext,
@@ -246,7 +361,7 @@ export function buildArmProviderSchema(
         }
       }
     }
-    
+
     // For multiple-path resources (same model at different paths), detect parent-child relationships through path matching
     // This is needed when both parent and child use the same model (e.g., legacy-operations pattern)
     if (!metadata.parentResourceId && metadata.resourceIdPattern) {
@@ -254,11 +369,11 @@ export function buildArmProviderSchema(
       for (const [otherKey, otherMetadata] of resourcePathToMetadataMap) {
         if (otherKey !== metadataKey && otherMetadata.resourceIdPattern) {
           // Check if this resource's path starts with the other resource's path
-          // e.g., "/providers/MgmtTypeSpec/bestPractices/{name}/versions/{versionName}" 
+          // e.g., "/providers/MgmtTypeSpec/bestPractices/{name}/versions/{versionName}"
           // is a child of "/providers/MgmtTypeSpec/bestPractices/{name}"
           const thisPath = metadata.resourceIdPattern;
           const potentialParentPath = otherMetadata.resourceIdPattern;
-          
+
           // The child path should start with the parent path followed by a "/"
           if (thisPath.startsWith(potentialParentPath + "/") && thisPath.length > potentialParentPath.length + 1) {
             metadata.parentResourceId = potentialParentPath;
@@ -288,11 +403,11 @@ export function buildArmProviderSchema(
   const metadataKeysToDelete: string[] = [];
   for (const [metadataKey, metadata] of resourcePathToMetadataMap) {
     const modelId = metadataKey.split('|')[0];
-    
+
     // If this entry has no resourceIdPattern, try to merge it with another entry for the same model that does
     if (metadata.resourceIdPattern === "") {
       let merged = false;
-      
+
       // First try to merge with parent if it exists
       const parentResourceModelId = getParentResourceModelId(
         sdkContext,
@@ -320,7 +435,7 @@ export function buildArmProviderSchema(
             break;
           }
         }
-        
+
         // If there's no parent and no other entry to merge with, treat all methods as non-resource methods
         if (!merged) {
           for (const method of metadata.methods) {
@@ -335,7 +450,7 @@ export function buildArmProviderSchema(
       }
     }
   }
-  
+
   // Remove entries that were merged or converted to non-resource methods
   for (const key of metadataKeysToDelete) {
     resourcePathToMetadataMap.delete(key);
@@ -351,7 +466,7 @@ export function buildArmProviderSchema(
     }
     modelIdToMetadataList.get(modelId)!.push(metadata);
   }
-  
+
   // Update resource names: prioritize explicit ResourceName from TypeSpec, fallback to deriving from client names
   // This handles the scenario where the same model is used by multiple resource interfaces with different paths.
   // TypeSpec authors should specify explicit ResourceName parameters in LegacyOperations templates.
@@ -824,7 +939,7 @@ function applyArmProviderSchemaDecorator(
  * Builds the ARM provider schema from detected resources and non-resource methods.
  * This consolidates all ARM resource information into a single unified structure.
  * This is a helper function called by buildArmProviderSchema.
- * 
+ *
  * @param sdkContext - The emitter context
  * @param resourceModels - All resource models detected in the code model
  * @param resourcePathToMetadataMap - Map of resource paths to their metadata

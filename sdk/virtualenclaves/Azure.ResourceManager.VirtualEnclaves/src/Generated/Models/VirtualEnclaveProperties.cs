@@ -8,44 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.VirtualEnclaves;
 
 namespace Azure.ResourceManager.VirtualEnclaves.Models
 {
     /// <summary> Virtual Enclave Resource properties. </summary>
     public partial class VirtualEnclaveProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualEnclaveProperties"/>. </summary>
         /// <param name="enclaveVirtualNetwork"> Virtual Network. </param>
@@ -78,8 +49,8 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
         /// <param name="governedServiceList"> Enclave specific policies. </param>
         /// <param name="enclaveDefaultSettings"> Enclave default settings. </param>
         /// <param name="maintenanceModeConfiguration"> Maintenance Mode configuration. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState, EnclaveVirtualNetwork enclaveVirtualNetwork, EnclaveAddressSpaces enclaveAddressSpaces, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? isBastionEnabled, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettings enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualEnclaveProperties(VirtualEnclaveProvisioningState? provisioningState, EnclaveVirtualNetwork enclaveVirtualNetwork, EnclaveAddressSpaces enclaveAddressSpaces, ResourceIdentifier communityResourceId, IReadOnlyList<ResourceIdentifier> resourceCollection, string managedResourceGroupName, ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration, bool? isBastionEnabled, IList<VirtualEnclaveRoleAssignmentItem> enclaveRoleAssignments, IList<VirtualEnclaveRoleAssignmentItem> workloadRoleAssignments, IList<VirtualEnclaveGovernedService> governedServiceList, EnclaveDefaultSettings enclaveDefaultSettings, VirtualEnclaveMaintenanceModeConfiguration maintenanceModeConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             EnclaveVirtualNetwork = enclaveVirtualNetwork;
@@ -94,45 +65,55 @@ namespace Azure.ResourceManager.VirtualEnclaves.Models
             GovernedServiceList = governedServiceList;
             EnclaveDefaultSettings = enclaveDefaultSettings;
             MaintenanceModeConfiguration = maintenanceModeConfiguration;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualEnclaveProperties"/> for deserialization. </summary>
-        internal VirtualEnclaveProperties()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Provisioning State. </summary>
         public VirtualEnclaveProvisioningState? ProvisioningState { get; }
+
         /// <summary> Virtual Network. </summary>
         public EnclaveVirtualNetwork EnclaveVirtualNetwork { get; set; }
+
         /// <summary> Enclave Address Spaces. </summary>
         public EnclaveAddressSpaces EnclaveAddressSpaces { get; }
+
         /// <summary> Community Resource Id. </summary>
         public ResourceIdentifier CommunityResourceId { get; set; }
+
         /// <summary> List of resource ids created by Virtual Enclave. </summary>
         public IReadOnlyList<ResourceIdentifier> ResourceCollection { get; }
+
         /// <summary> Managed resource group name. </summary>
         public string ManagedResourceGroupName { get; }
+
         /// <summary> Managed On Behalf Of Configuration. </summary>
         internal ManagedOnBehalfOfConfiguration ManagedOnBehalfOfConfiguration { get; }
-        /// <summary> Managed-On-Behalf-Of broker resources. </summary>
-        public IReadOnlyList<SubResource> ManagedOnBehalfOfMoboBrokerResources
-        {
-            get => ManagedOnBehalfOfConfiguration?.MoboBrokerResources;
-        }
 
         /// <summary> Deploy Bastion service (True or False). </summary>
         public bool? IsBastionEnabled { get; set; }
+
         /// <summary> Enclave role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> EnclaveRoleAssignments { get; }
+
         /// <summary> Workload role assignments. </summary>
         public IList<VirtualEnclaveRoleAssignmentItem> WorkloadRoleAssignments { get; }
+
         /// <summary> Enclave specific policies. </summary>
         public IList<VirtualEnclaveGovernedService> GovernedServiceList { get; }
+
         /// <summary> Enclave default settings. </summary>
         public EnclaveDefaultSettings EnclaveDefaultSettings { get; set; }
+
         /// <summary> Maintenance Mode configuration. </summary>
         public VirtualEnclaveMaintenanceModeConfiguration MaintenanceModeConfiguration { get; set; }
+
+        /// <summary> Managed-On-Behalf-Of broker resources. </summary>
+        public IReadOnlyList<MoboBrokerResource> ManagedOnBehalfOfMoboBrokerResources
+        {
+            get
+            {
+                return ManagedOnBehalfOfConfiguration.MoboBrokerResources;
+            }
+        }
     }
 }
