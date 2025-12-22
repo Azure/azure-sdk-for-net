@@ -115,7 +115,7 @@ namespace Azure.Generator.Management.Providers
             foreach (var p in methodSignature.Parameters)
             {
                 var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
-                if (normalizedName != null)
+                if (normalizedName != null && normalizedName != p.Name)
                 {
                     p.Update(name: normalizedName);
                 }

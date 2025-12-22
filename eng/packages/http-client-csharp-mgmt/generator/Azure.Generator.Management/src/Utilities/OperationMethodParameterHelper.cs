@@ -74,7 +74,7 @@ namespace Azure.Generator.Management.Utilities
                     (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {
                     var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(outputParameter);
-                    if (normalizedName != null)
+                    if (normalizedName != null && normalizedName != outputParameter.Name)
                     {
                         outputParameter.Update(name: normalizedName);
                     }
