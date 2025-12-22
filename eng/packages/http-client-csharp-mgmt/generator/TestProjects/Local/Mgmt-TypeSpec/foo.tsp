@@ -108,6 +108,11 @@ model FooDependency {
   version?: string;
 }
 
+model FooDependency {
+  dependencyName: string;
+  version?: string;
+}
+
 @singleton
 model FooSettings is ProxyResource<FooSettingsProperties> {
   @doc("The default Foo settings.")

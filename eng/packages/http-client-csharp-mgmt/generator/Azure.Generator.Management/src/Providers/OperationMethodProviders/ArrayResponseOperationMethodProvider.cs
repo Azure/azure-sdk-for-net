@@ -140,13 +140,58 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         protected MethodBodyStatement[] BuildBodyStatements()
         {
-            // TODO: Complete implementation of collection result class generation
-            // The approach needs to be finalized based on whether to:
-            // 1. Create synthetic InputPagingServiceMethod with null paging metadata
-            // 2. Use simpler TypeProvider-based implementation
-            // 3. Extend base framework to support non-paging collection results
+            var statements = new List<MethodBodyStatement>();
 
-            throw new NotImplementedException("Array response collection result generation is not yet implemented. See PR comments for discussion on implementation approach.");
+            // Create the collection result definition
+            var scopeName = ResourceHelpers.GetDiagnosticScope(_enclosingType, _methodName, _isAsync);
+            var collectionResult = CreateCollectionResultDefinition(scopeName);
+
+            // Register the collection result with the output library
+            ManagementClientGenerator.Instance.OutputLibrary.PageableMethodScopes.Add(collectionResult.Name, scopeName);
+
+            statements.Add(ResourceMethodSnippets.CreateRequestContext(KnownParameters.CancellationTokenParameter, out var contextVariable));
+
+            var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
+
+            var arguments = new List<ValueExpression>
+            {
+                _restClientField,
+            };
+
+            arguments.AddRange(_contextualPath.PopulateArguments(This.As<ArmResource>().Id(), requestMethod.Signature.Parameters, contextVariable, _signature.Parameters, _enclosingType));
+
+            // Handle ResourceData type conversion if needed
+            if (_itemResourceClient != null)
+            {
+                statements.Add(BuildResourceDataConversionStatement(collectionResult.Type, _itemResourceClient.Type, arguments));
+            }
+            else
+            {
+                statements.Add(Return(New.Instance(collectionResult.Type, arguments)));
+            }
+
+            return statements.ToArray();
+        }
+
+        private ArrayResponseCollectionResultDefinition CreateCollectionResultDefinition(string scopeName)
+        {
+            // Get the constructor parameters needed (same as the arguments we'll pass when instantiating)
+            var requestMethod = _restClient.GetRequestMethodByOperation(_serviceMethod.Operation);
+            var constructorParams = OperationMethodParameterHelper.GetOperationMethodParameters(_serviceMethod, _contextualPath, _enclosingType, false);
+
+            var collectionResult = new ArrayResponseCollectionResultDefinition(
+                _restClient,
+                _serviceMethod,
+                _itemType,
+                _listType,
+                _isAsync,
+                scopeName,
+                constructorParams);
+
+            // Add to the output library so it gets generated
+            ManagementClientGenerator.Instance.OutputLibrary.ArrayResponseCollectionResults.Add(collectionResult);
+
+            return collectionResult;
         }
 
         private MethodBodyStatement BuildResourceDataConversionStatement(CSharpType sourcePageable, CSharpType typeOfResource, List<ValueExpression> arguments)
