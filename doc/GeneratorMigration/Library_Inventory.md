@@ -12,14 +12,14 @@
 
 ## Summary
 
-- Total libraries: 399
+- Total libraries: 398
 - Management Plane (MPG): 226
   - Autorest/Swagger: 156
-  - New Emitter (TypeSpec): 36
-  - Old TypeSpec: 34
-- Data Plane (DPG): 173
+  - New Emitter (TypeSpec): 38
+  - Old TypeSpec: 32
+- Data Plane (DPG): 172
   - Autorest/Swagger: 86
-  - New Emitter (TypeSpec): 21
+  - New Emitter (TypeSpec): 20
   - Old TypeSpec: 17
 - No generator: 49
 
@@ -28,7 +28,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 21 / 38 (55.3%)
+**Migration Status**: 20 / 37 (54.1%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -63,7 +63,6 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | monitor | Azure.Monitor.Query.Metrics | ✅ |
 | onlineexperimentation | Azure.Analytics.OnlineExperimentation | ✅ |
 | openai | Azure.AI.OpenAI | ✅ |
-| planetarycomputer | Azure.Analytics.PlanetaryComputer | ✅ |
 | purview | Azure.Analytics.Purview.DataMap |  |
 | schemaregistry | Azure.Data.SchemaRegistry | ✅ |
 | template | Azure.Template | ✅ |
@@ -170,7 +169,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 86
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 36 / 70 (51.4%)
+**Migration Status**: 38 / 70 (54.3%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -240,9 +239,9 @@ Libraries that provide resource management APIs for Azure services and have been
 | storagesync | Azure.ResourceManager.StorageSync | ✅ |
 | terraform | Azure.ResourceManager.Terraform | ✅ |
 | trustedsigning | Azure.ResourceManager.TrustedSigning | ✅ |
-| virtualenclaves | Azure.ResourceManager.VirtualEnclaves |  |
+| virtualenclaves | Azure.ResourceManager.VirtualEnclaves | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
-| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration |  |
+| workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance |  |
 
 
