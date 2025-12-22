@@ -13,11 +13,28 @@ namespace Azure.Identity.Tests
     {
         private static readonly Lazy<Action> s_clearStaticMetadataProvider = new Lazy<Action>(() =>
         {
-            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.NetworkCacheMetadataProvider", true);
-            MethodInfo clearMethod = staticMetadataProviderType.GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance);
-            NewExpression callConstructor = Expression.New(staticMetadataProviderType);
-            MethodCallExpression invokeClear = Expression.Call(callConstructor, clearMethod);
-            return Expression.Lambda<Action>(invokeClear).Compile();
+            Type staticMetadataProviderType = typeof(PublicClientApplication).Assembly.GetType("Microsoft.Identity.Client.Instance.Discovery.NetworkCacheMetadataProvider", false);
+            if (staticMetadataProviderType == null)
+            {
+                return () => { }; // No-op if type doesn't exist
+            }
+
+            MethodInfo clearMethod = staticMetadataProviderType.GetMethod("Clear", BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            if (clearMethod == null)
+            {
+                return () => { }; // No-op if method doesn't exist
+            }
+
+            if (clearMethod.IsStatic)
+            {
+                return Expression.Lambda<Action>(Expression.Call(clearMethod)).Compile();
+            }
+            else
+            {
+                NewExpression callConstructor = Expression.New(staticMetadataProviderType);
+                MethodCallExpression invokeClear = Expression.Call(callConstructor, clearMethod);
+                return Expression.Lambda<Action>(invokeClear).Compile();
+            }
         });
         public static void ClearStaticMetadataProviderCache() => s_clearStaticMetadataProvider.Value();
     }
