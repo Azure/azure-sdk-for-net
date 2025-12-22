@@ -48,7 +48,6 @@ export interface ResourceMetadata {
   methods: ResourceMethod[];
   resourceScope: ResourceScope;
   parentResourceId?: string;
-  parentResourceModelId?: string;
   singletonResourceName?: string;
   resourceName: string;
 }

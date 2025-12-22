@@ -188,7 +188,6 @@ export function buildArmProviderSchema(
             resourceScope: ResourceScope.Tenant, // temporary default to Tenant, will be properly set later after methods are populated
             methods: [],
             parentResourceId: undefined, // this will be populated later
-            parentResourceModelId: undefined,
             // Use model name as default; will be updated later if multiple paths exist
             resourceName: model?.name ?? "Unknown"
           } as ResourceMetadata;
@@ -243,7 +242,6 @@ export function buildArmProviderSchema(
         const parentModelId = parentKey.split('|')[0];
         if (parentModelId === parentResourceModelId && parentMetadata.resourceIdPattern) {
           metadata.parentResourceId = parentMetadata.resourceIdPattern;
-          metadata.parentResourceModelId = parentResourceModelId;
           break;
         }
       }
@@ -296,10 +294,14 @@ export function buildArmProviderSchema(
       let merged = false;
       
       // First try to merge with parent if it exists
-      if (metadata.parentResourceModelId) {
+      const parentResourceModelId = getParentResourceModelId(
+        sdkContext,
+        models.get(modelId)
+      );
+      if (parentResourceModelId) {
         for (const [parentKey, parentMetadata] of resourcePathToMetadataMap) {
           const parentModelId = parentKey.split('|')[0];
-          if (parentModelId === metadata.parentResourceModelId && parentMetadata.resourceIdPattern) {
+          if (parentModelId === parentResourceModelId && parentMetadata.resourceIdPattern) {
             parentMetadata.methods.push(...metadata.methods);
             metadataKeysToDelete.push(metadataKey);
             merged = true;

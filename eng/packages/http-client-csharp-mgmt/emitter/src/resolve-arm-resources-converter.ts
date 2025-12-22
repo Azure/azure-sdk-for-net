@@ -265,9 +265,6 @@ function convertResolvedResourceToMetadata(
     methods,
     resourceScope: resourceScopeValue,
     parentResourceId,
-    // TODO: Feature request for resolveArmResources - include parentResourceModelId in the API
-    // Currently we need to calculate this ourselves by looking up the parent's model
-    parentResourceModelId: undefined, // This might need to be calculated from parent
     // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
     // Once the API includes this, we can remove this extraction logic
     singletonResourceName: extractSingletonName(resolvedResource.resourceInstancePath),
