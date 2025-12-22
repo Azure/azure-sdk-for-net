@@ -7,11 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
     /// <summary> Describes a VM Sizes. </summary>
-    public partial class ServiceFabricManagedUnsupportedVmSize
+    public partial class ServiceFabricManagedUnsupportedVmSize : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,31 +24,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedUnsupportedVmSize"/>. </summary>
-        /// <param name="properties"> VM Size properties. </param>
-        /// <param name="id"> VM Size id. </param>
-        /// <param name="name"> VM Size name. </param>
-        /// <param name="type"> VM Size type. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedUnsupportedVmSize(VMSize properties, string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="properties"> VM Size properties. </param>
+        /// <param name="name"> VM Size name. </param>
+        internal ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, VMSize properties, string name) : base(id, name, resourceType, systemData)
         {
-            Properties = properties;
-            Id = id;
-            Name = name;
-            Type = @type;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            Properties = properties;
         }
 
         /// <summary> VM Size properties. </summary>
         internal VMSize Properties { get; }
-
-        /// <summary> VM Size id. </summary>
-        public string Id { get; }
-
-        /// <summary> VM Size name. </summary>
-        public string Name { get; }
-
-        /// <summary> VM Size type. </summary>
-        public string Type { get; }
 
         /// <summary> VM Size name. </summary>
         public string VMSize

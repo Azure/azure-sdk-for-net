@@ -536,14 +536,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 clusterCodeVersion is null && versionSupportExpireOn is null && osType is null ? default : new ManagedClusterVersionDetails(clusterCodeVersion, versionSupportExpireOn, osType, null));
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="vmSize"> VM Size name. </param>
-        /// <param name="id"> VM Size id. </param>
         /// <param name="name"> VM Size name. </param>
-        /// <param name="type"> VM Size type. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
-        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(string vmSize = default, string id = default, string name = default, string @type = default)
+        public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string vmSize = default, string name = default)
         {
-            return new ServiceFabricManagedUnsupportedVmSize(vmSize is null ? default : new VMSize(vmSize, null), id, name, @type, additionalBinaryDataProperties: null);
+            return new ServiceFabricManagedUnsupportedVmSize(
+                id,
+                resourceType,
+                systemData,
+                additionalBinaryDataProperties: null,
+                vmSize is null ? default : new VMSize(vmSize, null),
+                name);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
