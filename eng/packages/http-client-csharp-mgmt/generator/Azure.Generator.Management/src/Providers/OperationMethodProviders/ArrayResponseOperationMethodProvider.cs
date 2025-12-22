@@ -186,7 +186,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _listType,
                 _isAsync,
                 scopeName,
-                constructorParams);
+                constructorParams,
+                _methodName);  // Pass the actual method name for proper class naming
 
             // Add to the output library so it gets generated
             ManagementClientGenerator.Instance.OutputLibrary.ArrayResponseCollectionResults.Add(collectionResult);

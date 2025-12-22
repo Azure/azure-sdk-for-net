@@ -430,28 +430,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <returns> A collection of <see cref="FooDependency"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FooDependency> GetDependenciesAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.GetDependencies");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _foosRestClient.CreateGetDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                IList<FooDependency> list = IList<FooDependency>.FromResponse(response);
-                if (list == null)
-                {
-                    throw new RequestFailedException(response);
-                }
-                return AsyncPageable<FooDependency>.FromPages(new Page<FooDependency>[] { Page<FooDependency>.FromValues(list, null, response) });
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new Tests.FoosGetDependenciesAsyncCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>
@@ -479,28 +462,11 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <returns> A collection of <see cref="FooDependency"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FooDependency> GetDependencies(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _foosClientDiagnostics.CreateScope("FooResource.GetDependencies");
-            scope.Start();
-            try
+            RequestContext context = new RequestContext
             {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _foosRestClient.CreateGetDependenciesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                IList<FooDependency> list = IList<FooDependency>.FromResponse(response);
-                if (list == null)
-                {
-                    throw new RequestFailedException(response);
-                }
-                return Pageable<FooDependency>.FromPages(new Page<FooDependency>[] { Page<FooDependency>.FromValues(list, null, response) });
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+                CancellationToken = cancellationToken
+            };
+            return new Tests.FoosGetDependenciesCollectionResultOfT(_foosRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
         }
 
         /// <summary>

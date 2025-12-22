@@ -39,14 +39,12 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 throw new FormatException($"The model {nameof(FooDependency)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("id"u8);
-            writer.WriteStringValue(Id);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            if (Optional.IsDefined(Type))
+            writer.WritePropertyName("dependencyName"u8);
+            writer.WriteStringValue(DependencyName);
+            if (Optional.IsDefined(Version))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type);
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -90,25 +88,19 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 return null;
             }
-            string id = default;
-            string name = default;
-            string @type = default;
+            string dependencyName = default;
+            string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("dependencyName"u8))
                 {
-                    id = prop.Value.GetString();
+                    dependencyName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("version"u8))
                 {
-                    name = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("type"u8))
-                {
-                    @type = prop.Value.GetString();
+                    version = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +108,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FooDependency(id, name, @type, additionalBinaryDataProperties);
+            return new FooDependency(dependencyName, version, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

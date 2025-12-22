@@ -18,37 +18,29 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FooDependency"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        internal FooDependency(string id, string name)
+        /// <param name="dependencyName"></param>
+        internal FooDependency(string dependencyName)
         {
-            Id = id;
-            Name = name;
+            DependencyName = dependencyName;
         }
 
         /// <summary> Initializes a new instance of <see cref="FooDependency"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="type"></param>
+        /// <param name="dependencyName"></param>
+        /// <param name="version"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FooDependency(string id, string name, string @type, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooDependency(string dependencyName, string version, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
-            Name = name;
-            Type = @type;
+            DependencyName = dependencyName;
+            Version = version;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the Id. </summary>
-        [WirePath("id")]
-        public string Id { get; }
+        /// <summary> Gets the DependencyName. </summary>
+        [WirePath("dependencyName")]
+        public string DependencyName { get; }
 
-        /// <summary> Gets the Name. </summary>
-        [WirePath("name")]
-        public string Name { get; }
-
-        /// <summary> Gets the Type. </summary>
-        [WirePath("type")]
-        public string Type { get; }
+        /// <summary> Gets the Version. </summary>
+        [WirePath("version")]
+        public string Version { get; }
     }
 }
