@@ -6,19 +6,11 @@ using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
 using Azure.AI.AgentServer.Core.Tools.Models;
 
-namespace BasicWorkflow;
+namespace ToolWorkflow;
 
 /// <summary>
 /// This sample introduces the use of AI agents as executors within a workflow,
 /// then runs the workflow with agent adapter using AIAgent exposed from it.
-///
-/// Instead of simple text processing executors, this workflow uses three translation agents:
-/// 1. French Agent - translates input text to French
-/// 2. Spanish Agent - translates French text to Spanish
-/// 3. English Agent - translates Spanish text back to English
-///
-/// The agents are connected sequentially, creating a translation chain that demonstrates
-/// how AI-powered components can be seamlessly integrated into workflow pipelines.
 /// </summary>
 /// <remarks>
 /// Pre-requisites:
@@ -57,41 +49,34 @@ public class Program
             .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
             .Build();
 
-        // Create agents
-        var frenchAgent = GetTranslationAgent("French", chatClient);
-        var spanishAgent = GetTranslationAgent("Spanish", chatClient);
-        var englishAgent = GetTranslationAgent("English", chatClient);
+        var testAgent = new ChatClientAgent(chatClient,
+              name: "test-agent",
+              instructions: @"You are a helpful assistant with access to tools for fetching Microsoft documentation.
+                IMPORTANT: When the user asks about Microsoft Learn articles or documentation:
+                1. You MUST use the microsoft_docs_fetch tool to retrieve the actual content
+                2. Do NOT rely on your training data
+                3. Always fetch the latest information from the provided URL
+
+                Available tools:
+                - microsoft_docs_fetch: Fetches and converts Microsoft Learn documentation
+                - microsoft_docs_search: Searches Microsoft/Azure documentation
+                - microsoft_code_sample_search: Searches for code examples")
+              .AsBuilder()
+              .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
+              .Build();
+
 
         // Build the workflow by adding executors and connecting them
-        WorkflowBuilder builder = new(frenchAgent);
-        builder.AddEdge(frenchAgent, spanishAgent);
-        builder.AddEdge(spanishAgent, englishAgent);
+        WorkflowBuilder builder = new(testAgent);
         var agent = builder.Build().AsAgent();
 
         // Run container agent adapter
         // await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
 
-
         await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
         tools: new List<ToolDefinition>
         {
-        new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
+            new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
         });
-    }
-
-
-    /// <summary>
-    /// Creates a translation agent for the specified target language.
-    /// </summary>
-    /// <param name="targetLanguage">The target language for translation</param>
-    /// <param name="chatClient">The chat client to use for the agent</param>
-    /// <returns>A ChatClientAgent configured for the specified language</returns>
-    private static AIAgent GetTranslationAgent(string targetLanguage, IChatClient chatClient)
-    {
-        var instructions = $"You are a translation assistant that translates the provided text to {targetLanguage}.";
-        return new ChatClientAgent(chatClient, instructions, name: "test-agentV2")
-            .AsBuilder()
-            .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
-            .Build();
     }
 }
