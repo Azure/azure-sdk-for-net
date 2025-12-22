@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     public abstract partial class StorageMoverCredentials
     {
         /// <summary> Initializes a new instance of <see cref="StorageMoverCredentials"/> for deserialization. </summary>
-        protected StorageMoverCredentials()
+        protected StorageMoverCredentials()    // The new MPG made this constructor private; change it back to protected to preserve backward compatibility.
         {
         }
     }

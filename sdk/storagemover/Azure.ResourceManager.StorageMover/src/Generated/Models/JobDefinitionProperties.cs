@@ -132,6 +132,16 @@ namespace Azure.ResourceManager.StorageMover.Models
         public DataIntegrityValidation? DataIntegrityValidation { get; set; }
 
         /// <summary> Gets the Value. </summary>
-        public IReadOnlyList<SourceTargetMap> SourceTargetMapValue { get; } = new ChangeTrackingList<SourceTargetMap>();
+        public IReadOnlyList<SourceTargetMap> SourceTargetMapValue
+        {
+            get
+            {
+                if (SourceTargetMap is null)
+                {
+                    SourceTargetMap = new JobDefinitionPropertiesSourceTargetMap();
+                }
+                return SourceTargetMap.Value;
+            }
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.StorageMover.Models
     public abstract partial class EndpointBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="EndpointBaseProperties"/> for deserialization. </summary>
-        protected EndpointBaseProperties()
+        protected EndpointBaseProperties()      // The new MPG made this constructor private; change it back to protected to preserve backward compatibility.
         {
         }
     }

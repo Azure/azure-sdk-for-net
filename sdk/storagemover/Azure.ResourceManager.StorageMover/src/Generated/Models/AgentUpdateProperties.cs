@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -40,6 +39,16 @@ namespace Azure.ResourceManager.StorageMover.Models
         internal UploadLimitSchedule UploadLimitSchedule { get; set; }
 
         /// <summary> The set of weekly repeating recurrences of the WAN-link upload limit schedule. </summary>
-        public IList<UploadLimitWeeklyRecurrence> UploadLimitScheduleWeeklyRecurrences { get; } = new ChangeTrackingList<UploadLimitWeeklyRecurrence>();
+        public IList<UploadLimitWeeklyRecurrence> UploadLimitScheduleWeeklyRecurrences
+        {
+            get
+            {
+                if (UploadLimitSchedule is null)
+                {
+                    UploadLimitSchedule = new UploadLimitSchedule();
+                }
+                return UploadLimitSchedule.WeeklyRecurrences;
+            }
+        }
     }
 }
