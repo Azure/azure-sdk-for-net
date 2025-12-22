@@ -4,6 +4,7 @@ using Azure.Identity;
 using Microsoft.Agents.AI;
 using Microsoft.Agents.AI.Workflows;
 using Microsoft.Extensions.AI;
+using Azure.AI.AgentServer.Core.Tools.Models;
 
 namespace BasicWorkflow;
 
@@ -31,6 +32,8 @@ public class Program
         var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT") ??
                        throw new InvalidOperationException("AZURE_OPENAI_ENDPOINT is not set.");
         var deploymentName = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT_NAME") ?? "gpt-4o-mini";
+        var toolConnectionId = Environment.GetEnvironmentVariable("TOOL_CONNECTION_ID") ??
+                       throw new InvalidOperationException("TOOL_CONNECTION_ID is not set.");
 
         // Check if API Key is provided, otherwise use DefaultAzureCredential
         var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");
@@ -66,8 +69,16 @@ public class Program
         var agent = builder.Build().AsAgent();
 
         // Run container agent adapter
-        await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
+        // await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
+
+
+        await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
+        tools: new List<ToolDefinition>
+        {
+        new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
+        });
     }
+
 
     /// <summary>
     /// Creates a translation agent for the specified target language.
