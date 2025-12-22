@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Description>Azure.Projects.Web is an ASP.NET Core extensions for Azure.Projects</Description>
     <Version>1.0.0-beta.2</Version>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
-    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <TargetFrameworks>$(RequiredRunnableTargetFrameworks)</TargetFrameworks>
+    <RequiredTargetFrameworks>$(RequiredRunnableTargetFrameworks)</RequiredTargetFrameworks>
+    <SupportsNetStandard20>false</SupportsNetStandard20>
     <Nullable>enable</Nullable>
-    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory.Data" VersionOverride="8.0.1" />
+    <PackageReference Include="System.Memory.Data" />
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

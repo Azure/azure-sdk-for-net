@@ -60,7 +60,8 @@ namespace Azure.Generator.Management
         private static readonly HashSet<string> _methodsToOmit = new()
         {
             // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
-            "Azure.ResourceManager.Operations.list"
+            "Azure.ResourceManager.Operations.list",
+            "Azure.ResourceManager.Legacy.Operations.list"
         };
 
         private InputNamespace? _inputNamespace;

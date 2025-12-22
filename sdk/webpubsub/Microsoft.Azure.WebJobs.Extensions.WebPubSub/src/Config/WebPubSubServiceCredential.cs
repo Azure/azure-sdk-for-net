@@ -5,18 +5,21 @@ using Azure.Core;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub;
 
+#nullable enable
+
 /// <summary>
-/// Can be key-based credential, identity-based connection, or null (A connection string without access key provided to Web PubSub trigger)
+/// Can be key-based credential or identity-based connection.
 /// </summary>
 internal abstract class WebPubSubServiceCredential
 {
     public abstract bool CanValidateSignature { get; }
 }
 
-internal class KeyCredential(string accessKey) : WebPubSubServiceCredential
+internal class KeyCredential(string? accessKey) : WebPubSubServiceCredential
 {
     public override bool CanValidateSignature => !string.IsNullOrEmpty(AccessKey);
-    public string AccessKey { get; } = accessKey;
+    // The AccessKey is null when a connection string without access key is provided, that is, users have disabled the access key authentication. This connection string is only used for upstream origin validation.
+    public string? AccessKey { get; } = accessKey;
 }
 
 internal class IdentityCredential(TokenCredential tokenCredential) : WebPubSubServiceCredential

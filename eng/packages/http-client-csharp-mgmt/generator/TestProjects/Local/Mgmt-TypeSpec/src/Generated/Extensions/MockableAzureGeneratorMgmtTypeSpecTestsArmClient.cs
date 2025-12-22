@@ -30,6 +30,24 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
         }
 
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="StorageSyncServiceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="StorageSyncServiceResource"/> object. </returns>
+        public virtual StorageSyncServiceResource GetStorageSyncServiceResource(ResourceIdentifier id)
+        {
+            StorageSyncServiceResource.ValidateResourceId(id);
+            return new StorageSyncServiceResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="FooResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FooResource"/> object. </returns>
@@ -252,6 +270,33 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Mocking
         {
             JooResource.ValidateResourceId(id);
             return new JooResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SAPVirtualInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SAPVirtualInstanceResource"/> object. </returns>
+        public virtual SAPVirtualInstanceResource GetSAPVirtualInstanceResource(ResourceIdentifier id)
+        {
+            SAPVirtualInstanceResource.ValidateResourceId(id);
+            return new SAPVirtualInstanceResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ResourceTypeTestResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ResourceTypeTestResource"/> object. </returns>
+        public virtual ResourceTypeTestResource GetResourceTypeTestResource(ResourceIdentifier id)
+        {
+            ResourceTypeTestResource.ValidateResourceId(id);
+            return new ResourceTypeTestResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SampleDataResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SampleDataResource"/> object. </returns>
+        public virtual SampleDataResource GetSampleDataResource(ResourceIdentifier id)
+        {
+            SampleDataResource.ValidateResourceId(id);
+            return new SampleDataResource(Client, id);
         }
     }
 }
