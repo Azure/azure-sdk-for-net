@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public abstract partial class EdgeJobContent
     {
         /// <summary> Initializes a new instance of <see cref="EdgeJobContent"/> for deserialization. </summary>
-        protected EdgeJobContent()
+        protected EdgeJobContent()      // The new MPG made this constructor private; change it back to protected to preserve backward compatibility.
         {
         }
     }

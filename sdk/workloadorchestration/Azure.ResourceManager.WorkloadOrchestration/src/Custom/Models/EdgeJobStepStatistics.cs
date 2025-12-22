@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
     public abstract partial class EdgeJobStepStatistics
     {
         /// <summary> Initializes a new instance of <see cref="EdgeJobStepStatistics"/> for deserialization. </summary>
-        protected EdgeJobStepStatistics()
+        protected EdgeJobStepStatistics()       // The new MPG made this constructor private; change it back to protected to preserve backward compatibility.
         {
         }
     }
