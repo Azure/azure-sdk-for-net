@@ -830,14 +830,5 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Properties.IsOutboundOnly = value.Value;
             }
         }
-
-        /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
-        public IList<ResourceIdentifier> VmManagedIdentityUserAssignedIdentities
-        {
-            get
-            {
-                return Properties is null ? default : Properties.VmManagedIdentityUserAssignedIdentities;
-            }
-        }
     }
 }
