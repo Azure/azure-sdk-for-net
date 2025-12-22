@@ -130,11 +130,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ServiceFabricManagedClusterVersion>> GetManagedClusterVersionAsync(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            using DiagnosticScope scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.Get");
+            using DiagnosticScope scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersion");
             scope.Start();
             try
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClusterVersionRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion, context);
+                HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionRequest(Id.SubscriptionId, location, clusterVersion, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ServiceFabricManagedClusterVersion> response = Response.FromValue(ServiceFabricManagedClusterVersion.FromResponse(result), result);
                 if (response.Value == null)
@@ -180,11 +180,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ServiceFabricManagedClusterVersion> Get(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
+        public virtual Response<ServiceFabricManagedClusterVersion> GetManagedClusterVersion(AzureLocation location, string clusterVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterVersion, nameof(clusterVersion));
 
-            using DiagnosticScope scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.Get");
+            using DiagnosticScope scope = ManagedClusterVersionClientDiagnostics.CreateScope("MockableServiceFabricManagedClustersSubscriptionResource.GetManagedClusterVersion");
             scope.Start();
             try
             {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ManagedClusterVersionRestClient.CreateGetRequest(Id.SubscriptionId, location, clusterVersion, context);
+                HttpMessage message = ManagedClusterVersionRestClient.CreateGetManagedClusterVersionRequest(Id.SubscriptionId, location, clusterVersion, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ServiceFabricManagedClusterVersion> response = Response.FromValue(ServiceFabricManagedClusterVersion.FromResponse(result), result);
                 if (response.Value == null)

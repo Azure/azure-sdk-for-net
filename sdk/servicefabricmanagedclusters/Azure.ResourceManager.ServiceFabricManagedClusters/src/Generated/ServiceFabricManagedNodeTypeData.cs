@@ -456,11 +456,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         }
 
         /// <summary> Indicates whether the node type will be Spot Virtual Machines. Azure will allocate the VMs if there is capacity available and the VMs can be evicted at any time. </summary>
-        public bool? IsSpotVM
+        public bool? IsSpotVm
         {
             get
             {
-                return Properties is null ? default : Properties.IsSpotVM;
+                return Properties is null ? default : Properties.IsSpotVm;
             }
             set
             {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 {
                     Properties = new NodeTypeProperties();
                 }
-                Properties.IsSpotVM = value.Value;
+                Properties.IsSpotVm = value.Value;
             }
         }
 

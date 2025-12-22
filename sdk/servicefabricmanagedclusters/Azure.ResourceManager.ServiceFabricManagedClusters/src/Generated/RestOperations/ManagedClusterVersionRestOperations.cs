@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string clusterVersion, RequestContext context)
+        internal HttpMessage CreateGetManagedClusterVersionRequest(string subscriptionId, AzureLocation location, string clusterVersion, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

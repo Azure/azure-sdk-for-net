@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(IsSpotVM))
+            if (Optional.IsDefined(IsSpotVm))
             {
                 writer.WritePropertyName("isSpotVM"u8);
-                writer.WriteBooleanValue(IsSpotVM.Value);
+                writer.WriteBooleanValue(IsSpotVm.Value);
             }
             if (Optional.IsDefined(HostGroupId))
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             bool? useTempDataDisk = default;
             bool? isOverProvisioningEnabled = default;
             IList<string> zones = default;
-            bool? isSpotVM = default;
+            bool? isSpotVm = default;
             string hostGroupId = default;
             bool? useEphemeralOSDisk = default;
             string spotRestoreTimeout = default;
@@ -770,7 +770,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    isSpotVM = prop.Value.GetBoolean();
+                    isSpotVm = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("hostGroupId"u8))
@@ -1023,7 +1023,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 useTempDataDisk,
                 isOverProvisioningEnabled,
                 zones ?? new ChangeTrackingList<string>(),
-                isSpotVM,
+                isSpotVm,
                 hostGroupId,
                 useEphemeralOSDisk,
                 spotRestoreTimeout,
