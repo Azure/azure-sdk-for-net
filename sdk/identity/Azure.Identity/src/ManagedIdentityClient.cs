@@ -63,7 +63,9 @@ namespace Azure.Identity
         {
             AuthenticationResult result;
 
+#pragma warning disable CS0618 // Type or member is obsolete
             MSAL.ManagedIdentitySource availableSource = ManagedIdentityApplication.GetManagedIdentitySource();
+#pragma warning restore CS0618 // Type or member is obsolete
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(availableSource.ToString(), _options.ManagedIdentityId.ToString());
 

@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Updated `Microsoft.Identity.Client` and `Microsoft.Identity.Client.Extensions.Msal` dependencies to version 4.79.2.
+
 ## 1.18.0-beta.2 (2025-11-19)
 
 ### Other Changes
