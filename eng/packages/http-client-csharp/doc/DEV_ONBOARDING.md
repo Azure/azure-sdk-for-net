@@ -89,18 +89,6 @@ repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json
 ```
 
-#### Library .csproj Configuration
-
-To exclude legacy AutoRest dependencies, add:
-
-```xml
-<PropertyGroup>
-  <IncludeAutorestDependency>false</IncludeAutorestDependency>
-</PropertyGroup>
-```
-
-> **Note**: Currently defaults to `true` for backward compatibility. Track [Issue #53148](https://github.com/Azure/azure-sdk-for-net/issues/53148) for the planned default change.
-
 ## Generating a Library
 
 Follow these steps to generate or regenerate a .NET library from TypeSpec:
@@ -139,12 +127,12 @@ Set the `emitterPackageJsonPath` to the appropriate artifact:
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-emitter-package.json"
 ```
 
-#### 3. Update .csproj File
+#### 3. Remove Legacy AutoRest Configuration (if migrating)
 
-Add the following property to exclude AutoRest dependencies:
+If your library is being migrated from AutoRest based generation, remove the following property from your `.csproj` file:
 
 ```xml
-<IncludeAutorestDependency>false</IncludeAutorestDependency>
+<IncludeAutorestDependency>true</IncludeAutorestDependency>
 ```
 
 #### 4. Update Spec Version (if needed)
@@ -224,7 +212,6 @@ dotnet build /t:GenerateCode
 
 - [ ] `tspconfig.yaml` has the correct emitter options configured (namespace, emitter-output-dir, etc.)
 - [ ] `tsp-location.yaml` has the correct `emitterPackageJsonPath`
-- [ ] `.csproj` has `<IncludeAutorestDependency>false</IncludeAutorestDependency>`
 - [ ] `tsp-location.yaml` has the correct spec `commit` SHA (if updating)
 
 ---
