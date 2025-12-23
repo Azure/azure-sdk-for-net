@@ -26,7 +26,6 @@
 
 import { Program, Model, Operation } from "@typespec/compiler";
 import {
-  Provider,
   ResolvedResource,
   ResourceType,
   resolveArmResources as resolveArmResourcesFromLibrary
