@@ -32,8 +32,6 @@ internal sealed class ToolClient : IAIFunctionProvider, IAsyncDisposable
     public async Task<IReadOnlyList<AIFunction>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
         var azureTools = await _toolClient.ListToolsAsync(cancellationToken).ConfigureAwait(false);
-        // Console.WriteLine($"[ToolClient] Converting {azureTools.Count} Azure tools to Agent Framework AIFunctions");
-
         var aiFunctions = new List<AIFunction>();
 
         foreach (var azureTool in azureTools)
@@ -55,7 +53,6 @@ internal sealed class ToolClient : IAIFunctionProvider, IAsyncDisposable
         var descriptionPreview = toolDescription.Length > 50
             ? toolDescription.Substring(0, 50) + "..."
             : toolDescription;
-        // Console.WriteLine($"[ToolClient] Converting tool '{toolName}' (source: {toolSource}, description: {descriptionPreview}) to AIFunction");
 
         // Use a simple delegate-based approach
         [Description("")]
@@ -63,18 +60,9 @@ internal sealed class ToolClient : IAIFunctionProvider, IAsyncDisposable
         {
             var arguments = aiArgs?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value) ?? new Dictionary<string, object?>();
 
-            // Console.WriteLine($"[AIFunction] Wrapper invoking tool '{toolName}' with {arguments.Count} arguments");
-            // Console.WriteLine($"[AIFunction] Arguments: {System.Text.Json.JsonSerializer.Serialize(arguments, new System.Text.Json.JsonSerializerOptions { WriteIndented = false })}");
-
             var result = await azureTool.InvokeAsync(arguments).ConfigureAwait(false);
 
             var resultLength = result?.ToString()?.Length ?? 0;
-            // Console.WriteLine($"[AIFunction] Wrapper received result from tool '{toolName}' (length: {resultLength} chars)");
-
-            // if (result == null || string.IsNullOrEmpty(result.ToString()))
-            // {
-            //     Console.WriteLine($"[AIFunction] WARNING: Tool '{toolName}' returned null or empty result!");
-            // }
 
             return result?.ToString() ?? string.Empty;
         }
