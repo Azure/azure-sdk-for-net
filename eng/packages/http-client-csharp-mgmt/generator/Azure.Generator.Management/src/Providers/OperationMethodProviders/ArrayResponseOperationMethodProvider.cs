@@ -43,6 +43,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private readonly MethodSignature _signature;
         private readonly MethodBodyStatement[] _bodyStatements;
         private readonly ArrayResponseCollectionResultDefinition? _collectionResult;
+        private readonly string? _arrayPropertyName;
 
         public ArrayResponseOperationMethodProvider(
             TypeProvider enclosingType,
@@ -61,7 +62,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _clientDiagnosticsField = restClientInfo.Diagnostics;
             _restClientField = restClientInfo.RestClient;
 
-            // Get the list type from the response
+            // Get the original response body type and check if it was wrapped
+            _arrayPropertyName = GetArrayPropertyName(_serviceMethod);
+
+            // Get the list type from the response (after unwrapping)
             _listType = _serviceMethod.GetResponseBodyType()!;
 
             // Extract the item type from the list
@@ -197,9 +201,41 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 scopeName,
                 constructorParams,
                 _methodName,  // Pass the actual method name for proper class naming
-                _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")
+                _enclosingType.Name,  // Pass the enclosing type name (e.g., "FooResource")
+                _arrayPropertyName);  // Pass the property name if the array was wrapped in a model
 
             return collectionResult;
+        }
+
+        /// <summary>
+        /// Determines if the response body is a model wrapping an array, and returns the property name if so.
+        /// </summary>
+        private static string? GetArrayPropertyName(InputServiceMethod method)
+        {
+            // Get the original response body type (before unwrapping in GetResponseBodyType)
+            var operationResponses = method.Operation.Responses;
+            var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
+            var responseBodyType = response?.BodyType;
+
+            if (responseBodyType is InputModelType modelType)
+            {
+                // Get all non-discriminator properties
+                var properties = modelType.Properties.Where(p => !p.IsDiscriminator).ToArray();
+
+                // If there's exactly one property and it's a list type, return the property name
+                if (properties.Length == 1 && properties[0].Type != null)
+                {
+                    var propertyType = properties[0].Type;
+                    var csharpPropertyType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(propertyType);
+
+                    if (csharpPropertyType != null && csharpPropertyType.IsList)
+                    {
+                        return properties[0].Name;
+                    }
+                }
+            }
+
+            return null;
         }
 
         private MethodBodyStatement BuildResourceDataConversionStatement(CSharpType sourcePageable, CSharpType typeOfResource, List<ValueExpression> arguments)

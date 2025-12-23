@@ -92,6 +92,14 @@ interface Foos {
     void,
     ArmResponse<FooDependency[]>
   >;
+
+  @get
+  @action("listDependencies2")
+  listDependencies2 is ArmResourceActionSync<
+    Foo,
+    void,
+    ListDependencyResult
+  >;
 }
 
 model FooActionRequest {
@@ -106,6 +114,10 @@ model FooActionResult {
 model FooDependency {
   dependencyName: string;
   version?: string;
+}
+
+model ListDependencyResult {
+  result: FooDependency[];
 }
 
 @singleton

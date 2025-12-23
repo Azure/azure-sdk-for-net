@@ -34,6 +34,7 @@ namespace Azure.Generator.Management.Providers
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
         private readonly string _enclosingTypeName;
+        private readonly string? _arrayPropertyName;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -49,7 +50,8 @@ namespace Azure.Generator.Management.Providers
             string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
             string methodName,
-            string enclosingTypeName)
+            string enclosingTypeName,
+            string? arrayPropertyName = null)
         {
             _restClient = restClient;
             _serviceMethod = serviceMethod;
@@ -60,6 +62,7 @@ namespace Azure.Generator.Management.Providers
             _constructorParameters = constructorParameters;
             _methodName = methodName;
             _enclosingTypeName = enclosingTypeName;
+            _arrayPropertyName = arrayPropertyName;
         }
 
         protected override string BuildRelativeFilePath() =>
@@ -281,46 +284,59 @@ namespace Azure.Generator.Management.Providers
                             Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")
                         }),
                     out var documentVariable),
-
-                // var array = document.RootElement;
-                Declare("array", typeof(System.Text.Json.JsonElement),
-                    documentVariable.Property("RootElement"),
-                    out var arrayVariable),
-
-                // var result = new List<T>();
-                Declare("result", new CSharpType(typeof(List<>), _itemType),
-                    New.Instance(new CSharpType(typeof(List<>), _itemType)),
-                    out var resultVariable),
-
-                // foreach (var element in array.EnumerateArray())
-                new Microsoft.TypeSpec.Generator.Statements.ForEachStatement(
-                    typeof(System.Text.Json.JsonElement),
-                    "element",
-                    arrayVariable.Invoke("EnumerateArray"),
-                    isAsync: false,
-                    out var elementVariable)
-                {
-                    // result.Add(ModelReaderWriter.Read<T>(new BinaryData(element.GetRawText()), ModelSerializationExtensions.WireOptions, {Context}.Default));
-                    // Use Literal code for the context reference since it's a generated type
-                    resultVariable.Invoke("Add",
-                        new ValueExpression[]
-                        {
-                            Static(new CSharpType(typeof(System.ClientModel.Primitives.ModelReaderWriter))).Invoke("Read",
-                                new ValueExpression[]
-                                {
-                                    New.Instance(typeof(BinaryData),
-                                        Static(typeof(System.Text.Encoding)).Property("UTF8").Invoke("GetBytes",
-                                            elementVariable.Invoke("GetRawText"))),
-                                    Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
-                                    Static(ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextType).Property("Default")
-                                },
-                                new[] { _itemType })
-                        }).Terminate()
-                },
-
-                // return result;
-                Return(resultVariable)
             };
+
+            VariableExpression arrayVariable;
+
+            // If the array is wrapped in a model, we need to access the property first
+            if (_arrayPropertyName != null)
+            {
+                // var array = document.RootElement.GetProperty("propertyName");
+                bodyStatements.Add(Declare("array", typeof(System.Text.Json.JsonElement),
+                    documentVariable.Property("RootElement").Invoke("GetProperty", [Literal(_arrayPropertyName)]),
+                    out arrayVariable));
+            }
+            else
+            {
+                // var array = document.RootElement;
+                bodyStatements.Add(Declare("array", typeof(System.Text.Json.JsonElement),
+                    documentVariable.Property("RootElement"),
+                    out arrayVariable));
+            }
+
+            // var result = new List<T>();
+            bodyStatements.Add(Declare("result", new CSharpType(typeof(List<>), _itemType),
+                New.Instance(new CSharpType(typeof(List<>), _itemType)),
+                out var resultVariable));
+
+            // foreach (var element in array.EnumerateArray())
+            bodyStatements.Add(new Microsoft.TypeSpec.Generator.Statements.ForEachStatement(
+                typeof(System.Text.Json.JsonElement),
+                "element",
+                arrayVariable.Invoke("EnumerateArray"),
+                isAsync: false,
+                out var elementVariable)
+            {
+                // result.Add(ModelReaderWriter.Read<T>(new BinaryData(element.GetRawText()), ModelSerializationExtensions.WireOptions, {Context}.Default));
+                // Use Literal code for the context reference since it's a generated type
+                resultVariable.Invoke("Add",
+                    new ValueExpression[]
+                    {
+                        Static(new CSharpType(typeof(System.ClientModel.Primitives.ModelReaderWriter))).Invoke("Read",
+                            new ValueExpression[]
+                            {
+                                New.Instance(typeof(BinaryData),
+                                    Static(typeof(System.Text.Encoding)).Property("UTF8").Invoke("GetBytes",
+                                        elementVariable.Invoke("GetRawText"))),
+                                Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
+                                Static(ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextType).Property("Default")
+                            },
+                            new[] { _itemType })
+                    }).Terminate()
+            });
+
+            // return result;
+            bodyStatements.Add(Return(resultVariable));
 
             return new MethodProvider(signature, bodyStatements.ToArray(), this);
         }
