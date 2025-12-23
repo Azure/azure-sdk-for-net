@@ -6,7 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
@@ -82,7 +84,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             List<FooDependency> result = new List<FooDependency>();
             foreach (JsonElement element in array.EnumerateArray())
             {
-                result.Add(FooDependency.DeserializeFooDependency(element, ModelSerializationExtensions.WireOptions));
+                result.Add(ModelReaderWriter.Read<FooDependency>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, AzureGeneratorMgmtTypeSpecTestsContext.Default));
             }
             return result;
         }
