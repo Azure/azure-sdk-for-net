@@ -33,6 +33,13 @@ This pattern enables:
   - Generates forwarding methods that delegate to mockable providers
   - Adds mocking documentation to guide users
 
+**Methods Forwarded**: All public methods from mockable providers are forwarded, including:
+- Factory methods for resource collections (e.g., `GetFoos()`)
+- Convenience Get methods (e.g., `GetFooAsync(string fooName)`)
+- Singleton resource factory methods (e.g., `GetFooSettings()`)
+- Non-resource methods (e.g., `GetAllPrivateLinkResourcesAsync()`)
+- Resource-specific extension methods from categorized resource methods
+
 **Example Output**: See [AzureGeneratorMgmtTypeSpecTestsExtensions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/AzureGeneratorMgmtTypeSpecTestsExtensions.cs)
 
 #### 2. MockableResourceProvider
