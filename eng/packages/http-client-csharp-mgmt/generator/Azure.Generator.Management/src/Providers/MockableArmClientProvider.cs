@@ -66,9 +66,23 @@ namespace Azure.Generator.Management.Providers
                     BuildServiceMethod(method.InputMethod, method.InputClient, true),
                     BuildServiceMethod(method.InputMethod, method.InputClient, false)
                 };
-                 foreach (var m in methodsToProcess)
+                foreach (var m in methodsToProcess)
                 {
                     methods.Add(m);
+                    var updated = false;
+                    foreach (var p in m.Signature.Parameters)
+                    {
+                        var normalizedName = BodyParameterNameNormalizer.GetNormalizedBodyParameterName(p);
+                        if (normalizedName != null && normalizedName != p.Name)
+                        {
+                            p.Update(name: normalizedName);
+                            updated = true;
+                        }
+                    }
+                    if (updated)
+                    {
+                        m.Update();
+                    }
                 }
             }
 
