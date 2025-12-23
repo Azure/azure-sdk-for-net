@@ -33,26 +33,7 @@ This pattern enables:
   - Generates forwarding methods that delegate to mockable providers
   - Adds mocking documentation to guide users
 
-**Example Output**:
-```csharp
-public static partial class AzureGeneratorMgmtTypeSpecTestsExtensions
-{
-    private static MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource 
-        GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(ResourceGroupResource resourceGroupResource)
-    {
-        return resourceGroupResource.GetCachedClient(client => 
-            new MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(client, resourceGroupResource.Id));
-    }
-
-    public static AsyncPageable<PrivateLink> GetAllPrivateLinkResourcesAsync(
-        this ResourceGroupResource resourceGroupResource, 
-        CancellationToken cancellationToken = default)
-    {
-        return GetMockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource(resourceGroupResource)
-            .GetAllPrivateLinkResourcesAsync(cancellationToken);
-    }
-}
-```
+**Example Output**: See [AzureGeneratorMgmtTypeSpecTestsExtensions.cs](../../generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/AzureGeneratorMgmtTypeSpecTestsExtensions.cs)
 
 #### 2. MockableResourceProvider
 - **File**: `MockableResourceProvider.cs`
@@ -63,33 +44,7 @@ public static partial class AzureGeneratorMgmtTypeSpecTestsExtensions
   - Provides convenience methods (Get, List) for resources
   - Hosts non-resource operations that belong to the scope
 
-**Example Output**:
-```csharp
-public partial class MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource : ArmResource
-{
-    // Rest clients for different operation groups
-    private ClientDiagnostics _privateLinksClientDiagnostics;
-    private PrivateLinks _privateLinksRestClient;
-
-    // Factory method for resource collection
-    public virtual FooCollection GetFoos()
-    {
-        return GetCachedClient(client => new FooCollection(client, Id));
-    }
-
-    // Convenience Get method
-    public virtual async Task<Response<FooResource>> GetFooAsync(string fooName, CancellationToken cancellationToken = default)
-    {
-        return await GetFoos().GetAsync(fooName, cancellationToken).ConfigureAwait(false);
-    }
-
-    // Non-resource method
-    public virtual AsyncPageable<PrivateLink> GetAllPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
-    {
-        // Implementation that calls REST client
-    }
-}
-```
+**Example Output**: See [MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs](../../generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs)
 
 #### 3. ManagementOutputLibrary
 - **File**: `ManagementOutputLibrary.cs`
