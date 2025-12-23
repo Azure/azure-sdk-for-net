@@ -373,7 +373,7 @@ export function buildArmProviderSchema(
   }
 
   // validate that each resource has exactly one Get method
-  for (const metadata of resourceModelToMetadataMap.values()) {
+  for (const metadata of resourcePathToMetadataMap.values()) {
     validateResourceGetMethods(sdkContext, metadata, serviceMethods);
   }
 
