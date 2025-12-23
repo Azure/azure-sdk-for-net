@@ -33,7 +33,6 @@ namespace Azure.Generator.Management.Providers
         private readonly string _scopeName;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
-        private readonly string _contextTypeName;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -48,8 +47,7 @@ namespace Azure.Generator.Management.Providers
             bool isAsync,
             string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
-            string methodName,
-            string contextTypeName)
+            string methodName)
         {
             _restClient = restClient;
             _serviceMethod = serviceMethod;
@@ -59,7 +57,6 @@ namespace Azure.Generator.Management.Providers
             _scopeName = scopeName;
             _constructorParameters = constructorParameters;
             _methodName = methodName;
-            _contextTypeName = contextTypeName;
         }
 
         protected override string BuildRelativeFilePath() =>
@@ -312,7 +309,7 @@ namespace Azure.Generator.Management.Providers
                                         Static(typeof(System.Text.Encoding)).Property("UTF8").Invoke("GetBytes",
                                             elementVariable.Invoke("GetRawText"))),
                                     Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
-                                    Literal($"{_contextTypeName}.Default")
+                                    Static(ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextType).Property("Default")
                                 },
                                 new[] { _itemType })
                         }).Terminate()

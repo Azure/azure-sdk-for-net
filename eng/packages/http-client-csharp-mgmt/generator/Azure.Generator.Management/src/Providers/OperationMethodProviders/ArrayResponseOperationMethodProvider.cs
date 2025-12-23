@@ -188,9 +188,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 .Where(p => p.Name != "context" && p.Name != "cancellationToken")  // Exclude context-related params
                 .ToArray();
 
-            // Get the ModelReaderWriterContext type name from the output library
-            var contextTypeName = ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextTypeName;
-
             var collectionResult = new ArrayResponseCollectionResultDefinition(
                 _restClient,
                 _serviceMethod,
@@ -199,8 +196,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _isAsync,
                 scopeName,
                 constructorParams,
-                _methodName,  // Pass the actual method name for proper class naming
-                contextTypeName);
+                _methodName);  // Pass the actual method name for proper class naming
 
             return collectionResult;
         }
