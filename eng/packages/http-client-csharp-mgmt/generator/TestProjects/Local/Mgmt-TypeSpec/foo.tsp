@@ -84,6 +84,14 @@ interface Foos {
       ArmLroLocationHeader<FinalResult = FooActionResult> &
       Azure.Core.Foundations.RetryAfterHeader
   >;
+
+  @get
+  @action("listDependencies")
+  listDependencies is ArmResourceActionSync<
+    Foo,
+    void,
+    ArmResponse<FooDependency[]>
+  >;
 }
 
 model FooActionRequest {
@@ -93,6 +101,11 @@ model FooActionRequest {
 model FooActionResult {
   msg: string;
   error?: Azure.ResourceManager.Foundations.ErrorDetail;
+}
+
+model FooDependency {
+  dependencyName: string;
+  version?: string;
 }
 
 @singleton
