@@ -174,7 +174,7 @@ namespace Azure.Generator.Management.Providers
                     out var responseVariable),
                 new IfStatement(responseVariable.Is(Null)) { new YieldBreakStatement() },
                 Declare("result", new CSharpType(typeof(IReadOnlyList<>), _itemType),
-                    This.Invoke("ParseArrayFromResponse", [responseVariable]),
+                    Static(Type).Invoke("ParseArrayFromResponse", [responseVariable]),
                     out var resultVariable),
                 YieldReturn(Static(new CSharpType(typeof(Page<>), _itemType)).Invoke("FromValues", [resultVariable, Null, responseVariable]))
             };
@@ -261,37 +261,55 @@ namespace Azure.Generator.Management.Providers
             var signature = new MethodSignature(
                 "ParseArrayFromResponse",
                 $"Parse the array from the response.",
-                MethodSignatureModifiers.Private,
+                MethodSignatureModifiers.Private | MethodSignatureModifiers.Static,
                 new CSharpType(typeof(IReadOnlyList<>), _itemType),
                 $"The parsed array.",
                 [responseParam]);
 
-            // Use JsonDocument to parse the response content as an array
-            // Parse response.Content as JSON array, then deserialize each element
+            // Generate body using ForEachStatement from Statements
             var bodyStatements = new List<MethodBodyStatement>
             {
-                // using var document = JsonDocument.Parse(response.Content);
+                // using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
                 UsingDeclare("document", typeof(System.Text.Json.JsonDocument),
-                    Static(typeof(System.Text.Json.JsonDocument)).Invoke("Parse", [responseParam.Property("Content")]),
+                    Static(typeof(System.Text.Json.JsonDocument)).Invoke("Parse",
+                        new ValueExpression[]
+                        {
+                            responseParam.Property("Content"),
+                            Static<ModelSerializationExtensionsDefinition>().Property("JsonDocumentOptions")
+                        }),
                     out var documentVariable),
-                    
+
                 // var array = document.RootElement;
                 Declare("array", typeof(System.Text.Json.JsonElement),
                     documentVariable.Property("RootElement"),
                     out var arrayVariable),
-                    
+
                 // var result = new List<T>();
                 Declare("result", new CSharpType(typeof(List<>), _itemType),
                     New.Instance(new CSharpType(typeof(List<>), _itemType)),
                     out var resultVariable),
-                    
+
                 // foreach (var element in array.EnumerateArray())
-                new ForeachStatement("element", arrayVariable.Invoke("EnumerateArray"), out var elementVariable, isAsync: false)
+                new Microsoft.TypeSpec.Generator.Statements.ForEachStatement(
+                    typeof(System.Text.Json.JsonElement),
+                    "element",
+                    arrayVariable.Invoke("EnumerateArray"),
+                    isAsync: false,
+                    out var elementVariable)
                 {
-                    // result.Add(T.DeserializeT(element));
-                    resultVariable.Invoke("Add", [Static(_itemType).Invoke($"Deserialize{_itemType.Name}", [elementVariable])]).Terminate()
+                    // result.Add(T.DeserializeT(element, ModelSerializationExtensions.WireOptions));
+                    resultVariable.Invoke("Add",
+                        new ValueExpression[]
+                        {
+                            Static(_itemType).Invoke($"Deserialize{_itemType.Name}",
+                                new ValueExpression[]
+                                {
+                                    elementVariable,
+                                    Static<ModelSerializationExtensionsDefinition>().Property("WireOptions")
+                                })
+                        }).Terminate()
                 },
-                
+
                 // return result;
                 Return(resultVariable)
             };

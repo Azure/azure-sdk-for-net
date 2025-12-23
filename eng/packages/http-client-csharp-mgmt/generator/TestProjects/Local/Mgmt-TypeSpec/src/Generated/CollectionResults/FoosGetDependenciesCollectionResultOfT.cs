@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -74,9 +75,16 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         /// <summary> Parse the array from the response. </summary>
         /// <param name="response"> The response to parse. </param>
         /// <returns> The parsed array. </returns>
-        private IReadOnlyList<FooDependency> ParseArrayFromResponse(Response response)
+        private static IReadOnlyList<FooDependency> ParseArrayFromResponse(Response response)
         {
-            return (IReadOnlyList<FooDependency>)IList<FooDependency>.FromResponse(response);
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            JsonElement array = document.RootElement;
+            List<FooDependency> result = new List<FooDependency>();
+            foreach (JsonElement element in array.EnumerateArray())
+            {
+                result.Add(FooDependency.DeserializeFooDependency(element, ModelSerializationExtensions.WireOptions));
+            }
+            return result;
         }
     }
 }
