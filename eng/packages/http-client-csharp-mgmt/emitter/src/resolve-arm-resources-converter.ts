@@ -42,11 +42,10 @@ import {
 import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
   SdkModelType,
-  SdkMethod,
-  SdkHttpOperation,
-  getClientType
+  getClientType,
+  getHttpOperationWithCache,
+  getCrossLanguageDefinitionId
 } from "@azure-tools/typespec-client-generator-core";
-import { getAllSdkClients } from "./resource-detection.js";
 
 /**
  * Resolves ARM resources from TypeSpec definitions using the standard resolveArmResources API
@@ -64,9 +63,6 @@ export function resolveArmResources(
   sdkContext: CSharpEmitterContext
 ): ArmProviderSchema {
   const provider = resolveArmResourcesFromLibrary(program);
-  
-  // Build maps for fast lookup
-  const operationMaps = buildOperationMap(sdkContext);
   
   // Convert resources
   const resources: ArmResourceSchema[] = [];
@@ -88,7 +84,7 @@ export function resolveArmResources(
       processedResources.add(resourceKey);
       
       // Convert to our resource schema format
-      const metadata = convertResolvedResourceToMetadata(resolvedResource, sdkContext, operationMaps);
+      const metadata = convertResolvedResourceToMetadata(resolvedResource, sdkContext);
       
       resources.push({
         resourceModelId: model.crossLanguageDefinitionId,
@@ -102,7 +98,7 @@ export function resolveArmResources(
   if (provider.providerOperations) {
     for (const operation of provider.providerOperations) {
       // Get method ID from the operation
-      const methodId = getMethodIdFromOperation(operation.operation, operation.path, operationMaps);
+      const methodId = getMethodIdFromOperation(operation.operation, sdkContext);
       if (!methodId) {
         continue;
       }
@@ -122,56 +118,11 @@ export function resolveArmResources(
 }
 
 /**
- * Build maps of TypeSpec operations to SDK methods for fast lookup.
- * Creates identity-based, name-based, and path-based maps since resolveArmResources
- * may return different Operation instances than the SDK clients.
- */
-function buildOperationMap(sdkContext: CSharpEmitterContext): {
-  byIdentity: Map<Operation, SdkMethod<SdkHttpOperation>>;
-  byName: Map<string, SdkMethod<SdkHttpOperation>>;
-  byPath: Map<string, SdkMethod<SdkHttpOperation>[]>;
-} {
-  const byIdentity = new Map<Operation, SdkMethod<SdkHttpOperation>>();
-  const byName = new Map<string, SdkMethod<SdkHttpOperation>>();
-  const byPath = new Map<string, SdkMethod<SdkHttpOperation>[]>();
-  
-  for (const client of getAllSdkClients(sdkContext)) {
-    for (const method of client.methods) {
-      const operation = method.__raw;
-      if (operation) {
-        byIdentity.set(operation, method);
-        
-        // Create a unique key using namespace and operation name
-        const nameKey = `${operation.namespace?.name || ""}.${operation.name}`;
-        byName.set(nameKey, method);
-        
-        // Index by path (there can be multiple methods for the same path with different HTTP verbs)
-        const httpOperation = method.operation as SdkHttpOperation;
-        if (httpOperation?.path) {
-          const pathKey = httpOperation.path;
-          if (!byPath.has(pathKey)) {
-            byPath.set(pathKey, []);
-          }
-          byPath.get(pathKey)!.push(method);
-        }
-      }
-    }
-  }
-  
-  return { byIdentity, byName, byPath };
-}
-
-/**
  * Converts a ResolvedResource to ResourceMetadata format
  */
 function convertResolvedResourceToMetadata(
   resolvedResource: ResolvedResource,
-  sdkContext: CSharpEmitterContext,
-  operationMaps: {
-    byIdentity: Map<Operation, SdkMethod<SdkHttpOperation>>;
-    byName: Map<string, SdkMethod<SdkHttpOperation>>;
-    byPath: Map<string, SdkMethod<SdkHttpOperation>[]>;
-  }
+  sdkContext: CSharpEmitterContext
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -182,7 +133,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.read && lifecycle.read.length > 0) {
       for (const readOp of lifecycle.read) {
-        const methodId = getMethodIdFromOperation(readOp.operation, readOp.path, operationMaps);
+        const methodId = getMethodIdFromOperation(readOp.operation, sdkContext);
         if (methodId) {
           methods.push({
             methodId,
@@ -197,7 +148,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.createOrUpdate && lifecycle.createOrUpdate.length > 0) {
       for (const createOp of lifecycle.createOrUpdate) {
-        const methodId = getMethodIdFromOperation(createOp.operation, createOp.path, operationMaps);
+        const methodId = getMethodIdFromOperation(createOp.operation, sdkContext);
         if (methodId) {
           methods.push({
             methodId,
@@ -212,7 +163,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.update && lifecycle.update.length > 0) {
       for (const updateOp of lifecycle.update) {
-        const methodId = getMethodIdFromOperation(updateOp.operation, updateOp.path, operationMaps);
+        const methodId = getMethodIdFromOperation(updateOp.operation, sdkContext);
         if (methodId) {
           methods.push({
             methodId,
@@ -227,7 +178,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.delete && lifecycle.delete.length > 0) {
       for (const deleteOp of lifecycle.delete) {
-        const methodId = getMethodIdFromOperation(deleteOp.operation, deleteOp.path, operationMaps);
+        const methodId = getMethodIdFromOperation(deleteOp.operation, sdkContext);
         if (methodId) {
           methods.push({
             methodId,
@@ -244,7 +195,7 @@ function convertResolvedResourceToMetadata(
   // Convert list operations
   if (resolvedResource.operations.lists) {
     for (const listOp of resolvedResource.operations.lists) {
-      const methodId = getMethodIdFromOperation(listOp.operation, listOp.path, operationMaps);
+      const methodId = getMethodIdFromOperation(listOp.operation, sdkContext);
       if (methodId) {
         methods.push({
           methodId,
@@ -262,7 +213,7 @@ function convertResolvedResourceToMetadata(
   // Convert action operations
   if (resolvedResource.operations.actions) {
     for (const actionOp of resolvedResource.operations.actions) {
-      const methodId = getMethodIdFromOperation(actionOp.operation, actionOp.path, operationMaps);
+      const methodId = getMethodIdFromOperation(actionOp.operation, sdkContext);
       if (methodId) {
         methods.push({
           methodId,
@@ -313,46 +264,21 @@ function getModelFromSdkContext(
 }
 
 /**
- * Helper to get method ID from an operation using the operation maps.
- * Tries identity-based lookup first, then path-based, then name-based lookup.
+ * Get method ID (cross-language definition ID) from an Operation.
+ * Uses TCGC's getCrossLanguageDefinitionId for reliable lookup.
  */
 function getMethodIdFromOperation(
   operation: Operation,
-  operationPath: string,
-  operationMaps: {
-    byIdentity: Map<Operation, SdkMethod<SdkHttpOperation>>;
-    byName: Map<string, SdkMethod<SdkHttpOperation>>;
-    byPath: Map<string, SdkMethod<SdkHttpOperation>[]>;
-  }
+  sdkContext: CSharpEmitterContext
 ): string | undefined {
-  // Try identity-based lookup first
-  let method = operationMaps.byIdentity.get(operation);
-  
-  // Fall back to path-based lookup if identity lookup fails
-  if (!method) {
-    const methodsByPath = operationMaps.byPath.get(operationPath);
-    if (methodsByPath && methodsByPath.length > 0) {
-      // If multiple methods share the same path, try to match by operation name
-      if (methodsByPath.length === 1) {
-        method = methodsByPath[0];
-      } else {
-        // Try to match by operation name
-        method = methodsByPath.find(m => m.__raw?.name === operation.name);
-        // If still no match, take the first one
-        if (!method) {
-          method = methodsByPath[0];
-        }
-      }
-    }
+  try {
+    // Use TCGC's utility to get the cross-language definition ID directly
+    // CSharpEmitterContext extends SdkContext which extends TCGCContext
+    return getCrossLanguageDefinitionId(sdkContext, operation);
+  } catch {
+    // If this fails, return undefined
+    return undefined;
   }
-  
-  // Last resort: fall back to name-based lookup
-  if (!method) {
-    const key = `${operation.namespace?.name || ""}.${operation.name}`;
-    method = operationMaps.byName.get(key);
-  }
-  
-  return method?.crossLanguageDefinitionId;
 }
 
 /**
