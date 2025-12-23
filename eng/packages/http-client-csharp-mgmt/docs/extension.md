@@ -49,6 +49,79 @@ This pattern enables:
 
 **Example Output**: See [MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs)
 
+### Types of Mockable Providers
+
+The generator creates **six types of mockable provider classes**, one for each ARM scope level:
+
+1. **MockableArmClient** (`Mockable{ServiceName}ArmClient`)
+   - **Extends**: `ArmClient`
+   - **Scope**: Extension resources (resources that can be attached to any ARM resource)
+   - **Generated when**: Extension resources or extension-scoped non-resource methods exist
+   - **Contains**:
+     - `GetResourceIdMethod` for extension resources
+     - Factory methods for extension resource collections
+     - Non-resource methods scoped to extensions
+
+2. **MockableTenantResource** (`Mockable{ServiceName}TenantResource`)
+   - **Extends**: `TenantResource`
+   - **Scope**: Tenant level (`/`)
+   - **Generated when**: Tenant-scoped resources or operations exist
+   - **Contains**:
+     - Factory methods for tenant-level resource collections (e.g., `GetFoos()`)
+     - Convenience Get methods for tenant-level resources (e.g., `GetFooAsync(string fooName)`)
+     - Non-resource methods scoped to tenant level
+
+3. **MockableSubscriptionResource** (`Mockable{ServiceName}SubscriptionResource`)
+   - **Extends**: `SubscriptionResource`
+   - **Scope**: Subscription level (`/subscriptions/{subscriptionId}`)
+   - **Generated when**: Subscription-scoped resources or operations exist
+   - **Contains**:
+     - Factory methods for subscription-level resource collections
+     - Convenience Get methods for subscription-level resources
+     - Non-resource methods scoped to subscription level
+     - Resource-specific extension methods that operate at subscription scope
+
+4. **MockableResourceGroupResource** (`Mockable{ServiceName}ResourceGroupResource`)
+   - **Extends**: `ResourceGroupResource`
+   - **Scope**: Resource group level (`/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}`)
+   - **Generated when**: Resource group-scoped resources or operations exist
+   - **Contains**:
+     - Factory methods for resource group-level resource collections
+     - Convenience Get methods for resource group-level resources
+     - Non-resource methods scoped to resource group level
+     - Resource-specific extension methods that operate at resource group scope
+
+5. **MockableManagementGroupResource** (`Mockable{ServiceName}ManagementGroupResource`)
+   - **Extends**: `ManagementGroupResource`
+   - **Scope**: Management group level (`/providers/Microsoft.Management/managementGroups/{managementGroupId}`)
+   - **Generated when**: Management group-scoped resources or operations exist
+   - **Contains**:
+     - Factory methods for management group-level resource collections
+     - Convenience Get methods for management group-level resources
+     - Non-resource methods scoped to management group level
+
+### Method Placement Rules
+
+Methods are placed in mockable providers based on these rules:
+
+**For Resource Collections** (when resource has Get operation):
+- **Factory method** (e.g., `GetFoos()`) → Placed in the mockable provider for the resource's scope
+- **Convenience Get method** (e.g., `GetFooAsync(string name)`) → Placed in the mockable provider for the resource's scope
+- **Example**: A resource group-scoped resource `Foo` will have its factory and convenience methods in `MockableResourceGroupResource`
+
+**For Singleton Resources**:
+- **Factory method** (e.g., `GetFooSettings()`) → Returns the singleton resource directly, placed in the mockable provider for the resource's scope
+- **No convenience Get method** (singleton has a fixed name)
+
+**For Non-Resource Methods** (operations without corresponding resource class):
+- Placed in the mockable provider corresponding to their **operation scope** (determined by request path)
+- **Example**: `GetAllPrivateLinkResourcesAsync()` is placed in `MockableResourceGroupResource` because its path is `/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/...`
+
+**For Resource-Specific Extension Methods**:
+- Methods categorized as `MethodsInExtension` are placed in the mockable provider for their **operation scope**
+- This allows operations on a resource to be called from parent scopes when appropriate
+- **Example**: A list operation for child resources might be accessible from the parent resource's scope
+
 #### 3. ManagementOutputLibrary
 - **File**: `ManagementOutputLibrary.cs`
 - **Purpose**: Orchestrates the categorization and initialization of resources and methods
