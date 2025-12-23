@@ -8,11 +8,12 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary></summary>
-    public partial class TrafficControllerResource : IJsonModel<TrafficControllerData>
+    public partial class TrafficControllerResource : ArmResource, IJsonModel<TrafficControllerData>
     {
         private static IJsonModel<TrafficControllerData> s_dataDeserializationInstance;
 

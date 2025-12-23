@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         internal IpAccessRulesPolicy IpAccessRulesPolicy { get; set; }
 
         /// <summary> Resource ID of the WAF. </summary>
-        public string WafPolicyId
+        public ResourceIdentifier WafPolicyId
         {
             get
             {

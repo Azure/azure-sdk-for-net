@@ -8,7 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
@@ -53,9 +55,14 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 writer.WritePropertyName("frontends"u8);
                 writer.WriteStartArray();
-                foreach (ResourceId item in Frontends)
+                foreach (SubResource item in Frontends)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,9 +70,14 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();
-                foreach (ResourceId item in Associations)
+                foreach (SubResource item in Associations)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,9 +85,14 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 writer.WritePropertyName("securityPolicies"u8);
                 writer.WriteStartArray();
-                foreach (ResourceId item in SecurityPolicies)
+                foreach (SubResource item in SecurityPolicies)
                 {
-                    writer.WriteObjectValue(item, options);
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -132,9 +149,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             IReadOnlyList<string> configurationEndpoints = default;
-            IReadOnlyList<ResourceId> frontends = default;
-            IReadOnlyList<ResourceId> associations = default;
-            IReadOnlyList<ResourceId> securityPolicies = default;
+            IReadOnlyList<SubResource> frontends = default;
+            IReadOnlyList<SubResource> associations = default;
+            IReadOnlyList<SubResource> securityPolicies = default;
             SecurityPolicyConfigurations securityPolicyConfigurations = default;
             ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -167,10 +184,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    List<ResourceId> array = new List<ResourceId>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceId.DeserializeResourceId(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default));
+                        }
                     }
                     frontends = array;
                     continue;
@@ -181,10 +205,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    List<ResourceId> array = new List<ResourceId>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceId.DeserializeResourceId(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default));
+                        }
                     }
                     associations = array;
                     continue;
@@ -195,10 +226,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    List<ResourceId> array = new List<ResourceId>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ResourceId.DeserializeResourceId(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default));
+                        }
                     }
                     securityPolicies = array;
                     continue;
@@ -228,9 +266,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             return new TrafficControllerProperties(
                 configurationEndpoints ?? new ChangeTrackingList<string>(),
-                frontends ?? new ChangeTrackingList<ResourceId>(),
-                associations ?? new ChangeTrackingList<ResourceId>(),
-                securityPolicies ?? new ChangeTrackingList<ResourceId>(),
+                frontends ?? new ChangeTrackingList<SubResource>(),
+                associations ?? new ChangeTrackingList<SubResource>(),
+                securityPolicies ?? new ChangeTrackingList<SubResource>(),
                 securityPolicyConfigurations,
                 trafficControllerProvisioningState,
                 additionalBinaryDataProperties);

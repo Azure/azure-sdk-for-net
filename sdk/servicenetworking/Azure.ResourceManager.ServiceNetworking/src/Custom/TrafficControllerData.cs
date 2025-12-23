@@ -1,0 +1,45 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+#nullable disable
+
+using System;
+using System.ComponentModel;
+using Azure.Core;
+using Azure.ResourceManager.Models;
+using Azure.ResourceManager.ServiceNetworking.Models;
+
+namespace Azure.ResourceManager.ServiceNetworking
+{
+    /// <summary>
+    /// A class representing the TrafficController data model.
+    /// Concrete tracked resource types can be created by aliasing this type using a specific property type.
+    /// </summary>
+    public partial class TrafficControllerData : TrackedResourceData
+    {
+        /// <summary> The status of the last operation. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is now deprecated. Please use `TrafficControllerProvisioningState` moving forward.")]
+        public ProvisioningState? ProvisioningState
+#pragma warning restore CS0618 // Type or member is obsolete
+        {
+            get
+            {
+                return TrafficControllerProvisioningState?.ToString();
+            }
+        }
+
+        /// <summary> Gets or sets Id. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ResourceIdentifier WafSecurityPolicyId
+        {
+            get => SecurityPolicyConfigurations?.WafSecurityPolicyId is null ? null : new ResourceIdentifier(SecurityPolicyConfigurations.WafSecurityPolicyId);
+            set
+            {
+                if (SecurityPolicyConfigurations is null)
+                    SecurityPolicyConfigurations = new SecurityPolicyConfigurations();
+                SecurityPolicyConfigurations.WafSecurityPolicyId = value?.ToString();
+            }
+        }
+    }
+}

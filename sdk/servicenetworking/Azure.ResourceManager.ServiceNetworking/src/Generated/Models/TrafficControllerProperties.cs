@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
@@ -21,9 +22,9 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public TrafficControllerProperties()
         {
             ConfigurationEndpoints = new ChangeTrackingList<string>();
-            Frontends = new ChangeTrackingList<ResourceId>();
-            Associations = new ChangeTrackingList<ResourceId>();
-            SecurityPolicies = new ChangeTrackingList<ResourceId>();
+            Frontends = new ChangeTrackingList<SubResource>();
+            Associations = new ChangeTrackingList<SubResource>();
+            SecurityPolicies = new ChangeTrackingList<SubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TrafficControllerProperties"/>. </summary>
@@ -34,7 +35,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
         /// <param name="trafficControllerProvisioningState"> The status of the last operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerProperties(IReadOnlyList<string> configurationEndpoints, IReadOnlyList<ResourceId> frontends, IReadOnlyList<ResourceId> associations, IReadOnlyList<ResourceId> securityPolicies, SecurityPolicyConfigurations securityPolicyConfigurations, ServiceNetworkingProvisioningState? trafficControllerProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TrafficControllerProperties(IReadOnlyList<string> configurationEndpoints, IReadOnlyList<SubResource> frontends, IReadOnlyList<SubResource> associations, IReadOnlyList<SubResource> securityPolicies, SecurityPolicyConfigurations securityPolicyConfigurations, ServiceNetworkingProvisioningState? trafficControllerProvisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConfigurationEndpoints = configurationEndpoints;
             Frontends = frontends;
@@ -49,13 +50,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public IReadOnlyList<string> ConfigurationEndpoints { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Frontends References List. </summary>
-        public IReadOnlyList<ResourceId> Frontends { get; } = new ChangeTrackingList<ResourceId>();
+        public IReadOnlyList<SubResource> Frontends { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Associations References List. </summary>
-        public IReadOnlyList<ResourceId> Associations { get; } = new ChangeTrackingList<ResourceId>();
+        public IReadOnlyList<SubResource> Associations { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Security Policies References List. </summary>
-        public IReadOnlyList<ResourceId> SecurityPolicies { get; } = new ChangeTrackingList<ResourceId>();
+        public IReadOnlyList<SubResource> SecurityPolicies { get; } = new ChangeTrackingList<SubResource>();
 
         /// <summary> Security Policy Configuration. </summary>
         public SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }

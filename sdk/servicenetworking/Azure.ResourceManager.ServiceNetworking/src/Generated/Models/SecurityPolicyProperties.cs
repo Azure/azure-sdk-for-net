@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public ServiceNetworkingProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource ID of the WAF. </summary>
-        public string WafPolicyId
+        public ResourceIdentifier WafPolicyId
         {
             get
             {

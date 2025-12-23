@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        internal ApplicationGatewayForContainersSecurityPolicyData(string id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SecurityPolicyProperties properties) : base(id, name, resourceType, systemData, tags, location)
+        internal ApplicationGatewayForContainersSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, SecurityPolicyProperties properties) : base(id, name, resourceType, systemData, tags, location)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary> Resource ID of the WAF. </summary>
-        public string WafPolicyId
+        public ResourceIdentifier WafPolicyId
         {
             get
             {

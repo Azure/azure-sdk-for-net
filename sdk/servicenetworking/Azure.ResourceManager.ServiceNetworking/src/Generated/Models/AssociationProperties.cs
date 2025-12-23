@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public ServiceNetworkingProvisioningState? ProvisioningState { get; }
 
         /// <summary> Association ID. </summary>
-        public string SubnetId
+        public ResourceIdentifier SubnetId
         {
             get
             {
