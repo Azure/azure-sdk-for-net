@@ -71,12 +71,12 @@ public class Program
         var agent = builder.Build().AsAgent();
 
         // Run container agent adapter
-        // await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
+        await agent.RunAIAgentAsync(telemetrySourceName: "Agents");
 
-        await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
-        tools: new List<ToolDefinition>
-        {
-            new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
-        });
+        // await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
+        // tools: new List<ToolDefinition>
+        // {
+        //     new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
+        // });
     }
 }
