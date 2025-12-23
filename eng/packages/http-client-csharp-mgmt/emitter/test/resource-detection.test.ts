@@ -9,7 +9,7 @@ import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
 import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
-import { ok, strictEqual } from "assert";
+import { ok, strictEqual, deepStrictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
@@ -233,22 +233,33 @@ interface Employees2 {
     strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
     strictEqual(listBySubEntry.resourceScope, undefined);
     
-    // Validate using resolveArmResources API
+    // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    ok(resolvedSchema.resources);
     
-    // Verify the resolved schema has the same Employee resource
-    const resolvedEmployee = resolvedSchema.resources.find(
-      (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents/employees"
+    // The resolveArmResources API currently doesn't populate methods in the same way as buildArmProviderSchema
+    // This is a known limitation that needs to be addressed in the converter
+    // For now, we compare schemas excluding the methods and nonResourceMethods fields
+    const compareSchemaWithoutMethods = (schema: any) => ({
+      resources: schema.resources.map((r: any) => ({
+        resourceModelId: r.resourceModelId,
+        metadata: {
+          resourceIdPattern: r.metadata.resourceIdPattern,
+          resourceType: r.metadata.resourceType,
+          resourceScope: r.metadata.resourceScope,
+          parentResourceId: r.metadata.parentResourceId,
+          singletonResourceName: r.metadata.singletonResourceName,
+          resourceName: r.metadata.resourceName
+          // Note: methods excluded from comparison due to converter limitation
+        }
+      }))
+      // Note: nonResourceMethods excluded from comparison due to converter limitation
+    });
+    
+    deepStrictEqual(
+      compareSchemaWithoutMethods(resolvedSchema),
+      compareSchemaWithoutMethods(armProviderSchema)
     );
-    ok(resolvedEmployee, "Employee resource must exist in resolved schema");
-    
-    // Validate key properties match
-    strictEqual(resolvedEmployee.metadata.resourceIdPattern, metadata.resourceIdPattern);
-    strictEqual(resolvedEmployee.metadata.resourceType, metadata.resourceType);
-    strictEqual(resolvedEmployee.metadata.resourceScope, metadata.resourceScope);
-    strictEqual(resolvedEmployee.metadata.parentResourceId, metadata.parentResourceId);
   });
 
   it("singleton resource", async () => {
