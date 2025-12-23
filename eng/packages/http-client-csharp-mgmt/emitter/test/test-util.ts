@@ -112,23 +112,13 @@ export async function createCSharpSdkContext(
 }
 
 /**
- * Helper function to compare ARM provider schemas while excluding fields that are known to differ.
- * This is useful when comparing schemas from different APIs (e.g., buildArmProviderSchema vs resolveArmResources)
- * where certain fields may not be populated in the same way.
+ * Helper function to normalize ARM provider schemas for comparison.
+ * This is useful when comparing schemas from different APIs (e.g., buildArmProviderSchema vs resolveArmResources).
  * 
  * @param schema - The ARM provider schema to normalize
- * @param options - Options for what to exclude from comparison
  * @returns A normalized schema object suitable for deep comparison
  */
-export function normalizeSchemaForComparison(
-  schema: any,
-  options?: {
-    excludeMethods?: boolean;
-    excludeNonResourceMethods?: boolean;
-  }
-) {
-  const { excludeMethods = false, excludeNonResourceMethods = false } = options || {};
-  
+export function normalizeSchemaForComparison(schema: any) {
   const result: any = {
     resources: schema.resources.map((r: any) => ({
       resourceModelId: r.resourceModelId,
@@ -139,14 +129,11 @@ export function normalizeSchemaForComparison(
         parentResourceId: r.metadata.parentResourceId,
         singletonResourceName: r.metadata.singletonResourceName,
         resourceName: r.metadata.resourceName,
-        ...(excludeMethods ? {} : { methods: r.metadata.methods })
+        methods: r.metadata.methods
       }
-    }))
+    })),
+    nonResourceMethods: schema.nonResourceMethods
   };
-  
-  if (!excludeNonResourceMethods) {
-    result.nonResourceMethods = schema.nonResourceMethods;
-  }
   
   return result;
 }

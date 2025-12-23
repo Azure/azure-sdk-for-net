@@ -270,14 +270,9 @@ function getMethodIdFromOperation(
   sdkContext: CSharpEmitterContext,
   operation: Operation
 ): string | undefined {
-  try {
-    // Use TCGC's utility to get the cross-language definition ID directly
-    // CSharpEmitterContext extends SdkContext which extends TCGCContext
-    return getCrossLanguageDefinitionId(sdkContext, operation);
-  } catch {
-    // If this fails, return undefined
-    return undefined;
-  }
+  // Use TCGC's utility to get the cross-language definition ID directly
+  // CSharpEmitterContext extends SdkContext which extends TCGCContext
+  return getCrossLanguageDefinitionId(sdkContext, operation);
 }
 
 /**
