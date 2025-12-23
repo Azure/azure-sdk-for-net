@@ -752,6 +752,60 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary>
+        /// Check if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// </summary>
+        /// <param name="selector">Options used to select a set of <see cref="ConfigurationSetting"/> entities from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual AsyncPageable<ConfigurationSetting> CheckConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new AsyncConditionalPageable(pageableImplementation);
+        }
+
+        /// <summary>
+        /// Check if one or more <see cref="ConfigurationSetting"/> entities that match the options specified in the passed-in <see cref="SettingSelector"/> have changed.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Pageable<ConfigurationSetting> CheckConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = CheckConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new ConditionalPageable(pageableImplementation);
+        }
+
+        private ConditionalPageableImplementation CheckConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        {
+            var key = selector.KeyFilter;
+            var label = selector.LabelFilter;
+            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
+            var tags = selector.TagsFilter;
+
+            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
+            IEnumerable<string> fieldsString = selector.Fields.Split();
+
+            context.AddClassifier(304, false);
+
+            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
+            {
+                return CreateCheckKeyValuesRequest(key, label, _syncToken, null, dateTime, fieldsString, null, conditions, tags, context);
+            }
+            ;
+
+            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string after)
+            {
+                return CreateCheckKeyValuesRequest(key, label, _syncToken, after, dateTime, fieldsString, null, conditions, tags, context);
+            }
+
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseCheckConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.CheckConfigurationSettings", context);
+        }
+
+        /// <summary>
         /// Retrieves one or more <see cref="ConfigurationSetting"/> entities for snapshots based on name.
         /// </summary>
         /// <param name="snapshotName">A filter used to get key-values for a snapshot. The value should be the name of the snapshot.</param>
@@ -1516,6 +1570,26 @@ namespace Azure.Data.AppConfiguration
             }
 
             return (values, nextLink);
+        }
+
+        private (List<ConfigurationSetting> Values, string After) ParseCheckConfigurationSettingsResponse(Response response)
+        {
+            string after = null;
+            string nextLink = null;
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+
+                var uriBuilder = new UriBuilder("https://dummy.com" + nextLink);
+                var query = System.Web.HttpUtility.ParseQueryString(uriBuilder.Query);
+                after = query["after"];
+            }
+
+            return (null, after);
         }
 
         private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)
