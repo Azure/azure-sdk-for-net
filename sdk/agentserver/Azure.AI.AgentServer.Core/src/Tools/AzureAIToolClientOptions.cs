@@ -3,18 +3,30 @@
 
 using Azure.AI.AgentServer.Core.Tools.Models;
 using Azure.AI.AgentServer.Core.Tools.Utilities;
+using Azure.Core;
 
 namespace Azure.AI.AgentServer.Core.Tools;
 
 /// <summary>
 /// Options for configuring the Azure AI Tool Client.
 /// </summary>
-public class AzureAIToolClientOptions
+public class AzureAIToolClientOptions : ClientOptions
 {
     /// <summary>
     /// Gets or sets the name of the agent. Defaults to "$default".
     /// </summary>
     public string AgentName { get; set; } = "$default";
+
+    /// <summary>
+    /// Service version.
+    /// </summary>
+    public enum ServiceVersion
+    {
+        /// <summary>
+        /// Default version.
+        /// </summary>
+        V1 = 1,
+    }
 
     /// <summary>
     /// Gets or sets the list of tool definitions.
@@ -47,7 +59,7 @@ public class AzureAIToolClientOptions
     /// <summary>
     /// Initializes a new instance of the <see cref="AzureAIToolClientOptions"/> class.
     /// </summary>
-    public AzureAIToolClientOptions()
+    public AzureAIToolClientOptions(ServiceVersion version = ServiceVersion.V1)
     {
         ToolConfig = new ToolConfigurationParser(Tools);
     }
