@@ -50,27 +50,44 @@ namespace Azure.Generator.Management.Utilities
         /// </summary>
         private static CSharpType? UnwrapArrayModel(InputType inputType)
         {
-            // Check if the input type is a model type
+            // Check if the input type is a model with a single array property
+            var arrayPropertyName = GetArrayPropertyName(inputType);
+            if (arrayPropertyName != null)
+            {
+                // Get the property type and convert it to CSharpType
+                var modelType = (InputModelType)inputType;
+                var property = modelType.Properties.First(p => !p.IsDiscriminator);
+                return ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(property.Type!);
+            }
+
+            return ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputType);
+        }
+
+        /// <summary>
+        /// Checks if an InputType is a model containing a single array property, and returns the property name if so.
+        /// Returns null if the type is not a wrapped array model.
+        /// </summary>
+        public static string? GetArrayPropertyName(InputType? inputType)
+        {
             if (inputType is InputModelType modelType)
             {
                 // Get all non-discriminator properties
                 var properties = modelType.Properties.Where(p => !p.IsDiscriminator).ToArray();
 
-                // If there's exactly one property and it's a list type, unwrap to that list type
+                // If there's exactly one property and it's a list type, return the property name
                 if (properties.Length == 1 && properties[0].Type != null)
                 {
                     var propertyType = properties[0].Type;
                     var csharpPropertyType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(propertyType);
 
-                    // Check if it's a list type by examining the CSharpType
                     if (csharpPropertyType != null && csharpPropertyType.IsList)
                     {
-                        return csharpPropertyType;
+                        return properties[0].Name;
                     }
                 }
             }
 
-            return ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(inputType);
+            return null;
         }
     }
 }

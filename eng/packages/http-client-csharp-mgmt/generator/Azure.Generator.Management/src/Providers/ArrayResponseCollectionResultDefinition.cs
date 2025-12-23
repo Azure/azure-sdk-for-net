@@ -286,23 +286,13 @@ namespace Azure.Generator.Management.Providers
                     out var documentVariable),
             };
 
-            VariableExpression arrayVariable;
+            // Determine the array value expression based on whether it's wrapped in a model
+            ValueExpression arrayValue = _arrayPropertyName != null
+                ? documentVariable.Property("RootElement").Invoke("GetProperty", [Literal(_arrayPropertyName)])
+                : documentVariable.Property("RootElement");
 
-            // If the array is wrapped in a model, we need to access the property first
-            if (_arrayPropertyName != null)
-            {
-                // var array = document.RootElement.GetProperty("propertyName");
-                bodyStatements.Add(Declare("array", typeof(System.Text.Json.JsonElement),
-                    documentVariable.Property("RootElement").Invoke("GetProperty", [Literal(_arrayPropertyName)]),
-                    out arrayVariable));
-            }
-            else
-            {
-                // var array = document.RootElement;
-                bodyStatements.Add(Declare("array", typeof(System.Text.Json.JsonElement),
-                    documentVariable.Property("RootElement"),
-                    out arrayVariable));
-            }
+            // var array = <arrayValue>;
+            bodyStatements.Add(Declare("array", typeof(System.Text.Json.JsonElement), arrayValue, out var arrayVariable));
 
             // var result = new List<T>();
             bodyStatements.Add(Declare("result", new CSharpType(typeof(List<>), _itemType),

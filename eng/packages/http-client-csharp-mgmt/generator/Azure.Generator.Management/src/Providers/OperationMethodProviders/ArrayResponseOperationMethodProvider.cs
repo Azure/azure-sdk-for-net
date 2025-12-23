@@ -217,25 +217,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
             var responseBodyType = response?.BodyType;
 
-            if (responseBodyType is InputModelType modelType)
-            {
-                // Get all non-discriminator properties
-                var properties = modelType.Properties.Where(p => !p.IsDiscriminator).ToArray();
-
-                // If there's exactly one property and it's a list type, return the property name
-                if (properties.Length == 1 && properties[0].Type != null)
-                {
-                    var propertyType = properties[0].Type;
-                    var csharpPropertyType = ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(propertyType);
-
-                    if (csharpPropertyType != null && csharpPropertyType.IsList)
-                    {
-                        return properties[0].Name;
-                    }
-                }
-            }
-
-            return null;
+            return InputServiceMethodExtensions.GetArrayPropertyName(responseBodyType);
         }
 
         private MethodBodyStatement BuildResourceDataConversionStatement(CSharpType sourcePageable, CSharpType typeOfResource, List<ValueExpression> arguments)
