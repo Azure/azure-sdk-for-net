@@ -188,15 +188,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 .Where(p => p.Name != "context" && p.Name != "cancellationToken")  // Exclude context-related params
                 .ToArray();
 
-            // Create a placeholder context type - the actual type will be generated
-            // We use a CSharpType with a marker type that will be replaced during code generation
-            // The context class pattern is: {NamespaceWithoutDots}Context
-            var namespaceWithDots = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Name;
-            var contextTypeName = namespaceWithDots.Replace(".", "") + "Context";
-            
-            // Use a simple CSharpType with the full type name
-            // This will generate code like: AzureGeneratorMgmtTypeSpecTestsContext.Default
-            var contextType = new CSharpType(typeof(object)) { Name = contextTypeName, Namespace = $"{namespaceWithDots}.Models" };
+            // Get the ModelReaderWriterContext type name from the output library
+            var contextTypeName = ManagementClientGenerator.Instance.OutputLibrary.ModelReaderWriterContextTypeName;
 
             var collectionResult = new ArrayResponseCollectionResultDefinition(
                 _restClient,
@@ -207,7 +200,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 scopeName,
                 constructorParams,
                 _methodName,  // Pass the actual method name for proper class naming
-                contextType);
+                contextTypeName);
 
             return collectionResult;
         }

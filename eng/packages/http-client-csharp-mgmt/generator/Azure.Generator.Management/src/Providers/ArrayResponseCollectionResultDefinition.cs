@@ -33,7 +33,7 @@ namespace Azure.Generator.Management.Providers
         private readonly string _scopeName;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
-        private readonly CSharpType _contextType;
+        private readonly string _contextTypeName;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -49,7 +49,7 @@ namespace Azure.Generator.Management.Providers
             string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
             string methodName,
-            CSharpType contextType)
+            string contextTypeName)
         {
             _restClient = restClient;
             _serviceMethod = serviceMethod;
@@ -59,7 +59,7 @@ namespace Azure.Generator.Management.Providers
             _scopeName = scopeName;
             _constructorParameters = constructorParameters;
             _methodName = methodName;
-            _contextType = contextType;
+            _contextTypeName = contextTypeName;
         }
 
         protected override string BuildRelativeFilePath() =>
@@ -300,14 +300,8 @@ namespace Azure.Generator.Management.Providers
                     isAsync: false,
                     out var elementVariable)
                 {
-                    // result.Add(ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, {Context}.Default));
-                    // Use a code literal for the context since it's generated
-                    var modelsWriter = ModelSerializationExtensionsDefinition.WireOptions;
-                    var contextNamespace = _contextType.Namespace ??  ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Name + ".Models";
-                    var contextName = _contextType.Name ?? ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Name.Replace(".", "") + "Context";
-                    var contextRef = new CodeWriterDeclaration($"{contextName}");
-                    var contextSnippet = new MemberExpression(Snippet.FromExpression(new CodeWriterDeclarationExpression(contextRef)), "Default");
-                    
+                    // result.Add(ModelReaderWriter.Read<T>(new BinaryData(element.GetRawText()), ModelSerializationExtensions.WireOptions, {Context}.Default));
+                    // Use Literal code for the context reference since it's a generated type
                     resultVariable.Invoke("Add",
                         new ValueExpression[]
                         {
@@ -318,7 +312,7 @@ namespace Azure.Generator.Management.Providers
                                         Static(typeof(System.Text.Encoding)).Property("UTF8").Invoke("GetBytes",
                                             elementVariable.Invoke("GetRawText"))),
                                     Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
-                                    contextSnippet
+                                    Literal($"{_contextTypeName}.Default")
                                 },
                                 new[] { _itemType })
                         }).Terminate()

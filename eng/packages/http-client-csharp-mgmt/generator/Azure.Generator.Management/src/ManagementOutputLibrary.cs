@@ -36,6 +36,12 @@ namespace Azure.Generator.Management
         private WirePathAttributeDefinition? _wirePathAttributeProvider;
         internal TypeProvider WirePathAttributeDefinition => _wirePathAttributeProvider ??= new WirePathAttributeDefinition();
 
+        private CSharpType? _modelReaderWriterContextType;
+        internal CSharpType ModelReaderWriterContextType => _modelReaderWriterContextType ??= GetModelReaderWriterContextType();
+
+        private string? _modelReaderWriterContextTypeName;
+        internal string ModelReaderWriterContextTypeName => _modelReaderWriterContextTypeName ??= GetModelReaderWriterContextTypeName();
+
         // TODO -- this is really a bad practice that this map is not built in one place, but we are building it while generating stuff and in the meantime we might read it.
         // but currently this is the best we could do right now.
         internal Dictionary<string, string> PageableMethodScopes { get; } = new();
@@ -374,6 +380,20 @@ namespace Azure.Generator.Management
                     collectionResults.Add(arrayCollectionResult);
                 }
             }
+        }
+
+        private CSharpType GetModelReaderWriterContextType()
+        {
+            // For now, return a placeholder type - we'll use the string name for code generation
+            return new CSharpType(typeof(System.ClientModel.Primitives.ModelReaderWriterContext));
+        }
+
+        private string GetModelReaderWriterContextTypeName()
+        {
+            // The context class name follows the pattern: {Namespace without dots}Context
+            // For example: Azure.Generator.MgmtTypeSpec.Tests -> AzureGeneratorMgmtTypeSpecTestsContext
+            var namespaceName = ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Name;
+            return namespaceName.Replace(".", string.Empty) + "Context";
         }
 
         private Dictionary<CSharpType, OperationSourceProvider> BuildOperationSources()
