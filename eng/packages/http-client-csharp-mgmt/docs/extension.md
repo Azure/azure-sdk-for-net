@@ -1,7 +1,3 @@
----
-title: 'Extension Class Generation'
----
-
 # Extension Class Generation in Azure Management SDK
 
 ## Introduction

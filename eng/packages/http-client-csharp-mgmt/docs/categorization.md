@@ -1,7 +1,3 @@
----
-title: 'Resource and Operation Categorization'
----
-
 # Resource and Operation Categorization in Azure Management SDK
 
 ## Introduction
