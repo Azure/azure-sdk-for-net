@@ -33,6 +33,7 @@ namespace Azure.Generator.Management.Providers
         private readonly string _scopeName;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
+        private readonly string _enclosingTypeName;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -47,7 +48,8 @@ namespace Azure.Generator.Management.Providers
             bool isAsync,
             string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
-            string methodName)
+            string methodName,
+            string enclosingTypeName)
         {
             _restClient = restClient;
             _serviceMethod = serviceMethod;
@@ -57,16 +59,17 @@ namespace Azure.Generator.Management.Providers
             _scopeName = scopeName;
             _constructorParameters = constructorParameters;
             _methodName = methodName;
+            _enclosingTypeName = enclosingTypeName;
         }
 
         protected override string BuildRelativeFilePath() =>
-            $"src/Generated/CollectionResults/{Name}.cs";
+            System.IO.Path.Combine("src", "Generated", "CollectionResults", $"{Name}.cs");
 
         protected override string BuildName()
         {
-            // Use the actual method name (e.g., "GetDependencies" or "GetDependenciesAsync")
+            // Use the enclosing type name (e.g., "FooResource") and actual method name
             // The method name already contains "Async" suffix when it's async, so we don't need to add/remove it
-            return $"{_restClient.Name}{_methodName}CollectionResultOfT";
+            return $"{_enclosingTypeName}{_methodName}CollectionResultOfT";
         }
 
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>

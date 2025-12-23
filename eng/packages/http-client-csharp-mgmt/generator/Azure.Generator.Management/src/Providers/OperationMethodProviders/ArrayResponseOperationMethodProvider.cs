@@ -196,7 +196,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _isAsync,
                 scopeName,
                 constructorParams,
-                _methodName);  // Pass the actual method name for proper class naming
+                _methodName,  // Pass the actual method name for proper class naming
+                _enclosingType.Name);  // Pass the enclosing type name (e.g., "FooResource")
 
             return collectionResult;
         }
