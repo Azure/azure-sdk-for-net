@@ -31,7 +31,7 @@ internal sealed class ToolClient : IAsyncDisposable
     /// <returns>List of AIFunction tools.</returns>
     public async Task<IReadOnlyList<AIFunction>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
-        var azureTools = await _toolClient.ListToolsAsync(cancellationToken).ConfigureAwait(false);
+        var azureTools = (await _toolClient.ListToolsAsync(cancellationToken).ConfigureAwait(false)).Value;
         var aiFunctions = new List<AIFunction>();
 
         foreach (var azureTool in azureTools)
@@ -100,7 +100,7 @@ internal sealed class ToolClient : IAsyncDisposable
     {
         if (_toolClient != null)
         {
-            await _toolClient.DisposeAsync().ConfigureAwait(false);
+            await ((IAsyncDisposable)_toolClient).DisposeAsync().ConfigureAwait(false);
         }
     }
 }

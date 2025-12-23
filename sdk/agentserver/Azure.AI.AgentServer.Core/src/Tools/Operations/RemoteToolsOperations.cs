@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Net.Http.Json;
 using System.Text.Json;
+using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.AI.AgentServer.Core.Common.Http.Json;
 using Azure.AI.AgentServer.Core.Tools.Exceptions;
 using Azure.AI.AgentServer.Core.Tools.Models;
@@ -15,17 +16,17 @@ namespace Azure.AI.AgentServer.Core.Tools.Operations;
 /// </summary>
 internal class RemoteToolsOperations
 {
-    private readonly HttpClient _httpClient;
+    private readonly IToolOperationsInvoker _invoker;
     private readonly AzureAIToolClientOptions _options;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RemoteToolsOperations"/> class.
     /// </summary>
-    /// <param name="httpClient">The HTTP client for making requests.</param>
+    /// <param name="invoker">The service invoker.</param>
     /// <param name="options">The client options.</param>
-    public RemoteToolsOperations(HttpClient httpClient, AzureAIToolClientOptions options)
+    public RemoteToolsOperations(IToolOperationsInvoker invoker, AzureAIToolClientOptions options)
     {
-        _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+        _invoker = invoker ?? throw new ArgumentNullException(nameof(invoker));
         _options = options ?? throw new ArgumentNullException(nameof(options));
     }
 
@@ -35,18 +36,17 @@ internal class RemoteToolsOperations
     /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>List of remote tools.</returns>
-    public IReadOnlyList<FoundryTool> ResolveTools(
+    public Response<IReadOnlyList<FoundryTool>> ResolveTools(
         HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
-        var request = BuildResolveToolsRequest();
-        if (request == null)
+        var message = CreateResolveToolsMessage(cancellationToken);
+        using (message)
         {
-            return Array.Empty<FoundryTool>();
+            var response = _invoker.SendRequest(message, cancellationToken);
+            var tools = ProcessResolveToolsResponse(response, existingNames);
+            return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, response);
         }
-
-        var response = SendRequest(request, cancellationToken);
-        return ProcessResolveToolsResponse(response, existingNames);
     }
 
     /// <summary>
@@ -55,18 +55,18 @@ internal class RemoteToolsOperations
     /// <param name="existingNames">Set of existing tool names to avoid conflicts.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning list of remote tools.</returns>
-    public async Task<IReadOnlyList<FoundryTool>> ResolveToolsAsync(
+    public async Task<Response<IReadOnlyList<FoundryTool>>> ResolveToolsAsync(
         HashSet<string> existingNames,
         CancellationToken cancellationToken = default)
     {
-        var request = BuildResolveToolsRequest();
-        if (request == null)
+        var message = CreateResolveToolsMessage(cancellationToken);
+        using (message)
         {
-            return Array.Empty<FoundryTool>();
+            var response = await _invoker.SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
+            var tools = await ProcessResolveToolsResponseAsync(response, existingNames, cancellationToken)
+                .ConfigureAwait(false);
+            return Response.FromValue<IReadOnlyList<FoundryTool>>(tools, response);
         }
-
-        var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-        return ProcessResolveToolsResponse(response, existingNames);
     }
 
     /// <summary>
@@ -76,14 +76,15 @@ internal class RemoteToolsOperations
     /// <param name="arguments">The tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>The tool invocation result.</returns>
-    public object? InvokeTool(
+    public Response<object?> InvokeTool(
         FoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken = default)
     {
-        var request = BuildInvokeToolRequest(tool, arguments);
-        var response = SendRequest(request, cancellationToken);
-        return ProcessInvokeToolResponse(response);
+        using HttpMessage message = CreateInvokeToolMessage(tool, arguments, cancellationToken);
+        var response = _invoker.SendRequest(message, cancellationToken);
+        var result = ProcessInvokeToolResponse(response);
+        return Response.FromValue(result, response);
     }
 
     /// <summary>
@@ -93,23 +94,19 @@ internal class RemoteToolsOperations
     /// <param name="arguments">The tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning the tool invocation result.</returns>
-    public async Task<object?> InvokeToolAsync(
+    public async Task<Response<object?>> InvokeToolAsync(
         FoundryTool tool,
         IDictionary<string, object?> arguments,
         CancellationToken cancellationToken = default)
     {
-        var request = BuildInvokeToolRequest(tool, arguments);
-        var response = await SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
-        return ProcessInvokeToolResponse(response);
+        using HttpMessage message = CreateInvokeToolMessage(tool, arguments, cancellationToken);
+        var response = await _invoker.SendRequestAsync(message, cancellationToken).ConfigureAwait(false);
+        var result = await ProcessInvokeToolResponseAsync(response, cancellationToken).ConfigureAwait(false);
+        return Response.FromValue(result, response);
     }
 
-    private HttpRequestMessage? BuildResolveToolsRequest()
+    private HttpMessage CreateResolveToolsMessage(CancellationToken cancellationToken)
     {
-        if (_options.ToolConfig.RemoteTools.Count == 0)
-        {
-            return null;
-        }
-
         var remoteServers = _options.ToolConfig.RemoteTools
             .Select(td => new
             {
@@ -129,18 +126,18 @@ internal class RemoteToolsOperations
         }
 
         var agentName = string.IsNullOrWhiteSpace(_options.AgentName) ? "$default" : _options.AgentName;
-        // Use relative URL (without leading /) so it's appended to BaseAddress correctly
-        var url = $"agents/{agentName}/tools/resolve?api-version={_options.ApiVersion}";
 
-        return new HttpRequestMessage(HttpMethod.Post, url)
-        {
-            Content = JsonContent.Create(content, options: JsonExtensions.DefaultJsonSerializerOptions)
-        };
+        var relativeUri = $"agents/{Uri.EscapeDataString(agentName)}/tools/resolve?api-version={Uri.EscapeDataString(_options.ApiVersion)}";
+        return _invoker.CreatePostMessage(
+            relativeUri,
+            BinaryData.FromObjectAsJson(content, JsonExtensions.DefaultJsonSerializerOptions),
+            cancellationToken);
     }
 
-    private HttpRequestMessage BuildInvokeToolRequest(
+    private HttpMessage CreateInvokeToolMessage(
         FoundryTool tool,
-        IDictionary<string, object?> arguments)
+        IDictionary<string, object?> arguments,
+        CancellationToken cancellationToken)
     {
         var content = new Dictionary<string, object?>
         {
@@ -159,21 +156,25 @@ internal class RemoteToolsOperations
         }
 
         var agentName = string.IsNullOrWhiteSpace(_options.AgentName) ? "$default" : _options.AgentName;
-        // Use relative URL (without leading /) so it's appended to BaseAddress correctly
-        var url = $"agents/{agentName}/tools/invoke?api-version={_options.ApiVersion}";
 
-        return new HttpRequestMessage(HttpMethod.Post, url)
-        {
-            Content = JsonContent.Create(content, options: JsonExtensions.DefaultJsonSerializerOptions)
-        };
+        var relativeUri = $"agents/{Uri.EscapeDataString(agentName)}/tools/invoke?api-version={Uri.EscapeDataString(_options.ApiVersion)}";
+        return _invoker.CreatePostMessage(
+            relativeUri,
+            BinaryData.FromObjectAsJson(content, JsonExtensions.DefaultJsonSerializerOptions),
+            cancellationToken);
     }
 
     private IReadOnlyList<FoundryTool> ProcessResolveToolsResponse(
-        HttpResponseMessage response,
+        Response response,
         HashSet<string> existingNames)
     {
-        var jsonResponse = response.Content.ReadFromJsonAsync<JsonElement>(
-            JsonExtensions.DefaultJsonSerializerOptions).Result;
+        if (response.ContentStream == null)
+        {
+            return Array.Empty<FoundryTool>();
+        }
+
+        using var document = JsonDocument.Parse(response.ContentStream);
+        var jsonResponse = document.RootElement;
 
         // Check for OAuth consent required
         CheckForOAuthConsent(jsonResponse);
@@ -191,10 +192,69 @@ internal class RemoteToolsOperations
             existingNames);
     }
 
-    private object? ProcessInvokeToolResponse(HttpResponseMessage response)
+    private async Task<IReadOnlyList<FoundryTool>> ProcessResolveToolsResponseAsync(
+        Response response,
+        HashSet<string> existingNames,
+        CancellationToken cancellationToken)
     {
-        var jsonResponse = response.Content.ReadFromJsonAsync<JsonElement>(
-            JsonExtensions.DefaultJsonSerializerOptions).Result;
+        if (response.ContentStream == null)
+        {
+            return Array.Empty<FoundryTool>();
+        }
+
+        using var document = await JsonDocument.ParseAsync(response.ContentStream, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+        var jsonResponse = document.RootElement;
+
+        // Check for OAuth consent required
+        CheckForOAuthConsent(jsonResponse);
+
+        if (!jsonResponse.TryGetProperty("tools", out var toolsElement))
+        {
+            return Array.Empty<FoundryTool>();
+        }
+
+        var enrichedTools = ParseEnrichedTools(toolsElement, _options.ToolConfig.RemoteTools);
+
+        return ToolDescriptorBuilder.BuildDescriptors(
+            enrichedTools,
+            ToolSource.RemoteTools,
+            existingNames);
+    }
+
+    private object? ProcessInvokeToolResponse(Response response)
+    {
+        if (response.ContentStream == null)
+        {
+            return null;
+        }
+
+        using var document = JsonDocument.Parse(response.ContentStream);
+        var jsonResponse = document.RootElement;
+
+        // Check for OAuth consent required
+        CheckForOAuthConsent(jsonResponse);
+
+        if (!jsonResponse.TryGetProperty("toolResult", out var resultElement))
+        {
+            return null;
+        }
+
+        return JsonSerializer.Deserialize<object>(
+            resultElement.GetRawText(),
+            JsonExtensions.DefaultJsonSerializerOptions);
+    }
+
+    private async Task<object?> ProcessInvokeToolResponseAsync(Response response, CancellationToken cancellationToken)
+    {
+        if (response.ContentStream == null)
+        {
+            return null;
+        }
+
+        using var document = await JsonDocument.ParseAsync(response.ContentStream, cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+        var jsonResponse = document.RootElement;
 
         // Check for OAuth consent required
         CheckForOAuthConsent(jsonResponse);
@@ -274,21 +334,5 @@ internal class RemoteToolsOperations
         }
 
         return enrichedTools;
-    }
-
-    private HttpResponseMessage SendRequest(HttpRequestMessage request, CancellationToken cancellationToken)
-    {
-        var response = _httpClient.Send(request, cancellationToken);
-        response.EnsureSuccessStatusCode();
-        return response;
-    }
-
-    private async Task<HttpResponseMessage> SendRequestAsync(
-        HttpRequestMessage request,
-        CancellationToken cancellationToken)
-    {
-        var response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-        response.EnsureSuccessStatusCode();
-        return response;
     }
 }
