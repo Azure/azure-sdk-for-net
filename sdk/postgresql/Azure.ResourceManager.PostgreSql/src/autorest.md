@@ -5,29 +5,24 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ```yaml
 azure-arm: true
 csharp: true
-clear-output-folder: true
-skip-csproj: true
 library-name: PostgreSql
-
+namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
+require: https://github.com/Azure/azure-rest-api-specs/blob/b24c97bfc136b01dd46a1c8ddcecd0bb5a1ab152/specification/postgresql/resource-manager/readme.md
+#tag: package-flexibleserver-2025-08-01
+output-folder: $(this-folder)/Generated
+clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: false
+skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
 use-model-reader-writer: true
-
-batch:
-  - tag: package-2020-01-01
-  - tag: package-flexibleserver-2025-08-01
 enable-bicep-serialization: true
-```
 
-``` yaml $(tag) == 'package-2020-01-01'
-
-namespace: Azure.ResourceManager.PostgreSql
-require: https://github.com/Azure/azure-rest-api-specs/blob/b24c97bfc136b01dd46a1c8ddcecd0bb5a1ab152/specification/postgresql/resource-manager/readme.md
-output-folder: $(this-folder)/PostgreSql/Generated
-sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
-  clear-output-folder: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -36,11 +31,12 @@ format-by-name-rules:
   'locationName': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
+  '*ResourceId': 'arm-id'
+  'ResourceType': 'resource-type'
+  '*IPAddress': 'ip-address'
   'PrincipalId': 'uuid'
   '*ServerId': 'arm-id'
   '*SubnetId': 'arm-id'
-  'ResourceType': 'resource-type'
-  '*IPAddress': 'ip-address'
 
 acronym-mapping:
   CPU: Cpu
@@ -64,11 +60,16 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  Vcore: VCore
+  Vcores: VCores
+  UTC: Utc
   Nine5: NinePointFive
   Nine6: NinePointSix
   Ten0: TenPointZero
   Ten2: TenPointTwo
 
+no-property-type-replacement:
+  - PostgreSqlFlexibleServerData
 
 prepend-rp-prefix:
   - Configuration
@@ -125,86 +126,6 @@ prepend-rp-prefix:
   - ValidationState
   - VirtualNetworkRuleListResult
   - VirtualNetworkRuleState
-rename-mapping:
-  ServerAdministratorResource: PostgreSqlServerAdministrator
-  ServerAdministratorResource.properties.login: LoginAccountName
-  ServerAdministratorResource.properties.sid: SecureId
-  ServerAdministratorResourceListResult: PostgreSqlServerAdministratorListResult
-  PrivateLinkServiceConnectionStateActionsRequire: PostgreSqlPrivateLinkServiceConnectionStateRequiredActions
-  RecoverableServerResource: PostgreSqlRecoverableServerResourceData
-  RecoverableServerResource.properties.vCore: VCores
-  ServerSecurityAlertPolicy.properties.emailAccountAdmins: SendToEmailAccountAdmins
-  NameAvailability.nameAvailable: IsNameAvailable
-  StorageProfile.storageMB: StorageInMB
-  PerformanceTierProperties.minStorageMB: MinStorageInMB
-  PerformanceTierProperties.maxStorageMB: MaxStorageInMB
-  PerformanceTierProperties.minLargeStorageMB: MinLargeStorageInMB
-  PerformanceTierProperties.maxLargeStorageMB: MaxLargeStorageInMB
-  PerformanceTierServiceLevelObjectives.maxStorageMB: MaxStorageInMB
-  PerformanceTierServiceLevelObjectives.minStorageMB: MinStorageInMB
-  PerformanceTierServiceLevelObjectives.vCore: VCores
-  NameAvailability: PostgreSqlNameAvailabilityResult
-  ConfigurationListResult: PostgreSqlConfigurationList
-  LogFile.properties.type: LogFileType
-override-operation-name:
-  ServerParameters_ListUpdateConfigurations: UpdateConfigurations
-  CheckNameAvailability_Execute: CheckPostgreSqlNameAvailability
-directive:
-  - from: postgresql.json
-    where: $.definitions
-    transform: >
-      $.ServerPrivateEndpointConnection.properties.id['x-ms-format'] = 'arm-id';
-      $.RecoverableServerProperties.properties.lastAvailableBackupDateTime['format'] = 'date-time';
-```
-
-``` yaml $(tag) == 'package-flexibleserver-2025-08-01'
-
-namespace: Azure.ResourceManager.PostgreSql.FlexibleServers
-require: https://github.com/Azure/azure-rest-api-specs/blob/b24c97bfc136b01dd46a1c8ddcecd0bb5a1ab152/specification/postgresql/resource-manager/readme.md
-output-folder: $(this-folder)/PostgreSqlFlexibleServers/Generated
-sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
-  clear-output-folder: false
-
-format-by-name-rules:
-  'tenantId': 'uuid'
-  'ETag': 'etag'
-  'location': 'azure-location'
-  'locationName': 'azure-location'
-  '*Uri': 'Uri'
-  '*Uris': 'Uri'
-  '*ResourceId': 'arm-id'
-  'ResourceType': 'resource-type'
-  '*IPAddress': 'ip-address'
-
-acronym-mapping:
-  CPU: Cpu
-  CPUs: Cpus
-  Os: OS
-  Ip: IP
-  Ips: IPs|ips
-  ID: Id
-  IDs: Ids
-  VM: Vm
-  VMs: Vms
-  Vmos: VmOS
-  VMScaleSet: VmScaleSet
-  DNS: Dns
-  VPN: Vpn
-  NAT: Nat
-  WAN: Wan
-  Ipv4: IPv4|ipv4
-  Ipv6: IPv6|ipv6
-  Ipsec: IPsec|ipsec
-  SSO: Sso
-  URI: Uri
-  Etag: ETag|etag
-  Vcore: VCore
-  Vcores: VCores
-  UTC: Utc
-
-no-property-type-replacement:
-  - PostgreSqlFlexibleServerData
 
 rename-mapping:
   Configuration: PostgreSqlFlexibleServerConfiguration

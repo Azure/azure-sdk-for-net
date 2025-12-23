@@ -223,13 +223,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="name"> Name of the compute (SKU). </param>
         /// <param name="vCores"> vCores available for this compute. </param>
         /// <param name="supportedIops"> Maximum IOPS supported by this compute. </param>
-        /// <param name="supportedMemoryPerVcoreMb"> Supported memory (in MB) per virtual core assigned to this compute. </param>
+        /// <param name="supportedMemoryPerVCoreMb"> Supported memory (in MB) per virtual core assigned to this compute. </param>
         /// <param name="supportedZones"> List of supported availability zones. E.g. '1', '2', '3'. </param>
         /// <param name="supportedHaMode"> Modes of high availability supported for this compute. </param>
         /// <param name="supportedFeatures"> Features supported. </param>
         /// <param name="securityProfile"> Security profile of the compute. Indicates if it's a Confidential Compute virtual machine. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/> instance for mocking. </returns>
-        public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVcoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<HighAvailabilityMode> supportedHaMode = null, IEnumerable<SupportedFeature> supportedFeatures = null, string securityProfile = null)
+        public static PostgreSqlFlexibleServerSkuCapability PostgreSqlFlexibleServerSkuCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus = null, string reason = null, string name = null, int? vCores = null, int? supportedIops = null, long? supportedMemoryPerVCoreMb = null, IEnumerable<string> supportedZones = null, IEnumerable<HighAvailabilityMode> supportedHaMode = null, IEnumerable<SupportedFeature> supportedFeatures = null, string securityProfile = null)
         {
             supportedZones ??= new List<string>();
             supportedHaMode ??= new List<HighAvailabilityMode>();
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 vCores,
                 supportedIops,
-                supportedMemoryPerVcoreMb,
+                supportedMemoryPerVCoreMb,
                 supportedZones?.ToList(),
                 supportedHaMode?.ToList(),
                 supportedFeatures?.ToList(),
