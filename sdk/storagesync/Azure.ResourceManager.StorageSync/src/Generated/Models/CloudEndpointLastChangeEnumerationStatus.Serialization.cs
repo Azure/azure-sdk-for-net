@@ -9,14 +9,15 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.StorageSync;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointLastChangeEnumerationStatus : IUtf8JsonSerializable, IJsonModel<CloudEndpointLastChangeEnumerationStatus>
+    /// <summary> Cloud endpoint change enumeration status object. </summary>
+    public partial class CloudEndpointLastChangeEnumerationStatus : IJsonModel<CloudEndpointLastChangeEnumerationStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointLastChangeEnumerationStatus>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<CloudEndpointLastChangeEnumerationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +29,11 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedTimestamp"u8);
@@ -64,15 +64,15 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("nextRunTimestamp"u8);
                 writer.WriteStringValue(NextRunTimestamp.Value, "O");
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -81,110 +81,116 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        CloudEndpointLastChangeEnumerationStatus IJsonModel<CloudEndpointLastChangeEnumerationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEndpointLastChangeEnumerationStatus IJsonModel<CloudEndpointLastChangeEnumerationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudEndpointLastChangeEnumerationStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(CloudEndpointLastChangeEnumerationStatus)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeCloudEndpointLastChangeEnumerationStatus(document.RootElement, options);
         }
 
-        internal static CloudEndpointLastChangeEnumerationStatus DeserializeCloudEndpointLastChangeEnumerationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CloudEndpointLastChangeEnumerationStatus DeserializeCloudEndpointLastChangeEnumerationStatus(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? startedTimestamp = default;
-            DateTimeOffset? completedTimestamp = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             long? namespaceFilesCount = default;
             long? namespaceDirectoriesCount = default;
-            long? namespaceSizeBytes = default;
+            long? namespaceSizeInBytes = default;
             DateTimeOffset? nextRunTimestamp = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("startedTimestamp"u8))
+                if (prop.NameEquals("startedTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    startedTimestamp = property.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("completedTimestamp"u8))
+                if (prop.NameEquals("completedTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    completedTimestamp = property.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("namespaceFilesCount"u8))
+                if (prop.NameEquals("namespaceFilesCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    namespaceFilesCount = property.Value.GetInt64();
+                    namespaceFilesCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("namespaceDirectoriesCount"u8))
+                if (prop.NameEquals("namespaceDirectoriesCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    namespaceDirectoriesCount = property.Value.GetInt64();
+                    namespaceDirectoriesCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("namespaceSizeBytes"u8))
+                if (prop.NameEquals("namespaceSizeBytes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    namespaceSizeBytes = property.Value.GetInt64();
+                    namespaceSizeInBytes = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("nextRunTimestamp"u8))
+                if (prop.NameEquals("nextRunTimestamp"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    nextRunTimestamp = property.Value.GetDateTimeOffset("O");
+                    nextRunTimestamp = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new CloudEndpointLastChangeEnumerationStatus(
-                startedTimestamp,
-                completedTimestamp,
+                startedOn,
+                completedOn,
                 namespaceFilesCount,
                 namespaceDirectoriesCount,
-                namespaceSizeBytes,
+                namespaceSizeInBytes,
                 nextRunTimestamp,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
@@ -194,15 +200,20 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
-        CloudEndpointLastChangeEnumerationStatus IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CloudEndpointLastChangeEnumerationStatus IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CloudEndpointLastChangeEnumerationStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CloudEndpointLastChangeEnumerationStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudEndpointLastChangeEnumerationStatus(document.RootElement, options);
                     }
                 default:
@@ -210,6 +221,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
         }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<CloudEndpointLastChangeEnumerationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -327,7 +327,7 @@ namespace Azure.Generator.Management.Providers
             return BuildServiceMethod(resourceMethod.InputMethod, resourceMethod.InputClient, isAsync, methodName);
         }
 
-        private MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
+        protected MethodProvider BuildServiceMethod(InputServiceMethod method, InputClient inputClient, bool isAsync, string? methodName = null)
         {
             var clientInfo = _clientInfos[inputClient];
             return method switch

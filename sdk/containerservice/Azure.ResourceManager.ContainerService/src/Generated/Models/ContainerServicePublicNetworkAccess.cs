@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Allow or deny public network access for AKS. </summary>
+    /// <summary>
+    /// PublicNetworkAccess of the managedCluster. Allow or deny public network access for AKS
+    /// Serialized Name: PublicNetworkAccess
+    /// </summary>
     public readonly partial struct ContainerServicePublicNetworkAccess : IEquatable<ContainerServicePublicNetworkAccess>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Enabled. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: PublicNetworkAccess.Enabled
+        /// </summary>
         public static ContainerServicePublicNetworkAccess Enabled { get; } = new ContainerServicePublicNetworkAccess(EnabledValue);
-        /// <summary> Disabled. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: PublicNetworkAccess.Disabled
+        /// </summary>
         public static ContainerServicePublicNetworkAccess Disabled { get; } = new ContainerServicePublicNetworkAccess(DisabledValue);
         /// <summary> Determines if two <see cref="ContainerServicePublicNetworkAccess"/> values are the same. </summary>
         public static bool operator ==(ContainerServicePublicNetworkAccess left, ContainerServicePublicNetworkAccess right) => left.Equals(right);
