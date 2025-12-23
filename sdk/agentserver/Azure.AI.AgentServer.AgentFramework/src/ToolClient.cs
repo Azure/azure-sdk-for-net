@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.AgentFramework;
 /// <summary>
 /// Client that integrates AzureAIToolClient with Agent Framework.
 /// </summary>
-internal sealed class ToolClient : IAIFunctionProvider, IAsyncDisposable
+internal sealed class ToolClient : IAsyncDisposable
 {
     private readonly AzureAIToolClient _toolClient;
 
