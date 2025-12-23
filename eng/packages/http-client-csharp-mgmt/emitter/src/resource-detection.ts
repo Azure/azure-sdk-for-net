@@ -434,13 +434,12 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
 /**
  * Validates that a resource has exactly one Get method.
  * Reports a diagnostic error if multiple Get methods are found.
- * This function is exported for testing purposes.
  * 
  * @param sdkContext - The SDK context containing the program for diagnostic reporting
  * @param resourceMetadata - The resource metadata to validate
  * @param serviceMethods - Map of service methods for resolving operation details
  */
-export function validateResourceGetMethods(
+function validateResourceGetMethods(
   sdkContext: CSharpEmitterContext,
   resourceMetadata: ResourceMetadata,
   serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>
