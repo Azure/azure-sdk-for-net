@@ -287,6 +287,8 @@ namespace Azure.Generator.Management.Providers
             };
 
             // Determine the array value expression based on whether it's wrapped in a model
+            // Note: GetProperty is safe here because the property name comes from the TypeSpec model definition
+            // and the response structure is guaranteed by the service contract
             ValueExpression arrayValue = _arrayPropertyName != null
                 ? documentVariable.Property("RootElement").Invoke("GetProperty", [Literal(_arrayPropertyName)])
                 : documentVariable.Property("RootElement");

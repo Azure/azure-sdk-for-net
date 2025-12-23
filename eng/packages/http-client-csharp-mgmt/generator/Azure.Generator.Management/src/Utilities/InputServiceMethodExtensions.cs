@@ -55,6 +55,7 @@ namespace Azure.Generator.Management.Utilities
             if (arrayPropertyName != null)
             {
                 // Get the property type and convert it to CSharpType
+                // Note: GetArrayPropertyName guarantees that the property exists and its Type is non-null
                 var modelType = (InputModelType)inputType;
                 var property = modelType.Properties.First(p => !p.IsDiscriminator);
                 return ManagementClientGenerator.Instance.TypeFactory.CreateCSharpType(property.Type!);
