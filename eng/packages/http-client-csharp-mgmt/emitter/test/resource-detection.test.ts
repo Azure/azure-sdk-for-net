@@ -1155,10 +1155,11 @@ interface Employees {
     strictEqual(employeeResource.metadata.resourceName, "Employee", "Resource should be Employee");
   });
 
-  it("handles multiple paths for same resource model", async () => {
-    // This test validates how the system handles when the same resource model
-    // is used with different paths (e.g., different segments).
-    // After the refactoring, each unique path creates a separate resource entry.
+  it("validates no false positive diagnostics for single Get method", async () => {
+    // This test validates that the diagnostic validation logic works correctly
+    // and doesn't emit false positives when there's only one Get method per resource.
+    // The duplicate Get diagnostic is designed to catch edge cases in resource detection,
+    // though TypeSpec itself will also reject duplicate operations on the same HTTP route.
     const program = await typeSpecCompile(
       `
 /** An Employee resource */
@@ -1178,19 +1179,7 @@ interface Operations extends Azure.ResourceManager.Operations {}
 interface Employees {
   get is ArmResourceRead<Employee>;
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
-}
-
-@armResourceOperations
-interface EmployeesSecondary {
-  getSecondary is ArmResourceRead<
-    Employee,
-    Parameters = {
-      @key
-      @path
-      @segment("something")
-      extra: string;
-    }
-  >;
+  delete is ArmResourceDeleteWithoutOkAsync<Employee>;
 }
 `,
       runner
@@ -1199,19 +1188,20 @@ interface EmployeesSecondary {
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     
-    // Build ARM provider schema - this will run validation
+    // Build ARM provider schema - this will run validation including duplicate Get check
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
     
-    // With the new architecture, different paths create separate resource entries
-    // Both should reference the same Employee model
+    // Verify no false positive diagnostics for duplicate Get methods
+    const duplicateDiagnostics = program.diagnostics.filter(
+      (d) => d.code === "@azure-typespec/http-client-csharp-mgmt/duplicate-get-method"
+    );
+    
+    strictEqual(duplicateDiagnostics.length, 0, 
+      `Should not emit duplicate-get-method diagnostic when there's only one Get method. Got ${duplicateDiagnostics.length} diagnostics.`);
+    
+    // Verify the resource was created successfully
     ok(armProviderSchema.resources);
     ok(armProviderSchema.resources.length >= 1, "Should have at least one resource");
-    
-    // Verify that resources were created for the Employee model
-    const employeeResources = armProviderSchema.resources.filter(
-      r => r.metadata.resourceName.includes("Employee")
-    );
-    ok(employeeResources.length >= 1, "Should have at least one Employee resource");
   });
 });
