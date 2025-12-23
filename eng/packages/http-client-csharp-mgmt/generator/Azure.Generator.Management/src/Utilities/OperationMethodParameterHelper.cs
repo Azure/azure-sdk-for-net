@@ -69,7 +69,7 @@ namespace Azure.Generator.Management.Utilities
                     outputParameter.Update(name: "data");
                 }
 
-                // Rename body parameters for resource/resourcecollection operations
+                // Rename body parameters for resource/resourcecollection/mockablearmclient operations
                 if ((enclosingTypeProvider is ResourceClientProvider or ResourceCollectionClientProvider or MockableArmClientProvider) &&
                     (serviceMethod.Operation.HttpMethod == "PUT" || serviceMethod.Operation.HttpMethod == "POST" || serviceMethod.Operation.HttpMethod == "PATCH"))
                 {
