@@ -84,7 +84,7 @@ export function resolveArmResources(
       processedResources.add(resourceKey);
       
       // Convert to our resource schema format
-      const metadata = convertResolvedResourceToMetadata(resolvedResource, sdkContext);
+      const metadata = convertResolvedResourceToMetadata(sdkContext, resolvedResource);
       
       resources.push({
         resourceModelId: model.crossLanguageDefinitionId,
@@ -98,7 +98,7 @@ export function resolveArmResources(
   if (provider.providerOperations) {
     for (const operation of provider.providerOperations) {
       // Get method ID from the operation
-      const methodId = getMethodIdFromOperation(operation.operation, sdkContext);
+      const methodId = getMethodIdFromOperation(sdkContext, operation.operation);
       if (!methodId) {
         continue;
       }
@@ -121,8 +121,8 @@ export function resolveArmResources(
  * Converts a ResolvedResource to ResourceMetadata format
  */
 function convertResolvedResourceToMetadata(
-  resolvedResource: ResolvedResource,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  resolvedResource: ResolvedResource
 ): ResourceMetadata {
   const methods: ResourceMethod[] = [];
   const resourceScope = convertScopeToResourceScope(resolvedResource.scope);
@@ -133,7 +133,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.read && lifecycle.read.length > 0) {
       for (const readOp of lifecycle.read) {
-        const methodId = getMethodIdFromOperation(readOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(sdkContext, readOp.operation);
         if (methodId) {
           methods.push({
             methodId,
@@ -148,7 +148,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.createOrUpdate && lifecycle.createOrUpdate.length > 0) {
       for (const createOp of lifecycle.createOrUpdate) {
-        const methodId = getMethodIdFromOperation(createOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(sdkContext, createOp.operation);
         if (methodId) {
           methods.push({
             methodId,
@@ -163,7 +163,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.update && lifecycle.update.length > 0) {
       for (const updateOp of lifecycle.update) {
-        const methodId = getMethodIdFromOperation(updateOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(sdkContext, updateOp.operation);
         if (methodId) {
           methods.push({
             methodId,
@@ -178,7 +178,7 @@ function convertResolvedResourceToMetadata(
     
     if (lifecycle.delete && lifecycle.delete.length > 0) {
       for (const deleteOp of lifecycle.delete) {
-        const methodId = getMethodIdFromOperation(deleteOp.operation, sdkContext);
+        const methodId = getMethodIdFromOperation(sdkContext, deleteOp.operation);
         if (methodId) {
           methods.push({
             methodId,
@@ -195,7 +195,7 @@ function convertResolvedResourceToMetadata(
   // Convert list operations
   if (resolvedResource.operations.lists) {
     for (const listOp of resolvedResource.operations.lists) {
-      const methodId = getMethodIdFromOperation(listOp.operation, sdkContext);
+      const methodId = getMethodIdFromOperation(sdkContext, listOp.operation);
       if (methodId) {
         methods.push({
           methodId,
@@ -213,7 +213,7 @@ function convertResolvedResourceToMetadata(
   // Convert action operations
   if (resolvedResource.operations.actions) {
     for (const actionOp of resolvedResource.operations.actions) {
-      const methodId = getMethodIdFromOperation(actionOp.operation, sdkContext);
+      const methodId = getMethodIdFromOperation(sdkContext, actionOp.operation);
       if (methodId) {
         methods.push({
           methodId,
@@ -265,16 +265,23 @@ function getModelFromSdkContext(
 
 /**
  * Get method ID (cross-language definition ID) from an Operation.
- * Uses TCGC's getCrossLanguageDefinitionId for reliable lookup.
+ * Uses TCGC's getHttpOperationWithCache to get the cached HttpOperation,
+ * then extracts the cldi using getCrossLanguageDefinitionId.
  */
 function getMethodIdFromOperation(
-  operation: Operation,
-  sdkContext: CSharpEmitterContext
+  sdkContext: CSharpEmitterContext,
+  operation: Operation
 ): string | undefined {
   try {
-    // Use TCGC's utility to get the cross-language definition ID directly
-    // CSharpEmitterContext extends SdkContext which extends TCGCContext
-    return getCrossLanguageDefinitionId(sdkContext, operation);
+    // First get the cached HttpOperation to ensure we're working with the consistent cached version
+    const httpOperation = getHttpOperationWithCache(sdkContext, operation);
+    if (!httpOperation) {
+      return undefined;
+    }
+    
+    // Then get the cross-language definition ID from the original operation
+    // Using the cached httpOperation ensures consistency
+    return getCrossLanguageDefinitionId(sdkContext, httpOperation.operation);
   } catch {
     // If this fails, return undefined
     return undefined;
