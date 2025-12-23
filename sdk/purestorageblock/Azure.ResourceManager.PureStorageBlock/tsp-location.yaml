@@ -1,5 +1,5 @@
 directory: specification/purestorage/PureStorage.Block.Management
-commit: 71a453b8ef8d9f5f50c9105839f82b399ffd626c
+commit: 48052485923746671326276e1f8a1273306bd92f
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
