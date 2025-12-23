@@ -124,8 +124,6 @@ public class AIAgentInvocation(
             {
                 Tools = aiFunctions.Cast<AITool>().ToList()
             };
-
-            // Console.WriteLine($"[AgentInvocation] Registered {chatOptions.Tools.Count} tools with ChatOptions for invocation.");
             return new ChatClientAgentRunOptions(chatOptions);
         }
 
