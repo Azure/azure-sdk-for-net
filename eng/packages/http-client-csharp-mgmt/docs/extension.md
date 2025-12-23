@@ -33,7 +33,7 @@ This pattern enables:
   - Generates forwarding methods that delegate to mockable providers
   - Adds mocking documentation to guide users
 
-**Example Output**: See [AzureGeneratorMgmtTypeSpecTestsExtensions.cs](../../generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/AzureGeneratorMgmtTypeSpecTestsExtensions.cs)
+**Example Output**: See [AzureGeneratorMgmtTypeSpecTestsExtensions.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/AzureGeneratorMgmtTypeSpecTestsExtensions.cs)
 
 #### 2. MockableResourceProvider
 - **File**: `MockableResourceProvider.cs`
@@ -44,7 +44,7 @@ This pattern enables:
   - Provides convenience methods (Get, List) for resources
   - Hosts non-resource operations that belong to the scope
 
-**Example Output**: See [MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs](../../generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs)
+**Example Output**: See [MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/eng/packages/http-client-csharp-mgmt/generator/TestProjects/Local/Mgmt-TypeSpec/src/Generated/Extensions/MockableAzureGeneratorMgmtTypeSpecTestsResourceGroupResource.cs)
 
 #### 3. ManagementOutputLibrary
 - **File**: `ManagementOutputLibrary.cs`
