@@ -33,6 +33,7 @@ namespace Azure.Generator.Management.Providers
         private readonly string _scopeName;
         private readonly IReadOnlyList<ParameterProvider> _constructorParameters;
         private readonly string _methodName;
+        private readonly CSharpType _contextType;
 
         private static readonly ParameterProvider ContinuationTokenParameter =
             new("continuationToken", $"A continuation token indicating where to resume paging.", new CSharpType(typeof(string)));
@@ -47,7 +48,8 @@ namespace Azure.Generator.Management.Providers
             bool isAsync,
             string scopeName,
             IReadOnlyList<ParameterProvider> constructorParameters,
-            string methodName)
+            string methodName,
+            CSharpType contextType)
         {
             _restClient = restClient;
             _serviceMethod = serviceMethod;
@@ -57,6 +59,7 @@ namespace Azure.Generator.Management.Providers
             _scopeName = scopeName;
             _constructorParameters = constructorParameters;
             _methodName = methodName;
+            _contextType = contextType;
         }
 
         protected override string BuildRelativeFilePath() =>
@@ -297,16 +300,27 @@ namespace Azure.Generator.Management.Providers
                     isAsync: false,
                     out var elementVariable)
                 {
-                    // result.Add(T.DeserializeT(element, ModelSerializationExtensions.WireOptions));
+                    // result.Add(ModelReaderWriter.Read<T>(new BinaryData(Encoding.UTF8.GetBytes(element.GetRawText())), ModelSerializationExtensions.WireOptions, {Context}.Default));
+                    // Use a code literal for the context since it's generated
+                    var modelsWriter = ModelSerializationExtensionsDefinition.WireOptions;
+                    var contextNamespace = _contextType.Namespace ??  ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Name + ".Models";
+                    var contextName = _contextType.Name ?? ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Name.Replace(".", "") + "Context";
+                    var contextRef = new CodeWriterDeclaration($"{contextName}");
+                    var contextSnippet = new MemberExpression(Snippet.FromExpression(new CodeWriterDeclarationExpression(contextRef)), "Default");
+                    
                     resultVariable.Invoke("Add",
                         new ValueExpression[]
                         {
-                            Static(_itemType).Invoke($"Deserialize{_itemType.Name}",
+                            Static(new CSharpType(typeof(System.ClientModel.Primitives.ModelReaderWriter))).Invoke("Read",
                                 new ValueExpression[]
                                 {
-                                    elementVariable,
-                                    Static<ModelSerializationExtensionsDefinition>().Property("WireOptions")
-                                })
+                                    New.Instance(typeof(BinaryData),
+                                        Static(typeof(System.Text.Encoding)).Property("UTF8").Invoke("GetBytes",
+                                            elementVariable.Invoke("GetRawText"))),
+                                    Static<ModelSerializationExtensionsDefinition>().Property("WireOptions"),
+                                    contextSnippet
+                                },
+                                new[] { _itemType })
                         }).Terminate()
                 },
 
