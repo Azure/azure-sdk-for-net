@@ -11,7 +11,7 @@ namespace Azure.AI.AgentServer.Core.Tools;
 /// Asynchronous client for aggregating tools from Azure AI MCP and Tools APIs.
 /// This is the primary client for production use.
 /// </summary>
-#pragma warning disable AZC0003, AZC0004, AZC0005, AZC0007, AZC0015
+#pragma warning disable AZC0015
 public class AzureAIToolClient : IAsyncDisposable
 {
     private readonly HttpClient _httpClient;
@@ -20,6 +20,18 @@ public class AzureAIToolClient : IAsyncDisposable
     private readonly MCPToolsOperations _mcpTools;
     private readonly RemoteToolsOperations _remoteTools;
     private bool _disposed;
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="AzureAIToolClient"/> class for mocking.
+    /// </summary>
+    protected AzureAIToolClient()
+    {
+        _httpClient = null!;
+        _options = null!;
+        _credential = null!;
+        _mcpTools = null!;
+        _remoteTools = null!;
+    }
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AzureAIToolClient"/> class.
@@ -45,13 +57,48 @@ public class AzureAIToolClient : IAsyncDisposable
     }
 
     /// <summary>
+    /// Lists all available tools from configured sources synchronously.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>List of available tools.</returns>
+    /// <exception cref="Exceptions.OAuthConsentRequiredException">OAuth consent required.</exception>
+    /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
+    public virtual IReadOnlyList<FoundryTool> ListTools(CancellationToken cancellationToken = default)
+    {
+        // Refresh token before making requests
+        RefreshToken(cancellationToken);
+
+        var existingNames = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var tools = new List<FoundryTool>();
+
+        if (_options.ToolConfig.NamedMcpTools.Count > 0)
+        {
+            tools.AddRange(_mcpTools.ListTools(existingNames, cancellationToken));
+        }
+
+        if (_options.ToolConfig.RemoteTools.Count > 0)
+        {
+            tools.AddRange(_remoteTools.ResolveTools(existingNames, cancellationToken));
+        }
+
+        // Attach sync + async invokers
+        foreach (var tool in tools)
+        {
+            tool.Invoker = args => InvokeTool(tool, args, cancellationToken);
+            tool.AsyncInvoker = args => InvokeToolAsync(tool, args, cancellationToken);
+        }
+
+        return tools;
+    }
+
+    /// <summary>
     /// Lists all available tools from configured sources asynchronously.
     /// </summary>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning list of available tools.</returns>
     /// <exception cref="Exceptions.OAuthConsentRequiredException">OAuth consent required.</exception>
     /// <exception cref="Exceptions.MCPToolApprovalRequiredException">Tool approval required.</exception>
-    public async Task<IReadOnlyList<FoundryTool>> ListToolsAsync(CancellationToken cancellationToken = default)
+    public virtual async Task<IReadOnlyList<FoundryTool>> ListToolsAsync(CancellationToken cancellationToken = default)
     {
         // Refresh token before making requests
         await RefreshTokenAsync(cancellationToken).ConfigureAwait(false);
@@ -85,10 +132,27 @@ public class AzureAIToolClient : IAsyncDisposable
         // Attach async invokers
         foreach (var tool in tools)
         {
+            tool.Invoker = args => InvokeTool(tool, args, cancellationToken);
             tool.AsyncInvoker = args => InvokeToolAsync(tool, args, cancellationToken);
         }
 
         return tools;
+    }
+
+    /// <summary>
+    /// Invokes a tool by name synchronously.
+    /// </summary>
+    /// <param name="toolName">The tool name.</param>
+    /// <param name="arguments">Optional tool arguments.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The tool invocation result.</returns>
+    public virtual object? InvokeTool(
+        string toolName,
+        IDictionary<string, object?>? arguments = null,
+        CancellationToken cancellationToken = default)
+    {
+        var descriptor = ResolveToolDescriptor(toolName, cancellationToken);
+        return InvokeTool(descriptor, arguments, cancellationToken);
     }
 
     /// <summary>
@@ -98,7 +162,7 @@ public class AzureAIToolClient : IAsyncDisposable
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning the tool invocation result.</returns>
-    public async Task<object?> InvokeToolAsync(
+    public virtual async Task<object?> InvokeToolAsync(
         string toolName,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
@@ -108,13 +172,40 @@ public class AzureAIToolClient : IAsyncDisposable
     }
 
     /// <summary>
+    /// Invokes a tool by descriptor synchronously.
+    /// </summary>
+    /// <param name="tool">The tool descriptor.</param>
+    /// <param name="arguments">Optional tool arguments.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>The tool invocation result.</returns>
+    public virtual object? InvokeTool(
+        FoundryTool tool,
+        IDictionary<string, object?>? arguments = null,
+        CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(tool);
+
+        // Refresh token before invocation
+        RefreshToken(cancellationToken);
+
+        var payload = arguments ?? new Dictionary<string, object?>();
+
+        return tool.Source switch
+        {
+            ToolSource.McpTools => _mcpTools.InvokeTool(tool, payload, cancellationToken),
+            ToolSource.RemoteTools => _remoteTools.InvokeTool(tool, payload, cancellationToken),
+            _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
+        };
+    }
+
+    /// <summary>
     /// Invokes a tool by descriptor asynchronously.
     /// </summary>
     /// <param name="tool">The tool descriptor.</param>
     /// <param name="arguments">Optional tool arguments.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task returning the tool invocation result.</returns>
-    public async Task<object?> InvokeToolAsync(
+    public virtual async Task<object?> InvokeToolAsync(
         FoundryTool tool,
         IDictionary<string, object?>? arguments = null,
         CancellationToken cancellationToken = default)
@@ -134,6 +225,15 @@ public class AzureAIToolClient : IAsyncDisposable
                 .ConfigureAwait(false),
             _ => throw new InvalidOperationException($"Unsupported tool source: {tool.Source}")
         };
+    }
+
+    private FoundryTool ResolveToolDescriptor(string toolName, CancellationToken cancellationToken)
+    {
+        var tools = ListTools(cancellationToken);
+        return tools.FirstOrDefault(t =>
+            string.Equals(t.Name, toolName, StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(t.Key, toolName, StringComparison.OrdinalIgnoreCase))
+            ?? throw new KeyNotFoundException($"Unknown tool: {toolName}");
     }
 
     private async Task<FoundryTool> ResolveToolDescriptorAsync(string toolName, CancellationToken cancellationToken)
@@ -165,11 +265,35 @@ public class AzureAIToolClient : IAsyncDisposable
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
     }
 
+    private void RefreshToken(CancellationToken cancellationToken)
+    {
+        var token = _credential.GetToken(
+            new TokenRequestContext(_options.CredentialScopes.ToArray()),
+            cancellationToken);
+
+        _httpClient.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token.Token);
+    }
+
+    /// <summary>
+    /// Disposes the client and releases resources synchronously.
+    /// </summary>
+    public virtual void Dispose()
+    {
+        if (!_disposed)
+        {
+            _httpClient?.Dispose();
+            _disposed = true;
+        }
+
+        GC.SuppressFinalize(this);
+    }
+
     /// <summary>
     /// Disposes the client and releases resources asynchronously.
     /// </summary>
     /// <returns>A task representing the asynchronous dispose operation.</returns>
-    public async ValueTask DisposeAsync()
+    public virtual async ValueTask DisposeAsync()
     {
         if (!_disposed)
         {
