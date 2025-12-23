@@ -18,7 +18,7 @@ using Azure.Generator.MgmtTypeSpec.Tests.Models;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests
 {
-    internal partial class FoosGetDependenciesAsyncCollectionResultOfT : AsyncPageable<FooDependency>
+    internal partial class FooResourceGetDependenciesAsyncCollectionResultOfT : AsyncPageable<FooDependency>
     {
         private readonly Foos _client;
         private readonly Guid _subscriptionId;
@@ -26,13 +26,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         private readonly string _fooName;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of FoosGetDependenciesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of FooResourceGetDependenciesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Foos client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public FoosGetDependenciesAsyncCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        public FooResourceGetDependenciesAsyncCollectionResultOfT(Foos client, Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             _client = client;
             _subscriptionId = subscriptionId;
@@ -41,10 +41,10 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
             _context = context;
         }
 
-        /// <summary> Gets the pages of FoosGetDependenciesAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of FooResourceGetDependenciesAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of FoosGetDependenciesAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of FooResourceGetDependenciesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<FooDependency>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponseAsync(pageSizeHint, null).ConfigureAwait(false);
