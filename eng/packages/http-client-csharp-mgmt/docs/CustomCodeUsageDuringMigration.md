@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document provides guidance on using custom code during the migration to the new Management Plane Generator (MPG). It is based on analysis of 16 migrated services that utilize custom code to address gaps between the generated code and service requirements.
+This document provides guidance on using custom code during the migration to the new Management Plane Generator (MPG). It is based on analysis of 17 migrated services that utilize custom code to address gaps between the generated code and service requirements.
 
 **Analysis Date:** December 2024
 
-**Services Analyzed:** nginx, quota, storagesync, hardwaresecuritymodules, healthdataaiservices, paloaltonetworks.ngfw, storagemover, agricultureplatform, databasewatcher, deviceregistry, workloadorchestration, carbon, dellstorage, impactreporting, neonpostgres, portalservices
+**Services Analyzed:** nginx, quota, storagesync, hardwaresecuritymodules, healthdataaiservices, paloaltonetworks.ngfw, storagemover, agricultureplatform, databasewatcher, deviceregistry, workloadorchestration, carbon, dellstorage, impactreporting, neonpostgres, portalservices, virtualenclaves
 
 ## Table of Contents
 
@@ -763,9 +763,10 @@ The 16 patterns identified in this analysis cover the vast majority of customiza
 | impactreporting | 3 | Patch Properties |
 | neonpostgres | 2 | Deprecated Update Methods, Patch Properties |
 | portalservices | 1 | Serialization Context |
+| virtualenclaves | 11 | Enum/Type Renaming |
 
-**Total Services Analyzed:** 16  
-**Total Custom Files:** 74
+**Total Services Analyzed:** 17  
+**Total Custom Files:** 85
 
 ---
 
