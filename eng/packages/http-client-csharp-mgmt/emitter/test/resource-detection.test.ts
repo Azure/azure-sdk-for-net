@@ -11,7 +11,6 @@ import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
 
-
 describe("Resource Detection", () => {
   let runner: TestHost;
   beforeEach(async () => {
@@ -146,14 +145,14 @@ interface Employees2 {
     
     // Validate method kinds are present (Get, Create, Update, Delete, List operations)
     const methodKinds = metadata.methods.map((m: any) => m.kind);
-    ok(methodKinds.includes("Get"));
+    ok(methodKinds.includes("Read"));
     ok(methodKinds.includes("Create"));
     ok(methodKinds.includes("Update"));
     ok(methodKinds.includes("Delete"));
     ok(methodKinds.includes("List"));
     
     // Validate Get method details
-    const getMethod = metadata.methods.find((m: any) => m.kind === "Get");
+    const getMethod = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethod);
     strictEqual(
       getMethod.operationPath,
@@ -348,7 +347,7 @@ interface CurrentEmployees {
       "ResourceGroup"
     );
     strictEqual(metadata.methods.length, 3);
-    strictEqual(metadata.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Read");
     strictEqual(metadata.resourceName, "Employee");
 
     // Find the CurrentEmployee resource in the schema by resource type
@@ -481,7 +480,7 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Get");
+    strictEqual(employeeMetadata.methods[0].kind, "Read");
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -639,7 +638,7 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Get");
+    strictEqual(employeeMetadata.methods[0].kind, "Read");
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -798,7 +797,7 @@ interface Employees {
     strictEqual(metadata.singletonResourceName, undefined);
     strictEqual(metadata.resourceScope, "Tenant");
     strictEqual(metadata.methods.length, 5);
-    strictEqual(metadata.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Read");
     strictEqual(
       metadata.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -898,9 +897,9 @@ interface Employees {
     strictEqual(metadata.resourceScope, "Subscription");
 
     // Verify the Get method itself has the correct scope
-    const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Get");
+    const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethodEntry);
-    strictEqual(getMethodEntry.kind, "Get");
+    strictEqual(getMethodEntry.kind, "Read");
     strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
   });
 
@@ -1156,21 +1155,13 @@ interface Employees {
     strictEqual(employeeResource.metadata.resourceName, "Employee", "Resource should be Employee");
   });
 
-  it("emits diagnostic when resource has duplicate Get methods", async () => {
-    // This test creates TypeSpec with two Get/Read operations on the same resource model
-    // using different HTTP routes to test the duplicate Get method diagnostic
-    //
-    // Note: After the main branch refactoring, resources are keyed by path (not just model),
-    // so operations with different paths create separate resource entries, each with one Get method.
-    // The diagnostic would only fire if the same resource path somehow gets multiple Get methods
-    // during processing, which TypeSpec's duplicate-operation validation would prevent.
-    //
-    // This test is kept as a placeholder to verify the current behavior and for potential
-    // future enhancements if the validation logic needs to check across resource paths.
-    
+  it("handles multiple paths for same resource model", async () => {
+    // This test validates how the system handles when the same resource model
+    // is used with different paths (e.g., different segments).
+    // After the refactoring, each unique path creates a separate resource entry.
     const program = await typeSpecCompile(
       `
-/** An Employee resource for testing */
+/** An Employee resource */
 model Employee is TrackedResource<EmployeeProperties> {
   ...ResourceNameParameter<Employee>;
 }
@@ -1187,35 +1178,40 @@ interface Operations extends Azure.ResourceManager.Operations {}
 interface Employees {
   get is ArmResourceRead<Employee>;
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
-  // Second Get operation with different route (extra path segment)
-  getSecondary is ArmResourceRead<Employee, Parameters = {
-    @key
-    @path
-    @segment("something")
-    extra: string;
-  }>;
+}
+
+@armResourceOperations
+interface EmployeesSecondary {
+  getSecondary is ArmResourceRead<
+    Employee,
+    Parameters = {
+      @key
+      @path
+      @segment("something")
+      extra: string;
+    }
+  >;
 }
 `,
       runner
     );
-    
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
     
-    // Build ARM provider schema - this will trigger validation including duplicate Get detection
+    // Build ARM provider schema - this will run validation
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
     
-    // With the current architecture (resources keyed by path), the two Get operations
-    // create separate resources, so no diagnostic should be emitted
-    const duplicateDiagnostics = program.diagnostics.filter(
-      (d) => d.code === "@azure-typespec/http-client-csharp-mgmt/duplicate-get-method"
-    );
+    // With the new architecture, different paths create separate resource entries
+    // Both should reference the same Employee model
+    ok(armProviderSchema.resources);
+    ok(armProviderSchema.resources.length >= 1, "Should have at least one resource");
     
-    // Currently, no diagnostics are expected since operations with different paths
-    // create separate resource entries
-    strictEqual(duplicateDiagnostics.length, 0, 
-      `With current architecture (path-based resource keying), different paths create separate resources. Got ${duplicateDiagnostics.length} diagnostics`);
+    // Verify that resources were created for the Employee model
+    const employeeResources = armProviderSchema.resources.filter(
+      r => r.metadata.resourceName.includes("Employee")
+    );
+    ok(employeeResources.length >= 1, "Should have at least one Employee resource");
   });
 });

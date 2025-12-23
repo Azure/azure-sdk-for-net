@@ -372,9 +372,9 @@ export function buildArmProviderSchema(
     resourcePathToMetadataMap.delete(key);
   }
 
-  // validate that each resource has exactly one Get method
+  // validate that each resource has exactly one Read method
   for (const metadata of resourcePathToMetadataMap.values()) {
-    validateResourceGetMethods(sdkContext, metadata, serviceMethods);
+    validateResourceReadMethods(sdkContext, metadata, serviceMethods);
   }
 
   // the last step, add the decorator to the resource model
@@ -424,7 +424,7 @@ export function buildArmProviderSchema(
 
 function isCRUDKind(kind: ResourceOperationKind): boolean {
   return [
-    ResourceOperationKind.Get,
+    ResourceOperationKind.Read,
     ResourceOperationKind.Create,
     ResourceOperationKind.Update,
     ResourceOperationKind.Delete
@@ -432,30 +432,30 @@ function isCRUDKind(kind: ResourceOperationKind): boolean {
 }
 
 /**
- * Validates that a resource has exactly one Get method.
- * Reports a diagnostic error if multiple Get methods are found.
+ * Validates that a resource has exactly one Read method.
+ * Reports a diagnostic error if multiple Read methods are found.
  * 
  * @param sdkContext - The SDK context containing the program for diagnostic reporting
  * @param resourceMetadata - The resource metadata to validate
  * @param serviceMethods - Map of service methods for resolving operation details
  */
-function validateResourceGetMethods(
+function validateResourceReadMethods(
   sdkContext: CSharpEmitterContext,
   resourceMetadata: ResourceMetadata,
   serviceMethods: Map<string, SdkMethod<SdkHttpOperation>>
 ): void {
-  const getMethods = resourceMetadata.methods.filter(
-    (m) => m.kind === ResourceOperationKind.Get
+  const readMethods = resourceMetadata.methods.filter(
+    (m) => m.kind === ResourceOperationKind.Read
   );
   
-  if (getMethods.length > 1) {
-    // Get the operation identifiers for all duplicate Get methods
-    const operationIds = getMethods
+  if (readMethods.length > 1) {
+    // Get the operation identifiers for all duplicate Read methods
+    const operationIds = readMethods
       .map((m) => m.methodId)
       .join(", ");
     
-    // Report the diagnostic for each duplicate Get method
-    for (const method of getMethods) {
+    // Report the diagnostic for each duplicate Read method
+    for (const method of readMethods) {
       const serviceMethod = serviceMethods.get(method.methodId);
       const target = serviceMethod?.__raw ?? NoTarget;
       
@@ -481,7 +481,7 @@ function parseResourceOperation(
       case readsResourceName:
       case armResourceReadName:
         return [
-          ResourceOperationKind.Get,
+          ResourceOperationKind.Read,
           getResourceModelId(sdkContext, decorator),
           undefined // No explicit resource name for ARM operations
         ];
@@ -519,7 +519,7 @@ function parseResourceOperation(
         switch (decorator.args[2].jsValue) {
           case "read":
             return [
-              ResourceOperationKind.Get,
+              ResourceOperationKind.Read,
               getResourceModelIdCore(
                 sdkContext,
                 decorator.args[1].value as Model,
@@ -584,7 +584,7 @@ function parseResourceOperation(
         switch (decorator.args[1].jsValue) {
           case "read":
             return [
-              ResourceOperationKind.Get,
+              ResourceOperationKind.Read,
               getResourceModelIdCore(
                 sdkContext,
                 decorator.args[0].value as Model,
@@ -649,7 +649,7 @@ function parseResourceOperation(
         switch (decorator.args[2].jsValue) {
           case "read":
             return [
-              ResourceOperationKind.Get,
+              ResourceOperationKind.Read,
               getResourceModelIdCore(
                 sdkContext,
                 decorator.args[1].value as Model,
@@ -822,7 +822,7 @@ function getResourceScope(
 
   // Fall back to Get method's scope only if no scope decorators are found
   if (methods) {
-    const getMethod = methods.find((m) => m.kind === ResourceOperationKind.Get);
+    const getMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
     if (getMethod) {
       return getMethod.operationScope;
     }
