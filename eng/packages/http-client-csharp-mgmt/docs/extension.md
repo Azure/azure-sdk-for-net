@@ -23,30 +23,6 @@ This pattern enables:
 
 ## Architecture Overview
 
-### High-Level Flow
-
-```
-TypeSpec Definition
-       ↓
-   Emitter (TypeSpec → InputServiceMethod)
-       ↓
-   ManagementOutputLibrary (Categorization)
-       ↓
-   ┌──────────────────────────────────────┐
-   │  Resources & Non-Resource Methods    │
-   │  Categorized by ResourceScope        │
-   └──────────────────────────────────────┘
-       ↓
-   ┌─────────────────┬──────────────────┐
-   ↓                 ↓                  ↓
-MockableResourceProvider  MockableResourceProvider  ...
-(ResourceGroup scope)    (Subscription scope)
-       ↓                 ↓
-   Extension Methods Forward to Mockable Providers
-       ↓
-   ExtensionProvider (Public Static Class)
-```
-
 ### Key Components
 
 #### 1. ExtensionProvider
