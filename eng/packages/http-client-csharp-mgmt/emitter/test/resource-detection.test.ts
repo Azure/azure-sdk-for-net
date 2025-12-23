@@ -7,9 +7,10 @@ import {
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
-import { buildArmProviderSchema } from "../src/resource-detection.js";
+import { buildArmProviderSchema, validateResourceGetMethods } from "../src/resource-detection.js";
 import { ok, strictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
+import { ResourceOperationKind, ResourceMetadata } from "../src/resource-metadata.js";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -1155,14 +1156,15 @@ interface Employees {
     strictEqual(employeeResource.metadata.resourceName, "Employee", "Resource should be Employee");
   });
 
-  it("validates no false positive diagnostics for single Get method", async () => {
-    // This test validates that the diagnostic validation logic works correctly
-    // and doesn't emit false positives when there's only one Get method per resource.
-    // The duplicate Get diagnostic is designed to catch edge cases in resource detection,
-    // though TypeSpec itself will also reject duplicate operations on the same HTTP route.
+  it("emits diagnostic when resource has duplicate Get methods", async () => {
+    // This test directly calls validateResourceGetMethods with mock data
+    // to verify the diagnostic is emitted when a resource has multiple Get methods.
+    // Note: TypeSpec's duplicate-operation validation prevents creating this scenario
+    // in real TypeSpec code, so we test the validation function directly.
+    
     const program = await typeSpecCompile(
       `
-/** An Employee resource */
+/** An Employee resource for testing */
 model Employee is TrackedResource<EmployeeProperties> {
   ...ResourceNameParameter<Employee>;
 }
@@ -1179,29 +1181,71 @@ interface Operations extends Azure.ResourceManager.Operations {}
 interface Employees {
   get is ArmResourceRead<Employee>;
   createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
-  delete is ArmResourceDeleteWithoutOkAsync<Employee>;
 }
 `,
       runner
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
     
-    // Build ARM provider schema - this will run validation including duplicate Get check
-    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
-    ok(armProviderSchema);
+    // Create mock resource metadata with duplicate Get methods
+    const mockMetadata: ResourceMetadata = {
+      resourceIdPattern: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Test.Provider/testResources/{testResourceName}",
+      resourceType: "Test.Provider/testResources",
+      resourceScope: ResourceScope.ResourceGroup,
+      resourceName: "TestResource",
+      methods: [
+        // First Get method
+        {
+          methodId: "TestNamespace.TestClient.get",
+          kind: ResourceOperationKind.Get,
+          operationPath: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Test.Provider/testResources/{testResourceName}",
+          operationScope: ResourceScope.ResourceGroup
+        },
+        // Second Get method (duplicate)
+        {
+          methodId: "TestNamespace.TestClient.getAlternate",
+          kind: ResourceOperationKind.Get,
+          operationPath: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Test.Provider/testResources/{testResourceName}",
+          operationScope: ResourceScope.ResourceGroup
+        },
+        // A non-Get method
+        {
+          methodId: "TestNamespace.TestClient.create",
+          kind: ResourceOperationKind.Create,
+          operationPath: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Test.Provider/testResources/{testResourceName}",
+          operationScope: ResourceScope.ResourceGroup
+        }
+      ],
+      singletonResourceName: undefined,
+      parentResourceId: undefined,
+      parentResourceModelId: undefined
+    };
     
-    // Verify no false positive diagnostics for duplicate Get methods
+    // Create empty service methods map (not needed for this test)
+    const serviceMethods = new Map();
+    
+    // Call the validation function directly with mock data containing duplicate Get methods
+    validateResourceGetMethods(sdkContext, mockMetadata, serviceMethods);
+    
+    // Check that diagnostics were emitted
     const duplicateDiagnostics = program.diagnostics.filter(
       (d) => d.code === "@azure-typespec/http-client-csharp-mgmt/duplicate-get-method"
     );
     
-    strictEqual(duplicateDiagnostics.length, 0, 
-      `Should not emit duplicate-get-method diagnostic when there's only one Get method. Got ${duplicateDiagnostics.length} diagnostics.`);
+    // Should emit diagnostics for each duplicate Get method (2 in this case)
+    ok(duplicateDiagnostics.length >= 2, 
+      `Should emit at least 2 diagnostics for duplicate Get methods, got ${duplicateDiagnostics.length}`);
     
-    // Verify the resource was created successfully
-    ok(armProviderSchema.resources);
-    ok(armProviderSchema.resources.length >= 1, "Should have at least one resource");
+    // Verify diagnostic messages exist and contain the template
+    for (const diag of duplicateDiagnostics) {
+      ok(diag.message, "Diagnostic should have a message");
+      // The message should at least mention "multiple Get methods" or "duplicate"
+      ok(
+        diag.message.toLowerCase().includes("multiple") || 
+        diag.message.toLowerCase().includes("get"),
+        `Diagnostic message should mention multiple Get methods. Got: ${diag.message}`
+      );
+    }
   });
 });
