@@ -43,7 +43,6 @@ import { CSharpEmitterContext } from "@typespec/http-client-csharp";
 import {
   SdkModelType,
   getClientType,
-  getHttpOperationWithCache,
   getCrossLanguageDefinitionId
 } from "@azure-tools/typespec-client-generator-core";
 
@@ -265,23 +264,16 @@ function getModelFromSdkContext(
 
 /**
  * Get method ID (cross-language definition ID) from an Operation.
- * Uses TCGC's getHttpOperationWithCache to get the cached HttpOperation,
- * then extracts the cldi using getCrossLanguageDefinitionId.
+ * Uses TCGC's getCrossLanguageDefinitionId utility directly.
  */
 function getMethodIdFromOperation(
   sdkContext: CSharpEmitterContext,
   operation: Operation
 ): string | undefined {
   try {
-    // First get the cached HttpOperation to ensure we're working with the consistent cached version
-    const httpOperation = getHttpOperationWithCache(sdkContext, operation);
-    if (!httpOperation) {
-      return undefined;
-    }
-    
-    // Then get the cross-language definition ID from the original operation
-    // Using the cached httpOperation ensures consistency
-    return getCrossLanguageDefinitionId(sdkContext, httpOperation.operation);
+    // Use TCGC's utility to get the cross-language definition ID directly
+    // CSharpEmitterContext extends SdkContext which extends TCGCContext
+    return getCrossLanguageDefinitionId(sdkContext, operation);
   } catch {
     // If this fails, return undefined
     return undefined;
