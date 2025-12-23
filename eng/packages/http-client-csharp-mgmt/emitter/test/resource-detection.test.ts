@@ -3,7 +3,8 @@ import {
   createCSharpSdkContext,
   createEmitterContext,
   createEmitterTestHost,
-  typeSpecCompile
+  typeSpecCompile,
+  normalizeSchemaForComparison
 } from "./test-util.js";
 import { TestHost } from "@typespec/compiler/testing";
 import { createModel } from "@typespec/http-client-csharp";
@@ -237,28 +238,11 @@ interface Employees2 {
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
     
-    // The resolveArmResources API currently doesn't populate methods in the same way as buildArmProviderSchema
-    // This is a known limitation that needs to be addressed in the converter
-    // For now, we compare schemas excluding the methods and nonResourceMethods fields
-    const compareSchemaWithoutMethods = (schema: any) => ({
-      resources: schema.resources.map((r: any) => ({
-        resourceModelId: r.resourceModelId,
-        metadata: {
-          resourceIdPattern: r.metadata.resourceIdPattern,
-          resourceType: r.metadata.resourceType,
-          resourceScope: r.metadata.resourceScope,
-          parentResourceId: r.metadata.parentResourceId,
-          singletonResourceName: r.metadata.singletonResourceName,
-          resourceName: r.metadata.resourceName
-          // Note: methods excluded from comparison due to converter limitation
-        }
-      }))
-      // Note: nonResourceMethods excluded from comparison due to converter limitation
-    });
-    
+    // Compare the entire schemas using deep equality
+    // Note: Methods should now be populated by the converter with the name-based fallback lookup
     deepStrictEqual(
-      compareSchemaWithoutMethods(resolvedSchema),
-      compareSchemaWithoutMethods(armProviderSchema)
+      normalizeSchemaForComparison(resolvedSchema),
+      normalizeSchemaForComparison(armProviderSchema)
     );
   });
 
