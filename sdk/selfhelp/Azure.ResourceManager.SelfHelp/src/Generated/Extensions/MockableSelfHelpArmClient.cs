@@ -8,412 +8,38 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.SelfHelp;
 using Azure.ResourceManager.SelfHelp.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableSelfHelpArmClient : ArmResource
     {
         private ClientDiagnostics _checkNameAvailabilityClientDiagnostics;
-        private CheckNameAvailabilityRestOperations _checkNameAvailabilityRestClient;
+        private CheckNameAvailability _checkNameAvailabilityRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSelfHelpArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableSelfHelpArmClient for mocking. </summary>
         protected MockableSelfHelpArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableSelfHelpArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableSelfHelpArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableSelfHelpArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableSelfHelpArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
+        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ClientDiagnostics CheckNameAvailabilityClientDiagnostics => _checkNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CheckNameAvailabilityRestOperations CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private CheckNameAvailability CheckNameAvailabilityRestClient => _checkNameAvailabilityRestClient ??= new CheckNameAvailability(CheckNameAvailabilityClientDiagnostics, Pipeline, Endpoint, "2024-03-01-preview");
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of SelfHelpDiagnosticResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SelfHelpDiagnosticResources and their operations over a SelfHelpDiagnosticResource. </returns>
-        public virtual SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(ResourceIdentifier scope)
-        {
-            return new SelfHelpDiagnosticCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetSelfHelpDiagnostics(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DiagnosticResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
-        {
-            return GetSelfHelpDiagnostics(scope).Get(diagnosticsResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SelfHelpSolutionResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SelfHelpSolutionResources and their operations over a SelfHelpSolutionResource. </returns>
-        public virtual SelfHelpSolutionCollection GetSelfHelpSolutions(ResourceIdentifier scope)
-        {
-            return new SelfHelpSolutionCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the solution using the applicable solutionResourceName while creating the solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="solutionResourceName"> Solution resource Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SelfHelpSolutionResource>> GetSelfHelpSolutionAsync(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetSelfHelpSolutions(scope).GetAsync(solutionResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the solution using the applicable solutionResourceName while creating the solution.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SolutionResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSolutionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="solutionResourceName"> Solution resource Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SelfHelpSolutionResource> GetSelfHelpSolution(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
-        {
-            return GetSelfHelpSolutions(scope).Get(solutionResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SelfHelpSimplifiedSolutionResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SelfHelpSimplifiedSolutionResources and their operations over a SelfHelpSimplifiedSolutionResource. </returns>
-        public virtual SelfHelpSimplifiedSolutionCollection GetSelfHelpSimplifiedSolutions(ResourceIdentifier scope)
-        {
-            return new SelfHelpSimplifiedSolutionCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get the simplified Solutions using the applicable solutionResourceName while creating the simplified Solutions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutionsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSimplifiedSolutionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="simplifiedSolutionsResourceName"> Simplified Solutions Resource Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SelfHelpSimplifiedSolutionResource>> GetSelfHelpSimplifiedSolutionAsync(ResourceIdentifier scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetSelfHelpSimplifiedSolutions(scope).GetAsync(simplifiedSolutionsResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the simplified Solutions using the applicable solutionResourceName while creating the simplified Solutions.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SimplifiedSolutionsResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpSimplifiedSolutionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="simplifiedSolutionsResourceName"> Simplified Solutions Resource Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SelfHelpSimplifiedSolutionResource> GetSelfHelpSimplifiedSolution(ResourceIdentifier scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
-        {
-            return GetSelfHelpSimplifiedSolutions(scope).Get(simplifiedSolutionsResourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of SelfHelpTroubleshooterResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of SelfHelpTroubleshooterResources and their operations over a SelfHelpTroubleshooterResource. </returns>
-        public virtual SelfHelpTroubleshooterCollection GetSelfHelpTroubleshooters(ResourceIdentifier scope)
-        {
-            return new SelfHelpTroubleshooterCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TroubleshooterResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<SelfHelpTroubleshooterResource>> GetSelfHelpTroubleshooterAsync(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
-        {
-            return await GetSelfHelpTroubleshooters(scope).GetAsync(troubleshooterName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>TroubleshooterResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SelfHelpTroubleshooterResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<SelfHelpTroubleshooterResource> GetSelfHelpTroubleshooter(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
-        {
-            return GetSelfHelpTroubleshooters(scope).Get(troubleshooterName, cancellationToken);
-        }
-
-        /// <summary>
-        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityOperationGroup_CheckSelfHelpNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The required parameters for availability check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
-            scope0.Start();
-            try
-            {
-                var response = await CheckNameAvailabilityRestClient.CheckSelfHelpNameAvailabilityAsync(scope, content, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Help/checkNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CheckNameAvailabilityOperationGroup_CheckSelfHelpNameAvailability</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01-preview</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="content"> The required parameters for availability check. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(scope, nameof(scope));
-
-            using var scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
-            scope0.Start();
-            try
-            {
-                var response = CheckNameAvailabilityRestClient.CheckSelfHelpNameAvailability(scope, content, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope0.Failed(e);
-                throw;
-            }
-        }
-        /// <summary>
-        /// Gets an object representing a <see cref="SelfHelpDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SelfHelpDiagnosticResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="SelfHelpDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SelfHelpDiagnosticResource"/> object. </returns>
         public virtual SelfHelpDiagnosticResource GetSelfHelpDiagnosticResource(ResourceIdentifier id)
@@ -422,10 +48,43 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             return new SelfHelpDiagnosticResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SelfHelpSolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SelfHelpSolutionResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpSolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="SelfHelpDiagnosticCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SelfHelpDiagnosticResource"/> objects. </returns>
+        public virtual SelfHelpDiagnosticCollection GetSelfHelpDiagnostics(ResourceIdentifier scope)
+        {
+            return new SelfHelpDiagnosticCollection(Client, scope);
+        }
+
+        /// <summary> Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SelfHelpDiagnosticResource> GetSelfHelpDiagnostic(ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
+            return GetSelfHelpDiagnostics(scope).Get(diagnosticsResourceName, cancellationToken);
+        }
+
+        /// <summary> Get the diagnostics using the 'diagnosticsResourceName' you chose while creating the diagnostic. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="diagnosticsResourceName"> Unique resource name for insight resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="diagnosticsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="diagnosticsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SelfHelpDiagnosticResource>> GetSelfHelpDiagnosticAsync(ResourceIdentifier scope, string diagnosticsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(diagnosticsResourceName, nameof(diagnosticsResourceName));
+
+            return await GetSelfHelpDiagnostics(scope).GetAsync(diagnosticsResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SelfHelpSolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SelfHelpSolutionResource"/> object. </returns>
         public virtual SelfHelpSolutionResource GetSelfHelpSolutionResource(ResourceIdentifier id)
@@ -434,10 +93,43 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             return new SelfHelpSolutionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SelfHelpSimplifiedSolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SelfHelpSimplifiedSolutionResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpSimplifiedSolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="SelfHelpSolutionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SelfHelpSolutionResource"/> objects. </returns>
+        public virtual SelfHelpSolutionCollection GetSelfHelpSolutions(ResourceIdentifier scope)
+        {
+            return new SelfHelpSolutionCollection(Client, scope);
+        }
+
+        /// <summary> Get the solution using the applicable solutionResourceName while creating the solution. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SelfHelpSolutionResource> GetSelfHelpSolution(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            return GetSelfHelpSolutions(scope).Get(solutionResourceName, cancellationToken);
+        }
+
+        /// <summary> Get the solution using the applicable solutionResourceName while creating the solution. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="solutionResourceName"> Solution resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="solutionResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="solutionResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SelfHelpSolutionResource>> GetSelfHelpSolutionAsync(ResourceIdentifier scope, string solutionResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(solutionResourceName, nameof(solutionResourceName));
+
+            return await GetSelfHelpSolutions(scope).GetAsync(solutionResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SelfHelpSimplifiedSolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SelfHelpSimplifiedSolutionResource"/> object. </returns>
         public virtual SelfHelpSimplifiedSolutionResource GetSelfHelpSimplifiedSolutionResource(ResourceIdentifier id)
@@ -446,16 +138,194 @@ namespace Azure.ResourceManager.SelfHelp.Mocking
             return new SelfHelpSimplifiedSolutionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing a <see cref="SelfHelpTroubleshooterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SelfHelpTroubleshooterResource.CreateResourceIdentifier" /> to create a <see cref="SelfHelpTroubleshooterResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="SelfHelpSimplifiedSolutionCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SelfHelpSimplifiedSolutionResource"/> objects. </returns>
+        public virtual SelfHelpSimplifiedSolutionCollection GetSelfHelpSimplifiedSolutions(ResourceIdentifier scope)
+        {
+            return new SelfHelpSimplifiedSolutionCollection(Client, scope);
+        }
+
+        /// <summary> Get the simplified Solutions using the applicable solutionResourceName while creating the simplified Solutions. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="simplifiedSolutionsResourceName"> Simplified Solutions Resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SelfHelpSimplifiedSolutionResource> GetSelfHelpSimplifiedSolution(ResourceIdentifier scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
+
+            return GetSelfHelpSimplifiedSolutions(scope).Get(simplifiedSolutionsResourceName, cancellationToken);
+        }
+
+        /// <summary> Get the simplified Solutions using the applicable solutionResourceName while creating the simplified Solutions. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="simplifiedSolutionsResourceName"> Simplified Solutions Resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="simplifiedSolutionsResourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="simplifiedSolutionsResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SelfHelpSimplifiedSolutionResource>> GetSelfHelpSimplifiedSolutionAsync(ResourceIdentifier scope, string simplifiedSolutionsResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simplifiedSolutionsResourceName, nameof(simplifiedSolutionsResourceName));
+
+            return await GetSelfHelpSimplifiedSolutions(scope).GetAsync(simplifiedSolutionsResourceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SelfHelpTroubleshooterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="SelfHelpTroubleshooterResource"/> object. </returns>
         public virtual SelfHelpTroubleshooterResource GetSelfHelpTroubleshooterResource(ResourceIdentifier id)
         {
             SelfHelpTroubleshooterResource.ValidateResourceId(id);
             return new SelfHelpTroubleshooterResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="SelfHelpTroubleshooterCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="SelfHelpTroubleshooterResource"/> objects. </returns>
+        public virtual SelfHelpTroubleshooterCollection GetSelfHelpTroubleshooters(ResourceIdentifier scope)
+        {
+            return new SelfHelpTroubleshooterCollection(Client, scope);
+        }
+
+        /// <summary> Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<SelfHelpTroubleshooterResource> GetSelfHelpTroubleshooter(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            return GetSelfHelpTroubleshooters(scope).Get(troubleshooterName, cancellationToken);
+        }
+
+        /// <summary> Gets troubleshooter instance result which includes the step status/result of the troubleshooter resource name that is being executed.&lt;br/&gt; Get API is used to retrieve the result of a Troubleshooter instance, which includes the status and result of each step in the Troubleshooter workflow. This API requires the Troubleshooter resource name that was created using the Create API. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="troubleshooterName"> Troubleshooter resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="troubleshooterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="troubleshooterName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<SelfHelpTroubleshooterResource>> GetSelfHelpTroubleshooterAsync(ResourceIdentifier scope, string troubleshooterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(troubleshooterName, nameof(troubleshooterName));
+
+            return await GetSelfHelpTroubleshooters(scope).GetAsync(troubleshooterName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="SelfHelpSolutionResultResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SelfHelpSolutionResultResource"/> object. </returns>
+        public virtual SelfHelpSolutionResultResource GetSelfHelpSolutionResultResource(ResourceIdentifier id)
+        {
+            SelfHelpSolutionResultResource.ValidateResourceId(id);
+            return new SelfHelpSolutionResultResource(Client, id);
+        }
+
+        /// <summary>
+        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailabilityOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="checkNameAvailabilityRequest"> The required parameters for availability check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<SelfHelpNameAvailabilityResult>> CheckSelfHelpNameAvailabilityAsync(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckSelfHelpNameAvailabilityRequest(scope.ToString(), SelfHelpNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SelfHelpNameAvailabilityResult> response = Response.FromValue(SelfHelpNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This API is used to check the uniqueness of a resource name used for a diagnostic, troubleshooter or solutions
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.Help/checkNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> CheckNameAvailabilityOperationGroup_CheckNameAvailability. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2024-03-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="checkNameAvailabilityRequest"> The required parameters for availability check. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<SelfHelpNameAvailabilityResult> CheckSelfHelpNameAvailability(ResourceIdentifier scope, SelfHelpNameAvailabilityContent content = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = CheckNameAvailabilityClientDiagnostics.CreateScope("MockableSelfHelpArmClient.CheckSelfHelpNameAvailability");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = CheckNameAvailabilityRestClient.CreateCheckSelfHelpNameAvailabilityRequest(scope.ToString(), SelfHelpNameAvailabilityContent.ToRequestContent(content), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SelfHelpNameAvailabilityResult> response = Response.FromValue(SelfHelpNameAvailabilityResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
         }
     }
 }
