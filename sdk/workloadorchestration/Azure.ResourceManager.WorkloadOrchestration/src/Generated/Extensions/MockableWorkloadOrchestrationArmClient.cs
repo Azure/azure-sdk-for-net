@@ -8,183 +8,29 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Azure.ResourceManager.WorkloadOrchestration;
 
 namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
 {
-    /// <summary> A class to add extension methods to ArmClient. </summary>
+    /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
     public partial class MockableWorkloadOrchestrationArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadOrchestrationArmClient"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableWorkloadOrchestrationArmClient for mocking. </summary>
         protected MockableWorkloadOrchestrationArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableWorkloadOrchestrationArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableWorkloadOrchestrationArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableWorkloadOrchestrationArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        internal MockableWorkloadOrchestrationArmClient(ArmClient client) : this(client, ResourceIdentifier.Root)
-        {
-        }
-
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
-
-        /// <summary> Gets a collection of EdgeJobResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of EdgeJobResources and their operations over a EdgeJobResource. </returns>
-        public virtual EdgeJobCollection GetEdgeJobs(ResourceIdentifier scope)
-        {
-            return new EdgeJobCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get a Job resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="jobName"> The name of the Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeJobResource>> GetEdgeJobAsync(ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeJobs(scope).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Job resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Job_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="jobName"> The name of the Job. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeJobResource> GetEdgeJob(ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeJobs(scope).Get(jobName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of EdgeSchemaReferenceResources in the ArmClient. </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> An object representing collection of EdgeSchemaReferenceResources and their operations over a EdgeSchemaReferenceResource. </returns>
-        public virtual EdgeSchemaReferenceCollection GetEdgeSchemaReferences(ResourceIdentifier scope)
-        {
-            return new EdgeSchemaReferenceCollection(Client, scope);
-        }
-
-        /// <summary>
-        /// Get a Schema Reference Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/schemaReferences/{schemaReferenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaReference_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaReferenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="schemaReferenceName"> The name of the SchemaReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<EdgeSchemaReferenceResource>> GetEdgeSchemaReferenceAsync(ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
-        {
-            return await GetEdgeSchemaReferences(scope).GetAsync(schemaReferenceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a Schema Reference Resource
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{resourceUri}/providers/Microsoft.Edge/schemaReferences/{schemaReferenceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SchemaReference_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="EdgeSchemaReferenceResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="schemaReferenceName"> The name of the SchemaReference. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaReferenceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<EdgeSchemaReferenceResource> GetEdgeSchemaReference(ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
-        {
-            return GetEdgeSchemaReferences(scope).Get(schemaReferenceName, cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeDynamicSchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDynamicSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeDynamicSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeDynamicSchemaResource"/> object. </returns>
         public virtual EdgeDynamicSchemaResource GetEdgeDynamicSchemaResource(ResourceIdentifier id)
@@ -193,10 +39,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeDynamicSchemaResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSchemaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSchemaResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeSchemaResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSchemaResource"/> object. </returns>
         public virtual EdgeSchemaResource GetEdgeSchemaResource(ResourceIdentifier id)
@@ -205,10 +48,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSchemaResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSchemaVersionResource"/> object. </returns>
         public virtual EdgeSchemaVersionResource GetEdgeSchemaVersionResource(ResourceIdentifier id)
@@ -217,10 +57,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSchemaVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSolutionVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSolutionVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeSolutionVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSolutionVersionResource"/> object. </returns>
         public virtual EdgeSolutionVersionResource GetEdgeSolutionVersionResource(ResourceIdentifier id)
@@ -229,10 +66,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSolutionVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeJobResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeJobResource.CreateResourceIdentifier" /> to create an <see cref="EdgeJobResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeJobResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeJobResource"/> object. </returns>
         public virtual EdgeJobResource GetEdgeJobResource(ResourceIdentifier id)
@@ -241,10 +75,43 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeJobResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeTargetResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeTargetResource.CreateResourceIdentifier" /> to create an <see cref="EdgeTargetResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="EdgeJobCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="EdgeJobResource"/> objects. </returns>
+        public virtual EdgeJobCollection GetEdgeJobs(ResourceIdentifier scope)
+        {
+            return new EdgeJobCollection(Client, scope);
+        }
+
+        /// <summary> Get a Job resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="jobName"> The name of the Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeJobResource> GetEdgeJob(ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return GetEdgeJobs(scope).Get(jobName, cancellationToken);
+        }
+
+        /// <summary> Get a Job resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="jobName"> The name of the Job. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeJobResource>> GetEdgeJobAsync(ResourceIdentifier scope, string jobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            return await GetEdgeJobs(scope).GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeTargetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeTargetResource"/> object. </returns>
         public virtual EdgeTargetResource GetEdgeTargetResource(ResourceIdentifier id)
@@ -253,10 +120,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeTargetResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeDynamicSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDynamicSchemaVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDynamicSchemaVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeDynamicSchemaVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeDynamicSchemaVersionResource"/> object. </returns>
         public virtual EdgeDynamicSchemaVersionResource GetEdgeDynamicSchemaVersionResource(ResourceIdentifier id)
@@ -265,10 +129,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeDynamicSchemaVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSchemaReferenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSchemaReferenceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSchemaReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeSchemaReferenceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSchemaReferenceResource"/> object. </returns>
         public virtual EdgeSchemaReferenceResource GetEdgeSchemaReferenceResource(ResourceIdentifier id)
@@ -277,10 +138,43 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSchemaReferenceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSolutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSolutionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets a collection of <see cref="EdgeSchemaReferenceCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="EdgeSchemaReferenceResource"/> objects. </returns>
+        public virtual EdgeSchemaReferenceCollection GetEdgeSchemaReferences(ResourceIdentifier scope)
+        {
+            return new EdgeSchemaReferenceCollection(Client, scope);
+        }
+
+        /// <summary> Get a Schema Reference Resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="schemaReferenceName"> The name of the SchemaReference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<EdgeSchemaReferenceResource> GetEdgeSchemaReference(ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(schemaReferenceName, nameof(schemaReferenceName));
+
+            return GetEdgeSchemaReferences(scope).Get(schemaReferenceName, cancellationToken);
+        }
+
+        /// <summary> Get a Schema Reference Resource. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="schemaReferenceName"> The name of the SchemaReference. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaReferenceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="schemaReferenceName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<EdgeSchemaReferenceResource>> GetEdgeSchemaReferenceAsync(ResourceIdentifier scope, string schemaReferenceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(schemaReferenceName, nameof(schemaReferenceName));
+
+            return await GetEdgeSchemaReferences(scope).GetAsync(schemaReferenceName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="EdgeSolutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSolutionResource"/> object. </returns>
         public virtual EdgeSolutionResource GetEdgeSolutionResource(ResourceIdentifier id)
@@ -289,10 +183,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSolutionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSolutionTemplateVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeSolutionTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSolutionTemplateVersionResource"/> object. </returns>
         public virtual EdgeSolutionTemplateVersionResource GetEdgeSolutionTemplateVersionResource(ResourceIdentifier id)
@@ -301,10 +192,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSolutionTemplateVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSolutionTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSolutionTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSolutionTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeSolutionTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSolutionTemplateResource"/> object. </returns>
         public virtual EdgeSolutionTemplateResource GetEdgeSolutionTemplateResource(ResourceIdentifier id)
@@ -313,10 +201,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeSolutionTemplateResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeDeploymentInstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDeploymentInstanceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeDeploymentInstanceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeDeploymentInstanceResource"/> object. </returns>
         public virtual EdgeDeploymentInstanceResource GetEdgeDeploymentInstanceResource(ResourceIdentifier id)
@@ -325,10 +210,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeDeploymentInstanceResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeDeploymentInstanceHistoryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDeploymentInstanceHistoryResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDeploymentInstanceHistoryResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeDeploymentInstanceHistoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeDeploymentInstanceHistoryResource"/> object. </returns>
         public virtual EdgeDeploymentInstanceHistoryResource GetEdgeDeploymentInstanceHistoryResource(ResourceIdentifier id)
@@ -337,10 +219,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeDeploymentInstanceHistoryResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeConfigTemplateResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeConfigTemplateResource.CreateResourceIdentifier" /> to create an <see cref="EdgeConfigTemplateResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeConfigTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeConfigTemplateResource"/> object. </returns>
         public virtual EdgeConfigTemplateResource GetEdgeConfigTemplateResource(ResourceIdentifier id)
@@ -349,10 +228,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeConfigTemplateResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeConfigTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeConfigTemplateVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeConfigTemplateVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeConfigTemplateVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeConfigTemplateVersionResource"/> object. </returns>
         public virtual EdgeConfigTemplateVersionResource GetEdgeConfigTemplateVersionResource(ResourceIdentifier id)
@@ -361,10 +237,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeConfigTemplateVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeWorkflowResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeWorkflowResource.CreateResourceIdentifier" /> to create an <see cref="EdgeWorkflowResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeWorkflowResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeWorkflowResource"/> object. </returns>
         public virtual EdgeWorkflowResource GetEdgeWorkflowResource(ResourceIdentifier id)
@@ -373,10 +246,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeWorkflowResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeWorkflowVersionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeWorkflowVersionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeWorkflowVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeWorkflowVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeWorkflowVersionResource"/> object. </returns>
         public virtual EdgeWorkflowVersionResource GetEdgeWorkflowVersionResource(ResourceIdentifier id)
@@ -385,10 +255,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeWorkflowVersionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeExecutionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeExecutionResource.CreateResourceIdentifier" /> to create an <see cref="EdgeExecutionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeExecutionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeExecutionResource"/> object. </returns>
         public virtual EdgeExecutionResource GetEdgeExecutionResource(ResourceIdentifier id)
@@ -397,10 +264,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeExecutionResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeDiagnosticResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeDiagnosticResource.CreateResourceIdentifier" /> to create an <see cref="EdgeDiagnosticResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeDiagnosticResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeDiagnosticResource"/> object. </returns>
         public virtual EdgeDiagnosticResource GetEdgeDiagnosticResource(ResourceIdentifier id)
@@ -409,10 +273,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeDiagnosticResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeContextResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeContextResource.CreateResourceIdentifier" /> to create an <see cref="EdgeContextResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeContextResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeContextResource"/> object. </returns>
         public virtual EdgeContextResource GetEdgeContextResource(ResourceIdentifier id)
@@ -421,10 +282,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Mocking
             return new EdgeContextResource(Client, id);
         }
 
-        /// <summary>
-        /// Gets an object representing an <see cref="EdgeSiteReferenceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EdgeSiteReferenceResource.CreateResourceIdentifier" /> to create an <see cref="EdgeSiteReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
+        /// <summary> Gets an object representing a <see cref="EdgeSiteReferenceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="EdgeSiteReferenceResource"/> object. </returns>
         public virtual EdgeSiteReferenceResource GetEdgeSiteReferenceResource(ResourceIdentifier id)
