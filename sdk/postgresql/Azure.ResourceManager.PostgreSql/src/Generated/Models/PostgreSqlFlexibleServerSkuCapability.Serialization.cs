@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVcoreMb))
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVCoreMb))
             {
                 writer.WritePropertyName("supportedMemoryPerVcoreMb"u8);
-                writer.WriteNumberValue(SupportedMemoryPerVcoreMb.Value);
+                writer.WriteNumberValue(SupportedMemoryPerVCoreMb.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string name = default;
             int? vCores = default;
             int? supportedIops = default;
-            long? supportedMemoryPerVcoreMb = default;
+            long? supportedMemoryPerVCoreMb = default;
             IReadOnlyList<string> supportedZones = default;
             IReadOnlyList<HighAvailabilityMode> supportedHaMode = default;
             IReadOnlyList<SupportedFeature> supportedFeatures = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    supportedMemoryPerVcoreMb = property.Value.GetInt64();
+                    supportedMemoryPerVCoreMb = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("supportedZones"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 vCores,
                 supportedIops,
-                supportedMemoryPerVcoreMb,
+                supportedMemoryPerVCoreMb,
                 supportedZones ?? new ChangeTrackingList<string>(),
                 supportedHaMode ?? new ChangeTrackingList<HighAvailabilityMode>(),
                 supportedFeatures ?? new ChangeTrackingList<SupportedFeature>(),
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemoryPerVcoreMb), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemoryPerVCoreMb), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  supportedMemoryPerVcoreMb: ");
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             else
             {
-                if (Optional.IsDefined(SupportedMemoryPerVcoreMb))
+                if (Optional.IsDefined(SupportedMemoryPerVCoreMb))
                 {
                     builder.Append("  supportedMemoryPerVcoreMb: ");
-                    builder.AppendLine($"'{SupportedMemoryPerVcoreMb.Value.ToString()}'");
+                    builder.AppendLine($"'{SupportedMemoryPerVCoreMb.Value.ToString()}'");
                 }
             }
 

@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlFlexibleServerHighAvailability highAvailability = default;
             PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
             ResourceIdentifier sourceServerResourceId = default;
-            DateTimeOffset? pointInTimeUTC = default;
+            DateTimeOffset? pointInTimeUtc = default;
             string availabilityZone = default;
             PostgreSqlFlexibleServerReplicationRole? replicationRole = default;
             int? replicaCapacity = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            pointInTimeUTC = property0.Value.GetDateTimeOffset("O");
+                            pointInTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("availabilityZone"u8))
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 highAvailability,
                 maintenanceWindow,
                 sourceServerResourceId,
-                pointInTimeUTC,
+                pointInTimeUtc,
                 availabilityZone,
                 replicationRole,
                 replicaCapacity,
