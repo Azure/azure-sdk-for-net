@@ -11,20 +11,6 @@ namespace Azure.ResourceManager.ServiceNetworking
     public partial class TrafficControllerAssociationData
     {
         /// <summary> Association Type. </summary>
-        public TrafficControllerAssociationType? AssociationType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AssociationType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AssociationProperties();
-                }
-                Properties.AssociationType = (TrafficControllerAssociationType)value;
-            }
-        }
+        public TrafficControllerAssociationType? AssociationType { get; set; }
     }
 }

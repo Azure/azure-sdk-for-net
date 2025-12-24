@@ -11,6 +11,7 @@ using Azure.Core;
 using NUnit.Framework;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.ServiceNetworking.Tests;
+using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
 {
@@ -48,6 +49,8 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Obtaining the Collection object of TrafficController to perform the Create/PUT operation.
             TrafficControllerCollection trafficControllerCollection = GetTrafficControllers(resourceGroup);
             TrafficControllerData tcgw = new TrafficControllerData(location);
+            // Access a property to ensure Properties object is initialized for serialization
+            _ = tcgw.ConfigurationEndpoints;
             var tcTask = await trafficControllerCollection.CreateOrUpdateAsync(WaitUntil.Completed, tcName, tcgw);
             return tcTask;
         }
@@ -74,6 +77,8 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             {
                 Location = location
             };
+            // Access a property to ensure Properties object is initialized for serialization
+            _ = fnd.ProvisioningState;
             //Performing the Create/PUT operation and returning the result.
             return await frontends.CreateOrUpdateAsync(WaitUntil.Completed, frontendName, fnd);
         }
@@ -147,10 +152,11 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             //Association Data object that is used to create the new frontend object.
             TrafficControllerAssociationData associationData = new TrafficControllerAssociationData(location)
             {
-                AssociationType = null,
                 SubnetId = subnet.Id,
                 Location = location,
             };
+            // Ensure Properties object is initialized with default AssociationType
+            associationData.AssociationType = TrafficControllerAssociationType.Subnets;
             //Performing the Create/PUT operation
             return await associations.CreateOrUpdateAsync(WaitUntil.Completed, associationName, associationData);
         }
@@ -212,13 +218,13 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             TrafficControllerResource tcCreate = CreateTrafficControllerAsync(location, resourceGroupName, tcName).Result.Value;
             Assert.NotNull(tcCreate, "Traffic Controller is Null");
             Assert.AreEqual(tcCreate.Data.Name, tcName);
-            Assert.AreEqual(tcCreate.Data.TrafficControllerProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(tcCreate.Data.TrafficControllerProvisioningState?.ToString(), "Succeeded");
 
             //Testing GET Operation
             TrafficControllerResource tcGet = GetTrafficControllerAsync(resourceGroupName, tcName).Result;
             Assert.NotNull(tcGet, "Traffic Controller is Null");
             Assert.AreEqual(tcGet.Data.Name, tcName);
-            Assert.AreEqual(tcGet.Data.TrafficControllerProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(tcGet.Data.TrafficControllerProvisioningState?.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             var tcDelete = await tcGet.DeleteAsync(WaitUntil.Completed);
@@ -247,13 +253,13 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             var frontendCreation = CreateFrontendAsync(rgResource, frontendName, tc, location).Result.Value;
             Assert.IsNotNull(frontendCreation);
             Assert.AreEqual(frontendCreation.Data.Name, frontendName);
-            Assert.AreEqual(frontendCreation.Data.ProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(frontendCreation.Data.ProvisioningState?.ToString(), "Succeeded");
 
             //Testing GET Operation
             var frontendGet = GetFrontendAsync(frontendName, tc).Result;
             Assert.IsNotNull(frontendGet);
             Assert.AreEqual(frontendGet.Data.Name, frontendName);
-            Assert.AreEqual(frontendGet.Data.ProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(frontendGet.Data.ProvisioningState?.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             var frontendDelete = await frontendGet.DeleteAsync(WaitUntil.Completed);
@@ -284,13 +290,13 @@ namespace Azure.ResourceManager.ServiceNetworking.TrafficController.Tests.Tests
             TrafficControllerAssociationResource associationCreate = CreateAssociationAsync(resourceGroupName, associationName, tc, location).Result.Value;
             Assert.IsNotNull(associationCreate);
             Assert.AreEqual(associationCreate.Data.Name, associationName);
-            Assert.AreEqual(associationCreate.Data.ProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(associationCreate.Data.ProvisioningState?.ToString(), "Succeeded");
 
             //Testing the GET Operation
             TrafficControllerAssociationResource associationGet = GetAssociationAsync(associationName, tc).Result;
             Assert.IsNotNull(associationGet);
             Assert.AreEqual(associationGet.Data.Name, associationName);
-            Assert.AreEqual(associationGet.Data.ProvisioningState.ToString(), "Succeeded");
+            Assert.AreEqual(associationGet.Data.ProvisioningState?.ToString(), "Succeeded");
 
             //Testing DELETE Operation
             await DeleteAssociation(associationGet);
