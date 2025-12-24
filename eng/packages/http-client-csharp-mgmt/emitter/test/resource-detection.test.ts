@@ -12,6 +12,9 @@ import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
+import {
+  resolveArmResources as resolveArmResourcesFromLibrary
+} from "@azure-tools/typespec-azure-resource-manager";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -112,13 +115,13 @@ interface Employees2 {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
     ok(armProviderSchema.resources);
     strictEqual(armProviderSchema.resources.length, 2); // Employee and EmployeeParent
-    
+
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents/employees"
@@ -126,7 +129,7 @@ interface Employees2 {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    
+
     // Validate resource metadata
     strictEqual(
       metadata.resourceIdPattern,
@@ -144,7 +147,7 @@ interface Employees2 {
     );
     strictEqual(metadata.resourceName, "Employee");
     strictEqual(metadata.methods.length, 6);
-    
+
     // Validate method kinds are present (Get, Create, Update, Delete, List operations)
     const methodKinds = metadata.methods.map((m: any) => m.kind);
     ok(methodKinds.includes("Get"));
@@ -152,7 +155,7 @@ interface Employees2 {
     ok(methodKinds.includes("Update"));
     ok(methodKinds.includes("Delete"));
     ok(methodKinds.includes("List"));
-    
+
     // Validate Get method details
     const getMethod = metadata.methods.find((m: any) => m.kind === "Get");
     ok(getMethod);
@@ -233,11 +236,11 @@ interface Employees2 {
     );
     strictEqual(listBySubEntry.operationScope, ResourceScope.Subscription);
     strictEqual(listBySubEntry.resourceScope, undefined);
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     // Note: Methods should now be populated by the converter with the name-based fallback lookup
     deepStrictEqual(
@@ -342,7 +345,7 @@ interface CurrentEmployees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    
+
     strictEqual(
       metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees/default"
@@ -391,15 +394,15 @@ interface CurrentEmployees {
       currentMetadata.resourceName,
       "CurrentEmployee"
     );
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchema)
+      normalizeSchemaForComparison(armProviderSchemaResult)
     );
   });
 
@@ -479,19 +482,19 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-    ok(armProviderSchemaResult);
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
 
     // Find the Employee resource in the schema by resource type
-    const employeeResource = armProviderSchemaResult.resources.find(
+    const employeeResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     ok(employeeResource);
     const employeeMetadata = employeeResource.metadata;
     ok(employeeMetadata);
-    
+
     strictEqual(
       employeeMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
@@ -511,13 +514,13 @@ interface Employees {
     strictEqual(employeeMetadata.resourceName, "Employee");
 
     // Find the Department resource in the schema by resource type
-    const departmentResource = armProviderSchemaResult.resources.find(
+    const departmentResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments"
     );
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
     ok(departmentMetadata);
-    
+
     strictEqual(
       departmentMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -536,13 +539,13 @@ interface Employees {
     strictEqual(departmentMetadata.resourceName, "Department");
 
     // Find the Company resource in the schema by resource type
-    const companyResource = armProviderSchemaResult.resources.find(
+    const companyResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
     );
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
     ok(companyMetadata);
-    
+
     strictEqual(
       companyMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
@@ -556,11 +559,11 @@ interface Employees {
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
@@ -647,19 +650,19 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-    ok(armProviderSchemaResult);
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
 
     // Find the Employee resource in the schema by resource type
-    const employeeResource = armProviderSchemaResult.resources.find(
+    const employeeResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     ok(employeeResource);
     const employeeMetadata = employeeResource.metadata;
     ok(employeeMetadata);
-    
+
     strictEqual(
       employeeMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
@@ -679,13 +682,13 @@ interface Employees {
     strictEqual(employeeMetadata.resourceName, "Employee");
 
     // Find the Department resource in the schema by resource type
-    const departmentResource = armProviderSchemaResult.resources.find(
+    const departmentResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments"
     );
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
     ok(departmentMetadata);
-    
+
     strictEqual(
       departmentMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -704,13 +707,13 @@ interface Employees {
     strictEqual(departmentMetadata.resourceName, "Department");
 
     // Find the Company resource in the schema by resource type
-    const companyResource = armProviderSchemaResult.resources.find(
+    const companyResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
     );
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
     ok(companyMetadata);
-    
+
     strictEqual(
       companyMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
@@ -724,11 +727,11 @@ interface Employees {
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
@@ -828,7 +831,7 @@ interface Employees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    
+
     strictEqual(
       metadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
@@ -854,7 +857,7 @@ interface Employees {
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
     ok(departmentMetadata);
-    
+
     strictEqual(
       departmentMetadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -879,7 +882,7 @@ interface Employees {
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
     ok(companyMetadata);
-    
+
     strictEqual(
       companyMetadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
@@ -893,19 +896,19 @@ interface Employees {
     strictEqual(companyMetadata.methods.length, 2);
     strictEqual(companyMetadata.parentResourceId, undefined);
     strictEqual(companyMetadata.resourceName, "Company");
-    
+
     // Validate using resolveArmResources API
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
     ok(resolvedSchema.resources);
-    
+
     // Verify tenant-scoped resources
     const resolvedEmployee = resolvedSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies/departments/employees"
     );
     ok(resolvedEmployee, "Employee resource must exist in resolved schema");
     strictEqual(resolvedEmployee.metadata.resourceScope, "Tenant");
-    
+
     const resolvedCompany = resolvedSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/companies"
     );
@@ -962,11 +965,11 @@ interface Employees {
     ok(getMethodEntry);
     strictEqual(getMethodEntry.kind, "Get");
     strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
@@ -1018,24 +1021,29 @@ interface Employees {
       runner
     );
     const context = createEmitterContext(program);
+    // const p = resolveArmResourcesFromLibrary(program);
+    // ok(p);
     const sdkContext = await createCSharpSdkContext(context);
+
+    const p2 = resolveArmResourcesFromLibrary(program);
+    ok(p2);
+
     const root = createModel(sdkContext);
     // Build ARM provider schema and verify its structure
 
-
-    const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
-    ok(armProviderSchemaResult);
-    ok(armProviderSchemaResult.resources);
-    strictEqual(armProviderSchemaResult.resources.length, 1); // Only EmployeeParent (Employee has no CRUD ops)
+    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
+    ok(armProviderSchema);
+    ok(armProviderSchema.resources);
+    strictEqual(armProviderSchema.resources.length, 1); // Only EmployeeParent (Employee has no CRUD ops)
 
     // Find the EmployeeParent resource in the schema by resource type
-    const employeeParentResource = armProviderSchemaResult.resources.find(
+    const employeeParentResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents"
     );
     ok(employeeParentResource);
     const metadata = employeeParentResource.metadata;
     ok(metadata);
-    
+
     strictEqual(
       metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
@@ -1052,15 +1060,15 @@ interface Employees {
     // Validate EmployeeParent has listByParent method
     const listByParentEntry = metadata.methods.find((m: any) => m.kind === "List");
     ok(listByParentEntry);
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
-      normalizeSchemaForComparison(armProviderSchemaResult)
+      normalizeSchemaForComparison(armProviderSchema)
     );
   });
 
@@ -1096,7 +1104,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -1111,11 +1119,11 @@ interface Employees {
     const metadata = employeeResource.metadata;
     ok(metadata);
     strictEqual(metadata.resourceScope, "ManagementGroup");
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
@@ -1167,11 +1175,11 @@ interface ScheduledActionExtension {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
-    
+
     // ScheduledAction should NOT have a resource entry since it has no CRUD operations
     ok(armProviderSchemaResult.resources);
     const scheduledActionResource = armProviderSchemaResult.resources.find(
@@ -1182,22 +1190,22 @@ interface ScheduledActionExtension {
       undefined,
       "ScheduledAction should not have resource metadata without CRUD operations"
     );
-    
+
     // Check that the method is treated as a non-resource method
     ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods");
     ok(armProviderSchemaResult.nonResourceMethods.length >= 1, "Should have at least one non-resource method");
-    
+
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     const methodEntry = nonResourceMethods.find(
       (m: any) => m.operationPath.includes("getAssociatedScheduledActions")
     );
     ok(methodEntry, "getAssociatedScheduledActions should be in non-resource methods");
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
-    
+
     // Validate using resolveArmResources API - use deep equality to ensure schemas match
     const resolvedSchema = resolveArmResources(program, sdkContext);
     ok(resolvedSchema);
-    
+
     // Compare the entire schemas using deep equality
     deepStrictEqual(
       normalizeSchemaForComparison(resolvedSchema),
