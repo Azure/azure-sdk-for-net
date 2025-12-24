@@ -268,7 +268,8 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: ResourceOperationKind.List,
           operationPath: listOp.path,
-          operationScope: resourceScope,
+          // TODO: now resolveArmResources is not returning therefore we have to calculate this.
+          operationScope: getOperationScopeFromPath(listOp.path),
           // TODO: now resolveArmResources is not returning therefore we have to calculate this.
           // this should be polulated later
           resourceScope: undefined
@@ -415,23 +416,21 @@ function extractSingletonName(path: string): string | undefined {
 }
 
 function canBeListResourceScope(listPathSegments: string[], resourceInstancePathSegments: string[]): boolean {
-  // first we trim off the last segment of the resourceInstancePath
-  const resourceInstancePath = resourceInstancePathSegments.slice(0, resourceInstancePathSegments.length - 1);
   // then we check if resourceInstancePath is a prefix of listPath
-  if (listPathSegments.length < resourceInstancePath.length) {
+  if (listPathSegments.length < resourceInstancePathSegments.length) {
     return false;
   }
-  for (let i = 0; i < resourceInstancePath.length; i++) {
+  for (let i = 0; i < resourceInstancePathSegments.length; i++) {
     // if both segments are variables, we consider it as a match
-    if (listPathSegments[i].startsWith("{") && resourceInstancePath[i].startsWith("{")) {
+    if (listPathSegments[i].startsWith("{") && resourceInstancePathSegments[i].startsWith("{")) {
       continue;
     }
     // if one of them is a variable, the other is not, we consider it as not a match
-    if (listPathSegments[i].startsWith("{") || resourceInstancePath[i].startsWith("{")) {
+    if (listPathSegments[i].startsWith("{") || resourceInstancePathSegments[i].startsWith("{")) {
       return false;
     }
     // both are fixed strings, they must match
-    if (listPathSegments[i] !== resourceInstancePath[i]) {
+    if (listPathSegments[i] !== resourceInstancePathSegments[i]) {
       return false;
     }
   }
