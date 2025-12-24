@@ -454,7 +454,7 @@ namespace Azure.Generator.Management.Providers
                 ResourceMethodSnippets.BuildValidateResourceIdMethod(this, _resourceTypeField)
             };
             methods.AddRange(operationMethods);
-            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputMethod;
+            var getMethod = _resourceServiceMethods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Read)?.InputMethod;
 
             // Only generate tag methods if the resource model has tag properties, has get and update methods
             if (HasTags() && getMethod is not null && updateMethodProvider is not null)
@@ -496,7 +496,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         private InputClient? PopulateGetClient()
-            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Get)?.InputClient;
+            => _resourceMetadata.Methods.FirstOrDefault(m => m.Kind == ResourceOperationKind.Read)?.InputClient;
 
         private (bool IsPatch, InputClient? UpdateClient) PopulateUpdateClient()
         {

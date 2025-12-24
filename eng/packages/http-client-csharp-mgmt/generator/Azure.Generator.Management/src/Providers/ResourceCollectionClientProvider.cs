@@ -106,7 +106,7 @@ namespace Azure.Generator.Management.Providers
 
                 switch (method.Kind)
                 {
-                    case ResourceOperationKind.Get:
+                    case ResourceOperationKind.Read:
                         getMethod = method;
                         break;
                     case ResourceOperationKind.List:

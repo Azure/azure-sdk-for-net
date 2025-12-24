@@ -68,7 +68,7 @@ namespace Azure.Generator.Management.Utilities
                         }
                         createMethod = method;
                         break;
-                    case ResourceOperationKind.Get:
+                    case ResourceOperationKind.Read:
                         // both resource and collection should have get method
                         methodsInResource.Add(method);
                         methodsInCollection.Add(method);
