@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
 
         private ClientDiagnostics OnlineExperimentationWorkspacesClientDiagnostics => _onlineExperimentationWorkspacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OnlineExperimentationWorkspaces OnlineExperimentationWorkspacesRestClient => _onlineExperimentationWorkspacesRestClient ??= new OnlineExperimentationWorkspaces(OnlineExperimentationWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-05-31-preview");
+        private OnlineExperimentationWorkspaces OnlineExperimentationWorkspacesRestClient => _onlineExperimentationWorkspacesRestClient ??= new OnlineExperimentationWorkspaces(OnlineExperimentationWorkspacesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Gets all online experimentation workspaces in the specified subscription.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-05-31-preview. </description>
+        /// <description> 2025-08-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

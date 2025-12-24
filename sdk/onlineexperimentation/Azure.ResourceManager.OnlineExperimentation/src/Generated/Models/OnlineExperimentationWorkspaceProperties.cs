@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             LogsExporterStorageAccountResourceId = logsExporterStorageAccountResourceId;
             AppConfigurationResourceId = appConfigurationResourceId;
+            PrivateEndpointConnections = new ChangeTrackingList<OnlineExperimentationPrivateEndpointConnectionData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OnlineExperimentationWorkspaceProperties"/>. </summary>
@@ -42,8 +43,14 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="appConfigurationResourceId"> The resource identifier of App Configuration with which this online experimentation workspace is tied for experimentation. This is a required field for creating an online experimentation workspace. </param>
         /// <param name="encryption"> The encryption configuration for the online experimentation workspace resource. </param>
         /// <param name="endpoint"> The data plane endpoint for the online experimentation workspace resource. </param>
+        /// <param name="publicNetworkAccess">
+        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if not set.
+        /// - Enabled: The resource can be accessed from the public internet.
+        /// - Disabled: The resource can only be accessed from a private endpoint.
+        /// </param>
+        /// <param name="privateEndpointConnections"> The private endpoint connections associated with the online experimentation workspace resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentationWorkspaceProperties(Guid? workspaceId, OnlineExperimentationProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OnlineExperimentationWorkspaceProperties(Guid? workspaceId, OnlineExperimentationProvisioningState? provisioningState, ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceIdentifier appConfigurationResourceId, ResourceEncryptionConfiguration encryption, Uri endpoint, PublicNetworkAccessType? publicNetworkAccess, IReadOnlyList<OnlineExperimentationPrivateEndpointConnectionData> privateEndpointConnections, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceId = workspaceId;
             ProvisioningState = provisioningState;
@@ -52,6 +59,8 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             AppConfigurationResourceId = appConfigurationResourceId;
             Encryption = encryption;
             Endpoint = endpoint;
+            PublicNetworkAccess = publicNetworkAccess;
+            PrivateEndpointConnections = privateEndpointConnections;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -75,6 +84,16 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary> The data plane endpoint for the online experimentation workspace resource. </summary>
         public Uri Endpoint { get; }
+
+        /// <summary>
+        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if not set.
+        /// - Enabled: The resource can be accessed from the public internet.
+        /// - Disabled: The resource can only be accessed from a private endpoint.
+        /// </summary>
+        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
+
+        /// <summary> The private endpoint connections associated with the online experimentation workspace resource. </summary>
+        public IReadOnlyList<OnlineExperimentationPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
         public CustomerManagedKeyEncryption CustomerManagedKeyEncryption

@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteObjectValue(Encryption, options);
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -95,6 +100,7 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             ResourceIdentifier logAnalyticsWorkspaceResourceId = default;
             ResourceIdentifier logsExporterStorageAccountResourceId = default;
             ResourceEncryptionConfiguration encryption = default;
+            PublicNetworkAccessType? publicNetworkAccess = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -125,12 +131,21 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     encryption = ResourceEncryptionConfiguration.DeserializeResourceEncryptionConfiguration(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new PublicNetworkAccessType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OnlineExperimentationWorkspacePatchProperties(logAnalyticsWorkspaceResourceId, logsExporterStorageAccountResourceId, encryption, additionalBinaryDataProperties);
+            return new OnlineExperimentationWorkspacePatchProperties(logAnalyticsWorkspaceResourceId, logsExporterStorageAccountResourceId, encryption, publicNetworkAccess, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>

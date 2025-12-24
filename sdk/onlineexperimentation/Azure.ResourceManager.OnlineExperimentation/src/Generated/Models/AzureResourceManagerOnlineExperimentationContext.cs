@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.OnlineExperimentation.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.OnlineExperimentation
 {
@@ -19,6 +20,14 @@ namespace Azure.ResourceManager.OnlineExperimentation
     [ModelReaderWriterBuildable(typeof(CustomerManagedKeyEncryption))]
     [ModelReaderWriterBuildable(typeof(KeyEncryptionKeyIdentity))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateEndpointConnectionData))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateEndpointConnectionListResult))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkData))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkResource))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkResourceListResult))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkResourceProperties))]
+    [ModelReaderWriterBuildable(typeof(OnlineExperimentationPrivateLinkServiceConnectionState))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceData))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceListResult))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspacePatch))]
@@ -26,8 +35,10 @@ namespace Azure.ResourceManager.OnlineExperimentation
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceProperties))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceResource))]
     [ModelReaderWriterBuildable(typeof(OnlineExperimentationWorkspaceSku))]
+    [ModelReaderWriterBuildable(typeof(PrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceEncryptionConfiguration))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerOnlineExperimentationContext : ModelReaderWriterContext

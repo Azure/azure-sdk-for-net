@@ -34,5 +34,23 @@ namespace Azure.ResourceManager.OnlineExperimentation.Mocking
             OnlineExperimentationWorkspaceResource.ValidateResourceId(id);
             return new OnlineExperimentationWorkspaceResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="OnlineExperimentationPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OnlineExperimentationPrivateEndpointConnectionResource"/> object. </returns>
+        public virtual OnlineExperimentationPrivateEndpointConnectionResource GetOnlineExperimentationPrivateEndpointConnectionResource(ResourceIdentifier id)
+        {
+            OnlineExperimentationPrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new OnlineExperimentationPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="OnlineExperimentationPrivateLinkResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OnlineExperimentationPrivateLinkResource"/> object. </returns>
+        public virtual OnlineExperimentationPrivateLinkResource GetOnlineExperimentationPrivateLinkResource(ResourceIdentifier id)
+        {
+            OnlineExperimentationPrivateLinkResource.ValidateResourceId(id);
+            return new OnlineExperimentationPrivateLinkResource(Client, id);
+        }
     }
 }
