@@ -145,16 +145,16 @@ interface Employees2 {
     strictEqual(metadata.resourceName, "Employee");
     strictEqual(metadata.methods.length, 6);
 
-    // Validate method kinds are present (Get, Create, Update, Delete, List operations)
+    // Validate method kinds are present (Read, Create, Update, Delete, List operations)
     const methodKinds = metadata.methods.map((m: any) => m.kind);
-    ok(methodKinds.includes("Get"));
+    ok(methodKinds.includes("Read"));
     ok(methodKinds.includes("Create"));
     ok(methodKinds.includes("Update"));
     ok(methodKinds.includes("Delete"));
     ok(methodKinds.includes("List"));
 
-    // Validate Get method details
-    const getMethod = metadata.methods.find((m: any) => m.kind === "Get");
+    // Validate Read method details
+    const getMethod = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethod);
     strictEqual(
       getMethod.operationPath,
@@ -360,7 +360,7 @@ interface CurrentEmployees {
       "ResourceGroup"
     );
     strictEqual(metadata.methods.length, 3);
-    strictEqual(metadata.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Read");
     strictEqual(metadata.resourceName, "Employee");
 
     // Find the CurrentEmployee resource in the schema by resource type
@@ -503,7 +503,7 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "ResourceGroup");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Get");
+    strictEqual(employeeMetadata.methods[0].kind, "Read");
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -671,7 +671,7 @@ interface Employees {
     strictEqual(employeeMetadata.singletonResourceName, undefined);
     strictEqual(employeeMetadata.resourceScope, "Subscription");
     strictEqual(employeeMetadata.methods.length, 5);
-    strictEqual(employeeMetadata.methods[0].kind, "Get");
+    strictEqual(employeeMetadata.methods[0].kind, "Read");
     strictEqual(
       employeeMetadata.parentResourceId,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -840,7 +840,7 @@ interface Employees {
     strictEqual(metadata.singletonResourceName, undefined);
     strictEqual(metadata.resourceScope, "Tenant");
     strictEqual(metadata.methods.length, 5);
-    strictEqual(metadata.methods[0].kind, "Get");
+    strictEqual(metadata.methods[0].kind, "Read");
     strictEqual(
       metadata.parentResourceId,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -913,7 +913,7 @@ interface Employees {
     strictEqual(resolvedCompany.metadata.resourceScope, "Tenant");
   });
 
-  it("resource scope determined from Get method when no explicit decorator", async () => {
+  it("resource scope determined from Read method when no explicit decorator", async () => {
     const program = await typeSpecCompile(
       `
 @parentResource(SubscriptionLocationResource)
@@ -953,14 +953,14 @@ interface Employees {
     const metadata = employeeResource.metadata;
     ok(metadata);
 
-    // The model should inherit its resourceScope from the Get method's operationScope (Subscription)
-    // because the Get method operates at subscription scope and there are no explicit scope decorators
+    // The model should inherit its resourceScope from the Read method's operationScope (Subscription)
+    // because the Read method operates at subscription scope and there are no explicit scope decorators
     strictEqual(metadata.resourceScope, "Subscription");
 
-    // Verify the Get method itself has the correct scope
-    const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Get");
+    // Verify the Read method itself has the correct scope
+    const getMethodEntry = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethodEntry);
-    strictEqual(getMethodEntry.kind, "Get");
+    strictEqual(getMethodEntry.kind, "Read");
     strictEqual(getMethodEntry.operationScope, ResourceScope.Subscription);
 
     // Validate using resolveArmResources API - use deep equality to ensure schemas match

@@ -305,7 +305,7 @@ export function buildArmProviderSchema(
       );
     }
 
-    // update the model's resourceScope based on resource scope decorator if it exists or based on the Get method's scope. If neither exist, it will be set to ResourceGroup by default
+    // update the model's resourceScope based on resource scope decorator if it exists or based on the Read method's scope. If neither exist, it will be set to ResourceGroup by default
     const model = resourceModelMap.get(modelId);
     if (model) {
       metadata.resourceScope = getResourceScope(model, metadata.methods);
@@ -412,7 +412,7 @@ export function buildArmProviderSchema(
 
 function isCRUDKind(kind: ResourceOperationKind): boolean {
   return [
-    ResourceOperationKind.Get,
+    ResourceOperationKind.Read,
     ResourceOperationKind.Create,
     ResourceOperationKind.Update,
     ResourceOperationKind.Delete
@@ -433,7 +433,7 @@ function parseResourceOperation(
       case readsResourceName:
       case armResourceReadName:
         return {
-          kind: ResourceOperationKind.Get,
+          kind: ResourceOperationKind.Read,
           modelId: getResourceModelId(sdkContext, decorator),
           explicitResourceName: undefined // No explicit resource name for ARM operations
         };
@@ -471,7 +471,7 @@ function parseResourceOperation(
         switch (decorator.args[2].jsValue) {
           case "read":
             return {
-              kind: ResourceOperationKind.Get,
+              kind: ResourceOperationKind.Read,
               modelId: getResourceModelIdCore(
                 sdkContext,
                 decorator.args[1].value as Model,
@@ -536,7 +536,7 @@ function parseResourceOperation(
         switch (decorator.args[1].jsValue) {
           case "read":
             return {
-              kind: ResourceOperationKind.Get,
+              kind: ResourceOperationKind.Read,
               modelId: getResourceModelIdCore(
                 sdkContext,
                 decorator.args[0].value as Model,
@@ -601,7 +601,7 @@ function parseResourceOperation(
         switch (decorator.args[2].jsValue) {
           case "read":
             return {
-              kind: ResourceOperationKind.Get,
+              kind: ResourceOperationKind.Read,
               modelId: getResourceModelIdCore(
                 sdkContext,
                 decorator.args[1].value as Model,
@@ -772,9 +772,9 @@ function getResourceScope(
     return ResourceScope.ResourceGroup;
   }
 
-  // Fall back to Get method's scope only if no scope decorators are found
+  // Fall back to Read method's scope only if no scope decorators are found
   if (methods) {
-    const getMethod = methods.find((m) => m.kind === ResourceOperationKind.Get);
+    const getMethod = methods.find((m) => m.kind === ResourceOperationKind.Read);
     if (getMethod) {
       return getMethod.operationScope;
     }

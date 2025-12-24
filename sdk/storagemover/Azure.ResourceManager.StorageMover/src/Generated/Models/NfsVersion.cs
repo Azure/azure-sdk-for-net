@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.StorageMover.Models
     public readonly partial struct NfsVersion : IEquatable<NfsVersion>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="NfsVersion"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public NfsVersion(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string NFSautoValue = "NFSauto";
         private const string NFSv3Value = "NFSv3";
         private const string NFSv4Value = "NFSv4";
 
-        /// <summary> NFSauto. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public NfsVersion(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the NFSauto. </summary>
         public static NfsVersion NFSauto { get; } = new NfsVersion(NFSautoValue);
-        /// <summary> NFSv3. </summary>
+
+        /// <summary> Gets the NFSv3. </summary>
         public static NfsVersion NFSv3 { get; } = new NfsVersion(NFSv3Value);
-        /// <summary> NFSv4. </summary>
+
+        /// <summary> Gets the NFSv4. </summary>
         public static NfsVersion NFSv4 { get; } = new NfsVersion(NFSv4Value);
+
         /// <summary> Determines if two <see cref="NfsVersion"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NfsVersion left, NfsVersion right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NfsVersion"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NfsVersion left, NfsVersion right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NfsVersion"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NfsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NfsVersion(string value) => new NfsVersion(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NfsVersion"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NfsVersion?(string value) => value == null ? null : new NfsVersion(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NfsVersion other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NfsVersion other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

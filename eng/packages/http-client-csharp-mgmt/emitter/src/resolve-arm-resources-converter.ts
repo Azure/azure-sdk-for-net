@@ -203,7 +203,7 @@ function convertResolvedResourceToMetadata(
         if (methodId) {
           methods.push({
             methodId,
-            kind: ResourceOperationKind.Get,
+            kind: ResourceOperationKind.Read,
             operationPath: readOp.path,
             operationScope: resourceScope,
             resourceScope: resolvedResource.resourceInstancePath
