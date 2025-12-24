@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of firewall rules. </summary>
+    /// <summary>
+    /// List of firewall rules.
+    /// Serialized Name: FirewallRuleList
+    /// </summary>
     internal partial class FirewallRuleList
     {
         /// <summary>
@@ -46,14 +50,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="FirewallRuleList"/>. </summary>
-        internal FirewallRuleList()
+        /// <param name="value">
+        /// The FirewallRule items on this page
+        /// Serialized Name: FirewallRuleList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal FirewallRuleList(IEnumerable<PostgreSqlFlexibleServerFirewallRuleData> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerFirewallRuleData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirewallRuleList"/>. </summary>
-        /// <param name="value"> List of firewall rules in a server. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// The FirewallRule items on this page
+        /// Serialized Name: FirewallRuleList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: FirewallRuleList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FirewallRuleList(IReadOnlyList<PostgreSqlFlexibleServerFirewallRuleData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +79,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of firewall rules in a server. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallRuleList"/> for deserialization. </summary>
+        internal FirewallRuleList()
+        {
+        }
+
+        /// <summary>
+        /// The FirewallRule items on this page
+        /// Serialized Name: FirewallRuleList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerFirewallRuleData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: FirewallRuleList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

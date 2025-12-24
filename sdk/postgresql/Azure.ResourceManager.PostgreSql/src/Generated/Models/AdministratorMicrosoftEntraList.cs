@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of server administrators associated to Microsoft Entra principals. </summary>
+    /// <summary>
+    /// List of server administrators associated to Microsoft Entra principals.
+    /// Serialized Name: AdministratorMicrosoftEntraList
+    /// </summary>
     internal partial class AdministratorMicrosoftEntraList
     {
         /// <summary>
@@ -46,14 +50,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AdministratorMicrosoftEntraList"/>. </summary>
-        internal AdministratorMicrosoftEntraList()
+        /// <param name="value">
+        /// The AdministratorMicrosoftEntra items on this page
+        /// Serialized Name: AdministratorMicrosoftEntraList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal AdministratorMicrosoftEntraList(IEnumerable<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AdministratorMicrosoftEntraList"/>. </summary>
-        /// <param name="value"> List of server administrators associated to Microsoft Entra principals. </param>
-        /// <param name="nextLink"> Link used to get the next page of results. </param>
+        /// <param name="value">
+        /// The AdministratorMicrosoftEntra items on this page
+        /// Serialized Name: AdministratorMicrosoftEntraList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: AdministratorMicrosoftEntraList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdministratorMicrosoftEntraList(IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +79,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of server administrators associated to Microsoft Entra principals. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdministratorMicrosoftEntraList"/> for deserialization. </summary>
+        internal AdministratorMicrosoftEntraList()
+        {
+        }
+
+        /// <summary>
+        /// The AdministratorMicrosoftEntra items on this page
+        /// Serialized Name: AdministratorMicrosoftEntraList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerActiveDirectoryAdministratorData> Value { get; }
-        /// <summary> Link used to get the next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: AdministratorMicrosoftEntraList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

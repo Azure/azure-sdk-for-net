@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of capabilities for the Azure Database for PostgreSQL flexible server. </summary>
+    /// <summary>
+    /// List of capabilities for the Azure Database for PostgreSQL flexible server.
+    /// Serialized Name: CapabilityList
+    /// </summary>
     internal partial class CapabilityList
     {
         /// <summary>
@@ -46,14 +50,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CapabilityList"/>. </summary>
-        internal CapabilityList()
+        /// <param name="value">
+        /// The Capability items on this page
+        /// Serialized Name: CapabilityList.value
+        /// </param>
+        internal CapabilityList(IEnumerable<PostgreSqlFlexibleServerCapabilityProperties> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerCapabilityProperties>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapabilityList"/>. </summary>
-        /// <param name="value"> List of supported capabilities. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// The Capability items on this page
+        /// Serialized Name: CapabilityList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: CapabilityList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CapabilityList(IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +76,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of supported capabilities. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapabilityList"/> for deserialization. </summary>
+        internal CapabilityList()
+        {
+        }
+
+        /// <summary>
+        /// The Capability items on this page
+        /// Serialized Name: CapabilityList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerCapabilityProperties> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: CapabilityList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

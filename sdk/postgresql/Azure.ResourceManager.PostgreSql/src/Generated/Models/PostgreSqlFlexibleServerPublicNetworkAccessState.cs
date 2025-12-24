@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Indicates if public network access is enabled or not. This is only supported for servers that are not integrated into a virtual network which is owned and provided by customer when server is deployed. </summary>
+    /// <summary>
+    /// Indicates if public network access is enabled or not.
+    /// Serialized Name: ServerPublicNetworkAccessState
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerPublicNetworkAccessState : IEquatable<PostgreSqlFlexibleServerPublicNetworkAccessState>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
 
-        /// <summary> Public network access is enabled. This allows the server to be accessed from the public internet, provided the necessary firewall rule that allows incoming traffic originating from the connecting client is in place. This is compatible with the use of private endpoints to connect to this server. </summary>
+        /// <summary>
+        /// Enabled
+        /// Serialized Name: ServerPublicNetworkAccessState.Enabled
+        /// </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Enabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(EnabledValue);
-        /// <summary> Public network access is disabled. This means the server cannot be accessed from the public internet, but only via private endpoints. </summary>
+        /// <summary>
+        /// Disabled
+        /// Serialized Name: ServerPublicNetworkAccessState.Disabled
+        /// </summary>
         public static PostgreSqlFlexibleServerPublicNetworkAccessState Disabled { get; } = new PostgreSqlFlexibleServerPublicNetworkAccessState(DisabledValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerPublicNetworkAccessState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerPublicNetworkAccessState left, PostgreSqlFlexibleServerPublicNetworkAccessState right) => left.Equals(right);

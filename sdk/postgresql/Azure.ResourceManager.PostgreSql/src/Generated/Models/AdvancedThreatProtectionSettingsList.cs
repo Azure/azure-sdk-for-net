@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of advanced threat protection settings for a server. </summary>
+    /// <summary>
+    /// List of advanced threat protection settings for a server.
+    /// Serialized Name: AdvancedThreatProtectionSettingsList
+    /// </summary>
     internal partial class AdvancedThreatProtectionSettingsList
     {
         /// <summary>
@@ -46,14 +50,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingsList"/>. </summary>
-        internal AdvancedThreatProtectionSettingsList()
+        /// <param name="value">
+        /// The AdvancedThreatProtectionSettingsModel items on this page
+        /// Serialized Name: AdvancedThreatProtectionSettingsList.value
+        /// </param>
+        internal AdvancedThreatProtectionSettingsList(IEnumerable<ServerThreatProtectionSettingsModelData> value)
         {
-            Value = new ChangeTrackingList<ServerThreatProtectionSettingsModelData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingsList"/>. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link used to get the next page of results. </param>
+        /// <param name="value">
+        /// The AdvancedThreatProtectionSettingsModel items on this page
+        /// Serialized Name: AdvancedThreatProtectionSettingsList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: AdvancedThreatProtectionSettingsList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AdvancedThreatProtectionSettingsList(IReadOnlyList<ServerThreatProtectionSettingsModelData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +76,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdvancedThreatProtectionSettingsList"/> for deserialization. </summary>
+        internal AdvancedThreatProtectionSettingsList()
+        {
+        }
+
+        /// <summary>
+        /// The AdvancedThreatProtectionSettingsModel items on this page
+        /// Serialized Name: AdvancedThreatProtectionSettingsList.value
+        /// </summary>
         public IReadOnlyList<ServerThreatProtectionSettingsModelData> Value { get; }
-        /// <summary> Link used to get the next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: AdvancedThreatProtectionSettingsList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

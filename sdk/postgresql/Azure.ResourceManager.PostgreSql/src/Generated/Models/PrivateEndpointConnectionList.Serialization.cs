@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 throw new FormatException($"The model {nameof(PrivateEndpointConnectionList)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (options.Format != "W")
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -96,10 +96,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<PostgreSqlFlexibleServersPrivateEndpointConnectionData> array = new List<PostgreSqlFlexibleServersPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -123,7 +119,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrivateEndpointConnectionList(value ?? new ChangeTrackingList<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(), nextLink, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionList(value, nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

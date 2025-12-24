@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -166,111 +164,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new VirtualEndpointResourcePatch(endpointType, members ?? new ChangeTrackingList<string>(), virtualEndpoints ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    endpointType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EndpointType))
-                {
-                    builder.Append("    endpointType: ");
-                    builder.AppendLine($"'{EndpointType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Members), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    members: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Members))
-                {
-                    if (Members.Any())
-                    {
-                        builder.Append("    members: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Members)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualEndpoints), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    virtualEndpoints: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VirtualEndpoints))
-                {
-                    if (VirtualEndpoints.Any())
-                    {
-                        builder.Append("    virtualEndpoints: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VirtualEndpoints)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("      '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"      '{item}'");
-                            }
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<VirtualEndpointResourcePatch>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualEndpointResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
@@ -279,8 +172,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualEndpointResourcePatch)} does not support writing '{options.Format}' format.");
             }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Workload information for the recommended action. </summary>
+    /// <summary>
+    /// Workload information for the recommended action.
+    /// Serialized Name: ObjectRecommendationPropertiesAnalyzedWorkload
+    /// </summary>
     public partial class ObjectRecommendationPropertiesAnalyzedWorkload
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ObjectRecommendationPropertiesAnalyzedWorkload"/>. </summary>
-        /// <param name="startOn"> Start time (UTC) of the workload analyzed. </param>
-        /// <param name="endOn"> End time (UTC) of the workload analyzed. </param>
-        /// <param name="queryCount"> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </param>
+        /// <param name="startOn">
+        /// Start time (UTC) of the workload analyzed.
+        /// Serialized Name: ObjectRecommendationPropertiesAnalyzedWorkload.startTime
+        /// </param>
+        /// <param name="endOn">
+        /// End time (UTC) of the workload analyzed.
+        /// Serialized Name: ObjectRecommendationPropertiesAnalyzedWorkload.endTime
+        /// </param>
+        /// <param name="queryCount">
+        /// Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero).
+        /// Serialized Name: ObjectRecommendationPropertiesAnalyzedWorkload.queryCount
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ObjectRecommendationPropertiesAnalyzedWorkload(DateTimeOffset? startOn, DateTimeOffset? endOn, int? queryCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Start time (UTC) of the workload analyzed. </summary>
+        /// <summary>
+        /// Start time (UTC) of the workload analyzed.
+        /// Serialized Name: ObjectRecommendationPropertiesAnalyzedWorkload.startTime
+        /// </summary>
         [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
-        /// <summary> End time (UTC) of the workload analyzed. </summary>
+        /// <summary>
+        /// End time (UTC) of the workload analyzed.
+        /// Serialized Name: ObjectRecommendationPropertiesAnalyzedWorkload.endTime
+        /// </summary>
         [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; set; }
-        /// <summary> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </summary>
+        /// <summary>
+        /// Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero).
+        /// Serialized Name: ObjectRecommendationPropertiesAnalyzedWorkload.queryCount
+        /// </summary>
         [WirePath("queryCount")]
         public int? QueryCount { get; set; }
     }

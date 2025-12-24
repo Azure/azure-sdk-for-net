@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Name property for quota usage. </summary>
+    /// <summary>
+    /// Name property for quota usage
+    /// Serialized Name: NameProperty
+    /// </summary>
     public partial class NameProperty
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NameProperty"/>. </summary>
-        /// <param name="value"> Name value. </param>
-        /// <param name="localizedValue"> Localized name. </param>
+        /// <param name="value">
+        /// Name value
+        /// Serialized Name: NameProperty.value
+        /// </param>
+        /// <param name="localizedValue">
+        /// Localized name
+        /// Serialized Name: NameProperty.localizedValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NameProperty(string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Name value. </summary>
+        /// <summary>
+        /// Name value
+        /// Serialized Name: NameProperty.value
+        /// </summary>
         [WirePath("value")]
         public string Value { get; }
-        /// <summary> Localized name. </summary>
+        /// <summary>
+        /// Localized name
+        /// Serialized Name: NameProperty.localizedValue
+        /// </summary>
         [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }

@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A list of servers. </summary>
+    /// <summary>
+    /// A list of servers.
+    /// Serialized Name: ServerList
+    /// </summary>
     internal partial class ServerList
     {
         /// <summary>
@@ -46,14 +50,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ServerList"/>. </summary>
-        internal ServerList()
+        /// <param name="value">
+        /// The Server items on this page
+        /// Serialized Name: ServerList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal ServerList(IEnumerable<PostgreSqlFlexibleServerData> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerData>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerList"/>. </summary>
-        /// <param name="value"> The list of servers. </param>
-        /// <param name="nextLink"> The link used to get the next page of operations. </param>
+        /// <param name="value">
+        /// The Server items on this page
+        /// Serialized Name: ServerList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: ServerList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ServerList(IReadOnlyList<PostgreSqlFlexibleServerData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +79,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of servers. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerList"/> for deserialization. </summary>
+        internal ServerList()
+        {
+        }
+
+        /// <summary>
+        /// The Server items on this page
+        /// Serialized Name: ServerList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerData> Value { get; }
-        /// <summary> The link used to get the next page of operations. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: ServerList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

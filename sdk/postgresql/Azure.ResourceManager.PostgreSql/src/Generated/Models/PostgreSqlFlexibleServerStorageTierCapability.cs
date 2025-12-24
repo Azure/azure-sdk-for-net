@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Capability of a storage tier. </summary>
+    /// <summary>
+    /// Capability of a storage tier.
+    /// Serialized Name: StorageTierCapability
+    /// </summary>
     public partial class PostgreSqlFlexibleServerStorageTierCapability : PostgreSqlBaseCapability
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
@@ -19,18 +22,33 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
-        /// <param name="capabilityStatus"> The status of the capability. </param>
-        /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="capabilityStatus">
+        /// The status of the capability.
+        /// Serialized Name: CapabilityBase.status
+        /// </param>
+        /// <param name="reason">
+        /// The reason for the capability not being available.
+        /// Serialized Name: CapabilityBase.reason
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="name"> Name of the storage tier. </param>
-        /// <param name="iops"> Supported IOPS for the storage tier. </param>
+        /// <param name="name">
+        /// Name of the storage tier.
+        /// Serialized Name: StorageTierCapability.name
+        /// </param>
+        /// <param name="iops">
+        /// Supported IOPS for the storage tier.
+        /// Serialized Name: StorageTierCapability.iops
+        /// </param>
         internal PostgreSqlFlexibleServerStorageTierCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, long? iops) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
             Iops = iops;
         }
 
-        /// <summary> Name of the storage tier. </summary>
+        /// <summary>
+        /// Name of the storage tier.
+        /// Serialized Name: StorageTierCapability.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
     }

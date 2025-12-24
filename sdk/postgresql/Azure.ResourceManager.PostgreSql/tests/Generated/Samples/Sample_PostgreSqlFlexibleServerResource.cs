@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using NUnit.Framework;
 
@@ -348,11 +347,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new PostgreSqlFlexibleServerSku
-                {
-                    Name = "Standard_D8s_v3",
-                    Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
-                },
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLoginPassword = "examplenewpassword",
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
@@ -364,7 +359,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 {
                     BackupRetentionDays = 20,
                 },
-                AuthConfig = new AuthConfigForPatch
+                AuthConfig = new PostgreSqlFlexibleServerAuthConfig
                 {
                     ActiveDirectoryAuth = PostgreSqlFlexibleServerActiveDirectoryAuthEnum.Enabled,
                     PasswordAuth = PostgreSqlFlexibleServerPasswordAuthEnum.Enabled,
@@ -405,7 +400,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                MaintenanceWindow = new MaintenanceWindowForPatch
+                MaintenanceWindow = new PostgreSqlFlexibleServerMaintenanceWindow
                 {
                     CustomWindow = "Enabled",
                     StartHour = 8,
@@ -447,17 +442,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new PostgreSqlFlexibleServerSku
-                {
-                    Name = "Standard_D8s_v3",
-                    Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
-                },
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity")] = new UserAssignedIdentity()
+["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity"] = new UserIdentity(),
+["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"] = new UserIdentity()
 },
                 },
                 AdministratorLoginPassword = "examplenewpassword",
@@ -508,17 +499,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new PostgreSqlFlexibleServerSku
-                {
-                    Name = "Standard_D8s_v3",
-                    Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
-                },
-                Identity = new ManagedServiceIdentity("UserAssigned")
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
+                Identity = new PostgreSqlFlexibleServerUserAssignedIdentity(PostgreSqlFlexibleServerIdentityType.UserAssigned)
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity")] = new UserAssignedIdentity(),
-[new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity")] = new UserAssignedIdentity()
+["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/examplegeoredundantidentity"] = new UserIdentity(),
+["/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/exampleprimaryidentity"] = new UserIdentity()
 },
                 },
                 AdministratorLoginPassword = "examplenewpassword",
@@ -569,11 +556,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             // invoke the operation
             PostgreSqlFlexibleServerPatch patch = new PostgreSqlFlexibleServerPatch
             {
-                Sku = new PostgreSqlFlexibleServerSku
-                {
-                    Name = "Standard_D8s_v3",
-                    Tier = PostgreSqlFlexibleServerSkuTier.GeneralPurpose,
-                },
+                Sku = new PostgreSqlFlexibleServerSku("Standard_D8s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 AdministratorLoginPassword = "examplenewpassword",
                 Storage = new PostgreSqlFlexibleServerStorage
                 {
@@ -595,146 +578,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetCapabilitiesByServers_ListTheCapabilitiesAvailableForAGivenServer()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/CapabilitiesByServerList.json
-            // this example is just showing the usage of "CapabilitiesByServer_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "exampleresourcegroup";
-            string serverName = "exampleserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in postgreSqlFlexibleServer.GetCapabilitiesByServersAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetCapturedLogs_ListAllCapturedLogsForDownloadInAServer()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/CapturedLogsListByServer.json
-            // this example is just showing the usage of "CapturedLogs_ListByServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "exampleresourcegroup";
-            string serverName = "exampleserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PostgreSqlFlexibleServerLogFile item in postgreSqlFlexibleServer.GetCapturedLogsAsync())
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckPrerequisitesBackupsLongTermRetention_PerformAllChecksRequiredForALongTermRetentionBackupOperationToSucceed()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/BackupsLongTermRetentionCheckPrerequisites.json
-            // this example is just showing the usage of "BackupsLongTermRetention_CheckPrerequisites" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "exampleresourcegroup";
-            string serverName = "exampleserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerLtrPreBackupContent content = new PostgreSqlFlexibleServerLtrPreBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"));
-            PostgreSqlFlexibleServerLtrPreBackupResult result = await postgreSqlFlexibleServer.CheckPrerequisitesBackupsLongTermRetentionAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task StartBackupsLongTermRetention_InitiateALongTermRetentionBackup()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/BackupsLongTermRetentionStart.json
-            // this example is just showing the usage of "BackupsLongTermRetention_Start" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "exampleresourcegroup";
-            string serverName = "exampleserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlFlexibleServerLtrBackupContent content = new PostgreSqlFlexibleServerLtrBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
-            ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> lro = await postgreSqlFlexibleServer.StartBackupsLongTermRetentionAsync(WaitUntil.Completed, content);
-            PostgreSqlFlexibleServerLtrBackupResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckNameAvailabilityMigration_CheckTheValidityAndAvailabilityOfTheGivenNameToAssignItToANewMigration()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/MigrationsCheckNameAvailability.json
-            // this example is just showing the usage of "Migrations_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "exampleresourcegroup";
-            string serverName = "exampleserver";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // invoke the operation
-            PostgreSqlCheckMigrationNameAvailabilityContent content = new PostgreSqlCheckMigrationNameAvailabilityContent("examplemigration", new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers/migrations"));
-            PostgreSqlCheckMigrationNameAvailabilityContent result = await postgreSqlFlexibleServer.CheckNameAvailabilityMigrationAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -844,6 +687,146 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             await postgreSqlFlexibleServer.StopAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetServerCapabilities_ListTheCapabilitiesAvailableForAGivenServer()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/CapabilitiesByServerList.json
+            // this example is just showing the usage of "CapabilitiesByServer_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in postgreSqlFlexibleServer.GetServerCapabilitiesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CheckPostgreSqlMigrationNameAvailability_CheckTheValidityAndAvailabilityOfTheGivenNameToAssignItToANewMigration()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/MigrationsCheckNameAvailability.json
+            // this example is just showing the usage of "Migrations_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlCheckMigrationNameAvailabilityContent content = new PostgreSqlCheckMigrationNameAvailabilityContent("examplemigration", new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers/migrations"));
+            PostgreSqlCheckMigrationNameAvailabilityContent result = await postgreSqlFlexibleServer.CheckPostgreSqlMigrationNameAvailabilityAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetPostgreSqlFlexibleServerLogFiles_ListAllCapturedLogsForDownloadInAServer()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/CapturedLogsListByServer.json
+            // this example is just showing the usage of "CapturedLogs_ListByServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (PostgreSqlFlexibleServerLogFile item in postgreSqlFlexibleServer.GetPostgreSqlFlexibleServerLogFilesAsync())
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task TriggerLtrPreBackupFlexibleServer_PerformAllChecksRequiredForALongTermRetentionBackupOperationToSucceed()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/BackupsLongTermRetentionCheckPrerequisites.json
+            // this example is just showing the usage of "BackupsLongTermRetention_CheckPrerequisites" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerLtrPreBackupContent content = new PostgreSqlFlexibleServerLtrPreBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"));
+            PostgreSqlFlexibleServerLtrPreBackupResult result = await postgreSqlFlexibleServer.TriggerLtrPreBackupFlexibleServerAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task StartLtrBackupFlexibleServer_InitiateALongTermRetentionBackup()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/BackupsLongTermRetentionStart.json
+            // this example is just showing the usage of "BackupsLongTermRetention_Start" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "exampleresourcegroup";
+            string serverName = "exampleserver";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // invoke the operation
+            PostgreSqlFlexibleServerLtrBackupContent content = new PostgreSqlFlexibleServerLtrBackupContent(new PostgreSqlFlexibleServerBackupSettings("exampleltrbackup"), new PostgreSqlFlexibleServerBackupStoreDetails(new string[] { "sasuri" }));
+            ArmOperation<PostgreSqlFlexibleServerLtrBackupResult> lro = await postgreSqlFlexibleServer.StartLtrBackupFlexibleServerAsync(WaitUntil.Completed, content);
+            PostgreSqlFlexibleServerLtrBackupResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

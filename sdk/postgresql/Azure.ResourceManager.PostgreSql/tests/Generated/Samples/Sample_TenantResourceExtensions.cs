@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetPrivateDnsZoneSuffix_GetThePrivateDNSSuffix()
+        public async Task ExecuteGetPrivateDnsZoneSuffix_GetThePrivateDNSSuffix()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/PrivateDnsZoneSuffixGet.json
             // this example is just showing the usage of "PrivateDnsZoneSuffix_Get" operation, for the dependent resources, they will have to be created separately.
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            string result = await tenantResource.GetPrivateDnsZoneSuffixAsync();
+            string result = await tenantResource.ExecuteGetPrivateDnsZoneSuffixAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

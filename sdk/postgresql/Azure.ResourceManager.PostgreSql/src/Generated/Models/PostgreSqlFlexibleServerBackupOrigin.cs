@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Type of backup. </summary>
+    /// <summary>
+    /// Type of backup.
+    /// Serialized Name: BackupType
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerBackupOrigin : IEquatable<PostgreSqlFlexibleServerBackupOrigin>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string FullValue = "Full";
         private const string CustomerOnDemandValue = "Customer On-Demand";
 
-        /// <summary> A full backup taken automatically by the service. These backups are retained for a period of time as defined by the backup retention policy, and they cannot be deleted by the customer. </summary>
+        /// <summary>
+        /// Full
+        /// Serialized Name: BackupType.Full
+        /// </summary>
         public static PostgreSqlFlexibleServerBackupOrigin Full { get; } = new PostgreSqlFlexibleServerBackupOrigin(FullValue);
-        /// <summary> A full backup triggered by the customer. These backups are retained for a period of time as defined by the backup retention policy, and they can also be deleted by the customer. </summary>
+        /// <summary>
+        /// Customer On-Demand
+        /// Serialized Name: BackupType.Customer On-Demand
+        /// </summary>
         public static PostgreSqlFlexibleServerBackupOrigin CustomerOnDemand { get; } = new PostgreSqlFlexibleServerBackupOrigin(CustomerOnDemandValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerBackupOrigin"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerBackupOrigin left, PostgreSqlFlexibleServerBackupOrigin right) => left.Equals(right);

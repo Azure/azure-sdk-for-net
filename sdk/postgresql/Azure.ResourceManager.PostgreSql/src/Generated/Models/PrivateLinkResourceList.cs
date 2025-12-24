@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A list of private link resources. </summary>
+    /// <summary>
+    /// A list of private link resources
+    /// Serialized Name: PrivateLinkResourceList
+    /// </summary>
     internal partial class PrivateLinkResourceList
     {
         /// <summary>
@@ -46,14 +50,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/>. </summary>
-        internal PrivateLinkResourceList()
+        /// <param name="value">
+        /// The PrivateLinkResource items on this page
+        /// Serialized Name: PrivateLinkResourceList.value
+        /// </param>
+        internal PrivateLinkResourceList(IEnumerable<PostgreSqlFlexibleServersPrivateLinkResourceData> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServersPrivateLinkResourceData>();
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/>. </summary>
-        /// <param name="value"> Array of results. </param>
-        /// <param name="nextLink"> Link to retrieve next page of results. </param>
+        /// <param name="value">
+        /// The PrivateLinkResource items on this page
+        /// Serialized Name: PrivateLinkResourceList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: PrivateLinkResourceList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PrivateLinkResourceList(IReadOnlyList<PostgreSqlFlexibleServersPrivateLinkResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +76,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of results. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/> for deserialization. </summary>
+        internal PrivateLinkResourceList()
+        {
+        }
+
+        /// <summary>
+        /// The PrivateLinkResource items on this page
+        /// Serialized Name: PrivateLinkResourceList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServersPrivateLinkResourceData> Value { get; }
-        /// <summary> Link to retrieve next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: PrivateLinkResourceList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

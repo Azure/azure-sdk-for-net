@@ -9,7 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
@@ -69,12 +68,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerConfigurationResource postgreSqlFlexibleServerConfiguration = client.GetPostgreSqlFlexibleServerConfigurationResource(postgreSqlFlexibleServerConfigurationResourceId);
 
             // invoke the operation
-            ConfigurationForUpdate configurationForUpdate = new ConfigurationForUpdate
+            PostgreSqlFlexibleServerConfigurationData data = new PostgreSqlFlexibleServerConfigurationData
             {
                 Value = "on",
                 Source = "user-override",
             };
-            ArmOperation<PostgreSqlFlexibleServerConfigurationResource> lro = await postgreSqlFlexibleServerConfiguration.UpdateAsync(WaitUntil.Completed, configurationForUpdate);
+            ArmOperation<PostgreSqlFlexibleServerConfigurationResource> lro = await postgreSqlFlexibleServerConfiguration.UpdateAsync(WaitUntil.Completed, data);
             PostgreSqlFlexibleServerConfigurationResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

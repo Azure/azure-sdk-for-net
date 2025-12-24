@@ -10,11 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> A request that is made for pre-backup. </summary>
+    /// <summary>
+    /// A request that is made for pre-backup.
+    /// Serialized Name: LtrPreBackupRequest
+    /// </summary>
     public partial class PostgreSqlFlexibleServerLtrPreBackupContent : PostgreSqlBackupContent
     {
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
-        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="backupSettings">
+        /// Backup Settings
+        /// Serialized Name: BackupRequestBase.backupSettings
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="backupSettings"/> is null. </exception>
         public PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings) : base(backupSettings)
         {
@@ -22,7 +28,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerLtrPreBackupContent"/>. </summary>
-        /// <param name="backupSettings"> Backup Settings. </param>
+        /// <param name="backupSettings">
+        /// Backup Settings
+        /// Serialized Name: BackupRequestBase.backupSettings
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerLtrPreBackupContent(PostgreSqlFlexibleServerBackupSettings backupSettings, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(backupSettings, serializedAdditionalRawData)
         {

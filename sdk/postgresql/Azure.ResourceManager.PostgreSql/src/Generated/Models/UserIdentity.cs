@@ -10,8 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Compute information of a server. </summary>
-    public partial class PostgreSqlFlexibleServersSku
+    /// <summary>
+    /// User assigned managed identity associated with a flexible server.
+    /// Serialized Name: UserIdentity
+    /// </summary>
+    public partial class UserIdentity
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,39 +48,39 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSku"/>. </summary>
-        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public PostgreSqlFlexibleServersSku(string name, PostgreSqlFlexibleServerSkuTier tier)
+        /// <summary> Initializes a new instance of <see cref="UserIdentity"/>. </summary>
+        public UserIdentity()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
-            Tier = tier;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSku"/>. </summary>
-        /// <param name="name"> Name by which is known a given compute size assigned to a server. </param>
-        /// <param name="tier"> Tier of the compute assigned to a server. </param>
+        /// <summary> Initializes a new instance of <see cref="UserIdentity"/>. </summary>
+        /// <param name="principalId">
+        /// Identifier of the object of the service principal associated to the user assigned managed identity.
+        /// Serialized Name: UserIdentity.principalId
+        /// </param>
+        /// <param name="clientId">
+        /// Identifier of the client of the service principal associated to the user assigned managed identity.
+        /// Serialized Name: UserIdentity.clientId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PostgreSqlFlexibleServersSku(string name, PostgreSqlFlexibleServerSkuTier tier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UserIdentity(Guid? principalId, string clientId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Tier = tier;
+            PrincipalId = principalId;
+            ClientId = clientId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersSku"/> for deserialization. </summary>
-        internal PostgreSqlFlexibleServersSku()
-        {
-        }
-
-        /// <summary> Name by which is known a given compute size assigned to a server. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
-        /// <summary> Tier of the compute assigned to a server. </summary>
-        [WirePath("tier")]
-        public PostgreSqlFlexibleServerSkuTier Tier { get; set; }
+        /// <summary>
+        /// Identifier of the object of the service principal associated to the user assigned managed identity.
+        /// Serialized Name: UserIdentity.principalId
+        /// </summary>
+        [WirePath("principalId")]
+        public Guid? PrincipalId { get; set; }
+        /// <summary>
+        /// Identifier of the client of the service principal associated to the user assigned managed identity.
+        /// Serialized Name: UserIdentity.clientId
+        /// </summary>
+        [WirePath("clientId")]
+        public string ClientId { get; set; }
     }
 }

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, ModelSerializationExtensions.WireV3Options);
+                writer.WriteObjectValue(Identity, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -189,8 +189,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 return null;
             }
-            PostgreSqlFlexibleServersSku sku = default;
-            ManagedServiceIdentity identity = default;
+            PostgreSqlFlexibleServerSku sku = default;
+            PostgreSqlFlexibleServerUserAssignedIdentity identity = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             PostgreSqlFlexibleServerStorage storage = default;
             PostgreSqlFlexibleServerAuthConfig authConfig = default;
             PostgreSqlFlexibleServerDataEncryption dataEncryption = default;
-            Backup backup = default;
+            PostgreSqlFlexibleServerBackupProperties backup = default;
             PostgreSqlFlexibleServerNetwork network = default;
             PostgreSqlFlexibleServerHighAvailability highAvailability = default;
             PostgreSqlFlexibleServerMaintenanceWindow maintenanceWindow = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    sku = PostgreSqlFlexibleServersSku.DeserializePostgreSqlFlexibleServersSku(property.Value, options);
+                    sku = PostgreSqlFlexibleServerSku.DeserializePostgreSqlFlexibleServerSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         continue;
                     }
-                    identity = ModelReaderWriter.Read<ManagedServiceIdentity>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireV3Options, AzureResourceManagerPostgreSqlContext.Default);
+                    identity = PostgreSqlFlexibleServerUserAssignedIdentity.DeserializePostgreSqlFlexibleServerUserAssignedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                             {
                                 continue;
                             }
-                            backup = Backup.DeserializeBackup(property0.Value, options);
+                            backup = PostgreSqlFlexibleServerBackupProperties.DeserializePostgreSqlFlexibleServerBackupProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("network"u8))

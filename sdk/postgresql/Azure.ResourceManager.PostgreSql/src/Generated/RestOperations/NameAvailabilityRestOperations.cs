@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Checks the validity and availability of the given name, to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         /// <summary> Checks the validity and availability of the given name, to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Check the availability of name for resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <summary> Check the availability of name for resource. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
