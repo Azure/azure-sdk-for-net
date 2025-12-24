@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 if (SecurityPolicyConfigurations is null)
                     SecurityPolicyConfigurations = new SecurityPolicyConfigurations();
-                SecurityPolicyConfigurations.WafSecurityPolicyId = value?.ToString();
+                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
             }
         }
     }

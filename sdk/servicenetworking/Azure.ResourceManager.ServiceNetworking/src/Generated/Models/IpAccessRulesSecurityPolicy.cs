@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of <see cref="IpAccessRulesSecurityPolicy"/>. </summary>
         /// <param name="id"> Resource ID of the Ip Access Rules Security Policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        public IpAccessRulesSecurityPolicy(string id)
+        public IpAccessRulesSecurityPolicy(ResourceIdentifier id)
         {
             Argument.AssertNotNull(id, nameof(id));
 
@@ -30,13 +31,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Initializes a new instance of <see cref="IpAccessRulesSecurityPolicy"/>. </summary>
         /// <param name="id"> Resource ID of the Ip Access Rules Security Policy. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IpAccessRulesSecurityPolicy(string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IpAccessRulesSecurityPolicy(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource ID of the Ip Access Rules Security Policy. </summary>
-        public string Id { get; set; }
+        public ResourceIdentifier Id { get; set; }
     }
 }

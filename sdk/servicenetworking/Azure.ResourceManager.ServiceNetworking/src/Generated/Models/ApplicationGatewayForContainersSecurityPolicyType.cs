@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <summary> Policy of Type WAF. </summary>
         private const string WAFValue = "waf";
         /// <summary> Policy of Type IpAccessRules. </summary>
-        private const string IpAccessRulesValue = "ipAccessRules";
+        private const string IPAccessRulesValue = "ipAccessRules";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static ApplicationGatewayForContainersSecurityPolicyType WAF { get; } = new ApplicationGatewayForContainersSecurityPolicyType(WAFValue);
 
         /// <summary> Policy of Type IpAccessRules. </summary>
-        public static ApplicationGatewayForContainersSecurityPolicyType IpAccessRules { get; } = new ApplicationGatewayForContainersSecurityPolicyType(IpAccessRulesValue);
+        public static ApplicationGatewayForContainersSecurityPolicyType IPAccessRules { get; } = new ApplicationGatewayForContainersSecurityPolicyType(IPAccessRulesValue);
 
         /// <summary> Determines if two <see cref="ApplicationGatewayForContainersSecurityPolicyType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

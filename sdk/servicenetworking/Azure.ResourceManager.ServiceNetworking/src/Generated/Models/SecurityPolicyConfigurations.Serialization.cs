@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 writer.WritePropertyName("wafSecurityPolicy"u8);
                 writer.WriteObjectValue(WafSecurityPolicy, options);
             }
-            if (Optional.IsDefined(IpAccessRulesSecurityPolicy))
+            if (Optional.IsDefined(IPAccessRulesSecurityPolicy))
             {
                 writer.WritePropertyName("ipAccessRulesSecurityPolicy"u8);
-                writer.WriteObjectValue(IpAccessRulesSecurityPolicy, options);
+                writer.WriteObjectValue(IPAccessRulesSecurityPolicy, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

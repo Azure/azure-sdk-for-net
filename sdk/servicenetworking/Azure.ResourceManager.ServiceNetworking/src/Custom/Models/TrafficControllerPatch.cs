@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     Properties = new TrafficControllerUpdateProperties();
                 if (Properties.SecurityPolicyConfigurations is null)
                     Properties.SecurityPolicyConfigurations = new SecurityPolicyConfigurations();
-                Properties.SecurityPolicyConfigurations.WafSecurityPolicyId = value?.ToString();
+                Properties.SecurityPolicyConfigurations.WafSecurityPolicyId = value;
             }
         }
     }
