@@ -64,6 +64,7 @@ export function resolveArmResources(
   // Convert resources
   const resources: ArmResourceSchema[] = [];
   const processedResources = new Set<string>();
+  const schemaToResolvedResource = new Map<ArmResourceSchema, ResolvedResource>();
 
   if (provider.resources) {
     for (const resolvedResource of provider.resources) {
@@ -83,10 +84,12 @@ export function resolveArmResources(
       // Convert to our resource schema format
       const metadata = convertResolvedResourceToMetadata(sdkContext, resolvedResource);
 
-      resources.push({
+      const resource = {
         resourceModelId: modelId,
         metadata
-      });
+      };
+      resources.push(resource);
+      schemaToResolvedResource.set(resource, resolvedResource);
     }
   }
 
@@ -97,6 +100,33 @@ export function resolveArmResources(
   const validResources = resources.filter(r => r.metadata.resourceIdPattern !== "");
   const incompleteResources = resources.filter(r => r.metadata.resourceIdPattern === "");
 
+  // now we populate parentResourceId in all resources. Incomplete resources are also handled here because when merging their methods into others, we need correct parentResourceId
+  const validResourceMap = new Map<string, ArmResourceSchema>();
+  for (const resource of validResources) {
+    const resolved = schemaToResolvedResource.get(resource);
+    if (resolved) {
+      validResourceMap.set(resolved.resourceInstancePath, resource);
+    }
+  }
+
+  for (const resource of resources) {
+    const resolved = schemaToResolvedResource.get(resource);
+    if (!resolved) continue;
+
+    let parent = resolved.parent;
+    while (parent) {
+      // Check if this parent is a valid resource in our set
+      const parentResource = validResourceMap.get(parent.resourceInstancePath);
+      if (parentResource) {
+        resource.metadata.parentResourceId = parentResource.metadata.resourceIdPattern;
+        resource.metadata.parentResourceModelId = parentResource.resourceModelId;
+        break;
+      }
+      parent = parent.parent;
+    }
+  }
+
+  // then we merge the methods in incomplete resources to their parents or siblings
   for (const resource of incompleteResources) {
     const metadata = resource.metadata;
     let merged = false;
@@ -294,13 +324,6 @@ function convertResolvedResourceToMetadata(
     }
   }
 
-  // Determine parent resource ID
-  const parentResourceId = resolvedResource.parent?.resourceInstancePath;
-  let parentResourceModelId: string | undefined;
-  if (resolvedResource.parent) {
-    parentResourceModelId = getCrossLanguageDefinitionId(sdkContext, resolvedResource.parent.type);
-  }
-
   // Convert resource scope
   const resourceScopeValue = convertScopeToResourceScope(resolvedResource.scope);
 
@@ -313,8 +336,8 @@ function convertResolvedResourceToMetadata(
     resourceType,
     methods,
     resourceScope: resourceScopeValue,
-    parentResourceId,
-    parentResourceModelId,
+    parentResourceId: undefined,
+    parentResourceModelId: undefined,
     // TODO: Temporary - waiting for resolveArmResources API update to include singleton information
     // Once the API includes this, we can remove this extraction logic
     singletonResourceName: extractSingletonName(resolvedResource.resourceInstancePath),
