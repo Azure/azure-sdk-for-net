@@ -38,6 +38,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public override bool Equals(object obj) => obj is AssociationType other && Equals(other);
         /// <inheritdoc />
         public bool Equals(AssociationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
