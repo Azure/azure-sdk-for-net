@@ -119,21 +119,9 @@ export async function createCSharpSdkContext(
  * @returns A normalized schema object suitable for deep comparison
  */
 export function normalizeSchemaForComparison(schema: any) {
-  // const result: any = {
-  //   resources: schema.resources.map((r: any) => ({
-  //     resourceModelId: r.resourceModelId,
-  //     metadata: {
-  //       resourceIdPattern: r.metadata.resourceIdPattern,
-  //       resourceType: r.metadata.resourceType,
-  //       resourceScope: r.metadata.resourceScope,
-  //       parentResourceId: r.metadata.parentResourceId,
-  //       singletonResourceName: r.metadata.singletonResourceName,
-  //       resourceName: r.metadata.resourceName,
-  //       methods: r.metadata.methods
-  //     }
-  //   })),
-  //   nonResourceMethods: schema.nonResourceMethods
-  // };
-  // currently there are no properties that need normalization, so we just return as is
+  // it is known issue that the resources.metadata.resourceName might be different therefore we need to ignore it
+  for (const resource of schema.resources) {
+    resource.metadata.resourceName = undefined;
+  }
   return schema;
 }
