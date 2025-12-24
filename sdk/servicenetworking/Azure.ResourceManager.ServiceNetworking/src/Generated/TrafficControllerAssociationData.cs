@@ -68,5 +68,22 @@ namespace Azure.ResourceManager.ServiceNetworking
                 Properties.SubnetId = value;
             }
         }
+
+        /// <summary> Association Type. </summary>
+        public TrafficControllerAssociationType? AssociationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AssociationType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AssociationProperties();
+                }
+                Properties.AssociationType = value.Value;
+            }
+        }
     }
 }

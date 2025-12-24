@@ -19,30 +19,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmServiceNetworkingModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="associationType"> Association Type. </param>
-        /// <param name="provisioningState"> Provisioning State of Traffic Controller Association Resource. </param>
-        /// <param name="subnetId"> Association ID. </param>
-        /// <returns> A new <see cref="ServiceNetworking.TrafficControllerAssociationData"/> instance for mocking. </returns>
-        public static TrafficControllerAssociationData TrafficControllerAssociationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, TrafficControllerAssociationType? associationType = default, ServiceNetworkingProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new TrafficControllerAssociationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                additionalBinaryDataProperties: null,
-                tags,
-                location,
-                associationType is null && provisioningState is null && subnetId is null ? default : new AssociationProperties(associationType.Value, new AssociationSubnet(subnetId, null), provisioningState, null));
-        }
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="associationType"> Association Type. </param>
