@@ -50,7 +50,8 @@ public class Program
             .Build();
 
         var testAgent = new ChatClientAgent(chatClient,
-              name: "test-agent",
+              name: "AgentWithHostedMCP",
+              tools: [],
               instructions: @"You are a helpful assistant with access to tools for fetching Microsoft documentation.
                 IMPORTANT: When the user asks about Microsoft Learn articles or documentation:
                 1. You MUST use the microsoft_docs_fetch tool to retrieve the actual content
@@ -62,6 +63,7 @@ public class Program
                 - microsoft_docs_search: Searches Microsoft/Azure documentation
                 - microsoft_code_sample_search: Searches for code examples")
               .AsBuilder()
+              .useFoundryTools(new List<ToolDefinition> { new() { Type = "mcp", ProjectConnectionId = toolConnectionId } })
               .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
               .Build();
 
