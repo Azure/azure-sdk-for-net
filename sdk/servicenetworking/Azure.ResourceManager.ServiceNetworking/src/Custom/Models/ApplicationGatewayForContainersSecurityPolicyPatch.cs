@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier WafPolicyId
         {
-            get => Properties?.WafPolicyId is null ? null : new ResourceIdentifier(Properties.WafPolicyId);
+            get => Properties is null ? default : Properties.WafPolicyId;
             set
             {
                 if (Properties is null)

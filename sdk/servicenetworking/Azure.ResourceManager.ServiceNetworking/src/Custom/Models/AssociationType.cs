@@ -26,27 +26,21 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> subnets. </summary>
         public static AssociationType Subnets { get; } = new AssociationType(SubnetsValue);
-
         /// <summary> Determines if two <see cref="AssociationType"/> values are the same. </summary>
         public static bool operator ==(AssociationType left, AssociationType right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="AssociationType"/> values are not the same. </summary>
         public static bool operator !=(AssociationType left, AssociationType right) => !left.Equals(right);
-
         /// <summary> Converts a <see cref="string"/> to a <see cref="AssociationType"/>. </summary>
         public static implicit operator AssociationType(string value) => new AssociationType(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AssociationType other && Equals(other);
-
         /// <inheritdoc />
         public bool Equals(AssociationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
         /// <inheritdoc />
         public override string ToString() => _value;
     }

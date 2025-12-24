@@ -14,7 +14,6 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
 #pragma warning disable 0618
-
     /// <summary> Model factory for models. </summary>
     public static partial class ArmServiceNetworkingModelFactory
     {
@@ -32,12 +31,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TrafficControllerData TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> configurationEndpoints, IEnumerable<SubResource> frontends, IEnumerable<SubResource> associations, ProvisioningState? provisioningState)
-            => TrafficControllerData(id, name, resourceType, systemData, tags, location, configurationEndpoints,
-                frontends,
-                associations,
-                securityPolicies: null,
-                wafSecurityPolicyId: null,
-                trafficControllerProvisioningState: provisioningState.HasValue ? (ServiceNetworkingProvisioningState?)Enum.Parse(typeof(ServiceNetworkingProvisioningState), provisioningState.Value.ToString()) : null);
+            => TrafficControllerData(id, name, resourceType, systemData, tags, location, configurationEndpoints, frontends, associations, securityPolicies: null, wafSecurityPolicyId: null, trafficControllerProvisioningState: provisioningState.HasValue ? (ServiceNetworkingProvisioningState?)Enum.Parse(typeof(ServiceNetworkingProvisioningState), provisioningState.Value.ToString()) : null);
 
         /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AssociationData"/>. </summary>
         /// <param name="id"> The id. </param>
@@ -113,31 +107,22 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <returns> A new <see cref="ServiceNetworking.TrafficControllerData"/> instance for mocking. </returns>
         public static TrafficControllerData TrafficControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IEnumerable<string> configurationEndpoints, IEnumerable<SubResource> frontends, IEnumerable<SubResource> associations, IEnumerable<SubResource> securityPolicies, ResourceIdentifier wafSecurityPolicyId, ServiceNetworkingProvisioningState? trafficControllerProvisioningState = null)
         {
-            // Convert SubResource collections to ResourceId collections
-            //var frontendsResourceIds = frontends?.Select(f => ResourceId(f.Id?.ToString()));
-            //var associationsResourceIds = associations?.Select(a => ResourceId(a.Id?.ToString()));
-            //var securityPoliciesResourceIds = securityPolicies?.Select(s => ResourceId(s.Id?.ToString()));
-
-            //var securityPolicyConfigurations = wafSecurityPolicyId != null ? new SecurityPolicyConfigurations()
-            //{
-            //    WafSecurityPolicyId = wafSecurityPolicyId
-            //} : null;
-
-            //// Call the generated factory method with ResourceId parameters
-            //return TrafficControllerData(
-            //    id: id,
-            //    name: name,
-            //    resourceType: resourceType,
-            //    systemData: systemData,
-            //    tags: tags,
-            //    location: location,
-            //    configurationEndpoints: configurationEndpoints,
-            //    frontends: frontendsResourceIds,
-            //    associations: associationsResourceIds,
-            //    securityPolicies: securityPoliciesResourceIds,
-            //    securityPolicyConfigurations: securityPolicyConfigurations,
-            //    trafficControllerProvisioningState: trafficControllerProvisioningState);
-            throw new NotImplementedException();
+            return TrafficControllerData(
+                id: id,
+                name: name,
+                resourceType: resourceType,
+                systemData: systemData,
+                tags: tags,
+                location: location,
+                configurationEndpoints: configurationEndpoints,
+                frontends,
+                associations,
+                securityPolicies,
+                wafSecurityPolicyId != null ? new SecurityPolicyConfigurations()
+                {
+                    WafSecurityPolicyId = wafSecurityPolicyId
+                } : null,
+                trafficControllerProvisioningState: trafficControllerProvisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.ServiceNetworking.ApplicationGatewayForContainersSecurityPolicyData" />. </summary>
@@ -190,6 +175,5 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             return TrafficControllerAssociationData(id, name, resourceType, systemData, tags, location, associationType, provisioningState, subnetId);
         }
     }
-
 #pragma warning restore 0618
 }

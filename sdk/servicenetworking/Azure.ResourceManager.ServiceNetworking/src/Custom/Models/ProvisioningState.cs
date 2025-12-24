@@ -32,45 +32,33 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <summary> Provisioning. </summary>
         public static ProvisioningState Provisioning { get; } = new ProvisioningState(ProvisioningValue);
-
         /// <summary> Updating. </summary>
         public static ProvisioningState Updating { get; } = new ProvisioningState(UpdatingValue);
-
         /// <summary> Deleting. </summary>
         public static ProvisioningState Deleting { get; } = new ProvisioningState(DeletingValue);
-
         /// <summary> Accepted. </summary>
         public static ProvisioningState Accepted { get; } = new ProvisioningState(AcceptedValue);
-
         /// <summary> Succeeded. </summary>
         public static ProvisioningState Succeeded { get; } = new ProvisioningState(SucceededValue);
-
         /// <summary> Failed. </summary>
         public static ProvisioningState Failed { get; } = new ProvisioningState(FailedValue);
-
         /// <summary> Canceled. </summary>
         public static ProvisioningState Canceled { get; } = new ProvisioningState(CanceledValue);
-
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ProvisioningState left, ProvisioningState right) => left.Equals(right);
-
         /// <summary> Determines if two <see cref="ProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ProvisioningState left, ProvisioningState right) => !left.Equals(right);
-
         /// <summary> Converts a <see cref="string"/> to a <see cref="ProvisioningState"/>. </summary>
         public static implicit operator ProvisioningState(string value) => new ProvisioningState(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ProvisioningState other && Equals(other);
-
         /// <inheritdoc />
         public bool Equals(ProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-
         /// <inheritdoc />
         public override string ToString() => _value;
     }

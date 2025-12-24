@@ -69,45 +69,23 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         internal AssociationPatch(TrafficControllerAssociationPatch patch)
         {
-            Tags = patch.Tags ?? new ChangeTrackingDictionary<string, string>();
-            if (patch.AssociationType.HasValue)
-                AssociationType = (AssociationType)Enum.Parse(typeof(AssociationType), patch.AssociationType.Value.ToString());
-            if (!string.IsNullOrEmpty(patch.SubnetId))
-                Subnet = new WritableSubResource() { Id = new ResourceIdentifier(patch.SubnetId) };
+            Tags = patch.Tags;
+            AssociationType = patch.AssociationType.ToString();
+            Subnet = new WritableSubResource() { Id = patch.SubnetId };
             _serializedAdditionalRawData = null;
         }
 
         internal TrafficControllerAssociationPatch ToTrafficControllerAssociationPatch()
         {
-            var result = new TrafficControllerAssociationPatch();
-
-            // Copy tags
-            foreach (var tag in Tags)
-            {
-                result.Tags[tag.Key] = tag.Value;
-            }
-
-            // Set properties
-            if (AssociationType.HasValue || Subnet?.Id != null)
-            {
-                if (AssociationType.HasValue)
-                    result.AssociationType = (TrafficControllerAssociationType)Enum.Parse(typeof(TrafficControllerAssociationType), AssociationType.Value.ToString());
-                if (Subnet?.Id != null)
-                    result.SubnetId = Subnet.Id;
-            }
-
-            return result;
+            return new TrafficControllerAssociationPatch(Tags, new AssociationUpdateProperties(AssociationType.ToString(), new AssociationSubnetUpdate { Id = SubnetId }, _serializedAdditionalRawData), _serializedAdditionalRawData);
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-
         /// <summary> Association Type. </summary>
         public AssociationType? AssociationType { get; set; }
-
         /// <summary> Association Subnet. </summary>
         internal WritableSubResource Subnet { get; set; }
-
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
         {

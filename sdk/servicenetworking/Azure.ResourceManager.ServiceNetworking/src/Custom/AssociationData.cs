@@ -85,12 +85,9 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         internal AssociationData(TrafficControllerAssociationData data) : base(data.Id, data.Name, data.ResourceType, data.SystemData, data.Tags, data.Location)
         {
-            if (data.AssociationType != null)
-                AssociationType = (AssociationType)Enum.Parse(typeof(AssociationType), data.AssociationType.ToString());
-            if (!string.IsNullOrEmpty(data.SubnetId))
-                Subnet = new WritableSubResource() { Id = new ResourceIdentifier(data.SubnetId) };
-            if (data.ProvisioningState.HasValue)
-                ProvisioningState = (ProvisioningState)Enum.Parse(typeof(ProvisioningState), data.ProvisioningState.Value.ToString());
+            AssociationType = data.AssociationType.ToString();
+            Subnet = new WritableSubResource() { Id = new ResourceIdentifier(data.SubnetId) };
+            ProvisioningState = data.ProvisioningState.ToString();
             _serializedAdditionalRawData = null;
         }
 
@@ -106,18 +103,13 @@ namespace Azure.ResourceManager.ServiceNetworking
                     properties.SubnetId = SubnetId;
             }
 
-            return new TrafficControllerAssociationData(Location)
-            {
-                Properties = properties
-            };
+            return new TrafficControllerAssociationData(Id, Name, ResourceType, SystemData, _serializedAdditionalRawData,Tags, Location, properties);
         }
 
         /// <summary> Association Type. </summary>
         public AssociationType? AssociationType { get; set; }
-
         /// <summary> Association Subnet. </summary>
         internal WritableSubResource Subnet { get; set; }
-
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier SubnetId
         {

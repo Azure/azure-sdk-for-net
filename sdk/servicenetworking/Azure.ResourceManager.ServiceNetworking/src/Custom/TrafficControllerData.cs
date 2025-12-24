@@ -17,23 +17,18 @@ namespace Azure.ResourceManager.ServiceNetworking
     /// </summary>
     public partial class TrafficControllerData : TrackedResourceData
     {
+#pragma warning disable 0618
         /// <summary> The status of the last operation. </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is now deprecated. Please use `TrafficControllerProvisioningState` moving forward.")]
-        public ProvisioningState? ProvisioningState
-#pragma warning restore CS0618 // Type or member is obsolete
-        {
-            get
-            {
-                return TrafficControllerProvisioningState?.ToString();
-            }
-        }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public ProvisioningState? ProvisioningState => TrafficControllerProvisioningState.ToString();
+#pragma warning restore 0618
 
         /// <summary> Gets or sets Id. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResourceIdentifier WafSecurityPolicyId
         {
-            get => SecurityPolicyConfigurations?.WafSecurityPolicyId is null ? null : new ResourceIdentifier(SecurityPolicyConfigurations.WafSecurityPolicyId);
+            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
             set
             {
                 if (SecurityPolicyConfigurations is null)
