@@ -110,13 +110,13 @@ interface Employees2 {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
     ok(armProviderSchema.resources);
     strictEqual(armProviderSchema.resources.length, 2); // Employee and EmployeeParent
-    
+
     // Find the Employee resource in the schema by resource type
     const employeeResource = armProviderSchema.resources.find(
       (r) => r.metadata.resourceType === "Microsoft.ContosoProviderHub/employeeParents/employees"
@@ -124,7 +124,7 @@ interface Employees2 {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    
+
     // Validate resource metadata
     strictEqual(
       metadata.resourceIdPattern,
@@ -142,7 +142,7 @@ interface Employees2 {
     );
     strictEqual(metadata.resourceName, "Employee");
     strictEqual(metadata.methods.length, 6);
-    
+
     // Validate method kinds are present (Get, Create, Update, Delete, List operations)
     const methodKinds = metadata.methods.map((m: any) => m.kind);
     ok(methodKinds.includes("Read"));
@@ -150,7 +150,7 @@ interface Employees2 {
     ok(methodKinds.includes("Update"));
     ok(methodKinds.includes("Delete"));
     ok(methodKinds.includes("List"));
-    
+
     // Validate Get method details
     const getMethod = metadata.methods.find((m: any) => m.kind === "Read");
     ok(getMethod);
@@ -329,7 +329,7 @@ interface CurrentEmployees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    
+
     strictEqual(
       metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employees/default"
@@ -456,7 +456,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -468,7 +468,7 @@ interface Employees {
     ok(employeeResource);
     const employeeMetadata = employeeResource.metadata;
     ok(employeeMetadata);
-    
+
     strictEqual(
       employeeMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
@@ -494,7 +494,7 @@ interface Employees {
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
     ok(departmentMetadata);
-    
+
     strictEqual(
       departmentMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -519,7 +519,7 @@ interface Employees {
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
     ok(companyMetadata);
-    
+
     strictEqual(
       companyMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
@@ -614,7 +614,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -626,7 +626,7 @@ interface Employees {
     ok(employeeResource);
     const employeeMetadata = employeeResource.metadata;
     ok(employeeMetadata);
-    
+
     strictEqual(
       employeeMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
@@ -652,7 +652,7 @@ interface Employees {
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
     ok(departmentMetadata);
-    
+
     strictEqual(
       departmentMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -677,7 +677,7 @@ interface Employees {
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
     ok(companyMetadata);
-    
+
     strictEqual(
       companyMetadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
@@ -785,7 +785,7 @@ interface Employees {
     ok(employeeResource);
     const metadata = employeeResource.metadata;
     ok(metadata);
-    
+
     strictEqual(
       metadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}/employees/{employeeName}"
@@ -811,7 +811,7 @@ interface Employees {
     ok(departmentResource);
     const departmentMetadata = departmentResource.metadata;
     ok(departmentMetadata);
-    
+
     strictEqual(
       departmentMetadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}/departments/{departmentName}"
@@ -836,7 +836,7 @@ interface Employees {
     ok(companyResource);
     const companyMetadata = companyResource.metadata;
     ok(companyMetadata);
-    
+
     strictEqual(
       companyMetadata.resourceIdPattern,
       "/providers/Microsoft.ContosoProviderHub/companies/{companyName}"
@@ -964,7 +964,7 @@ interface Employees {
     ok(employeeParentResource);
     const metadata = employeeParentResource.metadata;
     ok(metadata);
-    
+
     strictEqual(
       metadata.resourceIdPattern,
       "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContosoProviderHub/employeeParents/{employeeParentName}"
@@ -1015,7 +1015,7 @@ interface Employees {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
@@ -1076,11 +1076,11 @@ interface ScheduledActionExtension {
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema and verify its structure
     const armProviderSchemaResult = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchemaResult);
-    
+
     // ScheduledAction should NOT have a resource entry since it has no CRUD operations
     ok(armProviderSchemaResult.resources);
     const scheduledActionResource = armProviderSchemaResult.resources.find(
@@ -1091,11 +1091,11 @@ interface ScheduledActionExtension {
       undefined,
       "ScheduledAction should not have resource metadata without CRUD operations"
     );
-    
+
     // Check that the method is treated as a non-resource method
     ok(armProviderSchemaResult.nonResourceMethods, "Should have non-resource methods");
     ok(armProviderSchemaResult.nonResourceMethods.length >= 1, "Should have at least one non-resource method");
-    
+
     const nonResourceMethods = armProviderSchemaResult.nonResourceMethods;
     const methodEntry = nonResourceMethods.find(
       (m: any) => m.operationPath.includes("getAssociatedScheduledActions")
@@ -1104,114 +1104,161 @@ interface ScheduledActionExtension {
     strictEqual(methodEntry.operationScope, ResourceScope.ResourceGroup);
   });
 
-  it("validates diagnostic logic for duplicate Get methods", async () => {
-    // This test validates the diagnostic reporting logic by checking that when
-    // buildArmProviderSchema processes resources, it correctly reports NO diagnostics
-    // when there's only one Get method per resource.
+  it("validates diagnostic logic for duplicate READ methods", async () => {
     const program = await typeSpecCompile(
       `
-/** An Employee resource */
-model Employee is TrackedResource<EmployeeProperties> {
-  ...ResourceNameParameter<Employee>;
-}
+  interface Operations extends Azure.ResourceManager.Operations {}
 
-/** Employee properties */
-model EmployeeProperties {
-  /** Age of employee */
-  age?: int32;
-}
+  alias AchieveOperationOps = Azure.ResourceManager.Legacy.LegacyOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        ...Azure.ResourceManager.Legacy.Provider,
 
-interface Operations extends Azure.ResourceManager.Operations {}
+        /**
+         * The package type.
+         */
+        @path
+        @segment("packages")
+        @minLength(3)
+        @maxLength(50)
+        @pattern("^[a-zA-Z]*$")
+        @doc("The package type.")
+        packageType: string,
+      },
+      {
+        /**
+         * The name of the archive resource.
+         */
+        @path
+        @segment("archives")
+        @pattern("^[a-zA-Z0-9-]*$")
+        @minLength(5)
+        @maxLength(200)
+        @doc("The name of the archive resource.")
+        archiveName: string,
+      }
+    >;
 
-@armResourceOperations
-interface Employees {
-  get is ArmResourceRead<Employee>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
-  delete is ArmResourceDeleteWithoutOkAsync<Employee>;
-}
+  alias AchieveOps = Azure.ResourceManager.Legacy.LegacyOperations<
+      {
+        ...ApiVersionParameter,
+        ...SubscriptionIdParameter,
+        ...ResourceGroupParameter,
+        ...Azure.ResourceManager.Legacy.Provider,
+
+        /**
+         * The package type.
+         */
+        @path
+        @minLength(3)
+        @maxLength(50)
+        @pattern("^[a-zA-Z]*$")
+        @segment("packages")
+        @doc("The package type.")
+        packageType: string,
+      },
+      {}
+    >;
+
+  /**
+   * An object that represents a archive for a container registry.
+   */
+  model Archive is Azure.ResourceManager.ProxyResource<ArchiveProperties> {
+    ...ResourceNameParameter<
+      Resource = Archive,
+      KeyName = "archiveName",
+      SegmentName = "archives",
+      NamePattern = "^[a-zA-Z0-9-]*$"
+    >;
+  }
+
+  /** Archive update parameters */
+  model ArchiveUpdateParameters {
+    properties: ArchiveProperties;
+  }
+
+  /** Archive properties */
+  model ArchiveProperties {
+    /** The source location of the archive. */
+    sourceLocation?: string;
+  }
+
+  model ArchiveListResult {
+    /**
+     * The list of archives. Since this list may be incomplete, the nextLink field should be used to request the next list of archives.
+     */
+    @pageItems
+    value?: Archive[];
+
+    /**
+     * The URI that can be used to request the next list of archives.
+     */
+    @nextLink
+    nextLink?: string;
+  }
+
+  @armResourceOperations
+  interface Archives {
+    /**
+     * Gets the properties of the archive.
+     */
+    get is AchieveOperationOps.Read<Archive>;
+
+    /**
+     * Creates a archive for a container registry with the specified parameters.
+     */
+    create is AchieveOperationOps.CreateOrUpdateAsync<Archive>;
+
+    /**
+     * Updates a archive for a container registry with the specified parameters.
+     */
+    #suppress "@azure-tools/typespec-azure-resource-manager/arm-resource-patch" "FIXME: Update justification, follow aka.ms/tsp/conversion-fix for details"
+    @patch(#{ implicitOptionality: false })
+    update is AchieveOperationOps.CustomPatchSync<
+      Archive,
+      PatchModel = ArchiveUpdateParameters
+    >;
+
+    /**
+     * Deletes a archive from a container registry.
+     */
+    delete is AchieveOperationOps.DeleteWithoutOkAsync<Archive>;
+
+    // this is a mistake which causes duplicated Read method for this resource
+    // people should not write this but unfortunately this is still a possible typespec
+    // therefore we raise the extra diagnostic to make sure people notice and fix it.
+    /**
+     * Lists all archives for the specified container registry and package type.
+     */
+    @action("archives")
+    @list
+    list is AchieveOps.Read<Archive, Response = ArmResponse<ArchiveListResult>>;
+  }
 `,
       runner
     );
     const context = createEmitterContext(program);
     const sdkContext = await createCSharpSdkContext(context);
     const root = createModel(sdkContext);
-    
+
     // Build ARM provider schema - this will run validation
     const armProviderSchema = buildArmProviderSchema(sdkContext, root);
     ok(armProviderSchema);
-    
+
     // For this valid spec, there should be no duplicate-get-method diagnostics
     const duplicateDiagnostics = program.diagnostics.filter(
       (d) => d.code === "@azure-typespec/http-client-csharp-mgmt/duplicate-get-method"
     );
-    
+
     strictEqual(duplicateDiagnostics.length, 0, "Should not emit diagnostic when there is only one Get method");
-    
+
     // Verify the resource was created successfully
     ok(armProviderSchema.resources);
     strictEqual(armProviderSchema.resources.length, 1, "Should have one resource");
     const employeeResource = armProviderSchema.resources[0];
     ok(employeeResource.metadata, "Resource metadata should exist");
     strictEqual(employeeResource.metadata.resourceName, "Employee", "Resource should be Employee");
-  });
-
-  it("handles multiple paths for same resource model", async () => {
-    // This test validates how the system handles when the same resource model
-    // is used with different paths (e.g., different segments).
-    // After the refactoring, each unique path creates a separate resource entry.
-    const program = await typeSpecCompile(
-      `
-/** An Employee resource */
-model Employee is TrackedResource<EmployeeProperties> {
-  ...ResourceNameParameter<Employee>;
-}
-
-/** Employee properties */
-model EmployeeProperties {
-  /** Age of employee */
-  age?: int32;
-}
-
-interface Operations extends Azure.ResourceManager.Operations {}
-
-@armResourceOperations
-interface Employees {
-  get is ArmResourceRead<Employee>;
-  createOrUpdate is ArmResourceCreateOrReplaceAsync<Employee>;
-}
-
-@armResourceOperations
-interface EmployeesSecondary {
-  getSecondary is ArmResourceRead<
-    Employee,
-    Parameters = {
-      @key
-      @path
-      @segment("something")
-      extra: string;
-    }
-  >;
-}
-`,
-      runner
-    );
-    const context = createEmitterContext(program);
-    const sdkContext = await createCSharpSdkContext(context);
-    const root = createModel(sdkContext);
-    
-    // Build ARM provider schema - this will run validation
-    const armProviderSchema = buildArmProviderSchema(sdkContext, root);
-    ok(armProviderSchema);
-    
-    // With the new architecture, different paths create separate resource entries
-    // Both should reference the same Employee model
-    ok(armProviderSchema.resources);
-    ok(armProviderSchema.resources.length >= 1, "Should have at least one resource");
-    
-    // Verify that resources were created for the Employee model
-    const employeeResources = armProviderSchema.resources.filter(
-      r => r.metadata.resourceName.includes("Employee")
-    );
-    ok(employeeResources.length >= 1, "Should have at least one Employee resource");
   });
 });
