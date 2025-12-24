@@ -63,7 +63,7 @@ public class Program
                 - microsoft_docs_search: Searches Microsoft/Azure documentation
                 - microsoft_code_sample_search: Searches for code examples")
               .AsBuilder()
-              .useFoundryTools(new List<ToolDefinition> { new() { Type = "mcp", ProjectConnectionId = toolConnectionId } })
+              .useFoundryTools(new List<ToolDefinition> { ToolDefinition.Mcp(toolConnectionId) })
               .UseOpenTelemetry(sourceName: "Agents", configure: (cfg) => cfg.EnableSensitiveData = true)
               .Build();
 
@@ -78,7 +78,7 @@ public class Program
         // await agent.RunAIAgentAsync(telemetrySourceName: "Agents",
         // tools: new List<ToolDefinition>
         // {
-        //     new() { Type = "mcp", ProjectConnectionId = toolConnectionId }
+        //     ToolDefinition.Mcp(toolConnectionId)
         // });
     }
 }
