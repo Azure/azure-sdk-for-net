@@ -852,7 +852,7 @@ interface Employees {
     strictEqual(companyMetadata.resourceName, "Company");
   });
 
-  it("resource scope determined from Get method when no explicit decorator", async () => {
+  it("resource scope determined from Read method when no explicit decorator", async () => {
     const program = await typeSpecCompile(
       `
 @parentResource(SubscriptionLocationResource)
@@ -892,8 +892,8 @@ interface Employees {
     const metadata = employeeResource.metadata;
     ok(metadata);
 
-    // The model should inherit its resourceScope from the Get method's operationScope (Subscription)
-    // because the Get method operates at subscription scope and there are no explicit scope decorators
+    // The model should inherit its resourceScope from the Read method's operationScope (Subscription)
+    // because the Read method operates at subscription scope and there are no explicit scope decorators
     strictEqual(metadata.resourceScope, "Subscription");
 
     // Verify the Read method itself has the correct scope
