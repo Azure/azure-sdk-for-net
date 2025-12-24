@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Role of the server in a replication set. </summary>
+    /// <summary>
+    /// Role of the server in a replication set.
+    /// Serialized Name: ReplicationRole
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerReplicationRole : IEquatable<PostgreSqlFlexibleServerReplicationRole>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string AsyncReplicaValue = "AsyncReplica";
         private const string GeoAsyncReplicaValue = "GeoAsyncReplica";
 
-        /// <summary> No replication role assigned; the server operates independently. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ReplicationRole.None
+        /// </summary>
         public static PostgreSqlFlexibleServerReplicationRole None { get; } = new PostgreSqlFlexibleServerReplicationRole(NoneValue);
-        /// <summary> Acts as the source server for replication to one or more replicas. </summary>
+        /// <summary>
+        /// Primary
+        /// Serialized Name: ReplicationRole.Primary
+        /// </summary>
         public static PostgreSqlFlexibleServerReplicationRole Primary { get; } = new PostgreSqlFlexibleServerReplicationRole(PrimaryValue);
-        /// <summary> Receives data asynchronously from a primary server within the same region. </summary>
+        /// <summary>
+        /// AsyncReplica
+        /// Serialized Name: ReplicationRole.AsyncReplica
+        /// </summary>
         public static PostgreSqlFlexibleServerReplicationRole AsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(AsyncReplicaValue);
-        /// <summary> Receives data asynchronously from a primary server in a different region for geographical redundancy. </summary>
+        /// <summary>
+        /// GeoAsyncReplica
+        /// Serialized Name: ReplicationRole.GeoAsyncReplica
+        /// </summary>
         public static PostgreSqlFlexibleServerReplicationRole GeoAsyncReplica { get; } = new PostgreSqlFlexibleServerReplicationRole(GeoAsyncReplicaValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerReplicationRole"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerReplicationRole left, PostgreSqlFlexibleServerReplicationRole right) => left.Equals(right);

@@ -18,16 +18,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockablePostgreSqlFlexibleServersSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _capabilitiesByLocationClientDiagnostics;
-        private CapabilitiesByLocationRestOperations _capabilitiesByLocationRestClient;
         private ClientDiagnostics _nameAvailabilityClientDiagnostics;
         private NameAvailabilityRestOperations _nameAvailabilityRestClient;
-        private ClientDiagnostics _quotaUsagesClientDiagnostics;
-        private QuotaUsagesRestOperations _quotaUsagesRestClient;
         private ClientDiagnostics _postgreSqlFlexibleServerServersClientDiagnostics;
         private ServersRestOperations _postgreSqlFlexibleServerServersRestClient;
+        private ClientDiagnostics _capabilitiesByLocationClientDiagnostics;
+        private CapabilitiesByLocationRestOperations _capabilitiesByLocationRestClient;
         private ClientDiagnostics _virtualNetworkSubnetUsageClientDiagnostics;
         private VirtualNetworkSubnetUsageRestOperations _virtualNetworkSubnetUsageRestClient;
+        private ClientDiagnostics _quotaUsagesClientDiagnostics;
+        private QuotaUsagesRestOperations _quotaUsagesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockablePostgreSqlFlexibleServersSubscriptionResource"/> class for mocking. </summary>
         protected MockablePostgreSqlFlexibleServersSubscriptionResource()
@@ -41,75 +41,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         {
         }
 
-        private ClientDiagnostics CapabilitiesByLocationClientDiagnostics => _capabilitiesByLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private CapabilitiesByLocationRestOperations CapabilitiesByLocationRestClient => _capabilitiesByLocationRestClient ??= new CapabilitiesByLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics NameAvailabilityClientDiagnostics => _nameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private NameAvailabilityRestOperations NameAvailabilityRestClient => _nameAvailabilityRestClient ??= new NameAvailabilityRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-        private ClientDiagnostics QuotaUsagesClientDiagnostics => _quotaUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-        private QuotaUsagesRestOperations QuotaUsagesRestClient => _quotaUsagesRestClient ??= new QuotaUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics PostgreSqlFlexibleServerServersClientDiagnostics => _postgreSqlFlexibleServerServersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", PostgreSqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
         private ServersRestOperations PostgreSqlFlexibleServerServersRestClient => _postgreSqlFlexibleServerServersRestClient ??= new ServersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PostgreSqlFlexibleServerResource.ResourceType));
+        private ClientDiagnostics CapabilitiesByLocationClientDiagnostics => _capabilitiesByLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private CapabilitiesByLocationRestOperations CapabilitiesByLocationRestClient => _capabilitiesByLocationRestClient ??= new CapabilitiesByLocationRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
         private ClientDiagnostics VirtualNetworkSubnetUsageClientDiagnostics => _virtualNetworkSubnetUsageClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private VirtualNetworkSubnetUsageRestOperations VirtualNetworkSubnetUsageRestClient => _virtualNetworkSubnetUsageRestClient ??= new VirtualNetworkSubnetUsageRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
+        private ClientDiagnostics QuotaUsagesClientDiagnostics => _quotaUsagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PostgreSql.FlexibleServers", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private QuotaUsagesRestOperations QuotaUsagesRestClient => _quotaUsagesRestClient ??= new QuotaUsagesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// Lists the capabilities available in a given location for a specific subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CapabilitiesByLocation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocationsAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the capabilities available in a given location for a specific subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>CapabilitiesByLocation_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> GetCapabilitiesByLocations(AzureLocation locationName, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetCapabilitiesByLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -129,14 +75,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckGloballyNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityAsync(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckGloballyNameAvailability");
+            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
@@ -167,14 +113,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckGloballyNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailability(PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckGloballyNameAvailability");
+            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailability");
             scope.Start();
             try
             {
@@ -206,14 +152,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckWithLocationNameAvailabilityAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerNameAvailabilityResult>> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckWithLocationNameAvailability");
+            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
             try
             {
@@ -245,14 +191,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="content"> Parameters required to check if a given name is valid and available to assign it to a new server or to use it as the base name of a new pair of virtual endpoints. </param>
+        /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckWithLocationNameAvailability(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerNameAvailabilityResult> CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation(AzureLocation locationName, PostgreSqlFlexibleServerNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckWithLocationNameAvailability");
+            using var scope = NameAvailabilityClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation");
             scope.Start();
             try
             {
@@ -264,60 +210,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Get quota usages at specified location in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/resourceType/flexibleServers/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaUsages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="QuotaUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<QuotaUsage> GetQuotaUsagesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaUsagesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaUsage.DeserializeQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get quota usages at specified location in a given subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/resourceType/flexibleServers/usages</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>QuotaUsages_List</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-08-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="locationName"> The name of the location. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="QuotaUsage"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<QuotaUsage> GetQuotaUsages(AzureLocation locationName, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaUsagesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaUsage.DeserializeQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -381,6 +273,60 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
+        /// Lists the capabilities available in a given location for a specific subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapabilitiesByLocation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilitiesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteLocationBasedCapabilities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the capabilities available in a given location for a specific subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapabilitiesByLocation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerCapabilityProperties"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<PostgreSqlFlexibleServerCapabilityProperties> ExecuteLocationBasedCapabilities(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CapabilitiesByLocationRestClient.CreateListRequest(Id.SubscriptionId, locationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CapabilitiesByLocationRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PostgreSqlFlexibleServerCapabilityProperties.DeserializePostgreSqlFlexibleServerCapabilityProperties(e), CapabilitiesByLocationClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteLocationBasedCapabilities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Lists the virtual network subnet usage for a given virtual network.
         /// <list type="bullet">
         /// <item>
@@ -398,14 +344,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> GetVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteVirtualNetworkSubnetUsageAsync(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.GetVirtualNetworkSubnetUsage");
+            using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
@@ -437,14 +383,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="locationName"> The name of the location. </param>
-        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The required parameters for creating or updating a server. </param>
+        /// <param name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter"/> is null. </exception>
-        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> GetVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
+        public virtual Response<PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult> ExecuteVirtualNetworkSubnetUsage(AzureLocation locationName, PostgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter, nameof(postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter));
 
-            using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.GetVirtualNetworkSubnetUsage");
+            using var scope = VirtualNetworkSubnetUsageClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersSubscriptionResource.ExecuteVirtualNetworkSubnetUsage");
             scope.Start();
             try
             {
@@ -456,6 +402,60 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get quota usages at specified location in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/resourceType/flexibleServers/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaUsages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="QuotaUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<QuotaUsage> GetQuotaUsagesAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaUsagesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaUsage.DeserializeQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// Get quota usages at specified location in a given subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DBforPostgreSQL/locations/{locationName}/resourceType/flexibleServers/usages</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>QuotaUsages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-08-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="locationName"> The name of the location. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="QuotaUsage"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<QuotaUsage> GetQuotaUsages(AzureLocation locationName, CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaUsagesRestClient.CreateListRequest(Id.SubscriptionId, locationName);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, locationName);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaUsage.DeserializeQuotaUsage(e), QuotaUsagesClientDiagnostics, Pipeline, "MockablePostgreSqlFlexibleServersSubscriptionResource.GetQuotaUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

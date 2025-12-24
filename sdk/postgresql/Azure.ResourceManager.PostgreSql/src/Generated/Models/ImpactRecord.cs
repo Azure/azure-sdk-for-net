@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Impact on some metric if this recommended action is applied. </summary>
+    /// <summary>
+    /// Impact on some metric if this recommended action is applied.
+    /// Serialized Name: ImpactRecord
+    /// </summary>
     public partial class ImpactRecord
     {
         /// <summary>
@@ -51,10 +54,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImpactRecord"/>. </summary>
-        /// <param name="dimensionName"> Dimension name. </param>
-        /// <param name="unit"> Dimension unit. </param>
-        /// <param name="queryId"> Optional property that can be used to store the identifier of the query, if the metric is for a specific query. </param>
-        /// <param name="absoluteValue"> Absolute value. </param>
+        /// <param name="dimensionName">
+        /// Dimension name.
+        /// Serialized Name: ImpactRecord.dimensionName
+        /// </param>
+        /// <param name="unit">
+        /// Dimension unit.
+        /// Serialized Name: ImpactRecord.unit
+        /// </param>
+        /// <param name="queryId">
+        /// Optional property that can be used to store the identifier of the query, if the metric is for a specific query.
+        /// Serialized Name: ImpactRecord.queryId
+        /// </param>
+        /// <param name="absoluteValue">
+        /// Absolute value.
+        /// Serialized Name: ImpactRecord.absoluteValue
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ImpactRecord(string dimensionName, string unit, long? queryId, double? absoluteValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,16 +80,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Dimension name. </summary>
+        /// <summary>
+        /// Dimension name.
+        /// Serialized Name: ImpactRecord.dimensionName
+        /// </summary>
         [WirePath("dimensionName")]
         public string DimensionName { get; }
-        /// <summary> Dimension unit. </summary>
+        /// <summary>
+        /// Dimension unit.
+        /// Serialized Name: ImpactRecord.unit
+        /// </summary>
         [WirePath("unit")]
         public string Unit { get; }
-        /// <summary> Optional property that can be used to store the identifier of the query, if the metric is for a specific query. </summary>
+        /// <summary>
+        /// Optional property that can be used to store the identifier of the query, if the metric is for a specific query.
+        /// Serialized Name: ImpactRecord.queryId
+        /// </summary>
         [WirePath("queryId")]
         public long? QueryId { get; }
-        /// <summary> Absolute value. </summary>
+        /// <summary>
+        /// Absolute value.
+        /// Serialized Name: ImpactRecord.absoluteValue
+        /// </summary>
         [WirePath("absoluteValue")]
         public double? AbsoluteValue { get; }
     }

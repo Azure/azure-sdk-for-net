@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The TuningOptionParameterEnum. </summary>
+    /// <summary>
+    /// The TuningOptionParameterEnum.
+    /// Serialized Name: TuningOptionParameterEnum
+    /// </summary>
     public readonly partial struct TuningOptionParameterEnum : IEquatable<TuningOptionParameterEnum>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string IndexValue = "index";
         private const string TableValue = "table";
 
-        /// <summary> index. </summary>
+        /// <summary>
+        /// index
+        /// Serialized Name: TuningOptionParameterEnum.index
+        /// </summary>
         public static TuningOptionParameterEnum Index { get; } = new TuningOptionParameterEnum(IndexValue);
-        /// <summary> table. </summary>
+        /// <summary>
+        /// table
+        /// Serialized Name: TuningOptionParameterEnum.table
+        /// </summary>
         public static TuningOptionParameterEnum Table { get; } = new TuningOptionParameterEnum(TableValue);
         /// <summary> Determines if two <see cref="TuningOptionParameterEnum"/> values are the same. </summary>
         public static bool operator ==(TuningOptionParameterEnum left, TuningOptionParameterEnum right) => left.Equals(right);

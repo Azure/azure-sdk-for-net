@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Details for the validation for migration. </summary>
+    /// <summary>
+    /// Details for the validation for migration.
+    /// Serialized Name: ValidationDetails
+    /// </summary>
     public partial class PostgreSqlFlexibleServersValidationDetails
     {
         /// <summary>
@@ -53,11 +56,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServersValidationDetails"/>. </summary>
-        /// <param name="status"> Validation status for migration. </param>
-        /// <param name="validationStartTimeInUtc"> Start time (UTC) for validation. </param>
-        /// <param name="validationEndTimeInUtc"> End time (UTC) for validation. </param>
-        /// <param name="serverLevelValidationDetails"> Details of server level validations. </param>
-        /// <param name="dbLevelValidationDetails"> Details of server level validations. </param>
+        /// <param name="status">
+        /// Validation status for migration.
+        /// Serialized Name: ValidationDetails.status
+        /// </param>
+        /// <param name="validationStartTimeInUtc">
+        /// Start time (UTC) for validation.
+        /// Serialized Name: ValidationDetails.validationStartTimeInUtc
+        /// </param>
+        /// <param name="validationEndTimeInUtc">
+        /// End time (UTC) for validation.
+        /// Serialized Name: ValidationDetails.validationEndTimeInUtc
+        /// </param>
+        /// <param name="serverLevelValidationDetails">
+        /// Details of server level validations.
+        /// Serialized Name: ValidationDetails.serverLevelValidationDetails
+        /// </param>
+        /// <param name="dbLevelValidationDetails">
+        /// Details of server level validations.
+        /// Serialized Name: ValidationDetails.dbLevelValidationDetails
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServersValidationDetails(PostgreSqlFlexibleServersValidationState? status, DateTimeOffset? validationStartTimeInUtc, DateTimeOffset? validationEndTimeInUtc, IReadOnlyList<ValidationSummaryItem> serverLevelValidationDetails, IReadOnlyList<DbLevelValidationStatus> dbLevelValidationDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,19 +87,34 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Validation status for migration. </summary>
+        /// <summary>
+        /// Validation status for migration.
+        /// Serialized Name: ValidationDetails.status
+        /// </summary>
         [WirePath("status")]
         public PostgreSqlFlexibleServersValidationState? Status { get; }
-        /// <summary> Start time (UTC) for validation. </summary>
+        /// <summary>
+        /// Start time (UTC) for validation.
+        /// Serialized Name: ValidationDetails.validationStartTimeInUtc
+        /// </summary>
         [WirePath("validationStartTimeInUtc")]
         public DateTimeOffset? ValidationStartTimeInUtc { get; }
-        /// <summary> End time (UTC) for validation. </summary>
+        /// <summary>
+        /// End time (UTC) for validation.
+        /// Serialized Name: ValidationDetails.validationEndTimeInUtc
+        /// </summary>
         [WirePath("validationEndTimeInUtc")]
         public DateTimeOffset? ValidationEndTimeInUtc { get; }
-        /// <summary> Details of server level validations. </summary>
+        /// <summary>
+        /// Details of server level validations.
+        /// Serialized Name: ValidationDetails.serverLevelValidationDetails
+        /// </summary>
         [WirePath("serverLevelValidationDetails")]
         public IReadOnlyList<ValidationSummaryItem> ServerLevelValidationDetails { get; }
-        /// <summary> Details of server level validations. </summary>
+        /// <summary>
+        /// Details of server level validations.
+        /// Serialized Name: ValidationDetails.dbLevelValidationDetails
+        /// </summary>
         [WirePath("dbLevelValidationDetails")]
         public IReadOnlyList<DbLevelValidationStatus> DbLevelValidationDetails { get; }
     }

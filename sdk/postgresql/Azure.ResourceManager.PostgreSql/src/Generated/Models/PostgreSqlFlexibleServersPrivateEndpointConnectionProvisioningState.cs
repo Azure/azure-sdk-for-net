@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> The current provisioning state. </summary>
+    /// <summary>
+    /// The current provisioning state.
+    /// Serialized Name: PrivateEndpointConnectionProvisioningState
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState : IEquatable<PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary>
+        /// Succeeded
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Succeeded
+        /// </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Succeeded { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(SucceededValue);
-        /// <summary> Creating. </summary>
+        /// <summary>
+        /// Creating
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Creating
+        /// </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Creating { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(CreatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary>
+        /// Deleting
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Deleting
+        /// </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Deleting { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary>
+        /// Failed
+        /// Serialized Name: PrivateEndpointConnectionProvisioningState.Failed
+        /// </summary>
         public static PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState Failed { get; } = new PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState(FailedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState left, PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState right) => left.Equals(right);

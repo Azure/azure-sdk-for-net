@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
     /// <summary>
     /// A class representing the PostgreSqlFlexibleServerActiveDirectoryAdministrator data model.
     /// Server administrator associated to a Microsoft Entra principal.
+    /// Serialized Name: AdministratorMicrosoftEntra
     /// </summary>
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministratorData : ResourceData
     {
@@ -61,10 +62,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="principalType"> Type of Microsoft Entra principal to which the server administrator is associated. </param>
-        /// <param name="principalName"> Name of the Microsoft Entra principal. </param>
-        /// <param name="objectId"> Object identifier of the Microsoft Entra principal. </param>
-        /// <param name="tenantId"> Identifier of the tenant in which the Microsoft Entra principal exists. </param>
+        /// <param name="principalType">
+        /// Type of Microsoft Entra principal to which the server administrator is associated.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.principalType
+        /// </param>
+        /// <param name="principalName">
+        /// Name of the Microsoft Entra principal.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.principalName
+        /// </param>
+        /// <param name="objectId">
+        /// Object identifier of the Microsoft Entra principal.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.objectId
+        /// </param>
+        /// <param name="tenantId">
+        /// Identifier of the tenant in which the Microsoft Entra principal exists.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.tenantId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PostgreSqlFlexibleServerActiveDirectoryAdministratorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PostgreSqlFlexibleServerPrincipalType? principalType, string principalName, Guid? objectId, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -75,16 +88,28 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Type of Microsoft Entra principal to which the server administrator is associated. </summary>
+        /// <summary>
+        /// Type of Microsoft Entra principal to which the server administrator is associated.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.principalType
+        /// </summary>
         [WirePath("properties.principalType")]
         public PostgreSqlFlexibleServerPrincipalType? PrincipalType { get; set; }
-        /// <summary> Name of the Microsoft Entra principal. </summary>
+        /// <summary>
+        /// Name of the Microsoft Entra principal.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.principalName
+        /// </summary>
         [WirePath("properties.principalName")]
         public string PrincipalName { get; set; }
-        /// <summary> Object identifier of the Microsoft Entra principal. </summary>
+        /// <summary>
+        /// Object identifier of the Microsoft Entra principal.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.objectId
+        /// </summary>
         [WirePath("properties.objectId")]
         public Guid? ObjectId { get; set; }
-        /// <summary> Identifier of the tenant in which the Microsoft Entra principal exists. </summary>
+        /// <summary>
+        /// Identifier of the tenant in which the Microsoft Entra principal exists.
+        /// Serialized Name: AdministratorMicrosoftEntra.properties.tenantId
+        /// </summary>
         [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
     }

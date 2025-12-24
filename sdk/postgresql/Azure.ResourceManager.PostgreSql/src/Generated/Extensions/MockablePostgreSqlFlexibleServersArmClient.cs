@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerResource"/> object. </returns>
+        public virtual PostgreSqlFlexibleServerResource GetPostgreSqlFlexibleServerResource(ResourceIdentifier id)
+        {
+            PostgreSqlFlexibleServerResource.ValidateResourceId(id);
+            return new PostgreSqlFlexibleServerResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerActiveDirectoryAdministratorResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -68,6 +80,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         {
             PostgreSqlFlexibleServerBackupResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServerBackupResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="PostgreSqlMigrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
+        public virtual PostgreSqlMigrationResource GetPostgreSqlMigrationResource(ResourceIdentifier id)
+        {
+            PostgreSqlMigrationResource.ValidateResourceId(id);
+            return new PostgreSqlMigrationResource(Client, id);
         }
 
         /// <summary>
@@ -119,18 +143,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlMigrationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlMigrationResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlMigrationResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlMigrationResource"/> object. </returns>
-        public virtual PostgreSqlMigrationResource GetPostgreSqlMigrationResource(ResourceIdentifier id)
-        {
-            PostgreSqlMigrationResource.ValidateResourceId(id);
-            return new PostgreSqlMigrationResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServersPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -152,18 +164,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         {
             PostgreSqlFlexibleServersPrivateLinkResource.ValidateResourceId(id);
             return new PostgreSqlFlexibleServersPrivateLinkResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="PostgreSqlFlexibleServerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PostgreSqlFlexibleServerResource.CreateResourceIdentifier" /> to create a <see cref="PostgreSqlFlexibleServerResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PostgreSqlFlexibleServerResource"/> object. </returns>
-        public virtual PostgreSqlFlexibleServerResource GetPostgreSqlFlexibleServerResource(ResourceIdentifier id)
-        {
-            PostgreSqlFlexibleServerResource.ValidateResourceId(id);
-            return new PostgreSqlFlexibleServerResource(Client, id);
         }
 
         /// <summary>

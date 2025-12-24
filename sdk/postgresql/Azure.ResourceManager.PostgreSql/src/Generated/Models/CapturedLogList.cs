@@ -7,10 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> List of log files. </summary>
+    /// <summary>
+    /// List of log files.
+    /// Serialized Name: CapturedLogList
+    /// </summary>
     internal partial class CapturedLogList
     {
         /// <summary>
@@ -46,14 +50,27 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CapturedLogList"/>. </summary>
-        internal CapturedLogList()
+        /// <param name="value">
+        /// The CapturedLog items on this page
+        /// Serialized Name: CapturedLogList.value
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal CapturedLogList(IEnumerable<PostgreSqlFlexibleServerLogFile> value)
         {
-            Value = new ChangeTrackingList<PostgreSqlFlexibleServerLogFile>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="CapturedLogList"/>. </summary>
-        /// <param name="value"> List of log files in a server. </param>
-        /// <param name="nextLink"> Link used to get the next page of results. </param>
+        /// <param name="value">
+        /// The CapturedLog items on this page
+        /// Serialized Name: CapturedLogList.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The link to the next page of items
+        /// Serialized Name: CapturedLogList.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CapturedLogList(IReadOnlyList<PostgreSqlFlexibleServerLogFile> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +79,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> List of log files in a server. </summary>
+        /// <summary> Initializes a new instance of <see cref="CapturedLogList"/> for deserialization. </summary>
+        internal CapturedLogList()
+        {
+        }
+
+        /// <summary>
+        /// The CapturedLog items on this page
+        /// Serialized Name: CapturedLogList.value
+        /// </summary>
         public IReadOnlyList<PostgreSqlFlexibleServerLogFile> Value { get; }
-        /// <summary> Link used to get the next page of results. </summary>
+        /// <summary>
+        /// The link to the next page of items
+        /// Serialized Name: CapturedLogList.nextLink
+        /// </summary>
         public Uri NextLink { get; }
     }
 }

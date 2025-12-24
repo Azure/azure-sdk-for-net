@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<string>> GetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<string>> ExecuteGetPrivateDnsZoneSuffixAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersTenantResource.GetPrivateDnsZoneSuffix");
+            using var scope = PrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();
             try
             {
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<string> GetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
+        public virtual Response<string> ExecuteGetPrivateDnsZoneSuffix(CancellationToken cancellationToken = default)
         {
-            using var scope = PrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersTenantResource.GetPrivateDnsZoneSuffix");
+            using var scope = PrivateDnsZoneSuffixClientDiagnostics.CreateScope("MockablePostgreSqlFlexibleServersTenantResource.ExecuteGetPrivateDnsZoneSuffix");
             scope.Start();
             try
             {

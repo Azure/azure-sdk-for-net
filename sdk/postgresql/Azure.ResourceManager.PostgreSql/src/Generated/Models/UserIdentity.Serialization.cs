@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServersSku : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServersSku>
+    public partial class UserIdentity : IUtf8JsonSerializable, IJsonModel<UserIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServersSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserIdentity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PostgreSqlFlexibleServersSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UserIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,16 +29,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersSku)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UserIdentity)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("tier"u8);
-            writer.WriteStringValue(Tier.ToString());
+            if (Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (Optional.IsDefined(ClientId))
+            {
+                writer.WritePropertyName("clientId"u8);
+                writer.WriteStringValue(ClientId);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -56,19 +62,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
         }
 
-        PostgreSqlFlexibleServersSku IJsonModel<PostgreSqlFlexibleServersSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UserIdentity IJsonModel<UserIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersSku)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UserIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePostgreSqlFlexibleServersSku(document.RootElement, options);
+            return DeserializeUserIdentity(document.RootElement, options);
         }
 
-        internal static PostgreSqlFlexibleServersSku DeserializePostgreSqlFlexibleServersSku(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UserIdentity DeserializeUserIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -76,20 +82,24 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 return null;
             }
-            string name = default;
-            PostgreSqlFlexibleServerSkuTier tier = default;
+            Guid? principalId = default;
+            string clientId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
+                if (property.NameEquals("principalId"u8))
                 {
-                    name = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalId = property.Value.GetGuid();
                     continue;
                 }
-                if (property.NameEquals("tier"u8))
+                if (property.NameEquals("clientId"u8))
                 {
-                    tier = new PostgreSqlFlexibleServerSkuTier(property.Value.GetString());
+                    clientId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -98,7 +108,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PostgreSqlFlexibleServersSku(name, tier, serializedAdditionalRawData);
+            return new UserIdentity(principalId, clientId, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -112,48 +122,51 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  name: ");
+                builder.Append("  principalId: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(Name))
+                if (Optional.IsDefined(PrincipalId))
                 {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
+                    builder.Append("  principalId: ");
+                    builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tier), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientId), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("  tier: ");
+                builder.Append("  clientId: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                builder.Append("  tier: ");
-                builder.AppendLine($"'{Tier.ToString()}'");
+                if (Optional.IsDefined(ClientId))
+                {
+                    builder.Append("  clientId: ");
+                    if (ClientId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ClientId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ClientId}'");
+                    }
+                }
             }
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<PostgreSqlFlexibleServersSku>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UserIdentity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -162,26 +175,26 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersSku)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PostgreSqlFlexibleServersSku IPersistableModel<PostgreSqlFlexibleServersSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UserIdentity IPersistableModel<UserIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServersSku>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UserIdentity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePostgreSqlFlexibleServersSku(document.RootElement, options);
+                        return DeserializeUserIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServersSku)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PostgreSqlFlexibleServersSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UserIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

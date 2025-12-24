@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("supportedIops"u8);
                 writer.WriteNumberValue(SupportedIops.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVCoreMb))
+            if (options.Format != "W" && Optional.IsDefined(SupportedMemoryPerVcoreMb))
             {
                 writer.WritePropertyName("supportedMemoryPerVcoreMb"u8);
-                writer.WriteNumberValue(SupportedMemoryPerVCoreMb.Value);
+                writer.WriteNumberValue(SupportedMemoryPerVcoreMb.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
             {
@@ -117,9 +117,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string name = default;
             int? vCores = default;
             int? supportedIops = default;
-            long? supportedMemoryPerVCoreMb = default;
+            long? supportedMemoryPerVcoreMb = default;
             IReadOnlyList<string> supportedZones = default;
-            IReadOnlyList<HighAvailabilityMode> supportedHaMode = default;
+            IReadOnlyList<PostgreSqlFlexibleServerHAMode> supportedHaMode = default;
             IReadOnlyList<SupportedFeature> supportedFeatures = default;
             string securityProfile = default;
             PostgreSqlFlexbileServerCapabilityStatus? status = default;
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    supportedMemoryPerVCoreMb = property.Value.GetInt64();
+                    supportedMemoryPerVcoreMb = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("supportedZones"u8))
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    List<HighAvailabilityMode> array = new List<HighAvailabilityMode>();
+                    List<PostgreSqlFlexibleServerHAMode> array = new List<PostgreSqlFlexibleServerHAMode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new HighAvailabilityMode(item.GetString()));
+                        array.Add(new PostgreSqlFlexibleServerHAMode(item.GetString()));
                     }
                     supportedHaMode = array;
                     continue;
@@ -234,9 +234,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 vCores,
                 supportedIops,
-                supportedMemoryPerVCoreMb,
+                supportedMemoryPerVcoreMb,
                 supportedZones ?? new ChangeTrackingList<string>(),
-                supportedHaMode ?? new ChangeTrackingList<HighAvailabilityMode>(),
+                supportedHaMode ?? new ChangeTrackingList<PostgreSqlFlexibleServerHAMode>(),
                 supportedFeatures ?? new ChangeTrackingList<SupportedFeature>(),
                 securityProfile);
         }
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemoryPerVCoreMb), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMemoryPerVcoreMb), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  supportedMemoryPerVcoreMb: ");
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             }
             else
             {
-                if (Optional.IsDefined(SupportedMemoryPerVCoreMb))
+                if (Optional.IsDefined(SupportedMemoryPerVcoreMb))
                 {
                     builder.Append("  supportedMemoryPerVcoreMb: ");
-                    builder.AppendLine($"'{SupportedMemoryPerVCoreMb.Value.ToString()}'");
+                    builder.AppendLine($"'{SupportedMemoryPerVcoreMb.Value.ToString()}'");
                 }
             }
 

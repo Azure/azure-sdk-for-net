@@ -19,35 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCapabilitiesByLocations_ListTheCapabilitiesAvailableInAGivenLocationForASpecificSubscription()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/CapabilitiesByLocationList.json
-            // this example is just showing the usage of "CapabilitiesByLocation_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("eastus");
-            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in subscriptionResource.GetCapabilitiesByLocationsAsync(locationName))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckGloballyNameAvailability_CheckTheValidityAndAvailabilityOfTheGivenNameToAssignItToANewServerOrToUseItAsTheBaseNameOfANewPairOfVirtualEndpoints()
+        public async Task CheckPostgreSqlFlexibleServerNameAvailability_CheckTheValidityAndAvailabilityOfTheGivenNameToAssignItToANewServerOrToUseItAsTheBaseNameOfANewPairOfVirtualEndpoints()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/NameAvailabilityCheckGlobally.json
             // this example is just showing the usage of "NameAvailability_CheckGlobally" operation, for the dependent resources, they will have to be created separately.
@@ -68,14 +40,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 ResourceType = new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers"),
             };
-            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckGloballyNameAvailabilityAsync(content);
+            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckWithLocationNameAvailability_CheckTheValidityAndAvailabilityOfTheGivenNameInTheGivenLocationToAssignItToANewServerOrToUseItAsTheBaseNameOfANewPairOfVirtualEndpoints()
+        public async Task CheckPostgreSqlFlexibleServerNameAvailabilityWithLocation_CheckTheValidityAndAvailabilityOfTheGivenNameInTheGivenLocationToAssignItToANewServerOrToUseItAsTheBaseNameOfANewPairOfVirtualEndpoints()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/NameAvailabilityCheckWithLocation.json
             // this example is just showing the usage of "NameAvailability_CheckWithLocation" operation, for the dependent resources, they will have to be created separately.
@@ -97,37 +69,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 ResourceType = new ResourceType("Microsoft.DBforPostgreSQL/flexibleServers"),
             };
-            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckWithLocationNameAvailabilityAsync(locationName, content);
+            PostgreSqlFlexibleServerNameAvailabilityResult result = await subscriptionResource.CheckPostgreSqlFlexibleServerNameAvailabilityWithLocationAsync(locationName, content);
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetQuotaUsages_ListOfQuotaUsagesForServers()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/QuotaUsagesForFlexibleServers.json
-            // this example is just showing the usage of "QuotaUsages_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            AzureLocation locationName = new AzureLocation("eastus");
-            await foreach (QuotaUsage item in subscriptionResource.GetQuotaUsagesAsync(locationName))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -163,7 +107,35 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetVirtualNetworkSubnetUsage_ListTheVirtualNetworkSubnetUsageForAGivenVirtualNetwork()
+        public async Task ExecuteLocationBasedCapabilities_ListTheCapabilitiesAvailableInAGivenLocationForASpecificSubscription()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/CapabilitiesByLocationList.json
+            // this example is just showing the usage of "CapabilitiesByLocation_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("eastus");
+            await foreach (PostgreSqlFlexibleServerCapabilityProperties item in subscriptionResource.ExecuteLocationBasedCapabilitiesAsync(locationName))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ExecuteVirtualNetworkSubnetUsage_ListTheVirtualNetworkSubnetUsageForAGivenVirtualNetwork()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/VirtualNetworkSubnetUsageList.json
             // this example is just showing the usage of "VirtualNetworkSubnetUsage_List" operation, for the dependent resources, they will have to be created separately.
@@ -185,9 +157,37 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             {
                 VirtualNetworkArmResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/exampleresourcegroup/providers/Microsoft.Network/virtualNetworks/examplevirtualnetwork"),
             };
-            PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult result = await subscriptionResource.GetVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
+            PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult result = await subscriptionResource.ExecuteVirtualNetworkSubnetUsageAsync(locationName, postgreSqlFlexibleServerVirtualNetworkSubnetUsageParameter);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetQuotaUsages_ListOfQuotaUsagesForServers()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2025-08-01/examples/QuotaUsagesForFlexibleServers.json
+            // this example is just showing the usage of "QuotaUsages_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            AzureLocation locationName = new AzureLocation("eastus");
+            await foreach (QuotaUsage item in subscriptionResource.GetQuotaUsagesAsync(locationName))
+            {
+                Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
     }
 }

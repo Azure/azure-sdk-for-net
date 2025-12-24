@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    /// <summary> Types of identities associated with a server. </summary>
+    /// <summary>
+    /// Types of identities associated with a server.
+    /// Serialized Name: IdentityType
+    /// </summary>
     public readonly partial struct PostgreSqlFlexibleServerIdentityType : IEquatable<PostgreSqlFlexibleServerIdentityType>
     {
         private readonly string _value;
@@ -26,11 +29,20 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         private const string UserAssignedValue = "UserAssigned";
         private const string SystemAssignedUserAssignedValue = "SystemAssigned,UserAssigned";
 
-        /// <summary> No managed identity is assigned to the server. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: IdentityType.None
+        /// </summary>
         public static PostgreSqlFlexibleServerIdentityType None { get; } = new PostgreSqlFlexibleServerIdentityType(NoneValue);
-        /// <summary> One or more managed identities provided by the user are assigned to the server. </summary>
+        /// <summary>
+        /// UserAssigned
+        /// Serialized Name: IdentityType.UserAssigned
+        /// </summary>
         public static PostgreSqlFlexibleServerIdentityType UserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(UserAssignedValue);
-        /// <summary> Both system-assigned and user-assigned identities are assigned to the server. </summary>
+        /// <summary>
+        /// SystemAssigned,UserAssigned
+        /// Serialized Name: IdentityType.SystemAssigned,UserAssigned
+        /// </summary>
         public static PostgreSqlFlexibleServerIdentityType SystemAssignedUserAssigned { get; } = new PostgreSqlFlexibleServerIdentityType(SystemAssignedUserAssignedValue);
         /// <summary> Determines if two <see cref="PostgreSqlFlexibleServerIdentityType"/> values are the same. </summary>
         public static bool operator ==(PostgreSqlFlexibleServerIdentityType left, PostgreSqlFlexibleServerIdentityType right) => left.Equals(right);
