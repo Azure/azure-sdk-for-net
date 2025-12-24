@@ -66,21 +66,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (OnlineExperimentationPrivateEndpointConnectionData item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -130,8 +115,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
             ResourceIdentifier appConfigurationResourceId = default;
             ResourceEncryptionConfiguration encryption = default;
             Uri endpoint = default;
-            PublicNetworkAccessType? publicNetworkAccess = default;
-            IReadOnlyList<OnlineExperimentationPrivateEndpointConnectionData> privateEndpointConnections = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,29 +169,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                     endpoint = new Uri(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("publicNetworkAccess"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    publicNetworkAccess = new PublicNetworkAccessType(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("privateEndpointConnections"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<OnlineExperimentationPrivateEndpointConnectionData> array = new List<OnlineExperimentationPrivateEndpointConnectionData>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(OnlineExperimentationPrivateEndpointConnectionData.DeserializeOnlineExperimentationPrivateEndpointConnectionData(item, options));
-                    }
-                    privateEndpointConnections = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -222,8 +182,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
                 appConfigurationResourceId,
                 encryption,
                 endpoint,
-                publicNetworkAccess,
-                privateEndpointConnections ?? new ChangeTrackingList<OnlineExperimentationPrivateEndpointConnectionData>(),
                 additionalBinaryDataProperties);
         }
 

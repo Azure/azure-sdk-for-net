@@ -1,4 +1,4 @@
 directory: specification/onlineexperimentation/OnlineExperimentation.Management
-commit: bb4be729d5459970f4f525a32575e8e38f2ac017
+commit: 7577b4f0685f663e353f422b5bad9d670e2e8428
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

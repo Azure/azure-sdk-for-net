@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         {
             TryGetApiVersion(ResourceType, out string onlineExperimentationWorkspaceApiVersion);
             _onlineExperimentationWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OnlineExperimentation", ResourceType.Namespace, Diagnostics);
-            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Endpoint, onlineExperimentationWorkspaceApiVersion ?? "2025-08-01-preview");
+            _onlineExperimentationWorkspacesRestClient = new OnlineExperimentationWorkspaces(_onlineExperimentationWorkspacesClientDiagnostics, Pipeline, Endpoint, onlineExperimentationWorkspaceApiVersion ?? "2025-05-31-preview");
             ValidateResourceId(id);
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2025-05-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2025-05-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2025-05-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2025-05-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2025-05-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.OnlineExperimentation
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-01-preview. </description>
+        /// <description> 2025-05-31-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -677,72 +677,6 @@ namespace Azure.ResourceManager.OnlineExperimentation
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets a collection of PrivateEndpointConnections in the <see cref="OnlineExperimentationWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateEndpointConnections and their operations over a PrivateEndpointConnectionResource. </returns>
-        public virtual PrivateEndpointConnectionCollection GetPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new PrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary> Gets the private endpoint connection details for an online experimentation workspace resource. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the PrivateEndpointConnection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateEndpointConnectionResource>> GetPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return await GetPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets the private endpoint connection details for an online experimentation workspace resource. </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the PrivateEndpointConnection. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PrivateEndpointConnectionResource> GetPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-
-            return GetPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PrivateLinkResources in the <see cref="OnlineExperimentationWorkspaceResource"/>. </summary>
-        /// <returns> An object representing collection of PrivateLinkResources and their operations over a PrivateLinkResource. </returns>
-        public virtual PrivateLinkResourceCollection GetPrivateLinkResources()
-        {
-            return GetCachedClient(client => new PrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary> Gets a private link resource for an online experimentation workspace resource. </summary>
-        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PrivateLinkResource>> GetPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
-
-            return await GetPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary> Gets a private link resource for an online experimentation workspace resource. </summary>
-        /// <param name="privateLinkResourceName"> The name of the PrivateLinkResource. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PrivateLinkResource> GetPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
-
-            return GetPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
     }
 }

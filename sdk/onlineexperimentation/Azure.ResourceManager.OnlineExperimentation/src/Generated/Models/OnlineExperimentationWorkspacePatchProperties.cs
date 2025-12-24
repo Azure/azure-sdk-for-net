@@ -26,18 +26,12 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
         /// <param name="logAnalyticsWorkspaceResourceId"> The resource identifier of the Log Analytics workspace which online experimentation workspace uses for generating experiment analysis results. </param>
         /// <param name="logsExporterStorageAccountResourceId"> The resource identifier of storage account where logs are exported from Log Analytics workspace. online experimentation workspace uses it generating experiment analysis results. </param>
         /// <param name="encryption"> The encryption configuration for the online experimentation workspace resource. </param>
-        /// <param name="publicNetworkAccess">
-        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if set to null.
-        /// - Enabled: The resource can be accessed from the public internet.
-        /// - Disabled: The resource can only be accessed from a private endpoint.
-        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OnlineExperimentationWorkspacePatchProperties(ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceEncryptionConfiguration encryption, PublicNetworkAccessType? publicNetworkAccess, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OnlineExperimentationWorkspacePatchProperties(ResourceIdentifier logAnalyticsWorkspaceResourceId, ResourceIdentifier logsExporterStorageAccountResourceId, ResourceEncryptionConfiguration encryption, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogAnalyticsWorkspaceResourceId = logAnalyticsWorkspaceResourceId;
             LogsExporterStorageAccountResourceId = logsExporterStorageAccountResourceId;
             Encryption = encryption;
-            PublicNetworkAccess = publicNetworkAccess;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,13 +43,6 @@ namespace Azure.ResourceManager.OnlineExperimentation.Models
 
         /// <summary> The encryption configuration for the online experimentation workspace resource. </summary>
         internal ResourceEncryptionConfiguration Encryption { get; set; }
-
-        /// <summary>
-        /// Public Network Access Control for the online experimentation resource. Defaults to Enabled if set to null.
-        /// - Enabled: The resource can be accessed from the public internet.
-        /// - Disabled: The resource can only be accessed from a private endpoint.
-        /// </summary>
-        public PublicNetworkAccessType? PublicNetworkAccess { get; set; }
 
         /// <summary> All Customer-managed key encryption properties for the resource. </summary>
         public CustomerManagedKeyEncryption CustomerManagedKeyEncryption
