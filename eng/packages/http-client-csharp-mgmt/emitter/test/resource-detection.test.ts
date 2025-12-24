@@ -12,9 +12,6 @@ import { buildArmProviderSchema } from "../src/resource-detection.js";
 import { resolveArmResources } from "../src/resolve-arm-resources-converter.js";
 import { ok, strictEqual, deepStrictEqual } from "assert";
 import { ResourceScope } from "../src/resource-metadata.js";
-import {
-  resolveArmResources as resolveArmResourcesFromLibrary
-} from "@azure-tools/typespec-azure-resource-manager";
 
 describe("Resource Detection", () => {
   let runner: TestHost;
@@ -1021,12 +1018,7 @@ interface Employees {
       runner
     );
     const context = createEmitterContext(program);
-    // const p = resolveArmResourcesFromLibrary(program);
-    // ok(p);
     const sdkContext = await createCSharpSdkContext(context);
-
-    const p2 = resolveArmResourcesFromLibrary(program);
-    ok(p2);
 
     const root = createModel(sdkContext);
     // Build ARM provider schema and verify its structure

@@ -114,26 +114,26 @@ export async function createCSharpSdkContext(
 /**
  * Helper function to normalize ARM provider schemas for comparison.
  * This is useful when comparing schemas from different APIs (e.g., buildArmProviderSchema vs resolveArmResources).
- * 
+ *
  * @param schema - The ARM provider schema to normalize
  * @returns A normalized schema object suitable for deep comparison
  */
 export function normalizeSchemaForComparison(schema: any) {
-  const result: any = {
-    resources: schema.resources.map((r: any) => ({
-      resourceModelId: r.resourceModelId,
-      metadata: {
-        resourceIdPattern: r.metadata.resourceIdPattern,
-        resourceType: r.metadata.resourceType,
-        resourceScope: r.metadata.resourceScope,
-        parentResourceId: r.metadata.parentResourceId,
-        singletonResourceName: r.metadata.singletonResourceName,
-        resourceName: r.metadata.resourceName,
-        methods: r.metadata.methods
-      }
-    })),
-    nonResourceMethods: schema.nonResourceMethods
-  };
-  
-  return result;
+  // const result: any = {
+  //   resources: schema.resources.map((r: any) => ({
+  //     resourceModelId: r.resourceModelId,
+  //     metadata: {
+  //       resourceIdPattern: r.metadata.resourceIdPattern,
+  //       resourceType: r.metadata.resourceType,
+  //       resourceScope: r.metadata.resourceScope,
+  //       parentResourceId: r.metadata.parentResourceId,
+  //       singletonResourceName: r.metadata.singletonResourceName,
+  //       resourceName: r.metadata.resourceName,
+  //       methods: r.metadata.methods
+  //     }
+  //   })),
+  //   nonResourceMethods: schema.nonResourceMethods
+  // };
+  // currently there are no properties that need normalization, so we just return as is
+  return schema;
 }
