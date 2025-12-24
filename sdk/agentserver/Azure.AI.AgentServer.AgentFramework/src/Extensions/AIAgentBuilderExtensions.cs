@@ -28,7 +28,7 @@ public static class AIAgentBuilderExtensions
     /// a <see cref="DefaultAzureCredential"/> or a resolved <see cref="TokenCredential"/> from the service provider.
     /// </param>
     /// <returns>The <see cref="AIAgentBuilder"/> instance with tool discovery added.</returns>
-    public static AIAgentBuilder useFoundryTools(
+    public static AIAgentBuilder UseFoundryTools(
         this AIAgentBuilder builder,
         IList<ToolDefinition> toolDefinitions,
         Uri? projectEndpoint = null,
