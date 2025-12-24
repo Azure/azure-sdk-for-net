@@ -4,13 +4,15 @@
 #nullable disable
 
 using Azure.ResourceManager.ServiceNetworking.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    // add the property back for backward compatibility
+    // The definition in Swagger and TSP is not `Lifecycle.Read`, so this property is manually added back.
     public partial class TrafficControllerAssociationData
     {
         /// <summary> Association Type. </summary>
+        [CodeGenMember("associationType")]
         public TrafficControllerAssociationType? AssociationType { get; set; }
     }
 }
