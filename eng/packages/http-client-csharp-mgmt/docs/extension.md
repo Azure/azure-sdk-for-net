@@ -27,7 +27,6 @@ This pattern enables:
 - **Responsibilities**:
   - Creates `GetCachedClient` methods to instantiate mockable providers
   - Generates forwarding methods that delegate to mockable providers
-  - Adds mocking documentation to guide users
 
 **Methods Forwarded**: All public methods from mockable providers are forwarded, including:
 - Factory methods for resource collections (e.g., `GetFoos()`)
